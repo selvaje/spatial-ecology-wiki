@@ -1,0 +1,694 @@
+AWSTATS DATA FILE 6.9 (build 1.925)
+# If you remove this file, all statistics for date 201011 will be lost/reset.
+
+# Position (offset in bytes) in this file of beginning of each section for
+# direct I/O access. If you made changes somewhere in this file, you should
+# also remove completely the MAP section (AWStats will rewrite it at next
+# update).
+BEGIN_MAP 27
+POS_GENERAL 1864                
+POS_TIME 2554                
+POS_VISITOR 13909               
+POS_DAY 20968               
+POS_DOMAIN 3489                
+POS_LOGIN 3723                
+POS_ROBOT 3910                
+POS_WORMS 4574                
+POS_EMAILSENDER 4705                
+POS_EMAILRECEIVER 4848                
+POS_SESSION 21835               
+POS_SIDER 22047               
+POS_FILETYPES 4983                
+POS_OS 5255                
+POS_BROWSER 5454                
+POS_SCREENSIZE 5846                
+POS_UNKNOWNREFERER 5920                
+POS_UNKNOWNREFERERBROWSER 6395                
+POS_ORIGIN 6614                
+POS_SEREFERRALS 6758                
+POS_PAGEREFS 6935                
+POS_SEARCHWORDS 7662                
+POS_KEYWORDS 8242                
+POS_MISC 2217                
+POS_ERRORS 8648                
+POS_CLUSTER 3579                
+POS_SIDER_404 8816                
+END_MAP
+
+# LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value
+# FirstTime   = Date of first visit for history file
+# LastTime    = Date of last visit for history file
+# LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped
+# TotalVisits = Number of visits
+# TotalUnique = Number of unique visitors
+# MonthHostsKnown   = Number of hosts known
+# MonthHostsUnKnown = Number of hosts unknown
+BEGIN_GENERAL 8
+LastLine 20101201001041 14609 3385211 23486986201
+FirstTime 20101101032258
+LastTime 20101130234043
+LastUpdate 20101202022307 14609 14157 451 0 0
+TotalVisits 419                 
+TotalUnique 165                 
+MonthHostsKnown 0                   
+MonthHostsUnknown 173                 
+END_GENERAL
+
+# Misc ID - Pages - Hits - Bandwidth
+BEGIN_MISC 10
+QuickTimeSupport 0 0 0
+JavaEnabled 0 0 0
+JavascriptDisabled 0 0 0
+PDFSupport 0 0 0
+WindowsMediaPlayerSupport 0 0 0
+AddToFavourites 0 12 0
+RealPlayerSupport 0 0 0
+TotalMisc 0 0 0
+DirectorSupport 0 0 0
+FlashSupport 0 0 0
+END_MISC
+
+# Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth
+BEGIN_TIME 24
+0 38 61 950019 203 256 1878744
+1 40 59 1289549 141 178 1170108
+2 76 176 1913794 103 165 856413
+3 188 450 6549100 105 173 699216
+4 386 669 7012726 158 320 1393540
+5 438 796 130785300 290 443 2219996135
+6 221 444 6646495 140 218 1063138
+7 124 255 3261259 107 172 851946
+8 384 698 16728582 223 370 4717895
+9 301 1008 8552017 126 222 14263630
+10 223 491 4417562 165 282 1654955
+11 145 315 5660051 147 220 1451400
+12 226 532 9162599 136 230 1305557
+13 125 268 2735848 142 233 1551987
+14 180 428 7952119 99 159 674861
+15 105 224 1724679 120 194 1148601
+16 73 224 2384949 255 315 1514991
+17 50 73 540911 370 440 25872290
+18 40 78 761115 431 461 3765570
+19 83 122 2083126 366 392 2913925
+20 42 67 705111 308 348 2774402
+21 21 23 244229 206 231 1729632
+22 31 56 613320 176 192 1327992
+23 32 38 559671 207 252 1873040
+END_TIME
+
+# Domain - Pages - Hits - Bandwidth
+# The 10 first Pages must be first (order not required for others)
+BEGIN_DOMAIN 1
+ip 3572 7555 223234131
+END_DOMAIN
+
+# Cluster ID - Pages - Hits - Bandwidth
+BEGIN_CLUSTER 0
+END_CLUSTER
+
+# Login - Pages - Hits - Bandwidth - Last visit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_LOGIN 1
+speco 2 94 65376 20101128165153
+END_LOGIN
+
+# Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt
+# The 10 first Hits must be first (order not required for others)
+BEGIN_ROBOT 14
+bspider 1280 19470724 20101130224555 0
+slurp 960 6725754 20101130162449 0
+googlebot 270 25655302 20101130203605 0
+feedfetcher\-google 231 72803 20101130230428 0
+baiduspider 223 2756950 20101129101737 0
+msnbot 173 1815101 20101130125700 0
+bot[+:,\.\;\/\\-] 94 1271800 20101130210236 0
+yandex 15 254145 20101123172719 0
+spider 10 260100 20101126043433 0
+surveybot 3 50829 20101123221734 0
+no_user_agent 2 33886 20101104231754 0
+jeeves 1 16943 20101126110440 0
+cfnetwork 1 2218379080 20101129052942 0
+mj12bot 1 16943 20101108162726 0
+END_ROBOT
+
+# Worm ID - Hits - Bandwidth - Last visit
+# The 5 first Hits must be first (order not required for others)
+BEGIN_WORMS 0
+END_WORMS
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first Hits must be first (order not required for others)
+BEGIN_EMAILSENDER 0
+END_EMAILSENDER
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first hits must be first (order not required for others)
+BEGIN_EMAILRECEIVER 0
+END_EMAILRECEIVER
+
+# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression
+BEGIN_FILETYPES 12
+css 1510 7366890 0 0
+png 1374 6394098 0 0
+pdf 11 13184897 0 0
+pl 6 190893 0 0
+php 3550 67399241 0 0
+zip 1 122646388 0 0
+odt 1 251723 0 0
+html 2 1016 0 0
+js 256 4568800 0 0
+jpg 169 900471 0 0
+sh 1 460 0 0
+gif 674 329254 0 0
+END_FILETYPES
+
+# OS ID - Hits
+BEGIN_OS 13
+linuxsuse 178
+winlong 311
+winxp 3215
+win2000 3
+linuxubuntu 1856
+linuxfedora 40
+linux 451
+winme 2
+macosx 541
+win2003 56
+linuxdebian 265
+Unknown 371
+win2008 266
+END_OS
+
+# Browser ID - Hits
+BEGIN_BROWSER 24
+msie6.0 896
+firefox3.5.6 207
+chrome 576
+firefox3.6.11 134
+opera 54
+firefox3.6.6 65
+firefox3.0.14 26
+firefox3.5.15 78
+firefox3.5.3 8
+firefox3.0.5 1
+msie8.0 207
+mozilla 266
+firefox1.0 1
+msie7.0 767
+firefox3.5.9 91
+firefox3.6.12 3006
+firefox3.6.9 71
+firefox3.6.3 42
+wget 14
+firefox3.6.10 306
+firefox0.9 1
+Unknown 330
+safari 383
+firefox3.6.8 25
+END_BROWSER
+
+# Screen size - Hits
+BEGIN_SCREENSIZE 0
+END_SCREENSIZE
+
+# Unknown referer OS - Last visit date
+BEGIN_UNKNOWNREFERER 5
+Mozilla/5.0_(compatible;_ScoutJet;__http://www.scoutjet.com/) 20101110161326
+Wget/1.9_cvs-stable_(Red_Hat_modified) 20101127132958
+BlackBerry9000/4.6.0.167_Profile/MIDP-2.0_Configuration/CLDC-1.1_VendorID/102_ips-agent 20101105032958
+Apple-PubSub/65.20 20101130234043
+Mozilla/5.0_(en-us)_AppleWebKit/525.13_(KHTML,_like_Gecko;_Google_Web_Preview)_Version/3.1_Safari/525.13 20101111081121
+END_UNKNOWNREFERER
+
+# Unknown referer Browser - Last visit date
+BEGIN_UNKNOWNREFERERBROWSER 2
+BlackBerry9000/4.6.0.167_Profile/MIDP-2.0_Configuration/CLDC-1.1_VendorID/102_ips-agent 20101105032958
+Apple-PubSub/65.20 20101130234043
+END_UNKNOWNREFERERBROWSER
+
+# Origin - Pages - Hits 
+BEGIN_ORIGIN 6
+From0 886 886
+From1 3 3
+From2 24 24
+From3 69 69
+From4 2590 6573
+From5 0 0
+END_ORIGIN
+
+# Search engine referers ID - Pages - Hits
+BEGIN_SEREFERRALS 3
+google 22 22
+live 1 1
+yandex 1 1
+END_SEREFERRALS
+
+# External page referers - Pages - Hits
+# The 10 first Pages must be first (order not required for others)
+BEGIN_PAGEREFS 12
+http://dagendresen.wordpress.com 49 49
+http://www.whorush.com/search/ 4 4
+http://www.mail-archive.com/r-sig-geo@stat.math.ethz.ch/msg07297.html 4 4
+http://www.semrush.com/es/info/spatial-ecology.net 3 3
+http://www.casalegno.net/stefano/doku.php 2 2
+http://mpba.fbk.eu/en/itc4cc 1 1
+http://casalegno.net/stefano/doku.php 1 1
+http://www.bing.com/search 1 1
+http://posta15a.mailbeta.libero.it/cp/MailMessageBody.jsp 1 1
+http://es.mg40.mail.yahoo.com/dc/blank.html 1 1
+http://es.mg41.mail.yahoo.com/dc/blank.html 1 1
+http://dagendresen.wordpress.com/2010/10/20/envelope-models/ 1 1
+END_PAGEREFS
+
+# Search keyphrases - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_SEARCHWORDS 16
+spatial+ecology+courses 3
+spatial+ecology 3
+j-c+svenning 2
+training+spatial+ecology 2
+grass+merge+vector 2
+ecological+modelling+unibas+amatulli 1
+www.spatial-ecology.net 1
+the+basic+modeling+concepts+and 1
+open+source+tools+for+spatial+ecological+modelling 1
+www.spatialecology.com 1
+ecology+summer+schools 1
+quantum+gis+exercises 1
+r+spatial+ecology 1
+r+spatial+wiki 1
+environment+variables+ecology 1
+spatial+ecology+course 1
+END_SEARCHWORDS
+
+# Search keywords - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_KEYWORDS 34
+ecology 12
+spatial 12
+courses 3
+r 2
+grass 2
+training 2
+j-c 2
+merge 2
+svenning 2
+vector 2
+the 1
+www.spatial-ecology.net 1
+modeling 1
+gis 1
+www.spatialecology.com 1
+course 1
+for 1
+tools 1
+summer 1
+open 1
+wiki 1
+and 1
+basic 1
+source 1
+variables 1
+quantum 1
+exercises 1
+modelling 2
+environment 1
+ecological 2
+concepts 1
+schools 1
+unibas 1
+amatulli 1
+END_KEYWORDS
+
+# Errors - Hits - Bandwidth
+BEGIN_ERRORS 7
+401 60 24780
+403 5 4619
+302 1511 252249
+206 26 17336942
+500 1 542
+301 1 259
+404 1598 2050217
+END_ERRORS
+
+# URL with 404 errors - Hits - Last URL referer
+BEGIN_SIDER_404 108
+/robots.txt 326 -
+//phpMyAdmin-2.8.0-beta1/scripts/setup.php 3 -
+//scripts/setup.php 3 -
+//phpMyAdmin-2.8.1-rc1/scripts/setup.php 3 -
+//php-myadmin/scripts/setup.php 3 -
+//phpMyAdmin-2.6.4-pl1/scripts/setup.php 3 -
+//sqlweb/scripts/setup.php 3 -
+//phpMyAdmin-2.8.0.2/scripts/setup.php 3 -
+//phpMyAdmin-2/scripts/setup.php 3 -
+//phpMyAdmin-2.6.0-beta2/scripts/setup.php 3 -
+//phpMyAdmin-2.5.5-rc1/scripts/setup.php 3 -
+//phpMyAdmin-2.8.1/scripts/setup.php 3 -
+//php-my-admin/scripts/setup.php 6 -
+//phpadmin/scripts/setup.php 3 -
+//phpMyAdmin-2.6.1/scripts/setup.php 3 -
+//phpMyAdmin-2.6.2-beta1/scripts/setup.php 3 -
+/admin/flyer 2 -
+//phpMyAdmin-2.2.6/scripts/setup.php 3 -
+//phpMyAdmin-2.6.0-pl1/scripts/setup.php 3 -
+//phpMyAdmin-2.7.0-pl2/scripts/setup.php 2 -
+//phpMyAdmin-2.8.0-rc1/scripts/setup.php 2 -
+//phpMyAdmin-2.6.2-pl1/scripts/setup.php 3 -
+//phpMyAdmin-2.6.4-pl2/scripts/setup.php 3 -
+//phpMyAdmin-2.7.0-beta1/scripts/setup.php 2 -
+//phpMyAdmin-2.6.0-beta1/scripts/setup.php 3 -
+//phpmanager/scripts/setup.php 2 -
+//phpMyAdmin-2.6.1-rc2/scripts/setup.php 3 -
+/ost4sem/sitemap.xml.gz 1 -
+//phpMyAdmin-2.7.0-pl1/scripts/setup.php 3 -
+//PMA2005/scripts/setup.php 2 -
+/lib/exe/'+DOKU_BASE+'lib/images/loading.gif 22 http://www.spatial-ecology.net/lib/exe/js.php
+//phpMyAdmin-2.6.0-alpha2/scripts/setup.php 3 -
+//phpMyAdmin-2.8.0.1/scripts/setup.php 3 -
+//phpMyAdmin-2.2.3/scripts/setup.php 3 -
+//web/phpMyAdmin/scripts/setup.php 2 -
+//phpMyAdmin-2.5.7-pl1/scripts/setup.php 2 -
+//phpmyadmin1/scripts/setup.php 2 -
+//admin/scripts/setup.php 3 -
+/lib/tpl/monobook/common/print.css 931 http://www.spatial-ecology.net/
+//phpMyAdmin-2.8.0/scripts/setup.php 3 -
+//webdb/scripts/setup.php 3 -
+//phpmy-admin/scripts/setup.php 3 -
+//mysql-admin/scripts/setup.php 3 -
+//phpMyAdmin-2.7.0-rc1/scripts/setup.php 3 -
+//p/m/a/scripts/setup.php 3 -
+//web/scripts/setup.php 3 -
+//phpMyAdmin-2.6.3-rc1/scripts/setup.php 3 -
+//pma/scripts/setup.php 2 -
+//sqlmanager/scripts/setup.php 2 -
+/lib/tpl/monobook/common/'+stylepath+'/'+skin+'/KHTMLFixes.css 3 http://www.spatial-ecology.net/lib/tpl/monobook/common/wikibits.js
+/doku 1 -
+//phpMyAdmin-2.6.4-rc1/scripts/setup.php 3 -
+//phpmyadmin/scripts/setup.php 5 -
+//phpMyAdmin-2.8.2/scripts/setup.php 3 -
+//websql/scripts/setup.php 6 -
+//phpMyAdmin-2.8.0.4/scripts/setup.php 3 -
+//phpmyadmin2/scripts/setup.php 3 -
+//phpMyAdmin-2.5.5-pl1/scripts/setup.php 3 -
+//phpMyAdmin-2.5.7/scripts/setup.php 3 -
+/lib/tpl/monobook/common/'+stylepath+'/'+skin+'/Opera6Fixes.css 3 http://www.spatial-ecology.net/lib/tpl/monobook/common/wikibits.js
+//phpMyAdmin-2.7.0/scripts/setup.php 3 -
+//webadmin/scripts/setup.php 3 -
+/ost4sem/admin/flyer/flyer2011.odt%C3%B9 1 -
+//phpMyAdmin-2.5.5-rc2/scripts/setup.php 3 -
+//phpMyAdmin-2.5.1/scripts/setup.php 3 -
+//phpMyAdmin-2.6.1-pl1/scripts/setup.php 3 -
+/lib/exe/'+DOKU_BASE+'lib/images/throbber.gif 13 http://www.spatial-ecology.net/lib/exe/js.php
+//phpMyAdmin-2.5.5/scripts/setup.php 3 -
+//phpMyAdmin-2.6.2-rc1/scripts/setup.php 6 -
+//xampp/phpmyadmin/scripts/setup.php 3 -
+//mysqladmin/scripts/setup.php 6 -
+//phpMyAdmin-2.5.4/scripts/setup.php 3 -
+//phpMyAdmin-2.8.0-rc2/scripts/setup.php 3 -
+/admin/flyer/flyer2010.odd 1 -
+/lib/tpl/monobook/common/'+stylepath+'/'+skin+'/Opera7Fixes.css 3 http://www.spatial-ecology.net/lib/tpl/monobook/common/wikibits.js
+//phpMyAdmin-2.6.0-pl3/scripts/setup.php 3 -
+//phpMyAdmin-2.6.0-rc3/scripts/setup.php 3 -
+//phpMyAdmin-2.6.1-rc1/scripts/setup.php 3 -
+//db/scripts/setup.php 3 -
+//admin/pma/scripts/setup.php 3 -
+//myadmin/scripts/setup.php 3 -
+/GeneralObject]/Opera6Fixes.css 2 http://www.spatial-ecology.net/GeneralObject]/Opera6Fixes.css
+//phpMyAdmin-2.6.0/scripts/setup.php 3 -
+//phpMyAdmin-2.6.3-pl1/scripts/setup.php 3 -
+//pma2005/scripts/setup.php 2 -
+//phpMyAdmin-2.5.6-rc2/scripts/setup.php 3 -
+//phpMyAdmin-2.6.4-pl3/scripts/setup.php 3 -
+/ost4sem/ost4sem/sitemap.xml.gz 1 -
+//phpMyAdmin-2.5.6-rc1/scripts/setup.php 3 -
+//dbadmin/scripts/setup.php 2 -
+//phpMyAdmin-2.6.3/scripts/setup.php 6 -
+//phpMyAdmin-2.6.0-pl2/scripts/setup.php 3 -
+//phpMyAdmin-2.8.0.3/scripts/setup.php 3 -
+//phpMyAdmin-2.6.0-rc1/scripts/setup.php 2 -
+//admin/phpmyadmin/scripts/setup.php 3 -
+//phpMyAdmin-2.6.0-rc2/scripts/setup.php 3 -
+//phpMyAdmin-2.5.6/scripts/setup.php 3 -
+//phpMyAdmin-2.6.1-pl2/scripts/setup.php 3 -
+//typo3/phpmyadmin/scripts/setup.php 3 -
+//phpMyAdmin-2.6.1-pl3/scripts/setup.php 3 -
+//phpMyAdmin-2.6.4-pl4/scripts/setup.php 3 -
+/lib/tpl/monobook/common/iefixes.js 3 http://spatial-ecology.net/lib/tpl/monobook/common/iefixes.js
+//phpMyAdmin-2.6.4/scripts/setup.php 3 -
+//phpMyAdmin-2.6.2/scripts/setup.php 2 -
+//phpMyAdmin-2.6.0-alpha/scripts/setup.php 3 -
+//phpMyAdmin/scripts/setup.php 6 -
+//mysql/scripts/setup.php 3 -
+//mysqlmanager/scripts/setup.php 3 -
+END_SIDER_404
+
+# Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]
+# [Start date of last visit] and [Last page of last visit] are saved only if session is not finished
+# The 10 first Hits must be first (order not required for others)
+BEGIN_VISITOR 173
+129.240.88.195 386 530 1772874 20101130234043
+139.191.16.17 204 383 125748990 20101129052940
+130.225.165.41 163 666 3755371 20101129093151
+130.235.99.128 148 211 5478073 20101118083444
+95.210.140.218 108 265 2039398 20101128143725
+130.226.178.140 92 134 7654050 20101130092114
+79.107.253.180 84 113 1624956 20101117070752
+77.43.12.42 73 138 5803864 20101129072048
+131.175.12.86 68 226 518732 20101129121705
+195.148.239.161 61 106 541508 20101124112901
+213.185.28.227 25 46 3411783 20101125141601
+74.86.218.93 1 1 16943 20101123180200
+194.219.216.73 7 28 232317 20101107092936
+88.36.199.190 12 51 458338 20101130042434
+84.18.242.225 6 26 238585 20101125070937
+150.70.64.204 1 1 17741 20101121053225
+208.80.194.37 1 1 16943 20101109190222
+62.235.245.195 8 8 58808 20101118033204
+65.208.151.112 40 52 486762 20101129050545
+213.5.71.163 4 4 59987 20101103105302
+209.85.228.84 0 1 3459 
+69.58.178.58 11 11 149193 20101105033003
+79.243.210.30 17 38 1469498 20101103114126
+209.85.228.82 0 1 321 
+95.24.103.18 1 3 25959 20101112201435
+65.208.151.114 37 48 413238 20101129050536
+217.77.80.29 21 42 1286207 20101117104459
+124.115.1.8 30 50 1215582 20101130030520
+85.245.33.191 6 25 221754 20101107033508
+79.107.229.69 6 26 230319 20101104072023
+139.133.7.237 7 27 237229 20101129093033
+124.115.6.21 2 7 125542 20101115063828
+193.204.20.53 20 46 402510 20101130062658
+208.80.194.32 3 3 50829 20101117093206
+139.191.16.148 29 71 612537 20101112121433
+152.2.15.207 11 31 281852 20101115100550
+78.134.124.153 5 7 117432 20101101172707
+50.16.71.73 1 1 16943 20101103202704
+58.61.164.139 30 49 1228330 20101130031028
+193.219.58.122 60 107 590667 20101119064310
+193.11.20.234 28 28 3368876 20101122053347
+78.134.79.230 24 46 527452 20101110073741
+95.28.110.114 0 1 7348 
+216.36.130.75 7 27 238929 20101122111248
+78.134.115.242 4 51 129478 20101128165147
+208.94.234.220 3 3 43827 20101122000615
+74.125.16.1 5 23 217122 20101111081121
+75.119.32.158 1 1 86 20101124205213
+79.107.207.161 12 37 114949 20101118132345
+79.184.149.159 6 26 236885 20101121073530
+208.80.194.27 3 3 50829 20101126195917
+150.145.84.210 6 26 236693 20101126060300
+78.134.73.215 6 27 245234 20101108144024
+150.145.84.32 41 105 576436 20101126055225
+193.144.96.41 6 26 236693 20101130022647
+38.99.98.114 1 1 17741 20101110161326
+193.11.28.165 6 27 238472 20101101100634
+65.208.151.116 36 46 384805 20101129051458
+208.80.194.34 1 1 16943 20101115172453
+78.134.63.205 22 51 466010 20101112154443
+72.94.249.38 1 1 16943 20101120053113
+117.200.97.154 8 29 247736 20101111224832
+216.239.45.19 39 73 196366 20101116204838
+83.255.52.32 7 27 237229 20101126033024
+201.205.116.62 29 56 439695 20101105113817
+95.34.23.185 14 35 299690 20101109125444
+62.235.221.11 14 56 485778 20101120165433
+130.237.175.213 17 38 1274647 20101112033327
+138.100.127.25 6 26 236693 20101129122843
+83.32.145.38 6 26 243097 20101121110917
+93.33.251.26 56 78 7389169 20101103122104
+209.118.182.194 5 18 16943 20101116121457
+131.111.38.24 30 135 1170998 20101123043521
+194.171.8.33 7 27 237601 20101130033912
+77.191.170.137 12 33 283914 20101101135856
+209.85.228.80 1 1 9417 20101111081120
+79.184.149.19 6 26 236885 20101123163514
+84.159.68.219 42 108 704473 20101129053909
+93.80.129.1 0 3 28307 
+195.148.239.163 12 32 263159 20101123065728
+89.178.101.191 1 1 3170 20101112201438
+131.175.152.197 6 26 236693 20101123113938
+78.134.67.9 56 144 1159967 20101123154050
+94.163.22.117 4 6 72772 20101123154342
+130.216.17.206 10 30 265707 20101117144544
+79.107.204.172 8 28 64327 20101122174152
+129.177.218.132 6 26 243065 20101122053207
+58.61.164.141 30 51 1255601 20101130030048
+79.243.221.198 8 8 130528 20101104053057
+65.208.151.118 31 41 366603 20101129050546
+78.134.96.156 31 54 618065 20101119081711
+84.254.15.74 8 29 253483 20101110165810
+85.230.241.155 31 52 1425246 20101109131138
+193.197.158.1 5 24 162894 20101112093120
+93.144.195.46 37 78 490270 20101102133415
+139.191.166.82 56 84 754919 20101123104104
+114.80.93.73 19 19 321917 20101130210756
+86.133.156.33 7 28 238977 20101115065757
+74.52.245.146 1 1 16943 20101126185426
+193.204.20.26 32 54 436858 20101126081554
+78.134.78.55 8 27 302838 20101102070311
+68.168.105.57 1 1 16943 20101121165145
+95.27.21.204 0 1 587 
+93.80.98.104 2 3 60626 20101112201438
+66.45.246.226 1 1 16943 20101121020041
+93.63.186.82 8 28 238208 20101110083843
+139.191.16.59 19 42 298238 20101103051612
+58.61.164.39 18 18 304974 20101130205043
+89.178.101.58 0 2 679 
+93.34.9.101 17 38 364358 20101105104838
+93.47.97.178 6 26 236693 20101121084026
+79.243.203.209 17 38 1469498 20101105035209
+207.46.12.112 6 17 174564 20101105003811
+65.208.151.113 33 42 310427 20101129051506
+65.208.151.119 38 47 476174 20101129051509
+64.246.161.30 1 1 1995 20101126101125
+95.25.221.236 0 1 1128 
+92.90.17.5 10 31 271617 20101107081838
+83.36.22.193 20 41 328499 20101125141137
+139.191.16.16 25 70 377191 20101112121524
+208.80.194.36 2 2 33886 20101128083026
+95.24.103.54 1 3 5950 20101112201440
+208.80.194.28 1 1 16943 20101125071246
+58.61.164.40 28 50 1196389 20101130011511
+69.28.58.35 3 3 2167 20101127132958
+217.122.204.61 6 26 236693 20101115135656
+78.134.86.38 35 77 2416713 20101103194746
+208.80.194.26 1 1 16943 20101118232430
+95.25.171.88 1 7 96181 20101112201438
+192.43.227.18 19 43 399902 20101124032424
+64.246.165.180 1 1 1995 20101104053748
+217.72.49.106 33 54 2818120 20101126061309
+93.80.98.87 0 2 9758 
+81.198.19.199 1 1 16943 20101124125915
+77.191.191.59 14 35 310284 20101109165426
+79.243.218.36 12 12 195792 20101104174954
+78.134.111.12 11 31 514672 20101116084702
+87.63.149.238 18 78 681052 20101102033753
+114.80.93.71 26 48 1132890 20101130060138
+69.28.58.2 1 1 86 20101114121314
+138.100.126.113 8 29 252523 20101129095310
+208.80.194.29 5 5 84715 20101129211859
+65.208.151.115 30 46 401096 20101129051454
+69.28.58.10 6 6 2425 20101122151518
+124.115.1.7 30 49 1227676 20101130032649
+61.135.167.74 18 18 304974 20101130202508
+138.100.127.11 13 34 283111 20101129090521
+217.50.10.59 10 31 270404 20101129154738
+38.100.41.67 7 8 83839 20101113174836
+94.165.171.226 12 32 279505 20101128041716
+65.208.151.117 42 50 336878 20101129050603
+149.132.151.41 6 26 236693 20101109022651
+139.191.16.133 11 32 326250 20101126090710
+93.33.232.102 47 71 662648 20101108125110
+58.61.164.140 30 50 1232953 20101130042517
+62.235.212.175 16 37 368378 20101117054453
+213.239.200.199 21 21 252111 20101106194713
+130.89.210.3 6 26 236725 20101127054341
+124.115.6.20 1 8 100536 20101130180424
+69.28.58.9 4 4 2253 20101120114537
+78.134.95.25 15 39 361424 20101114035114
+79.243.207.89 8 8 130528 20101102074512
+140.203.12.241 8 28 240672 20101118150205
+82.49.185.112 6 26 230319 20101101115916
+124.115.5.11 19 19 321917 20101130213155
+62.235.212.64 6 6 44106 20101122122107
+78.134.57.181 5 7 141584 20101121075413
+93.10.134.51 6 26 232050 20101102124303
+85.230.246.126 8 27 237286 20101115144452
+88.214.193.166 7 7 119113 20101124194833
+117.193.163.90 6 26 238137 20101124183553
+64.246.165.10 1 1 1995 20101115063850
+109.52.156.67 4 49 126791 20101119102547
+END_VISITOR
+
+# Date - Pages - Hits - Bandwidth - Visits
+BEGIN_DAY 30
+20101101 49 160 1637659 11
+20101102 75 179 1695888 12
+20101103 193 351 12187844 19
+20101104 76 143 2196092 15
+20101105 97 200 2769828 10
+20101106 37 48 862442 11
+20101107 41 112 1377206 14
+20101108 118 190 2962156 16
+20101109 78 183 2630312 8
+20101110 77 170 2803739 18
+20101111 105 200 8504436 15
+20101112 124 314 3868336 23
+20101113 9 12 177295 3
+20101114 16 38 286992 3
+20101115 127 264 3664684 21
+20101116 133 229 1642741 16
+20101117 161 255 4650542 15
+20101118 164 283 4492084 13
+20101119 71 162 958315 9
+20101120 33 83 1064631 16
+20101121 30 92 958474 10
+20101122 99 221 2250863 14
+20101123 202 424 3358278 19
+20101124 131 261 1630044 15
+20101125 151 287 9710434 15
+20101126 138 263 3840906 18
+20101127 11 31 304583 6
+20101128 125 349 2465324 5
+20101129 754 1783 133752533 31
+20101130 147 268 4529470 18
+END_DAY
+
+# Session range - Number of visits
+BEGIN_SESSION 7
+1h+ 16
+5mn-15mn 11
+0s-30s 326
+15mn-30mn 17
+30s-2mn 22
+2mn-5mn 20
+30mn-1h 7
+END_SESSION
+
+# URL - Pages - Bandwidth - Entry - Exit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_SIDER 21
+/doku.php 1077 19420034 382 131
+/lib/exe/indexer.php 690 28980 2 112
+/lib/exe/css.php 648 3923900 4 9
+/feed.php 472 1390759 19 32
+/lib/exe/js.php 350 13276158 3 105
+/lib/exe/fetch.php 237 29251702 7 10
+/lib/exe/opensearch.php 58 31052 0 11
+/lib/exe/ajax.php 10 569 0 1
+/lib/exe/mediamanager.php 7 63430 0 0
+/stats/awstats/cgi-bin/awstats.pl 6 190893 1 2
+/ost4sem/exercise/basic_adv_gdalogr/tif2ascUL.sh 1 460 0 0
+/ost4sem/project/unidk2010/ECOWETHER/documents/VNProject.pdf 2 119664 0 0
+/ost4sem/exercise/basic_adv_r/altitude.R.pdf 2 3544 0 0
+/ost4sem/admin/flyer/flyer2011.odt 1 251723 0 1
+/ost4sem/lecture/introduction.pdf 1 49849 0 1
+/lib/exe/detail.php 1 12657 0 0
+/ost4sem/lecture/r_intro.pdf 3 4239237 0 2
+/stats/ 2 1016 1 0
+/sharing/outgoing/Ubuntu_05062010.7z.zip 1 122646388 0 1
+/ost4sem/project/unidk2010/MARINE/documents/Copenhagen2010.pdf 2 7967196 0 1
+/ost4sem/lecture/unixlinux.pdf 1 805407 0 0
+END_SIDER

@@ -1,0 +1,207 @@
+
+<h1 class="sectionedit1" id="hands_on_spatialite">Hands on SpatiaLite</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li">Create a spatiaLite database<ul>
+<li class="level1"><div class="li"> Import a shp file</div>
+</li>
+<li class="level1"><div class="li"> describe your data</div>
+</li>
+<li class="level1"><div class="li"> check layer was created in qgis</div>
+</li>
+<li class="level1"><div class="li"> perform sql quary on data</div>
+</li>
+<li class="level1"><div class="li"> load a non georeferenced table from a csv file </div>
+</li>
+<li class="level1"><div class="li"> create the join between the two tables</div>
+</li>
+<li class="level1"><div class="li"> Import a georeferenced csv table with x,y locations of cities in Ireland</div>
+</li>
+<li class="level1"><div class="li"> perform query</div>
+</li>
+<li class="level1"><div class="li"> perform spatial sql query</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+</div>
+</li>
+</ul>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:spatialite&amp;codeblock=0" title="Download Snippet" class="mediafile mf_sql">| basic.sql</a></dt>
+<dd><pre class="code sql"># SPATIALITE script <span class="kw1">FROM</span> the Spatial<span class="sy0">-</span>Ecology<span class="sy0">.</span>net course
+# <span class="kw1">OPEN</span> a bash terminal <span class="kw1">AND</span> run the following
+# 	<span class="kw1">IF</span> vector_database_cli<span class="sy0">.</span>sqlite does <span class="kw1">NOT</span> exist it will be created
+#	<span class="kw1">IF</span> vector_database_cli<span class="sy0">.</span>sqlite <span class="kw1">EXISTS</span><span class="sy0">,</span> it will <span class="kw1">OPEN</span> the <span class="kw1">DATABASE</span>
+&nbsp;
+spatialite vector_database_cli<span class="sy0">.</span>sqlite
+&nbsp;
+# you should now be <span class="kw1">IN</span> the spatialite command line interface <span class="kw1">AND</span> you should see the following:
+#SpatiaLite version <span class="sy0">..</span>: 4<span class="sy0">.</span>1<span class="sy0">.</span>1    Supported Extensions:
+#        <span class="sy0">-</span> <span class="st0">'VirtualShape'</span>        <span class="br0">&#91;</span>direct Shapefile access<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'VirtualDbf'</span>          <span class="br0">&#91;</span>direct DBF access<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'VirtualXL'</span>           <span class="br0">&#91;</span>direct XLS access<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'VirtualText'</span>         <span class="br0">&#91;</span>direct CSV<span class="sy0">/</span>TXT access<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'VirtualNetwork'</span>      <span class="br0">&#91;</span>Dijkstra shortest path<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'RTree'</span>               <span class="br0">&#91;</span>Spatial <span class="kw1">INDEX</span> <span class="sy0">-</span> R<span class="sy0">*</span>Tree<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'MbrCache'</span>            <span class="br0">&#91;</span>Spatial <span class="kw1">INDEX</span> <span class="sy0">-</span> MBR cache<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'VirtualSpatialIndex'</span> <span class="br0">&#91;</span>R<span class="sy0">*</span>Tree metahandler<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'VirtualXPath'</span>        <span class="br0">&#91;</span>XML Path <span class="kw1">LANGUAGE</span> <span class="sy0">-</span> XPath<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'VirtualFDO'</span>          <span class="br0">&#91;</span>FDO<span class="sy0">-</span>OGR interoperability<span class="br0">&#93;</span>
+#        <span class="sy0">-</span> <span class="st0">'SpatiaLite'</span>          <span class="br0">&#91;</span>Spatial <span class="kw1">SQL</span> <span class="sy0">-</span> OGC<span class="br0">&#93;</span>
+#PROJ<span class="sy0">.</span>4 version <span class="sy0">......</span>: Rel<span class="sy0">.</span> 4<span class="sy0">.</span>8<span class="sy0">.</span>0<span class="sy0">,</span> <span class="nu0">6</span> March <span class="nu0">2012</span>
+#GEOS version <span class="sy0">........</span>: 3<span class="sy0">.</span>4<span class="sy0">.</span>2<span class="sy0">-</span>CAPI<span class="sy0">-</span>1<span class="sy0">.</span>8<span class="sy0">.</span>2 r3921
+#SQLite version <span class="sy0">......</span>: 3<span class="sy0">.</span>8<span class="sy0">.</span>7<span class="sy0">.</span>1
+#Enter <span class="st0">&quot;.help&quot;</span> <span class="kw1">FOR</span> instructions
+#SQLite version 3<span class="sy0">.</span>8<span class="sy0">.</span>7<span class="sy0">.</span>1 <span class="nu0">2014</span><span class="sy0">-</span><span class="nu0">10</span><span class="sy0">-</span><span class="nu0">29</span> <span class="nu0">13</span>:<span class="nu0">59</span>:<span class="nu0">56</span>
+#Enter <span class="st0">&quot;.help&quot;</span> <span class="kw1">FOR</span> instructions
+#Enter <span class="kw1">SQL</span> statements <span class="kw1">TERMINATED</span> <span class="kw1">WITH</span> a <span class="st0">&quot;;&quot;</span>
+#spatialite<span class="sy0">&gt;</span>
+&nbsp;
+#all <span class="kw1">OF</span> the following commands should be typed <span class="kw1">AS</span> they are inside the spatialite cli
+#print cli help
+<span class="sy0">.</span>help
+&nbsp;
+#print available <span class="kw1">TABLES</span>
+<span class="sy0">.</span>tables
+&nbsp;
+#import shp 
+#syntax:
+# <span class="sy0">.</span>loadshp shpfilename layername encoding epsg_code
+<span class="sy0">.</span>loadshp nuts3_100k2006_ireland nuts3_ie utf<span class="sy0">-</span><span class="nu0">8</span> <span class="nu0">3035</span>
+&nbsp;
+#check layer was created 
+<span class="sy0">.</span>tables
+&nbsp;
+#describe the <span class="kw1">TABLE</span>
+pragma table_info<span class="br0">&#40;</span>nuts3_ie<span class="br0">&#41;</span>
+&nbsp;
+#check layer was created <span class="kw1">IN</span> qgis
+qgis vector_database_cli<span class="sy0">.</span>sqlite #<span class="br0">&#40;</span>run <span class="kw1">FROM</span> bash prompt<span class="br0">&#41;</span>
+&nbsp;
+#select everything <span class="kw1">FROM</span> nuts3_ie <span class="kw1">TABLE</span>
+<span class="kw1">SELECT</span> <span class="sy0">*</span> <span class="kw1">FROM</span> nuts3_ie;
+&nbsp;
+#select everything <span class="kw1">FROM</span> nuts3_ie <span class="kw1">TABLE</span> <span class="kw1">ORDER</span> alphabetically
+<span class="kw1">SELECT</span> <span class="sy0">*</span> <span class="kw1">FROM</span> nuts3_ie <span class="kw1">ORDER</span> <span class="kw1">BY</span> nuts_id;
+&nbsp;
+#select based <span class="kw1">ON</span> a wildcard <span class="br0">&#40;</span>e<span class="sy0">.</span>g<span class="sy0">.</span> everything starting <span class="kw1">WITH</span> <span class="st0">'IE'</span>
+<span class="kw1">SELECT</span> <span class="sy0">*</span> <span class="kw1">FROM</span> nuts3_ie <span class="kw1">WHERE</span> nuts_id <span class="kw1">LIKE</span> <span class="st0">'IE%'</span>;
+&nbsp;
+#count the <span class="kw1">NUMBER</span> <span class="kw1">OF</span> records <span class="kw1">FROM</span> above query
+<span class="kw1">SELECT</span> <span class="kw1">COUNT</span><span class="br0">&#40;</span><span class="sy0">*</span><span class="br0">&#41;</span> <span class="kw1">FROM</span> nuts3_ie <span class="kw1">WHERE</span> nuts_id <span class="kw1">LIKE</span> <span class="st0">'IE%'</span>;
+&nbsp;
+#use the ST_ARea <span class="kw1">TO</span> calculate the area <span class="kw1">USING</span> the Geometry <span class="kw1">COLUMN</span>
+<span class="kw1">SELECT</span> nuts_id<span class="sy0">,</span> ST_Area<span class="br0">&#40;</span>Geometry<span class="br0">&#41;</span> <span class="kw1">FROM</span> nuts3_ie; 
+&nbsp;
+#use the ST_ARea <span class="kw1">TO</span> calculate the area  <span class="kw1">IN</span> hectares
+<span class="kw1">SELECT</span> nuts_id<span class="sy0">,</span> ST_Area<span class="br0">&#40;</span>Geometry<span class="br0">&#41;</span><span class="sy0">/</span><span class="nu0">10000</span> <span class="kw1">FROM</span> nuts3_ie; 
+&nbsp;
+#add a <span class="kw1">NEW</span> <span class="kw1">FIELD</span> <span class="kw1">TO</span> calculate the area
+<span class="kw1">ALTER</span> <span class="kw1">TABLE</span> nuts3_ie <span class="kw1">ADD</span> <span class="kw1">COLUMN</span> area_ha <span class="kw1">INTEGER</span>;
+&nbsp;
+#update the <span class="kw1">TABLE</span> <span class="kw1">AND</span> <span class="kw1">SET</span> the area
+<span class="kw1">UPDATE</span> nuts3_ie <span class="kw1">SET</span> area_ha <span class="sy0">=</span> round<span class="br0">&#40;</span>ST_Area<span class="br0">&#40;</span>Geometry<span class="br0">&#41;</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#41;</span>;
+&nbsp;
+###
+# EXERCISE <span class="nu0">2</span> <span class="sy0">-</span> JOINING ATTRIBUTES <span class="br0">&#40;</span>CSV<span class="br0">&#41;</span> <span class="kw1">TO</span> VECTOR
+###
+&nbsp;
+#CREATE <span class="kw1">TABLE</span> <span class="kw1">TO</span> hold the CSV <span class="kw1">DATA</span>
+<span class="kw1">CREATE</span> <span class="kw1">TABLE</span> nuts3_forestarea <span class="br0">&#40;</span>nuts_id TEXT<span class="sy0">,</span> nonnullcells <span class="kw1">INTEGER</span><span class="sy0">,</span> forest_area <span class="kw1">INTEGER</span><span class="br0">&#41;</span>;
+&nbsp;
+#DEFINE CSV <span class="kw1">FIELD</span> SEPARATOR
+<span class="sy0">.</span>sep <span class="sy0">,</span>
+&nbsp;
+#import the csv <span class="kw1">USING</span> the <span class="sy0">.</span>import command
+<span class="sy0">.</span>import <span class="st0">'nuts3_forestarea.csv'</span> nuts3_forestarea
+&nbsp;
+#check the import was successful
+<span class="kw1">SELECT</span> <span class="sy0">*</span> <span class="kw1">FROM</span> nuts3_forestarea;
+&nbsp;
+#notice that the header was included <span class="kw1">IN</span> the import!
+#we need <span class="kw1">TO</span> remove this <span class="kw1">FROM</span> the <span class="kw1">TABLE</span>
+<span class="kw1">DELETE</span> <span class="kw1">FROM</span> nuts3_forestarea <span class="kw1">WHERE</span> nuts_id <span class="sy0">==</span> <span class="st0">'nuts_id'</span>;
+&nbsp;
+#create the <span class="kw1">JOIN</span> <span class="kw1">BETWEEN</span> the two <span class="kw1">TABLES</span>
+#N<span class="sy0">.</span>B<span class="sy0">.</span>:
+# a<span class="sy0">.</span> <span class="sy0">=</span> nuts3_ie
+# b<span class="sy0">.</span> <span class="sy0">=</span> nuts3_forestarea
+<span class="kw1">SELECT</span> a<span class="sy0">.</span>nuts_id<span class="sy0">,</span> a<span class="sy0">.</span>area_ha<span class="sy0">,</span> b<span class="sy0">.</span>forest_area <span class="kw1">FROM</span> nuts3_ie <span class="kw1">AS</span> a<span class="sy0">,</span>  nuts3_forestarea <span class="kw1">AS</span> b  <span class="kw1">WHERE</span> a<span class="sy0">.</span>nuts_id <span class="sy0">=</span> b<span class="sy0">.</span>nuts_id;
+&nbsp;
+#make this <span class="kw1">JOIN</span> permanent <span class="kw1">AS</span> a <span class="kw1">VIEW</span>
+<span class="kw1">CREATE</span> <span class="kw1">VIEW</span> v_nuts3_forestarea <span class="kw1">AS</span> <span class="kw1">SELECT</span> a<span class="sy0">.</span>nuts_id<span class="sy0">,</span> a<span class="sy0">.</span>area_ha<span class="sy0">,</span> a<span class="sy0">.</span>Geometry<span class="sy0">,</span> b<span class="sy0">.</span>forest_area <span class="kw1">FROM</span> nuts3_ie <span class="kw1">AS</span> a<span class="sy0">,</span>  nuts3_forestarea <span class="kw1">AS</span> b <span class="kw1">WHERE</span> a<span class="sy0">.</span>nuts_id <span class="sy0">=</span> b<span class="sy0">.</span>nuts_id;
+&nbsp;
+#register the <span class="kw1">VIEW</span> <span class="kw1">IN</span> the geometry <span class="kw1">COLUMNS</span> so that you can <span class="kw1">VIEW</span> it <span class="kw1">IN</span> a GIS
+<span class="kw1">INSERT</span> <span class="kw1">INTO</span> views_geometry_columns <span class="kw1">VALUES</span> <span class="br0">&#40;</span><span class="st0">'v_nuts3_forestarea'</span><span class="sy0">,</span> <span class="st0">'geometry'</span><span class="sy0">,</span> <span class="st0">'rowid'</span><span class="sy0">,</span> <span class="st0">'nuts3_ie'</span><span class="sy0">,</span> <span class="st0">'geometry'</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>;
+&nbsp;
+#view the <span class="kw1">VIEW</span> <span class="kw1">IN</span> qgis <span class="br0">&#40;</span>note run this <span class="kw1">FROM</span> bash!<span class="br0">&#41;</span>
+bash$<span class="sy0">&gt;</span>qgis vector_database_cli<span class="sy0">.</span>sqlite
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+###
+# EXERCISE <span class="nu0">3</span> <span class="sy0">-</span> IMPORT A CSV <span class="kw1">WITH</span> X<span class="sy0">,</span>Y locations <span class="kw1">OF</span> cities <span class="kw1">IN</span> Ireland
+###
+&nbsp;
+#create a <span class="kw1">TABLE</span> <span class="kw1">TO</span> hold the xy <span class="kw1">TABLE</span>
+<span class="kw1">CREATE</span> <span class="kw1">TABLE</span> towns <span class="br0">&#40;</span>x <span class="kw1">INTEGER</span><span class="sy0">,</span> y <span class="kw1">INTEGER</span><span class="sy0">,</span> county TEXT<span class="sy0">,</span> town TEXT<span class="sy0">,</span> population <span class="kw1">INTEGER</span><span class="sy0">,</span> male_population <span class="kw1">INTEGER</span><span class="sy0">,</span> female_population <span class="kw1">INTEGER</span><span class="br0">&#41;</span>;
+&nbsp;
+#import the towns CSV file
+<span class="sy0">.</span>import <span class="st0">'towns_ie.csv'</span> towns 
+&nbsp;
+#select <span class="kw1">ALL</span> <span class="kw1">FROM</span> towns
+<span class="kw1">SELECT</span> <span class="sy0">*</span> <span class="kw1">FROM</span> towns;
+&nbsp;
+#note<span class="sy0">,</span> it<span class="st0">'s not spatial!!
+&nbsp;
+#Add a geometry column to the towns table
+#note 29900 is the Irish National Grid projection (epsg:29900)
+SELECT AddGeometryColumn('</span>towns<span class="st0">', '</span>Geometry<span class="st0">', 29900, '</span>POINT<span class="st0">', 1);
+&nbsp;
+#set the Geometry type to Point 
+UPDATE towns SET Geometry=MakePoint(x,y, 29900);
+&nbsp;
+#check the output and print the geometry field and the SRID as TEXT
+SELECT x, y, AsText(geometry), SRID(geometry) FROM towns;
+&nbsp;
+#Let'</span>s <span class="kw1">ADD</span> a <span class="kw1">NEW</span> Geometry <span class="kw1">COLUMN</span> <span class="kw1">FOR</span> a different projection <span class="br0">&#40;</span>e<span class="sy0">.</span>g<span class="sy0">.</span> epsg: <span class="nu0">3035</span><span class="br0">&#41;</span>
+<span class="kw1">ALTER</span> <span class="kw1">TABLE</span> towns <span class="kw1">ADD</span> <span class="kw1">COLUMN</span> epsg3035 <span class="kw1">BLOB</span>;
+&nbsp;
+#Transform <span class="br0">&#40;</span>reproject the geometry <span class="kw1">COLUMN</span><span class="br0">&#41;</span>
+<span class="kw1">UPDATE</span> towns <span class="kw1">SET</span> epsg3035 <span class="sy0">=</span> TRANSFORM<span class="br0">&#40;</span>Geometry<span class="sy0">,</span> <span class="nu0">3035</span><span class="br0">&#41;</span>;
+&nbsp;
+#Register the <span class="kw1">NEW</span> geometry
+<span class="kw1">SELECT</span> RECovergeometrycolumn<span class="br0">&#40;</span><span class="st0">'towns'</span><span class="sy0">,</span> <span class="st0">'epsg3035'</span><span class="sy0">,</span> <span class="nu0">3035</span><span class="sy0">,</span> <span class="st0">'POINT'</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>;
+&nbsp;
+#view the <span class="kw1">VIEW</span> <span class="kw1">IN</span> qgis <span class="br0">&#40;</span>note run this <span class="kw1">FROM</span> bash!<span class="br0">&#41;</span>
+#you should see two towns layers<span class="sy0">,</span> <span class="kw1">WITH</span> the <span class="kw1">NEW</span> layers <span class="kw1">AS</span> towns<span class="br0">&#40;</span><span class="nu0">3035</span><span class="br0">&#41;</span>
+bash$<span class="sy0">&gt;</span>qgis vector_database_cli<span class="sy0">.</span>sqlite
+&nbsp;
+#in spatialite
+#return the coordinates <span class="kw1">IN</span> the two projections <span class="kw1">AND</span> the projection <span class="br0">&#40;</span>SRID<span class="br0">&#41;</span>
+<span class="kw1">SELECT</span> AsText<span class="br0">&#40;</span>geometry<span class="br0">&#41;</span><span class="sy0">,</span> SRID<span class="br0">&#40;</span>geometry<span class="br0">&#41;</span><span class="sy0">,</span> AsText<span class="br0">&#40;</span>epsg3035<span class="br0">&#41;</span><span class="sy0">,</span> SRID<span class="br0">&#40;</span><span class="nu0">3035</span><span class="br0">&#41;</span> <span class="kw1">FROM</span> towns;
+&nbsp;
+&nbsp;
+###
+# EXERCISE <span class="nu0">4</span> <span class="sy0">-</span> <span class="kw1">SOME</span> SPATIAL <span class="kw1">SQL</span>
+###
+#calculate the distance <span class="kw1">FROM</span> the towns <span class="kw1">DATABASE</span> <span class="kw1">AND</span> each polygon centroid <span class="kw1">WHERE</span> the town <span class="kw1">IS</span> called <span class="st0">'Wexford'</span>
+<span class="kw1">SELECT</span> a<span class="sy0">.</span>town<span class="sy0">,</span> b<span class="sy0">.</span>nuts_id<span class="sy0">,</span>  ST_Distance<span class="br0">&#40;</span>a<span class="sy0">.</span>geometry<span class="sy0">,</span> ST_Centroid<span class="br0">&#40;</span>b<span class="sy0">.</span>geometry<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">AS</span> dist <span class="kw1">FROM</span>  towns <span class="kw1">AS</span> a<span class="sy0">,</span> nuts3_ie <span class="kw1">AS</span> b <span class="kw1">WHERE</span> a<span class="sy0">.</span>town <span class="sy0">=</span> <span class="st0">'Wexford'</span>;
+&nbsp;
+#select the points <span class="kw1">IN</span> polygon <span class="kw1">WHERE</span> the nuts_id <span class="sy0">=</span> <span class="st0">'IE023'</span>
+<span class="kw1">SELECT</span> a<span class="sy0">.</span>town <span class="kw1">FROM</span> towns <span class="kw1">AS</span> a<span class="sy0">,</span> nuts3_ie <span class="kw1">AS</span> b <span class="kw1">WHERE</span> ST_Within<span class="br0">&#40;</span>Transform<span class="br0">&#40;</span>a<span class="sy0">.</span>geometry<span class="sy0">,</span> <span class="nu0">3035</span><span class="br0">&#41;</span><span class="sy0">,</span> b<span class="sy0">.</span>geometry<span class="br0">&#41;</span> <span class="kw1">AND</span> b<span class="sy0">.</span>nuts_id <span class="sy0">=</span> <span class="st0">'IE023'</span>;
+&nbsp;
+&nbsp;
+&nbsp;
+##Exiting Spatialite CLI
+<span class="sy0">.</span>quit 
+# <span class="kw1">OR</span> !!
+CTRL<span class="sy0">+</span>D</pre>
+</dd></dl>
+
+</div>

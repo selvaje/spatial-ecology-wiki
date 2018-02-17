@@ -1,0 +1,31 @@
+
+
+====== Using GDAL/OGR API for GIS analysis  ======
+
+Material prepared by Stephen Weston 
+
+  cd ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+  wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/gdal_example.py
+  wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/ogr_example.py
+  wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/masked.py
+  wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/polygon_means.py
+
+
+==== Reading raster images and return Min Max Mean ====
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/gdal_example.py }}
+
+==== Reading a vector file and return a coordinates of the centroid  ====
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/ogr_example.py }}
+
+
+==== Demonstrate how to create a NumPy mask array ====
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/masked.py }}
+
+==== Compute statistic inside polygons ====
+
+  gdal_rasterize -te 2632000.000 1420000.000 5972000.000 5450000.00 -tap -clump -tr 1000 1000 -l poly_fr poly_fr.shp poly_fr.tif
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/polygon_means.py }}

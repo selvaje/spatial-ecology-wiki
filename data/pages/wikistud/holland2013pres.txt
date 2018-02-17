@@ -1,0 +1,15 @@
+
+====== University of Twente - Enschede - The Netherlands   ======
+
+**SPATIO-TEMPORAL ANALYSIS AND BIG DATA PROCESSING USING FREE AND OPEN SOURCE SOFTWARE**\\
+16-20 December 2013 & 20-24 January 2014 \\
+4 ECTS\\
+\\
+  * [[wiki:enschede2013 | Objectives and program of the course  ]]\\
+  * [[http://www.sense.nl/?module=courses&func=displayplanned&planningid=1332 | Registration ]]\\
+  * [[wikistud:holland2013| Student's project assignments]]
+
+Over the few decades there has been an explosion of available data for environmental spatio-temporal research. This “big data” allows us to address a number of old and new important questions with unprecedented rigor and generality. Leveraging these new data streams requires new tools and increasingly complex workflows.
+This 2-week course introduces a set of free and open source software (GRASS, R, Python, AWK, BASH, GDAL) tools to perform spatio-temporal analysis and modelling of environmental data under Linux environment. It consists of a set of lectures and practical sessions where participants use this software packages to perform typical Geographic Information System (GIS) and Remote Sensing (RS) data analysis tasks.  
+In this course, attention is paid to the use of command line rather than the graphical user interface. Yet no programming experience is required to register for this course as basic principles are introduced.\\
+

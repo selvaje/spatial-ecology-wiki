@@ -1,0 +1,1 @@
+<span class="kw1">SELECT</span> dbinfo<span class="br0">&#40;</span>m<span class="br0">&#41;</span> <span class="kw1">FROM</span> mr <span class="kw1">AS</span> m

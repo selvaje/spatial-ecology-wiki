@@ -1,0 +1,18 @@
+====== Manipulate pdf documents using bash scripts ======
+[[http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit|PDF toolkit]] is an interesting tool for doing everyday things with PDF documents.\\
+[[http://www.pdflabs.com/docs/pdftk-man-page/|Here]] you find the pdftk **Synopsis** and manual page.\\
+**Example**\\
+==== Merge pdf ====
+We have several images in pdf format and we need to merge them in one single pdf file.\\
+<note important> please run first the [[imagemagikbash|image magick script]] </note> \\
+Change directory and look at your pdf images: \\
+
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_grass/tmp_image
+pdftk *.pdf cat output combined.pdf
+</code>
+
+==== Convert color pdf document into a black and white ====
+<code bash>
+convert -density 600 -colorspace Gray     INPUT_color_document.pdf      OUTPUT_black_and_white_document.pdf
+</code>

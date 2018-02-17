@@ -1,0 +1,219 @@
+====== Extracting Information from Images ======
+
+In this exercise you will complete a small remote sensing project.  We begin by importing a new Landsat image into GRASS and performing several data preparation operations.  Once the data are ready to use you will create a vegetation index and a map layer for degrees Celsius.  You will then do a basic change detection.  This will be followed with land cover classifications of the region.
+
+The Landsat image we will be using covers the same southern part of Kenya, but is larger than the area we worked with previously.  The image was acquired on 19 August 2010.  The data are in the compressed and archived format **tar.gz** as the data are provided by the USGS.
+
+The file is called **LT51680612010231MLK00.tar.gz**\\
+It is located in the folder: **/home/user/ost4sem/exercise/KenyaGIS/Landsat**.
+
+Open the File Manager (bottom of the Virtual Machine - third icon from the left).  Navigate to the Landsat folder and right-click on the filename.  Select **Extract Here** to unpack all of the data layers.
+
+If GRASS is currently open, **Remove** any maps in the Layer Manager.  If it is not open, reopen GRASS.  We will use the same Location **KenyaUTM** and Mapset **user** as we did earlier.
+
+==== Preparing data for use in GRASS ====
+
+=== Import each band of the Landsat scene ===
+We will use the graphic tool to import the first layer, then use the Command console to quickly imprt the remaining data layers
+
+
+  * From the menu select **File | Import raster data | Common formats import [r.in.gdal]**
+  * Browse to the KenyaGIS/Landsat folder and select file **LT51680612010231MLK00_B1.TIF**
+  * This file is the first band of the Landsat image, contianing data for the Blue band
+  * Click Open then Import
+  * The new map layer is added to the Layer Manager and the Map Display window
+  * Click in the Command console panel of the Layer Manager and press the keyboard Up Arrow to display the command
+  * Edit the command by replacing the **B1** with **B2** for both the input and output file names
+  * Hit the Enter key to run the command and the second data layer is imported
+  * Repeat this until all seven bands are imported into GRASS
+  * If you make an error entering the band numbers you can remove the bad dataset\\ **File | Manage maps | Delete [g.remove]**
+  * Close the Import window when you are done
+  * The Layer Manager should now have all seven bands loaded
+
+=== Region ===
+
+The Map Display should show the same area that was displayed in the earlier exercise.  This is because the default Region was set to this area.  You can learn more about this region from the Command console.
+
+  * Type **g.list region** to list the names of any Regions defined in the Location
+  * Type g.region -p to display all of the region information
+  * In the Map Display window click on the **Zoom to selected map layer** to display the full map layer
+  * On the bottom of the Display window change Coordinates to Show comp. extent to display the region boundary
+  * Change back to Coordinates and the region display is retained
+
+Region is a powerful part of GRASS.  You can use this to easily subset data, change cell size, and control raster processing.  You are encouraged to read about the tool g.region in the GRASS documentation.
+
+=== Explore the data ===
+Take few minutes to explore these data layers.  Toggle off and on various layers.  Use the Query tool to examine cell values.  Make layers 4 and 6 active and query the scene.  Note the large difference in values.  Band 4 represents optical data of the Near Infrared wavelength and Band 6 represents emissive (thermal) data.
+
+
+
+==== Data Preparation ====
+
+The data units, as provided in the original files, are Digital Numbers (DN).  These are rescaled radiance values.  We can improve the quality of the data and make it more comparable to other images by converting these data into Top of Atmosphere Reflectance.  We will use the GRASS TOAR tool to accomplish this.
+
+  * Load the tool **Imagery | Satellite images tools | Landsat DN to radiance/reflectance [i.landsat.toar]**
+  * In the //Basename// pane use the drop-down arrow to select the first layer.
+  * Only keep the common part of the name up to **B** and remove the last part of the name **1@user**
+  * Enter a Prefix of **2010TOARb**
+  * Click on the //Metadata// tab
+  * In the //Name of Landsat metatdata// pane click Browse and navigate to the folder where the original data are located
+  * Select the file with the name that ends with **MTL.txt** and click Open
+  * This may take a couple of minutes to run
+  * Close the TOAR tool when done
+
+=== Explore these new data ===
+  * Load the new band 4 and make both the original and new band 4 layers active
+  * Use the Query tool to compare values.  The original layer has DNs and the new file has reflectance values ranging from 0 to 1
+  * Compare the original and new band 6 layers.  The original layer had emissive values and the new file has degrees Kelvin
+
+=== Subset the data ===
+These data have been improved to represent the solar energy reflected from the surface of the earth and captured at the satellite.  Now we want to subset the data to the Nairobi Region.  We will use Mapcalc to multiply the data by 1.  Since the Region has been defined for the Location, this will subset the data to this area.
+
+  * Open the raster calculator **Raster | Raster map calculator**
+  * Select **2010TOARb1**in the Insert existing map box
+  * After the Mapset name user enter multiply Operator followed by 1
+  * The formula should look like this:   2010TOARb1@user * 1
+  * Enter and output name **2010b1** and click Run
+  * We need to do this for bands 2, through 7 next.
+  * Change the Expression and Output from **b1** to **b2** and click Run
+  * Repeat for the remaining bands
+
+<note>The new image has been subset to the Region size.  It also is using the Rainbow Color Table.  We will change this to grey later</note>
+
+=== Final Preparation ===
+Now we need to change the Color Table and create an Image Group and Subgroup and Color Balance the layers
+
+== Color Table ==
+  * In the Layer Manager right-click on **2010b1** and select **Set color table**
+  * Click on the Define tab, pick the **grey** color table and click Run
+  * Click Copy and paste the command into the Command console
+  * Change the band number and hit enter
+  * Click in the console, hit the Up arrow, change the band number and hit Enter again
+  * Repeat until all six bands have been changed
+  * Close the Color table window
+
+== Create Group ==
+
+  * Select **Imagery | Develop images and groups | Create/edit group [i.group]**
+  * Enter the new group name **2010TOAR**
+  * Click the **+Add** button and enter the Pattern **2010b** and click OK
+  * Now check the box **Edit/create subgroup,** enter the name **2010Sub,** select all bands and click OK
+
+
+== Color Balance Images ==
+Satellite images are typically quite dark before they are enhanced.  To see this use the Add Image tool {{:wiki:addimage.jpg?35|}} and select the new bands 3, 2, 1 to construct the RGB image.  It looks very dark.  We can quickly improve this.
+
+  * Select **Imagery | Manage image colors | Color balance [i.colors.enhance]**
+  * For the Red layer select the map **2010b3**
+  * For the Green layer select the map **2010b2**
+  * For the Blue layer select the map **2010b1**
+  * Toggle off then on the RGB image display
+  * Repeat the Color Balance for the RGB 432 and RGB 543 combinations
+
+
+==== Create New Data Layers ====
+
+== Convert degrees Kelvin to Celsius ==
+This is the same function that you did in the earlier exercise.  Use the Raster map Calculator to subtract 273.15 from the Kelvin layer **2010b6**.  Name the new file **2010Celsius**.  Change the Color Table to Celsius and use the Query tool to verify the data values.
+
+== Create the NDVI layer ==
+Recall from the lecture that this formula is the Near Infred layer minus the Red layer divided byt the sum of the two layers.  For Landsat the bands would be **(4 - 3) / (4 + 3)**
+
+  * Use the Map Calculator to construct this formula
+  * Make sure you use the Insert existing map pane to replace the numbers 4 and 3 with the layers 2010b4 and 2010b3
+  * Enter a new filename 2010NDVI
+  * Use the Query tool to verify that the data values are between -1.0 and +1.0
+  * Change the Color Table to NDVI
+
+
+==== Change detection ====
+The ability to measure change over time is a another powerful feature of working with satellite images.  We will look at how the temperature and NDVI have changed from 1995 to 2010.
+
+== Temperature Change ==
+  * Remove all map layers from the Layer Manager then open the **1995Celsius** and **2010Celsius** layers
+  * Use the Map Calculator to subtract the **1995Celsius** layer from the **2010Celsius** layer
+  * Enter a new filename 2010Cminus1995C
+  * Make all three layer active and use the Query tool to verify your results
+  * If this looks correct, change the Color Table to Differences
+  * Red and pink areas reflect increases in temperature and shades of blue are decreases
+
+== NDVI Change ==
+  * Add the 2010 and 1995 NDVI layers and perform the same difference calculation
+  * Use the Query tool to verify your result and if it looks good, change the Color Table
+  * Use the Map Swipe tool **File | Map Swipe** to see if changes in temperature vegetation are related
+
+This is just a brief exposure to change detection.  After you develop land cover classifications you can explore how forest have changed over time, examine urban sprawl, and many other changes to the landscape.
+
+==== Classification ====
+Land cover classification provides a means to categorize and quantify the landscape.  We will perform a quick unsupervised classification of the new 2010 image.  This will be followed by a supervised classification of the 1995 image used earlier.  In GRASS classifications are a two-step process.  You create the training data, then apply thenm in the Maximum Likelihood Classifier.
+
+=== Unsupervised Classification ===
+
+  * Select **Imagery | Clustering input for unsupervised classification**
+  * In the imagery group pane select the **2010TOAR** group created earlier
+  * In the subgroup pane select the **2010sub** subgroup
+  * Enter a filename **Unsup10class**
+  * Click on the **Setting** tab and enter 10 in the //Initial number of classes// pane
+  * Click Run to create the classification signature file
+  * If there are no error messages close the window
+  * Select **Imagery | Classify image | Maximum likelihood classification**
+  * Enter the same Group and Subgroup as above
+  * Enter **Unsup10class** for the //Name of Input file containing signatures//
+  * Enter the filename **10ClassUnsup** for the output and click Run
+
+=== Supervised Classification ===
+This method of classifying an image is a bit more complex.  It requires the user to create training regions before running the Maximum Likelihood Classifier.  Here is a view of the Classification tool.
+
+{{ :wiki:supclass.jpg?500 |}}
+
+This tool requires many inputs.  After you load the tool you should move the mouse over each icon to learn which tools to use.
+
+== Setup ==
+  * Select **Imagery | Classify image | Interactive input for supervised classification**
+  * Move your mouse over the icons to discover the many funtiosn you will be using
+  * First we must define the image group
+  * - Click on the Select Imagery Group tool in the upper left
+  * - Select the **1995Visible** group and **1995sub** created in the earlier exercise
+  * In the **Training Areas Display** select the Add RGB tool
+  * For the Red display layer scroll down to the Mapset:Permanet data and select the **1995Jan30b5** layer
+  * Select the **b4** and **b3** layers for the Green and Blue layers and click OK
+  * This will produce a flase color display with vegetation bright green, water black, and soils pink and purple
+  * In the Preview Display enter a band combination of 3, 2, and 1 to produce a natural color display
+
+== Define Classes ==
+  * Open the Class Manager tool and add several classes
+  * - Click the +Add button and enter the Class name **Water** and select the color blue
+  * - Add classes for Veg as green and Soil as orange
+  * Close the dialog when done
+
+== Create training regions ==
+  * Zoom very close in to the northeast corner to create the Water class training region
+  * - Make sure Water is selected near the Class Manager icon
+  * - Use the **Digitize new area** tool to create a couple of polygons containing only water
+  * - Zoom out the the full image then in to the very center
+  * - Create another Water polygon in the dark rectangular area.  Zoom in more if you do not see it
+  * Create a Veg traing region
+  * - Change the Active class to Veg
+  * - Zoom in to the bright green area just north of the settling ponds
+  * - Draw a polygon here - make sure it is displayed as green
+  * - Zoom out to the entire image then back in to the dark green area to the northwest
+  * - Create another Veg polygon here
+  * Create the Soil traing region
+  * - Change the active class to Soil
+  * - Zoom in to two of the pink areas and create polygons
+ 
+== Calculate the class signatures ==
+  * Click the **Run analysis** tool.  This will take a bit of time
+  * When it is finished it will add a color overlay in the Preview Display window and will display class histograms along the left side of the window
+  * Click on the **Save signature file** tool, enter the name **FirstSupClassSigs** and click OK
+
+Now that you have created the training regions you will run the maximum Likelihood Classifier as you did above.
+
+  * Select **Imagery | Classify image | Maximum likelihood classification**
+  * Enter the 1995 Group and Subgroup used above
+  * Enter **FirstSupClassSigs** for the //Name of Input file containing signatures//
+  * Enter the filename **FirstSupClass** for the output and click Run
+  * If you get no error messages then yo uwill see your new classification
+
+
+This was just a brief introduction to land cover classification.  You are encouraged to rad the GRASS manual and experiment with the many options to create and apply training regions.

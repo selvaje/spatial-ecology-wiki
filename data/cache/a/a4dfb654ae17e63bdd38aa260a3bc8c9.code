@@ -1,0 +1,5 @@
+install.packages(&quot;dismo&quot;)
+install.packages(&quot;XML&quot;)
+install.packages(&quot;maptools&quot;)
+install.packages(&quot;rgeos&quot;)
+install.packages(&quot;rasterVis&quot;)

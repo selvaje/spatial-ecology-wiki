@@ -1,0 +1,77 @@
+
+[[wiki: opinion_of_the_course| Read]] what people think about the course.\\
+
+====== Satisfactory survey ======
+Since 2008 we asked our students to give us some feed backs.
+\\
+\\
+===== Student's interest in in open source after attending the training =====
+** Are you interested in progress  and use OS tools in future ** \\
+^ ^ yes ^ no ^
+| nbr of answers | 277 | 42 |
+| percent | 87 | 13 |
+\\
+
+** Why did you attend the training?** n=42 \\
+^ to acquire new expertise ^ to improve my skills ^ to discuss related issues ^ no similar course found ^
+|37|13|4|4|
+\\
+
+
+** Do you see any interest in using Open Source tools in your current and future job ?** n= 92 \\
+^ ^ Yes ^  No ^ Little ^
+|nbr of answers  |76|3|13|
+| percentage  | 83|3|14|
+\\
+
+** Will you use and progress using Open Sources tools in future ?**  n= 76 (some students answered yes and no or none)\\
+^ ^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  AWK yes ^ AWK no ^
+|Answers | 70 | 4 |  66  | 8 | 66 | 10 | 75 | 2 |  65  | 22  | 38 | 3 |
+|% between yes and no|94|6^89^11|86|14^97^3|75|25^92^8|
+\\
+\\
+\\
+===== Self learning =====
+** Do you feel to be able to independently improve and learn more about Open Source tools ? ** n= 70 (some students answered yes and no or none)\\
+^ ^ Bash Yes ^ Bash No ^ AWK yes ^ AWK no ^ Gdal yes ^ Gdal no ^  Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R yes ^ R no ^
+|answers|64|9|34|9|53|16|68|3|63|6|50|19|
+|% between yes and no|88|12^79^21|77|23^96^4|97|3^72^28|
+\\
+
+** Overall ability acquired in self learning the use of OS ** \\
+^ ^ yes ^ no ^
+| nbr of answers | 238 | 46 |
+| percent | 84 | 16 |
+\\
+\\
+\\
+===== How do you judge the training ===== 
+\\
+**  Do you think the training was well adapted in respect of your needs, your skills and knowledge ? ** n= 110 \\
+^  ^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+|answers  |21|83|5|
+|percent  |19|77|4|
+\\
+
+**  Which part of the course would have liked to see in more in detail ? ** n= 54 (some students answered yes and no or none)\\
+^  ^ Bash ^ AWK ^ Gdal ^ Gnuplot ^ Grass ^ Qgis ^ R ^ Theory ^ Exercise ^ Exercise/ Tutorials ^ personal projects ^
+|answers  |46|20|30|20|54|36|41|20|35|20|15|
+| percent |14|6|9|6|16|11|12|6|10|6|4| 
+\\
+**  The trainers were clear and prepared? **\\
+^ ^ Very well ^  Yes enough prepared  ^ Not enough ^
+|answers  | 37|28|1|
+|percent  | 21|76|3|
+\\
+** The trainer's supervision during some coding exercises was satisfactory? ** n=63\\
+^ ^ Very much ^  yes satisfactory  ^ not enough ^
+|28|35|1|
+\\
+\\
+[[ http://www.spatial-ecology.net/sharing/outgoing/OGRS_Amatulli_et_al_tables.pdf |    Teaching spatio-temporal analysis and efficient data processing in open source environment:tables ]]
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+#----------------------------------------------------------------------------------------------------------------------------------------#
+# Data import to R:                                                                                                                      #
+#----------------------------------------------------------------------------------------------------------------------------------------#
+# import the spatial indicators produced by the Grass job
+RegMeteo = read.dbf(&quot;/home/user/Dropbox/OSGIScourse/VNspatial/grassdb/vietnam/PERMANENT/dbf/RegMeteo.dbf&quot;)
+&nbsp;
+# import rainfall from Stata format
+VNrainfall &lt;- read.dta(&quot;Rainfall2006.dta&quot;)
+str(VNrainfall) # Total rainfall for 365 days (2006) at 172 locations
+&nbsp;
+# put all indicator together
+VNdata = merge(VNrainfall, RegMeteo, by=c(&quot;ID&quot;))
+str(VNdata)
+&nbsp;
+VNdataOK &lt;- VNdata[complete.cases(VNdata$Rainfall,VNdata$Regelev,VNdata$Regaspect,VNdata$Regslope,VNdata$DMetCoast,VNdata$Lat,VNdata$Lon), ]
+&nbsp;
+# import bigger areas to be predicted
+Bigdata = read.dbf(&quot;/home/user/Dropbox/OSGIScourse/VNspatial/grassdb/vietnam/PERMANENT/dbf/VHLSSareas.dbf&quot;)
+BigdataOK &lt;- Bigdata[complete.cases(Bigdata$Regelev,Bigdata$Regaspect,Bigdata$Regslope,Bigdata$DMetCoast,Bigdata$Lat,Bigdata$Lon), ]

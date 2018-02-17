@@ -1,0 +1,88 @@
+
+[[wiki: opinion_of_the_course| Read]] what people think about the course.\\
+
+====== Satisfactory survey ======
+Since 2008 we asked our students to give us some feed backs.\\
+Press submit every time that you fill a question.\\
+\\
+<doodle german2016parallelsession | G0) Overall how would you rate this Workshop >
+^ Extremely useful ^ Very useful ^ Somehow useful ^ Not useful ^
+</doodle>
+
+<doodle german2016parallelsession | G1a) Did the training meet your expectations ? >
+^ Exceeded expectations ^ Met my goals ^ No ^ 
+</doodle>
+\\
+
+<doodle german2016parallelsession | G1b) Would you recommend this training to others ? >
+^ Yes ^  No ^ 
+</doodle>
+\\
+
+===== Student's interest in in open source after attending the training =====
+
+<doodle german2016parallelsession | G1) Are you interested in progress  and use OS tools in future >
+^ yes ^ no ^
+</doodle>
+
+\\
+
+<doodle german2016parallelsession | G2) Why did you attend the training?>
+^ to acquire new expertise ^ to improve my skills ^ to discuss related issues ^ no similar course found ^
+</doodle>
+\\
+
+
+<doodle german2016parallelsession | G3) Do you see any interest in using Open Source tools in your current and future job?>
+^ Yes ^  No ^ Little ^
+</doodle>
+\\
+
+<doodle german2016parallelsession | G4) Will you use and progress using these tools in future?>
+^ ^ Bash - AWK ^ Gdal - PKtools ^ R ^ Grass ^ Qgis ^ Grid processing ^
+</doodle>
+\\
+\\
+\\
+===== Self learning =====
+
+<doodle german2016parallelsession | G6) Do you feel confident in being able to learn more about open source tools on your own ?>
+^ yes ^ no ^ Very little ^
+</doodle>
+\\
+
+<doodle german2016parallelsession | G5) Select the tools (if any) you feel being able to independently use and learn more about >** 
+^ Bash - AWK ^ Gdal - PKtools ^ Grass ^ Qgis ^ R ^ Grid processing ^
+</doodle>
+\\
+\\
+===== How do you judge the training ===== 
+\\
+<doodle german2016parallelsession | G7) Do you think the training was well adapted in respect of your needs, your skills and knowledge?>
+^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+</doodle>
+\\
+
+<doodle german2016parallelsession | G8) Is there a part of the course you would have liked to see in more detail ?>
+^  Bash-AWK ^ Gdal-PKtools ^ Grass ^ Qgis ^ R ^ Grid processing ^ Guided tutorials ^ Exercise ^ Short lectures ^
+</doodle> 
+\\
+<doodle german2016parallelsession | G9) The trainers were clear and prepared?>
+^ Very well ^  Yes enough prepared  ^ Not enough ^
+</doodle>
+\\
+<doodle german2016parallelsession | G10) The trainer's supervision during some coding exercises was satisfactory?>
+^ Very much ^  yes satisfactory  ^ not enough ^
+</doodle>
+\\
+
+===== Personal Statement ===== 
+
+Please include in the personal statement these two points: 
+  - Did this training met your expectations? 
+  - Give us any feedbacks, opinion, suggestions.
+\\
+
+~~DISCUSSION | Please answer here ~~
+
+

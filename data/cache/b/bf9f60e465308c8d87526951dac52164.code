@@ -1,0 +1,7 @@
+<span class="co1"># Add a shapefile to a tar archive</span>
+<span class="kw1">import</span> <span class="kw3">tarfile</span>
+tar <span class="sy0">=</span> <span class="kw3">tarfile</span>.<span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;hancock.tar.gz&quot;</span><span class="sy0">,</span> <span class="st0">&quot;w:gz&quot;</span><span class="br0">&#41;</span>
+tar.<span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;hancock.shp&quot;</span><span class="br0">&#41;</span>
+tar.<span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;hancock.shx&quot;</span><span class="br0">&#41;</span>
+tar.<span class="me1">add</span><span class="br0">&#40;</span><span class="st0">&quot;hancock.dbf&quot;</span><span class="br0">&#41;</span>
+tar.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

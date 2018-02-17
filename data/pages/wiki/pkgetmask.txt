@@ -1,0 +1,35 @@
+====== pkgetmask ======
+NAME
+   pkgetmask - create mask image
+
+SYNOPSIS
+<code bash>
+   pkgetmask -i input -o output [OPTION]
+</code>
+       
+DESCRIPTION
+   Create mask image based on values in input raster file
+       
+OPTIONS
+<code bash>
+   -i     --input                Input image file (default: <empty string>)
+   -b     --band                 band(s) used for mask (default: 0)
+   -m     --min                  Values smaller than min threshold(s) are masked as invalid. Use one threshold for each band (default: 0)
+   -M     --max                  Values greater than max threshold(s) are masked as invalid. Use one threshold for each band (default: 0)
+   -p     --operator             Operator: [AND,OR]. (default: OR)
+   -t     --tvalue               value(s) for valid pixels: between min and max (default: 1)
+   -f     --fvalue               value(s) for invalid pixels: not between min and max (default: 0)
+   -o     --output               Output mask file (default: <empty string>)
+   -ot    --otype                Data type for output image ({Byte/Int16/UInt16/UInt32/Int32/Float32/Float64/CInt16/CInt32/CFloat32/CFloat64}). Empty string: inherit type from input image (default: Byte)
+   -of    --oformat              Output image format (see also gdal_translate). Empty string: inherit from input image (default: <empty string>)
+   -co    --co                   options: NAME=VALUE [-co COMPRESS=LZW] [-co INTERLEAVE=BAND] (default: INTERLEAVE=BAND)
+   -ct    --ct                   color table (file with 5 columns: id R G B ALFA (0: transparent, 255: solid) (default: <empty string>)
+   -v     --verbose              verbose (default: 0)
+</code>
+
+====== Examples ======
+<code bash>
+pkgetmask -i input.tif -o output.tif --min 0 -t 1 -f 0 # create mask, setting all negative values to 0 (rest to 1)
+
+pkgetmask -i input.tif -o output.tif --min 0 --max 10 --min 0 --max 250 -b 0 -b 1 # create mask. Mask is set to 0 (default value for -f) if either band 0 is not between 0 and 10 OR (default operator) band 1 is not between 0 and 250. Else mask is set to 1 (default value for -t)
+</code>

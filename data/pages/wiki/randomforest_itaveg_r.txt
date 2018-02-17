@@ -1,0 +1,273 @@
+
+===== Modeling the current distribution of the Natural Forest Vegetation of Italy using R =====
+
+Once you have run the ITAveg_respred_table.sh script you have generated a resp_p.dbf file. \\
+This dbf is a response/predictor input table. The resp_p.dbf file includes predictors variables values in occurrence of response variable randomly defined locations.\\
+The present script generates the following tasks:\\
+  - upload the resp_p.dbf response/ predictor table
+  - model forest Category Natural Vegetation of Europe using the whole set of 47 predictors available
+  - exclude two classes (the less performing classes) and remodel using the same 47 predictors
+  - prune the number of predictors to 23 and remodel the natural vegetation forest categories.
+  - split the database into an inbag / outbag set of data
+  - model the Italian natural vegetation forest categories using the inbag dataset
+  - predict vegetation category at inbag point location and calculate kappa and weighted kappa statistics from a predicted / observed confusion matrix
+  - predict vegetation category at outbag point location and calculate kappa and weighted kappa statistics from a predicted / observed confusion matrix
+  - Allow for checking of the performances of the whole set of models \\
+\\
+
+<note tip>
+You can create a folder "myresults" inside the exercise working directory 
+   mkdir ~/ost4sem/studycase/ITA_veg/myresults
+and save your own script results using the **save** commands including the ../myresults/ path 
+  ~/ost4sem/studycase/ITA_veg/myresults 
+
+In this way you will not overwrite the original script results and you will be able to compare your exercise scores with those that are pre-existing.
+</note>
+
+==== load libraries ====
+<code r>
+   library(gdata) # used to drep.levels function
+   library(foreign) # used to read.dbf function
+   library(randomForest) # Modelling function
+   library(mda) # confusion matrix
+   library (vcd)
+</code>
+==== Load and "clean" response / predictors table ====
+Load response / predictors DataFrame and clean it from the NA values and define predictor types (numeric / factors if needed).\\
+
+<code r>
+   pred = read.dbf("~/ost4sem/grassdb/europe/Vmodel/dbf/resp_p.dbf")
+   # you can use the 70 points of the ~/ost4sem/grassdbnew/europe/Vmodel/dbf/resp_p70.dbf and check if results are ok
+   # you can use the 7000 points preprocessed dbf using this file:
+   # pred = read.dbf("~/ost4sem/studycase/ITA_veg/data/resp_p.dbf")
+   pred = na.omit(pred)
+   
+</code>
+Save the database in R format if you want to use it later.
+<code r>
+   save(pred, file = "~/ost4sem/studycase/ITA_veg/data/res_pred_data")
+         
+</code>
+define factor variables
+<code r>
+   pred$pr205 = factor(pred$pr205, ordered = FALSE)
+   pred$pr250 = factor(pred$pr250, ordered = FALSE)
+   pred$pr254 = factor(pred$pr254, ordered = TRUE)
+   pred$pr255 = factor(pred$pr255, ordered = TRUE)
+   pred$pr257 = factor(pred$pr257, ordered = TRUE)
+   
+   pred$pr258 = factor(pred$pr258, ordered = TRUE)
+   pred$pr259 = factor(pred$pr259, ordered = FALSE)
+   pred$pr262 = factor(pred$pr262, ordered = FALSE)
+   pred$pr264 = factor(pred$pr264, ordered = FALSE)
+   pred$pr265 = factor(pred$pr265, ordered = FALSE)
+   pred$pr292 = factor(pred$pr292, ordered = FALSE)
+   
+   pred$FType = factor(pred$FType, ordered = FALSE)
+   
+</code>
+Clear the total number of factor levels
+<code r>
+   pred = drop.levels(pred)
+   
+</code>
+
+Exclude land cover "pr294", population density "pr293", WRB classification "pr265", and natural vegetation "pr292" since we are not going to use them.
+<code r>
+   pred47 = subset(pred, select = c(FType, pr101,pr102,pr103,pr104,pr105,pr106,pr107,pr108,pr109,pr110,pr111,pr112,pr113,pr114,pr115,pr116,pr117,pr118,pr119,pr120,pr121,pr122,pr123,pr124,pr125,pr126,pr127,pr128,pr129,pr131,pr133,pr134,pr135,pr136,pr137,pr138,pr139,pr198,pr199,pr200,pr201,pr202,pr203,pr204,pr205,pr259,pr262))
+   
+   pred = na.omit(pred)
+   pred = drop.levels(pred)
+   
+</code>
+\\
+==== Model building ====
+  * run a randomForest model using 47 predictors
+<code r>
+   RF47 = randomForest (pred47$FType ~ pr101 + pr102 + pr103 + pr104 + pr105 + pr106 + pr107 + pr108 + pr109 + pr110 + pr111 + pr112 + pr113 + pr114 + pr115 + pr116 + pr117 + pr118 + pr119 + pr120 + pr121 + pr122 + pr123 + pr124 + pr125 + pr126 + pr127 + pr128 + pr129 + pr131 + pr133 + pr134 + pr135 + pr136 + pr137 + pr138 + pr139 + pr198 + pr199 + pr200 + pr201 + pr202 + pr203 + pr204 + pr205 + pr259 + pr262, data = pred47, ntree=1500 ) 
+   
+   #save(RF47,file="~/ost4sem/studycase/ITA_veg/results/RF47")
+   save(RF47,file="~/ost4sem/studycase/ITA_veg/myresults/RF47")
+   load("~/ost4sem/studycase/ITA_veg/R_script/results/RF47")
+   
+</code>
+Check the results of the model
+   RF47$confusion
+   > RF47$confusion
+        3  4   5   6   7    8   9 10 11  12  16 18 class.error
+   3  360  0   0   3 103    5   0  1  0   0  59  0   0.3220339
+   4    0 60  29  29  28   15   0  0  0  18   0  0   0.6648045
+   5    0 19 572  84  33   66   0  0  1  51   0  0   0.3075061
+   6    1 13  58 757  84   10   0  0  0  22   0  0   0.1989418
+   7   72  1  23  67 843   94   2  2  0   1   2  0   0.2384824
+   8    2  7  47  15 114 1473  60  2  1  36   0  0   0.1616392
+   9    0  0   0   0   1   95 580  0  0   8   0  0   0.1520468
+   10  12  0   0   0  25    4   2  0  0   1   1  0   1.0000000
+   11   1  0   6   5   3    5   0  0  6  12   0  0   0.8421053
+   12   0 10  96  50   1   99  29  0  1 336   0  0   0.4598071
+   16  88  0   0   0  11    0   0  0  0   0 117  7   0.4753363
+   18   1  0   0   0   0    0   0  0  0   0  14 12   0.5555556
+   
+The total number of forest categories in the EEA classification scheme is 14.\\
+
+
+1. Boreal;\\
+2. Hemiboreal and Nemoral coniferous and mixed broadleaved coniferous; \\
+3. Alpine coniferous;\\
+4. Acidophylous oakwood and oak birch;\\
+5. Mesophytic deciduous;
+6. Beech;\\
+7. Mountainous beech;\\
+8. Thermophilous deciduous;\\
+9. Broadleaved evergreen;\\
+10. Coniferous mediterranean Anatolian and Macaronesian;\\
+11. Mire and Swamp;\\
+12. Floodplain;\\
+13. Non Riverine alder, birch or aspen;\\
+14. Plantations and self exotic;\\
+
+We also included the following classes in our analysis:
+16.Altitude and nordic grasslands;\\
+18. Glaciers;\\
+
+When reducing the extent to the Italian context, class 1, 2, and 13 where excluded.
+Class 14 is not included in the analysis because "Plantations" are not part of the natural forest vegetation. This means that in the original Natural vegetation map class 14 was not present.\\
+\\
+From the confusion matrix do you see any class you would like to exclude from this analysis ?\\
+Why?\\
+
+Exclude class 11 and 10
+<code r>
+   pred47= subset(pred47, pred47$FType != "11" & pred47$FType != "10")
+   pred47 = drop.levels(pred47)
+   
+</code>
+
+==== Run randomForest model using 47 predictors and reduced class to 10 levels ====
+<code r>
+   RF47pred10cl = randomForest (pred47$FType ~ pr101 + pr102 + pr103 + pr104 + pr105 + pr106 + pr107 + pr108 + pr109 + pr110 + pr111 + pr112 + pr113 + pr114 + pr115 + pr116 + pr117 + pr118 + pr119 + pr120 + pr121 + pr122 + pr123 + pr124 + pr125 + pr126 + pr127 + pr128 + pr129 + pr131 + pr133 + pr134 + pr135 + pr136 + pr137 + pr138 + pr139 + pr198 + pr199 + pr200 + pr201 + pr202 + pr203 + pr204 + pr205 + pr259 + pr262, data = pred47, ntree=1500 ) 
+   
+   #save(RF47pred10cl,file="~/ost4sem/studycase/ITA_veg/results/RF47pred10cl")
+   save(RF47pred10cl,file="~/ost4sem/studycase/ITA_veg/myresults/RF47pred10cl")
+</code>
+
+Compare performances of models using error rates % or MSE
+Look at the ranking of variables
+<code r>
+   varImpPlot(RF47, n.var=47)
+   
+</code>
+Save the graphics of variable ranking
+<code r>
+   #jpeg(filename = "~/ost4sem/studycase/ITA_veg/results/gini_idx_47pred.jpeg", width = 600, height = 1200)
+   #varImpPlot(RF47, n.var=47)
+   #dev.off()
+   
+   jpeg(filename = "~/ost4sem/studycase/ITA_veg/myresults/gini_idx_47pred.jpeg", width = 600, height = 1200)
+   varImpPlot(RF47, n.var=47)
+   dev.off()
+
+   
+</code>
+==== Exclude predictors up to 23 ====
+In this way the computation time for the map generation will be constrained.
+Run randomForest model using 23 predictors and reduced class to 10
+<code r>
+   pred23 = subset(pred47, select = c(FType, pr104,pr105,pr106,pr109,pr110,pr111,pr118,pr120,pr123,pr126,pr128,pr131,pr134,pr135,pr136,pr137,pr138,pr198,pr200,pr201,pr202,pr203,pr204))
+   
+   RF23pred10cl = randomForest (pred23$FType ~pr104 + pr105 + pr106 + pr109 + pr110 + pr111 + pr118 + pr120 + pr123 + pr126 + pr128 + pr131 + pr134 + pr135 + pr136 + pr137 + pr138 + pr198 + pr200 + pr201 + pr202 + pr203 + pr204 , data = pred23, ntree=1500 ) 
+   
+   #save(RF23pred10cl,file="~/ost4sem/studycase/ITA_veg/results/RF23pred10cl")
+   save(RF23pred10cl,file="~/ost4sem/studycase/ITA_veg/myresults/RF23pred10cl")
+</code>
+Compare performances of the models using error rates % or MSE
+
+==== Create an Out of bag "OOB" and Inbag "INB" dataset for model training and external validation ====
+Generate 2 sub-tables of 80% and 20% of the plots randomly splitted
+
+How many total observations do we have ? 
+<code r>
+   vec = 1:6851
+   ind.80 = sample(vec,6851*0.8)
+   respredFT8 = pred23[ind.80,]
+   print("respredFT8 table create using a random subset of 80% of RESPRED ")
+   
+   ind.20 = vec[is.na((match(vec,sort(ind.80))))]
+   respredFT2 = pred23[ind.20,]
+   print("respredFT2 table create using a random subset of 20% of RESPRED ")
+   print("starting modeling procedure")
+
+   #save(respredFT2,file="~/ost4sem/studycase/ITA_veg/results/respredFT2")
+   #save(respredFT8,file="~/ost4sem/studycase/ITA_veg/results/respredFT8")
+   save(respredFT2,file="~/ost4sem/studycase/ITA_veg/myresults/respredFT2")
+   save(respredFT8,file="~/ost4sem/studycase/ITA_veg/myresults/respredFT8")
+</code>
+==== Tune the model using INB data ====
+<code r>
+   predFT8 = respredFT8
+   predFT8$FType = NULL
+   tune.mtry.RF23t = tuneRF(predFT8, respredFT8$FType, ntreeTry = 600)
+   >mtry = 8 
+   
+</code>
+save tune.mtry 
+<code r>
+   #write.csv(tune.mtry.RF23t, file= "~/ost4sem/studycase/ITA_veg/results/tuneMtry_RF23t.csv")
+   write.csv(tune.mtry.RF23t, file= "~/ost4sem/studycase/ITA_veg/myresults/tuneMtry_RF23t.csv")
+</code>
+==== Plot the error rates or MSE according to the increasing number of trees ====
+<code r>
+   plot(RF23pred10cl)
+   
+</code>
+Check if 1500 is sufficient for the model to be stable
+
+==== Run a tuned randomForest model using 80% of input data ====
+<code r>
+   RF23tuned = randomForest (respredFT8$FType ~ pr104 + pr105 + pr106 + pr109 + pr110 + pr111 + pr118 + pr120 + pr123 + pr126 + pr128 + pr131 + pr134 + pr135 + pr136 + pr137 + pr138 + pr198 + pr200 + pr201 + pr202 + pr203 + pr204 , data = respredFT8, ntree=1500, mtry=8) 
+   
+   #save(RF23tuned,file="~/ost4sem/studycase/ITA_veg/results/RF23tune_ITAveg")
+   save(RF23tuned,file="~/ost4sem/studycase/ITA_veg/myresults/RF23tune_ITAveg")
+</code>
+
+
+
+
+==== Model VALIDATION ====
+Internal and external validation. 
+// nota bene// \\
+Random Forest do not need an external validation. An OOB validation already exists in the algorithm itself. Here we are carrying out such validation as a training exercise and to better understand the logic of model functioning.
+
+===  KAPPA STATISTICS using In Bag data ===
+<code r>
+   RFint = predict (RF23tuned, newdata=respredFT8, type="response" )
+   #RFint = predict (RF, newdata=respredFT8, type="class" )
+   RFint.cmx = confusion(RFint, respredFT8$FType)
+   RFint.k = Kappa(RFint.cmx, weights = c ("Equal-Spacing"))
+      
+   #save(RFint.cmx,file="~/ost4sem/studycase/ITA_veg/results/RFint.cmx_ITAveg")
+   #save(RFint.k,file="~/ost4sem/studycase/ITA_veg/results/RFint.k_ITAveg")
+   save(RFint.cmx,file="~/ost4sem/studycase/ITA_veg/myresults/RFint.cmx_ITAveg")
+   save(RFint.k,file="~/ost4sem/studycase/ITA_veg/myresults/RFint.k_ITAveg")
+   cat(" Kapa statistic computed for INTERNAL validation of Random Forest Model\n")
+
+</code>
+
+=== KAPPA STATISTICS using Out Of Bag data ===
+<code r>
+   RFext = predict (RF23tuned, newdata=respredFT2, type="response" )
+   RFext.cmx = confusion(RFext, respredFT2$FType)
+   RFext.k = Kappa(RFext.cmx, weights = c ("Equal-Spacing"))
+   
+   #save(RFext.cmx,file="~/ost4sem/studycase/ITA_veg/results/RFext.cmx_ITAveg")
+   #save(RFext.k,file="~/ost4sem/studycase/ITA_veg/results/RFext.k_ITAveg")
+   save(RFext.cmx,file="~/ost4sem/studycase/ITA_veg/myresults/RFext.cmx_ITAveg")
+   save(RFext.k,file="~/ost4sem/studycase/ITA_veg/myresults/RFext.k_ITAveg")
+   cat(" Kapa statistic computed for EXTERNAL validation of Random Forest Model\n")
+   
+   print(" MODELING and Validating Randomforest model  DONE - cmx and RF model saved in /studycase/ITA_veg/R_script/results/")
+   
+</code>
+
+This script is over. We can now plot the current and future Italian Natural Forest maps.
+The next step will be to map current natural forest using [[wiki:map_rf_itaveg_r|this R script]].\\

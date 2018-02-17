@@ -1,0 +1,259 @@
+This script summarises all the commands shown during the course, using a real example of research study.
+The final aim is to find a correlation equation between burnt area and Fire Weather Index, for each Mediterranean European country.
+It is based on 3 more scripts average_w.sh and file2R.awk fire_eumed.awk
+
+
+Study case:\\
+Script: open by kate [[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh | ~/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh ]]\\
+Ancillary scripts: \\
+[[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/average_w.sh | ~/ost4sem/studycase/fire_risk/sh_script/average_w.sh ]]\\
+[[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/awk_script/fire_eumed.awk
+ | ~/ost4sem/studycase/fire_risk/awk_script/fire_eumed.awk  ]]\\
+[[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/awk_script/file2R.awk
+ | ~/ost4sem/studycase/fire_risk/awk_script/file2R.awk  ]]\\
+[[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/r_script/fire_model_country.R | ~/ost4sem/studycase/fire_risk/r_script/fire_model_country.R]]\\
+
+
+
+The average_w.sh it is a combination of bash and awk language.\\
+The file2R.awk is a simple function of awk able to standardise the input for R.\\
+The fire_eumed.awk is a complex function of awk able to sum the data aver_month_nuts3_fire.asc.\\
+The fire_model_country.R is a simple script of R that perform a step-wise regression and saves the function coefficient in a file. 
+
+Data:\\
+[[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc| ~/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc ]]\\
+[[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc| ~/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3.asc ]]\\
+[[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/nuts3_area.asc| ~/ost4sem/studycase/fire_risk/tables/input/nuts3_area.asc ]]\\
+\\
+Input directory: ~/ost4sem/studycase/fire_risk/tables/input\\
+Output direcotry: ~/ost4sem/studycase/fire_risk/tables/output\\
+\\
+//Explore the data in the directory.\\
+How many line has the aver_month_nuts3.asc file?\\
+How many line has the nuts3_area.asc file?\\
+How I can read the first 4 line of the files?\\
+How I can read the last  4 line of the files?\\
+How I can read just the 22th line of the files? and by AWK?\\
+The files have a header?\\
+The which are the common columns?//\\
+\\
+Setting working space variables. The working space variables are useful in case you move the data from one directory to another directory.   
+<code bash>
+INPUT=~/ost4sem/studycase/fire_risk/tables/input
+OUTPUT=~/ost4sem/studycase/fire_risk/tables/output
+AWK_SCR=~/ost4sem/studycase/fire_risk/awk_script
+R_SCR=~/ost4sem/studycase/fire_risk/r_script
+SH_SCR=~/ost4sem/studycase/fire_risk/sh_script
+
+cd $INPUT
+</code>
+
+//How to print the value of a variable?\\
+How to print the working directory?//\\
+\\
+In order to join two tables you need to sort the data before. 
+Sorting the files based on the first column.
+<code bash>
+sort -k 1,1 aver_month_nuts3.asc > aver_month_nuts3_s.asc  
+sort -k 1,1 nuts3_area.asc >   nuts3_area_s.asc 
+</code>
+Join the files based on the sorted columns.\\
+The common column is always written in the first position, followed by first file columns and then second file columns.
+<code bash>
+echo running the join
+join -1 1 -2 1  aver_month_nuts3_s.asc   nuts3_area_s.asc  >  aver_month_nuts3_area.asc 
+rm aver_month_nuts3_s.asc  nuts3_area_s.asc 
+</code>
+
+Create a country list name. The "^" will be used in the grep command to search just in the 1st column of the input file. This will speed up the computation.
+<code bash>
+echo "EUmed -e ^ES -e ^IT -e ^GR  -e ^PT -e ^FR61 -e ^FR62 -e ^FR81 -e ^FR82 -e ^FR712 -e ^FR713 -e ^FR723 -e ^FR831 -e ^FR832" > country.txt
+echo "ES -e ^ES" >> country.txt
+echo "IT -e ^IT" >> country.txt
+echo "GR -e ^GR" >> country.txt
+echo "PT -e ^PT" >> country.txt
+echo "FRmed -e ^FR61 -e ^FR62 -e ^FR81 -e ^FR82 -e ^FR712 -e ^FR713 -e ^FR723 -e ^FR831 -e ^FR832" >> country.txt
+</code>
+//How can you read all the content of the file country_list_name.txt?\\
+What is the meaning of " >> "//\\
+\\
+In the following loop another script will be used ~ ost4sem/studycase/fire_risk/sh_script/average_w.sh \\
+Run the following command and replay the questions. 
+<code bash>
+sh ~/ost4sem/studycase/fire_risk/sh_script/average_w.sh aver_month_nuts3_area.asc  tmp_output.asc 
+</code>
+This kind of script requires input arguments, which provides a lot of flexibility to the computation.
+The inputs that you inserted manually can be inserted in a script using the <<EOF  syntax see in further.\\
+\\
+Create a loop able to read recursively one line in the country_list_name.txt and process the aver_month_nuts3_area.asc for each country. 
+
+<code bash>
+for (( line=1 ; line<=6 ; line++)) ; do 
+
+    # creating 2 variables from the country_list_name.txt  
+
+    country_grep=`head -$line country.txt | tail -1 | awk '{ print $1="" ,$0 }'` # this will be used for grep the file 
+    country_name=`awk -v line=$line '{ if(line==NR) print $1  }' country.txt`    # this to rename the file for each country
+    echo "$country_grep" ;  echo "$country_name"
+
+    # grep the string of country_grep in the file. 
+    # the file  grep_aver_month_nuts3_area.asc will include only the country that are included in one line
+
+    grep  $country_grep aver_month_nuts3_area.asc >   grep_aver_month_nuts3_area.asc
+
+
+    # calculate  montly weighted average in the period 1985-2004, 
+    # so my  ClASS/ID will be the YYYYMM  and the weighted column will be the area  
+
+    # extract the YYYY from the 2nd column select the years from 1985 to 2004,   
+    # print  NUTS3 MM all the column | sorting based on the 2nd column 
+ 
+    awk '{ if(substr($2,1,4)>=1985 && substr($2,1,4)<=2004) print $0 }' grep_aver_month_nuts3_area.asc | sort -k 2,2 > grep_aver_month_nuts3_area_s.asc
+
+    # run the weighted average calculation. Befor the EOF parameter never space or tab!! 
+$SH_SCR/average_w.sh grep_aver_month_nuts3_area_s.asc  grep_aver_month_nuts3_area_w.asc <<EOF
+n
+2
+14
+6
+EOF
+
+# create an header
+echo "YYYY MM AV_TEMP AV_WIND AV_HUM AV_PREP AV_FFMC AV_DMC AV_DC AV_ISI AV_BUI AV_FWI AV_DSR" >  "aver_yearmonth_w_era40_"$country_name"_85_04.asc"
+
+# split and print the 2nd column, delate the 1st, 14th, 4nd column, and print all columns  
+awk '{print substr($2,1,4),substr($2,5,2),$1="",$14="",$2="",$0}'  grep_aver_month_nuts3_area_w.asc >>  "aver_yearmonth_w_era40_"$country_name"_85_04.asc"
+
+
+# link the summed burnet area  with  climate montly average   1985-2004  
+
+# grep the country | select the year  and print 2nd and 3rd col without space |  sorting | run the sum 
+
+grep  $country_grep  aver_month_nuts3_fire.asc | awk '{ if($2>=1985 && $2<=2004) print $2 $3,$4,$5 }' | sort -k 1,1  |  awk -f  $AWK_SCR/fire_eumed.awk   >  aver_month_nuts3_fire_s.asc 
+
+   
+awk '{ print $1 $2, $1="", $2="", $0 }' "aver_yearmonth_w_era40_"$country_name"_85_04.asc" | sort -k 1,1  >  "aver_yearmonth_w_era40_"$country_name"_85_04_s.asc"
+
+## create an header 
+    echo "YYYY MM BCOUNT LG_BCOUNT BAREA LG_BAREA BABC AV_TEMP AV_WIND AV_HUM AV_PREP AV_FFMC AV_DMC AV_DC AV_ISI AV_BUI AV_FWI AV_DSR" >  $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc" 
+
+join -1 1 -2 1   aver_month_nuts3_fire_s.asc "aver_yearmonth_w_era40_"$country_name"_85_04_s.asc"   | awk '{ print substr($1,1,4),substr($1,5,2),$2,log($2),$3,log($3),$3/$2,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14}' >>  $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc"  
+
+## remuve intermediate file 
+rm   aver_month_nuts3_fire_s.asc "aver_yearmonth_w_era40_"$country_name"_85_04_s.asc"    grep_aver_month_nuts3_area.asc  
+rm grep_aver_month_nuts3_area_w.asc grep_aver_month_nuts3_area_s.asc "aver_yearmonth_w_era40_"$country_name"_85_04.asc" 
+
+
+# the files are ready to be imported in R for statical computation. 
+# basically there are 3 ways.
+#
+# 1st create an R script using the echo command, directly in this script, like for the country.txt 
+#     This method is useful for short R script, because the quoting of echo command is 
+#     really annoying. An example will be shown further in the gnuplot section 
+#  
+# 2nd create and R script in  another script and then run it. 
+# The R scripts, usually called name.R can be run by redirection of the input
+# R < name.R   # for more info run $ man R
+#
+# 3rd create an R script using the r commands included in the EOF syntax. 
+# R --no-save -q << EOF
+# all the r commands
+# EOF
+
+echo start running R script
+
+export country_name  # a bash variable needs to be exported to be used for other programs  
+
+R --no-save -q  <  $R_SCR/fire_model_country.R
+
+
+done 
+rm  aver_month_nuts3_area.asc 
+</code>
+
+<note tip>This line    //R --no-save -q  <  $R_SCR/fire_model_country.R//  can also be computed in the following way:
+</note>
+<note warning>Do not run!</note>
+<code bash>
+R --no-save -q  << EOF
+country=Sys.getenv('country_name') # import the variable in the R enviroment
+
+# import the data
+
+input_85_04=paste("~/corsoname/studycase/fire_risk/tables/output/aver_yearmonth_w_era40_" , country , "_85_04_fire.asc", sep="") 
+input_85_04  = read.delim ( input_85_04   , header = TRUE , sep = " "  )
+
+# built up a  model for summer-autumn  ~AV_DMC+AV_DC+AV_ISI+AV_BUI,AV_DSR
+# multiple regression with a step-wise selection
+
+input_85_04_M4_12e  = subset(input_85_04,  MM > 4 & MM <  12 )
+lm_4_12e_ba = lm ( LG_BAREA~AV_DC+AV_ISI, input_85_04_M4_12e )  
+
+# export the model result in a txt format.
+write.table(capture.output(summary(lm_4_12e_ba)),paste("../output/mod_sum_",country ,".txt",sep = ""),row.names=FALSE, quote = FALSE)
+
+EOF
+</code>
+
+The results of R is a linear function and has been exported to a file called mod_sum_"$country_name".txt".
+This file will be used to import the function coefficient in gnuplot. 
+Starting the plotting action:
+<code bash>
+for (( line=1 ; line<=6 ; line++)) ; do 
+
+    country_name=`awk -v line=$line '{if(line==NR) print $1}' country.txt`  # this to rename the file for each country
+    echo "$country_name"
+
+    # create a variable that change for each country
+    # getting the coefficient for the model 
+
+    Inter=`awk '{if(NR==12) print $2}' $OUTPUT"/mod_sum_"$country_name".txt"`
+    AV_DC=`awk '{if(NR==13) print $2}'  $OUTPUT"/mod_sum_"$country_name".txt"`
+    AV_ISI=`awk '{if(NR==14) print $2}'  $OUTPUT"/mod_sum_"$country_name".txt"`
+    std_erInt=`awk '{if(NR==12) print $3}'  $OUTPUT"/mod_sum_"$country_name".txt"`
+    std_erAV_DC=`awk '{if(NR==13) print $3}'  $OUTPUT"/mod_sum_"$country_name".txt"`
+    std_erAV_ISI=`awk '{if(NR==14) print $3}'  $OUTPUT"/mod_sum_"$country_name".txt"`
+
+# create a script that use the  input for each country 
+  
+    echo  set terminal postscript eps color solid lw 4  \"Helvetica\" 24  > 3d_plot.plt
+    echo  set size 2.5,2.5  >> 3d_plot.plt
+    echo  "set title \"3d interpolated surface\"" font \"Helvetica,32\"   >> 3d_plot.plt
+    echo  set xlabel \"DC_AVG\"  font \"Helvetica,24\"  >> 3d_plot.plt
+    echo  set xrange [100:1100]  >> 3d_plot.plt
+    echo  set yrange [1:8]  >> 3d_plot.plt
+    echo  set zrange [0:500000]  >> 3d_plot.plt
+    echo  set ylabel \"ISI_AVG\"  font \"Helvetica,24\"  >> 3d_plot.plt
+    echo  set zlabel  offset +15,+15  \"Burned Area \(ha\)\"  font \"Helvetica,24\"  >> 3d_plot.plt
+    echo  set key outside center bottom   >> 3d_plot.plt
+    echo  set ticslevel 0.02  >> 3d_plot.plt
+    echo  set view  80,225  >> 3d_plot.plt
+    echo  set tics out  >> 3d_plot.plt
+    echo  set tic scale 2  >> 3d_plot.plt
+    echo  set xtics nomirror  >> 3d_plot.plt
+    echo  set ytics nomirror  >> 3d_plot.plt
+    echo  set format y \"%g\"   >> 3d_plot.plt
+    echo  set format z \"%12.0f          \"  >> 3d_plot.plt
+    echo  set format x \"%g\"  >> 3d_plot.plt
+    echo  set pointsize 1.5  >> 3d_plot.plt
+    echo  "set output '$OUTPUT"/"$country_name.ps'"  >> 3d_plot.plt
+
+ echo "splot \"< awk '{if(\$2==5) print}' $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc" \" u 14:15:5 ti \"May\" w p 1 5,\\
+\"< awk '{if ( \$2==6) print}' $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc" \" u 14:15:5 ti \"June\" w p 2 5,\\
+\"< awk '{if ( \$2==7) print}' $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc" \" u 14:15:5 ti \"July\" w p 3 5,\\
+\"< awk '{if ( \$2==8) print}' $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc" \" u 14:15:5 ti \"August\" w p 4 5,\\
+\"< awk '{if ( \$2==9) print}' $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc" \" u 14:15:5 ti \"September\" w p 5 5,\\
+\"< awk '{if ( \$2==10) print}' $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc" \" u 14:15:5 ti \"October\" w p 6 5,\\
+\"< awk '{if ( \$2==11) print}' $OUTPUT"/aver_yearmonth_w_era40_"$country_name"_85_04_fire.asc" \" u 14:15:5 ti \"November\" w p 8 5 ,\\
+exp((($AV_DC-$std_erAV_DC)*x)+(($AV_ISI-$std_erAV_DC)*y)+($Inter-$std_erInt)) ti \"Interpolated Surface - Std.Error\" w l 9 ,\\
+exp(($AV_DC*x)+($AV_ISI*y)+$Inter) ti \"Interpolated Surface\" w l 7,\\
+exp((($AV_DC+$std_erAV_DC)*x)+(($AV_ISI+$std_erAV_DC)*y)+($Inter+$std_erInt)) ti \"Interpolated Surface + Std.Error\" w l 8
+" >> 3d_plot.plt 
+    echo "exit"  >> 3d_plot.plt
+    
+    gnuplot <   3d_plot.plt 
+
+done 
+
+rm 3d_plot.plt country.txt 
+</code>

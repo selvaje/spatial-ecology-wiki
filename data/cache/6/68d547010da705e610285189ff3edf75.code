@@ -1,0 +1,19 @@
+<span class="co0"># manually entering in grass</span>
+<span class="co0"># grass -text ~/ost4sem/grassdb/Germany/PERMANENT</span>
+&nbsp;
+<span class="co0"># change pix file in tif format to use Grass and Qgis.</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input
+gdal_translate <span class="re5">-b</span> <span class="nu0">7</span> Img_Germania.pix ch1_20ago.tif
+gdal_translate <span class="re5">-b</span> <span class="nu0">8</span> Img_Germania.pix ch2_20ago.tif
+gdal_translate <span class="re5">-b</span> <span class="nu0">3</span> Fondi.pix media_ch2-ch1.tif
+gdal_translate <span class="re5">-b</span> <span class="nu0">4</span> Fondi.pix sigma_ch2-ch1.tif
+gdal_translate <span class="re5">-b</span> <span class="nu0">5</span> Fondi.pix media_ch2<span class="sy0">/</span>ch1.tif
+gdal_translate <span class="re5">-b</span> <span class="nu0">6</span> Fondi.pix sigma_ch2<span class="sy0">/</span>ch1.tif
+&nbsp;
+<span class="co0"># tif files conversion in Grass format</span>
+r.in.gdal <span class="re2">input</span>=ch1_20ago.tif <span class="re2">output</span>=ch1_20agoGRASS <span class="re2">location</span>=Germany <span class="re5">--overwrite</span> 
+r.in.gdal <span class="re2">input</span>=ch2_20ago.tif <span class="re2">output</span>=ch2_20agoGRASS <span class="re2">location</span>=Germany <span class="re5">--overwrite</span>
+r.in.gdal <span class="re2">input</span>=media_ch2-ch1.tif <span class="re2">output</span>=media_ch2-ch1GRASS <span class="re2">location</span>=Germany <span class="re5">--overwrite</span>
+r.in.gdal <span class="re2">input</span>=sigma_ch2-ch1.tif <span class="re2">output</span>=sigma_ch2-ch1GRASS <span class="re2">location</span>=Germany <span class="re5">--overwrite</span>
+r.in.gdal <span class="re2">input</span>=media_ch2<span class="sy0">/</span>ch1.tif <span class="re2">output</span>=media_ch2<span class="sy0">/</span>ch1GRASS <span class="re2">location</span>=Germany <span class="re5">--overwrite</span>
+r.in.gdal <span class="re2">input</span>=sigma_ch2<span class="sy0">/</span>ch1.tif <span class="re2">output</span>=sigma_ch2<span class="sy0">/</span>ch1GRASS <span class="re2">location</span>=Germany <span class="re5">--overwrite</span>

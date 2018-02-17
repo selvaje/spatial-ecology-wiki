@@ -1,0 +1,116 @@
+=====  Use of qsub and xargs in for running R sections simultaneously =====
+
+We have seen in the  [[cluster_qsub   | Transform a simple "for loop script" in multicore "for loop script" using qsub]] how to use qsub and xargs to perform multicore processing. Now we see how to integrate R in xargs and run the job by qsub. 
+
+The object of the exercise is to calculate the Moran's I index (using R) inside the polygons of the poly_fr.sh shape file.
+
+   # logging to yaleHPC from your terminal
+   ssh -X geodata??@omega.hpc.yale.edu
+
+
+   cd $HOME
+   wget https://dl.dropboxusercontent.com/u/29337496/.bashrc 
+   source $HOME/.bashrc
+   # if you do not have the folder or you are log to the Yale-HPC
+   
+   mkdir -p $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/output_txt
+   mkdir -p $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif
+   cd $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif
+   wget https://dl.dropboxusercontent.com/u/29337496/2020_TSSP_IP-ENS-A2-SP20_43023435.tif
+   wget https://dl.dropboxusercontent.com/u/29337496/2050_TSSP_IP-ENS-A2-SP20_43023435.tif
+   wget https://dl.dropboxusercontent.com/u/29337496/2080_TSSP_IP-ENS-A2-SP20_43023435.tif
+   
+   mkdir -p $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp
+   cd $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp
+   wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.dbf
+   wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.prj
+   wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.qpj
+   wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.shp
+   wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.shx
+   
+   $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+   wget https://dl.dropboxusercontent.com/u/29337496/myQSUBXARGSRscript4cluster.sh
+   
+\\
+Split the shape file in 2 shape files with a single polygon 
+\\
+   ogr2ogr  -select   id   -where 'id=2'       $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp/poly_fr2.shp $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp/poly_fr.shp
+   ogr2ogr  -select   id   -where 'id=1'       $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp/poly_fr1.shp $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp/poly_fr.shp
+   mkdir /$HOME/stdout
+   mkdir /$HOME/stderr
+\\
+
+<code bash| myQSUBXARGSRscript4cluster.sh>
+# qsub syntax 
+# for file in  $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif/20?0_TSSP_IP-ENS-A2-SP20_43023435.tif  ; do qsub   -v file=$file $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/myQSUBXARGSRscript4cluster.sh  ; done 
+ 
+# bash syntax
+# for file in  $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif/2020_TSSP_IP-ENS-A2-SP20_43023435.tif  ; do bash  $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/myQSUBXARGSRscript4cluster.sh   $file ; done  
+ 
+ 
+#PBS -S /bin/bash 
+#PBS -q devel
+#PBS -l walltime=0:02:00   
+#PBS -l nodes=1:ppn=2      
+#PBS -V
+#PBS -o /$HOME/stdout       
+#PBS -e /$HOME/stderr 
+ 
+# varibles
+
+# export file=$1
+export file=$file 
+export INTIF=$HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif
+export INSHP=$HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp
+export OUTTXT=$HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/output_txt
+export filename=$(basename $file .tif)
+
+
+ls $INSHP/poly_fr?.shp  | xargs -n 1 -P 2 bash  -c $'
+
+SHP=$1
+shpname=$(basename $SHP .shp)
+export id=${shpname:7:1}
+echo id = $id  
+
+pkcrop -ot Int16   -m -1 -e  $SHP -i $file -o $INTIF/${filename}_crop${id}.tif 
+
+export file_crop=$INTIF/${filename}_crop${id}.tif 
+
+echo beforR $file_crop
+# start R and import bash variables (the file name)
+
+echo  $file_crop
+R --vanilla -q <<EOF
+
+# install.packages("rgdal")
+# install.packages("raster")
+library(rgdal)
+library(raster)
+
+file_crop = Sys.getenv(\'file_crop\')
+OUTTXT = Sys.getenv(\'OUTTXT\')
+filename = Sys.getenv(\'filename\')
+id = Sys.getenv(\'id\')
+
+rastD = raster( file_crop)
+
+rastD = raster(file_crop )
+M_text = Moran(rastD, w=matrix(1, 3, 3))
+M_text
+
+write.table (M_text[1] ,paste(OUTTXT,"/","poly",id,"_",filename,".txt",sep="" )  ,row.names = F , col.names = F)
+
+EOF
+
+' _ 
+
+cat   $OUTTXT/poly*_${filename}.txt   >   $OUTTXT/poly_${filename}.txt  
+exit 
+checkjob -v $PBS_JOBID 
+
+</code>
+
+
+   
+   

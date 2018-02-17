@@ -1,0 +1,6 @@
+<span class="co1">-- Syntax</span>
+mddExpression<span class="br0">&#91;</span>mintervalExpression<span class="br0">&#93;</span>
+&nbsp;
+<span class="co1">-- Returning a cutout on x axis from pixel 120 to  pixel 160 and on y axis from 55 to 75</span>
+<span class="kw1">SELECT</span> mr<span class="br0">&#91;</span> <span class="nu0">120</span>:<span class="nu0">160</span><span class="sy0">,</span> <span class="nu0">55</span>:<span class="nu0">75</span> <span class="br0">&#93;</span>
+<span class="kw1">FROM</span> mr

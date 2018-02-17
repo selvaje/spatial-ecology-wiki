@@ -1,0 +1,27 @@
+====== Exercise 2b: Landsat spectra of golf courses ======
+In this exercise the following tools will be used:
+  * pktools: pkextract, pkstatogr
+  * bash: for loop, redirection (> and >>)
+  * gdal/ogr tools: ogr2ogr
+
+This exercise is similar to exercise 2a and shows the difference in phenology between forest and a golf course
+\\
+__Extract golf course and reproject to EPSG:3035 (ETRS89/LAEA)__
+
+<code bash>
+ogr2ogr -t_srs epsg:3035 -where 'NAME like "Golf course:%"' ${OUTPUTDIR}/exercise2/cornwall_golf_3035.shp ${VECTORDIR}/cornwall_poi.shp
+</code>
+
+__Extract Landsat spectra from golf courses in Cornwall (mean value for each polygon)__
+
+<code bash>
+pkextract -i ${LANDSATDIR}/${LANDSATIMG} -s ${OUTPUTDIR}/exercise2/cornwall_golf_3035.shp -o ${OUTPUTDIR}/exercise2/golf_landsat.shp
+</code>
+
+__Calculate statistics using pkstatogr__
+
+<code bash>
+pkstatogr -i ${OUTPUTDIR}/exercise2/golf_landsat.shp -n B0 -n B1 -n B2 -n B3 -n B4 -n B5 -n B6 -n B7 -mean -stdev| awk '{print $4,$6}' > ${OUTPUTDIR}/exercise2/golf_landsat_mean_stdev.txt
+</code>
+
+__Plot the profiles in gnuplot__ (click [[gnuplot2b | here]] for the code)

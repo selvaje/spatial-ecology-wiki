@@ -1,0 +1,14 @@
+====== Sensors ======
+Back to [[uav:toolchain|main menue]].\\
+
+==== Vegetation Monitoring ====
+Interesting [[http://agribotix.com/blog/2014/06/10/misconceptions-about-uav-collected-ndvi-imagery-and-the-agribotix-experience-in-ground-truthing-these-images-for-agriculture/|article]] on UAVs NDVI.\\
+
+[[ http://www.airinov.fr/en/uav-sensor/agrosensor/|Airnov]] Multispec sensor for agriculture.\\
+{{:uav:airnov_sensor.png?400|}}\\
+
+[[https://publiclab.org/wiki/infragram-convertible-cameras| Example of converting camera products]]\\
+
+[[http://www.mapir.camera/collections/cameras| Mapir ]], [[http://www.agrocam.eu/#!cameras/b4guu| AgroCam]]: ready to use NDVI or mono bands cameras.\\
+[[http://www.peauproductions.com/collections/filters/products/ndvi-blue-infrared-filter| Blue filters]] for converting cameras.\\
+

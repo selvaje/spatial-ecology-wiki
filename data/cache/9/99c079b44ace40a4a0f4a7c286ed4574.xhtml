@@ -1,0 +1,41 @@
+
+<h1 class="sectionedit1" id="manipulate_pdf_documents_using_bash_scripts">Manipulate pdf documents using bash scripts</h1>
+<div class="level1">
+
+<p>
+<a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit" class="urlextern" target="blanc" title="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit" rel="nofollow noopener">PDF toolkit</a> is an interesting tool for doing everyday things with PDF documents.<br/>
+
+<a href="http://www.pdflabs.com/docs/pdftk-man-page/" class="urlextern" target="blanc" title="http://www.pdflabs.com/docs/pdftk-man-page/" rel="nofollow noopener">Here</a> you find the pdftk <strong>Synopsis</strong> and manual page.<br/>
+
+<strong>Example</strong><br/>
+
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Manipulate pdf documents using bash scripts" [1-314] -->
+<h3 class="sectionedit2" id="merge_pdf">Merge pdf</h3>
+<div class="level3">
+
+<p>
+We have several images in pdf format and we need to merge them in one single pdf file.<br/>
+
+</p>
+<div class="noteimportant"> please run first the <a href="/dokuwiki/doku.php?id=wiki:imagemagikbash" class="wikilink1" title="wiki:imagemagikbash">image magick script</a> 
+</div>
+<p>
+ <br/>
+
+Change directory and look at your pdf images: <br/>
+
+</p>
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_grass<span class="sy0">/</span>tmp_image
+pdftk <span class="sy0">*</span>.pdf <span class="kw2">cat</span> output combined.pdf</pre>
+
+</div>
+<!-- EDIT2 SECTION "Merge pdf" [315-666] -->
+<h3 class="sectionedit3" id="convert_color_pdf_document_into_a_black_and_white">Convert color pdf document into a black and white</h3>
+<div class="level3">
+<pre class="code bash">convert <span class="re5">-density</span> <span class="nu0">600</span> <span class="re5">-colorspace</span> Gray     INPUT_color_document.pdf      OUTPUT_black_and_white_document.pdf</pre>
+
+</div>
+<!-- EDIT3 SECTION "Convert color pdf document into a black and white" [667-] -->

@@ -1,0 +1,41 @@
+
+<p>
+Insert these lines in your bash script allowing to run your script by <em>bash name_script.sh</em>. Of course set the settled directories  in accordance to your directories.
+</p>
+<pre class="code bash"><span class="kw3">echo</span> <span class="st0">&quot;LOCATION_NAME: europe&quot;</span>                     <span class="sy0">&gt;</span>  <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6
+<span class="kw3">echo</span> <span class="st0">&quot;MAPSET: PERMANENT&quot;</span>                         <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6
+<span class="kw3">echo</span> <span class="st0">&quot;DIGITIZER: none&quot;</span>                           <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6
+<span class="kw3">echo</span> <span class="st0">&quot;GRASS_GUI: text&quot;</span>                           <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6
+<span class="kw3">echo</span> <span class="st0">&quot;GISDBASE: /home/user/ost4sem/grassdb&quot;</span>               <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6</pre>
+
+<h1 class="sectionedit1" id="path_to_grass_binaries_and_libraries">path to GRASS binaries and libraries:</h1>
+<div class="level1">
+<pre class="code bash"><span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>grass64
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span>bin:<span class="re1">$GISBASE</span><span class="sy0">/</span>scripts
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=~<span class="sy0">/</span>.grassrc6</pre>
+
+</div>
+<!-- EDIT1 SECTION "path to GRASS binaries and libraries:" [539-742] -->
+<h1 class="sectionedit2" id="use_process_id_pid_as_lock_file_number">use process ID (PID) as lock file number:</h1>
+<div class="level1">
+<pre class="code bash"><span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span></pre>
+
+</div>
+<!-- EDIT2 SECTION "use process ID (PID) as lock file number:" [743-827] -->
+<h1 class="sectionedit3" id="settings_for_graphical_output_to_png_file_optional">settings for graphical output to PNG file (optional)</h1>
+<div class="level1">
+<pre class="code bash"><span class="kw3">export</span> <span class="re2">GRASS_PNGFILE</span>=<span class="sy0">/</span>tmp<span class="sy0">/</span>grass6output.png
+<span class="kw3">export</span> <span class="re2">GRASS_TRUECOLOR</span>=TRUE
+<span class="kw3">export</span> <span class="re2">GRASS_WIDTH</span>=<span class="nu0">900</span>
+<span class="kw3">export</span> <span class="re2">GRASS_HEIGHT</span>=<span class="nu0">1200</span>
+<span class="kw3">export</span> <span class="re2">GRASS_PNG_COMPRESSION</span>=<span class="nu0">1</span></pre>
+
+</div>
+<!-- EDIT3 SECTION "settings for graphical output to PNG file (optional)" [828-1053] -->
+<h1 class="sectionedit4" id="test_if_your_script_is_able_to_use_grass_command_by_asking_the_ggisenv">test if your script is able to use grass command by asking the  g.gisenv</h1>
+<div class="level1">
+<pre class="code bash">g.gisenv</pre>
+
+</div>
+<!-- EDIT4 SECTION "test if your script is able to use grass command by asking the  g.gisenv" [1054-] -->

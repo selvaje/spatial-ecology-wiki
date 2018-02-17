@@ -1,0 +1,10 @@
+====== Advance gnuplot script======
+
+Exercise:\\
+Script: open but do not modify [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/pol1m_gp1.sh | ~/ost4sem/exercise/basic_adv_gnuplot/pol1m_gp1.sh ]] and 
+[[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/pol1m_gp2.sh | ~/ost4sem/exercise/basic_adv_gnuplot/pol2m_gp1.sh ]]\\
+Data:   [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/input.txt | ~/ost4sem/exercise/basic_adv_gnuplot/input.txt ]] and  [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/aver_month_nuts3.asc | ~/ost4sem/exercise/basic_adv_gnuplot/aver_month_nuts3.asc ]]\\
+Directory: ~/ost4sem/exercise/basic_adv_gnuplot\\
+\\
+  - Read the explanation carefully in the file and try to use with input.txt.
+  - Do the same with aver_month_nuts3.asc but before sampling the data with awk.

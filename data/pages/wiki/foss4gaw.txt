@@ -1,0 +1,5 @@
+
+
+ * [[ RvsBASH | R vs BASH  ]]
+ * [[ RAMtmpfs| RAM vs HARD DISK ]]
+ * [[cluster_xargs1 | Transform a simple "for loop" in multicore "for loop"]]

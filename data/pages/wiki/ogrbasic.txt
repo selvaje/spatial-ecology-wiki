@@ -1,0 +1,32 @@
+===== Vector manipulation with OGR =====
+
+== ogrinfo programme ==
+  ogrinfo -al    poly_fr_10poly.sh
+  ogrinfo -al -geom=NO    poly_fr_10poly.shp
+  
+  # select a field 
+  
+  ogrinfo -al -geom=NO    poly_fr_10poly.shp | grep id
+
+== Look at a different file ==
+
+<code bash>
+cd ~/ost4sem/exercise/KenyaGIS
+
+ogrinfo -al County.shp
+ogrinfo -al County.shp | head -30
+ogrinfo -al County.shp | head -41
+</code>
+
+== Process vector file with ogr2ogr and ogrinfo ==
+
+<code bash>
+INPUT=~/ost4sem/exercise/KenyaGIS
+
+ogr2ogr  -f "GML" -s_srs EPSG:4326  -t_srs EPSG:3857 -select COUNTY  -where "COUNTY = 'Isiolo'"  /tmp/Isiolo.gml  $INPUT/County.shp
+
+# Extract bounding box for different county and overall county in Kenya
+ogrinfo -al County.shp | grep "Extent" | awk '{gsub(/\(/,"");gsub(/\)/,"");gsub(/,/,"");print $2" "$3" "$5" "$6} '
+ogrinfo -al /tmp/Isiolo.gml | grep "Extent" | awk '{gsub(/\(/,"");gsub(/\)/,"");gsub(/,/,"");print $2" "$3" "$5" "$6} '
+
+</code>

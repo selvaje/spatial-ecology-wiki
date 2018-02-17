@@ -1,0 +1,4 @@
+gdalinfo <span class="re5">-mm</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+gdal_edit.py -a_nodata <span class="re5">-9999</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+gdalinfo <span class="re5">-mm</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+gdal_edit.py -a_nodata -<span class="nu0">339999995214436424907732413799364296704.000</span>    vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif

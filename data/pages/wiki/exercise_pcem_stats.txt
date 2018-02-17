@@ -1,0 +1,169 @@
+====== General statistics on the distribution and suitability of Pinus cembra in the alps ====== 
+
+The main objective of this exercise is to calculate the ha of tree cover for the distribution and Suitability of //Pinus cembra//. In this exercise we practice and learn some Bash shell scripting and awk commands within the grass environment.
+
+==== Introduction ====
+
+For estimating the ha of Tree cover of //Pinus cembra// current distribution and suitability we are going to use and cross the following maps.
+  * //Pinus cembra// Random Forest habitat suitability model from [[#bibliography|Casalegno et al., 2010]] 
+  * //Pinus cembra// distribution map [[http://www.euforgen.org|euforgen database]]
+  * Pan european high resolution forest/non-forest map [[#bibliography|Pekkarinen et al., 2008]] rescaled to 1km resolution.
+
+In the forest/non-forest map, the rescaled 25m to 1km resolution was done using a 0ha/1ha threshold for presence/absence reclassification to ensure inclusion of every hectare of forested landscape. This allows us to accurately determine areas of distribution and to estimate the suitability and distribution of //Pinus cembra// in its actual environment excluding lakes, water basins, agricultural landscapes, and urban and industrial areas. 
+
+
+==== Pinus Cembra distribution map: create a new GRASS location and define a region of analysis ====
+==== Data preparation ====
+We open a terminal and go to the directory corresponding to our GRASS LOCATION.
+
+  cd ~/ost4sem/grassdb/europe
+
+We enter Grass in a pre-existing mapset
+  grass -text  ~/ost4sem/grassdb/europe/PCEM
+
+Look at the default g.region and redefine a study area including only the Alpine mountain ranges.
+Set the new working region at 1km resolution and call it alpine
+
+  g.region -d
+  g.region -p
+  g.region n=2751000 s=2310000 w=3960000 e=4700000 res=1000 save=alpine --o
+  g.region -p
+
+Create a new mapset
+
+   g.mapset mapset=PCEMstat -c
+
+
+Import the Euforgen //Pinus cembra// distribution map from [[http://www.euforgen.org|the euforgen web page]] and convert it from a shape file to a raster file. Limit the import of polygons within the Alpine study area using the -r flag. 
+  g.mapsets addmapset=PCEMstat
+    
+
+== Import and reclass distribution map ==
+Import the Euforgen //Pinus cembra// distribution map from [[http://www.euforgen.org|the euforgen web page]] and convert it from a shape file to a raster file. Limit the import of polygons within the Alpine study area using the -r flag :
+  v.in.ogr -r dsn=~/ost4sem/exercise/rp_ratio/pcem_euforgen/Pinuscembra_LAEA.shp output=pcem_dist_alp --o
+
+==== Data preparation ====
+Convert the vector file to a raster file, look at the pixels values and reclass this map into a binary presence and absence of //Pinus cembra// distribution.
+  v.to.rast --o input=pcem_dist_alp output=pcem_dist_alp use=cat
+  v.info pcem_dist_alp
+  r.info pcem_dist_alp
+  r.mapcalc pcem_dist_alp = "if(pcem_dist_alp > 0 , 1 ,0 )"
+
+== Estimate ha of tree cover in the the Euforgen data with the Pan European forest/non-forest map ==
+Import the forest/non-forest map rescaled at 1km resolution 
+
+  r.in.gdal -o -e input=~/ost4sem/exercise/rp_ratio/fnf_map/fnfp_1k/hdr.adf output=fnfpc
+
+Generate a raster map of the forest area (percentage of area in 1 sq km) where // Pinus cembra// is distributed.
+The r.mapcalculator module of Grass allows you to calculate a new raster map from a r.mapcalc expression.  r.mapcalc performs arithmetic on raster map layers. Look at: [[http://grass.itc.it/grass64/manuals/html64_user/r.mapcalc.html|for more details]].
+
+  r.mapcalculator amap=pcem_dist_alp bmap=fnfpc formula=A*B outfile=pcem_dist_infor --overwrite
+
+<note important>
+The Pan-European forest/non-forest map rescaled at 1km resolution is a basic layer we might use in different projects within the Europe LOCATION. For this reason we are going to store it in the PERMANENT MAPSET, as detailed below: 
+  g.mapset mapset=PERMANENT
+  g.mapsets addmapset=PCEMstat
+  g.copy rast=fnfpc@PCEMstat,fnfpc
+  g.mapset mapset=PCEMstat
+  g.remove fnfpc@PCEMstat
+</note>
+\\
+
+==== Pinus Cembra suitability map: data preparation  ====
+
+== Import and resize suitability map ==
+Import the random forest model of suitability for //Pinus cembra//. 
+
+<note important>
+The Modeled suitability map of //Pinus cembra// is stored in the \\
+** ~/ost4sem/exercise/rp_ratio/pcem_randomforest/ ** folder
+</note>
+
+  r.in.gdal -o  input=~/ost4sem/exercise/rp_ratio/pcem_randomforest/gdwarp_PRESENT.tif output=pcem_pot_alps --o
+
+Resize the imported data at the Alpine study area. Since the r.in.gdal function does not resize the map to the study area (it can only extend -e) we can use an r.mapcalc function. rmapcalc does include the resize option by default.
+  r.info pcem_pot_alps # check the extent
+  r.mapcalc pcem_pot_alps = "if(pcem_pot_alps >= 0,pcem_pot_alps, null())"
+  r.info pcem_pot_alps # re-check the extent
+
+
+== Generate the map of ha of forest suitability within the forested areas ==
+Look at the pixel values in the pcem_pot_alps map: 
+  r.info pcem_pot_alps
+  d.mon start=x2
+  d.histogram map=pcem_pot_alps
+
+You can also open Qgis and query zones to understand pixel values and their associated class.
+The map is composed of the following categories:
+ 
+^Pixel value ^ category ^
+|1 | Unsuitable areas |
+|2  | Suitable areas |
+|20 | Sea |
+
+We would like to have a binary map with the following reclassification:
+
+^Pixel value ^ category ^
+|0 | Unsuitable |
+|1 | Suitable | 
+
+We have to reclassify the map. We can use the r.reclass function and use a text file containing the reclass rules.
+The reclass_pot_alps.txt file will be stored in the  **~/ost4sem/exercise/pcemstat** folder and has the following text:
+<note>
+1 = NULL \\
+2 = 1 \\
+20 = NULL \\
+</note>
+
+
+   r.reclass input=pcem_pot_alps output=pcem_pot_no_pot_alps rules=~/ost4sem/exercise/pcemstat/reclass_pot_alps.txt --overwrite 
+   
+   r.info pcem_pot_no_pot_alps
+   d.mon start=x2
+   d.histogram map=pcem_pot_no_pot_alps
+
+
+Generate a raster map of the forest area (percentage of area in 1 sq km) where // Pinus cembra// is suitable.
+We are going to multiply the reclassified suitability map for the forest/non-forest percentage map. 
+
+<note important>
+When we need to refer to a map stored in a different mapset from the current we can refer to the mapset with the syntax **mapname@mapset_name**
+</note>
+
+  r.mapcalculator amap=pcem_pot_no_pot_alps bmap=fnfpc@PERMANENT formula=A*B outfile=pcem_suit_infor --overwrite
+
+
+We now have ready the maps estimating ha of tree cover for the distribution and suitability of //Pinus cembra// 
+The maps are respectively  **pcem_dist_infor** the former and **pcem_suit_infor** the latter.\\
+\\
+
+==== Statistics of forested areas within the suitability and distribution maps ====
+We are going to use grass and awk language for computing the sum of ha of forested areas.
+
+== Accumulated forested area within the climatically suitable zones for Pinus cembra to grow == 
+the r.stat function include as option the **-l** and **-c** flags. -l : Print category labels and -c Print cell counts. Once we have extracted this information we will know the number of pixels per category. Each category corresponds to ha of forest per pixels. Multiplying (with awk) the category times pixels and summing the total multiplication results will estimate the ha of forest within suitable areas.
+
+<code awk>
+  r.stats -c -p -l -n input=pcem_suit_infor output=~/ost4sem/exercise/pcemstat/stat_suit.txt
+  cd ~/ost4sem/exercise/pcemstat/
+  awk '{  print $1 , $2 , $1*$2  }'  stat_suit.txt | awk '{ sum=sum+$3  } END { print sum }' > tot_ha_suit.txt   
+</code>
+
+== Accumulated forested area within the Euforgen distribution map of Pinus cembra == 
+The exact same procedure is carried out as above for the suitability. 
+<code awk>
+  r.stats -c -p -l -n input=pcem_dist_infor output=~/ost4sem/exercise/pcemstat/stat_dist.txt
+  awk '{  print $1 , $2 , $1*$2  }'  stat_dist.txt | awk '{ sum=sum+$3  } END { print sum }' > tot_ha_dist.txt 
+</code>
+
+<note tip>
+the same info as r.stats are visible with the r.report command
+   r.report -h -e map=pcem_dist_infor units=k
+</note>
+
+
+
+==== Bibliography ====
+  * Casalegno S., G. Amatulli, A. Camia, A. Nelson, A. Pekkarinen. 2010. [[http://dx.doi.org/10.1016/j.foreco.2009.10.001|Vulnerability of Pinus cembra L. in the Alps and the Carpathian mountains under present and future climates]]. Forest Ecology and Management 259: 70-761. 
+  * Gaston 2003. The Structure and Dynamics of Geographic Ranges. Series: OXFORD SERIES IN ECOLOGY AND EVOLUTION. Kevin J Gaston 266 pages, Oxford University Press. ISBN-10: 0198526407.
+  * Pekkarinen, A., Reithmaier, L. & Strobl, P. (2009): Pan-European forest/non-forest mapping with Landsat ETM+ and CORINE Land Cover 2000 data. ISPRS Journal of Photogrammetry and Remote Sensing 64: 171-183.

@@ -1,0 +1,192 @@
+====== Detection of vegetation pattern dynamics using multi-temporal MODIS data ======
+\\
+===== INTRODUCTION =====
+  * Spatial/temporal monitoring of vegetation
+  * Satellite data manipulation 
+\\
+===== METADATA =====
+==== Raster data ====
+
+  * 12 MODIS-NDVI monthly images 
+Spatial resolution: 250 m \\
+Data format: pix files (12 graphic planes)\\
+Data size: 7.0 Mb\\
+Projection: Integerized Sinusoidal (ISIN)\\
+  * Corine Land Cover 2000 \\
+Data format: pix file \\
+Data size: 41.3 Mb \\
+
+===== METHOD =====
+  * Import and subset of data\\
+  * Average extraction from sub-masks \\
+  * Spatio-temporal correlations \\
+  
+
+===== DATA IMPORT =====
+  * Import pix files in grass creating a new location\\
+
+===== DATA PROCESSING =====
+  * Subset data\\
+  * Sample NDVI from corine class
+  * Manipulate data in AWK
+  * Display results in R
+
+Ancillary script available at\\
+http://spatial-ecology.net/lib/exe/fetch.php?media=wiki:create_location.sh.zip \\
+download it, take out the the .zip extension and save it to ~/ost4sem/exercise/basic_adv_grass 
+
+
+<code bash>
+# create working directory 
+
+mkdir ~/ost4sem/project/unibas2010/MTAVEG/input
+rm -r ~/ost4sem/project/unibas2010/MTAVEG/grassdb
+mkdir ~/ost4sem/project/unibas2010/MTAVEG/grassdb
+rm -r ~/ost4sem/project/unibas2010/MTAVEG/output
+mkdir ~/ost4sem/project/unibas2010/MTAVEG/output
+
+rm -r ~/ost4sem/project/unibas2010/MTAVEG/output/NDVI_values
+mkdir ~/ost4sem/project/unibas2010/MTAVEG/output/NDVI_values
+rm -r ~/ost4sem/project/unibas2010/MTAVEG/output/NDVI_average
+mkdir ~/ost4sem/project/unibas2010/MTAVEG/output/NDVI_average
+
+# declare working directory variables
+  INDIR=~/ost4sem/project/unibas2010/MTAVEG/input
+ OUTDIR=~/ost4sem/project/unibas2010/MTAVEG/output
+GRASSDB=~/ost4sem/project/unibas2010/MTAVEG/grassdb
+
+# setting location of ancillary scripts 
+
+GRASS_SH=~/ost4sem/exercise/basic_adv_grass
+
+# if the input_data does not exist, then retrieve the data from the ftp server
+
+# modis data and corine
+
+if [ -f $INDIR/NDVI-MODIS2007.rar ] ; then 
+	echo the file $INDIR/input_data.tar.gz exist
+else
+	echo starting the download procedure
+ftp -in <<EOF
+open spatial-ecology.net
+user speco_students 4_students
+get  /unibas2010/MTAVEG/input/input_data.tar.gz $INDIR/input_data.tar.gz
+close 
+bye
+EOF
+    if [ -f $INDIR/input_data.tar.gz ] ; then 
+	echo the file $INDIR/input_data.tar.gz  has been downloaded from the ftp server
+    else
+	echo a problem occurred during the download, check the Internet connection or the ftp setting
+    fi 
+fi
+
+# uncompress the input file 
+cd $INDIR/
+tar xfz $INDIR/input_data.tar.gz        
+mv $INDIR/NDVI-MODIS2007.pix $INDIR/NDVI_MODIS2007.pix
+# export a geo data used to create a new location using a script
+gdal_translate -b 1 $INDIR/NDVI_MODIS2007.pix $GRASSDB/NDVI_MODIS2007_1.tif
+
+cd $GRASSDB 
+
+bash $GRASS_SH/create_location.sh NDVI_MODIS2007_1.tif vulture $GRASSDB 
+
+# enter in grass by setting enviroment variables  
+
+echo "LOCATION_NAME: vulture"         >  $HOME/.grassrc6
+echo "MAPSET: PERMANENT"              >> $HOME/.grassrc6
+echo "DIGITIZER: none"                >> $HOME/.grassrc6
+echo "GRASS_GUI: text"                >> $HOME/.grassrc6
+echo "GISDBASE: $GRASSDB"             >> $HOME/.grassrc6
+
+# path to GRASS binaries and libraries:
+
+export GISBASE=/usr/lib/grass64
+export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts
+export LD_LIBRARY_PATH="$GISBASE/lib"
+export GISRC=~/.grassrc6
+export GIS_LOCK=$$
+
+# test that the script is entered in grass
+g.version
+
+# import the all data in the current location and in the data_modis mapset
+
+g.mapset -c data_modis 
+g.gisenv set=MAPSET=data_modis
+
+r.in.gdal input=$INDIR/NDVI_MODIS2007.pix output=NDVI --overwrite
+
+# setting the working region
+ 
+g.region  n=4587000 s=4530000 w=1275000 e=1355000   res=250 save=vulture --overwrite
+
+for ((mese=24; mese<=35; mese++)); do
+  name=`expr $mese - 23`
+  r.mapcalc  NDVI$name = NDVI.$mese
+done
+
+# remove not necessary file 
+for ((i=1; i<=36; i++)); do
+  g.remove rast=NDVI.$i	
+done
+
+# import the corine landuse and clip it on the current region
+r.in.gdal input=$INDIR/clc_ISIN.pix output=clc_tot  --overwrite
+# clip the corine
+r.mapcalc  clc_tot_region = clc_tot 
+ 
+r.stats -a -c -i input=clc_tot_region
+
+# create a uniq NDVI masked from each class and for each month
+
+rm $OUTDIR/NDVI_average/NDVI_*.txt 
+for ((mese=1; mese<=12; mese++)); do
+  for ((clc=15; clc<=17; clc++)); do
+    r.mapcalc NDVI_clc$clc"_"$mese  = "if(clc_tot_region == $clc , NDVI$mese , null() )"
+    r.stats -c -p -l -n input=NDVI_clc$clc"_"$mese  output=$OUTDIR/NDVI_values/NDVI_values$clc"_"$mese.txt 
+    awk '{  print $1 , $2 , $1*$2  }' $OUTDIR/NDVI_values/NDVI_values$clc"_"$mese.txt | \
+    awk '{   sum3=sum3+$3  ;  sum2=sum2+$2  } END { print sum3/sum2 }'  >> $OUTDIR/NDVI_average/NDVI_$clc.txt
+  done
+done
+
+# adding the month id to join the file 
+ 
+awk   '{ print NR , $1/10000 }' $OUTDIR/NDVI_average/NDVI_15.txt > $OUTDIR/NDVI_average/NDVI_15nr.txt
+awk   '{ print NR , $1/10000 }' $OUTDIR/NDVI_average/NDVI_16.txt > $OUTDIR/NDVI_average/NDVI_16nr.txt
+awk   '{ print NR , $1/10000 }' $OUTDIR/NDVI_average/NDVI_17.txt > $OUTDIR/NDVI_average/NDVI_17nr.txt
+
+join -1 1 -2 1 $OUTDIR/NDVI_average/NDVI_15nr.txt $OUTDIR/NDVI_average/NDVI_16nr.txt > $OUTDIR/NDVI_average/NDVI_15_16.txt 
+join -1 1 -2 1  $OUTDIR/NDVI_average/NDVI_15_16.txt $OUTDIR/NDVI_average/NDVI_17nr.txt > $OUTDIR/NDVI_average/NDVI_15_16_17.txt
+awk 'BEGIN { print "Month Vineyards Fruit-tree Olive-groves"} { print }' $OUTDIR/NDVI_average/NDVI_15_16_17.txt >  $OUTDIR/NDVI_average/NDVI_4r.txt
+
+# export the $OUTDIR variable to be read in R
+export OUTDIR
+
+# start the R programm to plot the data
+# the $ simbol in the EOF has to be prefixed by \
+# if you find a more elegant solution to avoid \$ please let us know
+
+R --no-save -q  <<EOF
+OUTDIR = Sys.getenv("OUTDIR")
+NDVI_4r = read.delim (paste (OUTDIR,"/NDVI_average/NDVI_4r.txt", sep = "") , header = TRUE , sep = " "  )
+png(paste (OUTDIR,"/NDVI_nw.png",sep = ""), width=800, height=800)
+par(mar=c(5,5,6,1))
+plot(NDVI_4r\$Month,NDVI_4r\$Fruit.tree, type="l", lwd=6, axes=T, main="MODIS yearly pattern",xlab="Months",ylab="NDVI",cex.main=3, cex.lab=2, 
+cex.axis=2 )
+points(NDVI_4r\$Month,NDVI_4r\$Vineyards, type="l", col="red", lwd=6)
+points(NDVI_4r\$Month,NDVI_4r\$Olive.groves, type="l", col="blue", lwd=6)
+box()
+legend(7,0.75, legend = c("Fruit tree","Vineyards","Olives") , col=c("black","red","blue"), bty="n", lty=1, lwd=4, cex=3)
+dev.off()
+EOF
+
+display $OUTDIR/NDVI_nw.png &
+exit
+</code>
+
+===== RESULTS and DISCUSSION =====
+\\
+{{:wiki:ndvi.png?500|}}
+\\

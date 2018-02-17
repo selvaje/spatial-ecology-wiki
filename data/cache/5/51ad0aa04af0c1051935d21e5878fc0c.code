@@ -1,0 +1,9 @@
+<span class="kw3">echo</span> <span class="re5">-n</span> <span class="st0">&quot;Starting the process from year  = &quot;</span>
+<span class="kw2">read</span> yearstart
+&nbsp;
+<span class="kw3">echo</span> <span class="re5">-n</span> <span class="st0">&quot;Ending the process in year  = &quot;</span>
+<span class="kw2">read</span> yearend
+&nbsp;
+<span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">year</span>=<span class="re1">$yearstart</span> ; year<span class="sy0">&lt;</span>=<span class="re1">$yearend</span> ; year++<span class="br0">&#41;</span><span class="br0">&#41;</span>; <span class="kw1">do</span>
+    <span class="kw2">grep</span> <span class="st0">&quot; <span class="es2">$year</span> &quot;</span> <span class="re4">$1</span>  <span class="sy0">|</span> <span class="kw2">wc</span> <span class="re5">-l</span>       
+<span class="kw1">done</span> <span class="sy0">&gt;</span> <span class="re4">$2</span>

@@ -1,0 +1,70 @@
+====== Application of MOD13Q1 data to detect phonological Variability and Trends of NDVI Time Series in Africa ======
+
+
+
+===== INTRODUCTION =====
+Agricultural productivity in Africa is expected to change as a result of anticipated climate changes in the coming decades. In the recent years, Africa has witnessed periods of an exceptional drought, which may have affected plant leaf production, vegetation canopy properties and photosynthetic potential of important ecosystems. The overall aim of the project is to estimate the impact of climate change on phenology of terrestrial ecosystem 
+==== General framework of the analysis ====
+  - Background: what is all about and give a key biblio reference if available [[http://www.here.kr]]
+  - keywords: give key terms used and algorithm
+ 
+==== Project objectives ====
+Describe the output you target (c.f.: either calculate something, apply a model, produce one or a set of maps, graphics or tables issued from the processing of one or several data sources).
+
+To learn how to automatically how to download time series MOD13Q1 data in bash environment
+To learn how to automatically extract summary statistics, metrics (SOS, length of season (LOS), maximum NDVI value (maxNDVI), and cumulated NDVI over the season (cum-NDVI)) and used in further spatial and temporal analysis 
+===== METADATA =====
+Describe your input data and their license of use if you know them.
+
+==== Vector data ====
+  * link to vector data if available [[http://www.myvector_data_are_here]]
+
+==== Raster data ====
+  * [[http://www.myraster_data_are_here| link to raster data if available]]
+
+==== Other data sources====
+  * [[http://www.myraster_data_are_here| link to other data if needed]]
+
+===== METHOD =====
+Describe your script. If you use a specific algorithm [[http://www.mylink.net| link ]] the bibliographic references.
+
+
+===== Computational implementation =====
+Some further explanation of the overall analyses and of each step
+paste your code here
+<code bash - mycode>
+#/bin/bash
+# Comment your code to make it more easy to understand. 
+wget ftp://something.rar 
+
+for file in *.tif ; do 
+  echo $file ; gdalinfo -mm $file  | grep "Min/Max" 
+done 
+
+</code>
+
+Describe your second code if needed, what it does ...
+
+<code R>
+# my R code here
+
+</code>
+
+If you are modeling you might distinguish between
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+Show us the output of the analyses upload images if needed with "add images" link in the upper bar of this window while editing
+
+   * Map 1. bla bla bla bla ... \\
+{{:wiki:unibas108biomas.png?400|}}{{:wiki:unibas108biomas_legend.png?200|}}
+\\
+\\
+   * Graphic 1. bla bla ok ok yes yes fantastic\\
+{{:wiki:qualiaria24h.to.png?600|My graphic caption}}
+
+
+
+//Later on after the training you could improve the script and upgrade your wiki project page//

@@ -1,0 +1,1152 @@
+AWSTATS DATA FILE 6.9 (build 1.925)
+# If you remove this file, all statistics for date 201203 will be lost/reset.
+
+# Position (offset in bytes) in this file of beginning of each section for
+# direct I/O access. If you made changes somewhere in this file, you should
+# also remove completely the MAP section (AWStats will rewrite it at next
+# update).
+BEGIN_MAP 27
+POS_GENERAL 1864                
+POS_TIME 2543                
+POS_VISITOR 18230               
+POS_DAY 32963               
+POS_DOMAIN 3559                
+POS_LOGIN 3793                
+POS_ROBOT 3948                
+POS_WORMS 4797                
+POS_EMAILSENDER 4928                
+POS_EMAILRECEIVER 5071                
+POS_SESSION 33867               
+POS_SIDER 34078               
+POS_FILETYPES 5206                
+POS_OS 5497                
+POS_BROWSER 5772                
+POS_SCREENSIZE 6653                
+POS_UNKNOWNREFERER 6727                
+POS_UNKNOWNREFERERBROWSER 7691                
+POS_ORIGIN 8314                
+POS_SEREFERRALS 8466                
+POS_PAGEREFS 8635                
+POS_SEARCHWORDS 9771                
+POS_KEYWORDS 12013               
+POS_MISC 2206                
+POS_ERRORS 13929               
+POS_CLUSTER 3649                
+POS_SIDER_404 14098               
+END_MAP
+
+# LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value
+# FirstTime   = Date of first visit for history file
+# LastTime    = Date of last visit for history file
+# LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped
+# TotalVisits = Number of visits
+# TotalUnique = Number of unique visitors
+# MonthHostsKnown   = Number of hosts known
+# MonthHostsUnKnown = Number of hosts unknown
+BEGIN_GENERAL 8
+LastLine 20120401000054 57025 12366107 44913388708
+FirstTime 0
+LastTime 20120331190744
+LastUpdate 20120401021548 57025 54958 2065 1 0
+TotalVisits 485                 
+TotalUnique 334                 
+MonthHostsKnown 0                   
+MonthHostsUnknown 382                 
+END_GENERAL
+
+# Misc ID - Pages - Hits - Bandwidth
+BEGIN_MISC 10
+QuickTimeSupport 0 0 0
+JavaEnabled 0 0 0
+JavascriptDisabled 0 0 0
+PDFSupport 0 0 0
+WindowsMediaPlayerSupport 0 0 0
+AddToFavourites 0 24 0
+RealPlayerSupport 0 0 0
+TotalMisc 0 0 0
+DirectorSupport 0 0 0
+FlashSupport 0 0 0
+END_MISC
+
+# Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth
+BEGIN_TIME 24
+0 66 149 1724271 826 837 14934412
+1 75 129 2586856 1455 1468 145797844
+2 91 243 2580541 1490 1507 24983521
+3 88 192 2992691 4467 4487 70286222
+4 207 495 5572433 2363 2409 161112312
+5 122 327 3166759 2487 2537 38710932
+6 171 432 3600606 1384 1427 23070400
+7 147 363 3473488 449 484 7535800
+8 108 370 2326329 1383 1426 22159222
+9 156 430 7444757 1746 1782 29362980
+10 321 694 6382771 2689 2783 161010618
+11 268 686 5519051 2454 2538 33979844
+12 216 493 4763845 2434 2478 36746955
+13 241 441 5572935 494 548 8015409
+14 128 345 4431166 784 835 11939671
+15 183 436 3335539 1749 1829 27227550
+16 132 397 6788387 1756 1783 26416796
+17 175 386 4385100 2276 2324 39562001
+18 180 500 7618045 2926 2971 43381996
+19 550 659 557923378 3246 3264 57305217
+20 147 235 3140183 1178 1200 19889076
+21 224 279 5732314 701 715 11300523
+22 233 360 4256150 2293 2322 35800017
+23 60 79 1088722 2138 2148 46790135
+END_TIME
+
+# Domain - Pages - Hits - Bandwidth
+# The 10 first Pages must be first (order not required for others)
+BEGIN_DOMAIN 1
+ip 4289 9120 656406317
+END_DOMAIN
+
+# Cluster ID - Pages - Hits - Bandwidth
+BEGIN_CLUSTER 0
+END_CLUSTER
+
+# Login - Pages - Hits - Bandwidth - Last visit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_LOGIN 0
+END_LOGIN
+
+# Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt
+# The 10 first Hits must be first (order not required for others)
+BEGIN_ROBOT 19
+mj12bot 34067 649366787 20120331211325 0
+googlebot 794 384105747 20120331225814 0
+[+:,\.\;\/\\-]bot 639 13886154 20120331180853 0
+crawl 488 20589493 20120316175305 0
+baiduspider 454 9109238 20120331232324 0
+feedfetcher\-google 249 304828 20120331210908 0
+bot[+:,\.\;\/\\-] 188 3892332 20120331234410 0
+robot 160 3585550 20120331205551 0
+yandex 144 2500556 20120331213756 0
+msnbot 56 103539 20120330165126 0
+powermarks 2 33765 20120309230836 0
+exabot 20 506351 20120321211815 0
+no_user_agent 8 165531 20120328225506 0
+ia_archiver 1 28991 20120308233655 0
+mail\.ru 3 22536 20120328062229 0
+python 3 107448 20120327025424 0
+surveybot 2 43400 20120321145109 0
+java 1 86 20120326054640 0
+sogou 18 581171 20120331183755 0
+END_ROBOT
+
+# Worm ID - Hits - Bandwidth - Last visit
+# The 5 first Hits must be first (order not required for others)
+BEGIN_WORMS 0
+END_WORMS
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first Hits must be first (order not required for others)
+BEGIN_EMAILSENDER 0
+END_EMAILSENDER
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first hits must be first (order not required for others)
+BEGIN_EMAILRECEIVER 0
+END_EMAILRECEIVER
+
+# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression
+BEGIN_FILETYPES 13
+css 1822 3980487 0 0
+png 1728 9987730 0 0
+r 2 31934 0 0
+pdf 7 5097802 0 0
+php 4263 90570153 0 0
+awk 2 1485 0 0
+rar 5 419910311 0 0
+asc 2 1321773 0 0
+js 242 1444430 0 0
+jpg 214 1417562 0 0
+sh 7 57376 0 0
+exe 1 122046695 0 0
+gif 825 538579 0 0
+END_FILETYPES
+
+# OS ID - Hits
+BEGIN_OS 20
+winlong 616
+winxp 1352
+symbian 1
+win2000 25
+linuxfedora 27
+linuxgentoo 433
+winunknown 1
+wince 2
+linuxcentos 22
+win2003 68
+linuxdebian 31
+sunos 26
+winnt 12
+linuxubuntu 158
+win98 4
+linux 2744
+winme 11
+macosx 495
+Unknown 991
+win2008 2101
+END_OS
+
+# Browser ID - Hits
+BEGIN_BROWSER 57
+firefox3.6.24 116
+firefox14.0 60
+msie6.0 395
+firefox5.0 26
+firefox4.0.1 2
+firefox10.0 634
+chrome 974
+firefox3.6.11 2
+firefox3.0.14 33
+firefox4.0 3
+firefox8.0 1
+epiphany 31
+firefox9.0 2
+firefox3.5.3 2
+msie3.02 2
+msie8.0 439
+firefox6.0.2 49
+firefox3.6.19 26
+netscape0.91 2
+msie7.0 266
+firefox10.0.3 45
+firefox3.6.27 59
+firefox9.0.1 30
+firefox3.6.9 1
+wget 3
+msie5.0 6
+msie9.0 253
+firefox3.6.10 57
+Unknown 927
+firefox11.0 1659
+firefox3.5.6 34
+firefox2.0.0.20 32
+opera 101
+firefox3.5.16 28
+msie999.1 1
+firefox10.0.1 138
+firefox3.6.16 28
+firefox2.0.0.6 2
+msie5.5 2
+firefox3.6.4 433
+firefox7.0.1 25
+firefox12.0 25
+firefox2.0.0.11 30
+nokia 1
+firefox1.0 1
+mozilla 57
+firefox5.0.1 27
+firefox3.6.28 54
+firefox6.0 1
+firefox3.6.18 33
+netscape4.0 1
+firefox8.0.1 67
+firefox10.0.2 1531
+firefox3.6.8 5
+safari 302
+firefox3.6.13 27
+firefox3.0.15 29
+END_BROWSER
+
+# Screen size - Hits
+BEGIN_SCREENSIZE 0
+END_SCREENSIZE
+
+# Unknown referer OS - Last visit date
+BEGIN_UNKNOWNREFERER 14
+EC2LinkFinder 20120329200200
+facebookplatform/1.0_(_http://developers.facebook.com) 20120328105637
+AppEngine-Google;_(_http://code.google.com/appengine;_appid:_s~getfavicon27) 20120303090909
+linkdex.com/v2.0 20120307161602
+BlackBerry9630/5.0.0.732_Profile/MIDP-2.1_Configuration/CLDC-1.1_VendorID/102_ips-agent 20120309032024
+Internet_Explorer_6.0 20120301072104
+Mozilla/3.0_(compatible;_Linkman) 20120324200604
+Mozilla/0.91_Beta_(Windows) 20120320180733
+Mozilla/4.0 20120328231815
+Mozilla/5.0_(en-us)_AppleWebKit/534.14_(KHTML,_like_Gecko;_Google_Wireless_Transcoder)_Chrome/9.0.597_Safari/534.14 20120321103805
+facebookexternalhit/1.1_(_http://www.facebook.com/externalhit_uatext.php) 20120328105635
+facebookexternalhit/1.0_(_http://www.facebook.com/externalhit_uatext.php) 20120330084405
+Mozilla/4.0_(compatible;) 20120325232325
+Wget/1.11.4_Red_Hat_modified 20120319055148
+END_UNKNOWNREFERER
+
+# Unknown referer Browser - Last visit date
+BEGIN_UNKNOWNREFERERBROWSER 8
+EC2LinkFinder 20120329200200
+facebookplatform/1.0_(_http://developers.facebook.com) 20120328105637
+AppEngine-Google;_(_http://code.google.com/appengine;_appid:_s~getfavicon27) 20120303090909
+linkdex.com/v2.0 20120307161602
+BlackBerry9630/5.0.0.732_Profile/MIDP-2.1_Configuration/CLDC-1.1_VendorID/102_ips-agent 20120309032024
+Internet_Explorer_6.0 20120301072104
+facebookexternalhit/1.1_(_http://www.facebook.com/externalhit_uatext.php) 20120328105635
+facebookexternalhit/1.0_(_http://www.facebook.com/externalhit_uatext.php) 20120330084405
+END_UNKNOWNREFERERBROWSER
+
+# Origin - Pages - Hits 
+BEGIN_ORIGIN 6
+From0 580 616
+From1 907 907
+From2 162 162
+From3 109 159
+From4 2531 7276
+From5 0 0
+END_ORIGIN
+
+# Search engine referers ID - Pages - Hits
+BEGIN_SEREFERRALS 2
+google 160 160
+yahoo 2 2
+END_SEREFERRALS
+
+# External page referers - Pages - Hits
+# The 10 first Pages must be first (order not required for others)
+BEGIN_PAGEREFS 15
+http://www.spatial-ecology.net./doku.php 89 133
+http://dagendresen.wordpress.com/page/2/ 7 7
+http://globalmonitoring.sdstate.edu/people.php 3 3
+http://dagendresen.wordpress.com/2010/10/20/gap-analysis-in-genebank-collections-to-assist-the-planning-of-collecting-expeditions/ 2 2
+http://km.fao.org/OFwiki/index.php/Contributors 1 1
+http://36ohk6dgmcd1n-c.c.yom.mail.yahoo.net/om/api/1.0/openmail.app.invoke/36ohk6dgmcd1n/10/1.0.35/it/it-IT/view.html/0 1 1
+http://r-sig-geo.2731867.n2.nabble.com/Spatial-R-Courses-td4140761.html 1 1
+http://mpba.fbk.eu/en/itc4cc 1 1
+http://www.outertech.com 1 1
+http://casalegno.net/stefano/doku.php 1 1
+http://www.spatial-ecology.net./lib/tpl/monobook/dokuwiki/doku.css 0 2
+http://www.spatial-ecology.net./lib/tpl/monobook/monobook/main.css 0 3
+http://siguiendoelcambio.blogspot.com/2011/05/curso-de-modelos-ecologicos-con.html 1 1
+http://km.fao.org/OFwiki/index.php/Open_Foris_Toolkit_Contributors 1 1
+http://www.spatial-ecology.net./lib/exe/css.php 0 1
+END_PAGEREFS
+
+# Search keyphrases - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_SEARCHWORDS 71
+spatial+ecology 11
+vector+lines 6
+cross+section+maps 4
+open+spatio 3
+gnuplot+splot+title 3
+gnuplot+set+title 3
+course+spatial+ecology 2
+spatialecology+linux+qgis 2
+isoipse+wikipedia 2
+tanzania+land+cover 2
+sudo+echo+deb+http+%2f%2fwww.remastersys.com%2fubuntu+lucid+main+%3e%3e+%2fetc%2fapt%2fsources.list 1
+utm+proj+gdal 1
+%d0%ba%d0%b0%d0%ba+%d0%b8%d0%b7+bash+%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d1%82%d0%b8%d1%82%d1%8c+gnuplot 1
+pcuts+pine 1
+gdal_translate+-a_ullr+ulx+uly+lrx+lry 1
+predict+r+random+forest+spatial+data+script 1
+andrea+cantisani 1
+spacial+softwares+to+install+all+opearting+system 1
+dr+stefano+casalegno 1
+.txt+%7c+awk+-f 1
+functions+in+spatial+ecology 1
+nico.guarino%40tiscali.it 1
+ipsen+susan+nasirumbi 1
+spatial+ecological+modelling 1
+gisvm 1
+gdalwarp+changes+max+pixels+value 1
+v.in.ogr+polygon 1
+gdal+change+pixel+size 1
+grass+script+create+new+database 1
+zebra+mussels+shapefile 1
+readgdal+offset 1
+spatial+ecologist 1
+quoting+ecology 1
+lithuania+shapefile 1
+aldo+arranz 1
+ecology+modelling+mapping+conference 1
+qgis+visualization 1
+spatial+models+ecology+lecture 1
+spatial+ecology+on+r 1
+grass+gis+gisdbase+define+r 1
+gnuplot+geodata 1
+wiki+un+world+summit+of+cities+in+lyons 1
+metodo+termogravimetrico+umidit%c3%a0+suolo 1
+spatial+ecology+software 1
+list+epsg+codes+gdal 1
+vietnam+region+shapefile 1
+uniq+fruit 1
+qgis+style+manager+to+colormap+download+qml+file 1
+programming+languages+lectures+course+outline 1
+ecological+software+download+ubuntu 1
+vincenzo+scuccimarra+unibas 1
+wikipedia+a2a+b2a+scenarios 1
+least+cost+path+analysis+ecology 1
+rainfall+data+from+172+weather+stations+in+vietnam+version+2 1
+geohub.jrc.ec.europa.eu 1
+corine+land+cover+2006+gdalwarp 1
+qgis+streamflow 1
+mario+cozzi+unibas 1
+amatulli+g.+rodrigues+m.j.+trombetti+m.+and+lovreglio+r.+2006. 1
+grass+location+extent 1
+spatial+ecology+with+r 2
+gis+points+vector+maps 2
+r.mapcalc+mask+!%3d+255 1
+gnuplot+spartial 1
+exercises+unix+scriipt+bash 1
+gdal+exercises 2
+map+altitude+contour+lines 2
+what+is+spatial+ecology 1
+spatial+ecology+tools 1
+map+corine+data+with+r 1
+spatial+ecology+course 1
+END_SEARCHWORDS
+
+# Search keywords - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_KEYWORDS 192
+ecology 25
+spatial 25
+gnuplot 9
+lines 8
+vector 8
+r 6
+maps 6
+title 6
+gdal 5
+qgis 5
+file 1
+least 1
+shapefile 3
+utm 1
+scenarios 1
+what 1
+install 1
+analysis 1
+suolo 1
+open 3
+ubuntu 1
+functions 1
+tanzania 2
+contour 2
+readgdal 1
+gisvm 1
+and 1
+spacial 1
+download 2
+epsg 1
+system 1
+of 1
+pine 1
+visualization 1
+forest 1
+uly 1
+is 1
+all 1
+programming 1
+cover 3
+weather 1
+conference 1
+rainfall 1
+%2fetc%2fapt%2fsources.list 1
+mask 1
+lrx 1
+%3e%3e 1
+version 1
+g. 1
+zebra 1
+modelling 2
+lecture 1
+manager 1
+land 3
+scuccimarra 1
+deb 1
+ecological 2
+%d0%b8%d0%b7 1
+2006 1
+.txt 1
+-f 1
+ecologist 1
+predict 1
+andrea 1
+points 2
+2 1
+trombetti 1
+ipsen 1
+http 1
+bash 2
+gis 3
+in 3
+softwares 1
+v.in.ogr 1
+%7c 1
+lucid 1
+isoipse 2
+gdal_translate 1
+extent 1
+cost 1
+geohub.jrc.ec.europa.eu 1
+value 1
+nasirumbi 1
+proj 1
+data 3
+qml 1
+linux 2
+172 1
+changes 1
+pcuts 1
+rodrigues 1
+random 1
+languages 1
+%d0%b7%d0%b0%d0%bf%d1%83%d1%81%d1%82%d0%b8%d1%82%d1%8c 1
+ulx 1
+colormap 1
+exercises 3
+unix 1
+fruit 1
+quoting 1
+streamflow 1
+software 2
+awk 1
+2006. 1
+uniq 1
+lry 1
+scriipt 1
+gdalwarp 2
+mapping 1
+m.j. 1
+a2a 1
+map 3
+on 1
+cantisani 1
+255 1
+b2a 1
+termogravimetrico 1
+list 1
+spatialecology 2
+course 4
+change 1
+umidit%c3%a0 1
+tools 1
+grass 3
+region 1
+splot 3
+nico.guarino%40tiscali.it 1
+!%3d 1
+metodo 1
+sudo 1
+wiki 1
+with 3
+wikipedia 3
+geodata 1
+codes 1
+section 4
+size 1
+spatio 3
+stefano 1
+to 2
+from 1
+gisdbase 1
+echo 1
+set 3
+create 1
+m. 1
+style 1
+dr 1
+spartial 1
+path 1
+-a_ullr 1
+define 1
+vincenzo 1
+database 1
+lyons 1
+mussels 1
+vietnam 2
+lovreglio 1
+opearting 1
+cross 4
+%2f%2fwww.remastersys.com%2fubuntu 1
+lithuania 1
+max 1
+outline 1
+summit 1
+new 1
+aldo 1
+cozzi 1
+mario 1
+models 1
+corine 2
+location 1
+r. 1
+pixels 1
+stations 1
+susan 1
+main 1
+lectures 1
+arranz 1
+un 1
+pixel 1
+r.mapcalc 1
+world 1
+casalegno 1
+altitude 2
+offset 1
+script 2
+%d0%ba%d0%b0%d0%ba 1
+polygon 1
+unibas 2
+cities 1
+amatulli 1
+END_KEYWORDS
+
+# Errors - Hits - Bandwidth
+BEGIN_ERRORS 7
+403 4 3658
+302 6302 2699585
+206 11 464657
+400 19 4503
+500 98 54096
+301 1 495
+404 2370 5158956
+END_ERRORS
+
+# URL with 404 errors - Hits - Last URL referer
+BEGIN_SIDER_404 70
+//zenphoto/zp-core/zp-extensions/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+///includes/xml/bitfield_vbseo.xml 2 -
+/robots.txt 1501 -
+/admin/sqlpatch.php/password_forgotten.php 2 -
+//faq/admin/editor//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/ost4sem/exercise/basic_adv_r/altitude.R.pdf 1 
+/doku.php%3Fid%3Dwiki:pubste 1 -
+//lib/fckeditor/editor//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 1 -
+/blog/wp-trackback.php 1 -
+/uploads/ 1 -
+/doku.php%3Fid%3Dwiki:gisvm 1 -
+//vbforum//includes/xml/bitfield_vbseo.xml 1 -
+//phpadmin/scripts/setup.php 1 -
+//includes/tinymce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/lib/exe/fetch.php%3Fmedia%3Dwiki:graphic.jpg 3 -
+/cgi-bin/awstats.pl 1 -
+/lib/exe/http 1 -
+//main/inc/lib/fckeditor/editor//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/fckeditor/editor/images/anchor.gif 3 -
+/ost4sem/exercise/basic_adv_r/install_packages.R.pdf 1 
+/lib/tpl/monobook/common/print.css 746 http://www.spatial-ecology.net/doku.php
+/e107_docs/README.html 1 -
+//scripts/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/lib/exe/fetch.php%3Fmedia%3Dwikidk:rain_cokrige16994.png 1 -
+//FCKeditor/editor//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 2 -
+//includes/fckeditor/editor//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/ost4sem/exercise/basic_adv_r/kappastat.R.pdf 1 
+//shop/admin/includes/javascript/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+//javascript/tinymce/jscripts/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 2 -
+//boards//includes/xml/bitfield_vbseo.xml 1 -
+/register/ 2 -
+//pma/scripts/setup.php 1 -
+//gallery/zp-core/zp-extensions/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 2 -
+/phpBB/docs/FAQ.html 1 -
+/phpAlbum/main.php 1 -
+//phpmyadmin/scripts/setup.php 1 -
+//admin/fckeditor/editor//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+//tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/apple-touch-icon.png 4 -
+/lib/exe/fetch.php%3Fmedia%3Dwiki:alice_diffa.png 1 -
+//fckeditor/editor//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+//photo/zp-core/zp-extensions/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+//js/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/admin/fckeditor/editor/images/anchor.gif 1 -
+/FCKeditor/editor/images/anchor.gif 3 -
+//mysqladmin/scripts/setup.php 1 -
+/login.php 2 -
+/admin/FCKeditor/editor/images/anchor.gif 1 -
+//zen/zp-core/zp-extensions/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 2 -
+//js/jscripts/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+//myadmin/scripts/setup.php 1 -
+/ost4sem/exercise/basic_adv_r/bivariate.R.pdf 1 
+/ost4sem/exercise/basic_adv_r/advanced_synecology.R.pdf 1 
+//vbulletin//includes/xml/bitfield_vbseo.xml 2 -
+//jscripts/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+//admin/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/lib/exe/fetch.php%3Fw%3D400%26media%3Dwikiqgis:city_tanzania.png 1 http://dearcomputer.nl/gir/
+//ajaxfilemanager/jscripts/tiny_mce//plugins/ajaxfilemanager/jscripts/edit_area/edit_area.css 3 -
+/wp-trackback.php 1 -
+//forum//includes/xml/bitfield_vbseo.xml 2 -
+//vBulletin//includes/xml/bitfield_vbseo.xml 2 -
+/lib/exe/fetch.php%3Fmedia%3Dwikidk:predictedrainfall.png 1 -
+//vb//includes/xml/bitfield_vbseo.xml 2 -
+/wordpress/wp-trackback.php 1 -
+/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh 1 http://www.spatial-ecology.net/doku.php
+/wp/wp-trackback.php 1 -
+/signup.php 2 -
+//mysql/scripts/setup.php 1 -
+//phpMyAdmin/scripts/setup.php 1 -
+//forums//includes/xml/bitfield_vbseo.xml 2 -
+END_SIDER_404
+
+# Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]
+# [Start date of last visit] and [Last page of last visit] are saved only if session is not finished
+# The 10 first Hits must be first (order not required for others)
+BEGIN_VISITOR 382
+23.20.240.200 506 506 556483593 20120329200200
+141.163.217.1 412 881 5202359 20120330135925
+203.12.195.65 169 210 2674445 20120325232354
+149.156.124.18 168 389 1091651 20120331145120
+107.22.17.229 127 127 2905078 20120327212141
+194.119.194.15 117 145 2651992 20120320113047
+188.143.232.198 87 87 2771232 20120315000043
+137.216.206.43 74 140 916653 20120330094955
+79.156.3.70 66 213 443766 20120322215644
+88.14.202.219 53 80 633676 20120301061725
+101.226.33.225 1 1 29264 20120328231815
+200.251.58.190 2 2 68912 20120309222920
+220.181.141.70 2 2 43400 20120323152503
+187.45.214.4 1 1 32512 20120302193315
+157.27.4.1 6 25 177104 20120301070323
+137.216.148.55 6 27 188892 20120326142506
+84.90.158.46 1 1 21700 20120324200604
+209.85.228.82 1 3 67323 20120302115622
+74.125.78.84 1 1 46556 20120303063056
+74.125.78.91 0 2 1188 
+130.241.161.207 6 27 199511 20120329153907
+69.164.111.198 12 28 271068 20120318224537
+137.216.206.23 49 76 685067 20120315154343
+152.78.148.200 6 27 189084 20120306054837
+209.85.228.92 0 3 10684 
+150.70.172.206 4 5 103339 20120328105317
+124.115.1.8 4 8 154192 20120331172144
+184.72.240.170 1 1 32512 20120302235256
+95.244.114.217 8 28 418765 20120320180432
+220.109.99.17 6 26 155110 20120325040902
+193.54.112.22 6 26 183386 20120329043429
+98.208.59.117 6 26 180852 20120315012217
+24.200.163.28 1 1 0 20120308232936
+109.230.222.33 4 4 67530 20120320180733
+74.125.16.213 0 1 609 
+173.208.145.42 3 3 63760 20120307175037
+23.20.78.21 5 5 109952 20120307144316
+74.125.18.144 1 3 60064 20120303063055
+209.85.228.86 0 3 8938 
+208.80.194.32 1 1 21700 20120320234238
+41.141.195.28 6 28 195675 20120324095241
+95.71.40.132 2 2 33765 20120309032143
+209.85.228.96 1 4 3480 20120305025614
+150.237.85.248 2 2 21072 20120307143733
+74.125.156.85 1 1 21700 20120303090909
+173.208.130.206 1 1 21700 20120307114246
+74.125.18.162 0 1 1242 
+216.249.239.48 16 38 279483 20120305071156
+190.246.187.86 7 28 189428 20120310062245
+134.245.192.201 6 27 194338 20120319114615
+95.98.72.108 25 56 4205985 20120319183810
+86.91.47.117 6 27 184732 20120303063106
+80.243.191.66 2 2 33764 20120319225413
+69.171.234.6 0 1 7341 
+77.246.55.34 9 30 217104 20120312170154
+69.171.224.249 1 1 21700 20120328105635
+211.233.62.115 36 36 834868 20120316001854
+128.214.2.138 6 29 260395 20120312130702
+118.97.63.118 2 2 33765 20120322050314
+150.70.172.101 1 1 9417 20120326200656
+93.175.6.67 6 28 183037 20120308103129
+74.125.78.99 0 1 40710 
+83.211.165.190 1 1 31945 20120327145004
+212.156.147.146 2 2 40928 20120311163903
+125.22.247.130 30 53 480951 20120302073936
+128.119.246.79 3 3 258 20120319055148
+41.158.128.190 2 2 40928 20120324201003
+150.26.75.76 1 1 6514 20120309024155
+74.125.16.214 2 3 33096 20120327003020
+139.14.20.170 6 27 246222 20120315113627
+74.125.17.92 0 1 631 
+64.235.157.234 2 2 43400 20120331040943
+77.97.181.140 8 30 210952 20120318131233
+190.27.6.220 10 30 229642 20120306181742
+208.80.194.67 2 2 22236 20120330011935
+50.58.99.196 3 3 63760 20120314114933
+74.125.16.91 1 3 5929 20120327003020
+207.46.204.223 5 8 107494 20120307092857
+86.144.207.234 6 27 189116 20120322193448
+208.90.56.152 2 2 37041 20120305221738
+66.220.149.247 1 1 17303 20120323050358
+217.108.227.66 6 27 183918 20120328103114
+59.180.187.128 8 28 260285 20120308153007
+80.243.182.198 3 3 46630 20120320041638
+91.52.61.245 6 28 189419 20120308072937
+222.255.77.113 9 30 433037 20120330032813
+74.125.16.81 2 3 17285 20120327003019
+209.85.228.80 2 4 24426 20120302115625
+183.62.115.227 4 8 154192 20120331050410
+196.0.22.222 13 34 271652 20120327051612
+173.208.145.100 1 1 21700 20120301223233
+78.96.86.245 1 1 25493 20120331135911
+193.134.202.252 12 34 208735 20120327112908
+137.216.206.11 44 111 506162 20120319132430
+69.70.171.38 6 27 205431 20120307164043
+137.216.207.36 24 111 222505 20120307152114
+173.227.230.236 5 5 95332 20120304025116
+74.125.78.95 0 2 948 
+74.125.16.217 0 4 8677 
+74.125.126.96 1 1 190636 20120321103805
+122.72.2.200 1 1 28637 20120324200959
+200.195.147.117 8 28 418573 20120327124851
+221.194.177.170 1 1 18425 20120328014807
+119.147.75.140 2 4 77096 20120331131159
+74.125.16.85 0 3 16659 
+150.70.75.34 1 1 42 20120326205150
+212.160.172.70 10 33 444568 20120320054252
+137.122.204.65 11 33 235740 20120312162602
+81.193.237.124 1 1 0 20120302133409
+193.144.2.249 6 27 188892 20120323122022
+68.168.117.26 18 18 353321 20120319221209
+209.85.228.95 1 2 9891 20120305025614
+188.92.75.82 34 34 974640 20120315015340
+208.125.44.158 6 26 182694 20120309144559
+115.49.36.152 6 6 150248 20120314034230
+92.37.84.21 12 54 236978 20120305160432
+64.122.124.122 8 28 196103 20120307131820
+87.61.174.73 7 7 793520 20120307015738
+207.46.199.30 6 16 118425 20120323012629
+74.125.16.220 1 3 49430 20120327003021
+220.181.51.74 1 1 21700 20120319033314
+88.186.171.7 5 25 135613 20120327053159
+74.43.237.174 6 26 182054 20120319152512
+132.148.80.215 9 30 220798 20120307131132
+108.62.68.37 1 1 21700 20120306092149
+76.65.238.56 3 4 40744 20120312165745
+84.41.108.74 2 2 33765 20120304171407
+68.5.100.15 6 6 111803 20120319185623
+31.184.238.120 8 8 126281 20120323135009
+209.85.228.87 0 1 6723 
+149.238.193.121 35 57 497459 20120320043654
+66.220.149.250 0 1 7341 
+200.108.129.58 7 28 197514 20120319082230
+109.230.250.148 3 3 63760 20120302174149
+188.113.117.7 15 37 1341354 20120306144718
+74.117.180.55 1 1 22027 20120326212847
+189.240.252.18 12 32 269935 20120314150727
+137.154.16.31 12 38 285495 20120311185443
+74.125.78.81 0 1 3770 
+88.1.26.170 52 186 714850 20120312094544
+115.49.95.90 4 4 85088 20120331173201
+201.154.146.191 6 27 189148 20120322202800
+151.16.64.182 6 28 195323 20120304121135
+67.3.64.108 1 1 86 20120305011649
+209.85.228.83 1 1 17514 20120305025612
+67.191.209.193 1 1 14028 20120310022802
+208.80.194.36 1 1 21700 20120325211551
+195.176.154.26 6 26 207311 20120301074225
+184.71.162.242 1 1 190636 20120306163614
+157.55.17.84 6 16 122822 20120323033804
+69.171.234.7 1 1 21700 20120319110657
+74.125.16.216 0 7 56480 
+74.125.16.209 2 6 33392 20120320061909
+213.123.137.41 11 31 471487 20120312065138
+74.125.18.161 0 1 373 
+152.3.112.50 6 30 203354 20120317151021
+193.147.114.53 25 47 376954 20120314071601
+114.80.93.71 18 36 693864 20120328050306
+69.171.229.250 0 1 631 
+41.103.132.11 6 26 224658 20120329115252
+83.24.201.106 5 25 234799 20120321104314
+74.125.16.221 1 6 29334 20120301040958
+74.125.18.152 0 2 3851 
+70.24.197.231 9 30 377869 20120318182513
+80.243.182.196 4 4 78372 20120307203259
+69.140.172.129 24 47 1112721 20120313160821
+221.204.203.101 1 1 21700 20120301233558
+87.11.194.246 6 27 184334 20120320103605
+124.115.1.7 4 6 145352 20120331134406
+74.125.18.147 2 2 3212 20120303063057
+93.62.222.53 7 28 187992 20120329112929
+74.125.16.211 1 2 14931 20120320061909
+193.2.23.19 13 38 309020 20120320024938
+93.44.157.193 1 1 31945 20120306041510
+89.143.117.255 8 31 218076 20120311030249
+173.208.130.116 1 1 21700 20120325144621
+109.206.183.80 1 1 21700 20120326154600
+2.38.194.243 1 1 31945 20120308125611
+82.210.115.111 21 44 1075489 20120328143439
+74.125.78.92 0 1 6773 
+80.86.90.91 1 1 21700 20120320001831
+109.230.216.24 4 4 67530 20120318232817
+74.125.16.80 0 1 2501 
+208.80.194.33 1 1 21700 20120312233613
+74.125.16.212 3 7 75722 20120327003021
+115.49.70.31 6 6 131042 20120327103907
+190.226.229.58 6 27 182508 20120321194700
+74.125.78.82 1 1 13757 20120303063056
+113.111.169.114 1 1 29264 20120328231736
+74.125.16.84 0 3 8551 
+176.9.185.35 6 6 127520 20120321192202
+190.110.86.82 14 46 347823 20120309182133
+69.171.228.245 0 1 7341 
+220.181.51.77 2 2 43400 20120327013812
+88.214.193.166 6 6 130200 20120329010358
+139.191.16.170 6 27 188892 20120314065514
+120.19.196.250 10 32 219360 20120302020559
+152.1.32.115 6 26 184222 20120305102638
+209.85.228.81 0 3 3678 
+50.19.16.37 53 53 1202795 20120321215754
+116.55.19.96 2 2 70739 20120302152803
+146.230.128.50 21 42 339625 20120305154927
+137.216.207.16 6 26 186639 20120320221850
+208.80.194.37 2 2 43400 20120311004341
+209.85.228.84 0 1 373 
+74.125.18.146 0 4 11274 
+94.64.231.5 7 28 189428 20120311040105
+128.104.238.196 1 1 6514 20120320154039
+69.58.178.58 11 11 460945 20120309032024
+208.80.194.30 1 1 21700 20120317090017
+82.48.39.23 10 30 443531 20120316084831
+66.173.94.26 2 2 63890 20120305201919
+203.8.131.32 24 47 1105600 20120329194352
+204.236.243.38 53 53 1202795 20120323192755
+109.230.221.67 3 3 63760 20120322074416
+88.164.179.92 10 31 378405 20120326094117
+137.216.206.26 25 47 1153940 20120320210538
+209.85.228.90 0 1 7341 
+209.85.228.99 1 5 20642 20120302115623
+150.70.64.193 3 3 1114 20120326203042
+130.92.9.59 6 27 185198 20120302123323
+163.1.80.64 9 30 222413 20120305043648
+69.171.224.246 0 1 7341 
+139.191.4.108 24 24 219876 20120329115639
+83.46.22.136 46 172 360818 20120331042907
+74.125.16.90 0 3 6410 
+64.141.45.105 10 29 224732 20120303221406
+211.162.96.251 3 3 63760 20120305212226
+66.220.149.248 0 1 7341 
+74.125.16.93 1 2 50127 20120327003021
+176.58.197.154 16 61 433223 20120317062247
+74.125.16.89 0 2 1169 
+189.155.28.177 12 34 249410 20120301212523
+82.1.182.219 20 40 3202269 20120305095045
+107.22.105.72 3 3 65648 20120307161602
+208.80.194.27 2 2 43400 20120327202101
+91.156.133.134 6 31 227154 20120331084328
+202.27.242.65 18 40 361272 20120326200809
+1.161.129.230 2 2 40730 20120307023338
+74.125.18.158 2 2 78413 20120321060409
+74.217.36.97 7 30 213263 20120311042115
+93.97.71.127 6 27 188892 20120331121306
+220.181.127.123 1 1 21700 20120330093449
+65.95.14.73 8 30 211971 20120325225335
+24.59.189.107 8 28 324590 20120323173534
+188.242.249.11 9 33 457870 20120306090253
+175.140.247.46 6 26 181243 20120316110142
+66.207.218.10 3 11 274977 20120312165744
+176.207.144.101 1 1 31945 20120312035414
+208.80.194.34 1 1 21700 20120315040925
+74.125.18.160 1 3 17529 20120321060408
+74.125.78.87 0 1 2501 
+77.85.111.8 3 3 63760 20120307154949
+92.230.239.53 8 29 295361 20120301041332
+67.250.98.241 6 27 189020 20120305183939
+72.94.249.38 1 1 21700 20120316112159
+209.85.228.98 1 2 3779 20120305025613
+38.100.21.14 7 8 108874 20120324124612
+207.204.246.49 2 2 42730 20120328093032
+89.246.220.83 1 1 1542195 20120331172458
+149.3.87.224 3 3 52062 20120315231459
+117.24.55.87 5 6 117951 20120320235913
+200.27.169.99 6 28 211941 20120329091743
+74.125.16.219 1 6 61373 20120301040954
+209.85.228.93 0 3 5653 
+74.125.16.208 3 7 67439 20120320061908
+193.137.20.1 28 53 1155478 20120309113501
+142.207.253.30 6 28 190674 20120322000935
+216.67.89.171 6 25 191859 20120304161204
+74.125.18.163 0 2 12989 
+137.216.207.19 6 27 188892 20120321190324
+186.19.237.54 1 1 15387 20120310022825
+209.85.228.94 0 3 4718 
+69.171.228.250 0 1 631 
+62.75.229.90 1 1 21700 20120314034231
+74.125.18.155 0 2 7296 
+119.147.6.60 4 6 145352 20120331150925
+74.125.18.151 1 5 55473 20120321060408
+80.243.182.195 2 2 156742 20120326015626
+188.143.233.207 2 2 41299 20120306234730
+41.190.88.247 5 21 165943 20120322173332
+195.14.103.32 21 44 1074625 20120307070622
+137.216.206.30 43 66 499217 20120321181548
+139.14.20.193 6 27 246958 20120315113518
+62.42.135.102 16 37 1396702 20120330044413
+193.205.206.25 8 33 272706 20120316090753
+137.216.206.47 29 54 425320 20120322103354
+74.125.18.154 1 2 10048 20120303063058
+80.243.191.115 3 3 50305 20120312172939
+174.61.245.138 7 27 185838 20120328183028
+220.137.131.100 6 28 197979 20120326052659
+123.53.77.143 1 1 17167 20120331081338
+67.190.61.233 6 26 183386 20120328091018
+72.14.162.110 13 13 287349 20120317063034
+220.181.51.76 2 2 43400 20120311124952
+137.216.206.21 0 22 95370 
+174.137.152.60 22 22 489071 20120302152853
+209.85.228.91 1 4 49527 20120305025613
+183.62.115.234 8 16 308384 20120331190744
+149.156.96.15 28 89 656192 20120321052747
+87.6.146.8 1 1 31945 20120306085129
+121.75.133.226 18 60 769434 20120331115028
+14.139.240.242 6 26 188655 20120301081103
+173.208.130.59 3 3 65100 20120315164114
+78.47.65.198 2 2 62028 20120315063754
+79.100.108.190 6 6 127520 20120310173253
+74.125.18.150 1 2 16758 20120321060409
+108.59.2.201 1 1 21700 20120312062416
+71.55.80.171 0 21 92809 
+209.85.228.85 0 2 952 
+147.163.48.49 1 1 597514 20120328053140
+95.62.73.238 18 41 446535 20120312135028
+41.206.54.218 6 27 181864 20120329074928
+74.52.245.146 1 1 21700 20120316084723
+207.46.199.24 6 16 117954 20120325215710
+173.208.8.81 1 1 21700 20120306102148
+193.166.223.5 10 31 1041338 20120327022641
+31.214.133.17 11 11 173024 20120323172009
+112.151.40.135 10 30 636219 20120304121450
+74.125.18.145 0 4 17032 
+86.140.168.234 21 44 1078017 20120317032805
+94.23.225.68 1 1 16452 20120330182232
+74.125.16.210 2 14 78367 20120327003021
+74.125.18.157 1 3 10884 20120321060408
+195.37.34.66 8 29 202049 20120315071051
+157.164.187.138 6 27 304910 20120322112124
+74.125.16.223 1 3 31312 20120320061909
+66.220.146.250 0 1 7341 
+173.212.140.31 5 14 121791 20120329095713
+130.209.6.43 6 30 201887 20120305054923
+2.137.110.52 20 43 407814 20120306170707
+74.125.17.89 0 1 4795 
+31.53.199.33 42 111 750918 20120326163754
+74.125.16.222 2 4 68128 20120320061908
+200.7.141.5 6 27 188892 20120315120233
+74.125.16.92 1 1 28684 20120327003018
+208.80.194.28 2 2 43400 20120329072055
+74.125.78.96 0 1 2117 
+74.125.16.218 3 8 99070 20120327003023
+99.246.121.152 6 27 189084 20120326210608
+88.11.93.12 12 38 46412 20120314052803
+75.70.87.88 11 32 1297248 20120316133023
+2.102.119.119 2 2 18883 20120303033918
+74.125.18.149 0 2 1594 
+74.125.156.87 1 1 21700 20120303090907
+95.42.190.111 3 3 63760 20120309144946
+208.80.194.35 3 3 65100 20120330031009
+107.22.147.101 53 53 1202795 20120315121135
+184.72.70.99 53 53 1202795 20120323041629
+208.53.187.254 1 1 21700 20120321005035
+155.210.62.57 6 26 317244 20120322105907
+74.125.17.81 1 1 13757 20120305025613
+200.10.229.91 17 62 419087 20120307110052
+74.125.16.87 0 2 8567 
+69.171.229.245 1 1 21700 20120310224429
+209.85.228.97 2 7 112515 20120302115623
+221.0.177.119 6 6 73523 20120301072110
+220.181.51.78 1 1 21700 20120319033314
+188.152.193.150 6 27 187778 20120326061057
+150.101.108.94 6 27 183615 20120305061326
+50.115.160.222 1 1 21700 20120306094301
+134.36.64.135 11 34 263570 20120330111939
+107.22.41.86 53 53 1202795 20120323131510
+152.61.165.19 21 41 402966 20120322104210
+74.125.16.215 1 4 13532 20120327003024
+131.212.49.162 22 42 3240625 20120329162841
+161.67.122.117 6 26 198667 20120318071045
+63.152.72.61 6 27 188892 20120309142245
+98.247.55.18 18 61 428467 20120319004058
+173.212.197.206 1 1 21700 20120309101349
+72.12.77.143 1 1 67939 20120309161606
+74.125.18.159 0 1 3770 
+74.125.78.90 0 1 474 
+150.237.85.249 7 28 189620 20120307143714
+109.169.86.9 2 2 43400 20120319091406
+74.125.18.153 0 1 358 
+200.111.178.242 17 77 428487 20120320152857
+65.0.156.81 1 1 86 20120321022202
+92.37.10.123 2 2 21742 20120308133238
+62.24.222.131 1 1 21700 20120303033947
+220.181.51.75 1 1 21700 20120327013813
+122.54.155.29 5 14 173939 20120313040142
+END_VISITOR
+
+# Date - Pages - Hits - Bandwidth - Visits
+BEGIN_DAY 31
+20120301 109 260 2182170 19
+20120302 85 237 2115707 15
+20120303 39 142 748007 13
+20120304 42 126 1348196 11
+20120305 154 457 6096276 26
+20120306 105 259 3638342 19
+20120307 124 322 3775685 23
+20120308 59 171 1418996 14
+20120309 163 285 5206597 18
+20120310 36 57 704775 7
+20120311 54 176 1265026 11
+20120312 122 352 3089992 18
+20120313 85 229 1656450 8
+20120314 94 208 1334341 10
+20120315 192 344 4199119 16
+20120316 93 224 3454511 12
+20120317 60 132 1949436 8
+20120318 100 285 1665982 10
+20120319 167 389 6479749 21
+20120320 312 615 7205347 28
+20120321 179 388 3483393 20
+20120322 119 329 2526454 15
+20120323 286 395 5564289 15
+20120324 31 76 487679 6
+20120325 210 346 3865658 8
+20120326 103 298 2518715 18
+20120327 213 382 5830650 27
+20120328 76 213 3159439 18
+20120329 616 835 562267910 16
+20120330 186 392 3735098 16
+20120331 75 196 3432328 19
+END_DAY
+
+# Session range - Number of visits
+BEGIN_SESSION 7
+1h+ 4
+5mn-15mn 13
+30s-2mn 35
+15mn-30mn 12
+2mn-5mn 16
+0s-30s 400
+30mn-1h 5
+END_SESSION
+
+# URL - Pages - Bandwidth - Entry - Exit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_SIDER 32
+/doku.php 1970 43117675 414 150
+/lib/exe/css.php 754 4964919 21 46
+/lib/exe/indexer.php 654 27468 8 213
+/lib/exe/fetch.php 404 29686960 32 32
+/lib/exe/js.php 274 9954565 8 31
+/feed.php 73 521241 0 2
+/lib/exe/ajax.php 48 1983 0 0
+/lib/exe/mediamanager.php 44 2114964 0 0
+/lib/exe/opensearch.php 29 15520 2 10
+/lib/exe/detail.php 13 164858 0 0
+/ost4sem/studycase/fire_risk/awk_script/file2R.awk 1 767 0 0
+/ost4sem/studycase/fire_risk/sh_script/average_w.sh 1 4498 0 0
+/sharing/outgoing/Ubuntu_20122011.part1.rar 2 141113642 0 0
+/sharing/outgoing/Ubuntu_20122011.part3.rar 2 144036604 0 0
+/ost4sem/studycase/fire_risk/awk_script/fire_eumed.awk 1 718 0 0
+/ost4sem/lecture/r_intro.pdf 1 1413071 0 0
+/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh 1 12750 0 0
+/ost4sem/exercise/basic_adv_grass/basic_grass.sh 1 17662 0 0
+/ost4sem/exercise/rp_ratio/rp_ratio.sh 1 5192 0 0
+/ost4sem/lecture/qgis_intro.pdf 2 1184322 0 0
+/ost4sem/lecture/unixlinux.pdf 2 1610798 0 0
+/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc 1 1302209 0 0
+/ost4sem/exercise/basic_adv_gdalogr/basic_gdalogr.sh 1 1716 0 1
+/ost4sem/exercise/EUforest_stats/euforest_stats.sh 1 6740 0 0
+/sharing/outgoing/VMware-player-4.0.1-528992.exe 1 122046695 0 0
+/ost4sem/exercise/basic_adv_r/linear_reg_model.R.pdf 1 6448 0 0
+/sharing/outgoing/Ubuntu_20122011.part2.rar 1 134760065 0 0
+/ost4sem/exercise/basic_adv_r/basic_r.R 1 31017 0 0
+/ost4sem/exercise/pcemstat/pcemstat.sh 1 8818 0 0
+/ost4sem/studycase/fire_risk/tables/input/nuts3_area.asc 1 19564 0 0
+/ost4sem/lecture/grass_intro.pdf 1 883163 0 0
+/ost4sem/studycase/fire_risk/r_script/fire_model_country.R 1 917 0 0
+END_SIDER

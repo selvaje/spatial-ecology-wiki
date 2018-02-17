@@ -1,0 +1,83 @@
+====== Harmonizing altitudinal and climatic data for Tibetan plateau ======
+Modeling paleo Haizishan ice cap in southeastern Tibetan Plateau [[http://fuping1.blogspot.se/|Personal web page]] Ping Fu, Stockholm University
+
+===== INTRODUCTION =====
+
+Climate changes in recent decades has drawn lots of attention. To predict future changes requires a good understanding of past climate changes. Modeling the paleo Haizishan ice cap in the southeastern Tibetan Plateau allow us to reconstruct the paleo climate driven the evolution of the ice cap and the paleo ice dynamic. Here I am using a parralel ice sheet modeling (PISM) to simulate the ice cap evolution forced by WorldClim data and SRTM topography [[http://pism-docs.org/wiki/doku.php]]. 
+
+In this project, I will first clip the input images to fit the model domain, and then resample the climate data to different resolution of the topographic images. 
+
+
+ 
+==== Project objectives ====
+The output would be a set of maps, including maps of precipitation, temperature, and topography. 
+
+
+===== METADATA =====
+Topography data
+
+Resampled SRTM 90m Digital Elevation Database v4.1 with resolution of 250m, 500m, and 1 km.
+From [[http://www.cgiar-csi.org/data/srtm-90m-digital-elevation-database-v4-1]] 
+
+Suggested DEM http://topotools.cr.usgs.gov/gmted_viewer/ 
+
+Climate data
+
+WorldClim current climate data (interpolations of observed data, representative of 1950-2000) including mean temperature and precipitation.
+From [[http://www.worldclim.org/current]]
+
+library () 
+
+
+==== Vector data ====
+  * link to vector data if available [[http://www.myvector_data_are_here]]
+
+==== Raster data ====
+  * [[http://www.myraster_data_are_here| link to raster data if available]]
+
+==== Other data sources====
+  * [[http://www.myraster_data_are_here| link to other data if needed]]
+
+===== METHOD =====
+Describe your script. If you use a specific algorithm [[http://www.mylink.net| link ]] the bibliographic references.
+
+
+===== Computational implementation =====
+Some further explanation of the overall analyses and of each step
+paste your code here
+<code bash - mycode>
+#/bin/bash
+# Comment your code to make it more easy to understand. 
+wget ftp://something.rar 
+
+for file in *.tif ; do 
+  echo $file ; gdalinfo -mm $file  | grep "Min/Max" 
+done 
+
+</code>
+
+Describe your second code if needed, what it does ...
+
+<code R>
+# my R code here
+
+</code>
+
+If you are modeling you might distinguish between
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+Show us the output of the analyses upload images if needed with "add images" link in the upper bar of this window while editing
+
+   * Map 1. bla bla bla bla ... \\
+{{:wiki:unibas108biomas.png?400|}}{{:wiki:unibas108biomas_legend.png?200|}}
+\\
+\\
+   * Graphic 1. bla bla ok ok yes yes fantastic\\
+{{:wiki:qualiaria24h.to.png?600|My graphic caption}}
+
+
+
+//Later on after the training you could improve the script and upgrade your wiki project page//

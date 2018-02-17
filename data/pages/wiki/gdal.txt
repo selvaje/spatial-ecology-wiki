@@ -1,0 +1,51 @@
+====== GDAL and OGR ======
+[[http://www.gdal.org/| GDAL]] is a command-line library that can be used for raster data pre-processing.\\
+[[http://www.gdal.org/ogr/| OGR]] is a command-line library that can be used for vector data.\\
+Why use gdal and ogr?\\
+  * Several [[ http://www.gdal.org/gdal_utilities.html | raster ]] and [[http://www.gdal.org/ogr_utilities.html |  vector ]]  applications are already available in your shell.
+  * They support all the different [[http://www.gdal.org/formats_list.html | raster]] and [[ vhttp://www.gdal.org/ogr/ogr_formats.html | vector]] formats. 
+  * Command line.
+  * Can be combined in a bash language and therefore integrate in a script.
+  * You can create your geo-tools.
+  * NO FILE SIZE LIMITATION 
+  * Very fast
+  * They are the basic libraries that GRASS use to import and export data.
+\\
+
+You can access to gdal/ogr command by typing gdal or ogr and then press Tab twice.
+A list of all the gdal commands will be listed.\\
+\\
+The projection types are defined by the EPSG codes. They are used to define and change a projection. 
+A list of the EPSG codes can be found [[ http://spatialreference.org/ref/epsg/ | here ]]
+\\
+===== GDAL and OGR Tutorials =====
+  * [[gdalsintax|The GDAL and OGR syntax]]
+===== GDAL and OGR exercises =====
+These exercises use the scripts and data stored in ~/ost4sem/exercise/basic_adv_gdalogr \\ 
+
+You can open the scripts by kate and copy/paste the lines to the terminal.\\ 
+
+You can can also interact with the shell using other commands and inserting comments in the editor.\\
+You can run it directly by:
+<code bash> 
+sh file_name.sh 
+</code> 
+  * [[gdalbasic | Basic GDAL scripts]]
+  * [[ogrbasic | Basic OGR scripts]]
+  * [[langintergartiongr | Languages/Software data integration: GDAL and OFT-TOOLS ]]
+  * [[gdalbasic_yale | Basic GDAL and OGR scripts for species distribution ]]
+  * [[gdaladvance | Advance GDAL and OGR scripts]]
+  * [[gdalbasic_kenya | Basic GDAL and OGR for Kenya ]]
+  * [[gdalpktools_kenya | GDAL/OGR and PKTOOLS]]
+  * [[rsapplication yale | RS application for Yale ]]
+  * [[topovar | Derive topographic variable from a DEM  ]]
+  * [[MODISwget | Download MODIS Land Surface Temperature (*.hdf) from Nasa ftp]]
+
+===== GDAL and OGR links  =====
+
+  * [[ http://www.gdal.org/| GDAL homepage ]]
+  * [[ http://www.gdal.org/ogr/ | OGR homepage ]]
+  * [[ http://spatialreference.org | Spatial reference repertory]] EPSG, ESRI, IAU2000, spatialreference.org
+  * [[ http://epsg-registry.org/| EPSG Geodetic Parameter Registry]]
+  * [[ https://github.com/nvkelso/geo-how-to/wiki/OGR-to-reproject,-modify-Shapefiles | Examples ]]
+

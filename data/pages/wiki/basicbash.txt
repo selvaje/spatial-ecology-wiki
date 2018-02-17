@@ -1,0 +1,128 @@
+====== Basic bash scripts ======
+Getitor installation 
+
+sudo apt-get install gedit  gedit-plugins
+
+
+Exercise:\\
+Script: open by gedit [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_bash/basic_bash.sh | ~/ost4sem/exercise/basic_adv_bash/basic_bash.sh ]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_bash/aver_month_nuts3_fire.asc | ~/ost4sem/exercise/basic_adv_bash/aver_month_nuts3_fire.asc ]]\\
+Directory: ~/ost4sem/exercise/basic\_adv\_bash
+
+===== Search a command =====
+
+Change directory and create a little file from a large file:
+<code bash>
+gedit ~/ost4sem/exercise/basic_adv_bash/basic_bash.sh &
+cd ~/ost4sem/exercise/basic_adv_bash/
+head -1000 aver_month_nuts3_fire.asc > input.txt 
+</code>
+
+Read/explore the input.txt file\\
+
+Run the following commands one by one.
+<code bash>
+head input.txt
+more input.txt
+tail input.txt 
+</code>
+Count the line/word/character in a input.txt
+<code bash>
+wc input.txt
+</code>
+Search for a word in a file 
+<code bash>
+grep "2007" input.txt
+</code>
+
+I want to search for a command able to sort the input.txt table based on the //Year// column (YYYY).
+<code bash>
+man -k  sort
+</code>
+The last lines contain:\\
+//sort (1)  - sort lines of text files//\\
+So i will search how to use the sort command:
+<code bash>
+man sort
+</code>
+
+===== Sorting a file =====
+The //-k// option identify the column of sorting:\\
+  * Sorting based on column number 2  ( -k 2,2)
+  * sorting based on column number 2 and then number 1 ( -k 2,1)
+
+See again man sort for more options like -n -g\\
+Alfa numeric sorting:\\
+   sort -k 2,2 input.txt
+general numerical sorting\\ 
+   sort -k 2,2 -g  input.txt
+string numerical sorting\\
+   sort -k 2,2 -n  input.txt
+Save the result of a command in a file by '>' symbol
+<code bash>
+sort -k 2,2 -g input.txt > input_s.txt
+wc -l input_s.txt
+</code>
+Which is the first and last year of observations?
+===== Append the command result to a file =====
+Add the result of a command in the already existing "output" file by '>>' symbol
+<code bash>
+sort -k 3,3 -g input.txt >> input_s.txt
+wc -l input_s.txt
+</code>
+===== Concatenate commands =====
+We want to count how many observations exist in year 2007 in the input.txt.\\
+Concatenate command by the "|" symbol
+Search for the  word "2007" and count the line/word/character
+<code bash>
+grep "2007" input.txt | wc
+</code>
+===== Use the variable =====
+Define the value of the variable, print it by putting it in front of the $ symbol
+<code bash>
+var=21 ; echo $var
+</code>
+Define the value of the variable using the result of a command
+
+<code bash>
+var=`grep "2007" input.txt | wc -l`
+echo $var
+</code>
+
+Pay attention to differences between 
+
+  `
+and
+<code bash>
+  '
+</code>
+If the variable setting is equal to a command result and not equal to a string, use single back-quotation ` to include the command.\\
+
+var=varname\\
+var=$(command)\\ 
+
+Remember var is space sensitive.\\
+var=variable is correct\\
+
+<note warning> //var= variable// is not correct\\ </note>
+
+===== For loop =====
+
+We want to automatically count how many observations exist in the years 2007, 2006 2005 in the input.txt file.\\
+To solve this we can use the variable and list word/number loop function
+
+<code bash>
+for var in 2005 2006 2007; do
+    grep $var input.txt | wc -l     
+done 
+</code>
+
+Now we want to automatically count how many observations exist from year 2000 to 2008 in input.txt file.\\
+For this use the serial number list loop function.\\
+
+<code bash>
+rm input_wc.txt
+for ((var=2000 ; var<=2008 ; var++)); do
+    grep $var input.txt | wc -l  >> input_wc.txt  
+done 
+</code>

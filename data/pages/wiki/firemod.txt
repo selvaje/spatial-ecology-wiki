@@ -1,0 +1,38 @@
+
+===== Projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios. =====
+\\
+Full article at [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/fire_risk.pdf  | ~/ost4sem/studycase/fire_risk/fire_risk.pdf ]] 
+\\
+==== Objective ====
+The aim of this work is to use the results of statistical modelling of historical (1985-2004) monthly burnt areas in European Mediterranean countries, as a function of monthly weather data and derived fire danger indexes, and to analyse potential trends under present and future climate conditions.\\
+\\
+==== Method ====
+Meteorological variables were extracted from the ECMWF, and the FWI system components were computed from 1961 to 2004. Monthly averages of the indexes were used as explanatory variables in a stepwise multiple linear regression analysis, to estimate the monthly burnt areas in each of the five most affected Mediterranean countries of Europe. Significant regression equations and satisfactory coefficients of determination were found, although with remarkable differences between countries. Two IPCC SRES climate change scenarios (A2/B2) were simulated using the the regional climate model HIRHAM. The multiple regression models were than applied to the A2/B2 scenarios results to predict the potential burnt areas in each country. The models pointed out tangible changes in the potential burnt area extent for the future scenarios compared to the actual conditions.\\
+\\
+==== Input Data ====
+As input data we use the following datasets:
+  * Daily wind, temperature, humidity and precipitation were downloaded from [[  http://www.ecmwf.int/ | ECMWF ]].
+  * Forest fire data (burnt area and number of fires) were extracted from [[ http://effis.jrc.ec.europa.eu/ | EFFIS]]. 
+  * Nuts3 (province) area is stored in ~/ost4sem/studycase/fire_risk/tables/input/nuts3_area.asc 
+\\
+
+==== Computational Implementation ====
+
+The modelling procedure includes only the calculation of the regression equation and its graphic for each EU country. The climate change projection is not described:
+
+  * Daily wind, temperature, humidity and precipitation were used to compute the daily FWI by an AWK script.
+  * Monthly average was calculated using a bash script which includes awk commands: [[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/average.sh | ~/ost4sem/studycase/fire_risk/sh_script/average.sh]]
+  * The results are stored in the file [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3.asc |  ~/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3.asc ]].
+\\
+  * Monthly sum of burnt area and number of fires was calculated using a bash script which include awk commands.
+  * The results are stored in the file [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc |  ~/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc ]].
+\\
+  * The data integration of 3 input files ( aver_month_nuts3.asc, input file nuts3_area.asc  aver_month_nuts3_fire.asc) is performed by a bash shell / R / gnuplot / script: [[http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh|Download the shell script here]] or follow the [[fire_statistic_w.sh|shell script in wiki format]] \\
+\\
+  * The results are stored at:\\
+     * EU Mediterranean: [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/EUmed.ps | ~/ost4sem/studycase/fire_risk/tables/output/EUmed.ps ]]\\
+     * Portugal: [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/PT.ps | ~/ost4sem/studycase/fire_risk/tables/output/PT.ps ]]\\
+     * Spain: [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/ES.ps | ~/ost4sem/studycase/fire_risk/tables/output/ES.ps ]]\\
+     * France Med: [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/FRmed.ps | ~/ost4sem/studycase/fire_risk/tables/output/FRmed.ps ]]\\
+     * Italy: [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/IT.ps | ~/ost4sem/studycase/fire_risk/tables/output/IT.ps ]]\\
+     * Greece: [[ http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/GR.ps | ~/ost4sem/studycase/fire_risk/tables/output/GR.ps ]]\\

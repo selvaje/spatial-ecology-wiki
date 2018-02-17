@@ -1,0 +1,31 @@
+====== Download log files from UAV ======
+This operation can be done on Mission planner following the following steps:
+
+  * Open Mission planner
+
+<code bash>
+cd ~/software/missionplanner
+sudo mono MissionPlanner.exe
+</code>
+
+  * Connect Iris+ to OSGeo-live on your laptop using a usb cable and no battery attached to the Iris+.\\
+You'll find the Iris+ at a port similar to this: /dev/serial/by-id/usb-3D_Robotics_PX4_FMU_v2.x_0-if00; use 57600 bps baud rate.
+
+  * Click on **Data flash Log** tab on the left panel
+  * Click on **Download Dataflash Log Via MavLink**
+  * Tick box of the mission log file to download according to the date/time of flying mission
+  * Click on **Download These Logs**
+
+{{ :uav:down_log_file.png?1000 |}}
+
+  * Browse missionplanner logs foolder and check the availability of log file in different formats:\\
+
+
+<code bash>
+~/software/missionplanner/logs/QUADROTOR/1/2016-05-11 13-46-20.bin
+~/software/missionplanner/logs/QUADROTOR/1/2016-05-11 13-46-20.log
+~/software/missionplanner/logs/QUADROTOR/1/2016-05-11 13-46-20.log.gpx
+~/software/missionplanner/logs/QUADROTOR/1/2016-05-11 13-46-20.log.kml 
+</code>
+
+You can plot the kml file in Qgis to look at the differences between the planned mission and the actual plight path, in strong wind conditions the two might differ very much and the plnned overlapping of images could be unfitted to perform the data processing of orthophoto.\\

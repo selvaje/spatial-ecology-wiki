@@ -1,0 +1,13 @@
+<span class="co0"># stack the tif</span>
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span>   vegetation<span class="sy0">/</span>stack.vrt   vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif vegetation<span class="sy0">/</span>ETstdev08-<span class="nu0">11</span>.tif
+gdalinfo vegetation<span class="sy0">/</span>stack.vrt
+&nbsp;
+<span class="co0"># split in tiles </span>
+gdal_translate <span class="re5">-srcwin</span> <span class="nu0">0</span>     <span class="nu0">0</span> <span class="nu0">360</span> <span class="nu0">300</span> vegetation<span class="sy0">/</span>stack.vrt vegetation<span class="sy0">/</span>stack_UL.tif
+gdal_translate <span class="re5">-srcwin</span> <span class="nu0">0</span>   <span class="nu0">300</span> <span class="nu0">360</span> <span class="nu0">300</span> vegetation<span class="sy0">/</span>stack.vrt vegetation<span class="sy0">/</span>stack_UR.tif
+gdal_translate <span class="re5">-srcwin</span> <span class="nu0">360</span>   <span class="nu0">0</span> <span class="nu0">360</span> <span class="nu0">300</span> vegetation<span class="sy0">/</span>stack.vrt vegetation<span class="sy0">/</span>stack_LL.tif
+gdal_translate <span class="re5">-srcwin</span> <span class="nu0">360</span> <span class="nu0">300</span> <span class="nu0">360</span> <span class="nu0">300</span> vegetation<span class="sy0">/</span>stack.vrt vegetation<span class="sy0">/</span>stack_LR.tif
+&nbsp;
+<span class="co0"># recompose the image </span>
+gdalbuildvrt <span class="re5">-overwrite</span> vegetation<span class="sy0">/</span>ETmosaic.vrt vegetation<span class="sy0">/</span>stack_UL.tif vegetation<span class="sy0">/</span>stack_UR.tif vegetation<span class="sy0">/</span>stack_LL.tif vegetation<span class="sy0">/</span>stack_LR.tif
+gdal_translate <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> vegetation<span class="sy0">/</span>ETmosaic.vrt vegetation<span class="sy0">/</span>ETmosaic.tif

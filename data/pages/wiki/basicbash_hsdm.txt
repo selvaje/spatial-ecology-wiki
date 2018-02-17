@@ -1,0 +1,122 @@
+====== Basic bash scripts for hSDM======
+Logging in the yale-HPC
+   ssh -X netID@omega.hpc.yale.edu
+
+Copy bash setting to your home
+   cp -r  /lustre/scratch/client/fas/sbsc/ga254/.bashrc  $HOME/
+
+Copy the data folder to you home directory (Peter , Marta, Kellie, Longzhu)
+
+   cp -r  /lustre/scratch/client/fas/sbsc/ga254/ost4sem $HOME/
+
+If you are working in the virtual machine 
+   mkdir  $HOME/ost4sem/
+   mkdir  $HOME/ost4sem/exercise/
+   cd $HOME/ost4sem/exercise/
+   wget https://dl.dropboxusercontent.com/u/29337496/Introduction_to_hSDM.tar.gz
+   tar xvzf Introduction_to_hSDM.tar.gz
+
+Exercise:\\
+Data: $HOME/scratch/ost4sem/exercise/Introduction_to_hSDM/input_txt/point_data.txt\\
+Directory: $HOME/scratch/ost4sem/exercise/Introduction_to_hSDM/input_txt\\
+
+===== Search a command =====
+
+Change directory and create a little file from a large file:
+<code bash>
+cd $HOME/scratch/ost4sem/exercise/Introduction_to_hSDM/input_txt
+head -1000 point_data.txt > point_data_small.txt
+</code>
+
+Read/explore the point_data_small.txt file\\
+
+Run the following commands one by one.
+<code bash>
+head point_data_small.txt
+more point_data_small.txt
+tail point_data_small.txt
+</code>
+Count the line/word/character in a input.txt
+<code bash>
+wc point_data_small.txt
+</code>
+Search for a word in a file 
+<code bash>
+grep "2004-" point_data_small.txt
+</code>
+
+I want to search for a command able to sort the input.txt table based on the //Year// column (YYYY).
+<code bash>
+man -k  sort
+</code>
+The last lines contain:\\
+//sort (1)  - sort lines of text files//\\
+So i will search how to use the sort command:
+<code bash>
+man sort
+</code>
+
+===== Sorting a file =====
+The //-k// option identify the column of sorting:\\
+  * Sorting based on column number 2  ( -k 2,2)
+  * sorting based on column number 2 and then number 1 ( -k 2,1)
+See again man sort for more options like -n -g\\
+Alfa numeric sorting:\\
+//sort -k 2,2 point_data_small.txt//\\  
+general numerical sorting\\ 
+//sort -k 2,2 -g  point_data_small.txt//\\    
+string numerical sorting\\
+//sort -k 2,2 -n  point_data_small.txt//\\ 
+Save the result of a command in a file by ">" symbol
+<code bash>
+sort -k 2,2 -g point_data_small.txt > point_data_small_s.txt
+wc -l point_data_small.txt
+</code>
+Which is the first and last year of observations?
+===== Append the command result to a file =====
+Add the result of a command in the already existing "output" file by ">>" symbol
+<code bash>
+sort -k 3,3 -g point_data_small.txt >> point_data_small_s.txt
+wc -l point_data_small_s.txt
+</code>
+===== Concatenate commands =====
+We want to count how many observations exist in year 2004 in the point_data.txt\\
+Concatenate command by the "|" symbol
+Search for the  word "2004-" and count the line/word/character
+<code bash>
+grep "2004-" point_data.txt | wc
+</code>
+===== Use the variable =====
+Define the value of the variable, print it by putting it in front of the $ symbol
+<code bash>
+var=21 ; echo $var
+</code>
+Define the value of the variable using the result of a command
+<code bash>
+var=`grep "2004-" point_data.txt | wc -l`
+echo $var
+</code>
+Pay attention to differences between ` and ' \\
+If the variable setting is equal to a command result and not equal to a string, use single back-quotation ` to include the command.\\
+//var=varname//\\
+//var=`command`//\\ 
+Remember var is space sensitive.\\
+//var=variable// is correct\\
+ <note warning> //var= variable// is not correct\\ </note>
+
+===== For loop =====
+We want to automatically count how many observations exist in the years 2004, 2005 and 2006 in the point_data.txt file.\\
+To solve this we can use the variable and list word/number loop function
+<code bash>
+for var in 2004- 2005- 2006-; do
+    grep $var point_data.txt | wc -l     
+done 
+</code>
+Now we want to automatically count how many observations exist from year 2000 to 2008 in point_data.txt file.\\
+For this use the serial number list loop function.\\
+<code bash>
+rm input_wc.txt
+for ((var=2004 ; var<=2006 ; var++)); do
+    grep ${var}- point_data.txt | wc -l  >> input_wc.txt
+done 
+</code>

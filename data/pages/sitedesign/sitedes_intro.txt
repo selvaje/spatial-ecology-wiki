@@ -1,0 +1,63 @@
+====== Open Source Mapping and Site Design Workshop ======
+Instructors
+  * [[https://www.exeter.ac.uk/esi/people/researchandtechnical/casalegno/|Stefano Casalegno]] University of Exeter, UK - Spatial-Ecology.
+  * [[http://opensourceecology.org/marcin-jakubowski/ | Marcin Jakubowski]] Open Source Ecology.
+  * [[http://www.regrarians.org/about/darren-j-doherty-cv/|Darren Doherty]] The Regrarians platform.
+[[sitedesign:site_schedule |Schedule]]
+===== Build Yourself, Build your World =====
+The Open Source Mapping and Site Design workshop is an immersion 5 day experience in farm and landscape planning and design. We will go through a complete process of generating a site plan and map – geared especially at regenerative land use.\\
+Participants will learn basic competence in open source Geographical Information Systems (GIS) software, open source aerial drone mapping, surveying, geolocating, data collection, planting design, and site design.\\ 
+The tangible outcome are a baseline composite map, and an initial master plan for plantings, earthworks, ponds, and the built environment – as influenced by the nature of the site. The design framework will be based around principles of landscape architecture, Yeoman’s Scale of Permanence, keyline design, and regenerative agriculture.\\
+
+===== Open Source Mapping Environment =====
+{{:sitedesign:linux-256.jpg?100 |}}   
+  * [[http://spatial-ecology.net/ost4sem/lecture/Installing_osgeo-liveVM.pdf| Virtualization]] software and installation 
+  * [[wiki:bash|Introduction to Linux operating system]]
+  * [[http://live.osgeo.org/en/index.html|OSlive Geo Virtual machine]].
+
+----
+===== Introduction to Geographic Information Systems =====
+{{:sitedesign:gis_qgis.png?130 |}}
+  * Geographic [[https://www.youtube.com/watch?v=LN_tCKdl9cE|projections]], [[http://www.colorado.edu/geography/gcraft/notes/mapproj/mapproj_f.html|projections in US]], maps, [[http://geology.isu.edu/geostac/Field_Exercise/topomaps/topo_map.htm|topography - read]], [[https://www.youtube.com/watch?v=zqPMYGDxCr0|topography - video]] and [[http://www.slideshare.net/arniontech/gis-presentation-13885167|GIS]] data
+  * [[https://www.youtube.com/watch?v=aKdRiHezuk0|GIS data]]: [[https://www.youtube.com/watch?v=VeI4n7duavI|raster formats]] - [[https://www.youtube.com/watch?v=lelnsbJ7VWo|vector formats]] (min2:35)
+  * [[https://www.udel.edu/johnmack/frec682/cholera/cholera2.html|History]] and basic GIS functionalities
+  * [[wiki:wikiqgis:qgis|Getting started with Qgis]]
+  * [[https://www.qgiscloud.com/stefano/cornwall|Web gis]] applications.
+
+----
+===== Geodatabase =====
+[[sitedesign:site_geodatabase |{{:sitedesign:map-2-256.jpg? 120 }}]]
+  * [[sitedesign:site_geodatabase | Satellite Data Repository ]] 
+  * vector and rasters base maps layers
+  * Open Street Map
+  * GPS data
+  * Airborne imagery 
+
+----
+===== Geography of Landscape =====
+[[sitedesign:site_hydromod |{{:sitedesign:siteplann.png?150 |}}]]
+  * [[sitedesign:site_start |Introduction ]] Start a new project - acquire Lidar data.
+  * [[sitedesign:site_hydromod | Hydrological modelling ]] for site design
+  * [[sitedesign:site_terrainmod |Terrain modelling ]] for keyline site design
+  * [[sitedesign:site_toolbox | GIS toolbox for Permaculture and Site design]]
+
+----
+===== Local Climete =====
+{{:sitedesign:climate.png?150 |}}
+  * [[sitedesign:site_climate | Local climate parameters]]
+
+----
+===== Field Data Sampling  =====
+{{:sitedesign:gps_field_data.png?150 |}}
+  * [[sitedesign:site_fieldsample | Sampling data on the field]]: soil ecology, carbon stocks and physical parameters.
+  * [[sitedesign:site_fieldsample | Georeferencing and importing]] data from field samples.
+
+----
+===== Drone Mapping =====
+{{:sitedesign:drone.png?100 |[[sitedesign:site_drone]]}}
+  * A gentle introduction to low cost DIY UAV mapping for farmers and site design. (Cristiano Giovando: Terraplan - [[http://hotosm.org/about| Humanitarian Open Street Map]])
+  * Ground points settings
+  * Drone Flights
+  * Georeferencing and importing data from aerial images
+
+----

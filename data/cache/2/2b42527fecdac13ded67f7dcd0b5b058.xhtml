@@ -1,0 +1,454 @@
+
+<h1 class="sectionedit1" id="an_introduction_to_geographic_information_systems_using_qgis">An Introduction to Geographic Information Systems using QGIS</h1>
+<div class="level1">
+
+<p>
+For this exercise we will be using countrywide data for Kenya.  These data are in the “Geographic” projection using the WGS84 Datum.  Some of the data layers you will work with include: the Kenya Boundary, Counties, Major Cities, Roads and Airports and Protected Sites.  Data are located in the folder <strong>/home/user/ost4sem/exercise/KenyaGIS</strong>
+</p>
+
+<p>
+Open the <strong>Desktop GIS</strong> folder and double click on <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:qgis-logo.jpg" class="media" title="wiki:wikiqgis:qgis-logo.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=50&amp;tok=98f6b4&amp;media=wiki:wikiqgis:qgis-logo.jpg" class="media" alt="" width="50" /></a>to start the program.
+</p>
+
+<p>
+The main feature of the QGIS interface is the Map panel in the center.  At the top is the Menu bar to access all functions, and several Toolbars with icons located along the top and sides of the application window. Hover the mouse over an icon to show a tool tip explaining the tool function.  These Toolbars provide direct access to collections of functions.
+</p>
+
+</div>
+
+<h4 id="explore_your_first_data_layers">Explore your first data layers</h4>
+<div class="level4">
+
+<p>
+A small project file has been created to load a few data layers.  You will use this for the first view of data in QGIS.  From the menu select <strong>Project | Open</strong> then navigate to the <strong>KenyaGIS</strong> folder (see full path above) and open the <strong>FirstProject.qgs</strong> file.  The Layers panel on the left shows three layers, but in the Map panel you only see the polygon of Kenya.  The Layers panel controls which layers are displayed, and their order.
+</p>
+<ul>
+<li class="level1"><div class="li"> In the Layer panel uncheck the <strong>KenyaBoundary</strong> layer to reveal the <strong>County</strong> layer beneath it</div>
+</li>
+<li class="level1"><div class="li"> Turn the KenyaBoundary layer back on and drag it to the bottom of the layer stack</div>
+</li>
+<li class="level1"><div class="li"> Use the Zoom and Pan tools to navigate around the map</div>
+</li>
+<li class="level1"><div class="li"> Single-click County in the Layers panel to make it <strong>active</strong></div>
+</li>
+<li class="level1"><div class="li"> Use the Identify Features tool <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:idfeature.jpg" class="media" title="wiki:wikiqgis:idfeature.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=30&amp;tok=652ca8&amp;media=wiki:wikiqgis:idfeature.jpg" class="media" alt="" width="30" /></a> to query attributes of several counties.  Values are displayed in the Identify Results panel on the left.</div>
+</li>
+<li class="level1"><div class="li"> Drag the MajorCities layer to the top and make it active (single click on it)</div>
+</li>
+<li class="level1"><div class="li"> Examine the values of several cities</div>
+</li>
+<li class="level1"><div class="li"> Use the Zoom Full tool to return to the full map view</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1 SECTION "An Introduction to Geographic Information Systems using QGIS" [1-2044] -->
+<h3 class="sectionedit2" id="adjust_symbology">Adjust Symbology</h3>
+<div class="level3">
+
+<p>
+In this section we will change how layers are displayed on our map.  You will use the Layer Properties window often when working with data.  From here you can; view General information about the layer source and coordinate system, adjust the map Style, add Labels,and much more. <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:properties.jpg" class="media" title="wiki:wikiqgis:properties.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=200&amp;tok=49a251&amp;media=wiki:wikiqgis:properties.jpg" class="mediaright" alt="" width="200" /></a>
+</p>
+
+</div>
+
+<h5 id="display_county_borders_only">Display County borders only</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li">Drag the County layer to the top of the stack in the Layer panel</div>
+</li>
+<li class="level1"><div class="li">To open the Layer Properties window right-click on County and select Properties or double-click on the layer name</div>
+</li>
+<li class="level1"><div class="li">Select the Style property tab then click on <em>Simple fill</em> in the center of the window</div>
+</li>
+<li class="level1"><div class="li">On the right side you can change the Fill color.  Instead, click on the Drop-down arrow to display several fill choices</div>
+</li>
+<li class="level1"><div class="li">Select <em>Transparent fill</em></div>
+</li>
+<li class="level1"><div class="li">Click in the Border color box and select a shade of red</div>
+</li>
+<li class="level1"><div class="li">Click the Apply button to view your changes.</div>
+</li>
+<li class="level1"><div class="li">If you are satisfied with the changes, click OK.  Now the other data layers are visible through the County borders</div>
+</li>
+</ul>
+
+</div>
+
+<h5 id="add_labels">Add Labels</h5>
+<div class="level5">
+
+<p>
+Make the MajorCities layer active and open the Attribute Table  <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:attribtable.jpg" class="media" title="wiki:wikiqgis:attribtable.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=35&amp;tok=6d626a&amp;media=wiki:wikiqgis:attribtable.jpg" class="media" alt="" width="35" /></a> to view the attributes of the Major Cities layer.  Examining the table we see that the field <strong>CITY_NAME</strong> contains the name of the city.  For future reference, note that the field <strong>POP</strong> contains the city population.
+</p>
+<ul>
+<li class="level1"><div class="li">Open the Layer Properties window and select the Labels tab</div>
+</li>
+<li class="level1"><div class="li">Check the field <em>Label this layer with</em> and use the Drop-down arrow to select the field CITY_NAME</div>
+</li>
+<li class="level1"><div class="li">Click Apply to view the labels on the map</div>
+</li>
+<li class="level1"><div class="li">Nice, but adding a buffer around the text would make the labels more visible</div>
+</li>
+<li class="level1"><div class="li">Select <strong>Buffer</strong> in the Labels property window and check the <em>Draw text buffer</em> box</div>
+</li>
+<li class="level1"><div class="li">Click in the Color box and select a light shade of gray or blue</div>
+</li>
+<li class="level1"><div class="li">Click Apply and, if you are happy with this, click OK</div>
+</li>
+</ul>
+
+<p>
+Now that the cities have labels, it is easy to measure distance between Kisumu and Wajir.  Use the Measure Line tool <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:measureline.jpg" class="media" title="wiki:wikiqgis:measureline.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=35&amp;tok=0dd04b&amp;media=wiki:wikiqgis:measureline.jpg" class="media" alt="" width="35" /></a> to do this.  Click on <strong>Kisumu</strong> then right-click on <strong>Wajir</strong> to display the distance.  This tool can also be used to measure areas and angles.
+</p>
+
+</div>
+
+<h5 id="styles_based_on_attributes">Styles based on attributes</h5>
+<div class="level5">
+
+<p>
+You can adjust display styles based on attributes in layers.  We will adjust the Cities display based on population.
+</p>
+<ul>
+<li class="level1"><div class="li">Open the Properties window for MajorCities again and select the Style tab</div>
+</li>
+<li class="level1"><div class="li">-  Change Single Symbol to <strong>Graduated</strong></div>
+</li>
+<li class="level1"><div class="li">-  For Column select <strong>Pop</strong></div>
+</li>
+<li class="level1"><div class="li">-  Click Classify then Apply to view your map</div>
+</li>
+<li class="level1"><div class="li">-  Experiment with different Color Ramps and Modes</div>
+</li>
+<li class="level1"><div class="li">Click OK when you are satisfied with the Style</div>
+</li>
+</ul>
+
+<p>
+Now add the layer <strong>ProtectedAreas.shp.</strong> You will adjust the display based on the <em>type</em> of protected site.  If you examine the Attribute Table you will find a field DESIGNATE.  This looks like it has what we need.
+</p>
+<ul>
+<li class="level1"><div class="li">Open the ProtectedAreas Property window and select Style</div>
+</li>
+<li class="level1"><div class="li">Change <strong>Single Symbol</strong> to <strong>Categorized</strong></div>
+</li>
+<li class="level1"><div class="li">For Column select <strong>DESIGNATE</strong> and click Classify</div>
+</li>
+<li class="level1"><div class="li">Click Apply to view the map</div>
+</li>
+<li class="level1"><div class="li">In the Symbol section you can change the color of any class or turn it off</div>
+</li>
+<li class="level1"><div class="li">Click OK when you are happy with the style</div>
+</li>
+</ul>
+
+<p>
+This is just a brief introduction to the many ways we can adjust the display of data in QGIS.  Before moving on you should save this as a map project.  This way you can simply load the project to restore the set of layers, with the styles that were just defined.  From the menu select <strong>Project | Save As</strong> and enter a name such as <strong>StyledMap</strong>. To simplify the display for the next section remove the ProtectedAreas layer by right-clicking on it in the Layer panel.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Adjust Symbology" [2045-5720] -->
+<h3 class="sectionedit3" id="selections">Selections</h3>
+<div class="level3">
+
+<p>
+QGIS has many methods of selecting features within a layer.  You can use the Select Feature tool, select by an expression, or perform a spatial query.  Let&#039;s look at some of these techniques now.
+</p>
+<ul>
+<li class="level1"><div class="li">Make the County layer active in the Layer panel</div>
+</li>
+<li class="level1"><div class="li">Use the Select Features tool <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:selectfeature.jpg" class="media" title="wiki:wikiqgis:selectfeature.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=35&amp;tok=ddbb22&amp;media=wiki:wikiqgis:selectfeature.jpg" class="media" alt="" width="35" /></a> to select a county</div>
+</li>
+<li class="level1"><div class="li">Open the Attribute table and you will see that the selected county is high lighted (turns yellow)</div>
+</li>
+<li class="level1"><div class="li">Hold the &lt;Ctrl&gt; key down and you can make multiple selections</div>
+</li>
+<li class="level1"><div class="li">Make the MajorCities layer active to select Cities</div>
+</li>
+<li class="level1"><div class="li">Use the Deselect Features tool <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:selectclear.jpg" class="media" title="wiki:wikiqgis:selectclear.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=35&amp;tok=4323c9&amp;media=wiki:wikiqgis:selectclear.jpg" class="media" alt="" width="35" /></a> to clear all selections</div>
+</li>
+</ul>
+
+</div>
+
+<h5 id="select_from_the_attribute_table">Select from the Attribute Table</h5>
+<div class="level5">
+<div class="noteclassic"> Next we want to measure the distance between airports with IATA codes <strong>WIL</strong> and <strong>MBA</strong>
+</div><ul>
+<li class="level1"><div class="li"> Add <strong>MajorAirports.shp</strong> and open the Attribute Table</div>
+</li>
+<li class="level1"><div class="li"> - Find the two airports in the table</div>
+</li>
+<li class="level1"><div class="li"> - Click in the row number column at the far left of the table to select an airport.  This should turn yellow on the map</div>
+</li>
+<li class="level1"><div class="li"> - Hold the &lt;Crtl&gt; key and click another row to make multiple selections</div>
+</li>
+<li class="level1"><div class="li"> - Measure distance between airports</div>
+</li>
+<li class="level1"><div class="li"> Turn off the Airports layer</div>
+</li>
+</ul>
+
+</div>
+
+<h5 id="select_by_expression">Select by Expression</h5>
+<div class="level5">
+<div class="noteclassic">We want to create a new map layer of just the largest cities.  We will use the field <strong>POP</strong> for this.
+</div><ul>
+<li class="level1"><div class="li">Make sure the <strong>MajorCities</strong> layer is active and open the <em>Select features by expression</em> tool <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:selectexp.jpg" class="media" title="wiki:wikiqgis:selectexp.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=35&amp;tok=a5f241&amp;media=wiki:wikiqgis:selectexp.jpg" class="media" alt="" width="35" /></a></div>
+</li>
+<li class="level1"><div class="li">Scroll down the Function list until you locate <strong>Fields and Values</strong> and expand the list</div>
+</li>
+<li class="level1"><div class="li">Double-click on <strong>POP</strong> to load it into the Expression window (note the quotes around the field name).  Only a subset of available Operators may be displayed.  Scroll up the Function list and expand the Operators section see more.</div>
+</li>
+<li class="level1"><div class="li">Double-click to select the greater than symbol <strong>&gt;</strong> then type the value <strong>100000</strong></div>
+</li>
+<li class="level1"><div class="li">Click on the Select button and you should see four cities selected</div>
+</li>
+<li class="level1"><div class="li">Close the tool<br/>
+</div>
+</li>
+<li class="level1"><div class="li">Save the selected cities as a new layer</div>
+</li>
+<li class="level1"><div class="li"> - Right-click on MajorCities in the Layer panel and select <strong>Save As</strong></div>
+</li>
+<li class="level1"><div class="li"> - Enter a new layer name <strong>LargestCities,</strong> check the box <strong>Save only selected features</strong> and click OK</div>
+</li>
+<li class="level1"><div class="li">Open the Layer properties and change the style <strong>Marker</strong> to the <strong>Star</strong></div>
+</li>
+<li class="level1"><div class="li">Clear all selections</div>
+</li>
+</ul>
+<div class="noteclassic">Now select just the National Parks protected sites to add to our map.
+</div><ul>
+<li class="level1"><div class="li">Add the layer <strong>ProtectedAreas.shp</strong>  The layer did not retain the style you created previously</div>
+</li>
+<li class="level1"><div class="li">Open the <em>Select by expression</em> tool</div>
+</li>
+<li class="level1"><div class="li">From the Function list select the field <strong>DESIGNATE</strong> and select the <strong>=</strong> Operator</div>
+</li>
+<li class="level1"><div class="li">There are many Filed values for DESIGNATE so click on <strong>all unique</strong> to display them all</div>
+</li>
+<li class="level1"><div class="li">Scroll down to <strong>‘National Parks’</strong> and double-click it to select it</div>
+</li>
+<li class="level1"><div class="li">Click Select and Close to display the national parks</div>
+</li>
+<li class="level1"><div class="li">Save this as a new layer <strong>NatParks</strong> then clear selections</div>
+</li>
+<li class="level1"><div class="li">Turn off the ProtectedAreas layer</div>
+</li>
+<li class="level1"><div class="li">Add park names and improve the display style if you have time</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="spatial_query">Spatial Query</h4>
+<div class="level4">
+<div class="noteclassic">We want to select MajorCities in specific Counties
+</div><ul>
+<li class="level1"><div class="li"> Turn off the NatParks and LargestCities layers</div>
+</li>
+<li class="level1"><div class="li"> Make the County layer active</div>
+</li>
+<li class="level1"><div class="li"> Select several Counties with the Select Features tool (select Freehand or use the &lt;Ctrl&gt; key for multiple selections)</div>
+</li>
+<li class="level1"><div class="li"> Turn on Spatial Query plugin</div>
+</li>
+<li class="level1"><div class="li"> Open the <strong>Spatial Query</strong> tool <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Aqgis-kenya&amp;media=wiki:wikiqgis:spatialquery.jpg" class="media" title="wiki:wikiqgis:spatialquery.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=35&amp;tok=79c540&amp;media=wiki:wikiqgis:spatialquery.jpg" class="media" alt="" width="35" /></a> from the Toolbar on the left side of the application</div>
+</li>
+<li class="level1"><div class="li">  – Select source features from  <strong>MajorCities</strong></div>
+</li>
+<li class="level1"><div class="li">  – Where the feature   <strong>Within</strong> </div>
+</li>
+<li class="level1"><div class="li">  – Reference features of  <strong>Counties</strong>  (this will use only the selected counties)</div>
+</li>
+<li class="level1"><div class="li">  – Click Apply to make the selection</div>
+</li>
+<li class="level1"><div class="li">  – Click on the <strong>Create new selection</strong> button to make a <em>temporary</em> layer</div>
+</li>
+<li class="level1"><div class="li">  – Drag this to the top of the Layer stack to show the selected cities.  You could save this as a new permanent layer but we won&#039;t for now.</div>
+</li>
+<li class="level1"><div class="li"> Clear all selections, remove the temporary MajorCities layer and turn off the MajorCities layer</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "Selections" [5721-9769] -->
+<h3 class="sectionedit4" id="creating_new_data">Creating New Data</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="buffers">Buffers</h4>
+<div class="level4">
+<div class="noteclassic">We want to create a 10 km buffer around the major airports.  Because the data layer uses the Geographic projection, units are decimal degrees.  At the equator one decimal degree is approximately 110 km.
+</div><ul>
+<li class="level1"><div class="li"> Turn on (or add) the MajorAirports layer and make it active</div>
+</li>
+<li class="level1"><div class="li"> Open Buffer tool from the main menu -  <strong>Vector | Geoprocessing Tools | Buffer(s)</strong></div>
+</li>
+<li class="level1"><div class="li"> Select <strong>MajorAirports</strong> for the <em>Input vector layer</em></div>
+</li>
+<li class="level1"><div class="li"> Enter a Buffer distance of 0.11 and a new filename and click OK</div>
+</li>
+<li class="level1"><div class="li"> Zoom in to the area near Nairobi.  Notice that we have overlapping buffer zones</div>
+</li>
+<li class="level1"><div class="li"> Repeat the buffer operation but this time select the option <strong>Dissolve buffer results</strong> and click OK.</div>
+</li>
+<li class="level1"><div class="li"> Drag the MajorAirports layer on top of the new buffer layer to inspect your results</div>
+</li>
+<li class="level1"><div class="li"> Remove the MajorAirports and buffer layers</div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="zonal_statistics">Zonal Statistics</h4>
+<div class="level4">
+<div class="noteclassic">We want to find the average elevation of each County.  For this operation we will use the raster  Digital Elevation Model (DEM) dataset <strong>GMTED2010-1km.tif</strong>
+</div><ul>
+<li class="level1"><div class="li"> From the menu select <strong>Layer | Add Layer | Add Raster Layer</strong> and select the dataset <strong>GDEM2010-1km</strong></div>
+</li>
+<li class="level1"><div class="li"> Drag this layer below the County layer</div>
+</li>
+<li class="level1"><div class="li"> Load the Zonal Statistics tool from the menu  <strong>Raster | Zonal Statistics | Zonal Statistics</strong></div>
+</li>
+</ul>
+<div class="notetip">If you do not find this tool, you must activate the plugin.  From the menu select <strong>Plugins | Manage and Install plugins | Installed</strong>  Scroll to the bottom of the list and check the box for Zonal Statistics
+</div><ul>
+<li class="level1"><div class="li">If it is not already selected, pick the <strong>GMTED2010-1km</strong> layer for Raster layer</div>
+</li>
+<li class="level1"><div class="li">The Polygon layer should be <strong>County</strong></div>
+</li>
+<li class="level1"><div class="li">Enter a column prefix <strong>Elev-</strong> and click OK</div>
+</li>
+<li class="level1"><div class="li">Open the <em>County</em> Attribute Table.  There are three new columns, Elev-count, Elev-sum, and Elev-mean</div>
+</li>
+<li class="level1"><div class="li">Sort by the column Elev-mean to select the counties with the lowest then highest mean elevation</div>
+</li>
+<li class="level1"><div class="li">Change the County style property to Graduated using Elev-mean and Classify.  Experiment with different Modes and Color Ramps</div>
+</li>
+<li class="level1"><div class="li">Restore the County style to Single Symbol with a Transparent fill</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "Creating New Data" [9770-11886] -->
+<h3 class="sectionedit5" id="making_a_map">Making a Map</h3>
+<div class="level3">
+<div class="noteclassic">Make a map with title, scale bar and legend
+</div>
+<p>
+Remove all layers except MajorCities, County, NatParks, and KenyaBoundary arranging them in the order listed, with MajorCities at the top.
+</p>
+<ul>
+<li class="level1"><div class="li"> From the menu select <strong>Project | New Print Composer</strong> and enter a map name such as FirstMap</div>
+</li>
+<li class="level1"><div class="li"> The Map Composer window opens</div>
+</li>
+<li class="level1"><div class="li"> On the right make sure <strong>Landscape</strong> is selected for Orientation</div>
+</li>
+<li class="level1"><div class="li"> From the menu select <strong>Layout | Add Map</strong> and draw a box in the blank map page to place the map</div>
+</li>
+<li class="level1"><div class="li"> You can adjust the size and move it if desired.  Also each map object has an <em>Item Properties</em> tab on the right where you can make detailed adjustments to the display.</div>
+</li>
+<li class="level1"><div class="li"> Layout | Add Scalebar and click in the lower left to place the scale bar</div>
+</li>
+<li class="level1"><div class="li"> Layout | Add Legend and click on the right side to place a legend</div>
+</li>
+<li class="level1"><div class="li"> Layout | Add Label then click and drag a box at the top of the map to place the text box</div>
+</li>
+<li class="level1"><div class="li"> - Select the Item properties tab and replace the text <em>QGIS</em> with a map title.</div>
+</li>
+<li class="level1"><div class="li"> - Click on the Font bar and increase the font size to at least 26</div>
+</li>
+<li class="level1"><div class="li"> You can export the map to a PDF file or as an image</div>
+</li>
+<li class="level1"><div class="li"> From the menu select <strong>Composer | Export as Image,</strong> enter a map name and save this as an image file.</div>
+</li>
+</ul>
+
+<p>
+While this is just a very simple map, you get the idea.  You can add many types of map objects, customizing how each object appears on your maps.
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Making a Map" [11887-13285] -->
+<h3 class="sectionedit6" id="mini_projects">Mini Projects</h3>
+<div class="level3">
+
+<p>
+This project will use Attribute Table selection and two Spatial Queries.
+</p>
+<div class="noteclassic">You are responsible for a project to make major changes to Highway A1.  As a first step you will need to meet with the Transportation Directors for each county the highway passes through.  What steps would we take to identify the cities in the affected counties?
+</div><ul>
+<li class="level1"><div class="li">Start by adding the vector layers MajorTowns,shp and MajorRoads.shp</div>
+</li>
+<li class="level1"><div class="li">Examine the Attribute Table for the MajorRoads layer</div>
+</li>
+<li class="level1"><div class="li">Sort the table by the column <strong>Name1</strong> then select all road segments with the name <strong>A1</strong></div>
+</li>
+<li class="level1"><div class="li">Save this as a new layer <strong>Highway-A1</strong>.  Make sure you have checked the box <em>Save only selected features.</em></div>
+</li>
+<li class="level1"><div class="li">Close all selections</div>
+</li>
+</ul>
+
+<p>
+Perform a Spatial Query to select <em>Counties</em> that <em>Intersect</em> the new layer <em>Highway-A1</em> to identify the Counties of interest.  Click Apply then the <strong>Create new selection</strong> button to make a new temporary layer.
+</p>
+
+<p>
+Now perform a second Spatial Query, this time to select <em>Cities</em> that are <em>Within</em> the selected <em>Counties</em>.
+</p>
+
+<p>
+After examining your results close all selections and remove the selected county and city layers
+</p>
+<div class="noteclassic">How can we find the elevation of each major city?
+</div>
+<p>
+First we need to install Plugin Point Sample from the QGIS menu<br/>
+
+ <strong>Plugins | Manage and Install Plugins | Installed</strong> and check to box for the <strong>Point sampling tool</strong>
+</p>
+
+<p>
+Load the tool  <strong> Plugins | Analysis | Point sampling tool </strong>
+</p>
+<ul>
+<li class="level1"><div class="li">Layer containing sampling points – <strong>MajorCities</strong></div>
+</li>
+<li class="level1"><div class="li">Layers with fields…  select both <strong>MajorCities:CITY_NAME</strong> and <strong>GMTED2010-1km</strong></div>
+</li>
+<li class="level1"><div class="li">Enter a new output name <strong>CityElev.shp</strong> then click OK</div>
+</li>
+<li class="level1"><div class="li">Open the Attribute Table to see that the new point file contains both city name and elevation.  You could style this by elevation if you desired.</div>
+</li>
+</ul>
+<div class="noteclassic">We want to identify all areas in Kenya with an elevation greater than 900m
+</div>
+<p>
+This can be done easily using the Raster Calculator
+</p>
+<ul>
+<li class="level1"><div class="li">Make the elevation layer <strong>GMTED2010-1km</strong> active</div>
+</li>
+<li class="level1"><div class="li">From the menu select <strong>Raster | Raster Calculator</strong></div>
+</li>
+<li class="level1"><div class="li">Double-click the layer <strong>GMTED2010-1km</strong> to load it into the expression</div>
+</li>
+<li class="level1"><div class="li">Select the greater than <strong>&gt;</strong> operator and type <strong>900</strong></div>
+</li>
+<li class="level1"><div class="li">Enter an output name <strong>ElevGT900</strong> and click OK</div>
+</li>
+</ul>
+
+<p>
+The new layer will be black and white with values of zero and one respectively.  Values of one represent the areas with elevation greater than 900 meters.  This layer can be used in other calculations or as a file mask.
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Mini Projects" [13286-] -->

@@ -1,0 +1,65 @@
+====== Running R with multiple cores ======
+
+If you need to recursively process an R function or an R script n times, you can extract the //for loop// in bash and process each R function or script with a different CPU.
+How to do it:
+  - built a template R script
+  - built a template bash script 
+  - use *xargs* bash fonction in a loop for processing each step of the loop with a different CPU 
+\\
+\\
+<WRAP center round important 60%>
+Create a //~/ost4sem/exercise/multi_core // and a // .../exercise/multi_core/output // folders if you do not have them. 
+</WRAP>
+
+
+===== 1. Example of a template R script =====
+Save the R script below as //~/ost4sem/exercise/multi_core/template_R.R //  
+<code r>
+mod.t = Sys.getenv(c('mod','t','path'))
+mod = as.numeric(mod.t[1])
+t = as.numeric(mod.t[2])
+path = as.character(mod.t[3])
+
+print(mod)
+print(t)
+print(path)
+
+my_output=paste("We have processed  mod ",mod," and t ",t," ---- output path is   ",path,sep=" ")
+write.table(my_output,paste(path,"/my_mod",mod,"_t",t,".txt",sep=""))
+</code>
+\\
+\\
+
+===== 2. Example of a bash script to exchange variables with R ====
+
+Save the template bash script below as  //~/ost4sem/exercise/multi_core/template_bash.sh // 
+<code bash>
+#!/bin/bash
+cd ~/ost4sem/exercise/multi_core
+mod=$1
+t=$2
+path=~/ost4sem/exercise/multi_core/output
+
+export mod
+export t
+export path
+R --vanilla --no-readline  -q    <    template_R.R
+</code>
+<note> - - vanilla\\
+is used to combine   --no-save,    --no-restore,    --no-site-file,     --no-init-file and --no-environ</note>
+
+===== 3. Process the R script using the template bash within a xargs loop ===== 
+<code bash>
+cd ~/ost4sem/exercise/multi_core
+for mod in 1 2 3 4 ; do 
+for t in `seq 1 5` 
+do echo $mod $t 
+done 
+done| xargs -n 2 -P 2 bash template_bash.sh
+</code>
+
+<note> in xargs\\
+**-n 2** refer to the number of variables exchanged between **xargs** in the bash loop and the //template_bash.sh// script \\
+**-P 2** indicate the number of procssors you want to use.
+The //template_R.R// script need to be in your working environment( ~/ost4sem/exercise/multi_core ).//
+</note>

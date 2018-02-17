@@ -1,0 +1,28 @@
+library(dismo)
+system(&quot;wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/vector/cornwall_agri.zip&quot;)
+system(&quot;unzip cornwall_agri.zip&quot;)
+&nbsp;
+# load vector
+ward &lt;- shapefile(&quot;cornwall.shp&quot;) 
+&nbsp;
+# Reproject vector using raster library required by dismo
+ward.84 &lt;- spTransform(ward,CRS(&quot;+init=epsg:3857&quot;)) 
+&nbsp;
+# Load google map using the &quot;Cornwall&quot; location as google query
+cornwall.sat &lt;- gmap(&quot;Cornwall&quot;,type=&quot;satellite&quot;) 
+plot(cornwall.sat)  # plot the map
+&nbsp;
+# Overlay the vector layer on the raster layer
+plot(ward.84, add = TRUE, lwd =1, ext = extent(ward.84), border = &quot;yellow
+&nbsp;
+# Plot small area within a region 
+Lizard.sat &lt;- gmap(&quot;Lizard, Cornwall&quot;,type=&quot;satellite&quot;) 
+plot(Lizard.sat)
+&nbsp;
+# Plot small area within a region using google hybrid map
+Lizard.hybrid &lt;- gmap(&quot;Lizard, Cornwall&quot;,type=&quot;hybrid&quot;) 
+plot(Lizard.hybrid)&quot; )
+&nbsp;
+# Plot a town suing the terrain google map
+Matera.terrain &lt;- gmap(&quot;Matera&quot;,type=&quot;terrain&quot;) 
+plot(Matera.terrain)

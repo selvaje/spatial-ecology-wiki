@@ -1,0 +1,30 @@
+====== pkstatogr ======
+NAME
+   pkstatogr - calculate basic statistics from vector file
+
+SYNOPSIS
+<code bash>
+   pkstatogr -i input [OPTION]
+</code>
+       
+DESCRIPTION
+   Calculate basic statistics from vector file such as mean, min and max value
+       
+OPTIONS
+<code bash>
+   -i     --input                Input shape file (default: <empty string>)
+   -n     --fname                fields on which to calculate statistics (default: <empty string>)
+   -nbin  --nbin                 number of bins (default: 0)
+   -m     --min                  calculate minimum value (default: false)
+   -M     --max                  calculate maximum value (default: false)
+   -mean  --mean                 calculate mean value (default: false)
+   -stdev --stdev                calculate standard deviation (default: false)
+   -v     --verbose              verbose mode if > 0 (default: 0)
+</code>
+
+====== Examples ======
+<code bash>
+pkstatogr -i input.shp -f FIELDID -n 100 # report histogram of values in FIELDID (to standard output)
+
+pkstatogr -i input.shp -f FIELDID -m -M -mean -stdev # report min, max, mean and standard deviation of values in FIELDID (to standard output)
+</code>

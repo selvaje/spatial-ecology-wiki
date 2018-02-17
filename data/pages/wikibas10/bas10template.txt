@@ -1,0 +1,37 @@
+====== TITLE ======
+\\
+===== INTRODUCTION =====
+==== General framework of this analysis ====
+==== Project objectives ====
+\\
+===== METADATA =====
+==== Raster data ====
+==== Vector Data ====
+==== Text files and tables ====
+==== Ortophoto ====
+\\
+===== METHOD =====
+\\
+===== DATA IMPORT =====
+<code bash>
+# insert here your script with notes in "#" \\
+# example\\
+cd ~/ost4sem/project
+</code>
+\\
+===== DATA PROCESSING =====
+\\
+<code r>
+# insert here your script with notes in # \\
+# example\\
+cd ~/ost4sem/project
+</code>
+\\
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+Insert a map and related table or graphics if available\\
+Discuss the biological or geographical significance of results
+\\

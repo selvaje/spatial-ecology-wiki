@@ -1,0 +1,5 @@
+===== Openstreetmap, SQLite and sql commands =====
+
+  * [[exercise7a | exercise 7a]]: Download Openstreetmap vector
+  * [[exercise7b | exercise 7b]]: Using SQLite vectors
+  * [[exercise7c | exercise 7c]]: Using sql commands

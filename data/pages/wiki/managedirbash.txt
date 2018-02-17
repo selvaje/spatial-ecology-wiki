@@ -1,0 +1,79 @@
+====== Manage your working environment with file commands ======
+
+Use this wiki to get familiar with file commands useful for managing directories and files.
+
+=== pwd ls cd mkdir commands ===
+First we need to create a new folder in the  \\
+~/ost4sem/exercise/basic_adv_bash directory and call it example_manage
+
+<code bash>
+pwd # Which is our working directory ?
+ls # Which files exists in our working directory?
+ls -l # list with detailed info
+cd ~/ost4sem/exercise/basic_adv_bash # change working directory
+ls 
+ls -l
+mkdir example_manage
+ls
+ls -l
+rm -r example_manage # We remove the directory we just created
+</code>
+
+We can also create a folder or copy a file in a target directory from a different working directory
+
+<code bash>
+cd
+mkdir ~/ost4sem/exercise/basic_adv_bash/example_manage
+ls
+ls ~/ost4sem/exercise/basic_adv_bash/
+</code>
+
+=== Loops for multiple folder and files management ===
+Now we need to create a set of working directories for different years (2000 to 2010) each one with 12 subdirectories corresponding to months (Jan to Dec).
+<code bash>
+Year="Yr2000 Yr2001 Yr2002 Yr2003 Yr2004 Yr2005 Yr2006 Yr2007 Yr2008 Yr2009 Yr2010"
+month="Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec"
+for y in $Year ; do  mkdir $y
+for m in $month ; do mkdir $y/$m ; 
+done ; 
+done
+ls */*/
+</code>
+
+=== Now we create a text file === 
+<code bash>
+echo This is my exercise for learning bash scripting $Year $month >> example_text.txt 
+</code>
+
+=== And we copy this text file in every month for the years 2000 to 2010 folders we just created === 
+<code bash>
+for y in $Year ; do 
+for m in $month ; do
+cp example_text.txt $y/$m/copy_of_text.txt ;
+done ;
+done
+
+ls */
+ls */*/
+</code>
+
+
+=== Difference between cp and mv ===
+
+Now en need to rename the example_text.txt as Year2001.txt and move it from the ~/ost4sem/exercise/basic_adv_bash/example_manage folder to ../example_manage/Yr2001/ folder
+
+<code bash>
+mv example_text.txt ./Yr2001/Year2001.txt
+ls
+ls Yr2001
+</code>
+
+Now we copy the Yr2001.txt file to the Yr2000 folder and name it copy_of_year2001.txt
+<code bash>
+cp ./Yr2001/Year2001.txt ./Yr2000/copy_of_year2001.txt
+</code>
+
+=== Now we delete the folder example_manage and all its content ===
+
+  rm -r ~/ost4sem/exercise/basic_adv_bash/example_manage
+

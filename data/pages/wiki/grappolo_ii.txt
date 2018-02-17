@@ -1,0 +1,342 @@
+
+====== Customize master node ======
+
+===== Install Grid Engine ====
+Grid Engine is typically used on a computer farm or high-performance computing (HPC) cluster and is responsible for accepting, scheduling, dispatching, and managing the remote and distributed execution of large numbers of standalone, parallel or interactive user jobs. It also manages and schedules the allocation of distributed resources such as processors, memory, disk space.\\
+{{:wiki:gridengine-logo.png?200|}}\\
+We use the open source [[http://gridscheduler.sourceforge.net/ |Open Grid Schcheduler|]] as batch-queuing system. This is one of the most common software used in HPC clusters around the world and we aim at teaching its use.\\
+We will first install some dependency packages that I've found missing in raspian.
+<code bash>
+sudo apt-get install csh  # csh shell
+sudo apt-get install libpam0g-dev
+sudo apt-get install lesstif2-dev
+</code> 
+
+Then compile 
+<code bash> 
+wget http://sourceforge.net/projects/gridscheduler/files/GE2011.11p1/GE2011.11p1.tar.gz
+<del>wget http://softlayer-ams.dl.sourceforge.net/project/gridscheduler/GE2011.11p1/GE2011.11p1.tar.gz</del>
+tar zvxf GE2011.11p1.tar.gz
+cd GE2011.11p1/source
+export LDFLAGS=-L/usr/lib/arm-linux-gnueabihf
+./aimk -no-java -no-jni -no-secure -spool-classic -no-dump -only-depend
+./scripts/zerodepend
+./aimk -no-java -no-jni -no-secure -spool-classic -no-dump depend
+./aimk -no-java -no-jni -no-secure -spool-classic -no-dump -no-qmon
+</code> 
+Have a tea and a siesta... for a 30min ...
+
+The compilation succeeded. 
+
+==== Communication within the cluster ====
+Edit the /etc/hosts file making sure the internal ip-address for the master node "grappolo" is correct.
+We also add the ip-addresses for node 1 and 2 which we will install and connect later.\\
+
+<code bash>
+127.0.0.1       localhost
+::1             localhost ip6-localhost ip6-loopback
+fe00::0         ip6-localnet
+ff00::0         ip6-mcastprefix
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+
+10.141.255.254  grappolo
+10.141.0.1      node1
+10.141.0.2      node2
+</code>
+
+=== Grid engine - system configuration ===
+Create a new // /etc/profile.d/grappolo.sh // scripts with links of our system configurations and grid engine environment. 
+
+<code bash>
+sudo leafpad /etc/profile.d/grappolo.sh
+# add the following 3 lines to this script.
+export SGE_ROOT=/usr/local/apps/sge/2011.11p1
+export SGE_CELL="default"
+export PATH=$PATH:/usr/local/apps/sge/2011.11p1/bin/linux-arm/
+# save and close grappolo.sh
+</code>
+
+Then reboot.
+
+<code bash>
+sudo reboot
+ssh ssh -X pi@192.168.1.81 # again from your computer
+</code>
+
+===== SGE on master node =====
+Set up the SGE on the master node. Insert the original SD card on the raspi master node //grappolo//, power on and proceed to set up the Grid Engine Scheduler.\\
+
+<note tip> Before installation be sure your system configurations are ok!</note>
+For this you can type:
+<code bash>
+admin@grappolo:~ $ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games:/usr/local/apps/sge/2011.11p1/bin/linux-arm/
+admin@grappolo:~ $ echo $SGE_ROOT
+/usr/local/apps/sge/2011.11p1
+admin@grappolo:~ $ 
+</code>
+
+Naw set up the Grid Engine on the master node **Grappolo** as follow:
+
+<code bash>
+sudo mkdir -p /usr/local/apps/sge/2011.11p1
+sudo su
+chmod 777 /usr/local/apps/sge/2011.11p1/
+exit
+# export PATH=$PATH:/usr/local/apps/sge/2011.11p1/bin/linux-arm/
+# export SGE_ROOT=/usr/local/apps/sge/2011.11p1 
+# we have already double checked the previous two lines are correct
+cd  /usr/local/apps/sge/2011.11p1
+scripts/distinst -all -local -noexit
+cd $SGE_ROOT
+./install_qmaster
+</code>
+
+The interactive install console will start and we have follow similar settings to those suggested @ [[http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslSge | FslSGE ]]:\\
+  * press enter at the intro screen
+  * press "y" and then specify **admin** as the user id
+  * leave the install dir as /opt/sge
+  * You will now be asked about port configuration for the master, normally you would choose the default (2) which uses the /etc/services file 
+  * accept the sge_qmaster info
+  * You will now be asked about port configuration for the master, normally you would choose the default (2) which uses the /etc/services file
+  * accept the sge_execd info
+  * leave the cell name as "default"
+  * Enter **grappolo** as the appropriate cluster name when requested
+  * leave the spool dir as is
+  * press "n" for no windows hosts!
+  * press "y" (permissions are set correctly)
+  * press "y" for all hosts in one domain
+  * For the Java available on your Qmaster answer "n" for the wish to use SGE Inspect or SDM then enable the JMX MBean server
+  * press enter to accept the directory creation notification
+  * enter "classic" for classic spooling (berkeleydb may be more appropriate for large clusters)
+  * press enter to accept the next notice
+  * enterthe default "20000-20100" as the GID range (increase this range if you have execution nodes capable of running more than 100 concurrent jobs)
+  * accept the default spool dir or specify a different folder (for example if you wish to use a shared or local folder outside of SGE_ROOT
+  * email address enter default (no email)
+  * press "n" to refuse to change the parameters you have just configured
+  * press enter to accept the next notice
+  * press "y" to install the startup scripts
+  * press enter twice to confirm the following messages
+  * press "n" for a file with a list of hosts
+  * enter the node1 as names of your hosts who will be able to administer and submit jobs (enter alone to finish adding hosts)
+  * shadow hosts (press "default")
+  * choose "1" for normal configuration and agree with "y"
+  * press enter to accept the next message and "n" to refuse to see the previous screen again and then finally enter to exit the installer 
+
+=== Add grappolo as submit node ===
+
+    admin@grappolo:~ $  qconf -as grappolo
+    grappolo added to submit host list
+ 
+<note important>The grid engine should start automatically at reboot. If not, START GRID ENGINE using /etc/init.d/sgemaster.grappolo from grappolo</note>
+
+=== Bash as default terminal ===
+In the queuing list all.q by default we found the [[shell. https://en.wikipedia.org/wiki/C_shell|csh shell]] so we modify this into [[https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29 |bash shell]] using qconf SGE command.
+    qconf -mq all.q
+    # replace   /bin/csh with /bin/bash
+
+
+======= Customize slave nodes =======
+The following operations will be performed twice per each computation nodes of the cluster. First insert the cloned SD card into the same Raspberry pi you used before. From a remote computer connect via ssh.
+
+=== Hostname and password ===
+Log into the pi : 
+  * change hostname “grappolo” to “node1” and later "node2"; 
+<code bash>sudo nano /etc/hostname </code>
+  * change password to //node1pw//  and later //node2pw//
+ <code bash>passwd </code>
+
+=== Node communications ===
+  * edit the /etc/network/interfaces file as below: 
+<code bash>
+auto lo
+iface lo inet loopback
+
+auto eth0
+allow-hotplug eth0
+iface eth0 inet static
+address 10.141.0.1 
+netmask 255.255.0.0
+network 10.141.0.0
+broadcast 10.141.255.255
+gateway 10.141.255.254
+</code>
+
+<note important>In the /etc/network/interface file of node2 use address 10.141.0.2</note>
+
+
+  * edit /etc/hosts file as below:
+
+<code bash>
+127.0.0.1       localhost
+::1             localhost ip6-localhost ip6-loopback
+fe00::0         ip6-localnet
+ff00::0         ip6-mcastprefix
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+
+10.141.255.254  grappolo
+10.141.0.1      node1
+10.141.0.2      node2
+</code>
+
+<note important> /etc/hosts files for node1 and node2  are equal</note>
+
+=== Grid engine - system configuration ===
+As for the master node, we create a new // /etc/profile.d/grappolo.sh // scripts in both nodes with links of our system configurations and grid engine environment.
+<code bash>
+sudo leafpad /etc/profile.d/grappolo.sh
+# add the following 3 lines to this script.
+export SGE_ROOT=/usr/local/apps/sge/2011.11p1
+export SGE_CELL="default"
+export PATH=$PATH:/usr/local/apps/sge/2011.11p1/bin/linux-arm/
+# save and close grappolo.sh
+</code>
+
+===== General settngs =====
+
+Link the /usr/local/apps folder in grappolo using the nfs: 
+  * can create a folder in node1 
+  * mount it in as shared with the correspondent folder in grappolo. 
+
+<code bash>
+sudo mkdir /usr/local/apps
+sudo mount grappolo:/usr/local/apps /usr/local/apps
+</code>
+
+To allow auto mount /usr/local/apps in node1 and 2 at reeboot, edit the  /etc/fstab file and append the following line  : 
+<code bash>
+grappolo:/usr/local/apps	/usr/local/apps	nfs	rsize=8192,wsize=8192,timeo=14,intr,rw	0	0
+</code>
+
+Allow grappolo to ssh into node1 and node 2 without the need to type a password:
+Exit from node1, generate a key pair and copy the key from grappolo to node1. 
+<code bash>
+pi@node1 exit
+pi@grappolo ~ $ ssh-keygen -t rsa -P ""
+pi@grappolo ~ $ ssh-copy-id admin@node1
+pi@grappolo ~ $ ssh-copy-id admin@node2
+pi@grappolo ~ $ ssh admin@node1
+pi@node1 ~ $ exit
+pi@grappolo ~ $ ssh admin@node2
+pi@node2 ~ $ exit
+pi@grappolo ~ $
+</code>
+
+Allow node1 and node2 to ssh into grappolo without a password (the other way around from before:
+  * Log in from node1, to grappolo .
+  * Generate a key pair.
+  * Copy the key from node1 to grappolo. 
+  * Repeat the 3 step above for node2
+<code bash>
+pi@grappolo ~ $ ssh admin@node1
+pi@node1 ~ $ ssh-keygen -t rsa -P ""
+pi@node1 ~ $ ssh-copy-id 'admin@grappolo'
+pi@node1 ~ $ ssh admin@grappolo
+pi@grappolo ~ $ exit
+pi@node1 ~ $ exit
+pi@grappolo ~ $ ssh admin@node2
+pi@node2 ~ $ ssh-keygen -t rsa -P ""
+pi@node2 ~ $ ssh-copy-id 'admin@grappolo'
+pi@node2 ~ $ ssh admin@grappolo
+pi@grappolo ~ $ exit
+pi@node2 ~ $ exit
+
+
+</code>
+
+===== Installation of execution nodes =====
+
+  * Reboot all nodes (grappolo, node1 and node2).
+  * Log in grappolo 
+  * Check the nfs server is started and active
+
+<code bash>
+admin@grappolo:~ $ rpcinfo -p | grep portmapper | head -1
+    100000    4   tcp    111  portmapper
+admin@grappolo:~ $ rpcinfo -p | grep nfs | head -1
+    100003    2   tcp   2049  nfs
+</code>
+
+<note warning>If no nfs or portmapper is foud as rpcinfo message (stdout) the nfs server should be restarted</note>.
+
+If needed, to restart the nfs server:
+     sudo service rpcbind restart
+     sudo /etc/init.d/nfs-kernel-server restart
+     sudo mount grappolo:/usr/local/apps /usr/local/apps/
+
+  * Log into node1 and node2 and check the nfs serve is active
+   ls /usr/local/apps/sge
+   /2011.11p1/ 
+If you do not see the 2011.11.p1 folder, restart the nfs server as for grappolo.
+
+  * Log back in grappolo and check if the SGE is active.
+      ps -aux | grep sge
+      admin      720  0.0  0.4 112508  4504 ?        Sl   15:37   0:06 /usr/local/apps/sge/2011.11p1/bin/linux-arm/sge_qmaster
+      admin     1648  0.0  0.1   4264  1840 pts/0    S+   17:43   0:00 grep --color=auto sge
+
+Restart the SGE if needed:
+     /etc/init.d/sgemaster.grappolo
+
+In grappolo we should see the following settings
+     admin@grappolo:~ $ qconf -ss  # Displays the Grid Engine submit host list.
+     grappolo
+     node1
+     node2
+     
+     admin@grappolo:~ $ qconf -sh  # Show current administrative hosts 
+     grappolo
+     node1
+     node2
+Now install the execution nodes. Perform the following in both nodes:
+
+     cd $SGE_ROOT
+     sudo ./install_execd
+     
+In the installation prompt we accept all **Default** settings as below:
+  * Press ENTER at use default [/usr/local/apps/sge/2011.11p1] 
+  * Press ENTER at Please enter cell name which you used for the qmaster
+  * Press ENTER at Using cell: >default<
+  * Press ENTER at The port for sge_execd is currently set as service. sge_execd service set to port 6445
+  * Press ENTER at This hostname is known at qmaster as an administrative host.
+  * Press ENTER at The spool directory is currently set to: <</usr/local/apps/sge/2011.11p1/default/spool/node1>> Do you want to configure a different spool directory for this host (y/n) [n] >>
+  * Press ENTER at reating local configuration admin@node1 added "node1" to configuration list
+  * Press ENTER at We can install the startup script that will start execd at machine boot (y/n) [y] >>
+  * Press ENTER at cp /usr/local/apps/sge/2011.11p1/default/common/sgeexecd /etc/init.d/sgeexecd.grappolo/sbin/insserv /etc/init.d/sgeexecd.grappolo
+  * Press ENTER at Starting execution daemon. Please wait ... starting sge_execd
+  * Press ENTER at Do you want to add a default queue instance for this host (y/n) [y]
+  * Press ENTER at root@node1 modified "@allhosts" in host group list root@node1 modified "all.q" in cluster queue list
+
+<note important> ** Bash as default terminal **\\
+
+In master the queuing list all.q we modified the [[https://en.wikipedia.org/wiki/C_shell|csh shell]] into [[https://en.wikipedia.org/wiki/Bash_%28Unix_shell%29 |bash shell]] as default terminal. Now we double check this was successfully done using ** qconf -sq all.q  **. If this is not the case, we can modify the shell type again using ** qconf -mq all.q **
+</note>
+
+
+for nbr in $(sfor nbr in $(seq 1 32) ; do qsub -v nbr=$nbr test_sge.sh ; doneeq 1 32) ; do qsub -v nbr=$nbr test_sge.sh ; done
+
+Trouble shooting
+    cat  /usr/local/apps/sge/2011.11p1/default/spool/qmaster/messages 
+
+    qstat -explain c -j _Job-ID_
+http://gridscheduler.sourceforge.net/htmlman/
+\\
+common tasks with qconf\\
+http://gridscheduler.sourceforge.net/howto/commontasks.html
+\\
+solve qw faults\\
+https://arc.liv.ac.uk/pipermail/gridengine-users/2006-May/010095.html
+\\
+
+Adding new node\\
+http://verahill.blogspot.co.uk/2013/08/501-briefly-adding-new-node-to-sge.html
+
+to check hosts: 
+    qhost
+    admin@grappolo:~ $ qhost
+    HOSTNAME                ARCH         NCPU  LOAD  MEMTOT  MEMUSE  SWAPTO  SWAPUS
+    -------------------------------------------------------------------------------
+    global                  -               -     -       -       -       -       -
+    node1                   linux-arm       4     -  973.5M       -  100.0M       -
+    node2                   linux-arm       4     -  973.5M       -  100.0M       -

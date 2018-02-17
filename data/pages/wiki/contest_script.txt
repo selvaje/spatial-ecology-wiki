@@ -1,0 +1,13 @@
+===== Solution to the IEEE data fusion contest 2013 using pktools =====
+
+{{ :wiki:contest:diagram.png?nolink |}}
+
+  * [[contest_quicklook|Create a quick look]]
+  * [[contest_create_training|Creating training sample]]
+  * [[contest_classify_casi|Classify using CASI bands only]]
+  * [[contest_optimization|Parameter optimization]]
+  * [[contest_feature_selection|Feature selection]]
+  * [[contest_additional_features|Create additional features]]
+  * [[contest_data_fusion | Data fusion ]]
+  * [[contest_post_classification|Post classification optimization]]
+  * [[contest_assessment|Accuracy assessment]]    

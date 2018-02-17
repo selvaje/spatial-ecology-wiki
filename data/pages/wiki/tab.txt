@@ -1,0 +1,42 @@
+====== Command/filename completion ======
+When you use the bash shell on Linux it will complete commands and file names for you if you type the 'TAB' key. The default behavior is:
+1. You type in the start of the command or filename.
+2. You hit TAB.
+3. The shell will fill in as much as it can and beep.
+4. Hit TAB again and it shows you all possible matches. 
+
+Example:
+Type: "tai" and pres tab
+<code bash> 
+tai
+</code>
+Type: "ta" and pres tab 2 times
+<code bash> 
+tai
+</code>
+
+====== Keyboard shortcuts ======
+\\
+Ctrl + a        Go to the beginning of the line you are currently typing on.\\
+Ctrl + E 	Go to the end of the line you are currently typing on.\\
+Ctrl + l        Clears the Screen, similar to the clear command.\\
+Ctrl + u 	Clears the line before the cursor position. If you are at the end of the line, clears the entire line.\\
+Ctrl + h 	Same as backspace.\\
+Ctrl + r 	Let’s you search through previously used commands.\\
+Ctrl + c 	Kill whatever you are running.\\
+Ctrl + d 	Exit the current shell.\\
+Ctrl + z 	Puts whatever you are running into a suspended background process. fg restores it.\\
+Ctrl + w 	Delete the word before the cursor.\\
+Ctrl + k 	Clear the line after the cursor.\\
+Ctrl + t 	Swap the last two characters before the cursor.\\
+Esc + t 	Swap the last two words before the cursor.\\
+Alt + f 	Move cursor forward one word on the current line.\\
+Alt + b 	Move cursor backward one word on the current line.\\
+Tab 	        Auto-complete files and folder names.\\
+
+The most important shortcuts Keyboard shortcuts are\\
+Ctrl + a\\
+Ctrl + c\\
+Ctrl + e\\
+Ctrl + k\\
+Start to use it from the beginning and you will coding very fast!

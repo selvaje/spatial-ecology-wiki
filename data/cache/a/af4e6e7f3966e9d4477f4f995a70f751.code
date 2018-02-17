@@ -1,0 +1,9 @@
+   #jpeg(filename = &quot;~/ost4sem/studycase/ITA_veg/results/gini_idx_47pred.jpeg&quot;, width = 600, height = 1200)
+   #varImpPlot(RF47, n.var=47)
+   #dev.off()
+&nbsp;
+   jpeg(filename = &quot;~/ost4sem/studycase/ITA_veg/myresults/gini_idx_47pred.jpeg&quot;, width = 600, height = 1200)
+   varImpPlot(RF47, n.var=47)
+   dev.off()
+&nbsp;
+&nbsp;

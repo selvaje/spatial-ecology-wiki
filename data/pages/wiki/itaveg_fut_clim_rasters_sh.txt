@@ -1,0 +1,89 @@
+
+====== Generate Bioclimatic predictors surface maps ======
+For plotting a future prediction of the Natural Forest map in Italy under a future climate scenario we need to input in the random Forest model information for the future climatic conditions.\\
+This Script uploads and clips raster data of Future Climate Scenario IPCC Sres A2a ENS model for the year 2080. Data are derived from worldclim database. http://wworldclim.org \\
+ENS model is the averaged climatic model of CCMA, CSIRO and HADCM3 models
+
+
+==== Open grass and set the extent and working environment ====
+From a linux terminal make sure you are in the Gisdbase folder:
+<code bash>
+   cd ~/ost4sem/grassdbnew/europe
+</code>   
+Enter grass in command line mode :
+<code bash>
+   grass -text ~/ost4sem/grassdbnew/europe/Vmodel
+ </code>   
+
+Check your working environment.  It should look like this:
+  GRASS 6.4.0RC5 (europe):~/ost4sem/grassdb/europe > g.gisenv
+  GISDBASE=/home/stefano/ost4sem/grassdb
+  LOCATION_NAME=europe
+  MAPSET=Vmodel
+  MONITOR=x2
+  GRASS_GUI=text
+  [Raster MASK present]
+
+Set the study area as mask:  
+   r.mask -o input=mask_ita
+
+Grass shuld inform you:"MASK created. All subsequent raster operations will be limited to MASK area. Removing or renaming raster file named MASK will restore raster operations to normal
+
+Now we procede as follows:
+  * Import Raster climate data at European Extent from ARC INFO GRID format to GRASS format
+  * Clip rasters to the Italian extent
+  * Delete European extent rasters
+
+==== Upload raster data ====
+Import all ArcInfo raster files predictor variables for FUTURE CLIMATE into GRASS format
+
+<code bash>
+   for  (( dir=1 ; dir<=9 ; dir ++ ))  ; do
+         r.in.gdal -o input="/home/ste/ost4sem/studycase/ITA_veg/data/ENS_A2a_2080b/pr10"$dir"/hdr.adf"  output=pr10$dir"Feurope"  --overwrite
+   done
+   
+   for  (( dir=10 ; dir<=39 ; dir ++ ))  ; do
+         r.in.gdal -o input="/home/ste/ost4sem/studycase/ITA_veg/data/ENS_A2a_2080b/pr1"$dir"/hdr.adf"  output=pr1$dir"Feurope"  --overwrite
+   done
+   
+   for  dir in  198 199 ; do
+         r.in.gdal -o input="/home/ste/ost4sem/studycase/ITA_veg/data/ENS_A2a_2080b/pr"$dir"/hdr.adf"  output=pr$dir"Feurope"  --overwrite
+   done
+</code>   
+
+
+Clip GRASS FORMAT Raster predictor variables from the European to the italian extent
+<code bash>
+   for  (( pr=1 ; pr<=9 ; pr ++ ))  ; do
+      r.mapcalc pr10$pr"ENSA2a80" = pr10$pr"Feurope" 
+   done
+   
+   for  (( pr=10 ; pr<=39 ; pr ++ ))  ; do
+      r.mapcalc pr1$pr"ENSA2a80" = pr1$pr"Feurope"
+   done
+   
+   for  pr in  198 199 ; do
+      r.mapcalc pr$pr"ENSA2a80" = pr$pr"Feurope"
+   done
+</code>   
+
+Remove European extent GRASS FORMAT Raster predictor variables
+<code bash>
+   for  (( pr=1 ; pr<=9 ; pr ++ ))  ; do
+      g.remove rast=pr10$pr"Feurope"
+   done
+
+   for  (( pr=10 ; pr<=39 ; pr ++ ))  ; do
+      g.remove rast=pr1$pr"Feurope" 
+   done
+   
+   for  pr in  198 199 ; do
+      g.remove rast=pr$pr"Feurope" 
+   done
+ </code>  
+
+That's all folks!
+Future climatic rasters are now available for plotting future scenario maps using [[wiki:map_rf_itaveg_ens2028_r|this R script]] \\
+
+~/ost4sem/studycase/ITA_veg/R_script/map_RF_ITAveg_ENS2080.R script
+               

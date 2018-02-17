@@ -1,0 +1,54 @@
+
+<p>
+install in both pc 
+</p>
+<pre class="code"> sudo apt-get install openssh-client
+ sudo apt-get install openssh-server
+ sudo /etc/init.d/ssh restart</pre>
+
+<p>
+Get the ip with ifconfig
+</p>
+
+<p>
+scp of several files on remote server, parsing the pw in automatic. 
+</p>
+<pre class="code"> ls Smoothed_*.bil | xargs -n 1 -P 10 bash -c &#039; sshpass -p &#039;passward&#039; scp $1  selv@123.16.125.12:/home/selv/dem   &#039; _ 
+ 
+ </pre>
+
+<p>
+mount a remote server
+</p>
+<pre class="code"> 
+ sshfs hostname: mountpoint
+ eg
+ sshfs  data_urban/ giuseppea@litoria.eeb.yale.edu:/mnt/data2/scratch/data_ur/
+ 
+ # to specify the ownership of the folder 
+ sudo sshfs  -o nonempty   -o allow_other  -o uid=1115  -o gid=1115    /home/samid/grassdb/  samid@turaco.eeb.yale.edu:/mnt/data2/scratch/sami/grassbdmount/
+ 
+ # get the uid by id -u  and id -g 
+ 
+ 
+ </pre>
+
+<p>
+create a ftp on a machine 
+</p>
+<pre class="code"> sudo apt-get install vsftpd
+ mkdir /home/selv/ftp
+ sudo usermod -d /home/selv/ftp ftp
+ sudo /etc/init.d/vsftpd restart</pre>
+
+<p>
+rsync via ssh 
+</p>
+<pre class="code"> rsync  -v -e ssh    cloud/tif/cloud7.tif      ga254@bulldogj.wss.yale.edu:/lustre0/scratch/ga254/dem_bj/CLOUD/</pre>
+
+<p>
+create a mount point i the ram 
+</p>
+<pre class="code"> sudo mount -t tmpfs   -o size=50G tmpfs /tmp/tmp_ram
+ # in case you need specific permision
+ sudo chown -R   samid:samid /tmp/tmp_ram</pre>

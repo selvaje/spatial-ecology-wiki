@@ -1,0 +1,64 @@
+====== Multi-cores and Grid processing ======
+
+[[http://www.spatial-ecology.net/ost4sem/lecture/clustering.pdf |  Grid computing vs parallel computing ]]
+
+===== Multi-cores processing on desktop and laptop =====
+We can improve the capacity of processing data using the full computational capacity of CPU available in hardware.\\
+  * [[vm_parall | Set up your VM for multicore computation]]
+
+Control number of cores using **xargs & qsub** bash function:
+  * [[cluster_xargs1 | Transform a simple "for loop" in multicore "for loop"]] (basic multicore programming)
+  * [[cluster_xargs  | Transform a simple "for loop script" in multicore "for loop script" using xargs ]] (advance multicore programming)
+  * [[cluster_qsub   | Transform a simple "for loop script" in multicore "for loop script" using qsub]] (advance multicore programming)
+  * [[cluster_qsubInter  | Use of qsub and xargs in for running R sections simultaneously]] (advance multicore programming)
+  * [[http://www.gnu.org/software/parallel/man.html#name| parallel ]] - multi core processing using //parallel// bash function. //Parallel// allows you to perform a lot of stuff.... as an example you can use multiple remote computers for multi core computing. It is a rich software allowing the redirection of output to your machine.
+
+===== Cluster computation under GRAPPOLO =====
+[[wiki:raspi_hpc|GRAPPOLO]] **a supercomputer in a super box** is a project conceived and developed from **Spatial Ecology** to teach cluster computation using a grid engine. We have collaborated with Makernow (a fablab in Cornwall) to make it portable.
+More specifically, GRAPPOLO is micro cluster computer replicating the functioning of the biggest cluster computer facility in the southwest UK. This tool is similar to the Raspberry pi cluster developed at Southampton University but is aimed towards teaching BigData processing for Geographic Information Systems methods rather than raw computation. It is very low cost ( ~ £140), portable and a perfect replica of an operating system running on a true high performance cluster computer. 
+
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/grappolo_intro.pdf| general introduction ]] to **grappolo** hardware and grid engines.
+  * [[wiki:raspi_hpc| Installing ]] an operating system and grid engine on a cluster of computer
+  * [[http://www.makernow.co.uk/project/grappolo-supercomputer-superbox| Building ]] a box using open source software and a laser-cut for making grappolo portable and safe.
+  * [[wiki:grappolo_basic| Start using grappolo ]] and learn how to process data in a grid of computers.
+  * [[wiki:grappolo_grass | Grass data processing in HPC ]] - learn the variable and environmental setting of grass for processing data in a grid engine.
+
+===== Cluster computation using Amazon High Performance Computing HPC =====
+We obtained [[http://aws.amazon.com/grants/| Amazon education grants]] for accessing and teaching the use of Amazon web services for High Performance Computing. 
+\\
+   cd /home/user/Downloads/
+   wget http://www.spatial-ecology.net/ost4sem/exercise/keypair.pem
+   sudo chmod 400 /home/user/Downloads/keypair.pem
+      
+   # see http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:regListSBarb
+   # 1ID student  1 2 3 4 
+   
+   
+   
+   ssh -X -i /home/user/Downloads/keypair.pem  user*@ec2-54-234-116-177.compute-1.amazonaws.com
+   
+   # transfer file to the instance 
+   scp -i /home/user/Downloads/keypair.pem yourfile user*@ec2-54-234-116-177.compute-1.amazonaws.com:/home/user*/
+
+  * [[wiki:amazon_hpc | Learn HPC ]] using amazon cloud.
+  * [[wiki:amazon_zargs1  | Transform a simple "for loop" in multicore "for loop" ]] 
+  * [[wiki:amaxon_xargs |Transform a simple "for loop script" in multicore "for loop script" ]] in the Amazon cloud.
+
+===== Multi-cores processing R scripts =====
+Examples of processing R scripts using multiple CPU:
+  * [[cluster_R_EOF | Embed R funcion in Bash  ]] passing variables from bash to R: to understand the logic of multi chore, here an example of single CPU processing R script using EOF method.
+  * [[cluster_R_xargs | The use of xargs  ]] Basic R functions processed with multiple chore using xargs bash function
+\\
+\\
+
+===== Cloud computation using MS Azure =====
+[[http://en.wikipedia.org/wiki/Cloud_computing| Cloud computing ]] is the ability to run a program or application on many connected computers at the same time over internet.\\
+We can perform cloud computation uploading one or more virtual machines (VM) on a server, access the VMs through [[http://en.wikipedia.org/wiki/Secure_Shell| a secure shell - ssh]] data connection protocol.
+ 
+     ssh -X    nuvola1P@nuvola1p.cloudapp.net
+
+This is less performing than using cluster computation such as [[http://gridscheduler.sourceforge.net/htmlman/htmlman1/qsub.html| Sun Grid Engines]]. The advantage over cluster computation is that you can //rent// the computational hardware sized to your needs and for a limited time and perform a specific task.
+
+
+
+

@@ -1,0 +1,30 @@
+====== Creating and editing a vector layer in QGIS ======
+
+Using QGIS and GRASS we are often have to create or edit a vector file.\\
+
+===== The case of creating a vector in QGIS for classification purpose =====
+In this exercise we have several landsat Image (raster grass) available as reference data to identify landuse classes.\\
+
+Start grass by command line 
+   grass64 -text  ~/ost4sem/exercise/basic_remote_sensing/grass_location/PERMANENT
+Open Qgis inside grass by command line and load the L5168065_06520091206_B123 L5168065_06520091206_B234 L5168065_06520091206_B345
+   qgis &
+
+  * Open the GRASS raster L5168065_06520091206_B123  L5168065_06520091206_B234 L5168065_06520091206_B345 or a single band.
+  * From the main tools of Qgis select  New Shapefile Layer. A pop up window will appear. 
+  * Select:  Polygon, Attribute Name = Class, Type = Whole Number, Width = 2; then press "Add to attributes list"; then press "OK".
+  * Save the file as class.shp in ~/ost4sem/exercise/basic_remote_sensing/class.shp 
+  * Right click and select "Toggle Editing". The editing button will be available. {{:wiki:wikiqgis:editingtools.png|}}
+  * Press "Capture Polygon"
+  * Edit polygons in accordance to 
+    * Class 1 = Water
+    * Class 2 = Bare soil
+    * Class 3  = Sparse trees or bushes 
+    * Class 4  = Forest
+    * Use file  ~/ost4sem/exercise/basic_remote_sensing/class_examples.shp  as an example. 
+  * When you finish to edit, press right button and close the "Toggle Editing". Don't forget to save.
+\\
+The file that you created will be used for a Landsat supervised classification using grass. 
+ 
+
+

@@ -1,0 +1,37 @@
+====== AWS setup ======
+
+<code bash>
+cd /home/user/Downloads/
+wget http://www.spatial-ecology.net/ost4sem/exercise/keypair.pem
+sudo chmod 400 /home/user/Downloads/keypair.pem
+    
+# see the below table for student ID
+# ID student  1 2 3 4 
+
+ssh -X -i /home/user/Downloads/keypair.pem  user*@ec2-54-234-116-177.compute-1.amazonaws.com
+ 
+# transfer file to the instance 
+scp -i /home/user/Downloads/keypair.pem yourfile user*@ec2-54-234-116-177.compute-1.amazonaws.com:/home/user*/
+</code>
+
+|	ID	|	First Name	Last Name	|	Company	|
+|	1	|	Bo Victor	Thomsen	|	Municipality of Frederikssund	|
+|	2	|	Justin	Peters	|	Indiana University	|
+|	3	|	Mark	Scott	|	Cartomation	|
+|	4	|	Adam	Steer	|	Australian National University	|
+|	5	|	Martin	Ytre-Eide	|	Norwegian Radiation Protection Authority	|
+|	6	|	Thayer	Young	|	Cicada Systems GIS Consulting	|
+|	7	|	Seongkyu	Lee	|	APEC Climate Center	|
+|	8	|	Jonas Lund	Nielsen	|	Danish Ministry of Energy, Utilities and Climate	|
+|	9	|	Andrew	Chan	|	Firstbasesolutions Inc	|
+|	10	|	Aniruddha	Ghosh	|	University of California, Davis	|
+|	11	|	Robert	Dzur	|	Bohannan Huston, Inc.	|
+|	12	|	Bernie	Doud	|	Aero-Graphics, Inc.	|
+|	13	|	Casey	Francis	|	Aero-Graphics, Inc.	|
+|	14	|	Thea	Youngs	|	City of Portland	|
+|	15	|	Anton	Bakker	|	GeoCat BV	|
+|	16	|	Ionut	Serban	|	employer	|
+|	17	|	Mark	Burgoyne	|	Met Office	|
+|	18	|	Tim	Bailey	|	Humboldt State University	|
+|	19	|	Saffia	Hossainzadeh	|	FM Global	|
+|	20	|	Nathan	Piekielek	|	Penn State University	|

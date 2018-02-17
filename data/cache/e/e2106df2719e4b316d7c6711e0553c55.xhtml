@@ -1,0 +1,477 @@
+
+<h1 class="sectionedit1" id="nutrient_losses">Nutrient losses</h1>
+<div class="level1">
+
+<p>
+<br/>
+
+Script done by Toke Panduro, KU, tepp@life.ku.dk, Maria Konrad, AU, mthk@dmu.dk, Line Block Hansen, AU, lbc@dmu.dk
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Nutrient losses" [1-152] -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+Nutrient losses to the water environment is a major problem in many European and non-European countries. Excessive losses from agricultural areas enhance eutrophication processes with loss of biodiversity and groundwater contamination as a consequence. This again mean decreased economic values of fishery and recreational value. <br/>
+
+</p>
+
+</div>
+<!-- EDIT2 SECTION "INTRODUCTION" [153-514] -->
+<h3 class="sectionedit3" id="general_framework_of_this_analysis">General framework of this analysis</h3>
+<div class="level3">
+
+<p>
+In this project we have two data files, an excel file containing information about nutrient losses from agricultural areas and a shape file with the same areas. The purpose of the project is to surf around getting to know a bit more about the different programs, GRASS, QGIS, R and the BASH language. We are going to explore our data, reading them into GRASS and R and carry out some simple statistical exercises.<br/>
+
+</p>
+
+</div>
+<!-- EDIT3 SECTION "General framework of this analysis" [515-979] -->
+<h3 class="sectionedit4" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+To load data into GRASS and R. Carry out preliminary analysis of the data and plot different results in QGIS and R.
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Project objectives" [980-1127] -->
+<h2 class="sectionedit5" id="metadata">METADATA</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT5 SECTION "METADATA" [1128-1149] -->
+<h3 class="sectionedit6" id="excel_file">Excel file</h3>
+<div class="level3">
+
+<p>
+We have an excel file containing information about nutrient losses, retention and application of nitrogen, application of fertilizer and manure, yield type and other variables for 10,682 smaller agricultural areas. These areas are aggregated into 25 catchment areas around Odense Fjord.<br/>
+
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Excel file" [1150-1460] -->
+<h3 class="sectionedit7" id="vector_file">Vector file</h3>
+<div class="level3">
+
+<p>
+We have two vector files in shape format. One containing the 25 catchment areas (polygons) and one with the 10,682 smaller agricultural areas (points)
+</p>
+
+<p>
+Vectorfile 1: 
+Layer name: 25opl<em>info
+Geometry: Polygon
+Feature Count: 25
+Extent: (568411.591663, 6106805.020500) - (604461.949080, 6159975.773157)
+Projection [“ETRS</em>1989<em>UTM</em>Zone_32N”,
+UNIT[“Meter”,1.0]]
+</p>
+
+<p>
+Vectorfile 2:
+Layer name: Markblok
+Geometry: Point
+Feature Count: 10682
+Extent: (568654.170939, 6106822.772875) - (604447.698678, 6159673.938541)
+Projection [“ETRS<em>1989</em>UTM<em>Zone</em>32N”,
+UNIT[“Meter”,1.0]]
+</p>
+<pre class="code bash">Finding info about the files: use ogrinfo
+<span class="kw3">cd</span>    ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input<span class="sy0">/</span>
+ogrinfo <span class="re5">-al</span>   ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input<span class="sy0">/</span>25opl_info.shp <span class="sy0">|</span> <span class="kw2">head</span> <span class="re5">-28</span>
+ogrinfo <span class="re5">-al</span>   ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input<span class="sy0">/</span>Markblok.shp <span class="sy0">|</span> <span class="kw2">head</span> <span class="re5">-28</span>
+&nbsp;
+Fancy loop <span class="kw1">for</span> calling projection <span class="kw1">for</span> all files 
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.shp ; <span class="kw1">do</span> ogrinfo <span class="re5">-al</span> <span class="re1">$file</span>    <span class="sy0">|</span> <span class="kw2">grep</span> PROJCS  ; <span class="kw1">done</span> <span class="co0">#-al list all features in all layers</span></pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Vector file" [1461-2480] -->
+<h2 class="sectionedit8" id="method">METHOD</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT8 SECTION "METHOD" [2481-2500] -->
+<h2 class="sectionedit9" id="data_import">DATA IMPORT</h2>
+<div class="level2">
+
+<p>
+We saved data from an USB stick to the desktop and loaded data from the desktop to input folder
+</p>
+<pre class="code bash"><span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input   <span class="co0"># setting the input file directory which is necessary every time GRASS is opened </span>
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>output <span class="co0"># setting the output file directory</span></pre>
+
+<p>
+Change directory to the directory where the file to move is located, we saved ours in desktop directory
+</p>
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>Desktop 
+<span class="kw2">mv</span> basedata.csv ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input<span class="sy0">/</span>basedata.csv 
+<span class="kw2">mv</span> 25opl_info.dbf <span class="re1">$INDIR</span><span class="sy0">/</span>25opl_info.dbf
+<span class="kw2">mv</span> 25opl_info.prj <span class="re1">$INDIR</span><span class="sy0">/</span>25opl_info.prj
+<span class="kw2">mv</span> 25opl_info.sbn <span class="re1">$INDIR</span><span class="sy0">/</span>25opl_info.sbn
+<span class="kw2">mv</span> 25opl_info.sbx <span class="re1">$INDIR</span><span class="sy0">/</span>25opl_info.sbx
+<span class="kw2">mv</span> 25opl_info.shp <span class="re1">$INDIR</span><span class="sy0">/</span>25opl_info.shp
+<span class="kw2">mv</span> 25opl_info.shx <span class="re1">$INDIR</span><span class="sy0">/</span>25opl_info.shx
+&nbsp;
+<span class="kw2">mv</span> Markblok_25opl.dbf <span class="re1">$INDIR</span><span class="sy0">/</span>Markblok.dbf
+<span class="kw2">mv</span> Markblok_25opl.prj <span class="re1">$INDIR</span><span class="sy0">/</span>Markblok.prj
+<span class="kw2">mv</span> Markblok_25opl.sbn <span class="re1">$INDIR</span><span class="sy0">/</span>Markblok.sbn
+<span class="kw2">mv</span> Markblok_25opl.sbx <span class="re1">$INDIR</span><span class="sy0">/</span>Markblok.sbx
+<span class="kw2">mv</span> Markblok_25opl.shp <span class="re1">$INDIR</span><span class="sy0">/</span>Markblok.shp
+<span class="kw2">mv</span> Markblok_25opl.shx <span class="re1">$INDIR</span><span class="sy0">/</span>Markblok.shx</pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT9 SECTION "DATA IMPORT" [2501-3573] -->
+<h2 class="sectionedit10" id="data_processing">DATA PROCESSING</h2>
+<div class="level2">
+
+<p>
+We work a bit in GRASS, picking out a specific catchment area and calculate shortest distances between points and the catchment boarders. 
+The result can be seen in QGIS 
+</p>
+
+<p>
+Open grass in a preexisting mapset with a projection - in order to copy the excising projection
+</p>
+<pre class="code bash">grass <span class="re5">-text</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdb<span class="sy0">/</span>europe<span class="sy0">/</span>PERMANENT 
+<span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input    
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>output </pre>
+
+<p>
+Create a new location in GRASS to save our file with the projection obtained later. GRASS is by default creating a file called PERMANENT inside the odense directory.
+</p>
+<pre class="code bash"><span class="kw2">rm</span> <span class="re5">-r</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdb<span class="sy0">/</span>odense</pre>
+
+<p>
+Import the shape file 25opl<em>info.shp into the new grass location 
+&lt;code bash&gt;
+v.in.ogr -e dsn=$INDIR/25opl</em>info.shp output=opl25 location=odense  –overwrite 
+&lt;/code&gt;
+</p>
+
+<p>
+Exit GRASS to save the file in our working directory - doing this we have projected the projection from the excising data (in Permanent) to our file
+</p>
+<pre class="code bash"><span class="kw3">exit</span> 
+<span class="kw2">rm</span> <span class="re5">-r</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>grassdb<span class="sy0">/</span>odense <span class="co0">#Be sure that the directory not already exists!</span>
+<span class="kw2">mv</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdb<span class="sy0">/</span>odense ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>grassdb<span class="sy0">/</span>. <span class="co0">#Move Odense to our GRASS database in the nutrient directory</span></pre>
+
+<p>
+Enter GRASS again to clean file. When importing shape files into GRASS they have to be cleaned due to errors created when imported
+</p>
+<pre class="code bash">grass <span class="re5">-text</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>grassdb<span class="sy0">/</span>odense<span class="sy0">/</span>PERMANENT
+<span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input    
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>output </pre>
+
+<p>
+Create cleaned file and an error file.
+It will only work if we remember the -e, making us able to extend the data, allowing errors when splitting and coupling the shape file
+</p>
+<pre class="code bash">v.in.ogr <span class="re5">-e</span> <span class="re2">dsn</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>25opl_info.shp <span class="re2">output</span>=opl25 <span class="re5">--overwrite</span> 
+v.clean <span class="re2">input</span>=opl25 <span class="re2">output</span>=oplc25 <span class="re2">tool</span>=rmdupl,bpol <span class="re2">error</span>=myerroropl
+g.remove <span class="re2">vect</span>=opl25 <span class="co0">#Remove file not cleaned</span>
+&nbsp;
+v.in.ogr <span class="re5">-e</span> <span class="re2">dsn</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>Markblok.shp <span class="re2">output</span>=Markblok1 <span class="re5">--overwrite</span>
+v.clean <span class="re2">input</span>=Markblok1 <span class="re2">output</span>=Markblokc <span class="re2">tool</span>=rmdupl,bpol <span class="re2">error</span>=myerrormarkblok
+g.remove <span class="re2">vect</span>=Markblok1 
+qgis <span class="sy0">&amp;</span> <span class="co0">#Open Quantum GIS to explore data</span></pre>
+
+<p>
+Import csv file to dbf file in GRASS
+</p>
+<pre class="code bash">db.in.ogr <span class="re2">dsn</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>basedata.csv <span class="re2">output</span>=basedata <span class="re2">key</span>=BLOKNR</pre>
+
+<p>
+Now the two files, Markblokc (the shapefile) and basedata (info file) is joined in QGIS 
+using Vector/join attributes, and choose the relevant files and variables to join upon. The resulting file is a new shapefile named 
+join<em>basedata</em>markblokc.shp placed in: ost4sem/project/unidk2010/nutrients/output
+</p>
+<pre class="code bash">Load the joined <span class="kw2">file</span> into GRASS and clean it
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>output <span class="co0"># setting the output file directory</span>
+v.in.ogr <span class="re5">-e</span> <span class="re2">dsn</span>=<span class="re1">$OUTDIR</span><span class="sy0">/</span>join_basedata_markblokc.shp <span class="re2">output</span>=join_basedata_markblokc <span class="re5">--overwrite</span> 
+v.clean <span class="re2">input</span>=join_basedata_markblokc <span class="re2">output</span>=join_basedata_markblokc_c <span class="re2">tool</span>=rmdupl,bpol <span class="re2">error</span>=myerrorjoin
+g.remove <span class="re2">vect</span>=join_basedata_markblokc <span class="co0">#Remove file not cleaned</span></pre>
+
+</div>
+<div class="level6">
+
+</div>
+<!-- EDIT10 SECTION "DATA PROCESSING" [3574-6723] -->
+<h1 class="sectionedit11" id="we_would_like_to_find_the_catchment_area_with_the_greatest_n_loss_that_is_sum_variable_nudv_kg_per_catchment_area">We would like to find the catchment area with the greatest N loss, that is sum variable Nudv(kg) per catchment area</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT11 SECTION "We would like to find the catchment area with the greatest N loss, that is sum variable Nudv(kg) per catchment area" [6724-6841] -->
+<h1 class="sectionedit12" id="and_find_the_a_maximum_value_then_we_calculate_the_distance_from_markbloks_in_catchment_area_25_to_the_other_catchments_using_vdistance">and find the a maximum value. Then we calculate the distance from markbloks in catchment area 25 to the other catchments using v.distance</h1>
+<div class="level1">
+
+</div>
+<div class="level6">
+
+<p>
+v.out.ascii convert the GRASS vector file into a GRASS txt file, use the join<em>basedata</em>markblokc<em>c file, 
+seperating the colums with space (fs), only choose the two colums BNI</em>nr and Nudv<em>kg</em> and save it (&gt;) into  join<em>basedata</em>markblokc_c_table.txt
+</p>
+<pre class="code bash">v.out.ascii   <span class="re2">input</span>=join_basedata_markblokc_c  <span class="re2">fs</span>=<span class="st0">&quot; &quot;</span>   <span class="re2">columns</span>=BNI_nr,Nudv_kg_,Opl_NS  <span class="sy0">&gt;</span> join_basedata_markblokc_c_table.txt</pre>
+
+<p>
+Do a loop to caculate the sum of Nudv<em>kg</em> for every catchment area (BNI_nr) and print the file with three relevant columns. 
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span> <span class="re2">clas</span>=<span class="nu0">1</span> ; clas<span class="sy0">&lt;</span>=<span class="nu0">25</span> ; clas++<span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">do</span> 
+  <span class="kw2">awk</span>  <span class="re5">-v</span> <span class="re2">clas</span>=<span class="re1">$clas</span>  <span class="st_h">'{ if ($4==clas) sum5=sum5+$5  }  END {print clas, sum5, $6 }'</span> join_basedata_markblokc_c_table.txt   <span class="sy0">&gt;&gt;</span>  join_basedata_markblokc_c_sum.txt 
+<span class="kw1">done</span></pre>
+
+<p>
+Find the maximum value and print the maximum value and the BNI<em>nr ($1 = colum 1) and the Opl</em>NS (colum 3)
+</p>
+<pre class="code bash"><span class="kw2">awk</span> <span class="st_h">'{ if (NR&gt;1) {if ($2&gt;max) max= $2 }} END {print $1, $3, max }'</span>  join_basedata_markblokc_c_sum.txt </pre>
+
+<p>
+We found that catchment area no. 9 have the greatest N loss 
+</p>
+
+<p>
+Now we are going to estimate the distance between markbloks and catchment areas
+</p>
+
+<p>
+First we clip the catchment area to focus on, catchment area 15 and the mark points from catchment area 9.
+</p>
+<pre class="code bash">v.extract <span class="re2">input</span>=Markblokc <span class="re2">output</span>=Markblok9 <span class="re2">where</span>=<span class="st0">&quot;BNI_nr=9&quot;</span>
+v.extract <span class="re2">input</span>=oplc25 <span class="re2">output</span>=opl15 <span class="re2">where</span>=<span class="st0">&quot;BNI_nr=15&quot;</span></pre>
+
+<p>
+Now we calculate the distances from the markbloks in catchment area 9 to the boundaries in catchment area 15
+</p>
+<pre class="code bash">v.db.addcol <span class="re2">map</span>=Markblok9<span class="sy0">@</span>PERMANENT <span class="re2">layer</span>=<span class="nu0">1</span> <span class="st_h">'columns=dist double precision'</span><span class="co0">#Add a new column for use in the v.distance </span>
+v.info <span class="re5">-c</span> Markblok9
+v.distance <span class="re2">from</span>=Markblok9 <span class="re2">to</span>=opl15 <span class="re2">from_type</span>=point <span class="re2">to_type</span>=boundary <span class="re2">output</span>=distance_9_15 <span class="re2">upload</span>=dist <span class="re2">column</span>=dist <span class="re5">--overwrite</span></pre>
+
+<p>
+Now we do a loop to estimate distances from Markblok9 to all other catchment areas contained in oplc25
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span> <span class="re2">clas</span>=<span class="nu0">1</span> ; clas<span class="sy0">&lt;</span>=<span class="nu0">25</span> ; clas++<span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">do</span>  <span class="co0"># clas is the poligon ID</span>
+v.db.dropcol <span class="re2">map</span>=Markblok9  <span class="re2">column</span>=dist<span class="re1">$clas</span>
+v.db.addcol <span class="re2">map</span>=Markblok9<span class="sy0">@</span>PERMANENT <span class="re2">layer</span>=<span class="nu0">1</span> <span class="re2">columns</span>=<span class="st0">&quot;dist<span class="es2">$clas</span> int&quot;</span>  <span class="co0">#Add a new column for use in the v.distance</span>
+v.extract <span class="re2">input</span>=oplc25 <span class="re2">output</span>=opl<span class="re1">$clas</span> <span class="re2">where</span>=<span class="st0">&quot;BNI_nr=<span class="es2">$clas</span>&quot;</span> <span class="re5">--overwrite</span> 
+v.distance <span class="re2">from</span>=Markblok9 <span class="re2">to</span>=opl<span class="re1">$clas</span> <span class="re2">from_type</span>=point <span class="re2">to_type</span>=boundary <span class="re2">upload</span>=dist <span class="re2">column</span>=dist<span class="re1">$clas</span> <span class="re5">--overwrite</span>
+<span class="kw1">done</span> </pre>
+
+<p>
+Jubiiiiiiiiiiiiiiiiiiiiiiiiiiiii it worked…!!!!!!!!!!! <img src="/dokuwiki/lib/images/smileys/icon_razz.gif" class="icon" alt=":-P" />
+</p>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10agrinut&amp;media=wikidk:catchments_25_points.png" class="media" title="wikidk:catchments_25_points.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=1947e0&amp;media=wikidk:catchments_25_points.png" class="media" title="Catchments areas and smaller agricultural areas" alt="Catchments areas and smaller agricultural areas" width="400" /></a>
+</p>
+
+</div>
+<!-- EDIT12 SECTION "and find the a maximum value. Then we calculate the distance from markbloks in catchment area 25 to the other catchments using v.distance" [6842-9553] -->
+<h3 class="sectionedit13" id="model_parametrization">Model parametrization</h3>
+<div class="level3">
+
+<p>
+Now we are changing to R, load data into R, make some regressions and plot different results.
+We start with making a new directory in Bash 
+</p>
+<pre class="code bash"><span class="kw2">mkdir</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>R
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>R<span class="sy0">/</span>output
+<span class="re2">OUTR</span>=<span class="st0">&quot;~/ost4sem/project/unidk2010/nutrients/R/output&quot;</span></pre>
+
+<p>
+Then we start up R
+</p>
+<pre class="code R">R</pre>
+
+<p>
+Read data into R and change values from factor to numeric values, finally saving data in the R directory
+</p>
+<pre class="code R">markdata &lt;- read.dbf(&quot;~/ost4sem/project/unidk2010/nutrients/grassdb/odense/PERMANENT/dbf/join_basedata_markblokc_c.dbf&quot;, as.is=TRUE)</pre>
+
+<p>
+as.is=TRUE means that the function DO NOT convert characters to factors. This is important because characters can be converted to numeric numbers, factors can NOT 
+</p>
+<pre class="code R">markdata$GLRareal_N &lt;- as.numeric(markdata$GLRareal)
+markdata$Nudv_kg_N &lt;- as.numeric(markdata$Nudv_kg_)
+markdata$BNI_nr_N &lt;- as.numeric(markdata$BNI_nr)
+markdata$jb_N &lt;- as.numeric(markdata$jb)
+markdata$N_han_N &lt;- as.numeric(markdata$N_han)
+markdata$N_hus_N &lt;- as.numeric(markdata$N_hus)
+markdata$HaGrovf_N &lt;- as.numeric(markdata$HaGrovf)
+markdata$HaGraesVed_N &lt;- as.numeric(markdata$HaGraesVed)
+markdata$HaKornVaar_N &lt;- as.numeric(markdata$HaKornVaar)
+markdata$HaKornVin_N &lt;- as.numeric(markdata$HaKornVin)
+markdata$HaAndet_N &lt;- as.numeric(markdata$HaAndet)
+markdata$HaBrakSkov_N &lt;- as.numeric(markdata$HaBrakSkov)
+&nbsp;
+save(markdata, file=&quot;~/ost4sem/project/unidk2010/nutrients/R/markdata.Rdata&quot;)
+str(markdata)</pre>
+
+<p>
+Linear regression
+</p>
+<pre class="code R">reg1 &lt;- lm(markdata$Nudv_kg_N ~ markdata$GLRareal_N+markdata$jb_N+markdata$N_han_N+markdata$N_hus_N)
+reg2 &lt;- lm(markdata$Nudv_kg_N ~ markdata$GLRareal_N+markdata$N_han_N+markdata$N_hus_N)
+.
+.
+.
+reg8 &lt;- lm(markdata$Nudv_kg_N ~ markdata$GLRareal_N+markdata$N_han_N+markdata$N_hus_N+markdata$HaGraesVed_N+markdata$HaKornVaar_N+markdata$HaBrakSkov_N+markdata$HaKornVin_N)
+summary(reg8)</pre>
+
+<p>
+Print residuals and save in dataset markdata as the variable residual
+</p>
+<pre class="code R">markdata$residual &lt;- reg8$residual
+str(markdata$residual)</pre>
+
+<p>
+Now we make some plots…… for fun <img src="/dokuwiki/lib/images/smileys/icon_smile.gif" class="icon" alt=":-)" />
+</p>
+
+<p>
+We make a png-function which creates a directory OUTR where plots are stored, and close the directory with dev.off
+</p>
+<pre class="code R">par(mfrow=c(2,1))   #De to plots kommer i samme billede
+qqnorm(markdata$residual,main=&quot;QQ plot&quot;) #Two plots in the same picture
+hist(markdata$residual, freq=TRUE, main=&quot;Test for normal distribution&quot;,xlab=&quot;Residuals&quot;) #Plot residuals against the frequency
+dev.copy(png,filename=&quot;~/ost4sem/project/unidk2010/nutrients/R/Residuals.png&quot;,width = 1500, height = 1000, bg=&quot;white&quot;)
+dev.off()</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10agrinut&amp;media=wikidk:residualplot.png" class="media" title="wikidk:residualplot.png"><img src="/dokuwiki/lib/exe/fetch.php?w=500&amp;tok=e5e6f0&amp;media=wikidk:residualplot.png" class="media" alt="" width="500" /></a>
+</p>
+
+<p>
+Now we make a loop: a regression for the 25 different catchment areas and save the estimate values in a 1:25 vector
+The estimate value from the regression is called by &#039;$coefficient&#039;, we see that by wrigting str(summary(reg8))
+</p>
+<pre class="code R">estim=c(1:25)
+for (i in c(1:25)){
+subtmp=subset(markdata,markdata$BNI_nr_N==i)
+temp.lm &lt;- lm (subtmp$Nudv_kg_N~subtmp$GLRareal_N+subtmp$N_han_N+subtmp$N_hus_N+subtmp$HaGraesVed_N+subtmp$HaKornVaar_N+subtmp$HaBrakSkov_N+subtmp$HaKornVin_N)   
+estim[i]=temp.lm$coefficients[3] #coeff henviser til estimate væriden og 3 til variabel 3 der er manure og gemmer i es1
+}</pre>
+
+<p>
+Now we make a matrice with three different variables, estimate, r squared and intercept for the 25 catchments
+</p>
+<pre class="code R">full.est=matrix(NA,nrow=25,ncol=3)
+for (i in c(1:25)){
+subtmp=subset(markdata,markdata$BNI_nr_N==i)
+temp.lm &lt;- lm (subtmp$Nudv_kg_N~subtmp$GLRareal_N+subtmp$N_han_N+subtmp$N_hus_N+subtmp$HaGraesVed_N+subtmp$HaKornVaar_N+subtmp$HaBrakSkov_N+subtmp$HaKornVin_N)   
+full.est[i,1]=temp.lm$coefficients[3]
+full.est[i,2]=summary(temp.lm)$r.squared
+full.est[i,3]=temp.lm$coefficients[1]
+&nbsp;
+}
+colnames(full.est)=c(&quot;estimate&quot;,&quot;R squared&quot;,&quot;intercept&quot;)
+write.table(full.est,file=&quot;~/ost4sem/project/unidk2010/nutrients/R/Matrix.csv&quot;,row.names=TRUE,col.names=TRUE,sep=&quot; &quot;)</pre>
+
+<p>
+Doing some more fancy plots…
+We more libraries
+</p>
+<pre class="code R">library(sp)  
+library(RColorBrewer)
+library(classInt)</pre>
+
+<p>
+Now we rename our data because the structure of data are going to be changed with the coordinate system
+</p>
+<pre class="code R">fields&lt;-markdata</pre>
+
+<p>
+Look up the &#039;coordinates&#039; and define geographic units
+</p>
+<pre class="code R">summary(fields$xcoor)
+summary(fields$ycoor)
+coordinates(fields)&lt;-c(&quot;xcoor&quot;, &quot;ycoor&quot;)</pre>
+
+<p>
+Plot….
+</p>
+<pre class="code R">pal &lt;- brewer.pal(10,&quot;RdBu&quot;)
+q10 &lt;- classIntervals(fields$residual, n = 20, style=&quot;quantile&quot;)
+q10Colours &lt;- findColours(q10, pal)
+plot(fields, axes=TRUE, col = q10Colours, pch =20)
+title(&quot;residuals&quot;)
+legend(&quot;topleft&quot;, fill = attr(q10Colours, &quot;palette&quot;), legend=names(attr(q10Colours, &quot;table&quot;)), bty=&quot;n&quot;)
+dev.copy(png,filename=&quot;~/ost4sem/project/unidk2010/nutrients/R/map_of_Residuals.png&quot;,width = 1500, height = 1000, bg=&quot;white&quot;)
+dev.off()</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10agrinut&amp;media=wikidk:map_of_residuals.png" class="media" title="wikidk:map_of_residuals.png"><img src="/dokuwiki/lib/exe/fetch.php?w=500&amp;tok=577fa9&amp;media=wikidk:map_of_residuals.png" class="media" alt="" width="500" /></a>
+</p>
+
+<p>
+Creating and saving results from loop models 
+</p>
+<pre class="code R">par(mfrow=c(3,1))
+plot(full.est[,1],main=&quot;Manure&quot;,xlab=&quot;Catchment areas&quot;, ylab=&quot;Parameter estimates&quot;)
+plot(full.est[,2],main=&quot;R square&quot;,xlab=&quot;Catchment areas&quot;, ylab=&quot;R square&quot;)
+plot(full.est[,3], main=&quot;Intercept&quot;,xlab=&quot;Catchment areas&quot;, ylab=&quot;Parameter estimates&quot;)
+dev.copy(png,filename=&quot;~/ost4sem/project/unidk2010/nutrients/R/loop_values.png&quot;,width = 1500, height = 1000, bg=&quot;white&quot;)
+dev.off()</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10agrinut&amp;media=wikidk:loop_values.png" class="media" title="wikidk:loop_values.png"><img src="/dokuwiki/lib/exe/fetch.php?w=500&amp;tok=4944a7&amp;media=wikidk:loop_values.png" class="media" alt="" width="500" /></a>
+</p>
+
+</div>
+<div class="level6">
+
+</div>
+<!-- EDIT13 SECTION "Model parametrization" [9554-15028] -->
+<h2 class="sectionedit14" id="fun_merge_which_didn_t_work">Fun merge which didn&#039;t work</h2>
+<div class="level2">
+
+</div>
+<div class="level6">
+<pre class="code R"># v.to.db -p mark option=coor &gt; &quot;\$INPUT&quot;coordinates.txt
+v.db.addcol map=mark layer=1 columns=&quot;xcoor double,ycoor double&quot;
+v.to.db  map=mark layer=1 option=coor column=xcoor,ycoor
+&nbsp;
+&nbsp;
+R --no-save -q  &lt;&lt; EOF
+&nbsp;
+library(foreign)
+mark&lt;-read.dbf(&quot;~/ost4sem/project/unidk2010/nutrients/grassdb/odense/fjord/dbf/mark.dbf&quot;) # 29var
+names(mark)=toupper(names(mark))
+mark\$comm.id=mark\$BLOKNR
+mark\$bloknr=NULL
+mark\$comm.id=c(1:10682)
+&nbsp;
+base&lt;-read.dbf(&quot;~/ost4sem/project/unidk2010/nutrients/grassdb/odense/PERMANENT/dbf/basedata.dbf&quot;) # 38
+names(base)=tolower(names(base))
+base\$comm.id=base\$bloknr
+base\$bloknr=NULL
+base\$comm.id=as.numeric(base\$comm.id)
+&nbsp;
+intable=merge(mark, base, by.mark = &quot;comm.id&quot;, by.base = &quot;comm.id&quot;) #64 var  not 67
+write.table(intable,file=&quot;~/ost4sem/project/unidk2010/nutrients/input/intable_1.txt&quot;,sep=&quot;|&quot;,col.names=TRUE, row.name=FALSE)
+&nbsp;
+EOF
+&nbsp;
+### making a map from a text file #
+&nbsp;
+cat ~/ost4sem/project/unidk2010/nutrients/input/intable_1.txt | v.in.ascii out=mypoints x=30 y=31 cat=1 skip=1 --overwrite</pre>
+
+</div>
+<!-- EDIT14 SECTION "Fun merge which didn't work" [15029-] -->

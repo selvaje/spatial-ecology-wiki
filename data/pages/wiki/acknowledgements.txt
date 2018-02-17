@@ -1,0 +1,14 @@
+====== Acknowledgments ======
+This course is the result of several years of dealing with command-line software, accepting all the frustration of programming language syntax, which is especially annoying for the beginner. Nonetheless, the authors want to thank colleagues, or even better friends, for their technical and scientific support during the learning phase.\\
+
+In particular:\\
+
+**Anssi Pekkarinen** for opening the door of bash and awk programming languages;\\
+**Peter Vogt** for the useful expertise during the Linux installation;\\
+**Pieter Kempeneers** for the C++ codes and latex tips;\\
+**Konrad Bogner** for R scripting. \\
+**Hannes Isaak Reuter** for daily helping us in coding and solving bugs\\
+\\
+We also are gratefull to many other [[http://www.spatial-ecology.net/collaborators|friends and colleagues]] who have collaborated with us to enrich the Spatial Ecology Wikipedia. \\
+\\ 
+The material you find in this wiki has no pretension to be useful for professional and research jobs. Our objective is to initiate and stimulate people in learning GIS open sources tools. We are deeply convinced the potential of the OS community, the freedom to run, copy, distribute, study, change and improve the software are fundamental and the way to improve scientific and technical applications.

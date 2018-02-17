@@ -1,0 +1,1 @@
+gdal_translate <span class="re5">-of</span> vrt <span class="re5">-expand</span> rgba <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span><span class="nu0">19990724</span>_L7E_IM_FMAP.tif temp.vrt

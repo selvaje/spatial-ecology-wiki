@@ -1,0 +1,18 @@
+====== Basic Gnuplot script======
+Exercise:\\
+Script: open a new document by kate and save it to [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/basic_gnuplot.sh | ~/ost4sem/exercise/basic_adv_gnuplot/basic_gnuplot.sh ]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/aver_month_nuts3.asc | ~/ost4sem/exercise/basic_adv_gnuplot/aver_month_nuts3.asc ]]\\
+Directory: ~/ost4sem/exercise/basic_adv_gnuplot
+
+===== Do it by yourself =====
+
+Migrate to ~/ost4sem/exercise/basic_adv_gnuplot\\
+\\
+Using the syntax of the previous pages try to solve the following task: 
+\\
+Use the file aver_month_nuts3.asc and plot AV_FWI and AV_DSR.\\
+Speed up the process by sampling the data by awk.\\
+Are the two variables correlated?\\
+Make a 3D plot using AV_FFMC AV_DMC AV_ISI, sampling the data using awk.\\
+Rotate the graphics and find out if there are some outliers.\\
+

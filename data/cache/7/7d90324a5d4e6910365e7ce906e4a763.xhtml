@@ -1,0 +1,159 @@
+
+<h1 class="sectionedit1" id="terrain_modelling_for_site_design">Terrain modelling for site design</h1>
+<div class="level1">
+
+<p>
+As well as for hydrological modelling, GIS provide extended capacity for modelling landscape. 
+Again we will use the Digital Elevation Models to extract key features for keyline and permaculture site design.
+Specifically we are interested in the following feature:
+</p>
+<ul>
+<li class="level1"><div class="li"> Terrain slope and locations of extremes steep slopes</div>
+</li>
+<li class="level1"><div class="li"> Terrain slope orientation</div>
+</li>
+<li class="level1"><div class="li"> Contour lines</div>
+</li>
+<li class="level1"><div class="li"> The main ridge</div>
+</li>
+<li class="level1"><div class="li"> The primary valley</div>
+</li>
+<li class="level1"><div class="li"> The primary ridge</div>
+</li>
+</ul>
+
+<p>
+For this tutorial we have also used informations from the article on <a href="http://permaculturenews.org/2009/03/16/keyline-design-mark-iv/" class="urlextern" target="blanc" title="http://permaculturenews.org/2009/03/16/keyline-design-mark-iv/" rel="nofollow noopener">Keyline design</a> -Soil, Water &amp; Carbon for Every Farm - Building Soils, Harvesting Rainwater, Storing Carbon. Abe Collins &amp; Darren J. Doherty.
+</p>
+
+<p>
+As a preliminary step of data processing we will overwrite the projection of our DEM map to the EPSG: 26915 code and we will use this projection reference system. Thi can be done in Qgis using the Raster tab &gt; Projections &gt; Warp tool.<br/>
+
+Or using the terminal command line using the following code:
+</p>
+<pre class="code bash">gdalwarp -t_srs EPSG:<span class="nu0">26915</span> \\
+ost4sem<span class="sy0">/</span>siteplan<span class="sy0">/</span>data<span class="sy0">/</span>raster<span class="sy0">/</span>farm_dem.tif \\
+ost4sem<span class="sy0">/</span>siteplan<span class="sy0">/</span>data<span class="sy0">/</span>raster<span class="sy0">/</span>farm_dem26915.tif</pre>
+
+</div>
+<!-- EDIT1 SECTION "Terrain modelling for site design" [1-1207] -->
+<h2 class="sectionedit2" id="terrain_slope">Terrain slope</h2>
+<div class="level2">
+
+<p>
+The stepensess of the landscape is a crucial element for the water flow leading to soil erosion or flooding events to the downstream slopes. A key feature of the Keyline design is the definition of Keypoint (i.e. the point at which the primary valley gets suddenly steeper).<br/>
+
+We use GIS for extracting slope angles from DEM and then highlight areas of extremes slope steepens.
+</p>
+<ul>
+<li class="level1"><div class="li"> In Qgis we use the <strong>Processing</strong> tab &gt; toolbox</div>
+</li>
+<li class="level1"><div class="li"> GDAL/OGR</div>
+</li>
+<li class="level1"><div class="li"> Analisys</div>
+</li>
+<li class="level1"><div class="li"> Slope and select the below options:</div>
+</li>
+</ul>
+
+<p>
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_terrainmod&amp;media=sitedesign:slope.png" class="media" title="sitedesign:slope.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=36b019&amp;media=sitedesign:slope.png" class="mediacenter" alt="" width="500" /></a>
+To produce the following map with low to high steep surfaces in white to black colours.
+ <a href="/lib/exe/detail.php?id=sitedesign%3Asite_terrainmod&amp;media=sitedesign:slope_map.png" class="media" title="sitedesign:slope_map.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=79c518&amp;media=sitedesign:slope_map.png" class="mediacenter" alt="" width="200" /></a>
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Terrain slope" [1208-1890] -->
+<h2 class="sectionedit3" id="terrain_orientation">Terrain orientation</h2>
+<div class="level2">
+
+<p>
+Terrain orientation (in GIS aspect or slope exposure) is computed in Qgis using the Processing &gt; toolbox &gt; e GDAL/OGR &gt; Analysis &gt; <strong>Aspect</strong> function.
+We can use the parameters below:
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_terrainmod&amp;media=sitedesign:angle_azimuth.png" class="media" title="sitedesign:angle_azimuth.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=152b27&amp;media=sitedesign:angle_azimuth.png" class="mediacenter" alt="" width="500" /></a>
+And produce the Orientation map using colours in dark-light yellow for south exposures slopes and blue-grey colours for n-e n-w slopes.
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_terrainmod&amp;media=sitedesign:aspect_map.png" class="media" title="sitedesign:aspect_map.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=477764&amp;media=sitedesign:aspect_map.png" class="mediacenter" alt="" width="200" /></a>
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Terrain orientation" [1891-2322] -->
+<h2 class="sectionedit4" id="contour_lines">Contour lines</h2>
+<div class="level2">
+
+<p>
+In cartography, a <a href="https://en.wikipedia.org/wiki/Contour_line" class="urlextern" target="blanc" title="https://en.wikipedia.org/wiki/Contour_line" rel="nofollow noopener">contour line</a> (or <strong>isoline</strong>) traces points of equal elevation (height) above a given level, such as mean sea level.
+In Qgis
+</p>
+<ul>
+<li class="level1"><div class="li"> Processing</div>
+</li>
+<li class="level1"><div class="li"> Toolbox</div>
+</li>
+<li class="level1"><div class="li"> GDAL/OGR</div>
+</li>
+<li class="level1"><div class="li"> Extraction</div>
+</li>
+<li class="level1"><div class="li"> Contour</div>
+</li>
+<li class="level1"><div class="li"> Select farm_dem26915 as Input layer</div>
+</li>
+<li class="level1"><div class="li"> Select 1m as interval between contour lines</div>
+</li>
+<li class="level1"><div class="li"> In contour click on Save file /home/user/ost4sem/siteplan/data/vector/contour/contour-1m.shp</div>
+</li>
+<li class="level1"><div class="li"> Run</div>
+</li>
+</ul>
+
+<p>
+The output vector map overlayed with DEM:
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_terrainmod&amp;media=sitedesign:contourlines.png" class="media" title="sitedesign:contourlines.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=521411&amp;media=sitedesign:contourlines.png" class="mediacenter" alt="" width="200" /></a>
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Contour lines" [2323-2882] -->
+<h2 class="sectionedit5" id="landforms_-_geomorphons">Landforms - Geomorphons</h2>
+<div class="level2">
+
+<p>
+In a stabilized landscape, there are three land shapes we consider in relation to Keyline development: the main ridge, primary valley and primary ridge.
+</p>
+
+</div>
+
+<h4 id="the_main_ridge">The main ridge</h4>
+<div class="level4">
+
+<p>
+The main ridge is the summit line of two valley, it begins at the convergence of two water drainage lines. The crest of a ridge is synonymous with a water divide line. The crest of a ridge is usually less steep than the sides of the ridge. 
+</p>
+
+</div>
+
+<h4 id="the_primary_valley">The primary valley</h4>
+<div class="level4">
+
+<p>
+The primary valley is run from the ridge to the downslope water creek or main stream. A primary valley has a primary ridge on either side. Primary valley are located at the extremes convex points of contour lines descending from a primary ridge to the bottom valley.
+</p>
+
+</div>
+
+<h4 id="the_primary_ridge">The primary ridge</h4>
+<div class="level4">
+
+<p>
+Primary Valleys are divided by Primary Ridges. Primary ridges are located at the extremes concave points of contour lines descending from a primary ridge to the bottom valley.
+</p>
+
+<p>
+In GIS we might use different terminology for landforms. In GRASS GIS there is an excellent algorithm <a href="http://grass.osgeo.org/grass70/manuals/addons/r.geomorphon.html" class="urlextern" target="blanc" title="http://grass.osgeo.org/grass70/manuals/addons/r.geomorphon.html" rel="nofollow noopener">r.geomorphon</a> able to produce the above landforms and classify the landscape into: 1 flat, 2 peak, 3 ridge, 4 shoulder, 5 spur, 6 slope, 7 hollow, 8 footslope, 9 valley, and 10 pit.<br/>
+
+We can use the University of Cincinnaty&#039;s  <a href="http://sil.uc.edu/geom/app" class="urlextern" target="blanc" title="http://sil.uc.edu/geom/app" rel="nofollow noopener"> web processing service</a> to process data online using GRASS and download the geomorphon features.
+Upload the DEM and using a search radius of 25m we produce the map below. In geomorphons terminology, the Main ridge correspond to class 3- Ridge; Primary valley correspond to class 5 - Spur and Primary ridge correspond to class 7- Hollow.<br/>
+
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_terrainmod&amp;media=sitedesign:geomorphons.png" class="media" title="sitedesign:geomorphons.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=edeb60&amp;media=sitedesign:geomorphons.png" class="media" alt="" width="200" /></a><a href="/lib/exe/detail.php?id=sitedesign%3Asite_terrainmod&amp;media=sitedesign:legend_geomorphons.png" class="media" title="sitedesign:legend_geomorphons.png"><img src="/lib/exe/fetch.php?w=200&amp;tok=680d1f&amp;media=sitedesign:legend_geomorphons.png" class="media" alt="" width="200" /></a>
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Landforms - Geomorphons" [2883-] -->

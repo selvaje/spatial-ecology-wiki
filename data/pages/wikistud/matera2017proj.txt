@@ -1,0 +1,102 @@
+
+===== Species Distribution Modelling =====
+
+[[mat2017_patrick_shwager | Patrick Shwager]]\\
+
+Overlay and harmonize raster datasets to point data.\\
+Extract a table of predictor variables in correspondence of the x y location of response point data.\\
+  * point data occurrence of //Campanula pula// (endemic vascular plant species from Styria
+  * dem resolution 10 m
+  * mean annual temperature 50m res
+  * mean global radiation 50m res
+  * precipitation 50m res
+  * vector polygon of area of interest
+  * geology shape file
+
+===== Zonal statistics =====
+[[mat2017_thomaskandler |Thomas Kandler]]\\
+Explore and find the right tool to perform zonal statistics at best. \\
+Use Spatial Ecology template data and try different tools. \\
+     * PKTools
+     * R
+     * Pytrhon Gdal
+
+===== BigGeoData DEM Mosaic =====
+[[mat2017_marcogirardello | Marco Girardello ]]\\
+Aster DEM 300GB : Aggregate and mosaic tiles of global DEM at lower resolution (30 m res).\\
+
+===== Wheat variety mapping from UAV data =====
+[[mat2017_juanherrera | Juan Herrera ]]\\
+Extract more information from UAV : \\
+  * Orthomosaic
+  * Witch software orthomosaic and processing steps  to process images and get the necessary info from the images
+
+===== Plant disease detection  =====
+
+[[mat2017_annahamps  | Anna Hampf ]]\\
+
+Automatic detection of plant disease. \\
+Input data
+  * 100000 geo location point data of plant diseases
+  * soil maps profile (raster maps)
+Link disease occurrence (point) to soil maps profile (raster maps).
+
+
+===== Biotope Mapping from Orthophoto =====
+[[mat2017_mariannestoesel  | Marianne Stoessel ]]\\
+Input data\\
+Aerial Orthophoto Red Green NIR \\
+Explore different data processing options (PKTools, Orfeo Toolbox or other) to perform:
+  * Texture metrics
+  * Automatic classification
+
+===== Telemetry data Segmentation and Classification  =====
+[[mat2017_tinazivec  | Tina Zivec]]\\
+Telemetry data for geology \\
+    * Point data \\
+    * LiDAR TLS data\\
+    * Segmentation\\
+    * Classification\\
+
+
+===== Muti Chore Image Tiling with GDAL =====
+[[mat2017_jakobhagenauer  | Jakob Hagenauer ]]\\
+Use gdal library to perform tiling as with google tiles \\
+    * Web Mobile application\\
+    * gdal_to_tiles in multi chore to improve performance\\
+  
+Use multiprocessing python library to spawn processes across multiple platforms
+
+===== Burned area mapping  =====
+[[mat2017_elagonantana | Elago Nantana ]]\\
+      * Multi temporal satellite data.
+      * Classify images for burned areas / fire occurrence mapping.\\
+
+===== Multi Core Python scripting for Network Segmentation =====
+[[mat2017_raphaelcere | Raphael Cere]]\\
+Input data \\
+      * Data Ectometric \\
+      * Vector polygons   
+
+===== Qgis Plugin Development =====
+[[mat2017_andrewmercer | Andrew Mercer ]]\\
+Start o learn how to build a Qgis plugin  \\
+      * read a file\\
+      * Perform an operation   
+
+===== Point cloud data interpolation =====
+[[mat2017_pierocampalani | Piero Campalani ]]\\
+X Y Z point data surface interpolation  \\
+      * Use python (or R) to interpolate data and re ingest those to java\\
+
+
+
+===== Working with DEM =====
+[[mat2017_perroneantonio | Antonio Perrone ]]\\
+Modify hight in DEM at specific X Y Z locations  \\
+Input data
+      * DEM 5 m resolution\\
+      * Point file where the height need to be increased
+Use Grass and Qgis to modify the DEM. \\
+
+

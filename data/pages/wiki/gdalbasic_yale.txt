@@ -1,0 +1,81 @@
+====== Basic GDAL/OGR/PKTOOLS Commands ======
+===== Basic GDAL Commands =====
+
+   ssh -X YaleID@omega.hpc.yale.edu
+
+Get the geo Software
+   cp -r /lustre/scratch/client/fas/sbsc/ga254/software/*  $HOME
+
+Copy the .bashrc to set software links
+   cp /lustre/scratch/client/fas/sbsc/ga254/software/.bashrc $HOME
+   source $HOME/.bashrc
+
+Data Directory: /lustre/scratch/client/fas/geodata/aw524/data/
+\\
+\\
+Change the directory, and explore the files. 
+<code bash>
+ls /lustre/scratch/client/fas/geodata/aw524/data/
+gdalinfo /lustre/scratch/client/fas/geodata/aw524/data/worldclim/bio_9.bil
+</code>
+Reply to the following questions:\\
+What is the pixel size?\\
+How do you get min and max pixel values?\\
+\\
+Calculate minimum and maximum values for all the images: 
+<code bash>
+for file in  /lustre/scratch/client/fas/geodata/aw524/data/worldclim/bio_*.bil ; do 
+gdalinfo  -mm  $file # write a bash command to get only min/max values
+done
+</code>
+\\
+Exercise:\\
+Use one of the gdal commands and try to clip all the images using a square box:\\
+xmin : -81\\
+xmax : -63\\
+ymin : -19\\
+ymax :  12\\
+\\
+  - Open gedit and save the the script with the extension .sh
+<code bash>
+   gedit cropscript.sh
+</code>
+  - Create a working directory in your home
+  - Identify the gdal command going to the gdal Internet site.
+  - Identify the option of the command to make the clip using the given coordinates .
+  - Do a test with one image and open it by openev.
+  - Create a loop for all the images.
+\\
+Use all the previous examples stored in this wiki.\\
+All the commands have already been explained - you just need to combine them.\\
+Your script should be able to be run the script by bash  cropscript.sh.\\
+\\
+<code bash>
+mkdir ~/cropimage
+
+for file in  /lustre/scratch/client/fas/geodata/aw524/data/worldclim/bio_*.bil ; do
+filename=$(basename $file) 
+gdal_translate   -projwin  -81 12 -63 -19 $file   ~/cropimage/crop$filename  
+done
+
+</code>
+
+
+===== Basic PKTOOLS Commands =====
+Perform a composite (getting the mean)  between two images. 
+
+== Create a composite ==
+
+   pkcomposite  -of GTiff   -co COMPRESS=LZW -co ZLEVEL=9 -ulx -81 -uly 12 -lrx -63 -lry -19 \
+   -cr mean -i /lustre/scratch/client/fas/geodata/aw524/data/worldclim/bio_1.bil \
+   -i /lustre/scratch/client/fas/geodata/aw524/data/worldclim/bio_2.bil  -o mean.tif
+
+Check the nodata value in the image and set it in the pkcomposite. Re-run
+
+== Set up a mask == 
+
+   pksetmask -i mean.tif  -m mean.tif  -msknodata 150 -nodata 0 -p '<' -o mean150.tif
+
+You can find more example [[ http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:pk_tools  | here ]] or the in offcial [[ http://pktools.nongnu.org/html/md_doc_apps.html#available_tools | pktools page  ]]
+
+

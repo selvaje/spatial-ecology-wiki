@@ -1,0 +1,330 @@
+====== Least cost-path analysis applied to grey-sided vole movement between older stands of pine forest habitat patches ======
+
+
+
+===== INTRODUCTION =====
+The structure of the modern day landscape is highly influenced by human activities. Many species of animals and plants have a hard time finding suitable habitats since these are getting more and more fragmented as a result of human preference of large-scale similar aged monocultural type of agriculture or forestry. Therefore there is a need for closer investigations of the dispersal difficulties between fragmented habitats.\\
+\\
+Outside Umeå in boreal Sweden, the abundance of the grey-sided vole (//Clethrionomys rufocanus//) has been measured annually since 1971. The population of today peaks at 2-3% of the seventies' maxima. Hypotheses suggests that the decrease is due to:
+  - Smaller focal patch size; from median 200 to 50 ha.
+  - Increased inter-patch distance
+
+{{:wikidk:am_gs_trend.png?300|}}\\
+//Population decrease of grey-sided vole.//
+\\
+\\
+
+We address the second hypothesis be here presenting a cost path analysis aiming to make the habitat connectivity estimation more detailed and hence realistic. Least cost-path analysis is a GIS based method of investigating movement patterns of a certain organism. The approach is general and can be used for species with different habitat preferences and different movement capabilities.
+
+\\
+
+==== Project objectives ==== 
+To investigate animal movement in a forest landscape by producing a 'least cost-path' between fragmented habitat patches for the grey-sided vole.
+
+
+
+
+===== METADATA =====
+==== Raster data ====
+
+Data covering the province of Västerbottens Län in northern Sweden (resolution 25x25 meters per pixel):\\
+\\
+- Age of forest areas\\
+\\
+- Volume of Pine trees\\
+\\
+- Volume of all trees\\
+\\
+- Land use\\
+\\
+
+**Pine volume** (cubic meters / ha)\\
+{{:wikidk:am_pin.png|}}
+\\
+**Total volume** (cubic meters / ha)\\
+{{:wikidk:am_tot.png|}} \\
+\\
+**Age** (years)\\
+{{:wikidk:am_age.png|}} \\
+\\
+**Landcover map** \\
+{{:wikidk:am_veg_tr.png?500|}} \\
+\\
+
+==== Text files and tables ====
+A table of land cover classifications, where every type was an traversal cost (permeability value) for the grey-sided vole.
+
+
+
+===== METHOD =====
+\\
+**GRASS operations** \\
+\\
+- Reproject input raster tif-files from 'RT-90 2.5 GON V' to 'SWEREF 99 TM' using 'gdalwarp'\\ 
+\\
+- Import raster tif-files to GRASS-format using 'r.in.gdal'\\
+\\
+- Rectify position of cost raster to better fit patch layers using 'gdal_translate', 'awk' and 'r.in.gdal'\\
+\\
+- Replace zero or negative 'no data' values with 'null' to eliminate interference using 'r.null'\\
+\\ 
+- Perform 'smoothing' in order to create coherent patches of similar aged forest stands using 'r.neighbor'\\
+\\
+- Reclass everything greater than 60 years old forest to 1 using 'r.recode'\\
+\\
+- Remove nodata pixels in 'smoothed' layer using 'r.mapcalc'\\
+\\
+- Extract high quality habitat patches with min forest age of 80 years and at least 70 % Pine using 'r.mapcalc'\\
+\\
+- Assign a unique category value to every patch using 'r.clump'\\
+\\
+- Calculate number of high quality Pine forest pixels in each patch in relation to number of pixels in each patch using 'r.statistics' and 'r.mapcalc'\\
+\\
+- Create vector point layers with start and stopping points to be used with 'r.cost' and 'r.drain' functions\\
+\\
+- Calculate cost 'cloud' in the cost raster with edges of neighboring habitat patches as starting and stopping points using 'r.cost'\\
+\\
+- Visualize least cost-path between start and stop points in the cost raster using 'r.drain'\\
+\\
+**Finished!!!**\\
+\\
+
+
+
+===== DATA IMPORT =====
+\\
+<code bash>
+
+grass -text ~/ost4sem/grassdb/sweden/kNN2005
+
+##########################################################################
+###########   The following are GRASS commands     #######################
+
+# set the working directories
+INDIR=~/ost4sem/project/unidk2010/costpath/input/VB 
+OUTDIR=~/ost4sem/project/unidk2010/costpath/outputVB
+
+cd $INDIR
+echo the input file directory is : $INDIR/
+echo the output file directory is : $OUTDIR/
+
+# check coordinate system and NoData values of input files
+gdalinfo -mm AGE_24_P_05.tif | head -40
+gdalinfo -mm PINEVOL_24_P_05.tif | head -40
+gdalinfo -mm TOTALVOL_24_P_05.tif | head -40
+# Projection of input files is RT90_25_gon_W (EPSG: 2400)
+# Our desired projection is SWEREF99 TM (or EPSG:3006)
+# NoData Value=-32768
+# STATISTICS_MINIMUM=0
+
+##########################################################################
+##########   gdalwarp -- REPROJECT INPUT RASTERS       ###################
+cd $INDIR
+for oldfile in *.tif ; do
+  filename=`basename $oldfile .tif`
+  echo "old file:" $oldfile  "   new filename:" $filename"_prj.tif"
+  gdalwarp  -t_srs EPSG:3006  -s_srs EPSG:2400  $INDIR/$oldfile $INDIR/$filename"_prj.tif"
+# gdalwarp   -srcnodata "-32768 -2147483647" -dstnodata -9999 -t_srs EPSG:3006 -s_srs EPSG:2400 $INDIR/$oldfile $OUTDIR/$filename"_prj.tif"
+done
+# gdalwarp can merge adjecent areas if needed
+
+# view the reprojected .tif
+openev2 $INDIR/$filename"_prj.tif"
+
+##########################################################################
+##########   r.in.gdal -- IMPORT RASTERS INTO GRASS    ###################
+cd $INDIR
+for inputFile in *_prj.tif ; do
+  echo "Input file " $inputFile " is imported as raster " ${inputFile:0:3}
+  r.in.gdal input=$INDIR/$inputFile output=${inputFile:0:3}
+done
+
+##########################################################################
+##########   g.region -- set smaller working regions   ###################
+g.region n=7080000 e=730000 s=7066000 w=710000 res=25 save=umetest --overwrite
+g.region -p
+
+##########################################################################
+###    LAND COVER RASTER SEEMS TO BE DISLOCATED       
+###    MOVE RASTER 125 METERS UP/NORTH AND 175 METERS RIGHT/EAST
+gdal_translate -of  AAIGrid  ume/order_202207_356387_1.tif  ume/order_202207_356387_1.asc   
+awk ' {if(NR<=2) {print}  else{if(NR==3) {print $1 ,$2+175} else if(NR==4) {print $1 ,$2+125} else{print} }} '  ume/order_202207_356387_1.asc >  ume/order_202207_356387_1_tr.asc 
+cp  ume/order_202207_356387_1.prj  ume/order_202207_356387_1_tr.prj 
+gdal_translate  ume/order_202207_356387_1_tr.asc  ume/order_202207_356387_1_tr.tif  
+r.in.gdal input=$INDIR/ume/order_202207_356387_1_tr.tif output=VEG_tr
+##########################################################################
+# display imported rasters
+d.mon start=x1
+d.rast VEG_tr
+##########################################################################
+</code>
+\\
+
+===== DATA PROCESSING =====
+\\
+<code bash>
+
+##########################################################################
+##########   SMOOTHING OF FOREST DATA      ###############################
+
+# r.null does not create a new raster, but changes the input
+r.null map=AGE@kNN2005 setnull=-32768
+r.null map=PIN@kNN2005 setnull=-32768
+r.null map=TOT@kNN2005 setnull=-32768
+
+r.null map=AGE@kNN2005 setnull=0
+r.null map=PIN@kNN2005 setnull=0
+r.null map=TOT@kNN2005 setnull=0
+
+# Circle 3 median
+r.neighbors -c input=Age@kNN2005 output=Age_c3medN method=median size=3 
+# using processed input
+r.neighbors -c input=Age_c3med@kNN2005 output=Age_c3med2 method=median size=3 
+
+# Square 3 median
+r.neighbors input=AGE@kNN2005 output=AGE_sq3medN method=median size=3 --overwrite title="r.neighbors input=AGE@kNN2005 output=AGE_sq3medN method=median size=3"
+# Repeat
+r.neighbors input=AGE_sq3medN@kNN2005 output=AGE_sq3med2N method=median size=3 --overwrite
+# After inspection we choose to continue with the double 3x3px square neighborhood
+##########################################################################
+##########    IDENTIFY FOREST PATCHES >60 YRS        #####################
+# Reclass everything greater than 60 to 1("patch class"). 
+r.recode in=AGE_sq3med2N out=fp60_2n --overwrite <<EOF
+60:*:1
+EOF
+
+</code>
+
+\\
+**Each pixel is assigned the median value of its neighborhood.**
+\\
+{{:wikidk:am_age_sq3medn.png?600|}}
+\\
+\\
+**The procedure is repeated to get fewer and more smooth patches.**
+\\
+{{:wikidk:am_age_sq3med2n.png?600|}}
+\\
+\\
+**Now we can identify forest patches older than 60 years**
+\\
+{{:wikidk:am_patches.png?600|}}
+\\
+<code bash>
+##########################################################################
+### MASK SMOOTHED FOREST PATCHES WITH NoData AREAS (LAKES, RIVERS, ETC) ##
+
+# Identified patch pixels in smoothed data that are NoData in original age
+# will be classes as NULL
+r.mapcalc patches = "if(isnull(AGE), null(), fp60_2n)"
+
+##########################################################################
+##############      FIND OLD PINE PIXELS    ##############################
+
+# Select pixles of pine forest (70% volume)
+r.mapcalc pxlspine =   "if((PIN>=10 && PIN/TOT>=0.7) || PIN>100, 1, null())"
+
+# Select old pixels
+# r.mapcalc pxls100yrs = "if(AGE>=100, 1, null())"
+r.mapcalc pxls80yrs = "if(AGE>=80, 1, null())"
+
+# Select old pine pixels
+# r.mapcalc pxlspine100y ="if(pxls100yrs, pxlspine, null())"
+r.mapcalc pxlspine80y ="if(pxls80yrs, pxlspine, null())"
+
+##########################################################################
+##############     PATCH CALCULATIONS    #################################
+
+# Assign a unique category value to every identified patch
+r.clump input=patches@kNN2005 output=
+
+# r.statistics is a tool to analyse exploratory statistics of a "cover layer"
+# according to how it intersects with objects in a "base layer". A variety
+# of standard statistical measures are possible (called "zonal statistics" in some GIS). 
+r.statistics base=patches_nrd@kNN2005 cover=pxlspine80y@kNN2005 method=sum output=pat_sum_pine 
+r.statistics base=patches_nrd@kNN2005 cover=patches@kNN2005 method=sum output=pat_sum_pat
+
+# If a raster map layer name is preceded by the @ operator, then the labels in 
+# the category file for the raster map layer are used in the expression instead
+# of the category value.
+r.category pat_sum_pine
+r.category pat_sum_pat
+r.mapcalc "aggregated_pinearea=@pat_sum_pine"
+r.mapcalc "patcharea=@pat_sum_pat"
+
+# Selection of patches with pine
+r.mapcalc patch_w20perc_pine ="if((aggregated_pinearea>0 && aggregated_pinearea/patcharea>=0.20) || (patcharea<32  && aggregated_pinearea>=2) || (patcharea>640 && aggregated_pinearea>=64), 1, null())"
+# "aggregated_pinearea>0"   --- to avoid mapcalc on patches without category values of "aggregated_pinearea"
+# STANDARD CRITERIA: 20% pine
+# SPECIAL PINE CRITERIA FOR...
+# ...small patches
+# 32px   = 1ha
+# ... large patches
+# 640px  = 40ha
+# 64px   = 4ha
+##########################################################################
+</code>
+\\
+\\
+**In previous studies voles were found in patches with at 20 % pine. By combining the age and pine rasters we select pixels with pine forest older than 80 years**
+\\
+{{:wikidk:am_pxlspine80y.png?600|}}
+\\
+\\
+
+**To get patch specific statistics, we assign a unique identifier to each patch**
+\\
+{{:wikidk:patches_nrd.png|}}
+\\
+\\
+**Finally we select those forest patches(>60yrs) that contain at least 20 percent old growth pine**
+\\
+{{:wikidk:am_patch_w20perc_pine.png?600|}}
+\\
+\\
+
+==== Cost Path Modeling ====
+
+<code bash>
+
+##########################################################################
+##############      COST PATH CALCULATIONS     ###########################
+
+# Create raster with cost categories
+r.reclass input=VEG_tr output=cost_surf rules=cost_table_gs 
+
+# Create cost path between test points
+# In Quantum GIS we create vector point layers for start and stop locations 
+r.cost -k input=cost_surf output=cumulcostsume start_points=startpts2ume stop_points=stopptsume max_cost=5000
+
+# Create path
+r.drain -a input=cumulcostsume output=pathsume vector_points=stopptsume
+r.to.vect -s input=pathsume@kNN2005 output=pathsume feature=line
+
+##########################################################################
+
+</code>
+
+===== RESULTS and DISCUSSION =====
+\\
+**Classified costs and patches (darker areas)** \\
+{{:wikidk:am_costsurf_pat.png?600|}}
+\\ **Accumulated movement cost and least-cost paths**
+\\
+{{:wikidk:am_pathsume.png?600|}}\\
+**Least-cost paths and land types**
+\\
+{{:wikidk:am_veg_tr_paths.png?600|}}
+\\
+\\
+\\
+This theoretical dispersal model has produced practically usable results. For this project, we used arbitrary cost values of grey-sided vole movement in the different land use areas. Although we believe we have achieved a successful rough cost estimate, with proper empirical data on the distribution and ecology of the modelled organism one could create a model that could correspond very well to realistic conditions.Cost path analysis allow us to make more realistic representation of habitat networks, which in turn can provide different kinds of information to land-use management: \\
+  * Can local extinctions be compensated for by recolonization from connected habitat?
+  * How do matrix quality affect dispersal processes in fragmented habitat?  
+  * Identify high-connectivity areas to protect
+  * Analyze the existence of distance thresholds e.g emerging from human activities like forestry. Suggest alternative spatial management schemes.
+
+     
+\\
+We have shown that the open-source GIS platform (GRASS, QGIS), used together with bash/awk scripting, is well suited for studying the concept of least cost-path movement. Cost-path analysis could be used to study effective habitat connectivity for many ground dispersing vertebrates or invertebrates that depend on relatively undisturbed habitat types that are getting more and more fragmented as a result of anthropogenic activities in the landscape.\\
+\\

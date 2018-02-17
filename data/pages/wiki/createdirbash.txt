@@ -1,0 +1,60 @@
+====== Project environment settings ======
+
+The following script can be adapted to start a project and define a working directory
+Run this script using mapset name...
+<code bash>
+### title
+### authors
+#### this script is going to perform.... 
+
+INDIR=~/ost4sem/project/input   # setting the input file directory 
+OUTDIR=~/ost4sem/project/output # setting the output file directory 
+
+mkdir $INDIR
+mkdir $OUTDIR
+
+## add the variables
+
+cd $INDIR
+echo the input file directory is : $INDIR/input.txt
+echo the output file directory is : $INDIR/output.txt
+</code>
+
+
+
+
+====== Environment settings for a grass standalone routine ======
+<code bash>
+### title
+### authors
+#### this script is going to perform.... 
+
+export INDIR=~/ost4sem/project/input   # setting the input file directory 
+export OUTDIR=~/ost4sem/project/output # setting the output file directory 
+
+## add the variables
+
+cd $INDIR
+
+export GRASSDB=~/ost4sem/grassdb 
+export LOCATION=locaton_name 
+export MAPSET=PERMNENT
+export RES=$1  # if needed    
+
+echo "LOCATION_NAME: $LOCATION"    >  $HOME/.grassrc6_$$
+echo "MAPSET: $MAPSET"             >> $HOME/.grassrc6_$$
+echo "DIGITIZER: none"             >> $HOME/.grassrc6_$$
+echo "GRASS_GUI: text"             >> $HOME/.grassrc6_$$
+echo "GISDBASE: $GRASSDB"          >> $HOME/.grassrc6_$$
+
+#   path to GRASS binaries and libraries:
+export GISBASE=/usr/lib/grass64
+export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts
+export LD_LIBRARY_PATH="$GISBASE/lib"
+export GISRC=~/.grassrc6_$$
+export GIS_LOCK=$$  #   use process ID (PID) as lock file number
+
+g.gisenv
+
+       
+</code>

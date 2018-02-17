@@ -1,0 +1,12 @@
+# users.auth.php
+# <?php exit()?>
+# Don't modify the lines above
+#
+# Userfile
+#
+# Format:
+#
+# user:MD5password:Real Name:email:groups,comma,seperated
+
+
+ost4sem_admin:$1$1ec5e48a$pyHn3luYxAaoGTld.W6Gh1:Stefano Casalegno:stefano@casalegno.net:admin,user

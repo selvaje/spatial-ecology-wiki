@@ -1,0 +1,11 @@
+<span class="kw2">sudo</span> <span class="kw2">su</span>
+groupadd <span class="re5">-g</span> <span class="nu0">1002</span> students <span class="co0"># add a group of users called students</span>
+<span class="co0"># add users stu1 stu2 ... stu10 </span>
+<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">10</span><span class="br0">&#41;</span> ; <span class="kw1">do</span> 
+useradd <span class="re5">-u</span> $<span class="br0">&#40;</span><span class="kw2">expr</span> <span class="nu0">2000</span> + <span class="re1">$i</span><span class="br0">&#41;</span> <span class="re5">-g</span> <span class="nu0">1002</span> <span class="re5">-c</span> <span class="st0">&quot;Student <span class="es2">$i</span>&quot;</span> stu<span class="re1">$i</span> 
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0"># Add password stu1 stu2 ... stu10 and a home directory</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">10</span><span class="br0">&#41;</span> ; <span class="kw1">do</span>  
+<span class="kw3">echo</span> <span class="re5">-e</span> <span class="st0">&quot;stu<span class="es2">$i</span><span class="es1">\n</span>stu<span class="es2">$i</span>&quot;</span> <span class="sy0">|</span> <span class="kw2">passwd</span> stu<span class="re1">$i</span> 
+<span class="kw2">mkdir</span> <span class="sy0">/</span>home<span class="sy0">/</span>stu<span class="re1">$i</span> ;  <span class="kw1">done</span>

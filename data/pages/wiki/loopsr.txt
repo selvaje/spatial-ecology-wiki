@@ -1,0 +1,118 @@
+====== Scripting, if else condition, loops and plotting graphics ======
+
+
+===== R script =====
+
+An R script is a text file containing a list of R commands that you would enter in the command line of R. Using scripting is useful to carry out stand alone processes and eventually multi-tool tasks within data processing flows that include different applications to take part. Scripting is also required for cluster processing. 
+To create an R script you have to write a .txt file and save it with the .R extension.
+
+
+To run a script, let's say one with the name:
+
+<code bash>
+/home/path/to/myscript/myscript.R
+</code>
+
+
+you may use either:
+<code r>
+  source("/home/path/to/myscript/myscript.R")
+</code>
+on the command line of R or you can directly run the script from the Bash shell using the following command
+<code bash>
+  R CMD BATCH /home/path/to/myscript/myscript.R 
+</code>
+or
+<code bash>
+ R  --no-save  -q <     ost4sem/exercise/basic_adv_r/advance_synecology.R 
+</code>
+
+
+
+
+
+\\
+\\
+
+===== R script example =====
+ 
+We create a txt file with the following R commands and save it as myscript.R
+<code r>
+  sink("myscript_output_example.txt")
+  i <- 1:10
+  outer(i, i, "*")
+  sink()
+</code>
+
+then we lance it from a Bash terminal and we specify to --no-save the R working space once the R terminal will close 
+<code bash>
+  R<sink.R --no-save
+</code>
+
+We can check the result of the output. A  //myscript_output_example.txt// should be available in the working direcory since the R **sink** function is used to divert R output to a connection, and in our example to the output text file.
+! remember to clean up your directory once finished
+<code r>
+  source("rm /home/path/to/myscript/myscript.R")
+</code>
+
+===== if else condition =====
+
+** if (logic test) {TRUE} else {FALSE}**
+
+<code r>
+if (data$j==9) {ALPHA=0} else {ALPHA=data$j/45+data$t}
+</code>
+
+**ifelse(test, yes, no)** returns a value with the same shape as test, which is filled with elements selected from either yes or no depending on whether the element of the test is TRUE or FALSE.
+
+
+^ Arguments ^^
+|test	| an object which can be coerced to logical mode |
+|yes	| return values for true elements of test |
+|no	| return values for false elements of test |
+
+**Example** 
+<code r>
+  x <- c(10:-11)
+  x.positive = ifelse(x >= 0, x, NA)
+#
+  sqrt(x)#- gives warning
+  sqrt(ifelse(x >= 0, x, NA))# no warning
+</code> 
+
+===== For loop and plotting graphics =====
+
+We use a **for loop** function for plotting 30 different graphics. Each graphic represents a different forest tree species and its altitude range of growth according to slope orientation.
+
+
+<code r>
+sp.name = read.csv("~/ost4sem/exercise/basic_adv_r/inputs/SPECIES_DEF.txt",header=TRUE)
+main=sp.name$name[sp.name$code==1]
+
+load("~/ost4sem/exercise/basic_adv_r/inputs/advanceRdata")
+
+FFD = advanceRdata 
+ 
+for (i in c(1,5,7,10,11,13,15,17,20,22,29,35,36,41,44,46,48,49,51,54,56,68,100,116,118,123,125,129,130,134)){
+
+  mod <- paste("S",i,sep="")
+  presence = subset(FFD,FFD[[mod]]==1)
+  absence = subset(FFD,FFD[[mod]]!=1)
+  png(paste("~/ost4sem/exercise/basic_adv_r/outputs/altitude_png/sp_",i,"_altitude.png",sep=""),width = 800, height = 800)
+
+## plot altitude for each Aspect 
+ 
+  par(mar=c(5,5,5,1))
+  plot(presence$pr205,presence$pr201, main=sp.name$name[sp.name$code==i], col = "green3",  axes=FALSE, xlab="Slope Orientation", ylab="Mean Altitude    (m)", axis=FALSE, cex.main=3, cex.lab=2)
+  axis(1, at=c(1,2,3,4), labels=c("North","South","East","West"), cex.axis=1.5)
+  axis(2,cex.axis=1.5)
+  box()
+  dev.off()
+}
+
+</code>
+\\
+
+<note tip>
+see  http://addictedtor.free.fr/graphiques/ for more graphics examples
+</note>

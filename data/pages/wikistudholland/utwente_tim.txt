@@ -1,0 +1,130 @@
+====== Stratification during summer in the North Sea ======
+name ??
+affiliation ??
+===== INTRODUCTION =====
+
+The North Sea is one of the best researched seas in the world, especially due to its economical importance. Apart from ship traffic and oil drilling it has also been exploited for fish for centuries. To help biologists evaluate the state of fish stocks and the ecosystem they live in, oceanographers in Hamburg have developed a physical model of the North Sea, the HAMburg Shelf Ocean Model (HAMSOM, Pohlmann 2006). For this project, just to introduce the model, I use the newest 3km resolution. It has a 5m depth resolution and 1 day temporal resolution, but is also available in hourly and 1m solutions. The purpose of the project is to show the mean sea surface temperature and mean sea bottom temperature of july 2005 in georeferenced format. For ecological reasons, the stratification of the water column is very informative and we use the other two layers to calculate the stratification, which will then also be displayed.
+==== General framework of the analysis ====
+  - Background: **HAM**burg **S**helf **O**cean Model (Pohlmann 2006) 3km grid, 5m depth resolution at 1 day temporal resolution
+
+  - keywords: Tim Dudeck, summer stratification, North Sea
+ 
+==== Project objectives ====
+
+The intention is to produce a set of maps as georeferenced layers from a simple text file and to calculate an index from the previous layers and display the new as a separate layer.
+===== METADATA =====
+The data was generated from HAMSOM, the script of which was provided by Thomas Pohlmann and Marc Hufnagl. AS the model is under the copyright of Thomas Pohlmann, the generated data cannot be linked here. I ran HAMSOM for multiple years and used it for my MSc thesis. Thus, I used the mean data for july 2005, which I had already calculated in R.
+
+
+===== METHOD =====
+As for my usual calculations I use R to read in the text file. As the surface temperature and bottom temperature is already there as vectors (coming from the HAMSOM output), it is easy to calculate a stratification index by dividing the surface by the bottom temperature and making a simple vector out of it.
+The dataframe is saved as csv file to make it easier to implement in GRASS. Leave out rownames, because R does not give the rowname column a header and GRASS will need an equal length of the header vector.
+As it is a point dataset I read in the file via v.in.ascii. To display the different vectors on a gradient scale, so it can be viewed as temperature range from blue (cold) to red (warm), the function v.colors is used. It creates another color vector according to the temperature vector used. The color vector is then displayed with d.vect and exported as shape file with v.out.ogr.
+
+===== Bash script =====
+
+ first, I prepare a directory where the project and all files will be dealt with
+<code bash -Preparing the directories and files>  
+  # set up directory
+  # ~/grassdb_workshop$
+  #--------
+  mkdir project
+  # establishes directory for all project files and scripts
+  cd project
+  DIR=~/grassdb_workshop/project/grassdbproject/
+  mkdir $DIR
+  cd $DIR
+  #--------
+  # copy text file from shared folder to project folder
+  cp /media/sf_Geospatial_workshop/HAMjul05_pred.txt /home/user/grassdb_workshop/project/grassdbproject/HAMjul05_pred.txt
+</code>
+===== R script =====
+read in a text file and calculate a stratification index based on sea surface and bottom temperature
+<code R -Reading in txt, establish stratification index, save as csv>
+  ## Starting R
+  R
+  ## check working directory
+  getwd()
+  #
+  ## import the HAMSOM points
+  hamsom = read.table("HAMjul05_pred.txt" , header = TRUE, sep=",",dec="."  )
+  # look at data
+  #str(hamsom)
+  # Tmean= Sea surface temperature; Tmean.bott= Sea bottom temperature
+  ##create stratification index by dividing sea surface temperature 
+  #by bottom temperature
+  hamsom$Tstrat<-hamsom$Tmean/hamsom$Tmean.bott
+  # delete first column as it contains a too long string for GRASS
+  hamsom1 = hamsom[,-1]
+  # see if new index had been created
+  str(hamsom1)
+  # then save as .csv file
+  write.table(hamsom1, file="hamjul05csv2.csv", sep=";", col.names=TRUE, row.names=FALSE)
+  # exit R
+  q()
+  n	# for not saving the workspace
+  </code>
+
+===== GRASS from Bash script =====
+
+create a GRASS location, import the .csv file, colorize the layer according to variables and save them as .shp
+<code bash -Visualize temperature gradients>
+  #create a new GRASS location based on a previously established one
+  cp ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/2020_TSSP_IM-ENS-A2-SP20_43023435.tif   $DIR/2020_TSSP_IM-ENS-A2-SP20_43023435.tif
+  bash ~/ost4sem/exercise/basic_adv_grass/create_location.sh   2020_TSSP_IM-ENS-A2-SP20_43023435.tif  EU_location ~/grassdb_workshop/project/grassdbproject/ 
+  #location should have been created now
+  #--------------
+  #set location and mapset for grass session
+  #grass -text ~/ost4sem/grassdb/europe/PCEM
+  grass -text ~/grassdb_workshop/project/grassdbproject/EU_location/PERMANENT
+  #--------------
+  # set bash working directory the same
+  cd ~/grassdb_workshop/project/grassdbproject/EU_location/PERMANENT
+  # set projection to WGS84
+  g.proj --quiet -c epsg=4326
+  #--------------
+  # read in csv file, Longitude is column 4, Latitude column 3, skip header row
+  v.in.ascii --overwrite input=hamjul05csv2.csv output=hamjul2 fs=; skip=1 x=4 y=3
+  #--------------
+  # set color table for displaying temperature gradients
+  v.colors map=hamjul2 column=dbl_5 rgb_column=colorSST color=bcyr
+  v.colors map=hamjul2 column=dbl_7 rgb_column=colorTbott color=bcyr
+  v.colors map=hamjul2 column=dbl_11 rgb_column=colorstrat color=bcyr
+  #--------------
+  # display the SST layer according to color scheme
+  d.vect -a map=hamjul2 rgb_column=colorSST
+  # export layer as ESRI shape file
+  v.out.ogr input=hamjul2 type=point dsn=hamjul05sst
+  #--------------
+  # repeat procedure for the other two layers
+  d.vect -a map=hamjul2 rgb_column=colorTbott
+  v.out.ogr input=hamjul2 type=point dsn=hamjul05tbott
+  d.vect -a map=hamjul2 rgb_column=colorstrat
+  v.out.ogr input=hamjul2 type=point dsn=hamjul05strat
+  #--------------
+  # the shape file layers can now be send to and opened by 
+  #other scientist for quick spatial  reference of sea surface temperatures etc.
+
+  # END of code
+</code>
+  
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+In map 1 one can clearly see the temperature trend in the North Sea from warmer southern areaas to colder northern areas.  
+   * Map 1. Mean Sea surface temperature in the North Sea in july 2005\\
+{{:wikistudholland:hamjulSST.png?600|color scale ranging from deep blue=cold to red=warm}}
+\\
+\\
+   * Map2. Mean Sea bottom temperature in the North Sea in july 2005\\
+{{:wikistudholland:hamjulTbott.png?600|color scale ranging from deep blue=cold to red=warm}}
+\\
+\\
+In map two we see a similar trend. But it is also visible that the trend is correlated with depth. See the warmer bottom temperatures in the south-eastern North Sea, which resembles exactly the shallower area of the Doggerbank. Nevertheless there are also real cold areas as is the case off the eastern coast of Scotland.
+   * Map3. Temperature stratification index in the North Sea in july 2005\\
+{{:wikistudholland:hamjulstrat.png?600|color scale ranging from deep blue=mixed water to red=stratified water}}
+\\
+\\
+The stratification is also correlated with depth, which is clearly visible in the Norwegian Trench. The water here is much deeper and hence the bottom temperature is colder. Though, in all other areas even small differences in the stratification index can be linked to biological factors and thus provide valuable information for further analyses.

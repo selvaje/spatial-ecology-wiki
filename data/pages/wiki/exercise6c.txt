@@ -1,0 +1,17 @@
+====== Exercise 6c: Create shadow mask from digital surface model ======
+
+In this exercise, the following tools will be used:
+  * pktools: pkdsm2shadow
+
+<note tip> We will treat the cloud mask as a digital surface model
+</note>
+
+__Create cloud shadow mask based on cloud height__
+
+<code bash>
+pkdsm2shadow -i ${OUTPUTDIR}/exercise6/cloudmask_dil.tif -o ${OUTPUTDIR}/exercise6/shadowmask.tif -sza 20 -saa 155 -f 1 -s 1800 -ct ${OUTPUTDIR}/exercise6/cloudmask_ct.txt
+</code>
+
+<note tip>
+Try different cloud heights using the scale option (-s), Sun zenith angles and Sun azimuth angles
+</note>

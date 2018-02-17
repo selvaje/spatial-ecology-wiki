@@ -1,0 +1,145 @@
+
+<h1 class="sectionedit1" id="part_1">Part 1</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li">Introduction to vector and raster data (raster_images.pdf)</div>
+</li>
+<li class="level1"><div class="li">Introduction to open source geodata tools
+</div>
+<!-- EDIT1 SECTION "Part 1" [1-133] -->
+<h2 class="sectionedit2" id="introduction_to_vector_and_raster_data">Introduction to vector and raster data</h2>
+<div class="level2">
+</div>
+</li>
+<li class="level1"><div class="li">raster_images.pdf</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Introduction to vector and raster data" [134-208] -->
+<h2 class="sectionedit3" id="introduction_to_open_source_geodata_tools">Introduction to open source geodata tools</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT3 SECTION "Introduction to open source geodata tools" [209-263] -->
+<h3 class="sectionedit4" id="visualization_of_raster_and_vector_data">Visualization of raster and vector data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">openev</div>
+</li>
+<li class="level1"><div class="li">QGIS</div>
+</li>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:exercise1a" class="wikilink1" title="wiki:exercise1a"> exercise 1a</a>: Use of openev and ogr tool. Reprojection of vectors and feature selection</div>
+</li>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:exercise1b" class="wikilink1" title="wiki:exercise1b"> exercise 1b</a>: Convert forest vector file to KML vector for visualisation in GoogleEarth</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "Visualization of raster and vector data" [264-551] -->
+<h3 class="sectionedit5" id="basic_geospatial_raster_data_processing">Basic geospatial raster data processing</h3>
+<div class="level3">
+
+</div>
+
+<h5 id="format_conversiongdal_translate">Format conversion: gdal_translate</h5>
+<div class="level5">
+
+<p>
+Check the usage of gdal_translate on website and via command line:
+</p>
+<pre class="code">gdal_translate --help</pre>
+
+<p>
+In its most basic form, without any options, gdal_transform copies an input
+image to an output image:
+</p>
+<pre class="code">gdal_translate input output</pre>
+
+<p>
+Converting image or data formats is almost as simple. Check the available raster formats using
+</p>
+<pre class="code">gdalinfo --formats</pre>
+
+<p>
+An interesting format is the VRT driver is a format driver for GDAL that allows a virtual GDAL dataset to be composed from other GDAL datasets. As opposed to physical data, the virtual data are described by XML files that are linked to some physical data sets.
+</p>
+
+<p>
+As an example, the following example converts a Landsat image in GTiff format into a virtual data set (VRT):
+</p>
+<pre class="code">gdal_translate 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW.vrt -of VRT</pre>
+
+<p>
+You can perform operations on the virtual data, such as scaling:
+</p>
+<pre class="code">gdal_translate 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW.vrt -of VRT -scale 0 255 0 100</pre>
+
+</div>
+
+<h5 id="image_re-_projectionsgdalwarp">Image (re-)projections: gdalwarp</h5>
+<div class="level5">
+
+<p>
+Check the usage of gdalwarp on website and via command line:
+</p>
+<pre class="code">gdalwarp --help</pre>
+
+<p>
+The Landsat image over Cornwall is in a European projection (ETRS89/LAEA: epgs:3035). To obtain the image in the British national grid (epsg:27700), we can either do it directly:
+</p>
+<pre class="code">gdalwarp -of GTiff -co INTERLEAVE=BAND -co COMPRESS=LZW -t_srs epsg:27700 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW_27700_direct.tif</pre>
+
+<p>
+Or we can combine several processing steps by using the resulting virtual data set from the previous step as input for gdalwarp.
+</p>
+<pre class="code">gdalwarp -of VRT -t_srs epsg:27700 19990724_L7E_IP_CW.vrt 19990724_L7E_IP_CW_27700.vrt</pre>
+
+<p>
+We can thus postpone the creation of the physical data (in GTiff format) until the very end, which saves the creation of large temporary files and data input/output (I/O).
+</p>
+<pre class="code">gdal_translate -co INTERLEAVE=BAND -co COMPRESS=LZW -of GTiff 19990724_L7E_IP_CW_27700.vrt 19990724_L7E_IP_CW_27700.tif</pre>
+
+<p>
+As a default, GDAL (gdal_translate and gdalwarp) writes GTiff bands as interleaved by pixel. By using the creation options (-co) for INTERLEAVE and COMPRESS, we can change this. 
+</p>
+
+</div>
+
+<h5 id="spatial_and_spectral_image_subsetting">Spatial and spectral image subsetting</h5>
+<div class="level5">
+
+<p>
+We want to crop the Landsat image to the following bounding box:
+</p>
+<div class="noteclassic">ULX=3217600
+ULY=3127850
+LRX=3225650
+LRY=3119900
+
+</div><pre class="code">gdal_translate -projwin 3217600 3127850 3225650 3119900 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW_crop.tif</pre>
+
+<p>
+We now want to create a quick look of the Landsat image in JPEG format, using false colors:
+</p>
+<pre class="code">gdal_translate -ot Byte -scale -outsize 20% 20% -b 4 -b 3 -b 2 -of JPEG 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW.jpg</pre>
+<ul>
+<li class="level1"><div class="li">Vector and raster data processing</div>
+</li>
+<li class="level1"><div class="li">Displaying vector and raster data</div>
+</li>
+<li class="level1"><div class="li">Visualizing spatial data statistics</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "Basic geospatial raster data processing" [552-3482] -->
+<h3 class="sectionedit6" id="basic_geospatial_vector_data_processing">Basic geospatial vector data processing</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:pktools_sqlite" class="wikilink1" title="wiki:pktools_sqlite"> Openstreetmap, SQLite and sql commands </a>: exercise 7</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT6 SECTION "Basic geospatial vector data processing" [3483-] -->

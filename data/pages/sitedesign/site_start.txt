@@ -1,0 +1,60 @@
+====== Geography of Landscape for site design and permaculture ======
+In this first part of the tutorial we will set up a GIS working environment starting from downloading and harmonizing a DEM.\\ 
+Before starting any GIS analyses we need to define the geographical projection of our project. While dealing with different datasets, we'll need to reproject all layers to our defined projection. After defining our project we'll go through each step from the data acquisition to hydrological modelling and terrain modelling.
+
+
+===== Download data =====
+  * Go to this [[http://www.msdis.missouri.edu/data/lidar/download/modem.html| website and download]] the following Lidar images: 15_03794410.img - 15_03794411.img - 15_03794413.img - 15_03794414.img - 15_03814410.img - 15_03814411.img - 15_03814413.img - 15_03814414.img - 15_03824410.img - 15_03824411.img - 15_03824413.img - 15_03824414.img - 15_03784410.img - 15_03784411.img - 15_03784413.img - 15_03784414.img 
+  * Move the images to this folder /home/user/ost4sem/siteplan/data/rasters/lidar/
+
+
+===== Merge Data =====
+  * Start QGis
+  * Click on the Raster drop down tab > Miscellaneous > Merge
+  * In the Merge pop up window select all input image files. Name the output file merge_lidar.tif. You should see the following input at the command line area at the bottom of the pop up window:
+
+
+<code>
+gdal_merge.py -of GTiff -o merge_lidar
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03794411.img
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03794413.img
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03794414.img
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03814411.img
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03814413.img
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03814414.img
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03824411.img
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03824413.img
+/home/user/ost4sem/siteplan/data/rasters/lidar/15_03824414.img
+</code>
+
+  * Click OK and you should see the image below\\
+\\
+{{:sitedesign:merged_lidar.png?200|}}
+\\
+
+===== Set up GRASS environment in QGIS =====
+The next steps will allow us to access GRASS data and modules from Qgis\\
+
+** Method 1: using QGIS - grass plugin **\\
+We need to create a new folder where all GRASS outputs will be automatically stored. This folder will include a subfolder "LOCATION" and a sub-sub folder GRASS MAPSET". These subfoldes will be automatically created by QGIS-GRASS plugin:\\ 
+  * Open New Mapset {{:sitedesign:logo_grass_newmapset.png?30 |}} and browse to user/ost4sem/grassdb > next
+  * Select location: Missouri > next
+  * Under Projection > search and select EPSG:26915 > ok
+  * New mapset: maysville > Finish > ok
+
+** Method 2: using GRASS **\\
+  * From the {{:sitedesign:lubuntu-ball-logo.jpg?30| lubuntu}} icon select Geospatial > Desktop Gis > GRASS GIS 7.
+  * In the pannel 2. click on new and follow the create new location wizard. You can use EPSG code or a georeferenced map to define your grass working environment.
+  * Once the mapset is created and grass starts, close grass GUI and type qgis& in the terminal. In this way a QGIS session will start linked to our newly formed grass location environment.
+
+
+** Read Lidar images in QGIS-GRASS plugin **\\
+This will allow us to access non grass data format  (e.g. .tif or .img) in Qgis and process them using GRASS functions and perform a huge variety of data processing.
+  * Open GRASS Tools {{:sitedesign:logo_grass_toolbox.png?30 |}} > File management > Import into GRASS > Register external… > r.external
+
+  * Raster file to be linked:  //merge_lidar.tif// 
+  * name of output raster map: //merge.lidar//. Tick the box stating //Extend region extents based…// > run
+
+Now you can load the image to QGIS to visualize it:
+  * Add GRASS raster layer > select merge.lidar > ok
+

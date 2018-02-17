@@ -1,0 +1,134 @@
+====== University of Twente 2013 ======
+[[http://www.sense.nl/?module=courses&func=displayplanned&planningid=1332| course details here]]  - [[wikiholland:schedule2013|course schedule]]\\
+[[survey_twente2013| Satisfactory survey first week]]\\
+[[survey_twente2014| Satisfactory survey second week]]\\
+[[survey_twente2013-14| Satisfactory survey course overall]]\\
+[[data_template| template data]]\\
+\\
+\\
+{{:wiki:timetable_sense_wk2.pdf|Time table week 2}}
+{{:wiki:introduction_week2.pdf|introduction week 2}}
+====== Project assignment ======
+  * Please complete your personal project before Jan. 20th 2014.  
+  * Access your page by clicking at your name in the table below. 
+  * Edit your project by replacing **TITLE** with the title of your project and all the section afterwords.
+  * Add your name, affiliation, keywords and an acronym if you like.
+  * Do not leave residual text from the template. Remove them if not needed.
+
+|-|Name|email|
+|1|Stefano| stefano@casalegno.net|
+|2|[[wikistudholland:utwente_elikana| Elikana ]] Kalumanga |ekalumanga@yahoo.com|
+|3|[[wikistudholland:utwente_dirk| Dirk ]] Frederik Van Apeldoorn|dirkva@gmail.com|
+|4|[[wikistudholland:utwente_ping| Ping ]] Fu|ping.fu@natgeo.su.se|
+|5|[[wikistudholland:utwente_luis|Luis Eduardo]] Ramirez Camargo|luis.ramirez-camargo@th-deg.de|
+|6|[[wikistudholland:utwente_maria|Maria]] Lathouri|mlathouri@yahoo.gr|
+|7|[[wikistudholland:utwente_rehmat|Rehmat]] Ullah|r.ullah@utwente.nl|
+|8|[[wikistudholland:utwente_tim|Tim]] Dudeck|tim.dudeck@uni-hamburg.de|
+|9|[[wikistudholland:utwente_omar|Omar]] Ali Mohamed|ali.negen@gmail.com|
+|10|[[wikistudholland:utwente_haris|Haris]] Akram Bhatti|bhatti23984@itc.nl|
+|11|[[wikistudholland:utwente_vladimir|Vladimir]] Gusarov|vladimir.gusarov@nhm.uio.no|
+|12|[[wikistudholland:utwente_matthias|Matthias]] BenjaminSiewert|matthias.siewert@natgeo.su.se|
+|13|[[wikistudholland:utwente_norhakim|Norhakim Bin]] Yusof|n.yusof@utwente.nl|
+|14|[[wikistudholland:utwente_xiaojing|Xiaojing]] Wu| x.wu-1@utwente.nl|
+|15|[[wikistudholland:utwente_qijun|Qijun]] Jiang|qijun.jiang@wur.nl|
+|16|[[wikistudholland:utwente_rayan|Ryan Daniel]] Clark|ryan.clark@slu.se|
+|17|[[wikistudholland:utwente_efthymia|Efthymia]] Pavlidou|e.pavlidou@utwente.nl|
+|18|[[wikistudholland:utwente_hamed|Hamed]] Mehdi Poor|h.mehdipoor@utwente.nl|
+|19|[[wikistudholland:utwente_nadin| Nandin-Erdene]] Tsendbazar|nandin.tsendbazar@wur.nl|
+|20|[[wikistudholland:utwente_agnieszka|Agnieszka Helena]] Malinowska|agnieszka.malinowska@wur.nl|
+|21|[[wikistudholland:utwente_aart|Aart]] Van Der Linden|aart.vanderlinden@wur.nl|
+|22|[[wikistudholland:utwente_ejiet|Ejiet John]] Wasige|wasige17285@itc.nl|
+|23|[[wikistudholland:utwente_ahmed|Ahmed]] Ibrahim|a.a.m.ibrahim@utwente.nl|
+|24|[[wikistudholland:utwente_helen|Helen Moor]]| helen.moor@stockholmresilience.su.se|
+|25|Giuseppe| giuseppe.amatulli@gmail.com|
+|26|Raul|r.zurita-milla@utwente.nl|
+\\
+\\
+====== Azure cloud intro ======
+The spatial-ecology 2013 training in Enschede, The Netherlands, include 1,200 USD credit per student for processing data in the Azure cloud facility.\\
+Windows Azure 180 day Student Passes have been funded by Microsoft Research, UK through a grant awarded to Dr. M.D. Sharma at the University of Exeter, UK.  These passes will allow you access to Windows Azure with the following levels of service:
+ 
+Windows Azure
+   * Two small compute instances for Cloud Services or Virtual Machines
+   * 70 GB of storage
+   * 50,000,000 storage transactions
+   * 10 Shared Websites/10 Shared Mobile Services
+   * 500,000 Service Bus messages
+   * 1,500 Service Bus Relay hours
+SQL Database
+   * Two 1-GB Web Edition databases
+Data Transfers (per region)
+   * 12 GB in
+   * 12 GB out
+The estimated total market value of each student pass is USD 1200.00\\
+Your account will be valid during 6 months period and will allow you to learn cloud computation.\\
+You need to create your own account to access the azure cloud. Please follow the instruction below:\\
+\\
+====== Azure cloud registration ======
+
+   * 1. If you do not have a Microsoft account or Microsoft outlook account, go to the [[https://login.live.com/| Microsoft account web page]] and **sign up**. You will immediately receive an email to confirm registration. \\
+
+Once you have the microsoft account registered:
+ 
+   * 2. Go to the [[http://www.windowsazurepass.com/azure| azure registration web page]] and sign in using the personal promo codes (see below). You'll need to give personal info (adress, email, ...)\\
+
+   * 3. One to two days after registering you will receive an email confirmation and you will be able to access  [[http://www.windowsazure.com/en-us/account/| your azoure account manager page]] and start using your cloud computation facility.\\ 
+\\
+
+click on the manage windows.
+  * 4. enter the email used to activate Microsoft account
+  * 5. enter password
+  * 6. click next trough the intro untill you rich the main azure page
+  * 7. click **virtual machin** on the left menu
+  * 8. select **images** on the top bar
+  * 9. click brows on **browse vm depot**
+  * 10. browse done the scroll bar until you find **ost4twente** and click next
+  * 11.select west europe  > create a new storage account > $IDtwente2013 > click complete icon (bottom right). <WRAP center round tip 60%>
+$ID is your ID in the table of participants (see above)
+</WRAP>
+  * 12. Go to **virtual machine instances** on the top bar
+  * 13. click on **Register** on the lower bar
+  * 14. click complete
+  * 15.  click on **virtual machine instances** then ** create virtual machine** then **from gallery** then find //ost4twente// under **my images** then click next
+  * 16. Virtual Machine name= nuvola
+  * 17. user name = nuvola$IDP
+  * 18. **untick** //upload compatible ssh for authentication//
+  * 19. **tick** //provide a password//
+  * 19. password= username (nuvola$IDP)
+  * 20. click next
+  * 21. rename **cloud serviceDNSname**  nuvola$ID click next
+  * 22. click next 
+
+
+
+
+====== administrative stuff ======
+
+Azure pass codes to insert at the [[http://www.windowsazurepass.com/azure| azure registration web page]]  \\
+
+^nbr^Azure pass^First Name^Surname^E-Mail^Country^
+|2|IHEDYYOH5NX8|[[wikistudholland:utwente_elikana|Elikana ]]  Kalumanga|Ngallaba|ekalumanga@yahoo.com|Sweden|
+|3|CVVKQ3E1Y70X|[[wikistudholland:utwente_dirk| Dirk ]] Frederik|Van Apeldoorn|dirkva@gmail.com|Netherlands|
+|4|JYJ6Q6AKTMT5|[[wikistudholland:utwente_ping| Ping ]]|Fu|ping.fu@natgeo.su.se|Sweden|
+|5|VNQLY5GLSJMM|[[wikistudholland:utwente_luis|Luis Eduardo]]| Ramirez Camargo|luis.ramirez-camargo@th-deg.de|Germany|
+|6|9DW175MMRFE4|[[wikistudholland:utwente_maria|Maria]]|Lathouri|mlathouri@yahoo.gr|Greece|
+|7|GGLM68I6MU9B|[[wikistudholland:utwente_rehmat|Rehmat]]|Ullah|r.ullah@utwente.nl|Netherlands|
+|8|NJ996BEQGA3I|[[wikistudholland:utwente_tim|Tim]]|Dudeck|tim.dudeck@uni-hamburg.de|Germany|
+|9|09GNEAKRF7V0|[[wikistudholland:utwente_omar|Omar]] Ali |Mohamed|ali.negen@gmail.com|Egypt|
+|10|1QLH6H6T45RW|[[wikistudholland:utwente_haris|Haris]] Akram|Bhatti|bhatti23984@itc.nl|Netherlands|
+|11|LJGIEK8FXHEM|[[wikistudholland:utwente_vladimir|Vladimir]]|Gusarov|vladimir.gusarov@nhm.uio.no|Norway|
+|12|RM45EN5YRW8T|[[wikistudholland:utwente_matthias|Matthias]] Benjamin|Siewert|matthias.siewert@natgeo.su.se|Sweden|
+|13|I1HYTMG1QPSS|[[wikistudholland:utwente_norhakim|Norhakim Bin]]|Yusof|n.yusof@utwente.nl|Netherlands|
+|14|CFY6LQ7JK9UI|[[wikistudholland:utwente_xiaojing|Xiaojing]]|Wu|x.wu-1@utwente.nl|Netherlands|
+|15|JIMRLT33FOOP|[[wikistudholland:utwente_qijun|Qijun]]|Jiang|qijun.jiang@wur.nl|Netherlands|
+|16|V7T7TS94EKH7|[[wikistudholland:utwente_rayan|Ryan Daniel]]|Clark|ryan.clark@slu.se|Sweden|
+|17|3BHSTV5O80BE|[[wikistudholland:utwente_efthymia|Efthymia]]|Pavlidou|e.pavlidou@utwente.nl|Netherlands|
+|18|G0O82VBP8W4W|[[wikistudholland:utwente_hamed|Hamed]]|Mehdi Poor|h.mehdipoor@utwente.nl|Netherlands|
+|19|AE6FT0182F6L|[[wikistudholland:utwente_nadin|Nandin-Erdene]]|Tsendbazar|nandin.tsendbazar@wur.nl|Netherlands|
+|20|0SJ99XDA18QL|[[wikistudholland:utwente_agnieszka|Agnieszka Helena]]|Malinowska|agnieszka.malinowska@wur.nl|Netherlands|
+|21|7V7V929TUOKS|[[wikistudholland:utwente_aart|Aart]]|Van Der Linden|aart.vanderlinden@wur.nl|Netherlands|
+|22|1AO315YDP7MI|[[wikistudholland:utwente_ejiet|Ejiet John]]|Wasige|wasige17285@itc.nl|Uganda|
+|23|QO2WH4BFO07H|[[wikistudholland:utwente_ahmed|Ahmed]]|Ibrahim|a.a.m.ibrahim@utwente.nl|Netherlands|
+|24|S31JI0CF6UD8|[[wikistudholland:utwente_helen|Helen ]]| Moor| helen.moor@stockholmresilience.su.se|Sweden|
+We will use the cloud during the training course.\\
+ 

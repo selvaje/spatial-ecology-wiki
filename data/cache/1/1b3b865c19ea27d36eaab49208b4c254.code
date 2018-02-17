@@ -1,0 +1,37 @@
+<span class="kw3">export</span> <span class="re2">INDIR</span>=<span class="sy0">/</span>data<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span>
+<span class="kw3">export</span> <span class="re2">OUTDIR</span>=<span class="sy0">/</span>data<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span>
+&nbsp;
+<span class="kw1">time</span> <span class="br0">&#40;</span>
+&nbsp;
+<span class="kw2">ls</span> <span class="re1">$INDIR</span><span class="sy0">/</span><span class="nu0">20</span>?<span class="nu0">0</span>_TSSP_??-ENS-A2-SP20_43023435.tif  <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">6</span> <span class="kw2">bash</span>  <span class="re5">-c</span> $<span class="st_h">'
+&nbsp;
+file=$1
+export  filename=$(basename $file .tif)
+&nbsp;
+# pay attention to single quote that under xargs it need to escape by the \
+&nbsp;
+R --vanilla --no-readline   -q  &lt;&lt;\'</span>EOF<span class="co3">\'</span>
+&nbsp;
+library<span class="br0">&#40;</span>raster<span class="br0">&#41;</span>
+&nbsp;
+INDIR = Sys.getenv<span class="br0">&#40;</span>c<span class="br0">&#40;</span><span class="co3">\'</span>INDIR<span class="co3">\'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+OUTDIR = Sys.getenv<span class="br0">&#40;</span>c<span class="br0">&#40;</span><span class="co3">\'</span>OUTDIR<span class="co3">\'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+filename = Sys.getenv<span class="br0">&#40;</span>c<span class="br0">&#40;</span><span class="co3">\'</span>filename<span class="co3">\'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+paste0<span class="br0">&#40;</span><span class="st0">&quot;start to process &quot;</span>,INDIR,<span class="st0">&quot;/&quot;</span>,filename,<span class="st0">&quot;.tif&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="re2">data</span>=raster<span class="br0">&#40;</span>paste<span class="br0">&#40;</span>INDIR,<span class="st0">&quot;/&quot;</span>,filename,<span class="st0">&quot;.tif&quot;</span>,<span class="re2">sep</span>=<span class="st0">&quot;&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+r1 = crop<span class="br0">&#40;</span>data, extent<span class="br0">&#40;</span><span class="nu0">3825000</span>,<span class="nu0">4527900</span>,<span class="nu0">2565000</span>,<span class="nu0">3080000</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+paste0<span class="br0">&#40;</span><span class="st0">&quot;start to export &quot;</span>,INDIR,<span class="st0">&quot;/&quot;</span>,filename,<span class="st0">&quot;_crop.tif&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+writeRaster<span class="br0">&#40;</span>r1 , paste<span class="br0">&#40;</span>OUTDIR,<span class="st0">&quot;/&quot;</span>,filename,<span class="st0">&quot;_crop.tif&quot;</span>,<span class="re2">sep</span>=<span class="st0">&quot;&quot;</span><span class="br0">&#41;</span> , <span class="re2">overwrite</span>=TRUE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># if you get a file you can export with write.table</span>
+<span class="co0"># if you get a number you can use Sys.setenv() to export the variable in BASH:</span>
+&nbsp;
+EOF
+&nbsp;
+<span class="st_h">' _  
+&nbsp;
+)</span>

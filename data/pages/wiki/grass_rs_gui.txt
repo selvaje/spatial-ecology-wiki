@@ -1,0 +1,192 @@
+====== Burned area mapping exercise  ======
+[[http://grass.fbk.eu/|GRASS]] can be used to perform remote sensing image analysis in terms of preprocessing, classification and validation. 
+The image analysis commands start with the suffix " i. " (e.g., i.class , i.maxlik). They can be run in the bash shell and can be applied to any grass raster layer.\\ 
+The commands are listed and described in the [[ http://grass.osgeo.org/grass64/manuals/html64_user/imagery.html | Reference Manual ]].\\
+\\
+** Image classification **\\
+\\
+The following table summarizes the most important GRASS commands for Classification.
+\\
+^ ^radiometric unsupervised^radiometric supervised^radiometric supervised^radiometric & geometric supervised^
+|Image Preprocessing|r.seg|r.seg|r.seg|r.seg|
+|Preprocessing|i.cluster|i.class (monitor digitizing)|i.gensig (using training maps)|i.gensigset(using training maps)|
+|Classification|i.maxlik|i.maxlik|i.maxlik| i.smap| 
+|Remarks|automated from image statistics|requires training pixel collection|requires training pixel collection|requires training pixel collection|
+\\
+  * The **preprocessing** phase captures spectral signatures for each land cover class for later use by the classifier algorithm.
+  * The **classification** phase performs the classification based on the signatures collected in the previous step.
+\\
+
+===== Using WELD data for burned area mapping =====
+\\
+In order to understand the structure architecture of GRASS and the main modules and commands you can download the [[http://www.spatial-ecology.net/ost4sem/lecture/grass_intro.pdf | Introduction to GRASS]] presentation and see the [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:grass | Hands on GRASS: Geographic Resources Analysis Support System ]] page.
+==== Create New Mapset in GRASS ====
+\\
+Start Grass
+   grass  -wxpython
+Create new grass database, location and mapset using the grass Location Wizard button. Insert the options as reported in the below screenshots.\\
+\\
+|{{:wiki:grassdb.png?400}}|{{:wiki:location.png?600}}|\\
+\\
+Enter **PROJ.4 parameters string** under the  "Choose method for specifying georeferencing parameters:"\\
++proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +no_defs +a=6378137 +rf=298.257223563 +towgs84=0.000,0.000,0.000 +to_meter=1 \\
+\\
+|{{:wiki:specify_prj.png?500}}|{{:wiki:proj4.png?500}}|\\
+\\
+|{{:wiki:proj4_print.png?550}}|{{:wiki:start_grass.png?450}}|\\
+\\
+At this point the **GIS Data Directory**, the **Project location** and the **Accessible mapset** have been created and it is possible to start grass by the **Start GRASS** button.\\
+The following screenshots show the GRASS wxpython GUI. It possible to navigate in the tools bar and select the appropriate window module. Each module is a graphical tool of a command with its options. At the bottom of each module you can see the command line syntax that you can use to create a script routine.\\
+\\
+|{{:wiki:grass_gui.png?900}}|\\
+\\
+==== Importing data ====
+\\
+The created mapset is an empty environment where we can import the data:\\
+Band1_TOA_REF.TIF Band2_TOA_REF.TIF  Band3_TOA_REF.TIF Band4_TOA_REF.TIF Band5_TOA_REF.TIF Band7_TOA_REF.TIF\\
+stored in the /home/user/ost4sem/exercise/weld_data_processing/x6JIatZlSUMMER2008\\
+\\
+Open the Import raster data window as:\\
+ > File > Import Raster Data > Common Import Formats\\
+and select the Band1_TOA_REF.TIF Band2_TOA_REF.TIF  Band3_TOA_REF.TIF Band4_TOA_REF.TIF Band5_TOA_REF.TIF Band7_TOA_REF.TIF\\
+ file as reported in the following screenshot.\\
+\\
+|{{:wiki:imp_data.png?500|}}|\\
+\\
+
+==== Create RGB color map ====
+\\
+Open the i.landsat.rgb window by:\\
+ > Immagery > Manage immage colors > Color balance for RGB (command i.landsat.rgb).\\
+and select the bands as reported in the following screenshots.\\
+\\
+|{{:wiki:i.landsat.png?500|}}|
+\\
+Open the r.composite window by:\\
+ > Raster > Manage colors > Create RGB (command r.composite) \\
+and select the bands as reported in the left side of following screenshots. 
+Visualize the results by the GRASS wxpython GUI opening Band4_3_2_TOA_REF (right side screenshots).\\
+\\
+|{{:wiki:r.composite.png?500}} |{{:wiki:rgb_burnet.png?380}}|\\
+\\
+==== Group the bands ====
+\\
+From this point is much easier to use the command line. Copy the line and insert it in the terminal.
+
+   i.group group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup input=Band1_TOA_REF,Band2_TOA_REF,Band3_TOA_REF,Band4_TOA_REF,Band5_TOA_REF,Band7_TOA_REF
+
+==== Unsupervised classification ====
+\\
+Generate unsupervised statistics for 7 classes (you could select more classes, fewer tends not to work so well for these data):
+<code bash>
+i.cluster group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4maxlClust classes=8  sample=10,10 reportfile=Band4_3_2_TOA_REF_report.txt
+</code>
+Create the unsupervised classified image: 
+<code bash>
+g.remove rast=maxlikClust_map
+i.maxlik  group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4maxlClust class=maxlikClust_map   
+</code>
+Visualize the results using the GRASS wxpython GUI opening maxlikClust_map. Compare visually the classified map and the RGB layer.\\
+As you can see, the unsupervised classification classifies the burned area into several classes.\\
+\\
+|{{:wiki:unsuper.png?400}}|\\
+\\
+Let's try again now but with a supervised classifier to see if we can getter better results.\\
+\\
+==== Supervised classification ====
+\\
+For supervised classification you will need to create a shape file containing polygons where each polygon locates pixels that you think represent the different classes in the image (e.g., burned, unburned, cloud etc.) - these will be used as training data by the supervised classification algorithm.\\
+\\
+Create a training class polygon using qgis or GRASS wxpython. See the procedure in [[wiki:wikiqgis:editqgis |Editing and creating a vector in QGIS ]]\\
+\\
+If you cannot create it use ~/ost4sem/exercise/weld_data_processing/class_burned_example.shp by importing it into GRASS as:
+
+<code bash>
+g.remove vect=class ; v.db.droptable map=class 
+v.in.ogr -o dsn=~/ost4sem/exercise/weld_data_processing/shp/class_burned.shp  output=class min_area=0.0001 snap=-1 
+</code>
+
+Then convert the training class polygon to raster format:
+<code bash>
+v.to.rast in=class   out=class  use=attr column=burned labelcol=burned --o
+</code>
+
+Visualize the training class polygon raster using the GRASS wxpython GUI. 
+
+\\
+Now perform supervised classification with either of the two following methods.\\
+\\
+== Supervised classification using maximum-likelihood discriminant analysis ==
+\\
+Generate statistics from the training areas, to be used with the i.maxlik command.
+<code bash>
+i.gensig  group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4maxl trainingmap=class
+</code>
+Perform the classification
+<code bash>
+i.maxlik group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4maxl class=maxlik_map --o
+</code>
+== Supervised classification using sequential maximum a posteriori (SMAP) estimation ==
+\\
+Generate statistics from the training areas, to be used with the i.smap command. This is a long process (1hour !), so run it during your break. 
+<code bash>
+i.gensigset group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4smap training=class
+</code>
+Perform the classification
+<code bash>
+i.smap   group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4smap out=smap_map  --o 
+</code>
+\\
+You can visualize the maxlik_map and smap_map rasters using the GRASS wxpython GUI.\\
+\\
+For example, the following screenshots show maxlik_map (left) and smap_map (right) \\
+\\
+|{{wiki:maxlik.png?400}}| {{wiki:smap_map.png?400}}|
+\\
+==== Stand alone script ====
+\\
+The same exercise can be done by a stand alone script.\\
+
+Create a new grass location alaska2.
+<code bash>
+   cd ~/ost4sem/exercise/weld_data_processing/x6JIatZlSUMMER2008
+   bash ~/ost4sem/exercise/basic_adv_grass/create_location.sh Band1_TOA_REF.TIF alaska2 /home/user/ost4sem/exercise/weld_data_processing
+</code>
+Start grass manually.
+<code bash>
+   grass64 -wxpython /home/user/ost4sem/exercise/weld_data_processing/alaska2/PERMANENT
+</code>
+Import all the data by a loop:
+<code bash>
+for file in *_TOA_REF.TIF ; do 
+    RAST=`basename $file .TIF`
+    r.in.gdal in=$file  out=$RAST 
+done
+</code>
+Run the previous steps line by line and see the results with the GRASS wxpython GUI.
+
+<code bash>
+i.group group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup input=Band1_TOA_REF,Band2_TOA_REF,Band3_TOA_REF,Band4_TOA_REF,Band5_TOA_REF,Band7_TOA_REF
+i.cluster group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4maxlClust classes=8  sample=10,10 reportfile=Band4_3_2_TOA_REF_report.txt
+
+g.remove rast=maxlikClust_map
+i.maxlik  group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4maxlClust class=maxlikClust_map   
+
+
+g.remove vect=class ; v.db.droptable map=class 
+v.in.ogr -o dsn=~/ost4sem/exercise/weld_data_processing/shp/class_burned.shp  output=class min_area=0.0001 snap=-1 
+v.to.rast in=class   out=class  use=attr column=burned labelcol=burned --o
+
+
+i.gensig  group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4maxl trainingmap=class
+i.maxlik group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4maxl class=maxlik_map --o
+
+i.gensigset group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4smap training=class
+i.smap   group=Band_Multi_TOA_REF_group subgroup=Band_Multi_TOA_REF_subgroup sig=Band_Multi_TOA_REF_sig4smap out=smap_map  --o 
+</code>
+
+
+
+
+
+

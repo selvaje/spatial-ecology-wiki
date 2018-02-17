@@ -1,0 +1,15 @@
+<span class="co0"># convert vector to raster </span>
+v.to.rast <span class="re2">input</span>=poly_fr <span class="re2">output</span>=poly_fr  <span class="re2">use</span>=attr  <span class="re2">column</span>=<span class="kw2">id</span>  <span class="re5">--overwrite</span>
+<span class="co0"># setting the region</span>
+g.region <span class="re2">vect</span>=poly_fr<span class="sy0">@</span>PERMANENT <span class="re2">res</span>=<span class="nu0">1000</span>
+&nbsp;
+<span class="co0"># create a mask using the polygon ID=1 (left polygon)</span>
+r.mapcalc <span class="st0">&quot;poly_fr1 = if ( poly_fr == 1 , 1 , null()  ) &quot;</span>
+&nbsp;
+<span class="co0"># apply the mask (all the following operation will be based on the region and mask settings)</span>
+r.mask <span class="re2">input</span>=poly_fr1 <span class="re5">-o</span>
+&nbsp;
+<span class="co0"># loop through all the rasters and 'mask' them (set all masked values to NA)</span>
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">`</span>g.mlist <span class="re2">type</span>=rast  <span class="re2">pattern</span>=<span class="nu0">20</span><span class="sy0">*</span>IP<span class="sy0">*</span><span class="nu0">35</span>  <span class="sy0">`</span>; <span class="kw1">do</span> 
+r.mapcalc  <span class="st0">&quot;'<span class="es2">$file</span>&quot;</span>_fr1<span class="st0">&quot;'&quot;</span> =  <span class="st0">&quot;'<span class="es2">$file</span>'&quot;</span> 
+<span class="kw1">done</span>

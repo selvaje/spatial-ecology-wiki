@@ -1,0 +1,57 @@
+====== Exercise 5b: Extract shadow and water pixels ======
+
+In this exercise the following tools will be used:
+  * pkinfo: pkascii2ogr, pkextract, pkdumpogr
+  * bash: redirection, 
+  * awk: basic column selection
+  * gdal/ogr tools: ogr2ogr
+\\
+
+__Find geographic coordinates for shadow pixels__
+<code bash>
+cat > ${OUTPUTDIR}/exercise5/shadows.txt <<EOF
+shadow 3220825 3124100
+shadow 3221025 3124150
+shadow 3222325 3123950
+shadow 3223750 3124650
+EOF
+</code>
+
+__Create vector files__
+
+<code bash>
+pkascii2ogr -i ${OUTPUTDIR}/exercise5/shadows.txt -x 1 -y 2 -n label --ot String -a_srs epsg:3035 -o ${OUTPUTDIR}/exercise5/shadows.shp
+</code>
+
+__Extract LANDSAT shadow pixels__
+
+<code bash>
+pkextract -i ${LANDSATDIR}/${LANDSATIMG} -s ${OUTPUTDIR}/exercise5/shadows.shp -o ${OUTPUTDIR}/exercise5/shadows_landsat.shp
+</code>
+
+__Calculate mean and stdev shadow pixels__
+<code bash>
+pkstatogr -i ${OUTPUTDIR}/exercise5/shadows_landsat.shp -n B0 -n B1 -n B2 -n B3 -n B4 -n B5 -n B6 -n B7 -mean -stdev| awk '{print $4,$6}' > ${OUTPUTDIR}/exercise5/shadows_landsat_mean_stdev.txt
+</code>
+
+__Dump ogr to ascii text file__
+<code bash>
+pkdumpogr -i ${OUTPUTDIR}/exercise5/shadows_landsat.shp -n label -n B0 -n B1 -n B2 -n B3 -n B4 -n B5 -n B6 -n B7 > ${OUTPUTDIR}/exercise5/shadows_landsat.txt
+</code>
+
+__Extract LANDSAT water profiles from vector cornwall_water.shp and reproject to epsg:3035__
+
+<code bash>
+ogr2ogr -t_srs epsg:3035 -where "NATURAL='water'" ${OUTPUTDIR}/exercise5/cornwall_water_3035.shp ${VECTORDIR}/cornwall_water.shp
+</code>
+
+<code bash>
+pkextract -i ${LANDSATDIR}/${LANDSATIMG} -s ${OUTPUTDIR}/exercise5/cornwall_water_3035.shp -o ${OUTPUTDIR}/exercise5/water_landsat.shp -r 1 -l -t -10
+</code>
+__Dump shape content to ASCII file__
+<code bash>
+pkdumpogr -i ${OUTPUTDIR}/exercise5/water_landsat.shp -n B0 -n B1 -n B2 -n B3 -n B4 -n B5 -n B6 -n B7 |awk '{print $2,$3,$4,$5,$6,$7,$8,$9}' > ${OUTPUTDIR}/exercise5/water_landsat.txt
+</code>
+
+\\
+Plot profiles in gnuplot (click [[gnuplot5b | here]] for code)

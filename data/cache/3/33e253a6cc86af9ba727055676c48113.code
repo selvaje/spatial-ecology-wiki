@@ -1,0 +1,117 @@
+<span class="co0">##################################SIMULATION##################################################################</span>
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="co0">#Set the rotation ages (ie age when the forest clearfelled)#</span>
+&nbsp;
+<span class="re2">rpine</span>=<span class="nu0">110</span>
+<span class="re2">rspruce</span>=<span class="nu0">80</span>
+<span class="re2">rbirch</span>=<span class="nu0">70</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Rotation age: Pine <span class="es2">$rpine</span> years, Spruce <span class="es2">$rspruce</span> years, Birch <span class="es2">$rbirch</span> years&quot;</span> <span class="sy0">&gt;</span> report.txt
+&nbsp;
+  <span class="co0">#Set number of periods (5 years) for simulation#</span>
+  <span class="re2">n</span>=<span class="nu0">20</span>
+  <span class="kw3">echo</span> <span class="st0">&quot;Number of periods=&quot;</span><span class="re1">$n</span> <span class="sy0">&gt;&gt;</span> report.txt
+&nbsp;
+&nbsp;
+<span class="co0">#Set the lengh (nr of years) of a period</span>
+<span class="re2">l</span>=<span class="nu0">5</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Length of a period=<span class="es2">$l</span> years&quot;</span> <span class="sy0">&gt;&gt;</span> report.txt
+&nbsp;
+&nbsp;
+<span class="co0">#Set the allowed cut as a percentage of the total forest area</span>
+<span class="re2">aff</span>=<span class="nu0">5</span>
+&nbsp;
+<span class="co0">#Set the initial age raster (period 0)</span>
+r.mapcalc <span class="re2">age_0</span>=AGE_24_P_05_prj_grass
+&nbsp;
+<span class="co0"># Set NULLL for no data value (-32768) to make it easier for creating histogramms later on</span>
+r.null <span class="re2">map</span>=age_0 <span class="re2">setnull</span>=-<span class="nu0">32768</span>
+&nbsp;
+<span class="co0">#Calculate the allowed cutting area in pixels (lm) for all forests (here only sums the total forest area, continuation see below)</span>
+r.mapcalc <span class="re2">areatotal</span>=<span class="kw1">if</span><span class="st0">&quot;( age_0 &gt;= 0, 1, 0 )&quot;</span>
+r.sum <span class="re2">rast</span>=areatotal <span class="sy0">&gt;</span> areatotal.txt
+&nbsp;
+<span class="re2">lm</span>=<span class="sy0">`</span><span class="kw2">awk</span>  <span class="re5">-v</span> <span class="re2">aff</span>=<span class="re1">$aff</span> <span class="st_h">'{ printf(&quot;%.0f\n&quot;, $3*aff/100) }'</span> areatotal.txt<span class="sy0">`</span> <span class="co0">#THIS WORKS!!!!!!!!!!!!!!!!!!!!! 5 is the percentage of total forest area allowed to be cut within 1 period</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Allowed cutting level - <span class="es2">$aff</span> % of the total forest area PER PERIOD&quot;</span> <span class="sy0">&gt;&gt;</span> report.txt
+<span class="kw3">echo</span> <span class="st0">&quot;Allowed cutting area per period <span class="es2">$lm</span> pixels&quot;</span> <span class="sy0">&gt;&gt;</span> report.txt
+&nbsp;
+<span class="co0">#Print the column headings for the report in the sum1.txt</span>
+<span class="kw2">awk</span> <span class="st_h">'BEGIN { print &quot;Period&quot; , &quot;Species&quot; , &quot;Clearcut area&quot;, &quot;Unit&quot; }'</span> <span class="sy0">&gt;</span> sum1.txt
+&nbsp;
+<span class="co0">#Run the loop. age_1, age_2 etc are the age files after periods 1,2 etc given the specified rotation ages</span>
+&nbsp;
+<span class="kw1">for</span> nn <span class="kw1">in</span> <span class="sy0">`</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="re1">$n</span><span class="sy0">`</span>; <span class="kw1">do</span>
+&nbsp;
+  <span class="kw3">echo</span> Period <span class="re1">$nn</span>
+  <span class="re2">np</span>=$<span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re1">$nn</span>-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  r.mapcalc age_<span class="re1">$nn</span>=age_<span class="re1">$np</span>
+&nbsp;
+        <span class="co0">#Identify potential cutting areas (in pixels)</span>
+	r.mapcalc cuts_<span class="re1">$nn</span>=<span class="kw1">if</span><span class="st0">&quot;( species==1 &amp; age_<span class="es2">$nn</span> &gt; <span class="es2">$rpine</span> , 1 , 0 )&quot;</span>     
+	r.mapcalc cuts_<span class="re1">$nn</span>=<span class="kw1">if</span><span class="st0">&quot;( species==4 &amp; age_<span class="es2">$nn</span> &gt; <span class="es2">$rpine</span> , 1 , cuts_<span class="es2">$nn</span> )&quot;</span>       
+	r.mapcalc cuts_<span class="re1">$nn</span>=<span class="kw1">if</span><span class="st0">&quot;( species==2 &amp; age_<span class="es2">$nn</span> &gt; <span class="es2">$rspruce</span> , 1 , cuts_<span class="es2">$nn</span> )&quot;</span> 
+	r.mapcalc cuts_<span class="re1">$nn</span>=<span class="kw1">if</span><span class="st0">&quot;( species==3 &amp; age_<span class="es2">$nn</span> &gt; <span class="es2">$rbirch</span> , 1 ,  cuts_<span class="es2">$nn</span> )&quot;</span> 
+&nbsp;
+	<span class="co0">#Sum all the potential cutting area (in pixels)</span>
+	r.sum <span class="re2">rast</span>=cuts_<span class="re1">$nn</span> <span class="sy0">&gt;</span> sum.txt
+	<span class="re2">pcuts</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="st_h">'{ printf (&quot;%.0f\n&quot;, $3) }'</span> sum.txt<span class="sy0">`</span>
+	<span class="kw3">echo</span> <span class="st0">&quot;Area of forest that reached minimum allowed cutting age <span class="es2">$pcuts</span> pixels&quot;</span> <span class="sy0">&gt;&gt;</span> report.txt
+	<span class="co0">#counts the pixels selected for cutting</span>
+&nbsp;
+			      <span class="co0">#Test if the identified potential cutting area (pcuts) exceeds the allowed limit (lm) If it exceeds it randomly choose an area equal to lm out of the potential cuts</span>
+&nbsp;
+			      <span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$pcuts</span> <span class="re5">-gt</span> <span class="re1">$lm</span> <span class="br0">&#93;</span> ; <span class="kw1">then</span>
+&nbsp;
+			      <span class="kw3">echo</span> <span class="st0">&quot;Potential cutting area exceeds the allowed area of <span class="es2">$aff</span> % of forest area per period&quot;</span> <span class="sy0">&gt;&gt;</span> report.txt
+&nbsp;
+			      r.null <span class="re2">map</span>=cuts_<span class="re1">$nn</span> <span class="re2">setnull</span>=<span class="nu0">0</span>
+&nbsp;
+			      r.random <span class="re2">input</span>=cuts_<span class="re1">$nn</span> <span class="re2">n</span>=<span class="re1">$lm</span> <span class="re2">raster_output</span>=re_cuts_<span class="re1">$nn</span> <span class="re5">--overwrite</span>
+&nbsp;
+			      r.mapcalc cuts_<span class="re1">$nn</span>=re_cuts_<span class="re1">$nn</span>
+&nbsp;
+			      g.remove re_cuts_<span class="re1">$nn</span>
+&nbsp;
+			      r.sum <span class="re2">rast</span>=cuts_<span class="re1">$nn</span> <span class="sy0">&gt;</span> sum.txt
+			      <span class="re2">pcuts</span>=<span class="re1">$lm</span> 
+&nbsp;
+			       <span class="co0">#NULL values must be replace back by 0 (zeros) to make the next test.</span>
+			      r.null <span class="re2">map</span>=cuts_<span class="re1">$nn</span> <span class="re2">null</span>=<span class="nu0">0</span>	
+&nbsp;
+			      <span class="kw1">fi</span>
+&nbsp;
+	    <span class="co0"># When the cutting area (pcuts) is reset to (lm) the cuttings can be executed - i.e. the age raster can be manipulated. Cuts_$nn raster contains now all the &quot;approved&quot; cuts</span>
+	    <span class="kw3">echo</span> <span class="st0">&quot;Approved area of cuttings <span class="es2">$pcuts</span> pixels&quot;</span> <span class="sy0">&gt;&gt;</span> report.txt
+&nbsp;
+&nbsp;
+	    <span class="co0"># Thus the age in the age_$nn raster has to be reset for pixels where the cut is &quot;approved&quot; in cuts_$nn raster as results from the previous manipulations.</span>
+&nbsp;
+&nbsp;
+	    r.mapcalc age_<span class="re1">$nn</span>=<span class="kw1">if</span><span class="st0">&quot;( cuts_<span class="es2">$nn</span>==1, 0 , age_<span class="es2">$nn</span> )&quot;</span>
+&nbsp;
+	    r.mapcalc <span class="re2">pinecuts</span>=<span class="kw1">if</span><span class="st0">&quot;( cuts_<span class="es2">$nn</span>==1 &amp; species==1, 1, 0)&quot;</span>
+	    r.sum <span class="re2">rast</span>=pinecuts <span class="sy0">&gt;</span> cuts.txt
+	    <span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">nn</span>=<span class="re1">$nn</span> <span class="st_h">'{ print  nn, &quot;     &quot;, &quot;Pine&quot;, &quot;     &quot;, $3/16, &quot;    &quot;, &quot;ha&quot; }'</span>  cuts.txt <span class="sy0">&gt;&gt;</span> sum1.txt
+&nbsp;
+	    r.mapcalc <span class="re2">pine07cuts</span>=<span class="kw1">if</span><span class="st0">&quot;( cuts_<span class="es2">$nn</span>==1 &amp; species==4, 1, 0)&quot;</span>
+	    r.sum <span class="re2">rast</span>=pine07cuts <span class="sy0">&gt;</span> cuts.txt
+	    <span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">nn</span>=<span class="re1">$nn</span> <span class="st_h">'{ print  nn, &quot;     &quot;, &quot;Pine07&quot;, &quot;   &quot;, $3/16, &quot;    &quot;, &quot;ha&quot; }'</span>  cuts.txt <span class="sy0">&gt;&gt;</span> sum1.txt
+&nbsp;
+	    r.mapcalc <span class="re2">sprucecuts</span>=<span class="kw1">if</span><span class="st0">&quot;( cuts_<span class="es2">$nn</span>==1 &amp; species==2, 1, 0)&quot;</span>
+	    r.sum <span class="re2">rast</span>=sprucecuts <span class="sy0">&gt;</span> cuts.txt
+	    <span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">nn</span>=<span class="re1">$nn</span> <span class="st_h">'{ print  nn, &quot;     &quot;, &quot;Spruce&quot;, &quot;   &quot;, $3/16, &quot;    &quot;, &quot;ha&quot; }'</span>  cuts.txt <span class="sy0">&gt;&gt;</span> sum1.txt
+&nbsp;
+	    r.mapcalc <span class="re2">birchcuts</span>=<span class="kw1">if</span><span class="st0">&quot;( cuts_<span class="es2">$nn</span>==1 &amp; species==3, 1, 0)&quot;</span>
+	    r.sum <span class="re2">rast</span>=birchcuts <span class="sy0">&gt;</span> cuts.txt
+	    <span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">nn</span>=<span class="re1">$nn</span> <span class="st_h">'{ print  nn, &quot;     &quot;, &quot;Birch&quot;, &quot;    &quot;, $3/16, &quot;    &quot;, &quot;ha&quot; }'</span>  cuts.txt <span class="sy0">&gt;&gt;</span> sum1.txt
+&nbsp;
+&nbsp;
+	    <span class="co0"># Here I use the same sum1.txt file because it should conatin the pcuts_$nn count as it has rewritten last time in the while routine</span>
+	    <span class="co0"># In this version report is created only for total cut area together</span>
+	    <span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">nn</span>=<span class="re1">$nn</span> <span class="st_h">'{ print  nn, &quot;     &quot;, &quot;all&quot;, &quot;      &quot;, $3/16, &quot;    &quot;, &quot;ha&quot; }'</span>  sum.txt <span class="sy0">&gt;&gt;</span> sum1.txt
+&nbsp;
+<span class="co0"># Update age before next period</span>
+r.mapcalc age_<span class="re1">$nn</span>=age_<span class="re1">$nn</span> + <span class="re1">$l</span>
+&nbsp;
+<span class="kw1">done</span>

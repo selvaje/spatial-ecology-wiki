@@ -1,0 +1,14 @@
+====== Exercise 7b: Working with SQLite vectors ======
+GDALOGR: ogr2ogr ogrinfo
+
+__Convert to SQLite OGR vector__
+
+<code bash>
+ogr2ogr -f "SQLite" ${OUTPUTDIR}/exercise7/cornwall_osm.sqlite ${OUTPUTDIR}/exercise7/xapi_meta.osm
+</code>
+
+__Retain (multi-)polygons only and reproject to ETRS89/LAEA__
+
+<code bash>
+ogr2ogr -f "SQLite" -t_srs epsg:3035 ${OUTPUTDIR}/exercise7/osm_multipolygons.sqlite ${OUTPUTDIR}/exercise7/cornwall_osm.sqlite multipolygons
+</code>

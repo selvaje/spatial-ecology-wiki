@@ -1,0 +1,23 @@
+====== Exercise 6a: Create the cloud mask ======
+In this exercise, the following tools will be used:
+  * pktools: pkgetmask, pkfilter, pkreclass, pkdsm2shadow
+  * bash: cat, redirect
+
+__Create a directory for this exercise__
+
+<code bash>
+mkdir -p ${OUTPUTDIR}/exercise6
+</code>
+
+__Create a colour table__
+<code bash>
+cat > ${OUTPUTDIR}/exercise6/cloudmask_ct.txt <<EOF
+0 0 0 0 255
+1 255 255 255 255
+EOF
+</code>
+
+__Create the cloud mask using the thresholds found in exercise 5a__
+<code bash>
+pkgetmask -i ${LANDSATDIR}/${LANDSATIMG} -ot Byte -b 0 -min 0 -max 150 -b 3 -min 0 -max 150 -b 6 -min 140 -max 256 -o ${OUTPUTDIR}/exercise6/cloudmask.tif -data 0 -nodata 1 -ct ${OUTPUTDIR}/exercise6/cloudmask_ct.txt
+</code>

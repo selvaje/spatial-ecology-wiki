@@ -1,0 +1,1 @@
+<span class="kw2">awk</span>    <span class="st_h">'{ print log($1) }'</span> input.txt  

@@ -1,0 +1,577 @@
+AWSTATS DATA FILE 6.9 (build 1.925)
+# If you remove this file, all statistics for date 201108 will be lost/reset.
+
+# Position (offset in bytes) in this file of beginning of each section for
+# direct I/O access. If you made changes somewhere in this file, you should
+# also remove completely the MAP section (AWStats will rewrite it at next
+# update).
+BEGIN_MAP 27
+POS_GENERAL 1864                
+POS_TIME 2554                
+POS_VISITOR 9411                
+POS_DAY 14931               
+POS_DOMAIN 3492                
+POS_LOGIN 3725                
+POS_ROBOT 3912                
+POS_WORMS 4567                
+POS_EMAILSENDER 4698                
+POS_EMAILRECEIVER 4841                
+POS_SESSION 15752               
+POS_SIDER 15960               
+POS_FILETYPES 4976                
+POS_OS 5206                
+POS_BROWSER 5429                
+POS_SCREENSIZE 5802                
+POS_UNKNOWNREFERER 5876                
+POS_UNKNOWNREFERERBROWSER 6273                
+POS_ORIGIN 6547                
+POS_SEREFERRALS 6690                
+POS_PAGEREFS 6869                
+POS_SEARCHWORDS 7467                
+POS_KEYWORDS 8099                
+POS_MISC 2218                
+POS_ERRORS 8520                
+POS_CLUSTER 3581                
+POS_SIDER_404 8687                
+END_MAP
+
+# LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value
+# FirstTime   = Date of first visit for history file
+# LastTime    = Date of last visit for history file
+# LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped
+# TotalVisits = Number of visits
+# TotalUnique = Number of unique visitors
+# MonthHostsKnown   = Number of hosts known
+# MonthHostsUnKnown = Number of hosts unknown
+BEGIN_GENERAL 8
+LastLine 20110901002840 23177 5138194 48613595609
+FirstTime 20110801025213
+LastTime 20110831225840
+LastUpdate 20110901022230 23177 21807 1369 0 0
+TotalVisits 166                 
+TotalUnique 102                 
+MonthHostsKnown 0                   
+MonthHostsUnknown 157                 
+END_GENERAL
+
+# Misc ID - Pages - Hits - Bandwidth
+BEGIN_MISC 10
+QuickTimeSupport 0 0 0
+JavaEnabled 0 0 0
+JavascriptDisabled 0 0 0
+PDFSupport 0 0 0
+WindowsMediaPlayerSupport 0 0 0
+AddToFavourites 0 6 0
+RealPlayerSupport 0 0 0
+TotalMisc 0 0 0
+DirectorSupport 0 0 0
+FlashSupport 0 0 0
+END_MISC
+
+# Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth
+BEGIN_TIME 24
+0 38 53 565961 1000 1029 10780375
+1 24 49 331257 671 704 7469331
+2 68 138 3031200 659 707 7140592
+3 43 133 953318 1023 1076 11833353
+4 115 199 1662477 255 314 2214664
+5 91 148 1224411 676 722 7155024
+6 66 139 1069510 919 984 10357648
+7 30 96 483885 963 1027 11358694
+8 198 338 2604898 500 552 4426342
+9 38 132 748292 653 690 7836720
+10 125 313 2128866 624 677 6718283
+11 46 154 13765635 115 144 3141591
+12 77 225 1767805 246 283 2477405
+13 15 46 7845848 742 760 7885436
+14 11 18 121638 104 149 702946
+15 51 135 983989 1438 1490 17571402
+16 51 100 810108 358 408 15080218
+17 51 102 785049 664 719 52495842
+18 10 36 280113 1012 1034 11574855
+19 26 57 491695 1050 1109 11824922
+20 3 6 85660 354 387 3749655
+21 87 93 1091773 964 990 33799865
+22 21 48 11760014 1131 1201 24657252
+23 162 257 19450365 157 258 1087662
+END_TIME
+
+# Domain - Pages - Hits - Bandwidth
+# The 10 first Pages must be first (order not required for others)
+BEGIN_DOMAIN 1
+ip 1447 3015 74043767
+END_DOMAIN
+
+# Cluster ID - Pages - Hits - Bandwidth
+BEGIN_CLUSTER 0
+END_CLUSTER
+
+# Login - Pages - Hits - Bandwidth - Last visit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_LOGIN 1
+speco 1 46 31877 20110820091819
+END_LOGIN
+
+# Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt
+# The 10 first Hits must be first (order not required for others)
+BEGIN_ROBOT 14
+mj12bot 11978 157013409 20110831212309 0
+slurp 1100 4695859 20110831060142 0
+crawl 556 7795185 20110815150717 0
+googlebot 315 2864072 20110831235519 0
+feedfetcher\-google 239 101745 20110831083455 0
+bot[+:,\.\;\/\\-] 231 81554432 20110829210156 0
+yandex 219 1816005 20110831232554 0
+baiduspider 92 1220667 20110831162530 0
+nutch 24 271434 20110803033041 0
+surveybot 3 50337 20110831055414 0
+exabot 1 12831 20110817025823 0
+ia_archiver 2 34520 20110824164519 0
+sogou 2 33558 20110824174026 0
+robot 3 37377 20110828183828 0
+END_ROBOT
+
+# Worm ID - Hits - Bandwidth - Last visit
+# The 5 first Hits must be first (order not required for others)
+BEGIN_WORMS 0
+END_WORMS
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first Hits must be first (order not required for others)
+BEGIN_EMAILSENDER 0
+END_EMAILSENDER
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first hits must be first (order not required for others)
+BEGIN_EMAILRECEIVER 0
+END_EMAILRECEIVER
+
+# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression
+BEGIN_FILETYPES 10
+css 550 1390466 0 0
+png 632 3152799 0 0
+pdf 16 49057269 0 0
+pl 3 96524 0 0
+php 1424 19033061 0 0
+html 1 458 0 0
+js 101 733143 0 0
+jpg 60 418302 0 0
+sh 3 7271 0 0
+gif 225 154474 0 0
+END_FILETYPES
+
+# OS ID - Hits
+BEGIN_OS 16
+linuxredhat 69
+winlong 70
+winxp 786
+symbian 1
+win2000 32
+winnt 7
+linuxubuntu 269
+linuxfedora 36
+linux 612
+winme 1
+macosx 196
+win95 1
+win2003 56
+linuxdebian 30
+Unknown 200
+win2008 649
+END_OS
+
+# Browser ID - Hits
+BEGIN_BROWSER 24
+msie6.0 419
+firefox5.0 602
+firefox4.0.1 87
+firefox3.6 79
+chrome 313
+firefox3.6.11 69
+opera 33
+firefox3.6.16 126
+msie5.5 1
+firefox3.5.3 46
+msie8.0 162
+nokia 1
+mozilla 192
+msie7.0 76
+firefox5.0.1 41
+firefox3.6.18 185
+msie2.0 7
+firefox6.0 263
+firefox3.6.3 5
+firefox3.6.20 73
+msie9.0 28
+firefox3.6.10 28
+Unknown 40
+safari 139
+END_BROWSER
+
+# Screen size - Hits
+BEGIN_SCREENSIZE 0
+END_SCREENSIZE
+
+# Unknown referer OS - Last visit date
+BEGIN_UNKNOWNREFERER 4
+Mozilla/5.0_(compatible;_ScoutJet;__http://www.scoutjet.com/) 20110820083535
+facebookexternalhit/1.0_(_http://www.facebook.com/externalhit_uatext.php) 20110830220305
+Mozilla/4.0_(compatible;) 20110809153025
+BlackBerry9000/4.6.0.167_Profile/MIDP-2.0_Configuration/CLDC-1.1_VendorID/102_ips-agent 20110806024824
+END_UNKNOWNREFERER
+
+# Unknown referer Browser - Last visit date
+BEGIN_UNKNOWNREFERERBROWSER 2
+facebookexternalhit/1.0_(_http://www.facebook.com/externalhit_uatext.php) 20110830220305
+BlackBerry9000/4.6.0.167_Profile/MIDP-2.0_Configuration/CLDC-1.1_VendorID/102_ips-agent 20110806024824
+END_UNKNOWNREFERERBROWSER
+
+# Origin - Pages - Hits 
+BEGIN_ORIGIN 6
+From0 431 468
+From1 0 0
+From2 29 29
+From3 12 12
+From4 975 2506
+From5 0 0
+END_ORIGIN
+
+# Search engine referers ID - Pages - Hits
+BEGIN_SEREFERRALS 3
+google 25 25
+search 1 1
+yandex 3 3
+END_SEREFERRALS
+
+# External page referers - Pages - Hits
+# The 10 first Pages must be first (order not required for others)
+BEGIN_PAGEREFS 7
+http://www.slideshare.net/stefano70 3 3
+http://siguiendoelcambio.blogspot.com/2011/05/curso-de-modelos-ecologicos-con.html 2 2
+http://gis-lab.info/forum/viewtopic.php 2 2
+http://www.casalegno.net/stefano/doku.php 2 2
+http://osgeo-org.1803224.n2.nabble.com/Modeling-training-using-GRASS-R-and-OS-tools-td6336892.html 1 1
+http://www.sci.utu.fi/biologia/ajankohtaista/Summer_School.pdf 1 1
+http://siguiendoelcambio.blogspot.com/search/label/modelos 1 1
+END_PAGEREFS
+
+# Search keyphrases - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_SEARCHWORDS 15
+spatial+ecology 6
+spatial+ecology+r 3
+spatial-ecology.net 3
+refolana+copenhagen 2
+use+of+open+source+tools+for+spatial+ecological+modelling 2
+spatial+ecological+modeling 2
+summary+statistics+spatial+ecology 1
+landscape+model+in+tools+of+conservation-wikipedia 1
+free+couse+spatial+model#q=free+course+spatial+model 1
+open+source+spatial+ecology 1
+qgis+query+functions 1
+web 1
+amatulli+casalegno 1
+short+course+on+introduction+to+ecological+modelling 1
+spatial+ecology+software 1
+END_SEARCHWORDS
+
+# Search keywords - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_KEYWORDS 36
+spatial 18
+ecology 12
+ecological 5
+source 3
+r 3
+of 3
+tools 3
+modelling 3
+open 3
+spatial-ecology.net 3
+modeling 2
+statistics 1
+model 2
+qgis 1
+on 1
+in 1
+refolana 2
+course 2
+for 2
+functions 1
+introduction 1
+copenhagen 2
+web 1
+short 1
+to 1
+use 2
+summary 1
+free 1
+casalegno 1
+couse 1
+query 1
+model#q=free 1
+conservation-wikipedia 1
+software 1
+landscape 1
+amatulli 1
+END_KEYWORDS
+
+# Errors - Hits - Bandwidth
+BEGIN_ERRORS 7
+403 7 5138
+401 53 21889
+302 1453 369209
+206 6 14120141
+500 1 568
+301 1 485
+404 1128 1321216
+END_ERRORS
+
+# URL with 404 errors - Hits - Last URL referer
+BEGIN_SIDER_404 9
+/blog/wp-includes/images/blank.gif 1 -
+/ost4sem/ost4sem/sitemap.xml.gz 2 -
+/wp/wp-includes/images/blank.gif 1 -
+/robots.txt 716 -
+/ost4sem/sitemap.xml.gz 2 -
+/ost4sem/exercise/basic_adv_gdalogr/dem/M0227-%5B1-4%5DN.H29 3 http://www.spatial-ecology.net/doku.php
+/lib/tpl/monobook/common/print.css 401 http://spatial-ecology.net/doku.php
+/wordpress/wp-includes/images/blank.gif 1 -
+//wp-includes/images/blank.gif 1 -
+END_SIDER_404
+
+# Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]
+# [Start date of last visit] and [Last page of last visit] are saved only if session is not finished
+# The 10 first Hits must be first (order not required for others)
+BEGIN_VISITOR 157
+76.69.173.221 188 283 19560130 20110806050020
+109.73.68.18 140 140 1583363 20110811061102
+38.99.96.223 96 96 837730 20110820083535
+194.78.35.195 71 98 692350 20110831055006
+195.195.4.163 61 112 735249 20110816105652
+109.108.170.229 58 125 14613813 20110823070452
+130.235.99.128 55 101 2996673 20110816023643
+139.191.4.90 53 79 570237 20110817092552
+76.69.182.95 37 63 476147 20110807174409
+38.99.97.109 36 36 347169 20110815080426
+95.27.185.70 1 1 3170 20110816084037
+95.26.88.57 0 1 7348 
+147.125.96.175 14 37 252635 20110829093338
+165.83.96.22 30 54 398018 20110809153025
+153.90.237.109 6 28 187813 20110817171703
+208.80.194.37 2 2 33558 20110823222640
+176.14.169.123 0 1 23913 
+95.221.89.58 1 1 9417 20110816084039
+69.63.181.251 0 1 639 
+94.180.143.128 0 1 40718 
+109.206.179.177 1 1 16779 20110808173710
+95.26.248.108 0 1 336 
+217.77.80.29 23 69 438359 20110830045306
+69.171.228.249 0 2 1278 
+93.80.97.61 0 1 639 
+95.25.210.164 1 1 46556 20110825044222
+124.115.1.8 6 10 207715 20110831083109
+134.117.48.39 7 29 188093 20110802150347
+95.221.66.196 0 1 1650 
+89.178.231.68 0 1 14147 
+109.230.220.24 7 31 199414 20110828110347
+91.86.13.242 13 36 231519 20110824061121
+208.80.194.32 2 2 33558 20110828174804
+82.54.246.226 6 28 187365 20110804163014
+95.26.106.3 1 2 14093 20110825044220
+69.171.224.246 0 1 639 
+46.73.44.38 0 1 482 
+58.61.164.139 10 16 343240 20110831190704
+139.191.4.108 14 56 375856 20110808115102
+69.171.228.248 0 1 639 
+69.171.229.248 0 1 639 
+117.211.85.186 1 1 19090 20110827044631
+89.178.199.88 0 1 336 
+95.26.65.209 1 1 13757 20110816082705
+95.27.242.73 1 1 46556 20110816082705
+89.178.242.29 0 1 7624 
+95.221.102.168 0 1 5618 
+80.223.38.76 6 28 16821 20110809080258
+69.171.224.249 0 3 1917 
+208.80.194.27 2 2 33558 20110821225511
+84.49.192.85 5 10 111762 20110809142740
+67.182.238.180 6 28 187365 20110801151844
+46.73.194.247 1 2 46892 20110816084040
+95.220.155.191 1 2 30926 20110816082703
+93.63.223.138 8 30 203644 20110810085201
+89.178.250.252 0 1 587 
+95.220.218.125 0 1 1650 
+95.26.195.171 1 1 9417 20110825044221
+95.28.10.11 0 1 5618 
+208.80.194.34 1 1 16779 20110801050628
+79.225.220.219 10 32 64132 20110808114101
+69.171.224.248 0 1 7348 
+76.75.103.204 6 28 187557 20110801123558
+95.220.161.231 1 1 16779 20110825044217
+91.207.5.130 1 1 10010 20110803210226
+155.210.217.161 21 45 320199 20110826062226
+109.2.114.93 29 54 396928 20110818044750
+176.14.197.192 0 1 2124 
+69.63.181.244 0 2 1278 
+143.167.38.221 1 1 15570 20110802060920
+69.171.224.250 0 1 639 
+69.171.228.250 0 5 3195 
+119.147.6.60 12 24 433140 20110831121704
+95.220.164.162 1 1 16779 20110816084036
+194.44.31.50 12 38 235497 20110823080043
+83.57.247.233 8 31 205974 20110812102435
+151.42.33.83 14 37 255302 20110820071703
+95.220.200.105 0 1 3171 
+69.58.178.59 11 11 148865 20110806024827
+79.144.52.98 8 31 203195 20110826100526
+193.134.206.10 6 26 183400 20110805031650
+207.46.12.217 6 17 120631 20110804003303
+95.26.151.72 0 2 1215 
+69.171.229.246 0 2 1278 
+69.171.224.251 0 3 1917 
+83.53.60.214 6 28 187365 20110819053831
+96.126.105.220 2 2 16779 20110812192347
+46.73.75.147 0 1 7449 
+95.25.139.122 1 2 5739 20110816082705
+69.171.229.247 0 2 1278 
+69.171.229.244 0 1 639 
+201.80.188.244 6 28 187685 20110814102434
+89.204.139.193 4 49 128401 20110820091814
+69.171.229.249 0 2 1278 
+199.80.52.5 3 3 42596 20110801112706
+82.53.26.25 6 27 180879 20110802030554
+90.27.12.205 6 28 187429 20110808124643
+207.46.204.159 5 10 109190 20110818131903
+129.110.5.92 27 67 18274084 20110802131526
+109.230.251.121 3 3 38527 20110810095111
+168.167.30.176 6 27 184463 20110816104440
+95.25.62.184 0 1 4374 
+95.25.74.21 0 1 1250 
+131.181.251.10 15 38 232094 20110818192951
+188.140.72.171 7 31 206830 20110823094851
+95.26.223.89 0 1 7624 
+69.171.228.251 0 2 1278 
+93.80.93.79 0 2 8581 
+95.25.89.247 0 1 4374 
+93.80.225.21 0 2 23007 
+93.80.253.55 0 1 7449 
+31.184.236.8 15 15 156622 20110830233203
+89.178.218.15 0 1 336 
+95.221.73.115 0 2 24294 
+58.61.164.40 8 16 288760 20110831174358
+66.220.158.250 0 1 639 
+95.26.171.138 0 2 5737 
+95.221.75.80 0 2 13512 
+192.38.28.53 2 2 32888 20110817034720
+38.99.97.180 9 9 57470 20110818124318
+114.80.93.71 20 37 710921 20110830232036
+69.171.229.250 0 1 639 
+188.143.232.155 1 1 12831 20110817202328
+95.220.168.59 0 1 997 
+66.220.149.245 0 1 639 
+69.171.228.244 0 2 1278 
+132.187.246.103 5 26 134078 20110807130127
+95.25.51.22 1 1 13757 20110816084038
+208.80.194.29 5 5 83895 20110830150027
+155.210.217.33 6 28 20724 20110822032600
+208.80.194.35 3 3 50337 20110819223948
+196.207.199.193 8 30 199936 20110803181822
+84.251.101.32 12 56 204186 20110831022940
+124.115.1.7 8 12 271050 20110831225840
+95.25.51.181 0 1 366 
+91.86.31.113 8 8 29404 20110825014324
+189.63.67.17 6 28 187557 20110825233226
+95.210.9.81 32 87 751187 20110819122713
+58.61.164.140 4 6 135525 20110816041848
+95.221.87.176 0 1 381 
+95.25.227.150 0 1 22671 
+86.49.117.237 6 28 16821 20110801025216
+95.25.71.11 1 1 9417 20110816082705
+91.207.8.46 1 1 10010 20110829023459
+89.178.234.208 1 1 42 20110816082711
+155.210.217.80 14 14 62172 20110822064218
+208.80.194.33 2 2 33558 20110810000259
+95.24.149.180 1 1 3170 20110825044219
+210.212.14.146 6 30 248749 20110818064016
+69.171.228.245 0 2 1278 
+150.163.24.154 6 28 187365 20110811124332
+109.206.176.249 1 1 16779 20110830061911
+88.214.193.166 5 5 83895 20110826045157
+207.46.12.67 5 16 119627 20110819153137
+94.101.224.237 19 42 298498 20110827015457
+158.39.247.27 8 32 211418 20110809160240
+176.14.188.254 0 2 8583 
+END_VISITOR
+
+# Date - Pages - Hits - Bandwidth - Visits
+BEGIN_DAY 31
+20110801 36 125 698716 6
+20110802 77 184 35329591 5
+20110803 43 66 521533 3
+20110804 92 150 1983429 5
+20110805 50 121 1353671 8
+20110806 64 95 937543 8
+20110807 42 89 610225 2
+20110808 70 136 971947 7
+20110809 105 181 1370954 6
+20110810 48 73 653496 5
+20110811 49 73 736491 5
+20110812 13 39 249644 3
+20110813 2 5 72829 1
+20110814 7 30 205103 2
+20110815 36 39 349086 1
+20110816 135 269 4530534 23
+20110817 63 115 823104 5
+20110818 66 147 1117899 6
+20110819 44 134 1076236 4
+20110820 43 111 580573 4
+20110821 3 7 90247 2
+20110822 76 151 14833130 8
+20110823 26 96 468343 4
+20110824 17 41 246860 2
+20110825 16 50 397810 8
+20110826 30 78 540812 3
+20110827 21 45 335006 3
+20110828 8 32 216193 2
+20110829 43 98 819231 7
+20110830 35 89 853410 11
+20110831 87 146 1070121 7
+END_DAY
+
+# Session range - Number of visits
+BEGIN_SESSION 7
+1h+ 3
+5mn-15mn 6
+0s-30s 124
+2mn-5mn 9
+30s-2mn 11
+15mn-30mn 7
+30mn-1h 6
+END_SESSION
+
+# URL - Pages - Bandwidth - Entry - Exit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_SIDER 22
+/doku.php 651 10084069 149 52
+/lib/exe/indexer.php 303 12726 1 46
+/lib/exe/css.php 221 1619571 9 16
+/lib/exe/js.php 108 4526013 3 40
+/feed.php 80 155163 1 6
+/lib/exe/fetch.php 38 2563898 0 1
+/lib/exe/ajax.php 9 9 0 0
+/lib/exe/opensearch.php 7 3752 0 1
+/lib/exe/mediamanager.php 6 55260 0 0
+/ost4sem/lecture/fire_climate_change.pdf 4 15023388 0 1
+/ost4sem/exercise/basic_adv_gdalogr/dem/dem.sh 1 2765 0 0
+/ost4sem/lecture/introduction.pdf 1 49849 0 0
+/ost4sem/lecture/sp_eco_model_intro.pdf 3 909730 1 1
+/lib/exe/detail.php 1 12600 0 0
+/ost4sem/lecture/r_intro.pdf 2 2826158 1 0
+/stats/ 1 458 1 0
+/ost4sem/lecture/hands_on_ost4sem.pdf 3 6344415 0 0
+/ost4sem/exercise/basic_adv_awk/awk.sh 1 3661 0 0
+/ost4sem/lecture/unixlinux.pdf 1 805407 0 0
+/ost4sem/lecture/jrc24feb_2010.pdf 2 23098322 0 1
+/stats/awstats/cgi-bin/awstats.pl 3 96524 0 1
+/ost4sem/exercise/basic_adv_gnuplot/pol1m_gp1.sh 1 845 0 0
+END_SIDER

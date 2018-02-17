@@ -1,0 +1,130 @@
+====== Estimating the Forested area in European Countries ====== 
+
+The main objective of this exercise is to calculate the ha of tree cover for the distribution of forests in Europe. In this exercise we will create a loop for estimating the forested area of each European country. This will allow us to practice and learn some Bash shell scripting and awk commands within the grass environment. We will also automatically generate maps per country of forest cover.
+
+==== Introduction ====
+
+For estimating the ha of Tree cover in European countries we are going to cross the following maps.
+ 
+  * Pan european high resolution forest/non-forest map [[#bibliography|Pekkarinen et al., 2008]] rescaled to 1km resolution.\\
+  * A vector map of the administrative boundary of European Countries. [[#bibliography|(Ciesin, Ciat sources)]] \\
+
+In the forest/non-forest map, the rescaled 25m to 1km resolution was carried out using a 0ha/1ha threshold for presence/absence reclassification to ensure inclusion of every hectare of forested landscape. This allows us to accurately determine areas of distribution and to estimate the suitability and distribution of European Forests excluding lakes, water basins, agricultural landscapes, and urban and industrial areas. 
+
+==== Start GRASS and create a new project MAPSET ====
+We open a terminal and go to the directory corresponding to our GRASS LOCATION.
+
+  cd ~/ost4sem/grassdb/europe
+
+We start grass in the existing LAEA projection grass Location
+  grass -text  ~/ost4sem/grassdb/europe/PERMANENT
+
+Now we can create a new mapset "EUforest" (using the -c option) where we store maps for estimating ha of P. cembro forests distribution.We also check our new working environment and mapset settings
+
+  g.mapset -c mapset=EUforest
+  g.gisenv
+  g.region -p
+
+
+<note tip>An alternative procedure can be to start grass in the PERMANENT Mapset, import a layer using GDAL or OGR library using the option //Location=newlocationname//. This does not require copying to the PERMANENT folder. </note>
+\\
+
+Go to the default study region including the whole euro-asia
+  g.region -d
+
+Look at your raster and vector file availability
+  g.list rast
+  g.list vect # is your current mapset visibile ?  
+  g.mapsets addmapset=EUforest
+  g.list rast
+  g.list vect
+
+You should have in your MAPSET=PERMANENT the pan European forest non forest map **fnfpc** rescaled to 1km 
+
+==== Import country boundary vector map ====
+
+  - Download the World country border from the [[http://sedac.ciesin.columbia.edu/gpw/index.jsp|Gridded Population of the World, Version 3 (GPWv3): National Boundaries data]]. 
+  - Unzip the file. 
+  - Open the shape file **ntblnds.shp** in qgis, select the European countries, save the selected items in a new .shp file with the coordinate re-projected from the geographic coordinates of decimal degrees based on the World Geodetic System spheroid of 1984 (WGS84) to the Lambert Azimutal Equal Area projection: [[http://wiki.intamap.org/index.php/INSPIRE#INSPIRE_projection|LAEA]].
+  - Use the v.in.ogr module to import the .shp file to GRASS format as shown below
+
+   v.in.ogr dsn=~/ost4sem/exercise/EUforest_stats/EU_country_gl_gpwc3/EU_country_gpwv3.shp output=EUcountry
+
+<note important>
+If you like the European country border shape file is already stored in the \\
+**~/ost4sem/exercise/EUforest_stats/EU_country_gl_gpwc3/** folder
+</note>
+
+
+==== Set the study area ====
+  g.region -p
+  g.region rast=fnfpc res=1000 save=europe --o
+  g.region -p
+  
+==== Rasterize the European country boundary vector map ====
+
+  v.to.rast --o input=EUcountry output=EUcountry use=cat
+
+<note warning>
+The Country borders are sometimes smaller from the forest map extent. In the final result, the estimation of forest cover per country will be slightly underestimated. 
+</note>
+
+==== Estimate forest cover per country ====
+The following operations are chained in a loop for processing the forest cover statistics country by country:
+
+  * start a loop
+  * select a country X
+  * select forest cover map within country X
+  * create a folder for country X
+  * change directory to folder country X
+  * create a text file estimating the number of pixels per pixel category. Category range from 0 ha to 100 ha of forest cover per pixel
+  * calculate the total sum of ha of forest cover per country
+  * stop the loop
+
+<code awk>  
+for  (( dir=1 ; dir<=46 ; dir ++ ))  ; do
+
+  r.mapcalc ctry$dir = "if(EUcountry == $dir , 1 ,0 )"
+  r.mapcalc fnfpc_ctry$dir = "if(ctry$dir == 1 , fnfpc ,0 )"
+  mkdir ~/ost4sem/exercise/EUforest_stats/country$dir
+  r.stats -c -p -l -n input=fnfpc_ctry$dir output=~/ost4sem/exercise/EUforest_stats/country$dir/stat_forest_$dir.txt
+  cd ~/ost4sem/exercise/EUforest_stats/country$dir/
+  awk '{  print $1 , $2 , $1*$2  }'  stat_forest_$dir.txt | awk '{ sum=sum+$3  } END { print sum }' > tot_ha_ctry$dir.txt
+
+done
+</code>
+\\
+\\
+
+==== Synthetic view of results ====
+Now we Run the following R commands on the GRASS environment from the bash shell terminal to create a common synthetic table.
+The R scripting operate the following tasks:
+  - Load the Country definition table from the country boundary DBF of the vector map.
+  - Add two fields to the country definition table: ha of forest and km<sup>2</sup>
+  - Start a loop per country
+  - Load values of ha of forest per country
+  - Include the loaded values in the R dataframe
+  - Calculate  km<sup>2</sup> of forest per country and add it to the dataframe
+  - End of the country loop
+  - Export results into a table
+\\
+
+<code r> 
+R --no-save -q  << EOF
+library(foreign)
+cdb = read.dbf("~/ost4sem/exercise/EUforest_stats/EU_country_gl_gpwc3/EU_country_gpwv3.dbf")
+cdb\$haforest = 1
+cdb\$sqkmforest = 1
+for(country in 1:46){
+x=read.table(paste("~/ost4sem/exercise/EUforest_stats/country",country,"/tot_ha_ctry",country,".txt",sep=""))
+cdb\$haforest[country] = x[1,1]
+cdb\$sqkmforest[country] = x[1,1]/100
+}
+write.table(cdb,file="~/ost4sem/exercise/EUforest_stats/country_stat_results.txt")
+EOF
+</code>
+
+
+==== Bibliography ====
+  * Center for International Earth Science Information Network (CIESIN), Columbia University; and Centro Internacional de Agricultura Tropical (CIAT). 2005. Gridded Population of the World Version 3 (GPWv3): National Boundaries. Palisades, NY: Socioeconomic Data and Applications Center (SEDAC), Columbia University. Available at http://sedac.ciesin.columbia.edu/gpw. (March 5 2010).
+  * Pekkarinen, A., Reithmaier, L. & Strobl, P. (2009): Pan-European forest/non-forest mapping with Landsat ETM+ and CORINE Land Cover 2000 data. ISPRS Journal of Photogrammetry and Remote Sensing 64: 171-183.

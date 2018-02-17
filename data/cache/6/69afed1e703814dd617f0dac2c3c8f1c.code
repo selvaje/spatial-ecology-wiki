@@ -1,0 +1,149 @@
+<span class="st0">&quot;&quot;&quot;
+fmtDecode.py - Simple program to manually decode binary formats.
+&quot;&quot;&quot;</span>
+&nbsp;
+<span class="kw1">import</span> <span class="kw3">struct</span>
+<span class="kw1">import</span> <span class="kw3">pickle</span>
+<span class="kw1">import</span> <span class="kw3">os</span>
+&nbsp;
+<span class="kw1">def</span> export<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    <span class="kw1">print</span> <span class="st0">&quot;Saving results&quot;</span>
+    out <span class="sy0">=</span> <span class="kw2">None</span>
+    <span class="kw1">if</span> cached:
+      out <span class="sy0">=</span> <span class="kw2">file</span><span class="br0">&#40;</span>oname<span class="sy0">,</span> <span class="st0">&quot;a&quot;</span><span class="br0">&#41;</span>
+    <span class="kw1">else</span>:
+      out <span class="sy0">=</span> <span class="kw2">file</span><span class="br0">&#40;</span>oname<span class="sy0">,</span> <span class="st0">&quot;w&quot;</span><span class="br0">&#41;</span>
+      out.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+    <span class="kw1">for</span> record <span class="kw1">in</span> fileDesc:
+        <span class="kw1">for</span> field <span class="kw1">in</span> record:
+            out.<span class="me1">write</span><span class="br0">&#40;</span><span class="st0">&quot;%s<span class="es0">\t</span>&quot;</span> % field<span class="br0">&#41;</span>
+        out.<span class="me1">write</span><span class="br0">&#40;</span><span class="st0">&quot;<span class="es0">\n</span>&quot;</span><span class="br0">&#41;</span>
+    out.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw3">pickle</span>.<span class="me1">dump</span><span class="br0">&#40;</span>cached<span class="sy0">,</span> <span class="kw2">file</span><span class="br0">&#40;</span>pickleJar<span class="sy0">,</span> <span class="st0">&quot;w&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+header <span class="sy0">=</span> <span class="st0">&quot;POSTION<span class="es0">\t</span>FIELD<span class="es0">\t</span>SAMPLE<span class="es0">\t</span>TYPE<span class="es0">\t</span>BYTE_ORDER<span class="es0">\n</span>&quot;</span>
+fileDesc <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+files <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">listdir</span><span class="br0">&#40;</span><span class="st0">&quot;.&quot;</span><span class="br0">&#41;</span>
+count <span class="sy0">=</span> <span class="nu0">1</span>
+<span class="kw1">print</span> <span class="st0">&quot;Available Files:&quot;</span>
+&nbsp;
+<span class="kw1">for</span> f <span class="kw1">in</span> files:
+  <span class="kw1">print</span> <span class="st0">&quot; %s. %s&quot;</span> % <span class="br0">&#40;</span>count<span class="sy0">,</span> f<span class="br0">&#41;</span>
+  count +<span class="sy0">=</span> <span class="nu0">1</span>
+&nbsp;
+fnum <span class="sy0">=</span> <span class="kw2">raw_input</span><span class="br0">&#40;</span><span class="st0">&quot;Enter the number of the file to decode: &quot;</span><span class="br0">&#41;</span>
+fname <span class="sy0">=</span> files<span class="br0">&#91;</span><span class="kw2">int</span><span class="br0">&#40;</span>fnum<span class="br0">&#41;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>
+base <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">splitext</span><span class="br0">&#40;</span>fname<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+&nbsp;
+pickleJar <span class="sy0">=</span> <span class="st0">&quot;%s.p&quot;</span> % base
+&nbsp;
+cached <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="kw1">if</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">exists</span><span class="br0">&#40;</span>pickleJar<span class="br0">&#41;</span>:
+    <span class="kw1">print</span> <span class="st0">&quot;Cached session available.&quot;</span>
+    <span class="kw1">print</span> 
+    useCache <span class="sy0">=</span> <span class="kw2">raw_input</span><span class="br0">&#40;</span><span class="st0">&quot;Use it? Yes (Y), No (N)?&quot;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> <span class="st0">&quot;y&quot;</span> <span class="kw1">in</span> useCache.<span class="me1">lower</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="kw1">or</span> useCache <span class="sy0">==</span> <span class="st0">&quot;&quot;</span>:
+        cached <span class="sy0">=</span> <span class="kw3">pickle</span>.<span class="me1">load</span><span class="br0">&#40;</span><span class="kw2">open</span><span class="br0">&#40;</span>pickleJar<span class="sy0">,</span> <span class="st0">&quot;r&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">else</span>: cached <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+oname <span class="sy0">=</span> <span class="st0">&quot;%s_decode.txt&quot;</span> % base
+&nbsp;
+f <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>fname<span class="sy0">,</span> <span class="st0">&quot;rb&quot;</span><span class="br0">&#41;</span>
+loc <span class="sy0">=</span> f.<span class="me1">tell</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+f.<span class="me1">seek</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#41;</span>
+eof <span class="sy0">=</span> f.<span class="me1">tell</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+f.<span class="me1">seek</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+prev <span class="sy0">=</span> <span class="nu0">0</span>
+&nbsp;
+<span class="kw1">if</span> <span class="kw2">len</span><span class="br0">&#40;</span>cached<span class="br0">&#41;</span><span class="sy0">&gt;</span><span class="nu0">0</span>:
+    <span class="kw1">print</span> <span class="st0">&quot;Using cache...&quot;</span>
+    f.<span class="me1">seek</span><span class="br0">&#40;</span>cached<span class="br0">&#91;</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    prev <span class="sy0">=</span> cached<span class="br0">&#91;</span>-<span class="nu0">2</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;Starting at byte %s...&quot;</span> % f.<span class="me1">tell</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">try</span>:
+    formats <span class="sy0">=</span> <span class="br0">&#123;</span><span class="st0">&quot;char&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;c&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">1</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;signed char&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;b&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">1</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;unsigned char&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;B&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">1</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;_Bool&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;?&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">1</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;short&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;h&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">2</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;unsigned short&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;h&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">2</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;int&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;i&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">4</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;unsigned int&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;I&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">4</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;long&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;l&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">4</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;unsigned long&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;L&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">4</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;long long&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;q&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">8</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;unsigned long long&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;Q&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">8</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;float&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;f&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">4</span><span class="br0">&#125;</span><span class="sy0">,</span>
+               <span class="st0">&quot;double&quot;</span>:<span class="br0">&#123;</span><span class="st0">&quot;format&quot;</span>:<span class="st0">&quot;d&quot;</span><span class="sy0">,</span><span class="st0">&quot;len&quot;</span>:<span class="nu0">8</span><span class="br0">&#125;</span><span class="br0">&#125;</span>
+&nbsp;
+    <span class="kw1">while</span> f.<span class="me1">tell</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">&lt;</span> eof:
+        record <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+        start <span class="sy0">=</span> f.<span class="me1">tell</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        record.<span class="me1">append</span><span class="br0">&#40;</span><span class="st0">&quot;%s<span class="es0">\t</span>&quot;</span> % start<span class="br0">&#41;</span>
+        cached.<span class="me1">append</span><span class="br0">&#40;</span>start<span class="br0">&#41;</span>
+        fields <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+        <span class="kw1">print</span> 
+        count <span class="sy0">=</span> <span class="nu0">1</span>
+        <span class="kw1">try</span>:
+          <span class="co1"># Little endian formats</span>
+          <span class="kw1">for</span> fmt <span class="kw1">in</span> formats:
+            form <span class="sy0">=</span> formats<span class="br0">&#91;</span>fmt<span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st0">&quot;format&quot;</span><span class="br0">&#93;</span>
+            <span class="kw3">bytes</span> <span class="sy0">=</span> formats<span class="br0">&#91;</span>fmt<span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st0">&quot;len&quot;</span><span class="br0">&#93;</span>
+            field <span class="sy0">=</span> <span class="kw3">struct</span>.<span class="me1">unpack</span><span class="br0">&#40;</span><span class="st0">&quot;&lt;%s&quot;</span> % form<span class="sy0">,</span> f.<span class="me1">read</span><span class="br0">&#40;</span><span class="kw3">bytes</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+            <span class="kw1">print</span> <span class="st0">&quot;%s. Little %s: %s&quot;</span> % <span class="br0">&#40;</span>count<span class="sy0">,</span> fmt<span class="sy0">,</span> field<span class="br0">&#41;</span>
+            count +<span class="sy0">=</span> <span class="nu0">1</span>
+            f.<span class="me1">seek</span><span class="br0">&#40;</span>start<span class="br0">&#41;</span>
+            fields.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="kw2">str</span><span class="br0">&#40;</span>field<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span> fmt<span class="sy0">,</span> <span class="st0">&quot;little&quot;</span><span class="sy0">,</span> <span class="kw2">str</span><span class="br0">&#40;</span><span class="kw3">bytes</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+        <span class="kw1">except</span>: <span class="kw1">pass</span>                  
+&nbsp;
+        <span class="kw1">try</span>:
+          <span class="co1"># Big endian formats</span>
+          <span class="kw1">for</span> fmt <span class="kw1">in</span> formats:
+            form <span class="sy0">=</span> formats<span class="br0">&#91;</span>fmt<span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st0">&quot;format&quot;</span><span class="br0">&#93;</span>
+            <span class="kw3">bytes</span> <span class="sy0">=</span> formats<span class="br0">&#91;</span>fmt<span class="br0">&#93;</span><span class="br0">&#91;</span><span class="st0">&quot;len&quot;</span><span class="br0">&#93;</span>
+            field <span class="sy0">=</span> <span class="kw3">struct</span>.<span class="me1">unpack</span><span class="br0">&#40;</span><span class="st0">&quot;&gt;%s&quot;</span> % form<span class="sy0">,</span> f.<span class="me1">read</span><span class="br0">&#40;</span><span class="kw3">bytes</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+            <span class="kw1">print</span> <span class="st0">&quot;%s. Big %s: %s&quot;</span> % <span class="br0">&#40;</span>count<span class="sy0">,</span> fmt<span class="sy0">,</span> field<span class="br0">&#41;</span>
+            count +<span class="sy0">=</span> <span class="nu0">1</span>
+            f.<span class="me1">seek</span><span class="br0">&#40;</span>start<span class="br0">&#41;</span>
+            fields.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="kw2">str</span><span class="br0">&#40;</span>field<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span> fmt<span class="sy0">,</span> <span class="st0">&quot;big&quot;</span><span class="sy0">,</span> <span class="kw2">str</span><span class="br0">&#40;</span><span class="kw3">bytes</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+        <span class="kw1">except</span>: <span class="kw1">pass</span>                  
+&nbsp;
+        <span class="kw1">print</span> <span class="st0">&quot;%s. Go back to previous&quot;</span> % count
+        <span class="kw1">print</span>
+        <span class="kw1">print</span> <span class="st0">&quot;Current location: %s&quot;</span> % f.<span class="me1">tell</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        choice <span class="sy0">=</span> <span class="kw2">raw_input</span><span class="br0">&#40;</span><span class="st0">&quot;Enter the number of one of the above options: &quot;</span><span class="br0">&#41;</span>
+        choice <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>choice.<span class="me1">strip</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        desc <span class="sy0">=</span> <span class="st0">&quot;&quot;</span>
+        <span class="kw1">if</span> choice <span class="sy0">!=</span> count:
+          desc <span class="sy0">=</span> <span class="kw2">raw_input</span><span class="br0">&#40;</span><span class="st0">&quot;Enter a field description: &quot;</span><span class="br0">&#41;</span>
+          record.<span class="me1">append</span><span class="br0">&#40;</span><span class="st0">&quot;%s<span class="es0">\t</span>&quot;</span> % desc<span class="br0">&#41;</span>
+          record.<span class="me1">append</span><span class="br0">&#40;</span><span class="st0">&quot;%s<span class="es0">\t</span>&quot;</span> % fields<span class="br0">&#91;</span>choice-<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+          record.<span class="me1">append</span><span class="br0">&#40;</span><span class="st0">&quot;%s<span class="es0">\t</span>&quot;</span> % fields<span class="br0">&#91;</span>choice-<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+          record.<span class="me1">append</span><span class="br0">&#40;</span><span class="st0">&quot;%s<span class="es0">\t</span>&quot;</span> % fields<span class="br0">&#91;</span>choice-<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+          f.<span class="me1">seek</span><span class="br0">&#40;</span>start + <span class="kw2">int</span><span class="br0">&#40;</span>fields<span class="br0">&#91;</span>choice-<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+          prev <span class="sy0">=</span> start
+          fileDesc.<span class="me1">append</span><span class="br0">&#40;</span>record<span class="br0">&#41;</span>
+        <span class="kw1">elif</span> choice <span class="sy0">==</span> count:
+            f.<span class="me1">seek</span><span class="br0">&#40;</span>prev<span class="br0">&#41;</span>
+            <span class="kw1">print</span> <span class="st0">&quot;Going back to previous field.&quot;</span>          
+    f.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    export<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">except</span> <span class="kw2">KeyboardInterrupt</span>:
+    <span class="kw1">print</span>
+    reverse <span class="sy0">=</span> <span class="kw2">input</span><span class="br0">&#40;</span><span class="st0">&quot;How many records back? &quot;</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>reverse<span class="br0">&#41;</span>:
+        cached.<span class="me1">pop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw3">pickle</span>.<span class="me1">dump</span><span class="br0">&#40;</span>cached<span class="sy0">,</span> <span class="kw2">file</span><span class="br0">&#40;</span>pickleJar<span class="sy0">,</span> <span class="st0">&quot;w&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;The program will exit.  Restart and use cached version.&quot;</span>
+&nbsp;
+<span class="kw1">except</span>:
+    export<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;

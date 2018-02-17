@@ -1,0 +1,305 @@
+====== Spatio-temporal solar irradiation map =====
+\\
+Luis Ramirez Camargo -[[https://www.th-deg.de/en/tc-freyung/research-and-development/angewandte-energieforschung/2914]]
+
+Affiliation: Deggendorf Institute of Technology and University of Natural Resources and Life Sciences Vienna 
+
+===== INTRODUCTION =====
+
+Having an energy matrix based on renewable energies sources (RES) has become a priority for the European Union(European Commision 2009). Massive efforts have been made to increment the penetration of key technologies such as Photovoltaic (PV).  One of the primary steps for the introduction of these technologies consists on carrying out an assessment of the energy generation potential. An increasing number of methods and software tools are available to calculate such potential(Clarke and Grant 1996; Mendes, Ioakimidis, and Ferrão 2011; Markovic, Cvetkovic, and Masic 2011; Angelis-Dimakis et al. 2011; Connolly et al. 2010). These tools could be radically different the one of the other but all of them pursuit the same goal-- to maximize the annual amount of energy that can be harvest by the PV plants that are to be build. 
+
+This way of thinking works if PV plays only a marginal role in the energy matrix. the temporal variations of the energy generation can be easily compensated if the PV energy plants are connected to a grid. The situation changes, however, if the participation of PV and other variable renewable energy sources increases(Orioli and Di Gangi 2013; Passey et al. 2011; U.S. Department of Energy and SNL 2007; Azadian and Radzi 2013; Paatero and Lund 2007). The objective is no longer to generate as much energy as possible but generate energy when it is required. This modification of the objective also requires changes in the way potentials are calculated. 
+
+The ESRA algorithm implemented in the module r.sun of the open source software grass GIS has been widely tested and the results are very satisfactory--mostly when comparing with other GIS based tools (Inman, Pedro, and Coimbra 2013; Badescu et al. 2013; Stein, Hansen, and Reno 2012; Jakubiec and Reinhart 2013; Ruiz‐Arias et al. 2009; Šúri et al. 2007; Tabik et al. 2012). Although this software has been essentially used to calculate the 'classic' yearly-solar-harvest potential; it is also capable for the generation of instantaneous solar radiation maps. A combination of bash, python and grass scripts should allow the quick generation of solar radiation data sets with a high Spatio-temporal resolution usign r.sun. These data sets are to be used posteriorly as input for optimization algorithms that should decide which plants should be build based on the best fit to a certain potential demand.           
+ 
+==== Project objectives ====
+  * to generate a Digital Surface Model (DSM) from the LIDAR data
+  * to generate one hour time-step solar irradiation raster maps for the study region
+  * to produce graphics that summarize the temporal course of the solar irradiation for every building roof-top that belong to the study region 
+
+
+
+===== METADATA =====
+
+
+==== Vector data ====
+  * Building contour map
+
+{{ :wikistudholland:buildings.png?nolink |}}
+
+
+
+==== Other data ====
+
+  * LIDAR data with five returns and one square meter resolution in .fpl file format. Every .fpl file contains data of an area of one square kilometer. The data for the study area is available in two of these .fpl files.   
+
+
+{{ :wikistudholland:headfpl.png?nolink |}}
+
+===== METHOD =====
+1. generate the (input) raster maps required to run r.sun  
+
+1.1. generate a DSM from the .fpl files
+
+1.1.1. extract the first(terrain) and the third (roofs of buildings)returns from the .fpl files using AWK
+
+1.1.2. create a new .txt file that contains the first and third returns of all .fpl files
+
+1.1.3. import the .txt as a vector in grass gis
+  
+1.2.2. get further input parameters for r.sun. the monthly Linke turbidity factor values are taken from the SODA data bank. the daily values are calculated using the script g.linke_by_day.py of  Hamish Bowman 2009 
+
+2. get solar irradiation maps for a certain period of time in a desired time step. a python script that loops the Grass Gis 7 function r.sun is used to perform this task.
+  
+3.plot the solar irradiation trend of every building roof-top in the study region (it is expected to perform this task using PK tools) 
+
+===== Computational implementation =====
+
+<code bash - mycode>
+############pre-filtering of the LIDAR data####### 
+############(extraction of the necessary returns)##########
+#use AWK. use a multi core loop for selecting the 
+#first and the third return in the .fpl files and 
+#put all returns in a single .txt file 
+
+#define the directory where the data is located
+export Dir=~/myproject/FPLSelect/
+#define the directory where the new text file should be stored
+export DirObj=~/myproject/FPLSelect
+#set the files that are used for the loop without type of file
+File=*
+#set the File type. note that it should be a format compatible with awk -> text
+export FileTyp=.fpl
+#set the amount of cores to be used
+export cores=3
+#extract the desired laser returns from the file that have been set
+  ls $Dir$File$FileTyp  | xargs -n 1 -P $cores  bash -c $' 
+    file=$(basename "$1" .fpl)
+    awk \'{ if($4=3) print $1, $2, $3 }\'  $Dir$file$FileTyp > $DirObj/3_$file.txt
+    awk  \'{ if($4=1) print $1, $2, $3 }\'  $Dir$file$FileTyp > $DirObj/1_$file.txt
+    # in order to retrive further returns erase the "#" at the beginning of the line 
+    #awk  \'{ if($4=2) print $1, $2, $3 }\'  $Dir$file$FileTyp > $DirObj/2_$file.txt
+    #awk  \'{ if($4=4) print $1, $2, $3 }\'  $Dir$file$FileTyp > $DirObj/4_$file.txt
+    #awk  \'{ if($4=5) print $1, $2, $3 }\'  $Dir$file$FileTyp > $DirObj/5_$file.txt
+  ' _
+
+#put all return types of interest in single txt file
+cat $DirObj/?_fpl?.txt > $DirObj/returns.txt
+rm ?_fpl?.txt  
+
+#####USE GRASS GIS 7 without starting it explicitly######
+export GISBASE=/usr/lib/grass70
+export GRASS_VERSION="7.0.svn" 
+MYGISDBASE=$HOME/myproject/grassdb
+MYLOC=district
+MYMAPSET=Luis
+ 
+# Set the global grassrc file to individual file name
+MYGISRC="$HOME/.grassrc.$GRASS_VERSION.$$"
+ 
+echo "GISDBASE: $MYGISDBASE" > "$MYGISRC"
+echo "LOCATION_NAME: $MYLOC" >> "$MYGISRC"
+echo "MAPSET: $MYMAPSET" >> "$MYGISRC"
+echo "GRASS_GUI: text" >> "$MYGISRC"
+ 
+# path to GRASS settings file
+export GISRC=$MYGISRC
+export GRASS_PYTHON=python
+export GRASS_MESSAGE_FORMAT=plain
+export GRASS_TRUECOLOR=TRUE
+export GRASS_TRANSPARENT=TRUE
+export GRASS_PNG_AUTO_WRITE=TRUE
+export GRASS_GNUPLOT='gnuplot -persist'
+export GRASS_WIDTH=640
+export GRASS_HEIGHT=480
+export GRASS_HTML_BROWSER=firefox
+export GRASS_PAGER=cat
+export GRASS_WISH=wish
+ 
+export PATH="$GISBASE/bin:$GISBASE/scripts:$PATH"
+export LD_LIBRARY_PATH="$GISBASE/lib"
+export GRASS_LD_LIBRARY_PATH="$LD_LIBRARY_PATH"
+export PYTHONPATH="$GISBASE/etc/python:$PYTHONPATH"
+export MANPATH=$MANPATH:$GISBASE/man
+ 
+export GIS_LOCK=$$
+  
+#####generate input raster maps for r.sun######
+#import the returns as vector in grass Gis
+v.in.ascii -n --o input=/home/user/myproject/FPLSelect/returns.txt output=rawpoints separator=space z=3  
+#generate the DSM, slope and aspect raster maps needed for r.sun -> this is a very simplistic way for performing this task but the procedure presented in neteler and mitasova 2008 (the Grass GIS 6 Book) leads to errors
+v.surf.rst -z input=rawpoints elev=elev1 slope=slope1 asp=asprast1 npmi=120 seg=25 lay=0 ten=15 smo=1
+
+#####open python in Grass Gis 7#########
+python
+
+</code>
+
+<code python - loop r.sun >
+
+######python function to loop r.sun #####
+
+import grass.script as grass	
+#function defined by the start and stop time and the input raster maps
+def my_r_sun(startday,stopday,starthour,stophour,elevmap,aspectmap,slopemap):
+# day is the day of the year, h is the hour of the day
+	for day in range (startday,stopday+1,1):
+		for hour in range (starthour,stophour+1,1):
+			def linkebyday():
+				import numpy
+				from scipy.interpolate import interpolate
+				##### put monthly data here
+				linke_data = numpy.array ([3.6,3.9,4.0,3.9,4.4,4.4,4.5,4.5,4.1,3.6,3.4,3.2])
+				linke_data_wrap = numpy.concatenate((linke_data[9:12], linke_data, linke_data[0:3]))
+				monthDays = numpy.array ([0,31,28,31,30,31,30,31,31,30,31,30,31])
+				#init empty
+				midmonth_day = numpy.array ([0,0,0,0,0,0,0,0,0,0,0,0])
+				for i in range(1, 12+1):
+					midmonth_day[i-1] = 15 + sum(monthDays[0:i])
+				midmonth_day_wrap = numpy.concatenate((midmonth_day[9:12]-365, \
+													   midmonth_day,
+													   midmonth_day[0:3]+365))
+				interp_type = 'cubic'  # 'linear'
+				linke = interpolate.interp1d(midmonth_day_wrap, 
+											 linke_data_wrap,
+											 kind=interp_type)
+				return("%.4f" % linke(day) )
+			hour = hour-0.5
+			print hour, "h"
+			print day, "day" 
+			# to get global irradiance
+			irradiance = "globrad_" + str(day) + "_" + str(hour)
+			linkev=linkebyday()
+			# run the solar model
+			grass.run_command("r.sun", elevin = str(elevmap), aspin = str(aspectmap), slopein = str(slopemap), lin = linkev, glob_rad = str(irradiance), day = day, time=hour)
+
+#generate the irradiation maps for the days 180,181 and 182 of the year for the period between 14:00 and 16:00  
+my_r_sun(180,182, 14, 16, "elev1","asprast1", "slope")
+
+#second example (see animations) maps for the days 1 to 3 of the year for the period between 07:00 and 17:00
+my_r_sun(1,3, 7, 17, "elev1","asprast1", "slope1")
+
+
+</code>
+
+
+
+
+
+
+
+<code bash - multi-core>
+the following code also loops r.sun but it uses multi-core 
+#runing the code to "USE GRASS GIS 7 without starting it explicitly" is also required
+#set startday, stopday,starthour, stophour, step and input raster maps for r.sun 
+export startday=20
+export stopday=20
+export starthour=10
+export stophour=12
+export step=1
+export elevmap=elev1
+export aspectmap=asprast1
+export slopemap=slope1
+export cores=3
+
+#run r.sun using xargs
+for DAY in $(seq $startday $stopday); do 
+ seq $starthour $step $stophour | xargs -n 1 -P $cores -I{} r.sun --o elevin=$elevmap aspin=$aspectmap slopein=$slopemap lin=$(python g.linke_by_day.py $DAY) glob_rad=multicore_globrad.${DAY}_{} day=$DAY time={}; 
+ done
+
+</code>
+
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+The aim of the present project is only to generate irradiation data in an efficient way. The quality (accuracy and sensibility to parameters) of the data generated with r.sun has been widely discussed elsewhere and a further validation do not correspond to the scope of this project. The high accuracy of the base algorithm of r.sun has been confirmed at least by Inman, Pedro, and Coimbra 2013; Badescu et al. 2013; Stein, Hansen, and Reno 2012; Jakubiec and Reinhart 2013; Ruiz‐Arias et al. 2009; Šúri et al. 2007
+===== RESULTS and DISCUSSION =====
+
+* DSM of the study region
+{{ :wikistudholland:dsm.png?nolink |}}
+
+
+* Slope map
+
+{{ :wikistudholland:slope.png?nolink |}}
+
+
+* Aspect map
+
+{{ :wikistudholland:aspect.png?nolink |}}
+
+*output code example
+
+{{ :wikistudholland:output.png?nolink |}}
+
+*irradiation map example in detail
+
+{{ :wikistudholland:irradiationindetail.png?nolink |}}
+
+*animation days 1 to 3 period 07:00 to 17:00
+
+#all extensions for animations are forbidden->
+
+#"Upload denied. This file extension is forbidden!"
+
+#instead raster maps for the first day of the year
+
+{{ :wikistudholland:animation_irradiation01.png?nolink |}}
+{{ :wikistudholland:animation_irradiation02.png?nolink |}}
+{{ :wikistudholland:animation_irradiation03.png?nolink |}}
+{{ :wikistudholland:animation_irradiation04.png?nolink |}}
+{{ :wikistudholland:animation_irradiation05.png?nolink |}}
+{{ :wikistudholland:animation_irradiation06.png?nolink |}}
+{{ :wikistudholland:animation_irradiation07.png?nolink |}}
+{{ :wikistudholland:animation_irradiation08.png?nolink |}}
+{{ :wikistudholland:animation_irradiation09.png?nolink |}}
+{{ :wikistudholland:animation_irradiation10.png?nolink |}}
+{{ :wikistudholland:animation_irradiation11.png?nolink |}}
+
+
+===== References =====
+Angelis-Dimakis, Athanasios, Markus Biberacher, Javier Dominguez, Giulia Fiorese, Sabine Gadocha, Edgard Gnansounou, Giorgio Guariso, et al. 2011. “Methods and Tools to Evaluate the Availability of Renewable Energy Sources.” Renewable and Sustainable Energy Reviews 15 (2): 1182–1200. doi:10.1016/j.rser.2010.09.049.
+
+Azadian, Farshad, and M.A.M. Radzi. 2013. “A General Approach toward Building Integrated Photovoltaic Systems and Its Implementation Barriers: A Review.” Renewable and Sustainable Energy Reviews 22: 527–38. doi:10.1016/j.rser.2013.01.056.
+
+Badescu, Viorel, Christian A. Gueymard, Sorin Cheval, Cristian Oprea, Madalina Baciu, Alexandru Dumitrescu, Flavius Iacobescu, Ioan Milos, and Costel Rada. 2013. “Accuracy and Sensitivity Analysis for 54 Models of Computing Hourly Diffuse Solar Irradiation on Clear Sky.” Theoretical and Applied Climatology 111 (3-4): 379–99. doi:10.1007/s00704-012-0667-1.
+
+Clarke, J.A., and A.D. Grant. 1996. “Planning Support Tools for the Integration of Renewable Energy at the Regional Level.” Renewable Energy 9 (1–4): 1090–93. doi:10.1016/0960-1481(96)88468-0.
+
+Connolly, D., H. Lund, B.V. Mathiesen, and M. Leahy. 2010. “A Review of Computer Tools for Analysing the Integration of Renewable Energy into Various Energy Systems.” Applied Energy 87 (4): 1059–82. doi:10.1016/j.apenergy.2009.09.026.
+
+European Commision. 2009. “SEC(2009)1295, 2009. Commission Staff Working Document - Accompanying Document to the Communication from the Commission to the European Parliament, the Council, the European Economic and Social Committee and the Committee of the Regions on Investing in the Development of Low Carbon Technologies (SET-Plan) - A Technology Roadmap.” http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=SEC:2009:1295:FIN:EN:PDF.
+
+Inman, Rich H., Hugo T.C. Pedro, and Carlos F.M. Coimbra. 2013. “Solar Forecasting Methods for Renewable Energy Integration.” Progress in Energy and Combustion Science 39 (6): 535–76. doi:10.1016/j.pecs.2013.06.002.
+
+Jakubiec, J. Alstan, and Christoph F. Reinhart. 2013. “A Method for Predicting City-Wide Electricity Gains from Photovoltaic Panels Based on LiDAR and GIS Data Combined with Hourly Daysim Simulations.” Solar Energy 93: 127–43. doi:10.1016/j.solener.2013.03.022.
+
+Markovic, Dragan, Dragan Cvetkovic, and Branislav Masic. 2011. “Survey of Software Tools for Energy Efficiency in a Community.” Renewable and Sustainable Energy Reviews 15 (9): 4897–4903. doi:10.1016/j.rser.2011.06.014.
+
+Mendes, Gonçalo, Christos Ioakimidis, and Paulo Ferrão. 2011. “On the Planning and Analysis of Integrated Community Energy Systems: A Review and Survey of Available Tools.” Renewable and Sustainable Energy Reviews 15 (9): 4836–54. doi:10.1016/j.rser.2011.07.067.
+
+Orioli, Aldo, and Alessandra Di Gangi. 2013. “Load Mismatch of Grid-Connected Photovoltaic Systems: Review of the Effects and Analysis in an Urban Context.” Renewable and Sustainable Energy Reviews 21: 13–28. doi:10.1016/j.rser.2012.12.035.
+
+Paatero, Jukka V., and Peter D. Lund. 2007. “Effects of Large-Scale Photovoltaic Power Integration on Electricity Distribution Networks.” Renewable Energy 32 (2): 216–34. doi:10.1016/j.renene.2006.01.005.
+
+Passey, Robert, Ted Spooner, Iain MacGill, Muriel Watt, and Katerina Syngellakis. 2011. “The Potential Impacts of Grid-Connected Distributed Generation and How to Address Them: A Review of Technical and Non-Technical Factors.” Energy Policy 39 (10): 6280–90. doi:10.1016/j.enpol.2011.07.027.
+
+Ruiz‐Arias, J. A., J. Tovar‐Pescador, D. Pozo‐Vázquez, and H. Alsamamra. 2009. “A Comparative Analysis of DEM‐based Models to Estimate the Solar Radiation in Mountainous Terrain.” International Journal of Geographical Information Science 23 (8): 1049–76. doi:10.1080/13658810802022806.
+
+Stein, Joshua S., Clifford W. Hansen, and Matthew J. Reno. 2012. “Global Horizontal Irradiance Clear Sky Models: Implementation and Analysis.” SAND2012-2389. Sandia National Laboratories. http://www.osti.gov/scitech/biblio/1039404.
+
+Šúri, Marcel, Thomas A. Huld, Ewan D. Dunlop, and Heinz A. Ossenbrink. 2007. “Potential of Solar Electricity Generation in the European Union Member States and Candidate Countries.” Solar Energy 81 (10): 1295–1305. doi:10.1016/j.solener.2006.12.007.
+
+Tabik, S., A. Villegas, E.L. Zapata, and L.F. Romero. 2012. “A Fast GIS-Tool to Compute the Maximum Solar Energy on Very Large Terrains.” Procedia Computer Science 9: 364–72. doi:10.1016/j.procs.2012.04.039.
+
+U.S. Department of Energy, and Sandia National Laboratories SNL. 2007. “Solar Energy Grid Integration Systems‘SEGIS’. Program Concept Paper.” http://www1.eere.energy.gov/solar/pdfs/segis_concept_paper.pdf.
+
+
+For Code development and Input data:
+
+Neteler, Markus, and Helena Mitasova. 2008. “Working with Raster Data.” In Open Source GIS, edited by Markus Neteler and Helena Mitasova, 83–168. Springer US. 
+
+Hamish Bowman, Dunedin, New Zealand: module: g.linke_by_day.py, Interpolate day of year into Linke turbidity value.(c) 2009 Hamish Bowman, and The GRASS Development Team
+
+Linke turbidity factor values: http://www.soda-is.com/eng/services/linke_turbidity_info.html
+

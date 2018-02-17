@@ -1,0 +1,99 @@
+===== Start and shut-down =====
+
+==== log to grappolo via ethernet ====
+  * Connect grappolo to ethernet network and turn on the power 
+  * from an external laptop or desktop connected to the same network as grappolo do **ifconfig** to find out the network IP address you are logged on. Next type
+<code bash>
+    sudo nmap -sP 144.173.78.1-255 | grep -B2 00:00:00:00:08:49
+    # or
+    sudo nmap -sP 144.173.78.1-255 | grep -B2 erox
+    # replace 144.173.78 with the IP adrees of your network
+    # use the resulting stdout IP address to log grappolo via ssh
+    ssh admin@144.173.78.xxx # pass admin
+    # or
+    ssh stu1@144.173.78.xxx  # pass stu1
+</code>
+
+==== log to grappolo via wifi ====
+
+  * remove sd card from grappolo 
+<note warning>never remove SD card with power on! </note>
+  * Insert and read sd card from your laptop/desktop
+  * edit the /etc/network/interfaces file as sudo user
+
+<code bash>
+sudo nano /etc/network/interfaces
+</code>
+
+  * Add network name and password to wpa-ssid and wpa-psk:
+<code bash>
+iface wlan0 inet dhcp
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+       wpa-ssid "NETWORK_NAME"
+       wpa-psk "NETWORK_PASSWORD"
+</code>
+
+<note tip>to save and exit nano type ctrl + X and yes</note>
+
+===== Start the grid engine =====
+  * once logged into grappolo, start the grid engine using the startup script:
+<code bash>
+bash grappolo_start.sh
+# enter admin password : admin
+# enter node1 password : node1pw
+# enter node2 password : node2pw
+</code>
+
+===== Shut down grappolo =====
+<code bash>
+admin@grappolo:~$ ssh node1
+admin@node1:~$ sudo poweroff # password: node1pw
+admin@grappolo:~$ ssh node2 
+admin@node2:~$ sudo poweroff # password: node2pw
+admin@grappolo:~$ sudo poweroff # password grappolo: admin
+</code>
+<note important>leds from usb will be off, now you can power of grappolo</note>
+
+
+===== Submit jobs to GRAPPOLO =====
+
+==== Computational implementation ====
+
+Create a template script **Template2qsub.sh** with all the commands you need to execute for your data processing routine. Save Template2qsub.sh here:  pi@grappolo ~/ost4sem/experiment/scripts/Template2qsub.sh
+
+In the example below we perform the following:
+  * read the metadata of a raster image (.tif) and print these information on an output txt file
+  * crop the raster image to the extent of a vector file (.shp format)
+  * read the metadata of the newest cropped raster image (.tif) and printe these info on a new txt data.
+
+<code bash>
+#$ -S /bin/bash
+# #$ -o /home/pi/ost4sem/experiment/stdout
+# #$ -e /home/pi/ost4sem/experiment/stderr
+INPUTDIR=~/usbstore1/input
+OUTPUTDIR=~/usbstore1/output
+CROPFILE=$(basename $file .tif)_fr.tif
+
+gdalinfo $file > $OUTPUTDIR/$(basename $file .tif).txt
+gdalwarp -cutline $INPUTDIR/poly_fr.shp -crop_to_cutline $file $OUTPUTDIR/$CROPFILE
+gdalinfo $OUTPUTDIR/$CROPFILE > $OUTPUTDIR/$(basename $CROPFILE .tif).txt
+</code>
+
+
+The **QsubImages.sh** script below will perform the following:
+  * List the images you need to process 
+  * Sent to process images individually using a dedicated CPU. 
+
+A job submission queuing list is created into a grid engine ( a software dealing with job submission queuing and priority). When the number of process in the queue is higher than the number of CPU available in the cluster, jobs to be processed are waiting. \\
+The script is found in grappolo at: pi@grpi@grappolo ~/ost4sem/experiment/scripts/QsubImages.sh
+
+
+<code bash>
+#!/bin/bash
+
+SCRIPTDIR=~/ost4sem/experiment/scripts
+for file in  ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/20*.tif ; do 
+qsub -v file=$file $SCRIPTDIR/Template2qsub.sh
+done
+
+</code>

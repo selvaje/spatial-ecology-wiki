@@ -1,0 +1,71 @@
+** Will you use and progress using Open Sources tools in future ?** \\
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  
+|22 | 1 | 16 | 5 | 13 | 8 | 22 | 0 | 15 | 16 |
+\\
+** Do you feel to be able to independently improve and learn more about Open Source tools ? **
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ 
+| 19 | 2 | 7 | 11 | 7 | 11 | 18 | 0 | 13 | 4 |
+\\
+** Do you see any interest in using Open Source tools in your current and future job ?** two years survey
+^ Yes ^  No ^ Little ^
+|15|0|5|
+|10|3|5|
+\\
+**  Which part of the course would have liked to see in more in detail ? **
+^ Bash ^ Gdal ^ Gnuplot ^ Grass ^ R ^ Qgis ^ Theory ^ Exercise ^ Tutorials ^
+|19|8|9|16|6|13|1|11|2|
+\\
+**  Do you think the training was well adapted in respect of your needs, your skills and knowledge ? **
+^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+|7|13|0|
+|7|9|0|
+\\
+**  The trainers were clear and prepared ? **
+^ Very well ^  Yes enough prepared  ^ Not enough ^
+|2|18|1|
+\\
+** The trainer's supervision during some coding exercises was satisfactory ? **
+^ Very much ^  yes satisfactory  ^ not enough ^ not at all ^
+|4|16|0|0|
+\\
+** The training organization was correctly carried out?  **
+^ Virtual Machine OK ^ Virtual Machine no ^ Slides OK ^ Slides No ^ Vikipedia OK ^ Vikipedia no ^ Schedule OK  ^ Schedule NO ^
+| 20|0|12|4|20|0|16|0|
+\\
+** Did you like the example to simulate a cluster processing?  **
+^ Yes ^  No  ^ Yes but i did not get very well ^
+|14|0|5|
+\\
+** Will you be able to replicate a small script for cluster processing?  **
+^ Yes ^  No  ^ Yes but i will encounter several problems ^
+|2|1|13|
+\\
+**  Are you planing to use Ubuntu?  **
+^ No ^ Yes as VM ^ Yes as full installation ^ Yes as live usb/cd ^
+|1|18|2|0|
+\\
+**  Are you already use command line in the terminal? **
+^ No ^ Yes ^ No but i will start soon ^
+|0|19|0|
+\\
+** Are you interested to follow a more advance course in programming? ** If yes send to giuseppe.amatulli@gmail.com a mail with the object ADVANCED PROGRAMMING, i will inform you if we organize a course >
+^ No ^ Not yet ^ Yes ^ Yes but only R ^ Yes but only GRASS ^ Yes but only python ^
+|0|16|6|0|1|1|
+\\
+-----------------------------------
+Please if you have any remark or suggestions for improving this training write to giuseppe.amatulli@gmail.com.
+Fell free to write your positive/negative impression. We will use it us feedback for next training.
+
+**Do you feel to be able to independently get information and learn about the use of a function?**
+^ Students ^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R Yes ^ R No ^
+^ 18 ^ 14 ^ 4 ^	10 ^ 5 ^ 11 ^ 4 ^ 17 ^  ^ 17 ^ ^ 10 ^ 7 ^
+
+\\
+**Which part of the course you preferred and would have liked to see in more in detail?**
+^ Students ^ Bash ^ Awk ^ Gdal ^ Gnuplot ^ Grass ^ Qgis	^ R ^ Theory ^ Exercise ^ Study case ^
+^ 17 ^ 13 ^ 3 ^ 2 ^ 1 ^ 15 ^ 9 ^ 3 ^ 1 ^ 6 ^ 6 ^
+\\
+
+
+
+

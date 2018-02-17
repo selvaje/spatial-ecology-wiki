@@ -1,0 +1,84 @@
+====== TITLE ======
+Linking Movement data and contextual data
+
+===== INTRODUCTION =====
+
+  - Background: Recent data acquisition tools — such as Global Positioning System (GPS) and mobile phones — have resulted in huge amounts of movement data. Most applications abstract the trajectories to a finite set of ordered observations. Each of these consists of object location (in one, two, or three dimensions), a timestamp, and a set of attributes. 
+  - The objects move in an environment that has a significant effect on their behaviour. This environment defines the context in which the object moves. Examples of these objects for which the context influences the movement include hurricanes and birds where climatic phenomena, such as temperature, wind, and rain, are important examples of the context affecting them. 
+  - Unfortunately, these contextual data are usually field-based data, represented by rasters, different granularities, and have vast size datasets. Consequently, the integration needs combining both vector format (movement data) and raster format (contextual data). In addition, the vast amount of contextual data increases the complexity of the analysis. For example, analysing the hurricane behaviour needs processing of the vast amount of Sea Surface Temperature (SST) data because SST measurements are usually collected at daily or even hourly rates. Moreover, analysing the movement behaviour may require processing data at multiple granularities and computing the spatiotemporal lags. For example, analysing relations between hurricane and SST needs to get the monthly, yearly, or (maybe) five-year averages for SST as well as the status within specific temporal window before or after hurricane passage.
+
+  - keywords: moving object, context, spatiotemporal raster, integration
+ 
+==== Project objectives ====
+This project aims at analysing the relations between Sea surface temperature and the travelled distance of the hurricanes. Therefore, we will implement 4 main functions: the first one concerns temporal aggregation for spatiotemporal raster and moving objects. The other concern the integration of Spatiotemporal raster with moving object. These operations have two steps: spatiotemporal overlay and aggregation. The spatiotemporal overlay finds the cells in a spatiotemporal raster that spatially and temporally intersect the observations in a moving object. If no snapshots in the spatiotemporal raster temporally matches the moving object observation, two snapshots are used to interpolate the value at time of the observation. Following the overlay step, the values of these cells are aggregated. 
+
+
+
+
+===== METADATA =====
+In this project, we have two datasets. The hurricane dataset contains 30-year tracks from the period 1980– 2009. Hurricane data are maintained by World Data Center (WDC) for Meteorology. This dataset contains 2759 storm tracks. It consists of six-hourly centre locations in longitude and latitude, minimum central pressure, and maximum surface wind speeds for hurricanes. The 30-year Sea Surface Temperature dataset has been downloaded from the European Centre for Medium-Range Weather Forecasts (ECMWF). Its temporal granularity is 6 hours and the spatial resolution is 1.0-degree latitude by 1.0-degree longitude. The temporal extent of this data set is 01-01-1980 00:00:00 to 01-01-2009 18:00:00 with 43832 snapshots.
+
+
+==== Vector data ====
+  * link to vector data if available [[http://www.myvector_data_are_here]]
+
+==== Raster data ====
+  * [[http://www.myraster_data_are_here| link to raster data if available]]
+
+==== Other data sources====
+  * [[http://www.myraster_data_are_here| link to other data if needed]]
+
+===== METHOD =====
+the following steps describe the work flow for the integration functions:
+   read the moving objects data (read as text)
+   for each moving object do
+        for each observation in moving object do
+              extract its time
+              get the required snapshot 
+              extract the pixel value "single pixel, using buffer, or history"
+              loop
+        compute the aggregation result 
+   loop
+   print the result
+
+
+
+===== Computational implementation =====
+Some further explanation of the overall analyses and of each step
+paste your code here
+<code bash - mycode>
+#/bin/bash
+# Comment your code to make it more easy to understand. 
+wget ftp://something.rar 
+
+for file in *.tif ; do 
+  echo $file ; gdalinfo -mm $file  | grep "Min/Max" 
+done 
+
+</code>
+
+Describe your second code if needed, what it does ...
+
+<code R>
+# my R code here
+
+</code>
+
+If you are modeling you might distinguish between
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+Show us the output of the analyses upload images if needed with "add images" link in the upper bar of this window while editing
+
+   * Map 1. bla bla bla bla ... \\
+{{:wiki:unibas108biomas.png?400|}}{{:wiki:unibas108biomas_legend.png?200|}}
+\\
+\\
+   * Graphic 1. bla bla ok ok yes yes fantastic\\
+{{:wiki:qualiaria24h.to.png?600|My graphic caption}}
+
+
+
+//Later on after the training you could improve the script and upgrade your wiki project page//

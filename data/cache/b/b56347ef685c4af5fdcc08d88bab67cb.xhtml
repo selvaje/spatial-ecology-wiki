@@ -1,0 +1,669 @@
+
+<h1 class="sectionedit1" id="title">TITLE</h1>
+<div class="level1">
+
+<p>
+<strong>Evaluation of Bias correction method for satellite based precipitation (CMORPH) product</strong>
+</p>
+
+<p>
+(Ahmed Ibrahim, Haris Akram Bhatti, Norhakim Yusof, Omar Mohamed)
+</p>
+
+</div>
+<!-- EDIT1 SECTION "TITLE" [1-179] -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT2 SECTION "INTRODUCTION" [180-205] -->
+<h3 class="sectionedit3" id="general_framework_of_the_analysis">General framework of the analysis</h3>
+<div class="level3">
+
+<p>
+<strong>Background</strong>: Hydrological studies particularly related to rainfall-runoff modeling and flood forecasting relies upon precipitation. The ideal source of  precipitation data is by installation of rain gauge stations at high density for longer time span. Traditionally, the network of ground based rainfall observation is sparse due to limited financial resources and socio economic issues. Also, rainfall records are often incomplete due to poor maintenance. Under such conditions, gauges may not record data at high spatio-temporal scales. Therefore, an alternative and reliable data source is needed for rainfall-runoff modeling.
+</p>
+
+<p>
+With the advancement in remote sensing, satellite based precipitation estimates are gaining attraction in the field of hydrology particularly in rainfall-runoff modeling. However, satellite based estimates commonly are affected by systematic (bias) errors. The bias persists when the estimates are aggregated over time and hence may cause large uncertainty in hydrologic modeling. The success of the simulation study is based on the accuracy of input rainfall that drives the hydrologic model. However, the adequacy of using satellite based precipitation to replace gauge data in the hydrologic model is still questionable.
+</p>
+
+<p>
+<strong>Keywords</strong>: Bias, CMORPH, precipitation, hydrology
+</p>
+
+</div>
+<!-- EDIT3 SECTION "General framework of the analysis" [206-1563] -->
+<h3 class="sectionedit4" id="project_objectives">Project objectives</h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> To evaluate bias between the in-situ (gauge) rainfall and satellite (CMORPH) data</div>
+</li>
+<li class="level1"><div class="li"> To apply bias correction to CMPORPH data</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT4 SECTION "Project objectives" [1564-1725] -->
+<h2 class="sectionedit5" id="metadata">METADATA</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Daily CMORPH precipitation (raster) data (in excel form) at 8 km spatial resolution from 2003-2010</div>
+</li>
+<li class="level1"><div class="li"> Daily in-situ precipitation (point) data (in excel form) of six stations from 2003-2010</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "METADATA" [1726-1948] -->
+<h2 class="sectionedit6" id="method">METHOD</h2>
+<div class="level2">
+
+<p>
+<strong>In this study, we estimated multiplicative bias correction factor for the daily uncorrected CMORPH data. The ratio between gauge and uncorrected CMORPH observations are calculated and multiplied with the uncorrected data to obtain the biased corrected rainfall.</strong>
+</p>
+<ul>
+<li class="level1"><div class="li">We applied two methods i.e. moving window (MW) and sequential window (SW) to remove bias in the CMORPH product. MW method is tested with three different approaches (forward window, central window and backward window). Analysis of different sampling windows (5,7,9,…. 31 days) were tested for MW and SW methods to reduce the effect of sampling variability and scale discrepancies between gauge and CMORPH observations.<ol>
+<li class="level1"><div class="li"> Each method is assessed by statistical indices like RMSE, SD and correlation (Taylor&#039;s diagram) and the optimal method (with sampling window) is selected for further use (figure 1).</div>
+</li>
+<li class="level1"><div class="li"> Pixel-based bias estimates for the selected bias removal scheme are then spatially interpolated using IDW interpolation to yield a spatial field of bias factors. The uncorrected CMORPH field was multiplied by the bias field to result in bias corrected CMORPH estimates. </div>
+</li>
+<li class="level1"><div class="li"> To validate the bias corrected CMORPOH rainfall field, cross validation method recommended by World Meteorological Organization is applied. This procedure involves withholding one gauge at a time and calculating the bias field without this particular gauge. This procedure is repeated systematically for all 6 gauges but every time the validation data set is selected from the remaining data used in the previous step. This process guarantees that each gauge is withdrawn once. The bias-corrected CMORPH estimates at the withheld gauge are then compared against the corresponding gauge observations to examine the performance of the proposed technique.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT6 SECTION "METHOD" [1949-3779] -->
+<h2 class="sectionedit7" id="computational_implementation">Computational implementation</h2>
+<div class="level2">
+</div>
+</li>
+</ul>
+
+<p>
+Describe your code, what it does …
+</p>
+<pre class="code R"># Functions to read and implement the moving window
+# this code is used to read data in excel files (two files, image data and point data) 
+# implement the window functions with different sizes
+# correct the data using window values and original data
+# write the outputs in two files ( one for window values and one for the corrected values)
+&nbsp;
+# Function to round decimal numbers
+&nbsp;
+specify_decimal &lt;- function(x, k) format(round(x, k), nsmall=k)
+&nbsp;
+# for excel files
+library(gdata) 
+&nbsp;
+# Main logic
+# 	read Excel Files
+# 	process data
+# 	Write output
+ReadData &lt;- function(path1)
+{
+# Read The PixelFile
+#assign the output path
+outpath=paste(path1,&quot;Output/&quot;,sep = &quot;&quot;)
+# Create the output Directory
+dir.create(outpath)
+&nbsp;
+# Read the all pixel files (Image data)
+files=list.files(path = path1, pattern = &quot;*_pixel.xlsx&quot;)
+#Loop for all of these Files
+for(fi in 1:length(files))
+{
+#Read the file name (Exclude the _pixel.xlsx 11 char
+stop=nchar(files[[fi]])-11
+filename=substr(files[[fi]], 1, stop)
+&nbsp;
+&nbsp;
+filepath1=paste(path1,filename,sep = &quot;&quot;)
+pixelpath=paste(filepath1,&quot;pixel.xlsx&quot;,sep = &quot;_&quot;)
+pixeldataframe&lt;-  read.xls(pixelpath)
+&nbsp;
+#assign the point file
+pointpath=paste(filepath1,&quot;point.xlsx&quot;,sep = &quot;_&quot;)
+#continue if the point file not exist
+if(!file.exists(pointpath))
+next
+&nbsp;
+pointdataframe&lt;-  read.xls(pointpath)
+&nbsp;
+ncols=ncol(pixeldataframe)
+nrows=nrow(pixeldataframe)
+&nbsp;
+&nbsp;
+# get the years / Days 
+Years=as.vector(pixeldataframe[1,2:ncols])
+yearno=length(Years)
+Days=pixeldataframe[2:nrows,1]
+dayno=length(Days)
+#Create 4 empty vectors 
+DaysVector &lt;- rep(NA, dayno*yearno)
+YearsVector &lt;- rep(NA, dayno*yearno)
+PixelsVector &lt;- rep(NA, dayno*yearno)
+PointsVector &lt;- rep(NA, dayno*yearno)
+&nbsp;
+#loop, to fill the vectors with the data
+for (col in 1:yearno) {
+&nbsp;
+  sind=(col-1)*dayno+1
+  eind=col*dayno
+  DaysVector[sind:eind]=Days
+  YearsVector[sind:eind]=Years[[col]]
+  PixelsVector[sind:eind]=as.vector(pixeldataframe[2:nrows,col+1])
+  PointsVector[sind:eind]=as.vector(pointdataframe[2:nrows,col+1])
+&nbsp;
+ }
+&nbsp;
+ # create the data frame with the 4 vectors
+dfd=data.frame(DaysVector,YearsVector,PixelsVector,PointsVector)
+# process data
+wholedata&lt;-MakeWindow(dfd)
+&nbsp;
+#write window values
+filepath=paste(outpath,filename,sep = &quot;&quot;)
+output=paste(filepath,&quot;all.csv&quot;,sep = &quot;_&quot;)
+write.csv(wholedata[[1]], file = output)
+&nbsp;
+# write corrected data
+print(&quot;correcting data&quot;)
+filepath=paste(outpath,filename,sep = &quot;&quot;)
+output1=paste(filepath,&quot;Corrected.csv&quot;,sep = &quot;_&quot;)
+write.csv(wholedata[[2]], file = output1)
+&nbsp;
+}
+return(0)
+} 
+&nbsp;
+MakeWindow&lt;-function(dframe)
+{
+# copy the current frame
+  dframecpy=dframe
+  # initialize the non value
+  nanva=1
+&nbsp;
+  #create the window sizes array {3, 5 ......,31}
+  windows&lt;-seq(3,31, 2)
+  x=&quot;&quot;
+  #create the vector of window method array
+  methods=c(&quot;MF&quot;,&quot;MC&quot;,&quot;MB&quot;,&quot;S&quot;)
+&nbsp;
+  # for each method 
+  for(ty in 1:4)
+  {
+  # within each method , for each window size 
+    for(wind in windows)
+    {
+#assign the column name by concatenating the method name and window size
+      x=paste(methods[ty],wind)
+# compute the window value and corrected value 
+      lists&lt;-Window(dframe[1:nrow(dframe), 3],dframe[1:nrow(dframe), 4],wind,ty,nanva)
+&nbsp;
+	  #add the window value column to the data frame
+      dframe[,x] =lists[[1]]
+	  #add the corrected value column to the data frame
+      dframecpy[,x]=lists[[2]]
+&nbsp;
+    }
+  }
+&nbsp;
+  #create new list 
+  ret=list(dframe,dframecpy)
+return(ret)
+&nbsp;
+}
+&nbsp;
+#window
+#this function implements the 
+#parameter 
+#lst1:first list
+# lst2:second list
+# win:window length
+# type: window type (1 :Moving wind and forward , 2 :moving window and centre , 3 :moving window and backward, 4: Sequential window)
+#nanval: NAN value
+#Output : list with two items, First is the new value based on window type and length , second is the corrected data
+&nbsp;
+Window&lt;-function(lst1,lst2,win,type,nanval)
+{
+#Initialize two vectors (results and correction)
+  ResFactor &lt;- rep(NA, length(lst1))
+  Correctedvalue &lt;- rep(NA, length(lst1))
+#for moving window and Forward
+   if(type==1)
+  {
+&nbsp;
+    for(var in 1:length(lst1))
+    {
+#compute the window
+      swin=var
+      ewin=var+win-1
+&nbsp;
+      # when the current window less than window size
+      if(ewin &gt;length(lst1)){ ewin=swin}
+&nbsp;
+	  #Initialize the variables
+      sum1=0
+      sum2=0
+      res=0
+&nbsp;
+	for(winvar in swin:ewin)
+	{
+	  sum1=sum1+lst1[[winvar]]
+	  sum2=sum2+lst2[[winvar]]
+	}
+&nbsp;
+	if(sum2==0) {res=0}
+	else if(sum1==0) {res=nanval}
+	else {res=sum2/sum1 }
+&nbsp;
+#Round the result
+      ResFactor[[var]]=specify_decimal(res, 2)
+      #Correct Data
+      if(res==1)
+      Correctedvalue[[var]]=lst2[[var]]
+      else
+      Correctedvalue[[var]]=specify_decimal(lst1[[var]]*res,2)
+&nbsp;
+    }
+&nbsp;
+  }
+  else if(type==2) #for moving window and Center
+  {
+&nbsp;
+&nbsp;
+    for(var in 1:length(lst1))
+    {
+      #compute the window
+      swin=var-as.integer(win/2)
+      ewin=var+as.integer(win/2)
+&nbsp;
+      #Intialize the variables
+      sum1=0
+      sum2=0
+      res=0
+      if(swin&lt;1 || ewin &gt;length(lst1))
+      {
+      swin=var
+      ewin=var
+      }
+	for(winvar in swin:ewin)
+	{
+&nbsp;
+	  sum1=sum1+lst1[[winvar]]
+	  sum2=sum2+lst2[[winvar]]
+	}
+&nbsp;
+	if(sum2==0) {res=0}
+	else if(sum1==0) {res=nanval}
+	else {res=sum2/sum1 }
+&nbsp;
+      ResFactor[[var]]=specify_decimal(res, 2)
+       #Correct Data
+      if(res==1)
+      Correctedvalue[[var]]=lst2[[var]]
+      else
+      Correctedvalue[[var]]=specify_decimal(lst1[[var]]*res,2)
+    }
+&nbsp;
+  }
+   else if(type==3) #for moving window and Backword
+  {
+&nbsp;
+    for(var in 1:length(lst1))
+    {
+      #compute the window
+      swin=var-win+1
+      ewin=var
+&nbsp;
+      #need Confirm
+      #if(ewin &gt;length(lst1){ ewin=length(lst1)}
+      sum1=0
+      sum2=0
+      res=0
+      if(swin&lt;1)
+      {
+      swin=var
+       }
+	for(winvar in swin:ewin)
+	{
+	  sum1=sum1+lst1[[winvar]]
+	  sum2=sum2+lst2[[winvar]]
+	}
+	if(sum2==0) {res=0}
+	else if(sum1==0) {res=nanval}
+	else {res=sum2/sum1 }
+&nbsp;
+      ResFactor[[var]]=specify_decimal(res, 2)
+       #Correct Data
+      if(res==1)
+      Correctedvalue[[var]]=lst2[[var]]
+      else
+      Correctedvalue[[var]]=specify_decimal(lst1[[var]]*res,2)
+    }
+&nbsp;
+  }
+&nbsp;
+  else if(type==4) #for Sequential
+  {
+    #Initialize the counter
+    var=1
+    while(var &lt;=length(lst1))
+    {
+      #compute the window
+      swin=var
+      ewin=var+win-1
+&nbsp;
+&nbsp;
+      sum1=0
+      sum2=0
+      res=0
+      if(ewin &gt;length(lst1))
+      {
+      ewin=var
+      }
+&nbsp;
+	for(winvar in swin:ewin)
+	{
+&nbsp;
+	  sum1=sum1+lst1[[winvar]]
+	  sum2=sum2+lst2[[winvar]]
+	}
+&nbsp;
+	if(sum2==0) {res=0}
+	else if(sum1==0) {res=nanval}
+	else {res=sum2/sum1 }
+&nbsp;
+	for(winvar in swin:ewin)
+	{
+	  ResFactor[[winvar]]=specify_decimal(res, 2)
+	   #Correct Data
+      if(res==1)
+      Correctedvalue[[var]]=lst2[[winvar]]
+      else
+      Correctedvalue[[var]]=specify_decimal(lst1[[winvar]]*res,2)
+&nbsp;
+	}
+&nbsp;
+	var=ewin+1
+&nbsp;
+    }
+&nbsp;
+  }
+&nbsp;
+  # create the  list to be returned
+  retres = list(ResFactor,Correctedvalue)
+  return(retres)
+&nbsp;
+}
+&nbsp;
+#function Read 
+&nbsp;
+args &lt;- commandArgs(trailingOnly = TRUE)
+cat(&quot;Done&quot;, ReadData(args[1]), &quot;\n&quot;)
+&nbsp;
+## This code plots Taylor's diagram
+&nbsp;
+require (plotrix)
+&nbsp;
+t1&lt;-read.table(&quot;Tay_Zege.txt&quot;)
+&nbsp;
+taylor.diagram(t1[,1],t1[,2],add = FALSE, col = &quot;red&quot;,pch = 18, pos.cor = TRUE, xlab = &quot;Standard deviation (mm)&quot;, ylab = &quot;Standard deviation (mm)&quot;, main = &quot;&quot;, show.gamma = T,ngamma = 6, gamma.col = 8, sd.arcs = 1, ref.sd = T,grad.corr.lines = c(0.2, 0.4, 0.6, 0.8, 0.9), pcex = 1,cex.axis = 1, normalize = FALSE)
+&nbsp;
+taylor.diagram(t1[,1],t1[,3],add=T,col = &quot;blue4&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,4],add=T,col = &quot;blueviolet&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,5],add=T,col = &quot;cornflowerblue&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,6],add=T,col = &quot;cyan&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,7],add=T,col = &quot;cadetblue&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,8],add=T,col = &quot;red&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,9],add=T,col = &quot;red4&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,10],add=T,col = &quot;orange&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,11],add=T,col = &quot;orange4&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,12],add=T,col = &quot;green&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,13],add=T,col = &quot;greenyellow&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,14],add=T,col = &quot;grey&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,15],add=T,col = &quot;khaki&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,16],add=T,col = &quot;khaki4&quot;,pch = 0)
+taylor.diagram(t1[,1],t1[,17],add=T,col = &quot;pink&quot;,pch = 0)
+&nbsp;
+taylor.diagram(t1[,1],t1[,18],add=T,col = &quot;blue4&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,19],add=T,col = &quot;blueviolet&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,20],add=T,col = &quot;cornflowerblue&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,21],add=T,col = &quot;cyan&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,22],add=T,col = &quot;cadetblue&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,23],add=T,col = &quot;red&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,24],add=T,col = &quot;red4&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,25],add=T,col = &quot;orange&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,26],add=T,col = &quot;orange4&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,27],add=T,col = &quot;green&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,28],add=T,col = &quot;greenyellow&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,29],add=T,col = &quot;grey&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,30],add=T,col = &quot;khaki&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,31],add=T,col = &quot;khaki4&quot;,pch = 1)
+taylor.diagram(t1[,1],t1[,32],add=T,col = &quot;pink&quot;,pch = 1)
+&nbsp;
+taylor.diagram(t1[,1],t1[,33],add=T,col = &quot;blue4&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,34],add=T,col = &quot;blueviolet&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,35],add=T,col = &quot;cornflowerblue&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,36],add=T,col = &quot;cyan&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,37],add=T,col = &quot;cadetblue&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,38],add=T,col = &quot;red&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,39],add=T,col = &quot;red4&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,40],add=T,col = &quot;orange&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,41],add=T,col = &quot;orange4&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,42],add=T,col = &quot;green&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,43],add=T,col = &quot;greenyellow&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,44],add=T,col = &quot;grey&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,45],add=T,col = &quot;khaki&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,46],add=T,col = &quot;khaki4&quot;,pch = 2)
+taylor.diagram(t1[,1],t1[,47],add=T,col = &quot;pink&quot;,pch = 2)
+&nbsp;
+lpos1&lt;-1.32*sd(t1[,1])
+lpos2&lt;-1.8*sd(t1[,1])
+# add a legend
+legend(lpos1,lpos2,legend=c(&quot;Uncor-CMORPH&quot;,&quot;3&quot;,&quot;5&quot;,&quot;7&quot;,&quot;9&quot;,&quot;11&quot;,&quot;13&quot;,&quot;15&quot;,&quot;17&quot;,&quot;19&quot;,&quot;21&quot;,&quot;23&quot;,&quot;25&quot;,&quot;27&quot;,&quot;29&quot;,&quot;31&quot;),pch=c(18,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2),col=c(&quot;red&quot;,&quot;blue4&quot;,&quot;blueviolet&quot;,&quot;cornflowerblue&quot;,&quot;cyan&quot;,&quot;cadetblue&quot;,&quot;red&quot;,&quot;red4&quot;,&quot;orange&quot;,&quot;orange4&quot;,&quot;green&quot;,&quot;greenyellow&quot;,&quot;grey&quot;,&quot;khaki&quot;,&quot;khaki4&quot;,&quot;pink&quot;))
+&nbsp;
+## R code for Time-Series Precipitation idw interpolation ##
+&nbsp;
+library(gstat)
+library(rgdal)
+library(maptools)
+&nbsp;
+data1&lt;- read.csv(&quot;Data_6m5stn.csv&quot;, header=TRUE)
+#stn &lt;- read.csv(&quot;Station_coor.csv&quot;, header=TRUE)
+&nbsp;
+stn &lt;- data1[2:4]
+&nbsp;
+stn$x = as.numeric((stn[[&quot;LON&quot;]]))
+stn$y = as.numeric((stn[[&quot;LAT&quot;]]))
+&nbsp;
+coordinates(stn) = ~x+y
+proj4string(stn) = &quot;+proj=utm +zone=37 +ellps=WGS84 +datum=WGS84 +units=m +no_defs&quot;
+&nbsp;
+##Generate new grid##
+&nbsp;
+pixels &lt;- 200
+&nbsp;
+stn.grd &lt;- expand.grid(x=seq(from=36,to=39,length.out=pixels),
+                        y=seq(from=10,to=13,length.out=pixels))
+&nbsp;
+grd.pts &lt;- SpatialPixels(SpatialPoints((stn.grd)))
+ngrid &lt;- as(grd.pts, &quot;SpatialGrid&quot;)
+&nbsp;
+proj4string(ngrid) = &quot;+proj=utm +zone=37 +ellps=WGS84 +datum=WGS84 +units=m +no_defs&quot;
+&nbsp;
+&nbsp;
+##IDW For-loop## 
+&nbsp;
+library(raster)
+&nbsp;
+wordir &lt;- &quot;/home/user/Project&quot;
+&nbsp;
+for (i in 1:30) {
+col&lt;- paste(data1[i+4], &quot;~1&quot;, sep=&quot;&quot;)
+idw &lt;- idw(as.formula(col), stn, ngrid)
+r &lt;- raster(idw[&quot;var1.pred&quot;])
+&nbsp;
+plot(r, col=topo.colors(100), legend=FALSE, axes=FALSE)
+title(paste(&quot;Precipitation_idw&quot;, 20030600+i, sep = &quot;&quot;))
+&nbsp;
+minr &lt;- as.numeric(format(round(minValue(r), 2), nsmall=2))
+maxr &lt;- as.numeric(format(round(maxValue(r), 2), nsmall=2))
+&nbsp;
+r.range &lt;- c(minr, maxr)
+plot(r, legend.only=TRUE, col=topo.colors(100),
+     legend.width=1, legend.shrink=0.75,
+     axis.args=list(at=seq(minr, maxr, 0.2),
+                    labels=seq(minr, maxr, 0.2),  
+                    cex.axis=0.6),
+     legend.args=list(text='Precipitation (corrected)', side=4, font=2, line=2.5, cex=0.8),border=&quot;grey50&quot; )
+&nbsp;
+writeRaster(r, filename=paste(wordir, &quot;/img/Preci_idw_&quot;, 20030600+i, &quot;.tif&quot;, sep = &quot;&quot;), format='GTiff', overwrite=TRUE) #create GoTiFF rasters
+&nbsp;
+dev.copy(jpeg, file = paste( wordir, &quot;/img/Preci_idw_&quot;, 20030600+i, &quot;.jpg&quot;, #save plot to jpg
+sep = &quot;&quot;), height = 17, width = 17, units = &quot;cm&quot;, quality = 100,
+res=150, bg=&quot;white&quot;) ; dev.off()
+&nbsp;
+rm(idw)
+}
+&nbsp;
+##Extract pixel value from point coordinate##
+&nbsp;
+setwd(&quot;/home/user/Project/img&quot;)
+im &lt;-  list.files(pattern='*.tif') # folder that contain all the save idw rasters
+no &lt;- length(im) 
+&nbsp;
+imst &lt;- stack(im[1:no])
+&nbsp;
+x &lt;- 37.255 #x,y -&gt; station 6
+y &lt;- 11.93
+&nbsp;
+data_stn6 &lt;- data.frame(x,y)
+coordinates(data_stn6) &lt;- c(&quot;x&quot;, &quot;y&quot;)
+&nbsp;
+proj4string(data_stn6) = &quot;+proj=utm +zone=37 +ellps=WGS84 +datum=WGS84 +units=m +no_defs&quot;
+&nbsp;
+ex &lt;- extract(imst, data_stn6)
+&nbsp;
+table &lt;- t(ex) # transpose to columns
+&nbsp;
+write.table(table, file = &quot;Pixel_stn6_1.csv&quot;, sep = &quot;,&quot;, col.names = &quot;BF_Pixel&quot;, row.names =F,  
+            qmethod = &quot;double&quot;)  #save extract pixel values
+&nbsp;
+##Combine with uncorrected pixel value and station 6 data##
+&nbsp;
+data2&lt;- read.csv(&quot;Zege_uncorrected_pixel.csv&quot;, header=TRUE) # uncorrected pixel &amp; station 6 data
+data_ex&lt;- read.csv(&quot;Pixel_stn6_1.csv&quot;, header=TRUE)
+&nbsp;
+raw_pix &lt;- data2[1:30,1] # uncorrected pixel
+&nbsp;
+stn6 &lt;- data2[1:30,2] # station 6 values
+&nbsp;
+&nbsp;
+data_ex$Un_Pix &lt;- raw_pix
+data_ex$Stn6 &lt;- stn6
+&nbsp;
+&nbsp;
+&nbsp;
+##plot line graph for comparison (Pixel vs Station)## 
+&nbsp;
+##Pixel correction##
+&nbsp;
+#data_plot &lt;- read.csv(&quot;Line_plot.csv&quot;, header=TRUE)
+&nbsp;
+bf&lt;- as.numeric(data_ex[,1])
+Un_pix &lt;-as.numeric(data_ex[,2])
+&nbsp;
+Corr &lt;- bf * Un_pix
+&nbsp;
+data_ex$Coor_Pixel &lt;- Corr
+&nbsp;
+write.table(data_ex, file = &quot;Line_plot.csv&quot;, sep = &quot;,&quot;, col.names = c(&quot;BF_Pixel&quot;, &quot;Un_Pixel&quot;, &quot;Point&quot;, &quot;Coor_Pixel&quot;), row.names=F, 
+           qmethod = &quot;double&quot;)
+&nbsp;
+library(ggplot2)
+library(reshape)
+&nbsp;
+x  &lt;- seq(1, 30, 1)
+Corrected_CMORPH &lt;- data_ex[,4]
+Uncorrected_CMORPH &lt;- data_ex[,2]
+Gauge_Observation &lt;- data_ex[,3]
+df &lt;- data.frame(x,Uncorrected_CMORPH, Corrected_CMORPH,Gauge_Observation)
+&nbsp;
+d2 &lt;- melt(df, id=&quot;x&quot;) #reshape the table structure into id, variable, value columns
+ggplot(d2, aes(x, value, colour=variable)) + 
+  geom_line() +
+  geom_line() +
+  scale_colour_manual(values=c(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;), name=&quot;Type of line&quot;) +
+  ggtitle(expression(atop(&quot;Comparison between Corrected Pixel vs Station 6&quot;)))+
+  scale_x_continuous(&quot;June 2003&quot;) + 
+  scale_y_continuous(&quot;Precipitation (mm)&quot;)
+&nbsp;
+## Final Taylor's diagram for cross validation by leave one out method
+&nbsp;
+require (plotrix)
+&nbsp;
+t1&lt;-read.table(&quot;Final_Tay_1&quot;)
+taylor.diagram(t1[,1],t1[,2],add = FALSE, col = &quot;red&quot;,pch = 18, pos.cor = F,  main = &quot;&quot;, show.gamma = T,ngamma = 6, gamma.col = 8, sd.arcs = 1, ref.sd = T,grad.corr.lines = c(0.2, 0.4, 0.6, 0.8, 0.9), pcex = 1,cex.axis = 1, normalize = FALSE)
+&nbsp;
+taylor.diagram(t1[,1],t1[,3],add=T,col = &quot;blue&quot;,pch = 18)
+&nbsp;
+lpos1&lt;-0.4*sd(t1[,1])
+lpos2&lt;-2.1*sd(t1[,1])
+# add a legend
+legend(lpos1,lpos2,legend=c(&quot;Uncor-CMORPH&quot;,&quot;Corrected-CMORPH&quot;),pch=c(18,18),col=c(&quot;red&quot;,&quot;blue&quot;))</pre>
+
+</div>
+<!-- EDIT7 SECTION "Computational implementation" [3780-18866] -->
+<h2 class="sectionedit8" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">Fig 1. Taylor&#039;s diagram showing statistical indices for MW approach for Zege rain gauge station. Triangle, circle and rectangle represents FW, CW and BW schemes respectively. Sampling windows are shown by different colours.<br/>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_haris&amp;media=wikistudholland:tay_zege.jpeg" class="media" title="wikistudholland:tay_zege.jpeg"><img src="/dokuwiki/lib/exe/fetch.php?w=500&amp;tok=f77cb7&amp;media=wikistudholland:tay_zege.jpeg" class="mediacenter" alt="" width="500" /></a>
+</p>
+</div>
+</li>
+</ul>
+
+<p>
+<strong>Similar plots are drawn for 5 other stations and SW approach (see step 2 of method)</strong><br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li">Fig 2. Bias factor spatial field after applying IDW interpolation. Results are shown (by dropping Zege station) for June 1, 2003. The uncorrected CMORPH field is multiplied by the bias field to result in bias corrected CMORPH estimates.<br/>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_haris&amp;media=wikistudholland:preci_idw_20030601.jpg" class="media" title="wikistudholland:preci_idw_20030601.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=500&amp;tok=24629c&amp;media=wikistudholland:preci_idw_20030601.jpg" class="mediacenter" alt="" width="500" /></a>
+</p>
+</div>
+</li>
+</ul>
+
+<p>
+<strong>Similar plots are drawn for the entire June, 2003 (see step 3 of method)</strong><br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Fig 3. Time series comparison of gauge observations (i.e., the bench mark) to the uncorrected and corrected CMORPH data. Analysis is shown for the pixel overlain on Zege station. Analysis period is June 1 - June 30, 2003 (see step 4 of method).<br/>
+</div>
+</li>
+</ul>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_haris&amp;media=wikistudholland:plot_un_cor_obs.jpeg" class="media" title="wikistudholland:plot_un_cor_obs.jpeg"><img src="/dokuwiki/lib/exe/fetch.php?w=500&amp;tok=a99d64&amp;media=wikistudholland:plot_un_cor_obs.jpeg" class="mediacenter" alt="" width="500" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li">Fig 4. Taylor&#039;s diagram showing results of cross validation at Zege rain gauge station for the period June 1 - June 30, 2003 (see step 4 of method).<br/>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_haris&amp;media=wikistudholland:final_tay.jpeg" class="media" title="wikistudholland:final_tay.jpeg"><img src="/dokuwiki/lib/exe/fetch.php?w=500&amp;tok=42671a&amp;media=wikistudholland:final_tay.jpeg" class="mediacenter" alt="" width="500" /></a>
+</p>
+</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT8 SECTION "RESULTS and DISCUSSION" [18867-] -->

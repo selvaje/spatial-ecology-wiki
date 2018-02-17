@@ -1,0 +1,83 @@
+
+<h1 class="sectionedit1" id="geocoding_with_geopy">Geocoding with GEOPY</h1>
+<div class="level1">
+
+<p>
+<br/>
+
+</p>
+<pre class="code">wget http://www.spatial-ecology.net/ost4sem/exercise/python/Seafood_noheader.csv</pre>
+
+<p>
+<br/>
+
+</p>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:geocoding&amp;codeblock=0" title="Download Snippet" class="mediafile mf_py">geopy_retrieve_coordinates.py</a></dt>
+<dd><pre class="code python"><span class="co1">#!/usr/bin/env python</span>
+&nbsp;
+<span class="kw1">import</span> <span class="kw3">sys</span>
+<span class="kw1">import</span> <span class="kw3">csv</span>
+<span class="kw1">from</span> geopy.<span class="me1">geocoders</span> <span class="kw1">import</span> Nominatim
+<span class="kw1">from</span> geopy.<span class="me1">exc</span> <span class="kw1">import</span> GeocoderTimedOut
+&nbsp;
+<span class="co1"># =============================================================================</span>
+<span class="kw1">def</span> Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">''</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Usage: geopy_retrieve_coordinates.py input.txt  output.txt'</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">''</span><span class="br0">&#41;</span>
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span> <span class="nu0">1</span> <span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># =============================================================================</span>
+&nbsp;
+src_input  <span class="sy0">=</span> <span class="kw2">None</span>
+src_output <span class="sy0">=</span> <span class="kw2">None</span>
+argv<span class="sy0">=</span><span class="br0">&#40;</span><span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#41;</span>
+<span class="co1"># Parse command line arguments.</span>
+i <span class="sy0">=</span> <span class="nu0">1</span>
+<span class="kw1">while</span> i <span class="sy0">&lt;</span> <span class="kw2">len</span><span class="br0">&#40;</span><span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#41;</span>:
+    arg <span class="sy0">=</span> argv<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+    <span class="kw1">if</span> src_input <span class="kw1">is</span> <span class="kw2">None</span>:
+        src_input  <span class="sy0">=</span> arg
+    <span class="kw1">elif</span> src_output <span class="kw1">is</span> <span class="kw2">None</span>:
+        src_output <span class="sy0">=</span> arg
+    <span class="kw1">else</span>:
+        Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    i <span class="sy0">=</span> i + <span class="nu0">1</span>
+&nbsp;
+<span class="kw1">if</span>  src_input <span class="kw1">is</span> <span class="kw2">None</span>:
+        Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">if</span>  src_output <span class="kw1">is</span> <span class="kw2">None</span>:
+        Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+geolocator <span class="sy0">=</span> Nominatim<span class="br0">&#40;</span><span class="br0">&#41;</span>
+new_rows_list <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+output <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>src_output<span class="sy0">,</span> <span class="st0">&quot;w&quot;</span><span class="br0">&#41;</span>
+writer <span class="sy0">=</span> <span class="kw3">csv</span>.<span class="me1">writer</span><span class="br0">&#40;</span>output<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>src_input <span class="sy0">,</span> <span class="st0">'rb'</span><span class="br0">&#41;</span> <span class="kw1">as</span> csvfile:
+    spamreader <span class="sy0">=</span> <span class="kw3">csv</span>.<span class="me1">reader</span><span class="br0">&#40;</span>csvfile<span class="sy0">,</span> delimiter<span class="sy0">=</span><span class="st0">','</span><span class="sy0">,</span> quotechar<span class="sy0">=</span><span class="st0">'&quot;'</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> row <span class="kw1">in</span> spamreader:
+        <span class="kw1">try</span>:
+            address<span class="sy0">,</span> <span class="br0">&#40;</span>latitude<span class="sy0">,</span> longitude<span class="br0">&#41;</span>  <span class="sy0">=</span> geolocator.<span class="me1">geocode</span><span class="br0">&#40;</span>row<span class="br0">&#41;</span>
+            <span class="kw1">print</span> address<span class="sy0">,</span> latitude<span class="sy0">,</span> longitude
+        <span class="kw1">except</span> <span class="kw2">Exception</span> <span class="kw1">as</span> e:
+            <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Error: geocode failed on input %s with message %s&quot;</span>%<span class="br0">&#40;</span>row<span class="sy0">,</span>e.<span class="me1">message</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+exit <span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+
+<p>
+<br/>
+
+</p>
+<pre class="code">python geopy_retrieve_coordinates.py Seafood_noheader.csv out.csv</pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>

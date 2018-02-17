@@ -1,0 +1,4 @@
+<span class="re2">INPUT</span>=<span class="re4">$1</span>
+<span class="re2">NOVALUE</span>=<span class="re4">$2</span>
+pkinfo <span class="re5">-i</span> <span class="re1">$INPUT</span> <span class="re5">--ref</span> <span class="re5">-mask</span> <span class="re1">$NOVALUE</span>
+<span class="co0">#sleep 1</span>

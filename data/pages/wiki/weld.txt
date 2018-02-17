@@ -1,0 +1,9 @@
+======  Introduction to the Web-enabled Landsat Data (WELD) products using open source software ======
+The NASA funded [[http://globalmonitoring.sdstate.edu/projects/weld/| Web-enabled Landsat Data (WELD)]] project is systematically generating 30m composited Landsat Enhanced Thematic Mapper Plus (ETM+) mosaics of the conterminous United States and Alaska from 2002 to 2012.\\
+The WELD products provide the first instance of continental-scale science-quality Landsat data with a level of pre-processing comparable to the NASA MODIS land products. 
+
+* [[ wiki:exercise_weld | WELD overview - How to get data ]]
+* [[ wiki:weld_visual_fire | Data visualization using openev  ]]
+* [[ wiki:time_series | Manipulation and visualization of WELD single pixel time series  ]]
+* [[ wiki:openforis_burned | Change Detection, Classification, Segmentation - WELD burned area mapping]]
+* [[ wiki:weld_visual | Comparison of TOA vs SR ]]

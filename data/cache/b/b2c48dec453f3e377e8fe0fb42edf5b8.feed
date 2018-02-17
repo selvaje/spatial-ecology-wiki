@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- generator="FeedCreator 1.7.2-ppt DokuWiki" -->
+<?xml-stylesheet href="http://spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://spatial-ecology.net/dokuwiki/feed.php">
+        <title> wikistudholland</title>
+        <description></description>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2018-02-16T05:11:23+00:00</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_aart&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_agnieszka&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ahmed&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_dirk&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_efthymia&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ejiet&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_elikana&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_hamed&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_haris&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_helen&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_luis&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_maria&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_matthias&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_nadin&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_norhakim&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_omar&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ping&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_qijun&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_rayan&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_rehmat&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_tim&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_vladimir&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_xiaojing&amp;rev=1512514411&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <url>http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_aart&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_aart</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_aart&amp;rev=1512514411&amp;do=diff</link>
+        <description>Modelling Wheat Harvest Dates in France
+
+Aart van der Linden
+
+
+Animal Production Systems group,
+
+
+Plant Production Systems group, 
+
+
+Wageningen University
+
+INTRODUCTION
+
+Temperature and daylength are the most important drivers for crop development. The rate of development of cereals can be described as a function of the growing degree days (GDD). Wheat requires 1600 GDD from sowing to maturity and harvest.  The amount of GDD increases when temperature is higher than a base temperature (BT). The …</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_agnieszka&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_agnieszka</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_agnieszka&amp;rev=1512514411&amp;do=diff</link>
+        <description>Effects of landscape and climate on reptiles
+
+Agnieszka H. Malinowska, Wageningen University
+
+INTRODUCTION
+
+In the Netherlands there are seven species of reptiles which occupy mostly heathlands and peat bogs – land cover types that declined sharply in the last 50 years. Existing heathlands and peat bogs are now highly fragmented and threatened with excessive nitrogen deposition and desiccation due to water table management for agricultural purposes</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ahmed&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_ahmed</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ahmed&amp;rev=1512514411&amp;do=diff</link>
+        <description>TITLE
+
+Linking Movement data and contextual data
+
+INTRODUCTION
+
+	* Background: Recent data acquisition tools — such as Global Positioning System (GPS) and mobile phones — have resulted in huge amounts of movement data. Most applications abstract the trajectories to a finite set of ordered observations. Each of these consists of object location (in one, two, or three dimensions), a timestamp, and a set of attributes.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_dirk&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_dirk</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_dirk&amp;rev=1512514411&amp;do=diff</link>
+        <description>Visualizing agricultural dynamics in INDIA
+
+Dirk van Apeldoorn &lt;http://www.dirkvanapeldoorn.nl&gt;
+
+INTRODUCTION
+
+new upcoming economies (Brazil Russia India China, BRIC) are generally poorly represented in global integrative assessment models &lt;http://themasites.pbl.nl/tridion/en/themasites/image/&gt;. These countries are huge while data is only available at national scales. while within the countries large asymmetries of development exist. To improve these models it is therefore crucial to incorporat…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_efthymia&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_efthymia</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_efthymia&amp;rev=1512514411&amp;do=diff</link>
+        <description>3-D visualization of TIR anomalies
+
+Efthymia Pavlidou, Enschede, The Netherlands
+
+INTRODUCTION
+
+General framework of the analysis
+
+Anomaly detection in time series is performed using spatial and temporal filters. In order to evaluate the detected anomalies and link them with potential underlying physical processes, we need to visualize the results in both spatial and temporal dimensions. This should include the location, spatial extent and duration of extreme values as well as the occurence of t…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ejiet&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_ejiet</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ejiet&amp;rev=1512514411&amp;do=diff</link>
+        <description>Application of MOD13Q1 data to detect phonological Variability and Trends of NDVI Time Series in Africa
+
+INTRODUCTION
+
+Agricultural productivity in Africa is expected to change as a result of anticipated climate changes in the coming decades. In the recent years, Africa has witnessed periods of an exceptional drought, which may have affected plant leaf production, vegetation canopy properties and photosynthetic potential of important ecosystems. The overall aim of the project is to estimate the …</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_elikana&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_elikana</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_elikana&amp;rev=1512514411&amp;do=diff</link>
+        <description>Linking Elephant Movement and NDVI in Ugalla ecosystem, Western Tanzania
+
+By Elikana Kalumanga
+
+INTRODUCTION
+
+Little is known on the ecology of elephants and other large mammals in Western Tanzania (Caro, 1999; Westert, 2006). To contribute to the ecological knowledge of elephants in Western Tanzania, I intend to test the hypothesis that elephant movements are mostly correlated to the high vegetation NDVI values among other social, economic and environmental factors. Elephants are the largest su…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_hamed&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_hamed</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_hamed&amp;rev=1512514411&amp;do=diff</link>
+        <description>Plant phenology modelling using growing degree-days to check the quality of volunteered phenological observations
+
+Hamed Mehdi Poor, Geo-information department, ITC faculty, Twente University &lt;http://gip.itc.nl/default/node/382&gt;
+
+INTRODUCTION
+
+General framework of the analysis
+
+Developing models is one way to explore patterns in phenology (studying life cycle events of plants and animals) while lacking complete period-of-records on specie. These models are called phenological model. In the case …</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_haris&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_haris</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_haris&amp;rev=1512514411&amp;do=diff</link>
+        <description>TITLE
+
+Evaluation of Bias correction method for satellite based precipitation (CMORPH) product
+
+(Ahmed Ibrahim, Haris Akram Bhatti, Norhakim Yusof, Omar Mohamed)
+
+INTRODUCTION
+
+General framework of the analysis
+
+Background: Hydrological studies particularly related to rainfall-runoff modeling and flood forecasting relies upon precipitation. The ideal source of  precipitation data is by installation of rain gauge stations at high density for longer time span. Traditionally, the network of ground …</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_helen&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_helen</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_helen&amp;rev=1512514411&amp;do=diff</link>
+        <description>Species Distribution Modeling with Swedish Wetland Vegetation
+
+Helen Moor, Stockholm Resilience Centre, Stockholm University contact
+
+INTRODUCTION
+
+General framework of the analysis
+
+Using species distribution modeling (MaxEnt, as appropriate for occurrence only data,</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_luis&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_luis</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_luis&amp;rev=1512514411&amp;do=diff</link>
+        <description>Spatio-temporal solar irradiation map
+
+
+
+Luis Ramirez Camargo -&lt;https://www.th-deg.de/en/tc-freyung/research-and-development/angewandte-energieforschung/2914&gt;
+
+Affiliation: Deggendorf Institute of Technology and University of Natural Resources and Life Sciences Vienna 
+
+INTRODUCTION
+
+Having an energy matrix based on renewable energies sources (RES) has become a priority for the European Union(European Commision 2009). Massive efforts have been made to increment the penetration of key technologie…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_maria&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_maria</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_maria&amp;rev=1512514411&amp;do=diff</link>
+        <description>An Assessment of temporal and spatial variability of metal bioavailability
+
+tips
+
+&lt;http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:pcem_syneco_r&gt;
+google r graphic gallery
+
+INTRODUCTION
+
+The project assessed the temporal variability of water characteristics as well as the speciation of metals  in a manner which reflects different aquatic environments.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_matthias&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_matthias</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_matthias&amp;rev=1512514411&amp;do=diff</link>
+        <description>Upscaling of soil sample data to landscape scale
+
+Matthias Siewert - INK, Stockholms Universitet, Stockholm, Sweden
+
+INTRODUCTION
+
+General framework of the analysis
+
+Soils in permafrost environments have been identified as a major pool of soil organic carbon (SOC) (Tarnocai et al. 2009). To map SOC soil pedon data is often thematically upscaled using landcover classifications (LCC) (Hugelius et al. 2010).</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_nadin&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_nadin</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_nadin&amp;rev=1512514411&amp;do=diff</link>
+        <description>Reprojection and extraction of MODIS VCF data
+
+Nandin-Erdene Tsendbazar 
+
+INTRODUCTION
+
+General framework of the analysis
+
+	*  Background: When using a reference data of a land cover map to validate another land cover map, we need to improve the reference data in a way it fits the legend system of the target map. MODIS VCF data provide tree cover percentage information and this is useful in determining closed and open forests with a given thresholds.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_norhakim&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_norhakim</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_norhakim&amp;rev=1512514411&amp;do=diff</link>
+        <description>Evaluation of Bias correction method for satellite based precipitation (CMORPH) product
+
+INTRODUCTION
+
+(Refer to Haris Akram Bhatti's wiki page)
+
+General framework of the analysis
+
+Project objectives
+
+Describe the output you target (c.f.: either calculate something, apply a model, produce one or a set of maps, graphics or tables issued from the processing of one or several data sources).</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_omar&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_omar</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_omar&amp;rev=1512514411&amp;do=diff</link>
+        <description>TITLE
+
+Spider Man - Forest Hills, New York City Personal web page if you like
+
+INTRODUCTION
+
+General framework of the analysis
+
+	*  Background: what is all about and give a key biblio reference if available &lt;http://www.here.kr&gt;
+	*  keywords: give key terms used and algorithm
+
+Project objectives
+
+Describe the output you target (c.f.: either calculate something, apply a model, produce one or a set of maps, graphics or tables issued from the processing of one or several data sources).</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ping&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_ping</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_ping&amp;rev=1512514411&amp;do=diff</link>
+        <description>Harmonizing altitudinal and climatic data for Tibetan plateau
+
+Modeling paleo Haizishan ice cap in southeastern Tibetan Plateau Personal web page Ping Fu, Stockholm University
+
+INTRODUCTION
+
+Climate changes in recent decades has drawn lots of attention. To predict future changes requires a good understanding of past climate changes. Modeling the paleo Haizishan ice cap in the southeastern Tibetan Plateau allow us to reconstruct the paleo climate driven the evolution of the ice cap and the paleo …</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_qijun&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_qijun</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_qijun&amp;rev=1512514411&amp;do=diff</link>
+        <description>Data Acquisition and integration with google map
+
+Qijun Jiang, WUR
+
+INTRODUCTION
+
+General framework of the analysis
+
+	*  Background: In order to integrate sensor networks with GIS and remote sensing to a big web. we need to know how they communicate and how the data flow works. Here just try to explore it using a small example which get metadata from</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_rayan&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_rayan</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_rayan&amp;rev=1512514411&amp;do=diff</link>
+        <description>Bird Abundance and Diversity in Sweden's Agricultural Landscapes
+
+Ryan Clark
+
+Swedish University of Agricultural Sciences
+
+INTRODUCTION
+
+General framework of the analysis
+
+	*  Background: Farmland bird populations across Europe have been declining rapidly due to increase of agricultural land use and intensity. Some types of agricultural land use, or farm management, may benefit some bird species. Data on bird species presence and abundance has been collected at many farms across Sweden between 2…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_rehmat&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_rehmat</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_rehmat&amp;rev=1512514411&amp;do=diff</link>
+        <description>TITLE
+
+Time cartograms construction for effective visualization of scheduled movement data
+
+INTRODUCTION
+
+Currently, high volumes of multivariable spatio-temporal data are available.  The study and analysis of such data can help to explore interesting and unknown patterns that can improve our understanding of complex phenomena and systems associated with the data. The available data is underutilized in many domains due to its spatial and temporal complexity, and the limitations of visual analyti…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_tim&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_tim</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_tim&amp;rev=1512514411&amp;do=diff</link>
+        <description>Stratification during summer in the North Sea
+
+name ??
+affiliation ??
+
+INTRODUCTION
+
+The North Sea is one of the best researched seas in the world, especially due to its economical importance. Apart from ship traffic and oil drilling it has also been exploited for fish for centuries. To help biologists evaluate the state of fish stocks and the ecosystem they live in, oceanographers in Hamburg have developed a physical model of the North Sea, the HAMburg Shelf Ocean Model (HAMSOM, Pohlmann 2006).…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_vladimir&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_vladimir</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_vladimir&amp;rev=1512514411&amp;do=diff</link>
+        <description>Comparing frequency distributions of bioclimatic environmental variables in Norway and Sweden
+
+Name?
+Affiliation? 
+
+INTRODUCTION
+
+Distribution of many insect species in Norway is poorly known, particularly in comparison to adjacent countries, e.g. Sweden. Many species are represented in Norwegian collections by very few specimens originating from a small number of localities close to where their collectors live(d). To some extent, the problem of lack of data about detailed distribution of a spec…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_xiaojing&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+00:00</dc:date>
+        <title>wikistudholland:utwente_xiaojing</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikistudholland:utwente_xiaojing&amp;rev=1512514411&amp;do=diff</link>
+        <description>Geovisual Analysis of Synchronization in Weather Data-- temperature in the Netherlands as case study
+
+Xiaojing Wu, Geo-information Processing Dept., University of Twente
+
+INTRODUCTION
+
+Long and consistent time series of weather data are available in most countries. This data is fundamental to quantify climate change as well as to study a wide range of environmental processes. Thus, discovering and analyzing spatio-temporal weather patterns is essential for understanding the Earth system. One par…</description>
+    </item>
+</rdf:RDF>

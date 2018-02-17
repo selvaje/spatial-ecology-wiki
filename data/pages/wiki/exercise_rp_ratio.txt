@@ -1,0 +1,100 @@
+====== Limited filling of the potential Pinus cembra range ====== 
+
+==== Introduction ====                                                                        
+//Pinus Cembra// (Pinaceae L.) or Swiss Stone Pine is a localised and endemic tree species that occurs in the alpine timberline. 
+We are going to calculate the realized / potential range size ratio (range filling R/P) for the alpine Pine //Pinus cembra// as a measure of how well this species fulfills its potential range [[#bibliography|Gaston 2003]]. We use the //Pinus cembra// habitat suitability modeling [[#bibliography|Casalegno et al., 2010]] and the //Pinus cembra// distribution map [[http://www.euforgen.org|euforgen database]] to estimate R/P ratio.
+  * P is the total number of //Pinus cembra// suitable pixels within the study area.
+  * R is the number of //Pinus cembra// suitable pixels within the //Pinus cembra// distribution maps pixels.
+
+This will quantify the extent to which //Pinus cembra// fulfills its modelled suitability range in the Alps.
+We computed the realized / potential range size ratio (R/P) across the Alpine and Carpathian mountains area.
+
+==== Start a new GRASS project and define a region of analysis ====
+We open a terminal and go to the directory corresponding to our GRASS LOCATION.
+
+  cd ~/ost4sem/grassdb/europe
+
+We copy the PERMANENT MAPSET and rename it PCEM. PCEM will be our new MAPSET and grass project where we store maps for calculating the R/P ratio.
+
+  rm -r PCEM
+  cp -r PERMANENT PCEM
+
+We start grass in the newest PCEM mapset
+  grass -text  ~/ost4sem/grassdb/europe/PCEM
+
+Look at the default g.region and redefine a study area including the Carpathian and Alpine mountain ranges.
+Set the new working region at 1km resolution and call it alpine:
+
+  g.region -d
+  g.region -p
+  g.region --o n=3070000 s=2270000 w=3900000 e=5660000 res=1000 save=alp_car
+  g.region -p
+
+==== Pinus Cembra distribution map: data preparation  ====
+== Import and reclass distribution map ==
+Import the Euforgen //Pinus cembra// distribution map from [[http://www.euforgen.org|the euforgen web page]] and convert it from a shape file to a raster file :
+  v.in.ogr dsn=~/ost4sem/exercise/rp_ratio/pcem_euforgen/Pinuscembra_LAEA.shp output=pcem_euforgen --overwrite
+
+
+Convert the vector file to a raster file, look at the pixels values and reclass this map into a binary presence and absence of //Pinus cembra// distribution.
+
+<note tip>
+You can open Qgis within the grass section and continue to work with grass using the following command
+  qgis &
+Once you have opened Qgis, load the pcem_euforgen@PCEM vector map and check which source of raster values you have to use for the conversion from vector to raster. You have the choice between: attr,cat,val,z,dir.
+</note>
+
+  v.to.rast --o input=pcem_euforgen@PCEM output=pcem_euforgen use=cat
+  v.info pcem_euforgen
+  r.info pcem_euforgen
+
+The raster we generate has values running from 1 to 14 but we need a presence-absence map so we have to reclassify the pcem_euforgen raster into 0 - 1 map values.
+
+  r.mapcalc pcem_euforgen = "if(pcem_euforgen > 0 , 1 ,0 )"
+
+==== Pinus Cembra suitability map: data preparation  ====
+
+== Import and resize suitability map ==
+Import the random forest model of suitability for //Pinus cembra//
+  r.in.gdal -o -e input=~/ost4sem/exercise/rp_ratio/pcem_randomforest/gdwarp_PRESENT.tif output=pcem_potential --o
+
+
+Visualise the actual suitability of //Pinus cembra// acccording to the Random Forest Model
+  
+  d.mon start=x3
+  d.rast pcem_potential
+
+
+==== Calculate the realised range of Pinus Cembra suitability ====
+The Potential distribution map or suitability map //pcem_potential// has values equal to:
+  * 1 : No suitable or no potential
+  * 2 : Suitable or Potential
+  * 20: Sea 
+
+The distribution map //pcem_euforgen// has values equal to:
+  * NoData: absence
+  * 1: presence
+
+If we sum the two maps we will be able to generate a realized range map. This is done by selecting class 3 from the sum of the two maps. Class 3 represents suitable pixels within the presence of distribution. 
+ 
+  r.mapcalculator amap=pcem_euforgen bmap=pcem_potential formula=A+B outfile=pcem_realized --overwrite
+  r.mapcalc pcem_realized = "if(pcem_realized == 3 , 1 ,0 )"
+
+You visualize and save results for the Realized area in a text file with the following commands:
+  r.report -n map=pcem_realized units=k
+  r.report -n map=pcem_realized units=k > ~/ost4sem/exercise/rp_ratio/results/R_value.txt
+
+The **R** (realised distribution range) is equal to 24,606 square Kilometres. 
+
+You visualize and save results for the Potential area in a text file with the following commands:
+   r.report -n map=pcem_potential units=k 
+   r.report -n map=pcem_potential units=k > ~/ost4sem/exercise/rp_ratio/results/P_value.txt
+The P (potential distribution range) is equal to 32,538 square Kilometres. 
+
+The RP ratio ⇒ 24,606 / 32,538 % 100 = 75 %
+
+
+==== Bibliography ====
+  * Casalegno S., G. Amatulli, A. Camia, A. Nelson, A. Pekkarinen. 2010. [[http://dx.doi.org/10.1016/j.foreco.2009.10.001|Vulnerability of Pinus cembra L. in the Alps and the Carpathian mountains under present and future climates]]. Forest Ecology and Management 259: 70-761. 
+  * Gaston 2003. The Structure and Dynamics of Geographic Ranges. Series: OXFORD SERIES IN ECOLOGY AND EVOLUTION. Kevin J Gaston 266 pages, Oxford University Press. ISBN-10: 0198526407.
+  

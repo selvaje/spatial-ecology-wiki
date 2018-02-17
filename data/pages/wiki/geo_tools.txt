@@ -1,0 +1,32 @@
+====== Geo Tools Scripts ======
+
+We recommend to look at [[http://www.nongnu.org/pktools/html/index.html| pk-tools]], [[http://www.gdal.org/gdal_utilities.html| Gdal-ogr]] and [[http://km.fao.org/OFwiki/index.php/Tools_%26_Exercises| Open-foris]]  for building stand alone geoprocessing routines.
+This page collect a series of supplementary scripts that can be used as stand alone programs after installation.\\
+
+===== Zonal statistic =====
+  * [[geotools_zonal_stat | ost4sem_zonal_stats.py]] calculates mean min max and stdev values of a continues raster (e.g. dem) based on a different categorized raster.\\
+The output is a txt file with the statistical value of each category.\\
+
+===== Add item area to a shapefile =====
+  * [[ addattr-area | addattr-area.py ]] Command line to add attribute area at each polygon in a shapefile.\\
+===== Intersect two  shape files =====
+  * [[ intersect-python | intersect.py ]] Command line to intersect two  shape files.\\
+
+===== Extract unique values between two raster maps =====
+  * [[geotools_uniq | count_uniq.py]] extracts unique pare of values between two tifs/rasters and stores the results in a txt file.
+===== Dealing with simple statistic in large txt file =====
+* [[ average | ost4sem_average.sh ]] calculate average of a txt file based on unique id column 
+\\
+* [[ average_w | ost4sem_average_w.sh ]] calculate weigthed average of a txt file based on unique id column and weighted column 
+\\
+* [[ sum | ost4sem_sum.sh ]] calculate sum of a txt file based on unique id column 
+\\
+===== Create arc/info ascii grid =====
+* [[ chess_grid | ost4sem_chess_grid.sh ]] create an arc/info chess_grid with pixel value 1 or 2 
+\\
+
+ * More ost4sem tools will be uploaded soon 
+===== Modeling =====
+Tools of correlation and modeling analisis between two images.
+
+* [[ pearson_tif | oft-pearson.bash ]] calcualte a r pearsono coefficencinet between two immages. 

@@ -1,0 +1,5 @@
+Please create a directory for the exercises and copy the pktools data from the Dropbox to that directory:
+
+<code bash>
+cp -r /home/user/Dropbox/week2 ~
+</code>

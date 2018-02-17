@@ -1,0 +1,6 @@
+<span class="co1"># Extract a shapefile from a gzipped tar archive</span>
+<span class="kw1">import</span> <span class="kw3">tarfile</span>
+tar <span class="sy0">=</span> <span class="kw3">tarfile</span>.<span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;hancock.tar.gz&quot;</span><span class="sy0">,</span> <span class="st0">&quot;r:gz&quot;</span><span class="br0">&#41;</span>
+tar.<span class="me1">extractall</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+tar.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;

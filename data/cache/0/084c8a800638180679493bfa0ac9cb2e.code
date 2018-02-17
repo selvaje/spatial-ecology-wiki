@@ -1,0 +1,16 @@
+<span class="co1"># Build kml with eTree</span>
+<span class="kw1">try</span>:
+    <span class="kw1">import</span> <span class="kw3">xml</span>.<span class="me1">etree</span>.<span class="me1">cElementTree</span> <span class="kw1">as</span> ET
+<span class="kw1">except</span> <span class="kw2">ImportError</span>:
+    <span class="kw1">import</span> <span class="kw3">xml</span>.<span class="me1">etree</span>.<span class="me1">ElementTree</span> <span class="kw1">as</span> ET      
+&nbsp;
+root <span class="sy0">=</span> ET.<span class="me1">Element</span><span class="br0">&#40;</span><span class="st0">&quot;kml&quot;</span><span class="br0">&#41;</span>
+root.<span class="me1">attrib</span><span class="br0">&#91;</span><span class="st0">&quot;xmlns&quot;</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="st0">&quot;http://www.opengis.net/kml/2.2&quot;</span>
+placemark <span class="sy0">=</span> ET.<span class="me1">SubElement</span><span class="br0">&#40;</span>root<span class="sy0">,</span> <span class="st0">&quot;Placemark&quot;</span><span class="br0">&#41;</span>
+office <span class="sy0">=</span> ET.<span class="me1">SubElement</span><span class="br0">&#40;</span>placemark<span class="sy0">,</span> <span class="st0">&quot;name&quot;</span><span class="br0">&#41;</span>
+office.<span class="me1">text</span> <span class="sy0">=</span> <span class="st0">&quot;Office&quot;</span>
+point <span class="sy0">=</span> ET.<span class="me1">SubElement</span><span class="br0">&#40;</span>placemark<span class="sy0">,</span> <span class="st0">&quot;Point&quot;</span><span class="br0">&#41;</span>
+coordinates <span class="sy0">=</span> ET.<span class="me1">SubElement</span><span class="br0">&#40;</span>point<span class="sy0">,</span> <span class="st0">&quot;coordinates&quot;</span><span class="br0">&#41;</span>
+coordinates.<span class="me1">text</span> <span class="sy0">=</span> <span class="st0">&quot;-122.087461,37.422069&quot;</span>
+tree <span class="sy0">=</span> ET.<span class="me1">ElementTree</span><span class="br0">&#40;</span>root<span class="br0">&#41;</span>
+tree.<span class="me1">write</span><span class="br0">&#40;</span><span class="st0">&quot;placemark.kml&quot;</span><span class="sy0">,</span> xml_declaration<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span>encoding<span class="sy0">=</span><span class="st0">'utf-8'</span><span class="sy0">,</span>method<span class="sy0">=</span><span class="st0">&quot;xml&quot;</span><span class="br0">&#41;</span>

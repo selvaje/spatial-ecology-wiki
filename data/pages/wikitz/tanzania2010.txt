@@ -1,0 +1,80 @@
+
+====== Summary of the satisfactory survey ======
+
+=== Will you use and progress using Open Sources tools in future ?  ===
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ 
+|14 | 1 | 13 | 2 | 15 | 0 | 15 | 0 |
+\\
+
+
+===  Do you feel to be able to independently improve and learn more about Open Source tools ?  ===
+| Bash Yes | Bash No | Gdal yes | Gdal no | Grass yes | Grass no | Qgis yes | Qgis no |
+| 9 | 4 | 8 | 6 | 11 | 3 | 12 | 1 |
+\\
+=== Do you see any interest in using Open Source tools in your current and future job ? ===
+| Yes | no | Little |
+| 13 | 0 | 0 |
+\\
+=== Which part of the course would have liked to see in more in detail ? ===
+| Bash | Gdal | Gnuplot | Grass | Qgis | Theory | Exercise | Tutorials |
+| 6 | 4 | 4 | 9 | 10 | 5 | 8 | 4 |
+\\
+=== Do you think the training was well adapted in respect of your needs, your skills and knowledge ? ===
+| Advanced and too difficult | well adapted | Basic and boring |
+| 7 | 6 | 0 |
+\\
+=== The trainers where clear and prepared ? ===
+| Very well | Yes enough prepared | Not enough |
+| 8 | 3 | 1 | 
+\\
+
+
+=== The trainer's supervision during your exercitation was satisfactory ? ===
+| Very much | yes satisfactory | not enough | not at all |
+\\
+
+=== The training organization was correctly carried out ? ===
+| Virtual Machine OK | Virtual Machine no | Slides OK | Slides No | Vikipedia OK | Vikipedia no | Schedule OK | Schedule NO |
+|12 | 0 | 7 | 4 | 10 | 0 | 8 | 3 | 
+\\
+This page is available for students participating at the Dar es Salaam 2010 training
+\\
+\\\
+\\\
+\\\
+====== Satisfactory survey ======
+
+<doodle Tanzania  /  Will you use and progress using Open Sources tools in future ?>
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  
+</doodle>
+\\
+<doodle Tanzania  /  Do you feel to be able to independently improve and learn more about Open Source tools ? >
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ 
+</doodle>
+\\
+<doodle Tanzania  /  Do you see any interest in using Open Source tools in your current and future job ? >
+^ Yes ^  No ^ Little ^
+</doodle>
+\\
+<doodle Tanzania /   Which part of the course would have liked to see in more in detail ? >
+^ Bash ^ Gdal ^ Gnuplot ^ Grass ^ Qgis ^ Theory ^ Exercise ^ Tutorials ^
+</doodle>
+\\
+<doodle Tanzania  /  Do you think the training was well adapted in respect of your needs, your skills and knowledge ? >
+^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+</doodle>
+\\
+<doodle Tanzania  /  The trainers where clear and prepared ? >
+^ Very well ^  Yes enough prepared  ^ Not enough ^
+</doodle>
+\\
+<doodle Tanzania  /  The trainer's supervision during your exercitation was satisfactory ? >
+^ Very much ^  yes satisfactory  ^ not enough ^ not at all ^
+</doodle>
+\\
+<doodle Tanzania  /  The training organization was correctly carried out ?  >
+^ Virtual Machine OK ^ Virtual Machine no ^ Slides OK ^ Slides No ^ Vikipedia OK ^ Vikipedia no ^ Schedule OK  ^ Schedule NO ^
+</doodle>
+\\
+
+Please if you have any remark or suggestions for improving this training write to us at unidk2010@spatial-ecology.net

@@ -1,0 +1,189 @@
+====== Visualizing agricultural dynamics in INDIA ======
+Dirk van Apeldoorn [[http://www.dirkvanapeldoorn.nl]]
+
+===== INTRODUCTION =====
+new upcoming economies (Brazil Russia India China, BRIC) are generally poorly represented in global integrative assessment models [[http://themasites.pbl.nl/tridion/en/themasites/image/]]. These countries are huge while data is only available at national scales. while within the countries large asymmetries of development exist. To improve these models it is therefore crucial to incorporate lower scale data of countries in these models.
+
+For India statistics have become available from the district level and upward. In this project I first want to rasterize vectors of administrative state boundaries from ([[http://gadm.org/]] database ) and subsequently link the several administrative units to the statistics available at [[http://www.indiastat.com/]]
+==== General framework of the analysis ====
+    - keywords: GRASS, r.univar, v.to.rast
+ 
+==== Project objectives ====
+an area weighted raster map of administrative boundaries
+
+
+==== Vector data ====
+  * [[http://gadm.org/]]
+
+==== Raster data ====
+  * [[http://www.myraster_data_are_here| link to raster data if available]]
+
+==== Other data sources====
+  * [[http://www.myraster_data_are_here| link to other data if needed]]
+
+===== METHOD =====
+Describe your script. If you use a specific algorithm [[http://www.mylink.net| link ]] the bibliographic references.
+
+
+===== Computational implementation =====
+Some further explanation of the overall analyses and of each step
+paste your code here
+<code bash - mycode>
+#create temp mapset
+g.mapset -c mapset=workloc2
+#check settings
+g.gisenv 
+#go to mapsetlocation
+cd ~/MANDIST/INDIA2/workloc2
+# set location of dataset
+path="//media/sf_sharelinux/"
+
+#add the PERMANENT mapset
+g.mapsets addmapset=PERMANENT
+#copy the projected raster to mapset workloc 
+g.copy rast=isonuts05@PERMANENT,isonuts
+
+
+#create binary rastermap at half degree for India isocode for india is 356
+r.mapcalc " indiamap = if ( isonuts == 356 , 1 , 0) "
+#create mask
+r.mask input=indiamap maskcats="1" -o
+#set region
+g.region rast=indiamap zoom=indiamap
+#check region
+g.region -p
+
+#set database driver to sqlite
+db.connect driver=sqlite database='$GISDBASE/$LOCATION_NAME/$MAPSET/sqlite.db'
+db.connect -p
+#import the administrative boundaries of india 
+#snap threshold value is used to snap boundary vertices to each other if the distance 
+#in map units between two vertices is not larger than the threshold.
+#-o overwrite projection (use projection of location)
+v.in.ogr dsn=//media/sf_sharelinux/indiashape/IND_adm1.shp\
+  output=statevect snap=1e-14 --overwrite -o
+# transform the vector to grid
+v.to.rast input=statevect output=stategrid  use=attr  column=ID_1  --overwrite
+#import grid with area (km)of land per gridcell
+# India is big and area per gridcell change with latitude, 
+# also accounts for gridcells that contain coasts
+r.in.gdal -o input=$path/GAREALAND.asc output=CELLAREA --quiet --overwrite
+
+#calculate zonal statistics  scripts based on example given in r.univar
+#for each state the zonal statistics are calculated
+# this output is piped to only obtain the the sum (column 13) and saved as txt file
+r.univar -t map=CELLAREA zones=stategrid | \
+  cut -f1,13 -d'|' > gridarea.txt
+#import area according to India. bash script expect output
+# could be circumvented but this was easier
+bash ~/workdir/script/fromCSVtoTXT.sh $path/statearea.csv statearea.txt
+cut -f1,3 statearea.txt -d ' '>statearea2.txt
+rm statearea.txt
+
+# add columns to vector to include areas of grid, 
+#the vector map and the official area
+v.db.addcol map=statevect \
+  columns='gridarea INTEGER,vectarea_km INTEGER,officialarea INTEGER'
+
+# create SQL command file to link the , sed is a streameditor 
+#-e means expression 1d deletes first line -F in awk is sed delimitor
+sed -e '1d' gridarea.txt | awk -F'|' \
+  '{print "UPDATE statevect SET gridarea = "$2" WHERE cat = "$1";"}' \
+   > gridarea_sqlcmd.txt
+
+sed -e '1d' statearea2.txt | awk -F' ' \
+  '{print "UPDATE statevect SET officialarea = "$2" WHERE cat = "$1";"}' \
+   > statearea_sqlcmd.txt
+
+#excute the sql statement
+db.execute input=gridarea_sqlcmd.txt
+db.execute input=statearea_sqlcmd.txt
+
+#calculate area in km^2
+v.to.db map=statevect  columns='vectarea_km' option=area units=k
+
+#show result
+db.select sql="SELECT cat,NAME_1,gridarea,vectarea_km,officialarea FROM statevect"
+</code>
+
+
+
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+cat 	NAME_1 			gridarea 	vectarea_km 	officialarea
+
+1 	Andaman and Nicobar 			**2841** 	7610 	8249
+
+2 	Andhra Pradesh		 	267334 	274836 	275045
+
+3 	Arunachal Pradesh		 	81754 	82039 	83743
+
+4 	Assam 			79645 	78414 	78438
+
+5 	Bihar 			91730 	94232 	94163
+
+6 	Chandigarh 			**2654** 	118 	114
+
+7 	Chhattisgarh 			137799 	135431 	135191
+
+8 	**Dadra and Nagar Haveli**		 	 	491 	491
+
+9 	Daman and Diu 			**1761** 	555 	112
+
+10 	**Delhi** 			2706 	1502 	1483
+
+11 	Goa 			2971 	3695 	3702
+
+12 	Gujarat 			178363 	185246 	196024
+
+13 	Haryana 			40415 	44024 	44212
+
+14 	Himachal Pradesh 			52418 	55603 	55673
+
+15 	Jammu and Kashmir 			99774 	105660 	**222236**
+
+16 	Jharkhand 			87566 	80040 	79714
+
+17 	Karnataka 			192374 	191377 	191791
+
+18 	Kerala 			33459 	37700 	38863
+
+19 	**Lakshadweep** 			 	34 	32
+
+20 	Madhya Pradesh 			298346 	308054 	308245
+
+21 	Maharashtra 			295208 	307341 	307713
+
+22 	Manipur 			22421 	22320 	22327
+
+23 	Meghalaya 			25000 	22427 	22429
+
+24 	Mizoram 			19822 	21137 	21081
+
+25 	Nagaland 			16626 	16599 	16579
+
+26 	Orissa 			149782 	155638 	155707
+
+27 	**Puducherry** 			 	547 	479
+
+28 	Punjab 			45076 	50225 	50362
+
+29 	Rajasthan 			353003 	341901 	342239
+
+30 	Sikkim 			10950 	7080 	7096
+
+31 	Tamil Nadu 			125912 	130208 	130058
+
+32 	Tripura 			14114 	10447 	10486
+
+33 	Uttar Pradesh 			247598 	240751 	240928
+
+34 	Uttaranchal 			50706 	53808 	53483
+
+35 	West Bengal 			78197 	85240 	88752
+
+
+lessons learned do not stick to one environment. I tried to long to do determine areas of different states per gridcell this is easy in python not in GRASS as far as I know.
+

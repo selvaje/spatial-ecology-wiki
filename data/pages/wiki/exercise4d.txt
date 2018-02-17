@@ -1,0 +1,19 @@
+====== Exercise 4d: Create animation of NDVI time series ======
+In this exercise the following tools will be used:
+  * bash: for loop
+  * ImageMagick: animate, convert, display
+
+__Animate a number of TIF files as a movie using ImageMagick (animate)__
+<code bash>
+animate -delay 50 $(for file in ${OUTPUTDIR}/exercise4/20*-MODIS500_CW_NDVI.tif;do echo $file;done)
+</code>
+
+__Create a movie for the same animation using ImageMagick (convert)__
+<code bash>
+convert -delay 50 $(for file in ${OUTPUTDIR}/exercise4/20*-MODIS500_CW_NDVI.tif;do echo $file;done) -loop 0 ${OUTPUTDIR}/movie.gif 
+</code>
+
+__Play just created movie (display)__
+<code bash>
+display ${OUTPUTDIR}/movie.gif 
+</code>

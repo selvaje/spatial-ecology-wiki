@@ -1,0 +1,104 @@
+====== Language integration: import/export variables and integrate different languages in one script   ======
+
+Often there is a need to switch from one language to another one. The different languages need to communicate by passing variables from one to the other one.\\ 
+\\
+This is an example of a //for bash loop// where I do something in bash then I start an R script using the  [[http://en.wikipedia.org/wiki/End-of-file|EOF]] function.\\
+\\
+The  //export// bash function and the //Sys.getenv()// R function allows to exchange variables between R and bash. We can use this functionality to embed an R command in bash.  
+
+
+
+
+<code bash>
+
+export INDIR=path/path/path
+export OUTDIR=path/path/path
+
+for file in $INDIR/input[1-3].tif  ; do 
+
+# crop the image based on polygon shapefile (poly.shp) 
+export  filename=`basename $file .tif`
+pkcrop  -e $INDIR/poly.shp  $file -o $OUTDIR/${filename}_crop.tif   
+
+R --vanilla --no-readline   -q  << EOF
+
+INDIR = Sys.getenv(c('INDIR'))
+OUTDIR = Sys.getenv(c('OUTDIR'))
+filename = Sys.getenv(c('filename'))
+
+paste("do somthing with",INDIR,"/",filename,"_crop.tif" )
+
+# if you get a file you can export with write.table
+
+# if you get a number you can use Sys.setenv() to export the variable in R:
+
+EOF
+
+# continue the operation in bash loop  eventually 
+# using the variable settled by Sys.setenv()
+
+done 
+
+# continue the operation in bash outside from the loop 
+# eventually using the variable settled by Sys.setenv()
+
+</code>
+
+The previous example is useful if the R part is not long and can be integrate in the bash script as a text. Instead if the R script is long we can store it as an Rscript and call it from bash.   
+
+
+<code bash>
+
+export INDIR=path/path/path
+export OUTDIR=path/path/path
+
+for file in $INDIR/input[1-3].tif  ; do 
+
+# crop the image based on polygon shapefile (poly.shp) 
+export  filename=`basename $file .tif`
+pkcrop  -e $INDIR/poly.shp  $file -o $OUTDIR/${filename}_crop.tif
+
+R --vanilla --no-readline  -q    <    myRscript.R
+
+# Rscript myRscript.R
+
+# continue the operation in bash loop
+
+done 
+
+# continue the operation in bash outside from the loop
+</code>
+\\
+
+
+In bash/c like command you can pass variables by setting arguments or by using the EOF syntax.\\   
+Let's suppose that the 3 tif are overlapping the same area and that I want make the sum of the 3. 
+
+<code bash> 
+gdalbuildvrt $OUTDIR/merge.vrt $INDIR/input[1-3].tif 
+gdal_translate $OUTDIR/merge.vrt $OUTDIR/merge.tif
+
+                      # first argument   # second argument
+oft-calc  -ot Float64 $OUTDIR/merge.tif  $OUTDIR/sum.tif  <<EOF # inputs requested from the oft-calc
+1
+#1 #2 #3 + +
+EOF
+
+</code>
+\\
+In R you can call bash commands by the R command //system()//
+\\
+<code bash>
+R
+</code>
+
+<code bash>
+
+system("pwd") 
+
+</code>
+
+So you can use several bash commands and so olso gdal commands (such as gdal_translate). In this case your main working environment will be R
+
+
+

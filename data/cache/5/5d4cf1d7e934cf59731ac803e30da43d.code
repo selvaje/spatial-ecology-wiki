@@ -1,0 +1,27 @@
+<span class="co1">#!/usr/bin/env python</span>
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> numpy.<span class="me1">ma</span> <span class="kw1">as</span> ma
+&nbsp;
+x <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">3</span><span class="sy0">,</span> -<span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> x.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+mask <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+mx <span class="sy0">=</span> ma.<span class="me1">masked_array</span><span class="br0">&#40;</span>x<span class="sy0">,</span> mask<span class="sy0">=</span>mask<span class="br0">&#41;</span>
+<span class="kw1">print</span> mx.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> mx
+&nbsp;
+y <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> y.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">print</span> x<span class="br0">&#91;</span>x <span class="sy0">&gt;=</span> <span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> x<span class="br0">&#91;</span>mask <span class="sy0">==</span> <span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">####</span>
+mx <span class="sy0">=</span> ma.<span class="me1">masked_where</span><span class="br0">&#40;</span>x <span class="sy0">&lt;</span> <span class="nu0">0</span><span class="sy0">,</span> x<span class="br0">&#41;</span>
+<span class="kw1">print</span> mx.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Mask a masked array</span>
+mmx <span class="sy0">=</span> ma.<span class="me1">masked_where</span><span class="br0">&#40;</span>mx <span class="sy0">&gt;</span> <span class="nu0">2</span><span class="sy0">,</span> mx<span class="br0">&#41;</span>
+<span class="kw1">print</span> mmx
+&nbsp;
+<span class="kw1">print</span> mmx.<span class="me1">fill_value</span>

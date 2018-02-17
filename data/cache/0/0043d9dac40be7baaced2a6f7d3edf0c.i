@@ -1,0 +1,153 @@
+a:243:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:34:"3-D visualization of TIR anomalies";i:1;i:1;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:1;}i:2;i:1;}i:3;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:1;}i:4;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:44:"Efthymia Pavlidou, Enschede, The Netherlands";}i:2;i:50;}i:5;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:94;}i:6;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:96;}i:7;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:12:"INTRODUCTION";i:1;i:2;i:2;i:96;}i:2;i:96;}i:8;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:96;}i:9;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:122;}i:10;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:33:"General framework of the analysis";i:1;i:3;i:2;i:122;}i:2;i:122;}i:11;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:3;}i:2;i:122;}i:12;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:122;}i:13;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:431:"Anomaly detection in time series is performed using spatial and temporal filters. In order to evaluate the detected anomalies and link them with potential underlying physical processes, we need to visualize the results in both spatial and temporal dimensions. This should include the location, spatial extent and duration of extreme values as well as the occurence of the events triggering the appearance of the detected anomalies.";}i:2;i:167;}i:14;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:598;}i:15;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:598;}i:16;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:1;i:1;s:2:"**";}i:2;i:1;i:3;s:2:"**";}i:2;i:600;}i:17;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:3;i:1;s:59:"keywords: 3-D visualization, anomaly detection, time series";}i:2;i:3;i:3;s:59:"keywords: 3-D visualization, anomaly detection, time series";}i:2;i:602;}i:18;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:4;i:1;s:2:"**";}i:2;i:4;i:3;s:2:"**";}i:2;i:661;}i:19;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:663;}i:20;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:666;}i:21;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:18:"Project objectives";i:1;i:3;i:2;i:666;}i:2;i:666;}i:22;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:3;}i:2;i:666;}i:23;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:666;}i:24;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:536:"The project intended to visualize in 3D, binary classified geostationary hypertemporal TIR data resulting from time series analysis with R. Visualization options were investigated to include spatiotemporal distribution, clustering and intensity of anomalous values. Potential processes related to the appearance of the extreme values were visualized in the same plot, along with an underlying DEM of the study area, to allow for an evaluation of the relation between the appearance of the anomalies and the proposed underlying process. ";}i:2;i:695;}i:25;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:1231;}i:26;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:1234;}i:27;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:8:"METADATA";i:1;i:2;i:2;i:1234;}i:2;i:1234;}i:28;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:1234;}i:29;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:1234;}i:30;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1187:"The input data used in the project are a result of processing thermal infra-red images obtained by meteorological satellites operated by EUMETSAT. The processing involved spatial and temporal filtering, anomaly detection and summation of anomalous values withing a moving window. The resulting data were organized as a  dataframe in R, containing information on the coordinates (lat-long and pixel/sample coordinates within the image), time of appearance (as in sequential satellite images) and intensity (as in number of anomalous values summed in a moving temporal window) of the calculated anomalous counts. The original hypertemporal dataset was too large for an exploratory study (82x101x105210) so it was subsetted to (61x87x100). The dataframe entries were ordered by the intensity of anomalous values in order to facilitate the use of color palettes in this project. The values contained in the dataframe were also transfered to a coresponding array to allow for the application of functions visualizing volumetric data. A smaller synthetic dataset (8x10x12 entries) was also created to explore the potential of the packages used for this project. This dataset contained entries ";}i:2;i:1255;}i:31;a:3:{i:0;s:18:"doublequoteopening";i:1;a:0:{}i:2;i:2442;}i:32;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:10:"classified";}i:2;i:2443;}i:33;a:3:{i:0;s:18:"doublequoteclosing";i:1;a:0:{}i:2;i:2453;}i:34;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:291:" in two levels, 1 and 2. Class 2 values were completely surrounded by class 1 values. In this way, transparency options were explored for the visualization of overlapping levels of anomalous counts. Since original DEMs were not available, background surface information was derived from the ";}i:2;i:2454;}i:35;a:3:{i:0;s:13:"emphasis_open";i:1;a:0:{}i:2;i:2745;}i:36;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:10:"Hypsometry";}i:2;i:2747;}i:37;a:3:{i:0;s:14:"emphasis_close";i:1;a:0:{}i:2;i:2757;}i:38;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:5:" and ";}i:2;i:2759;}i:39;a:3:{i:0;s:13:"emphasis_open";i:1;a:0:{}i:2;i:2764;}i:40;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:"Volcano";}i:2;i:2766;}i:41;a:3:{i:0;s:14:"emphasis_close";i:1;a:0:{}i:2;i:2773;}i:42;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:25:" datasets available in R.";}i:2;i:2775;}i:43;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:19:"markdowku_linebreak";i:1;a:3:{i:0;s:4:"   
+";i:1;i:5;i:2;i:2800;}i:2;i:5;i:3;s:4:"   
+";}i:2;i:2800;}i:44;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:2804;}i:45;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:2809;}i:46;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:11:"METHODOLOGY";i:1;i:2;i:2;i:2809;}i:2;i:2809;}i:47;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:2809;}i:48;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:2809;}i:49;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:89:"Analysis was carried out in R with three packages designed for visualization of 3D data: ";}i:2;i:2832;}i:50;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:1;i:1;s:2:"**";}i:2;i:1;i:3;s:2:"**";}i:2;i:2921;}i:51;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:3;i:1;s:3:"rgl";}i:2;i:3;i:3;s:3:"rgl";}i:2;i:2923;}i:52;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:4;i:1;s:2:"**";}i:2;i:4;i:3;s:2:"**";}i:2;i:2926;}i:53;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:2:", ";}i:2;i:2928;}i:54;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:1;i:1;s:2:"**";}i:2;i:1;i:3;s:2:"**";}i:2;i:2930;}i:55;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:3;i:1;s:6:"misc3d";}i:2;i:3;i:3;s:6:"misc3d";}i:2;i:2932;}i:56;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:4;i:1;s:2:"**";}i:2;i:4;i:3;s:2:"**";}i:2;i:2938;}i:57;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:5:" and ";}i:2;i:2940;}i:58;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:1;i:1;s:2:"**";}i:2;i:1;i:3;s:2:"**";}i:2;i:2945;}i:59;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:3;i:1;s:6:"plot3D";}i:2;i:3;i:3;s:6:"plot3D";}i:2;i:2947;}i:60;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:22:"markdowku_boldasterisk";i:1;a:2:{i:0;i:4;i:1;s:2:"**";}i:2;i:4;i:3;s:2:"**";}i:2;i:2953;}i:61;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:298:", the latter very recently appearing in CRAN. The processing followed the examples and suggestions included in the documentation of the packages (see bibliography). An attempt was made to explore also the potential of OCTAVE for the project, but this was not possible due to technical difficulties.";}i:2;i:2955;}i:62;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:3253;}i:63;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:3253;}i:64;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:416:"The workflow was centered on the following axes:
+1. Visualization of the temporal and spatial occurence of anomalous TIR values
+2. Visualization of the levels (intensity) of detected anomalous counts
+3. Visualization of the extent of the anomalies (clustering in space and in time)
+4. Visualization of the above in combination with the study area and spatiotemporal occurence of the potential cause of the anomalies.";}i:2;i:3255;}i:65;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:3671;}i:66;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:3671;}i:67;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:805:"The scenario which was examined was the appearance of anomalies in thermal infra-red emissions during the preparatory phase of a volcanic eruption. In order to be able to link the anomalies with the volcanic activity, the anomalous values need to be located at distances close to the volcano and to the time of the eruption. The anomalous counts were visualized as point observations in a 3D scatterplot, and their intensity was represented with different colours. A kernel density estimate was calculated and visualized using contour surfaces to better represent clustering. The above were examined in combined images with 3D visualization of the anomalies, the altitude/terrain of the study area and the occurence of the explosion to investigate the relation between anomalies and their potential cause.";}i:2;i:3673;}i:68;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:4478;}i:69;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:4478;}i:70;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:310:"The packages offer numerous possibilities for analyzing the study area, applying functions on the background image, computiong contours and gradients etc. These were tried but, given that real background data were not available for this study to relate with the scenario, they were not included in the results.";}i:2;i:4480;}i:71;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:4790;}i:72;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:4790;}i:73;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:485:"To further explore the visualization facilities offered by the packages, a synthetic datacube was designed to contain anomalies classified in two levels, with one of the levels completely surrounded by the other. This scenario allowed for visualization of isosurfaces of anomalies with the same value, with different degrees of fill and transparency (so that both levels would be visible), and with slicing. Different available functions for creating isosurfaces were explored, namely ";}i:2;i:4792;}i:74;a:3:{i:0;s:13:"emphasis_open";i:1;a:0:{}i:2;i:5277;}i:75;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:37:"contour 3D, isosurface, createisosurf";}i:2;i:5279;}i:76;a:3:{i:0;s:14:"emphasis_close";i:1;a:0:{}i:2;i:5316;}i:77;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:5:" and ";}i:2;i:5318;}i:78;a:3:{i:0;s:13:"emphasis_open";i:1;a:0:{}i:2;i:5323;}i:79;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:7:"slice3D";}i:2;i:5325;}i:80;a:3:{i:0;s:14:"emphasis_close";i:1;a:0:{}i:2;i:5332;}i:81;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:41:" with their related/supporting functions.";}i:2;i:5334;}i:82;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:19:"markdowku_linebreak";i:1;a:3:{i:0;s:3:"  
+";i:1;i:5;i:2;i:5375;}i:2;i:5;i:3;s:3:"  
+";}i:2;i:5375;}i:83;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:12:"
+References:";}i:2;i:5378;}i:84;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:5390;}i:85;a:3:{i:0;s:10:"listu_open";i:1;a:0:{}i:2;i:5390;}i:86;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:5390;}i:87;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:5390;}i:88;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:114:" Dai Feng, Luke Tierney, 2008. Computing and Displaying Isosurfaces in R. Journal of Statistical Software 28(1). <";}i:2;i:5394;}i:89;a:3:{i:0;s:7:"acronym";i:1;a:1:{i:0;s:3:"URL";}i:2;i:5508;}i:90;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:2:": ";}i:2;i:5511;}i:91;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:33:"http://www.jstatsoft.org/v28/i01/";i:1;N;}i:2;i:5513;}i:92;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:3:">. ";}i:2;i:5546;}i:93;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:5549;}i:94;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:5549;}i:95;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:5549;}i:96;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:5549;}i:97;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:175:" Lorensen, W.E. and Cline, H.E., 1987.Marching Cubes: a high resolution 3D surface reconstruction algorithm, Computer Graphics, Vol. 21, No. 4, pp 163-169 (Proc. of SIGGRAPH).";}i:2;i:5553;}i:98;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:5728;}i:99;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:5728;}i:100;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:5728;}i:101;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:5728;}i:102;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:89:" R Development Core Team (2008). R: A Language and Environment for Statistical Computing.";}i:2;i:5732;}i:103;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:5821;}i:104;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:5821;}i:105;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:5821;}i:106;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:5821;}i:107;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:78:" R Foundation for Statistical Computing, Vienna, Austria. ISBN 3-900051-07-0, ";}i:2;i:5825;}i:108;a:3:{i:0;s:7:"acronym";i:1;a:1:{i:0;s:3:"URL";}i:2;i:5903;}i:109;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:" ";}i:2;i:5906;}i:110;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:25:"http://www.R-project.org/";i:1;N;}i:2;i:5907;}i:111;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:19:"markdowku_autolinks";i:1;b:1;i:2;i:5;i:3;s:27:"<http://www.R-project.org/>";}i:2;i:5907;}i:112;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:5934;}i:113;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:5934;}i:114;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:5934;}i:115;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:5934;}i:116;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:97:" Soetaert K (2013). plot3D: Plotting multi-dimensional data. R package version 1.0. Available in ";}i:2;i:5938;}i:117;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:66:"http://cran.r-project.org/web/packages/plot3D/vignettes/plot3D.pdf";i:1;N;}i:2;i:6035;}i:118;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:19:"markdowku_autolinks";i:1;b:1;i:2;i:5;i:3;s:68:"<http://cran.r-project.org/web/packages/plot3D/vignettes/plot3D.pdf>";}i:2;i:6035;}i:119;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6103;}i:120;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6103;}i:121;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:6103;}i:122;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:6103;}i:123;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:61:" Soetaert K (2013).Fifty ways to draw a volcano using package";}i:2;i:6107;}i:124;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:6168;}i:125;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:6168;}i:126;a:3:{i:0;s:11:"listu_close";i:1;a:0:{}i:2;i:6168;}i:127;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:6168;}i:128;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:21:"plot3D. Available in ";}i:2;i:6169;}i:129;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:67:"http://cran.r-project.org/web/packages/plot3D/vignettes/volcano.pdf";i:1;N;}i:2;i:6190;}i:130;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:19:"markdowku_autolinks";i:1;b:1;i:2;i:5;i:3;s:69:"<http://cran.r-project.org/web/packages/plot3D/vignettes/volcano.pdf>";}i:2;i:6190;}i:131;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:6259;}i:132;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:6263;}i:133;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:28:"Computational implementation";i:1;i:2;i:2;i:6263;}i:2;i:6263;}i:134;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:6263;}i:135;a:3:{i:0;s:4:"code";i:1;a:3:{i:0;s:3351:"
+#plot the Hypsometry dataset for the whole world showing 
+#rectangle with location of study area
+
+image2D(Hypsometry, xlab = "longitude", ylab = "latitude", \
+ contour = list(levels = 0, col = "black", lwd = 2), \
+shade = 0.1, main = "Hypsometry data set", clab = "m") \
+rect(55, 25 ,80,45 ,lwd=3)
+
+#subsetting the study area
+
+ii=which(Hypsometry$x > 55 & Hypsometry$x < 80) 
+jj=which(Hypsometry$y > 25 & Hypsometry$y < 45) 
+zlim=c(5000, 0)
+par(mfrow = c(1, 1))
+persp3D(z = Hypsometry$z[ii,jj], xlab = "longitude", main= "Study area", \
+bty ="bl2", ylab = "latitude",  zlab = "height", clab = "height, m", \
+expand = 0.5, d = 2, phi = 20, theta = 30, resfac = 4, \
+contour = list(col = "grey", side = c("zmin", "z")), \
+zlim = zlim, colkey = list(side = 1, length = 0.5))
+
+#3D scatter plot of the dataset
+
+par(mfrow = c(1, 1))
+panelfirst <- function(pmat) {
+zmin=min(ord$time)
+XY=trans3D(ord$lon, ord$lat, z = rep(zmin, nrow(ord)), pmat = pmat)
+scatter2D(XY$x, XY$y, colvar = ord$int, pch = ".", cex = 2, \
+add = TRUE, colkey = FALSE)
+xmin=min(ord$lon)
+XY=trans3D(x = rep(xmin, nrow(ord)), y = ord$lat,
+z = ord$time, pmat = pmat)
+scatter2D(XY$x, XY$y, colvar = ord$int, pch = ".", \
+cex = 2, add = TRUE, colkey = FALSE)
+}
+
+with(ord, scatter3D(x = lon, y = lat, z = time, colvar = int, \
+pch = 16, cex = 1.5, xlab = "longitude", ylab = "latitude", \
+zlab = "time", clab = c("Anomalous","counts"), \
+main = "Distribution of anomalous counts", ticktype = "detailed", \
+panel.first = panel first, theta = 10, d = 2, \
+colkey = list(length = 0.5, width = 0.5, cex.clab = 0.75)))
+
+
+#create combined scatterplot+study area+volcanic eruption
+# surface = volcano 
+
+M = mesh(1:nrow(volcano), 1:ncol(volcano)) 
+scatter3D(xss, ys, zs, ticktype = "detailed", pch = 16, bty = "f", \
+xlab="pixel", ylab="line", zlab="time", \
+xlim = c(1, 87), ylim = c(1,61), zlim = c(94, 315),phi=10, \
+surf = list(x = M$x, y = M$y, z = volcano, \
+col = "grey", shade = 0.3, alpha=0.8)) 
+
+scatter3D(x = 20, y = 40, z = 300, add = TRUE, \
+colkey = FALSE,pch = 18, cex = 3, col = "black")
+
+
+#create matrix with the data
+
+matrix=array(0, c(100,100,100)) 
+> for (i in 1:100){ 
++ matrix[ord$lat[i],ord$lon[i],ord$time[i]]=ord$int[i] 
++ } 
+ 
+
+#plot isosurface of the volumetric data
+
+iso = createisosurf(ord$lat, ord$lon, ord$time, matrix, level = 34)
+triangle3D(iso, col = "lightskyblue", alpha=0.8,  shade = 0.3) 
+
+#plot 3D transparent histogram
+
+hist3D(z=volcano, scale = FALSE, expand = 0.01, col = jet.col(100, alpha = 0.3), \
+border = "black", main="3D histogram of altitude values")
+
+#plot isosurface of anomalies with contour3D
+
+contour3d(matrix, 34, alpha=0.8) 
+box3d(col="gray")
+
+#plot density contour surface (kernel density estimate)
+
+de=kde3d(ord$lon, ord$lat, ord$time, n=40)
+contour3d(de$d, 0.00005, de$x, de$y, de$z, color="magenta") 
+box3d(col="gray")
+
+#create small array
+
+cube=array(0, c(8,10,12))
+cube[3:6,4:6,5:8]=1 
+cube[4:5,5,6:7]=2 
+
+#plot nested transparent isosurfaces with the cube
+
+n=40 
+k=3 
+cmap=heat.colors 
+lev<-c(0,1,2)
+al=c(0,0.4,0.8) 
+contour3d(cube, lev, color=col, alpha=al) 
+box3d(col="gray")
+
+#plot isosurfaces and slices of the cube
+
+mcube=mesh(8,10,12)
+x=c(1:8) 
+y=c(1:10) 
+z=c(1:12)
+isoc=createisosurf(x,y,z, cube, level = 1) 
+triangle3D(isoc, col = "lightskyblue", alpha=0.8,  shade = 0.3)
+slice3D(x,y,z, colvar=cube, xs=4, ys=NULL, zs=c(6,8))
+";i:1;s:1:"R";i:2;s:10:"- visual.R";}i:2;i:6310;}i:136;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:9684;}i:137;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:22:"RESULTS and DISCUSSION";i:1;i:2;i:2;i:9684;}i:2;i:9684;}i:138;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:9684;}i:139;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:9720;}i:140;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:10:"Study area";i:1;i:2;i:2;i:9720;}i:2;i:9720;}i:141;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:9720;}i:142;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:9720;}i:143;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:68:"1. The Hypsometry dataset with a rectangle showing study area subset";}i:2;i:9743;}i:144;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:9811;}i:145;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:9811;}i:146;a:3:{i:0;s:13:"internalmedia";i:1;a:7:{i:0;s:26:":wikistudholland:world.png";i:1;s:0:"";i:2;N;i:3;s:3:"200";i:4;N;i:5;s:5:"cache";i:6;s:7:"details";}i:2;i:9813;}i:147;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:0:"";}i:2;i:9848;}i:148;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:9849;}i:149;a:3:{i:0;s:10:"listo_open";i:1;a:0:{}i:2;i:9849;}i:150;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:9849;}i:151;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:9849;}i:152;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:1;i:3;s:5:"
+
+2. ";}i:2;i:9849;}i:153;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:56:"The subset of the previous map, with overlaying contours";}i:2;i:9854;}i:154;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:3;i:3;s:56:"The subset of the previous map, with overlaying contours";}i:2;i:9854;}i:155;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:9910;}i:156;a:3:{i:0;s:13:"internalmedia";i:1;a:7:{i:0;s:31:":wikistudholland:study_area.png";i:1;s:0:"";i:2;N;i:3;s:3:"200";i:4;N;i:5;s:5:"cache";i:6;s:7:"details";}i:2;i:9911;}i:157;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:9951;}i:158;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:9952;}i:159;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:9952;}i:160;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:0;}i:2;i:9952;}i:161;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:9952;}i:162;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:2;i:3;s:4:"
+3. ";}i:2;i:9952;}i:163;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:50:"3D histogram of altitude values of the study areas";}i:2;i:9956;}i:164;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:3;i:3;s:50:"3D histogram of altitude values of the study areas";}i:2;i:9956;}i:165;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:10006;}i:166;a:3:{i:0;s:13:"internalmedia";i:1;a:7:{i:0;s:30:":wikistudholland:histogram.png";i:1;s:0:"";i:2;N;i:3;s:3:"400";i:4;N;i:5;s:5:"cache";i:6;s:7:"details";}i:2;i:10007;}i:167;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:10046;}i:168;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:10046;}i:169;a:3:{i:0;s:11:"listo_close";i:1;a:0:{}i:2;i:10046;}i:170;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:4;i:3;s:1:"
+";}i:2;i:10046;}i:171;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:10048;}i:172;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:41:"Visualizations of the synthetic data cube";i:1;i:2;i:2;i:10048;}i:2;i:10048;}i:173;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:10048;}i:174;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:10048;}i:175;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:52:"1. Nested transparent isosurfaces, using contour 3D
+";}i:2;i:10102;}i:176;a:3:{i:0;s:13:"internalmedia";i:1;a:7:{i:0;s:44:":wikistudholland:nested_isosurfaces_cube.png";i:1;s:0:"";i:2;N;i:3;s:3:"300";i:4;N;i:5;s:5:"cache";i:6;s:7:"details";}i:2;i:10154;}i:177;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:10207;}i:178;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:10209;}i:179;a:3:{i:0;s:10:"listo_open";i:1;a:0:{}i:2;i:10209;}i:180;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:10209;}i:181;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:10209;}i:182;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:1;i:3;s:5:"
+
+2. ";}i:2;i:10209;}i:183;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:49:"Nested isosurfaces, with no fill, using contour3D";}i:2;i:10214;}i:184;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:3;i:3;s:49:"Nested isosurfaces, with no fill, using contour3D";}i:2;i:10214;}i:185;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:10263;}i:186;a:3:{i:0;s:13:"internalmedia";i:1;a:7:{i:0;s:39:":wikistudholland:nested_isos_nofill.png";i:1;s:0:"";i:2;N;i:3;s:3:"300";i:4;N;i:5;s:5:"cache";i:6;s:7:"details";}i:2;i:10264;}i:187;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:10312;}i:188;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:10314;}i:189;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:10315;}i:190;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:10315;}i:191;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:0;}i:2;i:10315;}i:192;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:10315;}i:193;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:2;i:3;s:4:"
+3. ";}i:2;i:10315;}i:194;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:36:"Triple-sliced datacube using slice3D";}i:2;i:10319;}i:195;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:3;i:3;s:36:"Triple-sliced datacube using slice3D";}i:2;i:10319;}i:196;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:10355;}i:197;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:122:"http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=120&h=116&t=1390096911&tok=ea5056&media=wikistudholland:slice1.png";i:1;N;}i:2;i:10356;}i:198;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:10478;}i:199;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:10478;}i:200;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:0;}i:2;i:10478;}i:201;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:10478;}i:202;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:2;i:3;s:4:"
+4. ";}i:2;i:10478;}i:203;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:47:"Isosurface of class 1 anomalies using isosurf3D";}i:2;i:10482;}i:204;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:3;i:3;s:47:"Isosurface of class 1 anomalies using isosurf3D";}i:2;i:10482;}i:205;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:10529;}i:206;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:125:"http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=120&h=115&t=1390096732&tok=28c59d&media=wikistudholland:cube_iso1.png";i:1;N;}i:2;i:10530;}i:207;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:10655;}i:208;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:10655;}i:209;a:3:{i:0;s:11:"listo_close";i:1;a:0:{}i:2;i:10655;}i:210;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:4;i:3;s:1:"
+";}i:2;i:10655;}i:211;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:10657;}i:212;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:11:"TIR dataset";i:1;i:2;i:2;i:10657;}i:2;i:10657;}i:213;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:10657;}i:214;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:10657;}i:215;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:126:"1. Spatiotemporal distribution of anomalous values, with their intensity visualized with the color palette. Using a scatter3D
+";}i:2;i:10681;}i:216;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:124:"http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=120&h=113&t=1390096887&tok=cf94e6&media=wikistudholland:scatter1.png";i:1;N;}i:2;i:10807;}i:217;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:122:"
+2. 3D kernel density estimate of anomalous values using contour3d, to show clustering of anomalies in space and in time.
+";}i:2;i:10931;}i:218;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:138:"http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=57&h=120&t=1390096748&tok=914bad&media=wikistudholland:density_contour_surface.png";i:1;N;}i:2;i:11053;}i:219;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:159:"
+3. Different isosurfaces showing location of anomalous values > 40 (in the first graph, using contour3D) and >34 (in the second graph, using createisosurf). 
+";}i:2;i:11191;}i:220;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:122:"http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=35&h=120&t=1390096720&tok=9873fa&media=wikistudholland:contour.png";i:1;N;}i:2;i:11350;}i:221;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:11472;}i:222;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:11472;}i:223;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:126:"http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=120&h=112&t=1390096806&tok=af68ca&media=wikistudholland:isosurface.png";i:1;N;}i:2;i:11474;}i:224;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:11600;}i:225;a:3:{i:0;s:10:"listo_open";i:1;a:0:{}i:2;i:11600;}i:226;a:3:{i:0;s:13:"listitem_open";i:1;a:1:{i:0;i:1;}i:2;i:11600;}i:227;a:3:{i:0;s:16:"listcontent_open";i:1;a:0:{}i:2;i:11600;}i:228;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:1;i:3;s:5:"
+
+4. ";}i:2;i:11600;}i:229;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:422:"Combination of TIR anomaly scatterplot overlaying a surface plot of the study area and including the occurence of the volcanic eruption(with the black square point). The intensity of the anomalies is clearly rising as the time of the eruption approaches. The appearance of anomalies earlier and in lower altitudes may be suggestive of the characteristics of the upper crust and potential movement of fluids or gas release.";}i:2;i:11605;}i:230;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:3;i:3;s:422:"Combination of TIR anomaly scatterplot overlaying a surface plot of the study area and including the occurence of the volcanic eruption(with the black square point). The intensity of the anomalies is clearly rising as the time of the eruption approaches. The appearance of anomalies earlier and in lower altitudes may be suggestive of the characteristics of the upper crust and potential movement of fluids or gas release.";}i:2;i:11605;}i:231;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:19:"markdowku_linebreak";i:1;a:3:{i:0;s:3:"  
+";i:1;i:5;i:2;i:12027;}i:2;i:5;i:3;s:3:"  
+";}i:2;i:12027;}i:232;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:123:"http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=117&h=120&t=1390096869&tok=0081c0&media=wikistudholland:overlay.png";i:1;N;}i:2;i:12030;}i:233;a:3:{i:0;s:17:"listcontent_close";i:1;a:0:{}i:2;i:12153;}i:234;a:3:{i:0;s:14:"listitem_close";i:1;a:0:{}i:2;i:12153;}i:235;a:3:{i:0;s:11:"listo_close";i:1;a:0:{}i:2;i:12153;}i:236;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:16:"markdowku_olists";i:1;b:1;i:2;i:4;i:3;s:3:"
+
+
+";}i:2;i:12153;}i:237;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:12153;}i:238;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:504:"The above examples show that the tested R packages provide many 3D visualization options according to the intended analysis. The displays of the clustering of the anomalies, their intensity and their spatiotemporal distribution can provide valuable information on the underlying processes and their development in time, especially if they are combined with images from the study area and the potential causes of the anomalies. More experimentation is needed to establish applicability in larger datasets.";}i:2;i:12157;}i:239;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:19:"markdowku_linebreak";i:1;a:3:{i:0;s:6:"     
+";i:1;i:5;i:2;i:12661;}i:2;i:5;i:3;s:6:"     
+";}i:2;i:12661;}i:240;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:12661;}i:241;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:12661;}i:242;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:12661;}}

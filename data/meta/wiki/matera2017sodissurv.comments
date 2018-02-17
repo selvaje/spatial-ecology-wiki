@@ -1,0 +1,48 @@
+a:5:{s:5:"title";s:20:" Please answer here ";s:6:"status";i:1;s:6:"number";i:6;s:8:"comments";a:6:{s:32:"fc4842d729f1963d39180bab6d5babf7";a:8:{s:4:"user";a:5:{s:2:"id";s:7:"student";s:4:"name";s:7:"student";s:4:"mail";s:27:"giuseppe.amatulli@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1498229083;}s:3:"raw";s:479:"The training met my expectations.
+
+I suggest to have 2-3 trainers more during the exercises going around the tables to help students.   
+Another suggestion is to better introduce at the beginning of the course the structure of the website to be able to follow lectures and exorcises. Actually the website is well done but sometimes is difficult to locate the page showing on the screen, which is very useful to follow the training. 
+
+Thanks a lot for organizing this workshop!   ";s:5:"xhtml";s:513:"
+<p>
+The training met my expectations.
+</p>
+
+<p>
+I suggest to have 2-3 trainers more during the exercises going around the tables to help students.<br/>
+Another suggestion is to better introduce at the beginning of the course the structure of the website to be able to follow lectures and exorcises. Actually the website is well done but sometimes is difficult to locate the page showing on the screen, which is very useful to follow the training. 
+</p>
+
+<p>
+Thanks a lot for organizing this workshop!<br/>
+
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"fc4842d729f1963d39180bab6d5babf7";}s:32:"47c1ccb2715bb31f5a12887d60eb63c3";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.235";s:4:"name";s:13:"elago Nantana";s:4:"mail";s:19:"nantana77@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1498229091;}s:3:"raw";s:167:"yes it did, i thought the course was for beginners people who never did any coding or worked on open source, but i managed to catch up and understand, it was worth it
+";s:5:"xhtml";s:177:"
+<p>
+yes it did, i thought the course was for beginners people who never did any coding or worked on open source, but i managed to catch up and understand, it was worth it
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"47c1ccb2715bb31f5a12887d60eb63c3";}s:32:"33cf985c7d7a9e169fa86f54e472ecf3";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.235";s:4:"name";s:14:"Thomas Kandler";s:4:"mail";s:15:"kandler@gc-i.de";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1498229671;}s:3:"raw";s:351:"A great course to improve overall confidence in learning, bash, linux and geospatial computing. Personally, I would take a more application-oriented approach to the Python instead of one based on "traditional" computer science. But that's just the fly in the ointment. 
+Great teachers, great location & surroundings, great content. Surely recommended.";s:5:"xhtml";s:375:"
+<p>
+A great course to improve overall confidence in learning, bash, linux and geospatial computing. Personally, I would take a more application-oriented approach to the Python instead of one based on “traditional” computer science. But that&#039;s just the fly in the ointment. 
+Great teachers, great location &amp; surroundings, great content. Surely recommended.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"33cf985c7d7a9e169fa86f54e472ecf3";}s:32:"665d45d85cd401909d5e20b2d351a290";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.235";s:4:"name";s:15:"Piero Campalani";s:4:"mail";s:21:"piero.campa@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1498229940;}s:3:"raw";s:202:"Although I hoped the course could be more technically advanced, I had a satisfactory overview of the FOSS geospatial tools, some of them I was not aware of. I am happy with the material we got left too.";s:5:"xhtml";s:266:"
+<p>
+Although I hoped the course could be more technically advanced, I had a satisfactory overview of the <abbr title="Free &amp; Open-Source Software">FOSS</abbr> geospatial tools, some of them I was not aware of. I am happy with the material we got left too.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"665d45d85cd401909d5e20b2d351a290";}s:32:"2a0950baa8bfe636f84b012079b3e365";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test143.50.236.142";s:4:"name";s:16:"Patrick Schwager";s:4:"mail";s:28:"patrick.schwager@uni-graz.at";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1498480983;}s:3:"raw";s:711:"Thank you for the great and well organized course. In one week we were confronted with an overwhelming set of opensource tools to manage our analysis not only in spatial ecology but also in other research fields. Although I missed a little bit the praxis on our own. As a suggestion, it may be better to start the students project from the first day on. So that on each day the own practical work can be extended by newely learnd techniques. Everyone comes with different expectations and previous knowledge.  The individual learning success of each participand  can thus be increased enormously. 
+Newertheless, a fantastic summer school in an interesting part of Italy, with interesting people! Keep on moving!";s:5:"xhtml";s:722:"
+<p>
+Thank you for the great and well organized course. In one week we were confronted with an overwhelming set of opensource tools to manage our analysis not only in spatial ecology but also in other research fields. Although I missed a little bit the praxis on our own. As a suggestion, it may be better to start the students project from the first day on. So that on each day the own practical work can be extended by newely learnd techniques. Everyone comes with different expectations and previous knowledge.  The individual learning success of each participand  can thus be increased enormously. 
+Newertheless, a fantastic summer school in an interesting part of Italy, with interesting people! Keep on moving!
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"2a0950baa8bfe636f84b012079b3e365";}s:32:"61f32eb25a2d4ab3bdda64de713436dc";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test79.25.51.187";s:4:"name";s:11:"Adara Pardo";s:4:"mail";s:18:"adharapv@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1499259898;}s:3:"raw";s:408:"The course was indeed interesting and useful, although it was a bit hard to follow for me some days, partly due to my not so high level of expertise in the subject. However, I thought that the Python lecture was particularly difficult to follow, it would surely benefit from changing a bit the way it was structured and delivered. 
+Overall I would recommend it, thank you to the teachers and organization!!  ";s:5:"xhtml";s:423:"
+<p>
+The course was indeed interesting and useful, although it was a bit hard to follow for me some days, partly due to my not so high level of expertise in the subject. However, I thought that the Python lecture was particularly difficult to follow, it would surely benefit from changing a bit the way it was structured and delivered. 
+Overall I would recommend it, thank you to the teachers and organization!!<br/>
+
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"61f32eb25a2d4ab3bdda64de713436dc";}}s:11:"subscribers";N;}

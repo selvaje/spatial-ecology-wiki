@@ -1,0 +1,63 @@
+====== Running gnuplot ======
+Exercise:\\
+Script: open by kate [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh | ~/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh ]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/input.txt | ~/ost4sem/exercise/basic_adv_gnuplot/input.txt ]]\\
+Directory: ~/ost4sem/exercise/basic_adv_gnuplot/
+\\
+<code bash>
+kate ~/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh &
+</code>
+===== From the bash command line =====
+You can run gnuplot directory from the bash command line typing command by command\\
+Example:
+<code gnuplot>
+gnuplot
+set xrange [2000:14000] 
+splot 'input.txt'   u 3:4:5
+</code>
+This way it is very useful to explore your data.
+===== From a script =====
+If you need to automate a process it is better to create a script that can be run by the shell many times. It can be run by:\\  
+// gunplot < myscriptplot.plt//\\
+Example:\\
+Create a simple gnuplot script in a text editor using the following commands:\\
+\\
+//set terminal postscript eps color solid lw 4  "Helvetica" 24 //\\
+//set view  80,100//\\
+//set output 'country_name.ps'//\\
+//splot 'input.txt'   u 3:4:5//\\
+\\
+save it to //myscriptplot.plt.//\\
+\\
+Run it by:\\
+<code bash>
+gunplot < myscriptplot.plt
+evince country_name.ps 
+</code>
+\\
+If you need to insert a serial of gnuplot commands inside a bash script you can use the following syntax:\\
+\\
+//gnuplot <<EOF//\\
+....\\
+....\\
+//EOF//\\
+\\
+Example:\\
+Create a simple bash-gnuplot script in a text editor using the following command:\\
+\\
+//grep IT aver_month_nuts3.asc > aver_month_IT.asc //\\
+//gnuplot << EOF//\\
+//set terminal postscript eps color solid lw 4 "Helvetica" 24//\\
+//set view  80,100  //\\
+//set output 'country_IT.ps'//\\
+//splot 'aver_month_IT.asc' u 3:4:5//\\
+//exit//\\
+//EOF//\\
+//rm aver_month_IT.asc//\\
+\\
+save it to //bash_gnuplot_script.sh//\\
+\\
+Run it by:\\
+<code bash>
+sh bash_gnuplot_script.sh
+</code>

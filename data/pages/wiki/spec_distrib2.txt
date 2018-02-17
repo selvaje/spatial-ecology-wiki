@@ -1,0 +1,31 @@
+===== Understanding Autoecology & Synecology to model species distribution Maxent =====
+
+The main aim of this page is to show how to retrieve environmental information at point level and build up a table useful to identify  Autoecology and Synecology of a species. 
+   * Autoecology: the branch of ecology which deals with individual species and their reactions to environmental factors. [[http://www.everythingbio.com|sources]]
+   * Synecology : The branch of ecology which deals with the distribution, abundance, demography, and interactions between coexisting populations. 
+
+As an example we show a typical pattern of 3 plant species.  
+\\
+{{:wiki:synecology_cembro.png?600}}\\
+
+
+\\
+Autoecology and synecology of Pinus cembra, according to bioclimatic variables and to the distribution of Larix decidua and Picea abies  [[ http://www.spatial-ecology.net/giuseppe/publications/1-s2.0-S0378112709007257-main.pdf | (S. Casalegno et. al. 2010)]]. ( [[http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:pcem_syneco_r| script]])
+
+
+===== Autoecology of Solitary Tinamou =====
+
+The [[ http://en.wikipedia.org/wiki/Solitary_Tinamou | Solitary Tinamou ]] is a bird that is living in South America.\\
+Points data can be download from [[http://ebird.org/content/ebird/ | ebird ]] and [[ http://www.gbif.org/ | gbif]]. Moreover, in Map Of Life there are dataset of presence and absence in National Parks. 
+We will use these points to extract environment variable values as in this picture\\ 
+|{{:wiki:gis.jpg?350}}|\\. 
+
+
+=== R-studio Installation ====
+
+https://www.rstudio.com/products/rstudio/download/
+
+=== R Code ====
+
+{{gh> https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/maxent/tinamumscript_maxent.R }}
+

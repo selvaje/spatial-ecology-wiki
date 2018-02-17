@@ -1,0 +1,4 @@
+for c in ( AvgLandTemp ) return encode(
+condense +
+over $t ansi(imageCrsDomain(c[ansi(&quot;2001-01&quot;:&quot;2001-12&quot;)], ansi))
+using 1, &quot;csv&quot;)

@@ -1,0 +1,149 @@
+
+====== Preliminary Program ======
+
+===== Day 1 =====
+
+**Introduction**
+  - Knowing each other: backgrounds of trainers and participants
+  - Identifying participant needs
+  - Course objectives and schedule
+  - Installation and introduction to the Linux Virtual Machine
+  - Linux environment, why and what to use
+  - Handling and understanding pc performance
+  - www.spatial-ecology.net platform
+  - Why to use Unix/Linux command line
+  - The use of kate as an editor (intro to Emacs)
+**UNIX/LINUX Bash programming (Introduction)**
+  - Unix/Linux command line
+  - Command syntax and basic commands
+  - Redirection of the input/output
+  - File management
+  - Read and explore a text file
+  - Meta-characters and regular expression, their use
+  - Concatenate process (pipe)
+  - The use of variable
+  - String manipulation
+  - Iteration (for loop, while)
+  - Exercise
+===== Day 2 =====
+**AWK**
+  - AWK Programming language introduction
+  - Why to use AWK command line
+  - The basic commands, command syntax
+  - Built in variables
+  - Import variables
+  - String functions
+  - Numerical functions
+  - Query functions
+  - Manipulate large files before importing in R
+  - Exercise
+**GDAL/OGR introduction (setting the bases for an advanced use)**
+  - GDAL/OGR for raster and vector analysis
+  - Command syntax
+  - Raster/vector data manipulation
+  - Scripting GDAL/OGR functions in loops for multiple image processing
+  - Exercise
+
+===== Multi-session  Day 3-4-5 =====
+(2 or 3 sessions in parallel in accordance to the interest/level  of the participants. The described topics may be change/increase/reduced in accordance to the participants interest/level )
+
+==== GIS oriented sessions (GRASS; QGIS) ====
+
+**GRASS and QGIS introduction (setting the bases for an advanced use**)
+  - Introduction to Quantum GIS
+  - Quantum GIS pluggins
+  - QGIS as GUI to GRASS and as a learning tool
+  - Introduction to GRASS
+  - Data structure in GRASS
+  - Command syntax and general commands of data handling
+  - Raster and vector data import, export, display and conversion
+  - Raster map calculator
+  - Vector manipulation and processing
+  - Production of maps and tables layout for reporting
+  - Exercise
+**GRASS advance**
+  - Scripting in GRASS: combining BASH commands with GRASS commands
+  - GRASS/BASH Environment variables
+  - GRASS in batch mode
+  - Exercise
+
+**Spatialite for advanced vector data analysis**
+  - Overview of SQLite and Spatialite
+  - Using GDAL/OGR with Spatialite
+  - SQLite SQL dialect
+  - Spatial operations using Spatialite
+
+==== Statistical oriented sessions (R) ====
+
+**R introduction (setting the bases for an advanced use)**
+  - Introduction to R environment
+  - R structure, libraries, scripting and getting help
+  - Command syntax, R objects
+  - Basic commands (input, output, data creation)
+  - Data manipulation
+  - Plotting data and graphical parameters
+  - Iterations (if/ifelse conditions, for loop, while)
+  - Exercise
+
+**R advance**
+  - Importing/Exporting geo-data
+  - Spatio-temporal and ecological modeling libraries
+  - A linear model and step-wise regression
+  - More complex algorithms (CART / Random Forest)
+  - Model prediction
+  - Exercise
+
+**R advance programming for raster analysis**  
+  - Raster library, performance and limitations
+  - Model training and prediction using raster data
+  - Grass and R integration
+
+**Creating graphics with ggplot2**
+  - Grass and R integration
+  - Introduction to ggplot2
+  - Creating high quality graphics with ggplot2
+  - Exercises
+
+==== Remote sensing oriented sessions (gdal/ogr, pktools, Orfeo Toolbox) ====
+
+
+**Introduction to the Orfeo Toolbox**
+  - Overview of command line utilities
+  - Atmospheric corrections
+  - Image segmentation
+  - Running OTB from QGIS
+
+**Multispectral Landcover Classification**
+  - Data Preparation Using GDAL/OGR
+  - Unsupervised image classification using Orfeo Toolbox
+  - Collecting training data for image classification
+  - Supervised classification using pktools
+  - Machine learning for image classification using pktools
+  - Accuracy assessment using pktools and QGIS
+
+**Temporal analysis using pktools**
+  - Image mosaicking and compositing
+  - Image filtering/aggregation in the temporal/spatial domain
+
+==== Language/software integration session (advanced geospatial data processing in cluster computing - really advance ) ====
+
+**Cluster/grid parallel processing on the Virtual Machine**
+  - Simple exercise on cluster computing
+  - Combine multiple languages in a scripting-process
+  - Template for building scripts
+  - Import and export variables from different languages
+  - Integrate GRASS and R in a bash script
+  - The use of GRASS in clustering computing
+  - Working in tiles for Cluster/Grid/Parallel processing
+  - Cloud computing on MS azure and/or Amazon web services
+  - Advanced programming for clustering computation
+  - Parallel programming
+  - Using xargs/parallel and qsub for job queuing
+  - Exercise
+
+===== Day 6 =====
+**Work with your data**
+  - Participants can bring their own data and processing problems. This section offers a unique opportunity for participants to learn how open source tools can solve their analysis problems. Solutions will be presented and explained in detail, depending on the quantity and complexity of the problems. Data privacy will be respected according to the data policy at hand.
+  - Wrap up with a summary of the material discussed in the course.
+
+

@@ -1,0 +1,112 @@
+<span class="co0">#!/bin/bash</span>
+<span class="co0">#Modified by Stefano casalegno from getData version 0.2 written by Hans Bosch and Sonya Ahamed for AfSIS project, Columbia University </span>
+<span class="co0">#This script downloads Modis data for computing NDVI cumulate values in Cornwall as a metric of the ecosystem service value plant productivity</span>
+<span class="co0">#</span>
+<span class="co0">#Pre condition:</span>
+<span class="co0">#    Adequate space needs to be allocated for downloads and temp files</span>
+<span class="co0">#    Write permissions to file system </span>
+<span class="co0">#    The variable tileList needs to contain the exact name of the tile</span>
+<span class="co0">#    Network access to Modis ftp server ftp://e4ftl01.cr.usgs.gov</span>
+<span class="co0">#    Requires curl to be installed see http://curl.haxx.se</span>
+<span class="co0">#</span>
+<span class="co0">#Post condition:</span>
+<span class="co0">#    Base directory is created with multiple date sub directories </span>
+<span class="co0">#    Sub directories created and populated with desired tiles</span>
+<span class="co0">#    Script builds directories starting from script execution point</span>
+<span class="co0">#   </span>
+<span class="co0">#    Select the zone of interest from this file http://gis.cri.fmach.it/data/modis_sinusoidal.zip</span>
+<span class="co0">#    Declare tiles to download in variable tileList (see details on the sinusoidal projection here http://gis.cri.fmach.it/modis-sinusoidal-gis-files/  )</span>
+<span class="co0">#</span>
+<span class="co0">#    your working dir is named after modis product name: (see https://lpdaac.usgs.gov/products/modis_products_table)</span>
+<span class="co0">#    Create root directory for downloads https://lpdaac.usgs.gov/products/modis_products_table/mod13q1</span>
+<span class="co0">#</span>
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>MODIS
+<span class="kw3">cd</span> ~<span class="sy0">/</span>MODIS<span class="sy0">/</span>
+<span class="re2">tileList</span>=<span class="br0">&#40;</span>h18v03 h17v03 h17v4<span class="br0">&#41;</span> <span class="co0"># My zone of interest </span>
+<span class="re2">baseDir</span>=MOD13Q1.005            <span class="co0"># MODIS product name</span>
+<span class="kw2">mkdir</span> <span class="re1">$baseDir</span>
+<span class="kw3">cd</span> <span class="re1">$baseDir</span>
+<span class="co0">#Determine the directory dates for $baseDir</span>
+curl ftp:<span class="sy0">//</span>e4ftl01.cr.usgs.gov<span class="sy0">/</span>MOLT<span class="sy0">/</span><span class="re1">$baseDir</span><span class="sy0">/</span> <span class="re5">--user</span> anonymous:user<span class="sy0">@</span>mailservice.com <span class="sy0">&gt;</span> dirDates
+<span class="kw1">for</span> eachDate <span class="kw1">in</span> <span class="sy0">`</span><span class="kw2">cat</span> dirDates<span class="sy0">|</span><span class="kw2">awk</span> <span class="st_h">'{print $8}'</span><span class="sy0">`</span> ; <span class="kw1">do</span> <span class="co0">#Process each date in the $baseDir</span>
+<span class="kw3">echo</span> <span class="re1">$eachDate</span>
+<span class="kw2">mkdir</span> <span class="re1">$eachDate</span>
+<span class="kw3">cd</span> <span class="re1">$eachDate</span>    <span class="co0"># Now that we have the dates get the directory listing under that date</span>
+curl ftp:<span class="sy0">//</span>e4ftl01.cr.usgs.gov<span class="sy0">/</span>MOLT<span class="sy0">/</span><span class="re1">$baseDir</span><span class="sy0">/</span><span class="re1">$eachDate</span><span class="sy0">/</span> <span class="re5">--user</span> anonymous:user<span class="sy0">@</span>mailservice.com <span class="sy0">&gt;</span> allFiles4Date
+<span class="kw2">grep</span> hdf allFiles4Date <span class="sy0">&gt;</span> files2Get         <span class="co0"># From all the files only get the *.hdf and *.hdf.xml files</span>
+   <span class="kw1">for</span> eachTile <span class="kw1">in</span> <span class="co1">${tileList[*]}</span> ; <span class="kw1">do</span>     <span class="co0"># Get only the tiles needed </span>
+   <span class="kw2">grep</span> <span class="re1">$eachTile</span> files2Get <span class="sy0">&gt;</span> tiles2Get
+     <span class="kw1">for</span> eachFile <span class="kw1">in</span> <span class="sy0">`</span><span class="kw2">cat</span> tiles2Get<span class="sy0">|</span><span class="kw2">awk</span> <span class="st_h">'{print $8}'</span><span class="sy0">`</span> ; <span class="kw1">do</span> 
+     curl <span class="re5">-O</span> ftp:<span class="sy0">//</span>e4ftl01.cr.usgs.gov<span class="sy0">/</span>MOLT<span class="sy0">/</span><span class="re1">$baseDir</span><span class="sy0">/</span><span class="re1">$eachDate</span><span class="sy0">/</span><span class="re1">$eachFile</span> <span class="re5">--user</span> anonymous:user<span class="sy0">@</span>mailservice.com
+     <span class="kw1">done</span>
+   <span class="kw1">done</span>
+<span class="kw3">cd</span> ..  <span class="co0">#Change directory up one to base dir</span>
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0">##### DOWNLOADING DONE</span>
+<span class="co0">#### Set Grass environment </span>
+<span class="co0"># Define the appropriate UK projection to the project using an existing image reprojected to the target EPSG:27700</span>
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>MODIS<span class="sy0">/</span>grassdb
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdb<span class="sy0">/</span>
+gdalwarp   -t_srs EPSG:<span class="nu0">27700</span>  -s_srs EPSG:<span class="nu0">3035</span>  ost4sem<span class="sy0">/</span>studycase<span class="sy0">/</span>ITA_veg<span class="sy0">/</span>data<span class="sy0">/</span>physic_pr<span class="sy0">/</span>pr200<span class="sy0">/</span>hdr.adf input_proj.tif
+<span class="kw2">bash</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_grass<span class="sy0">/</span>create_location.sh input_proj.tif modis27700
+&nbsp;
+&nbsp;
+<span class="co0"># Setting GRASS variables for GRASS bash job</span>
+<span class="kw3">export</span> <span class="re2">GRASSDB</span>=~<span class="sy0">/</span>MODIS<span class="sy0">/</span>grassdb
+<span class="kw3">export</span> <span class="re2">LOCATION</span>=modis27700
+<span class="kw3">export</span> <span class="re2">MAPSET</span>=PERMANENT
+<span class="kw3">echo</span> <span class="st0">&quot;LOCATION_NAME: <span class="es2">$LOCATION</span>&quot;</span>                  <span class="sy0">&gt;</span>  <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;MAPSET: <span class="es2">$MAPSET</span>&quot;</span>                           <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;DIGITIZER: none&quot;</span>                           <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GRASS_GUI: text&quot;</span>                           <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GISDBASE: <span class="es2">$GRASSDB</span>&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>grass64
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span>bin:<span class="re1">$GISBASE</span><span class="sy0">/</span>scripts
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=~<span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span>  <span class="co0">#   use process ID (PID) as lock file number</span>
+g.mapset <span class="re5">-c</span> <span class="re2">mapset</span>=processing
+<span class="co0">##### Next steps are </span>
+<span class="co0">#       - convert hdr to Gtif, </span>
+<span class="co0">#       - MERGE tiles </span>
+<span class="co0">#       - REPROJECT DATA to EPSG27700 UK projection</span>
+<span class="co0">#       - cumulate all images using only positive values </span>
+<span class="kw3">cd</span> <span class="sy0">/</span>disk2<span class="sy0">/</span>MODIS
+<span class="kw2">mkdir</span> <span class="re1">$baseDir</span><span class="st0">&quot;_TIF&quot;</span>
+<span class="kw2">mkdir</span> MOD13Q1.005_TIF<span class="sy0">/</span>NDVI
+<span class="kw2">mkdir</span> MOD13Q1.005_TIF<span class="sy0">/</span>NDVI_Merge
+<span class="kw3">cd</span> <span class="sy0">/</span>disk2<span class="sy0">/</span>MODIS<span class="sy0">/</span>MOD13Q1.005
+&nbsp;
+<span class="co0"># create a template file with all pixels = 0 values</span>
+<span class="re2">eachDate</span>=2000.02.18
+gdal_merge.py <span class="re5">-o</span> ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>template_modis_proj.tif $<span class="br0">&#40;</span><span class="kw2">ls</span> ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI<span class="sy0">/*</span>tif<span class="br0">&#41;</span>
+gdalwarp -s_srs <span class="st_h">'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'</span> -t_srs EPSG:<span class="nu0">27700</span> <span class="re5">-r</span> cubic  ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>template_modis_proj.tif ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>template_27700.tif
+r.in.gdal <span class="re5">-e</span> <span class="re2">input</span>=<span class="sy0">/</span>disk2<span class="sy0">/</span>MODIS<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>template_27700.tif <span class="re2">output</span>=template 
+g.region <span class="re2">rast</span>=template  <span class="re2">nsres</span>=<span class="nu0">236.13777419</span> <span class="re2">ewres</span>=<span class="nu0">236.13777419</span>
+r.mapcalc template = <span class="st0">&quot;0&quot;</span>
+&nbsp;
+<span class="co0">##</span>
+&nbsp;
+<span class="kw1">for</span> eachDate <span class="kw1">in</span> <span class="sy0">`</span><span class="kw2">cat</span> dirDates<span class="sy0">|</span><span class="kw2">awk</span> <span class="st_h">'{print $8}'</span><span class="sy0">`</span> ; <span class="kw1">do</span> <span class="co0">#Process each date in the $baseDir</span>
+<span class="kw3">echo</span> <span class="re1">$eachDate</span>
+<span class="kw3">cd</span> <span class="re1">$eachDate</span>
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.hdf ; <span class="kw1">do</span>
+gdal_translate  <span class="st_h">'HDF4_EOS:EOS_GRID:&quot;'</span><span class="re1">$file</span><span class="st_h">'&quot;:MODIS_Grid_16DAY_250m_500m_VI:250m 16 days NDVI'</span> ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI<span class="sy0">/</span>NDVI_<span class="re1">$eachDate</span>$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .hdf<span class="br0">&#41;</span><span class="st0">&quot;.tif&quot;</span>
+<span class="kw1">done</span> 
+&nbsp;
+gdal_merge.py <span class="re5">-o</span> ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI_Merge<span class="sy0">/</span>NDVI<span class="re1">$eachDate</span>.tif $<span class="br0">&#40;</span><span class="kw2">ls</span> ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI<span class="sy0">/*</span>tif<span class="br0">&#41;</span>
+&nbsp;
+gdalwarp -s_srs <span class="st_h">'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'</span> -t_srs EPSG:<span class="nu0">27700</span> <span class="re5">-r</span> cubic   ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI_Merge<span class="sy0">/</span>NDVI<span class="re1">$eachDate</span>.tif  ..<span class="sy0">/</span>..<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI_Merge<span class="sy0">/</span>NDVI_import.tif
+r.external <span class="re2">input</span>=<span class="sy0">/</span>disk2<span class="sy0">/</span>MODIS<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI_Merge<span class="sy0">/</span>NDVI_import.tif <span class="re2">output</span>=import <span class="re5">--overwrite</span>
+r.mapcalc out = <span class="st0">&quot;if(  import &gt;= 0 , template+import  , template )&quot;</span>
+r.mapcalc template = out
+<span class="kw2">rm</span> ~<span class="sy0">/</span>MODIS<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI_Merge<span class="sy0">/*</span>
+<span class="kw2">rm</span> ~<span class="sy0">/</span>MODIS<span class="sy0">/</span>MOD13Q1.005_TIF<span class="sy0">/</span>NDVI<span class="sy0">/*</span>
+<span class="kw3">cd</span> ..<span class="sy0">/</span>
+<span class="kw1">done</span>
+&nbsp;
+r.out.gdal <span class="re2">input</span>=template <span class="re2">output</span>=~<span class="sy0">/</span>MODIS<span class="sy0">/</span>NDVI_sum.tif
+&nbsp;
+<span class="co0"># FINISH NDVI </span>

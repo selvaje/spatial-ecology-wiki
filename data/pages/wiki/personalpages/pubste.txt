@@ -1,0 +1,123 @@
+====== Peer review and book chapters ======
+
+** Recently subitted** 
+  * Stott I., S. Casalegno, Kevin J. Gaston. J. Appl. Ecol. - //Local-to-landscape effects of built environments on multiple ecosystem services//.
+  * Casalegno S., Bennie J., Inger R. Gaston K. - Ecological Applications - // Impact of grain size on priority landscapes for ecosystem services//. 
+
+==== Ecosystem services and computational social science ====
+
+  * Casalegno S, Bennie J, Inger R, Gaston KJ (2014) Regional scale prioritisation for key ecosystem services, renewable energy production and urban development. [[http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0107822|PLoS ONE 9(9): e107822]].
+
+  * Casalegno S, Inger R, DeSilvey C, Gaston KJ (2013) Spatial Covariance between Aesthetic Value & Other Ecosystem Services. [[http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0068437|PLoS ONE 8(6): e68437]].
+
+  * Durán AP, Casalegno S, Marquet PA, Gaston KJ (2013) Representation of Ecosystem Services by Terrestrial Protected Areas: Chile as a Case Study. [[http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0082643|PLoS ONE 8(12) : e82643]]
+
+==== Alpine vegetation modeling and climate change ====
+
+  * Casalegno S., G. Amatulli, A. Camia, A. Nelson, A. Pekkarinen. 2010. [[http://dx.doi.org/10.1016/j.foreco.2009.10.001|Vulnerability of Pinus cembra L. in the Alps and the Carpathian mountains under present and future climates]]. Forest Ecology and Management 259: 70-761. 
+
+
+==== Vegetation characterization and mapping ====
+
+  * Casalegno S., Amatulli G., Bastrup-Birk A., Houston-Durrant T., Pekkarinen A. [[http://www.springerlink.com/content/x273366168478uv1/|Modelling and mapping the suitability of European forest formations at  1km resolution]]. 2011. European Journal of Forest Research.DOI: 10.1007/s10342-011-0480-x
+
+  *  F. Carré, N. Jeannée, S. Casalegno, O. Lemarchand, H.I. Reuter, L. Montanarella (2010) [[http://link.springer.com/chapter/10.1007%2F978-90-481-8863-5_18| in. Digital soil mapping]] Springer. Mapping the CN Ratio of the Forest Litters in Europe-Lessons for Global Digital Soil Mapping. Progress in Soil Science (2): 217-226. 
+
+  * Casalegno S. 2002. [[http://ressources.ciheam.org/om/pdf/a48/00800038.pdf|Issues related to vegetation characterization and mapping using fieldwork, G.I.S. and Remote Sensing high resolution data]] : in Comprehensive economic and spatial bio-energy modelling, eds. S. Rozakis & J-C. Sourie, Options Méditerranéennes 48: 139-147.
+
+  * Casalegno, S., Arriaga L., Girard C.M., Passsini, M-F. 2000. [[http://cat.inist.fr/?aModele=afficheN&cpsidt=14064184|Characterizing a tropical mountain forest ecotone using remotely sensed data: case study in Sierra de la Laguna, Southern Baja California, Mexico]]. SFPT 160 (4):3-12. 
+
+==== Urban vegetation and climate change ====
+
+  * [[http://www.intechopen.com/books/show/title/global-warming-impacts-case-studies-on-the-economy-human-health-and-on-urban-and-natural-environments|Global Warming Impacts - Case Studies on the Economy, Human Health, and on Urban and Natural Environments]]. 2011. Editor:  S. Casalegno. Intech Open Access Publisher. ISBN 978-953-307-785-7
+
+==== Spatial Bio-energy modeling ====
+ 
+  * Rozakis S., Casalegno S., Gilliot J-M. 2002. [[http://ressources.ciheam.org/om/pdf/a48/00800035.pdf|Multiple Criteria Decision-Making on Bio-Energy Projects Assisted by GIS: Current applications and perspectives]] : in Comprehensive economic and spatial bio-energy modelling, eds. S. Rozakis & J-C. Sourie, Options Méditerranéennes 48: 105-122.
+
+
+====== Publications in workshops and conference proceeding ======
+==== Open source geospatial computation and Education ====
+  * Amatulli G, Casalegno S, D’Annunzio R, Haapanen R, Kempeneers P, Lindquist E, Pekkarinen A, Wilson AM, Zurita-Milla R. 2014. Teaching spatio-temporal analysis and efficient data processing in open source environment. [[http://www.spatial-ecology.net/giuseppe/publications/Amatulli_et_al_OGRS.pdf| Proceedings ]] of the 3rd Open Source Geospatial Research & Education Symposium. Espoo, Finland, 10-13 June 2014.  
+
+==== Protective function of forest ====
+ 
+  * Reithmaier, L. and S. Casalegno. 2009. Harmonized Large Area Mapping of Protection Forest in Mountainous Areas: Case study in the Alps - Picea abies L. 33rd International Symposium on Remote Sensing of Environment, May 4-8, 2009, Stresa, Italy. http://www.symposia.org/
+
+  * Reithmaier L., Casalegno S., Rosa, V. 2008. [[http://www.forestadaptation2008.net/16250-1-0.pdf|Protection Forest in Europe: a First Approach for Harmonized Large Area Mapping in the Alpine Area]]. Proceedings: Adaptation of Forests and Forest Management to Changing Climate with Emphasis on Forest Health: A Review of Science, Policies, and Practices. Umea, Sweden August 25-28, 2008. Page 209. 
+
+
+==== Vulnerability of mountain forests under climate change ====
+
+  * Casalegno S. and L.M. Reithmaier. 2008. [[http://www.forestadaptation2008.net/16250-1-0.pdf|Actual Vulnerability and Future Trends of Changes for Pinus cembra L. in the Alps]]. Proceedings: Adaptation of Forests and Forest Management to Changing Climate with Emphasis on Forest Health: A Review of Science, Policies, and Practices. Umea, Sweden August 25-28, 2008. Page 48. 
+
+
+==== Mapping Forest soil patterns and process ====
+
+  * Carree F., N. Jeanne, S. Casalegno, H.I. Reuter, L. Montanarella. 2008. Mapping the CN ratio of the forest litters in Europe. Proceedings of the 3rd Global Workshop on Digital Soil Mapping: "Digital Soil Mapping: Bridging Research, Production, and Environmental Application." Sept. 30 Oct 3, 2008. Utah State University, Logan UT - U.S.A. [[http://dsmusa.org/|www]]
+
+  * Jeannee N., F. Carree, S. Casalegno, A. Bastrup-Birk 2008. Modelling the local spatial variability of the forest soil mineralization process over Europe. Proceedings of the 10th Conference on Soil-Water Systems in Europe: ConSoil 2008. 3-6 June 2008, Stella Polare Congress Centre Fiera Milano Italy.[[http://www.consoil.olanis.de/consoil_previous/consoil_2008/index.php|www]]
+
+
+==== Urban, Peri-Urban Forest and climate change ====
+
+  * Casalegno S., Durrant Huston T. 2008. [[http://www.metla.fi/tapahtumat/2008/recreation-tourism/abstracts/casalegno-durranthouston.pdf|Urban and periurban Forest habitat Suitability: current fitness and future trends under climate change scenario]]. Proceedings of the Joint  nal conference of Forest for recreation and tourism and 11th European Forum on Urban Forestry: Forest recreation & tourism serving urbanised societies, 28-31 May 2008, Hameenlinna, Finland. 
+[[http://www.metla.fi/tapahtumat/2008/recreation-tourism/presentations/casalegno.pdf|download oral presentation]]
+
+==== European scale forest modeling and climate change ====
+ 
+  * Casalegno S., Amatulli G., Bastrup-Birk A., Houston T. , 2007, [[http://doga.ogs.trieste.it/doga/echo/ecem07/Main/27Nov/casalegno.pdf|Modelling Current and Future Distribution of European Forest Categories]]. Proceedings of the 6th European Conference on Ecological Modelling: Challenges for ecological modelling in a changing world: Global Changes, Sustainability and Ecosystem Based Management. November 27-30, 2007. Trieste Italy.
+
+  * Casalegno S., Bastrup-Birk A., Hiederer R., Houston T. and Sanchez Orois S. 2006. [[http://www.greenspace.it/index.php?option=com_docman&task=doc_download&gid=46&Itemid=336&lang=en|Modelling suitability maps of European Common Beech and Aleppo Pine]]. Proceedings of IUFRO Landscape Ecology Conference, Sept. 26-29, 2006 - Locorotondo, Bari (ITALY). Lafortezza R. and Senesi G. (eds): Pattern and process in forest landscapes. Consequences of human management. Accademia Italiana Scienze Forestali, Firenze Italy.
+
+
+  * Casalegno, S. 2005. [[http://www.icp-forests.org/DocsGrowth/05_Casalegno.pdf|Modelling Potential Distribution of European Forests]]. International Cooperative Programme on Assessment and Monitoring of Air Pollution Effects on Forests. United Nations Economic Commission for Europe in cooperation with the European Commission. VIII Expert Panel Meeting on Forest Growth Assessment on Intensive Monitoring Plots. Igls, Austria, 19. - 22. October 2005. 
+
+==== Biomass yield ====
+
+  * Casalegno S. 2001. Remote sensing to estimate biomass yield. Workshop on "Comprehensive Modeling of Bio-Energy Systems". Host institute : INRA, UMR Economie Publique. Grignon France, 7-8 june 2001.
+
+
+==== Ecotones ====
+ 
+  * Casalegno S., L. Arriaga, M.F. Passini. (1999). Analysis of landscape boundaries between the tropical dry forest and oak forests in a mountainous region of Baja California Sur, Mexico. XVI International Botanical Congress. St. Louis, MO, U.S.A No. 1475, p 538.
+
+  * Casalegno S., C.M. Girard. 1999. Spectral characterization of a mountain forest ecotone. Congress on: Geographiocal information and environnemental risk - ASITA (Federazione delle Associazioni Scienti che per le Informazioni Territoriali e Ambientali), Naples Nov. 9-12 / 1999.
+\\
+
+ 
+====== Scientific and technical reports ======
+
+==== Cliamte change ====
+ 
+  * EEA Report No 4/2008. [[http://www.eea.europa.eu/publications/eea_report_2008_4/|Impacts of Europe's changing climate - 2008 indicator-based assessment]]. 2008. European Environmental Agency, European Commissions Joint Research Centre, World Health Organization. Contribution to chapter 9: Agriculture and forestry, section 6: Forest growth.
+
+
+==== Forest damages estimates ====
+
+  * European Union Solidarity Fund. Forest Damages caused by the Cyclone Kyrill in Germany (January 2007). Scientific technical report: JRC IES/H07 April 2007.
+
+==== European Agricultural Policy and climate change ====
+ 
+  * Jayet, P-A., S. De Cara, F. Carr, S. Casalegno, J.-M. Gilliot, C. Godard, M. Houz, and S. Rozakis: 2004. Spatialisation des impacts de la regulation  economique de l’effet de serre d’origine agricole. Rapport  nal 1.01, Ministere de l’Ecologie et du Developpement Durable, Programme Gestion et Impacts des Changements Climatiques (GICC), INRA, UMR Economie Publique, Grignon, France.
+
+  * Jayet, P-A., S. De Cara, S. Casalegno, and C. Godard: 2002, Agriculture et e et de serre : R egulation economique des impacts crois es et combinaison des politiques agricole et environnementale. Analyse pour la France et extension pour l'Union Europ eenne. Rapport  nal 7.99, Minist ere de l'Ecologie et du Developpement Durable, Programme Gestion et Impacts des Changements Climatiques (GICC), INRA ESR, Grignon, France. 
+
+==== Information Technology ====
+
+  * Casalegno S., Casalegno F., Tagliabue R. and Jennifer Mikel. 2003. Massachusetts Institute of Technology Mobile Experience Lab. Voices of Mayors: Research project for the World Summit of Cities and Local Authorities on the Information Society, Lyon, France, Dec 2004. Video presented at the World Summit on the Information Society, Geneva, Dec. 2003: "Voice of childrens".
+
+==== Tropical ecology, plants bird interactions ====
+
+  * Casalegno S., Hager N., (1996) Temporal variation in competitive behaviour, visitation time and species composition of sunbirds feeding on Erythrina abyssinica. Tropical Biology Association report 1996/1. Supervisors: Dr Peter Jones and Dr Rosalyn Trevelyan.
+\\
+
+
+====== University dissertations ======
+
+  * **Ph.D Applied Forest Ecology.** Casalegno, S. 2001. [[http://cat.inist.fr/casalegno|Characterizing and mapping a mountain forest Ecotone as indicator of anthropogenic disturbance. Multi-level assessment analysis, and mapping the transition between the oak woodland and the tropical deciduous forest in Sierra de la Laguna Mountain (BCS Mexico)]]. Ph.D. dissertation. Institut National Agronomique Paris-Grignon. Supervisor Emeritus Professor Dr C. Girard
+
+
+  * **Master of Science in Ecology, Eco-physiology and Ecosystem functioning.** S. Casalegno. 1997. //L'ecotone entre la forêt tropicale caducifoliée et la forêt de chênes en basse californie: analyse structurale et apport de l'imagerie Spot. MSc. Ecology//. Mêmoire de Diplôme d'Etude Approfondies d'Ecologie : Organismes d'accueil : Laboratoire de Biologie Végétale Tropicale UPMC, Paris VI ( Dr M-F. Passini) ; CIBNOR, La Paz BCS Méxique (Dr L. Arriaga) ; Centre D'Ecologie Fonctionnelle Evolutive CNRS, Montpellier (Dr B. Lacaze).
+
+  * **Bachelor of Science in Ecology.** Casalegno S., Derock D., Leprieur F., Prieur L., Thierry E. 1996. //Ecologie des haies de Paimpont, France//. Mâitrise d'Ecologie - Univ. Paris Sud XI. (Ecology of the hedges in Paimpont, Bretagne France, BCs Ecology). 

@@ -1,0 +1,53 @@
+# Using the reprojected images, GRASS working environment is created; and
+#images vector files are imported to GRASS.
+&nbsp;
+#create new grass database folder
+mkdir /media/DATA1/tsend001/vcf_modis_global/grassdb
+&nbsp;
+#copy projected VCF file into that folder so that creation of
+#new grass environment can make use of the informations on the 
+#projection and extent. 
+cp /media/DATA1/tsend001/vcf_modis_global/proj_mod44b_world_2005_250.tif /media/DATA1/tsend001/vcf_modis_global/grassdb/proj_mod44b_world_2005_250.tif
+&nbsp;
+#change directory to grassdb
+cd /media/DATA1/tsend001/vcf_modis_global/grassdb
+&nbsp;
+# Download the create_location.sh.zip(http://www.spatial-ecology.net/dokuwiki/lib/exe/fetch.php?media=wiki:create_location.sh.zip) and save it in your directory
+#Rename create_location.sh.zip create_location.sh by mv create_location.sh.zip create_location.sh
+#Run the script create_location.sh which creates the newlocation with inside the imported proj_*.tif.  
+bash /media/DATA1/tsend001/vcf_modis_global/scripts/create_location.sh proj_mod44b_world_2005_250.tif new_grass_loc /media/DATA1/tsend001/vcf_modis_global/grassdb 
+#open grass environement
+grass70 -text /media/DATA1/tsend001/vcf_modis_global;/grassdb/new_grass_loc/PERMANENT
+&nbsp;
+###### start perform script tasks 
+&nbsp;
+#import raster files into grass environment
+&nbsp;
+r.in.gdal input=/media/DATA1/tsend001/vcf_modis_global/proj_mod44b_world_2004_250.tif output=2004_VCF  --overwrite 
+r.in.gdal input=/media/DATA1/tsend001/vcf_modis_global/proj_mod44b_world_2005_250.tif output=2005_VCF  --overwrite 
+r.in.gdal input=/media/DATA1/tsend001/vcf_modis_global/proj_mod44b_world_2006_250.tif output=2006_VCF  --overwrite 
+&nbsp;
+# import the vector polygons
+v.in.ogr -c dsn=/media/DATA1/tsend001/vcf_modis_global/points_combined_translated_5x5_rec.shp output=glob_samples1 --overwrite
+&nbsp;
+#extract the values of VCF over the sample locations and #extracted values will be added to the attribute table of the #vector data
+v.rast.stats glob_samples raster=2004_VCF colprefix=v_4 -c --verbose
+v.rast.stats glob_samples raster=2005_VCF colprefix=v_5 -c --verbose
+v.rast.stats glob_samples raster=2006_VCF colprefix=v_6 -c --verbose
+&nbsp;
+#check the results
+v.info -c glob_samples
+v.db.select glob_samples
+v.univar glob_samples column=v_4_mean #calculate summary stats per field
+&nbsp;
+#export the glob_samples to shp
+v.out.ogr input=glob_samples type=area dsn=/media/DATA1/tsend001/vcf_modis_global/globsample_vcf.shp
+&nbsp;
+#Start R and import the shape file to calculate mean VCF values for three years
+R --vanilla -q &lt;&lt;EOF
+library(rgdal)
+globsample_vcf&lt;-readOGR(&quot;/media/DATA1/tsend001/vcf_modis_global/globsample_vcf.shp&quot; , &quot;globsample_vcf&quot;)
+globsample_vcf_mean&lt;-globsample_vcf[, c(1:49, 55,64,73)]
+globsample_vcf_mean$vcf&lt;-rowMeans(globsample_vcf_mean@data[c(50:52)])
+writeOGR(globsample_vcf_mean, dsn=&quot;/media/DATA1/tsend001/vcf_modis_global/globsample_vcf_mean1.shp&quot;, &quot;globsample_vcf_mean1&quot; , &quot;ESRI Shapefile&quot;)
+EOF

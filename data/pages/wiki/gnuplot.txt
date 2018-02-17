@@ -1,0 +1,58 @@
+====== GNUPLOT ======
+
+[[http://www.gnuplot.info/|GNUPLOT]] is a command-line program that can generate two- and three-dimensional plots of functions, data, and data fits.\\
+Why use GNUPLOT?\\
+  * Performs fast data plotting of text files (no binary file).
+  * Nice and in-depth graphs.
+  * Command line.
+  * Can query your data by AWK language.
+  * Built-in standard functions.
+  * Built up specific functions.
+  * NO FILE SIZE LIMITATION 
+  * NO ROW AND COLUMNS LIMITATION
+\\
+In the case studies gnuplot will be used to produce complex graphic animations.\\
+In the tutorial just few examples of data plotting will be shown in order to quickly discover the data distribution and pattern analysis.  
+Graphical settings such as legend and axis format will not be explained and can be easily found in the links. 
+
+You can access to gnuplot by:
+<code bash>
+gnuplot
+</code>
+and in gnuplot you can enter in help page by:
+//help command//\\
+Example:
+<code bash>
+help plot
+</code>
+
+
+
+
+===== Gnuplot Tutorials =====
+  * [[gnuplotsintax|The Gnuplot syntax]]
+  * [[gnurun|Running Gnuplot]]
+
+===== Gnuplot exercises =====
+These exercises create scripts that will be stored in ~/ost4sem/exercise/basic_adv_gnuplot.\\ 
+
+Open the kate file and copy/paste the lines to the terminal.\\ 
+
+You can can also interact with the shell using other commands and inserting comments in the editor.\\
+You can run it directly by:
+<code bash> 
+sh file_name.sh 
+</code> 
+The files that are used in these exercises are also used in the case study.\\
+Try to explore the file and understand thoroughly the data structure, in order to follow the case study script for each step.\\
+
+  * [[gnuplotbasic | Basic gnuplot scripts]]
+  * [[gnuplotadvance | Advance gnuplot scripts ]]
+
+===== Gnuplot links  =====
+
+  * [[ http://www.gnuplot.info/ | gnuplot homepage ]]
+  * [[ http://www.gnuplot.info/docs/gnuplot.html | Official documentation ]]
+  * [[ http://www.gnuplot.info/docs_4.0/gpcard.pdf | Reference card ]]
+  * [[ http://t16web.lanl.gov/Kawano/gnuplot/index-e.html | Gnuplot Example]]
+  * [[ http://www.me.umn.edu/~langlais/UMN/gnuplot-shortcourse/gnuplot.pdf | Short Course]]

@@ -1,0 +1,31 @@
+====== Registration Fees ======
+
+
+Registration is on //a first come, first served// basis and it will be closed when it reaches 25 participants. Therefore, we encourage participant to register ASAP. A waiting list will be establish in case of over-passing the 25 participants.\\
+\\
+Students from University of California - Santa Barbara  benefit of 20 places reserved as compensation for hosting the event. **We will holding them until the April 30th**, afterwards the remain places will open to no-UCSB affiliates.\\
+\\
+The course Registration Fee Includes: 42 hours class training, student supervision, course auditing, course material, lectures, sample data and a Linux Virtual Machine with all the software installed.\\
+Participants are expected to take care of their own accommodation, meals, and travel expenses to and from UCSB.
+
+In order to register, all participants have to:\\
+\\
+1) //**Keep in touch with giuseppe.amatulli@yale.edu**// expressing your interest in the course and your affiliation.\\
+
+2) //**Pay the registration fee**// of $450 using your pay-pal account by selecting 
+-> "Pay or send money" -> "Send money to friends or family" (It’s free in the U.S. when you use bank or balance) using giuseppe.amatulli@yale.edu e-mail account. **DO NOT USE** "Pay for goods or services" option.\\
+\\
+\\
+3) //** fill-in the  [[wiki:SBarbregist_quest | following questionnaire]] **//
+\\
+
+//**__You will be considered registered__ ONCE the registration fee has been paid through pay-pal and the questionnaire has been filled **//
+\\
+
+=== Refund policy ===
+Written notification of registration cancellation must be e-mailed to giuseppe.amatulli@yale.edu. If registration cancellation is received by June 1st, 2015, registrant will receive a refund of registration fee less a $100 processing fee. We will retain $350 for cancellation notice submitted after June 1st, 2015 unless candidates from waiting list accept to replace withdrawal candidates.
+\\
+\\
+[[regListSBarb | Registration List & Registration Waiting List]]\\
+[[wiki:SBarbregist_quest | following questionnaire]]
+

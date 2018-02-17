@@ -1,0 +1,86 @@
+====== Part 4 ======
+
+  * Introduction to LiDAR
+  * Point data formats: ASCII, vector and LAS data
+
+===== Digital elevation models =====
+
+  * digital surface models (DSM)
+  * digital terrain models (DTM)
+  * vegetation height models (VHM)
+
+===== Open source software for processing LAS data =====
+
+  * las tools from Martin Isenburg (multiple license: partly open, partly commercial) [[http://www.cs.unc.edu/~isenburg/lastools/|lastools]]
+  * las tools from Mateusz Loskot (BSD License): [[http://www.liblas.org/lastools.html|liblas]]
+  * SPDLib from Pete Bunting: [[http://www.spdlib.org/doku.php?id=spdlib:examples:examples|SPDLib]]
+  * pktools creating and filtering DEM raster datasets from LAS files: [[http://www.nongnu.org/pktools/html/index.html|pktools]]
+
+====== Case study: LiDAR products in forestry ======
+
+ * Input data: forest_31370.laz
+ * Create digital surface model (DSM)
+ * Create digital terrain model (DTM)
+ * Create vegetation height model (VHM)
+ * Create percentage height values (PHV)
+ * Create intensity map
+
+===== Set environment variables for input and output directories =====
+
+<code>
+export INPUTDIR=...
+export OTPUTDIR=...
+</code>
+
+===== Extract basic information =====
+
+==== from LAZ file ====
+
+<code>
+lasinfo $INPUTDIR/forest_31370.laz
+</code>
+
+==== from (APEX) hyperspectral dataset ====
+
+<code>
+gdalinfo $INPUTDIR/apex_ql.tif
+</code>
+
+==== using pktools ====
+
+<code>
+pkinfo -i $INPUTDIR/apex_ql.tif -dx -dy -bb
+</code>
+
+===== Create digital elevation models (DEM) =====
+
+==== Digital surface model (DSM) ====
+
+<code>
+pklas2img -i $INPUTDIR/forest_31370.laz -o $OUTPUTDIR/forest_dsm.tif -a_srs epsg:31370 $(pkinfo -i $INPUTDIR/apex_ql.tif -dx -dy -bb) -comp max
+</code>
+
+==== Digital terrain model (DTM) ====
+
+<code>
+pklas2img -i $INPUTDIR/forest_31370.laz -o $OUTPUTDIR/forest_dem_min.tif -a_srs epsg:31370 $(pkinfo -i $INPUTDIR/apex_ql.tif -dx -dy -bb) -comp min
+pkfilterdem -i $OUTPUTDIR/forest_dem_min.tif -o $OUTPUTDIR/forest_dtm.tif -f promorph -dim 3 -dim 17
+</code>
+
+==== Vegetation height model (VHM) ====
+
+<code>
+gdal_calc.py -A $OUTPUTDIR/forest_dsm.tif -B $OUTPUTDIR/forest_dtm.tif --outfile=$OUTPUTDIR/forest_vhm.tif --calc="(A>B)*(A-B)"
+</code>
+
+==== Create percentage height values (PHV) ====
+
+<code>
+pklas2img -i $INPUTDIR/forest_31370.laz -o $OUTPUTDIR/forest_profile.tif -a_srs epsg:31370 $(pkinfo -i input/apex_ql.tif -dx -dy -bb) -comp profile -nbin 11
+</code>
+
+==== Create intensity map ====
+
+<code>
+pklas2img -i $INPUTDIR/forest_31370.laz -o $OUTPUTDIR/forest_intensity.tif -a_srs epsg:31370 $(pkinfo -i input/apex_ql.tif -dx -dy -bb) -fir first -n intensity -ot UInt16
+</code>

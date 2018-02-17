@@ -1,0 +1,10 @@
+====== Call bash command (so gdal/pktools) from python  ======
+\\
+Material prepared by Stephen Weston 
+\\
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/subproc.py }}
+
+
+
+  import os
+  os.system ('gdal_translate ost4sem_all/ost4sem/exercise/basic_adv_gdalogr/input.tif test.tif')

@@ -1,0 +1,26 @@
+====== Geotaggin images using log files ======
+Images downloaded from the camera do not have any spatial information (lat, long, altitude) where the picture was taken, neither the direction of the camera. The UAV autopilot at the same time write to a log file all flying information from a flight including speed, direction, time stamps. We can use the log file to relate each picture to it's spatial location while was taken.\\ 
+[[http://www.spatial-ecology.net/ost4sem/lecture/geotag.pdf| 3DR Tower and geotagging]].\\
+Different software exists to enrich images meta data with these informations:
+  * Mission planner can perform it using different [[http://ardupilot.org/copter/docs/common-geotagging-images-with-mission-planner.html| approaches]] (c.f. distance or time approach).
+  * A [[https://hub.qgis.org/projects/geotagphotos/wiki| QGis Photo2shape]] plugging provide a GUI to the excellent ExifTool perl library to perform this task.
+
+Here we use ExifTools without GUI interface. [[http://owl.phy.queensu.ca/~phil/exiftool/|ExifTools]] is a powerful command line application for reading, writing and editing meta information in a large variety of image file formats. 
+{{ :wiki:uav:overview_exiftool.png?800 |Overview of ExifTool functions}}
+\\
+Exiftool [[http://www.sno.phy.queensu.ca/~phil/exiftool/geotag.html | geotag option]] is a ready to go tool to geotag images. We need to specify the folder containing the images and the name of the log file. 
+
+<note important>We have have tested the gpx log file format and it works ok. Move the gpx log file in the same folder as the images, migrate to that folder and execute the **ExifTool -geotag** command </note>
+
+From the shell terminal use the below lines of code:
+
+<code bash>
+sudo apt install libimage-exiftool-perl # install ExifTool
+cd ~/path2images
+exiftool -geotag=MISSION.log.gpx ~/path2images/
+</code>
+
+If you need to change time or date for the whole set of images (ex. you travel in a place with 1h difference from your place of origin and your camera has 1h difference from drone settings), use the following line of code:
+    exiftool -DateTimeOriginal+=1   ~/path_to/image_folder/
+
+

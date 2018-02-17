@@ -1,0 +1,45 @@
+
+===== Limited filling of the potential range in tree species =====
+The objective of this exercise is to quantify the range filling as realized/potential range size ratios for the distribution of //Pinus cembra//. We are going to use the potential habitat distribution model of Pinus cembra random Forest and the Euforgen distribution maps.
+  * [[exercise_rp_ratio|Calculate the Limited Filling of the Potential Range - wiki format]]; [[http://www.spatial-ecology.net/ost4sem/exercise/rp_ratio/rp_ratio.sh|Download the script]] or open it from your virtual machine at\\  ~/ost4sem/exercise/pcemstat/pcemstat.sh\\
+\\
+===== General statistics on the distribution and suitability of Pinus Cembra in the alps =====
+The main objective of this exercise is to calculate the ha of tree cover for the distribution and suitability of //Pinus cembra//. In this exercise we practice and learn some Bash shell scripting and awk commands within the grass environment.\\
+  * [[exercise_pcem_stats|General statistics of Pinus cembra forests - wiki format]]; [[http://www.spatial-ecology.net/ost4sem/exercise/pcemstat/pcemstat.sh|download the sh script]] or open it from your virtual machine at\\  ~/ost4sem/exercise/pcemstat/pcemstat.sh \\
+\\
+===== European Forest cover distribution by country =====
+The main objective of this exercise is to calculate the ha of tree cover for European countries. In this exercise we practice and learn some Bash shell scripting and awk commands within the grass environment.\\
+  * [[exercise_euforest_stats|European Forest cover statistics by country - wiki format]]; [[http://www.spatial-ecology.net/ost4sem/exercise/EUforest_stats/euforest_stats.sh|download the sh script]] or open it from your virtual machine at\\  ~/ost4sem/exercise/EUforest_stats/euforest_stats.sh \\
+\\
+===== Create a dem from point data =====
+The main objective of this exercise is to build up a DEM tif data starting from point data in text format.
+  * [[exercise_createDem | Create a dem from point data - wiki format]];\\
+\\
+===== Create a raster ID =====
+The main objective of this exercise is to create a raster ID in a specific location and with a predetermined pixel size.
+  * [[exercise_createRasterID | Create a raster ID - wiki format]];\\
+\\
+===== Downlowad procedure to retrive WELD product =====
+The main objective of this exercise is to see how to download the data [[http://weld.cr.usgs.gov/ | WELD products]] and use it for burned area mapping and time series observation.
+  * [[exercise_weld | Download WELD data products - wiki format]];\\
+\\
+===== Building a geo-database from online web pages =====
+This exercise withdraw online data to built a geodatabase. We map cornwall school locations.\\
+  * [[exercise_cornwallschool | Download school location from the wed and create a map]];\\
+\\
+===== Forest fire =====
+  * [[wiki:firemod | Projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios. ]]\\
+\\
+===== Forest distribution modelling =====
+  * [[wiki:forestmod | Modelling and mapping the Natural Forest Distribution of Italy and predicting changes for the year 2080 under IPCC SRES A2a scenario.]]\\
+\\
+===== Urban greening and climate change =====
+  * [[wiki:urbanmod | Urban and Peri-Urban Tree Cover in European Cities: Current Distribution and Future Vulnerability Under Climate Change Scenarios.]] Computational implementation of the //Global Warming// book chapter published by Intech Open Access Publisher.\\
+\\
+===== Scanned maps =====
+  * [[wiki:scanmap | Remove image border and resize maps coming from a scanning operation ]] 
+
+=====  QGIS and Python for Hydrology =====
+Open-source [[https://github.com/raffalba/GeomorphicFloodIndex|GeomorphicFloodIndex]] and [[https://github.com/FloodRiskGroup/floodrisk| FloodRisk]] available in Qgis for Hydrological Analysis and flood risk modelling.\\
+Author: [[http://www2.unibas.it/raffaelealbano/?p=196| Dr Raffaele Albano ]] Co-Founder of Wat-TUBE spin-off UNIBAS, Research Associate at University of Basilicata (UNIBAS), ECS Representatives of NH Division of European Geosciences Union (EGU).\\
+[[https://github.com/raffalba/GIS_courses/tree/master/Summer_School_UNIBAS_SpatialEcology_Matera_2016 | Tutorial and scripts @ github]] 

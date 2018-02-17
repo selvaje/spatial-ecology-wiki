@@ -1,0 +1,45 @@
+=== Stack bands in feature fusion approach ===
+
+<note>
+LiDAR=band 0 \\
+NDVI=band 1\\
+LINEAR FEATURES=band 2 and 3\\
+CASI1-144=band 4 ... band 147\\
+</note>
+
+<code bash>
+    pkcrop -i 2013_IEEE_GRSS_DF_Contest_LiDAR.tif -i 2013_IEEE_GRSS_DF_Contest_NDVI.tif -i 2013_IEEE_GRSS_DF_Contest_LINEAR.tif -i 2013_IEEE_GRSS_DF_Contest_CASI.tif -o 2013_IEEE_GRSS_DF_Contest_FEATURE_FUSION.tif
+</code>
+
+==== Feature fusion ====
+
+=== Create training vector with stacked features ===
+<code bash>
+    pkextract -i 2013_IEEE_GRSS_DF_Contest_FEATURE_FUSION.tif -s 2013_IEEE_GRSS_DF_Contest_Samples_TR_26915.shp -o training_feature_fusion.shp
+</code>
+
+=== Optimize SVM parameters for these features ===
+<code bash>
+    pkopt_svm -t training_feature_fusion.shp -cc 0.1 -cc 10000 -g 0.001 -g 10 -step 10
+</code>
+
+<note tip>
+--ccost 7657.41 --gamma 0.186167
+</note>
+
+=== Redo the feature selection based on this new feature set (we can stop already after 10 features) ===
+<code bash>
+    pkfs_svm -t training_feature_fusion.shp -cc 100 -g 1 -n 10 -v 1 -cv 2
+</code>
+
+<note tip>
+-b 140 -b 2 -b 48 -b 0 -b 3 -b 23
+</note>
+
+==== Image classification ====
+
+=== Based on the optimal feature set, we can create a new land cover map ===
+<code bash>
+    pkclassify_svm -i 2013_IEEE_GRSS_DF_Contest_FEATURE_FUSION.tif -t training_feature_fusion.shp -o testmap_feature_fusion.tif -ct ct.txt --ccost 100 --gamma 1 -b 140 -b 2 -b 48 -b 0 -b 3 -b 23
+</code>
+

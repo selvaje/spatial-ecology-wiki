@@ -1,0 +1,22 @@
+====== Download and unzip files ======
+
+Supposing that you want download all the 6901??.tar.gz files  from this page  ftp://ftp.ncdc.noaa.gov/pub/data/nsrdb-solar/solar-only/ \\
+
+you can easily done with wget
+    cd /tmp
+    wget "ftp://ftp.ncdc.noaa.gov/pub/data/nsrdb-solar/solar-only/6901??.tar.gz"
+    
+Now you want untar all your files 
+
+    for file in *.tar.gz  ; do tar zxvf $file ; done
+    
+Now your files/folders will be stored in nsrdb_solar you can read one by: 
+
+    head nsrdb_solar/690140/690140_1991.csv
+
+And manipulate with AWK.
+
+
+<note tip>
+In case of an http server wget does not allow the use of metacharacter or regular expressions, but we can use curl in a similar way. See an help forum [[http://www.linuxquestions.org/questions/linux-newbie-8/wget-with-regular-expressions-846368/]].
+</note>

@@ -1,0 +1,7 @@
+for cov in ( Multiband )
+return encode ({
+red : cov.b3;
+green : cov .b1;
+blue : cov .b2
+}[E (300000:370000) , N (5800000:5850000)] ,
+&quot; tiff &quot;)

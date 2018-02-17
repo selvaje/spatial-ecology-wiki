@@ -1,0 +1,80 @@
+====== Questionnaire ======
+
+By knowing in advance the programming level of the participants will help us to set a better the course syllabus. No previous programming skills are required to attend the training, but we expect the participants to have strong motivation in learning command-line interface. 
+\\
+\\
+Please spend a moment to answer:\\
+  * In the **Real name** column, write your name
+  * Select one answer
+  * Click on submit
+  * When you finish send an e-mail to giuseppe.amatulli@yeale.edu indicating that you complete the questionnaire and that you performed the pay-pal transfer.\\
+===== Programming knoledge level =====
+Never used = I never used\\
+Yes but very basic level = I started to use few months ago but I still writing simple scripts\\
+Yes intermediate level = I use from several years and I'm able to combine few languages.\\
+Yes advance level = I use from several years and I'm able to combine few languages in multicore enviroment.\\
+<doodle SBarb2015any | 1SB) Do you know any programming or scripting language? >
+^ Never used  ^ Yes but very basic level ^ Yes intermediate level ^ Yes advance level ^ 
+</doodle>
+\\
+Never used = I never used\\
+I know very basic commands = I use simple commands but only in the terminal\\
+I can write simple scripts = I can use //for loop// and //if condition//\\
+I am a very experienced user = I can combine several languages using bash and i can use xargs & qsub for multicore\\
+<doodle SBarb2015bash | 2SB) What is your level of Linux Bash programming ? >
+^ Never used ^ I know very basic commands ^ I can write simple scripts ^ I am a very experienced user ^ 
+</doodle>
+\\
+Never used = I never used\\
+I know very basic commands = I use simple commands but only in the python terminal\\
+I can write simple scripts = I can use //for loop// and //if condition//\\
+I am a very experienced user = I can work with matrix and do complex math operation\\
+I am a very web experienced user = I use python manly for web developing\\
+<doodle SBarb2015python | 3SB) What is your level of Python programming ? >
+^ Never used ^ I know very basic commands ^ I can write simple scripts ^ I can write complex scripts ^ I am a very experienced user ^ I am a very web experienced user ^
+</doodle>
+\\
+Never used = I never used\\
+Only graphical user interface = I use graphical user interface but I started to use command lines\\
+I can write basic scripts = I can write basic scripts using //if condition// and //for loop// \\
+I am an experienced user = I write my own functions and use libraries  for parallel processing.\\
+<doodle SBarb2015r | 4SB) What is your knowledge of R language & environment for statistical computing and graphics  >
+^ Never used ^ Only graphical user interface ^ I can write basic scripts ^ I can write complex scripts ^ 
+</doodle>
+\\
+Never used = I never used\\
+Basic knowledge = I just use //print $1// and some //if conditions//\\
+I am an experienced user = I use //for loop// to loop trough the columns, indexing and associative array.\\
+<doodle SBarb2015awk | 5SB) What is your level of AWK  programming ? >
+^ Never used ^ Basic knowledge ^ I am an experienced user ^ 
+</doodle>
+\\
+Never used = I never used in my life\\
+Only graphical user interface = I use graphical user interface\\
+I can write basic scripts = I can write basic scripts using combining the different GRASS commands\\
+I am an experienced user = I write complex scripts, build Location/Mapset on the flight set GRASS variable for batch processing\\
+<doodle SBarb2015grass | 6SB) What is your knowledge of GRASS GIS >
+^ Never used ^ Only graphical user interface ^ I can write basic scripts ^ I can write complex scripts ^ 
+</doodle>
+\\
+Never used = I never used\\
+Only used in QGIS graphical user interface = I use only the QGIS plugging\\
+I can write basic scripts = I can use GDAL/OGR commands in simple scripts\\
+I am a good user = I combine GDAL/OGR with GRASS under BASH or Python\\
+I am an experienced user = I use GDAL/OGR API under Python\\
+<doodle SBarb2015gdal | 7SB) What is your knowledge of GDAL/OGR >
+^ Never used ^ Only used in QGIS graphical user interface ^ I can write basic scripts ^ I am a good user ^ I am an experienced user ^ 
+</doodle>
+\\
+<doodle SBarb2015gdal | 8SB) Do you have experience in the following software (if yes select it)?>
+^ ArcGis ^ ERDAS ^ ENVI ^ ERMapper ^ IDL ^ Matlab ^ AutoCad ^
+</doodle>
+\\
+\\
+In this section the course participants can post comments/suggestions or what you would like to achieve with this course. **Remember to write your name in the "real-name box"** in order to show who wrote the post.
+
+
+~~DISCUSSION | Questionnaire Discussion Forum ~~
+
+
+

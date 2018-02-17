@@ -1,0 +1,78 @@
+
+====== LANDSCAPE 3D ANALYSIS ======
+
+
+====INTRODUCTION===
+CREATE A RENDERING OF DIGITAL TERRAIN MODEL TO PERFORM A LANDSCAPE ANALYSIS 
+
+CREATE A MODEL FROM DEM
+ 
+
+===== RASTER DATA =====
+====ORTOPHOTO (* TIF) ====
+  
+COORDINATE SYSTEM : GAUSS BOAGA, DATUM WGS84
+
+===== METHOD =====
+GDAL ( READING FILE *.TIF, ASSIGNMENT COORDINATE, EXTRACTION OF A PORTION OF GRID)
+
+QGIS ( VALIDATION OF SCRIPT )
+
+OPENEV2 ( 3D ANALYSIS )
+
+===== DATA IMPORT =====
+DATA PRE-PROCESSING, USE EPSG COORDINATE FOR TRASFORMATION IN GAUSS BOAGA COORDINATE
+
+===== DATA PROCESSING =====
+
+<code bash>
+INDIR=~/ost4sem/project/input
+
+OUTDIR=~/ost4sem/project/output
+
+# ADD THE VARIABLES
+
+# READING THE FILE.TIF WITH A LOOP
+
+echo create the report 
+cd ~/ost4sem/project/input
+for file in *.TIF ; do 
+  gdalinfo  -mm  $file | grep "Computed Min/Max" 
+  gdalinfo    $file | grep "Size" 
+done > $OUTDIR/report.txt 
+
+# ASSIGN THE COORDINATE TO FILE.TIF
+# EPSG 3004 FOR GAUSS BOAGA FUSE EST 
+
+cd $OUTDIR
+
+for file in $INDIR/*.TIF ; do 
+  file=`basename $file`
+  echo define the projection of $file
+  gdalwarp   -t_srs EPSG:3004  -s_srs EPSG:3004  $INDIR/$file  $OUTDIR/proj_$file
+  
+  #  PULL OUT THE COORDINATE OF THE VERTICES OF *TIF
+  #  CALCULATE THE -projwin ulx uly lrx lry 
+
+  ULX=`gdalinfo $OUTDIR/proj_$file | grep "Upper Left" | awk '{ gsub (","," ") ;  print $4 }'`
+  ULY=`gdalinfo $OUTDIR/proj_$file | grep "Upper Left" | awk '{ print substr($5,1,11) }'`
+  LRX=`gdalinfo $OUTDIR/proj_$file | grep "Lower Right" | awk '{ gsub (","," ") ;  print $4  }'`
+  LRY=`gdalinfo $OUTDIR/proj_$file | grep "Lower Right" | awk '{  print substr($5,1,11)       }'`
+
+  # ESTRATION OF A PORTION OF GRID
+  
+
+echo "clip the dem"
+  gdal_translate  -projwin  $ULX $ULY $LRX $LRY $INDIR/Dem_Linux/int_gridtingb/w001001.adf  $OUTDIR/clip_grid_$file
+done
+</code>
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+http://old.nabble.com/OpenEV2-on-Ubuntu-9.10-td26273054.html
+{{:wiki:505010.png|}}
+{{:wiki:505020.png|}}
+{{:wiki:505050.png|}}
+{{:wiki:505060.png|}}

@@ -1,0 +1,132 @@
+
+<h1 class="sectionedit1" id="multi-cores_and_grid_processing">Multi-cores and Grid processing</h1>
+<div class="level1">
+
+<p>
+<a href="http://www.spatial-ecology.net/ost4sem/lecture/clustering.pdf" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/lecture/clustering.pdf" rel="nofollow noopener">  Grid computing vs parallel computing </a>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Multi-cores and Grid processing" [1-155] -->
+<h2 class="sectionedit2" id="multi-cores_processing_on_desktop_and_laptop">Multi-cores processing on desktop and laptop</h2>
+<div class="level2">
+
+<p>
+We can improve the capacity of processing data using the full computational capacity of CPU available in hardware.<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:vm_parall" class="wikilink1" title="wiki:vm_parall"> Set up your VM for multicore computation</a></div>
+</li>
+</ul>
+
+<p>
+Control number of cores using <strong>xargs &amp; qsub</strong> bash function:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:cluster_xargs1" class="wikilink1" title="wiki:cluster_xargs1"> Transform a simple &quot;for loop&quot; in multicore &quot;for loop&quot;</a> (basic multicore programming)</div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:cluster_xargs" class="wikilink1" title="wiki:cluster_xargs"> Transform a simple &quot;for loop script&quot; in multicore &quot;for loop script&quot; using xargs </a> (advance multicore programming)</div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:cluster_qsub" class="wikilink1" title="wiki:cluster_qsub"> Transform a simple &quot;for loop script&quot; in multicore &quot;for loop script&quot; using qsub</a> (advance multicore programming)</div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:cluster_qsubinter" class="wikilink1" title="wiki:cluster_qsubinter"> Use of qsub and xargs in for running R sections simultaneously</a> (advance multicore programming)</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.gnu.org/software/parallel/man.html#name" class="urlextern" target="blanc" title="http://www.gnu.org/software/parallel/man.html#name" rel="nofollow noopener"> parallel </a> - multi core processing using <em>parallel</em> bash function. <em>Parallel</em> allows you to perform a lot of stuff…. as an example you can use multiple remote computers for multi core computing. It is a rich software allowing the redirection of output to your machine.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Multi-cores processing on desktop and laptop" [156-1295] -->
+<h2 class="sectionedit3" id="cluster_computation_under_grappolo">Cluster computation under GRAPPOLO</h2>
+<div class="level2">
+
+<p>
+<a href="/dokuwiki/doku.php?id=wiki:raspi_hpc" class="wikilink1" title="wiki:raspi_hpc">GRAPPOLO</a> <strong>a supercomputer in a super box</strong> is a project conceived and developed from <strong>Spatial Ecology</strong> to teach cluster computation using a grid engine. We have collaborated with Makernow (a fablab in Cornwall) to make it portable.
+More specifically, GRAPPOLO is micro cluster computer replicating the functioning of the biggest cluster computer facility in the southwest UK. This tool is similar to the Raspberry pi cluster developed at Southampton University but is aimed towards teaching BigData processing for Geographic Information Systems methods rather than raw computation. It is very low cost ( ~ £140), portable and a perfect replica of an operating system running on a true high performance cluster computer. 
+</p>
+<ul>
+<li class="level1"><div class="li"><a href="http://www.spatial-ecology.net/ost4sem/lecture/grappolo_intro.pdf" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/lecture/grappolo_intro.pdf" rel="nofollow noopener"> general introduction </a> to <strong>grappolo</strong> hardware and grid engines.</div>
+</li>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:raspi_hpc" class="wikilink1" title="wiki:raspi_hpc"> Installing </a> an operating system and grid engine on a cluster of computer</div>
+</li>
+<li class="level1"><div class="li"><a href="http://www.makernow.co.uk/project/grappolo-supercomputer-superbox" class="urlextern" target="blanc" title="http://www.makernow.co.uk/project/grappolo-supercomputer-superbox" rel="nofollow noopener"> Building </a> a box using open source software and a laser-cut for making grappolo portable and safe.</div>
+</li>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:grappolo_basic" class="wikilink1" title="wiki:grappolo_basic"> Start using grappolo </a> and learn how to process data in a grid of computers.</div>
+</li>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:grappolo_grass" class="wikilink1" title="wiki:grappolo_grass"> Grass data processing in HPC </a> - learn the variable and environmental setting of grass for processing data in a grid engine.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "Cluster computation under GRAPPOLO" [1296-2757] -->
+<h2 class="sectionedit4" id="cluster_computation_using_amazon_high_performance_computing_hpc">Cluster computation using Amazon High Performance Computing HPC</h2>
+<div class="level2">
+
+<p>
+We obtained <a href="http://aws.amazon.com/grants/" class="urlextern" target="blanc" title="http://aws.amazon.com/grants/" rel="nofollow noopener"> Amazon education grants</a> for accessing and teaching the use of Amazon web services for High Performance Computing. 
+<br/>
+
+</p>
+<pre class="code"> cd /home/user/Downloads/
+ wget http://www.spatial-ecology.net/ost4sem/exercise/keypair.pem
+ sudo chmod 400 /home/user/Downloads/keypair.pem
+    
+ # see http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:regListSBarb
+ # 1ID student  1 2 3 4 
+ 
+ 
+ 
+ ssh -X -i /home/user/Downloads/keypair.pem  user*@ec2-54-234-116-177.compute-1.amazonaws.com
+ 
+ # transfer file to the instance 
+ scp -i /home/user/Downloads/keypair.pem yourfile user*@ec2-54-234-116-177.compute-1.amazonaws.com:/home/user*/</pre>
+<ul>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:amazon_hpc" class="wikilink2" title="wiki:amazon_hpc" rel="nofollow"> Learn HPC </a> using amazon cloud.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:amazon_zargs1" class="wikilink1" title="wiki:amazon_zargs1"> Transform a simple &quot;for loop&quot; in multicore &quot;for loop&quot; </a> </div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:amaxon_xargs" class="wikilink1" title="wiki:amaxon_xargs">Transform a simple &quot;for loop script&quot; in multicore &quot;for loop script&quot; </a> in the Amazon cloud.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "Cluster computation using Amazon High Performance Computing HPC" [2758-3782] -->
+<h2 class="sectionedit5" id="multi-cores_processing_r_scripts">Multi-cores processing R scripts</h2>
+<div class="level2">
+
+<p>
+Examples of processing R scripts using multiple CPU:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:cluster_r_eof" class="wikilink1" title="wiki:cluster_r_eof"> Embed R funcion in Bash  </a> passing variables from bash to R: to understand the logic of multi chore, here an example of single CPU processing R script using <abbr title="End of file">EOF</abbr> method.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:cluster_r_xargs" class="wikilink1" title="wiki:cluster_r_xargs"> The use of xargs  </a> Basic R functions processed with multiple chore using xargs bash function</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Multi-cores processing R scripts" [3783-4198] -->
+<h2 class="sectionedit6" id="cloud_computation_using_ms_azure">Cloud computation using MS Azure</h2>
+<div class="level2">
+
+<p>
+<a href="http://en.wikipedia.org/wiki/Cloud_computing" class="urlextern" target="blanc" title="http://en.wikipedia.org/wiki/Cloud_computing" rel="nofollow noopener"> Cloud computing </a> is the ability to run a program or application on many connected computers at the same time over internet.<br/>
+
+We can perform cloud computation uploading one or more virtual machines (VM) on a server, access the VMs through <a href="http://en.wikipedia.org/wiki/Secure_Shell" class="urlextern" target="blanc" title="http://en.wikipedia.org/wiki/Secure_Shell" rel="nofollow noopener"> a secure shell - ssh</a> data connection protocol.
+</p>
+<pre class="code"> ssh -X    nuvola1P@nuvola1p.cloudapp.net</pre>
+
+<p>
+This is less performing than using cluster computation such as <a href="http://gridscheduler.sourceforge.net/htmlman/htmlman1/qsub.html" class="urlextern" target="blanc" title="http://gridscheduler.sourceforge.net/htmlman/htmlman1/qsub.html" rel="nofollow noopener"> Sun Grid Engines</a>. The advantage over cluster computation is that you can <em>rent</em> the computational hardware sized to your needs and for a limited time and perform a specific task.
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Cloud computation using MS Azure" [4199-] -->

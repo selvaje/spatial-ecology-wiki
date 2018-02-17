@@ -1,0 +1,1 @@
+if (data$j==9) {ALPHA=0} else {ALPHA=data$j/45+data$t}

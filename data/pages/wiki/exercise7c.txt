@@ -1,0 +1,44 @@
+====== Exercise 7c: Using sql commands ======
+GDALOGR: ogr2ogr ogrinfo
+
+__Check the different classes (attribute=landuse) in the OSM polygons:__
+
+<code bash>
+ogrinfo ${OUTPUTDIR}/exercise7/osm_multipolygons.sqlite -sql "select DISTINCT landuse from multipolygons"
+</code>
+
+__Count number of polygons where landuse is forest:__
+
+<code bash>
+ogrinfo ${OUTPUTDIR}/exercise7/osm_multipolygons.sqlite -sql "select COUNT(landuse) from multipolygons where landuse='forest'"
+</code>
+
+__Script to count the polygons for each landuse class: show only those classes with more than 20 polygons__
+
+<code bash>
+for LU in $(ogrinfo ${OUTPUTDIR}/exercise7/osm_multipolygons.sqlite -sql "select DISTINCT landuse from multipolygons"|grep 'landuse (String) =' |awk -F= '{print $2}');do 
+ogrinfo ${OUTPUTDIR}/exercise7/osm_multipolygons.sqlite -sql "select COUNT(landuse) from multipolygons where landuse='$LU'"|grep "COUNT(landuse) (Integer) ="|awk -F= -v lu=$LU '{if ($2>20) print lu,$2}'
+done
+</code>
+
+__Create a SQLite vector with single attribute 'landuse' and retain only forest polygons__
+
+<code bash>
+ogr2ogr -f "SQLite" ${OUTPUTDIR}/exercise7/osm_forest.sqlite ${OUTPUTDIR}/exercise7/osm_multipolygons.sqlite -where "landuse='forest'" -select 'landuse'
+</code>
+
+__Create a SQLite vector with single attribute 'landuse' and retain selection of non-forest polygons: 'meadow','industrial','commercial','residential','grass'__
+
+<code bash>
+ogr2ogr -f "SQLite" ${OUTPUTDIR}/exercise7/osm_nonforest.sqlite ${OUTPUTDIR}/exercise7/osm_multipolygons.sqlite -where "landuse in ('meadow','industrial','commercial','residential','grass')" -select 'landuse'
+</code>
+
+__Merge the SQLite vectors__
+
+<code bash>
+ogr2ogr -f SQLite ${OUTPUTDIR}/exercise7/osm_merged.sqlite ${OUTPUTDIR}/exercise7/osm_forest.sqlite
+</code>
+
+<code bash>
+ogr2ogr -f SQLite -update -append ${OUTPUTDIR}/exercise7/osm_merged.sqlite ${OUTPUTDIR}/exercise7/osm_nonforest.sqlite
+</code>

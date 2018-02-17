@@ -1,0 +1,100 @@
+
+http://spatial-ecology.net/doku.php?id=wiki:insert_the_web_page_name_here
+
+^web page name^corrections^notes^
+|acknowledgements| yes fast   | done  |
+|admin| no needed  |   |
+|admin_unibas2010| no needed  |   |
+|admin_unizar2010| no needed  |   |
+|advancebash| yes fast | done  |
+|awk| yes fast | done  |
+|awkadvance| yes fast    | done   |
+|awkbasic| yes fast   | done  |
+|awkrun| yes fast   | done  |
+|awksintax| yes fast  | done  |
+|bas10bacteria| not now   |   |
+|bas10biomas| not now    |   |
+|bas10krigging| not now    |   |
+|bas10mtaland| not now   |   |
+|bas10mtasoil| not now    |   |
+|bas10mtaveg| yes fast    | done  |
+|bas10rxls| not now   |   |
+|bas10template| not now   |   |
+|bas10vector| not now   |   |
+|bas10vector3d| not now  |   |
+|bash| yes fast   | done  |
+|bashscript| yes fast   | done  |
+|basicbash| yes fast   | done  |
+|basicgrass| yes fast   | done  |
+|basicqgis| yes fast   | done  |
+|basicr| yes fast   | done  |
+|bivariate_r| yes fast    | done  |
+|case_studies| no needed   | need to be delate   |
+|case_study_intro| yes fast   | done |
+|commandbash| yes fast   | done  |
+|content_of_the_course| yes very carefully   | done  |
+|createdirbash| no needed    |   |
+|data| no needed   |   |
+|dk2010studentsteam| no needed   |   |
+|dokuwiki| no needed   |   |
+|editors| no needed   |   |
+|exercise_euforest_stats| yes   | done  |
+|exercise_pcem_stats| yes   | done  |
+|exercise_rp_ratio| yes   | done  |
+|exercises| yes   | done   |
+|fire_statistic_w.sh| yes   | done  |
+|firemod| yes   | done  |
+|forestmod| yes  | done  |
+|gdal| yes fast   | done  |
+|gdaladvance| yes fast   | done  |
+|gdalbasic| yes fast   | done  |
+|gdalsintax| yes fast    | done  |
+|gisvm| yes fast   | done  |
+|gnuplot| yes fast | done  |
+|gnuplotadvance| yes fast    | done  |
+|gnuplotbasic| yes fast    | done  |
+|gnuplotsintax| yes fast    | done  |
+|gnurun| yes fast    | done   |
+|grass| yes fast   | done  |
+|grassbatchjobs| yes fast    | done  |
+|grasscreatelocation| yes fast    | done  |
+|grassvariables| yes fast | done  |
+|hands_on_tools| no needed   |   |
+|history| yes fast    |done  |
+|install| yes fast   | done  |
+|installpkage| yes fast   | done  |
+|introduction| yes very carefully   | done  |
+|itaveg_fut_clim_rasters_sh| yes fast    |   |
+|itaveg_respred_table_sh| yes fast   |   |
+|kappar| no needed    |   |
+|lectures| yes carfuly|  |
+|lm_and_graphicr| yes fast  |   |
+|loopsr| yes fast    |   |
+|map_rf_itaveg_ens2028_r| yes fast   |   |
+|map_rf_itaveg_r| yes fast   |   |
+|merge_ascii_sh| yes fast   |   |
+|metacaracter| no needed   | delate   |
+|metacharacters| yes fast   |   |
+|online_tutorial| yes fast  |   |
+|pcem_syneco_r| yes fast   |   |
+|pipe| yes fast   |   |
+|predictor_table| yes fast   |   |
+|projects| no needed   |   |
+|pubgiu| no needed   |   |
+|pubste| no needed   |   |
+|qgis| yes fast    |   |
+|quoting| yes fast    |   |
+|r| yes fast    |   |
+|r_language_and_environment_for_statistical_computing_and_graphics| no needed | |
+|randomforest_itaveg_r| yes fast    |   |
+|schedule| no needed    |   |
+|shortcut| no needed    |   |
+|start| no needed    |   |
+|startbash| yes fast    |   |
+|students| no needed   |   |
+|syntax| yes fast    |   |
+|tab| yes fast    |   |
+|teachers| yes very carfuly    |   |
+|unibasilicata2010| no needed   |   |
+|work_in_progress| no needed    |   |
+|zaragoza2010| yes fast    |   |

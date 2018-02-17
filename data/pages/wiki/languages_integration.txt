@@ -1,0 +1,28 @@
+===== Integrate different SW and programming language for extracting relevant knowledge from data =====
+The main aim of these pages is to show how to integrate different SW and programming language under BASH environment
+
+==== Basic techniques ====
+Tips and tricks to import/export variables, run a program being inside to another one or communicate with the OS being in another SW 
+\\
+   * [[ LangIntegratiTheory  | Main syntax for Languages/Software integration]]\\
+   * [[ LangIntegratiTheory2 | Languages/Software integration: BASH and R]]\\
+   * [[ LangIntergartionGR | Languages/Software integration: PKTOOLS and OFT-TOOLS]]\\
+   * [[ LangIntergartionPTOT | Languages/Software integration: GRASS and R]]\\
+   * [[ LangIntergartionPkR | Languages/Software integration: GDAL, PKTOOLS and R]]\\
+   * [[wiki:weld| Landsat]]\\
+   * [[wiki:pk_tools | PKTOOLS ]]\\
+   * [[wiki:LangIntergartionGRASSBASH |  Compute Modis NDVI using GRASS and Bash ]]\\
+\\
+   * [[gdalbasic_kenya | Basic GDAL and OGR for Kenya ]]
+
+==== Unsupervised satellite image classification using bash orfeo-toolbox  ====
+   * [[wiki:unsupervisedPKT| Unsupervised classification ]]\\
+
+
+==== Supervised satellite image classification using bash PKtools ====
+
+   * [[wiki:openforis_burned | Burned Area Mapping using Support Vector Machine and Combined Segmentation Random Forest classifiers ]] 
+
+
+
+

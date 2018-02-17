@@ -1,0 +1,4 @@
+modified.ttest(rank(agri@data$dairy),rank(agri@data$beef_v),coordinates(coordinates(agri)))
+# F-statistic: 5.6505 on 1 and 140.7158 DF, p-value: 0.0188 
+# alternative hypothesis: true autocorrelation is not equal to 0
+# sample correlation: 0.1965

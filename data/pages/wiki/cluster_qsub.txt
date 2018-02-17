@@ -1,0 +1,91 @@
+====== Transform a simple "for loop script" in multicore "for loop script" using qsub  ======
+\\
+We have seen in the {{cluster_xargs1 | Transform a simple "for loop" in multicore "for loop"}} & {{ cluster_xargs  | Transform a simple "for loop script" in multicore "for loop script" using xargs }} how to use  //**xargs**// to perform multicore processing. In clusters or servers where several users have access to multicore processing the job submission is managed by //**qsub**//. Qsub is the command used for job submission that create a job cue scheduled for each user with specific priority.
+\\
+   ssh -X geodata??@omega.hpc.yale.edu
+
+   # if you do not have the folder or you are log to the Yale-HPC
+   mkdir -p $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+   cd $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+   wget https://dl.dropboxusercontent.com/u/29337496/2020_TSSP_IP-ENS-A2-SP20_43023435.tif
+   wget https://dl.dropboxusercontent.com/u/29337496/2050_TSSP_IP-ENS-A2-SP20_43023435.tif
+   wget https://dl.dropboxusercontent.com/u/29337496/2080_TSSP_IP-ENS-A2-SP20_43023435.tif
+   
+\\
+Now let's suppose that we have a script called myQSUBscript4cluster.sh with inside gdalwarp command and  settings specific for qsub.
+
+=== QSUB ===
+
+This example use qsub to send each file to a node. 
+
+   wget https://dl.dropboxusercontent.com/u/29337496/myQSUBXARGSscript4cluster.sh
+   mkdir $HOME/stdout
+   mkdir $HOME/stderr
+
+<code bash| myQSUBscript4cluster.sh>
+
+#PBS -S /bin/bash 
+#PBS -q fas_devel
+#PBS -l walltime=00:10:00    # maximum estimated processing time
+#PBS -l nodes=1:ppn=1       # number of nodes and processors used in the computation
+#PBS -V
+#PBS -o $HOME/stdout        # directory where standard output are saved
+#PBS -e $HOME/stderr        # directory where standard errors are saved
+
+# load modules for GIS and RS application 
+
+# varibles
+
+DIR=$HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+
+filename=$(basename $file)
+gdalwarp -r cubic -tr 0.008 0.008 -t_srs EPSG:4326 $DIR/$filename.tif  $DIR/proj_$filename.tif -overwrite 
+
+checkjob -v $PBS_JOBID
+
+</code>
+
+You can run myQSUBscript4cluster.sh with the following code\\
+
+   for file in $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/20?0_TSSP_IP-ENS-A2-SP20_43023435.tif ; do qsub   -v file=$file myQSUBscript4cluster.sh ; done 
+
+This solution is not computational efficient because each node use only one processor to accomplish the task. Rather we can use QSUB & XARGS to send all the files to a node and then all the files to the processors.
+
+=== QSUB & XARGS ===
+
+
+   wget https://dl.dropboxusercontent.com/u/29337496/myQSUBXARGSscript4cluster.sh
+   mkdir $HOME/stdout
+   mkdir $HOME/stderr
+
+<code bash| myQSUBXARGSscript4cluster.sh>
+
+#PBS -S /bin/bash 
+#PBS -q fas_devel
+#PBS -l walltime=00:10:00    # maximum estimated processing time
+#PBS -l nodes=1:ppn=4       # number of nodes and processors used in the computation
+#PBS -V
+#PBS -o $HOME/stdout        # directory where standard output are saved
+#PBS -e $HOME/stderr        # directory where standard errors are saved
+
+# load modules for GIS and RS application 
+
+# varibles
+
+DIR=$HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+
+ls $DIR/20?0_TSSP_IP-ENS-A2-SP20_43023435.tif | xargs -n 1 -P 4 bash -c $'
+file=$1
+filename=$(basename $file)
+gdalwarp -r cubic -tr 0.008 0.008 -t_srs EPSG:4326 $DIR/$filename.tif  $DIR/proj_$filename.tif -overwrite 
+
+' _ 
+checkjob -v $PBS_JOBID
+
+</code>
+
+You can run myQSUBXARGSscript4cluster.sh with the following code\\
+
+   qsub myQSUBXARGSscript4cluster.sh  
+
+This solution is more efficient the previous one because we are using one node and the 4 processors in one node.  

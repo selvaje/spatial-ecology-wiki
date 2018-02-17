@@ -1,0 +1,128 @@
+
+<h1 class="sectionedit1" id="pkmosaic">pkmosaic</h1>
+<div class="level1">
+
+<p>
+NAME
+</p>
+<pre class="code"> pkmosaic - mosaic and composit raster files</pre>
+
+<p>
+SYNOPSIS
+</p>
+<pre class="code bash">   pkmosaic <span class="re5">-i</span> input <span class="re5">-o</span> output <span class="br0">&#91;</span>OPTION<span class="br0">&#93;</span></pre>
+
+<p>
+DESCRIPTION
+</p>
+<pre class="code"> Create mosaics and composit raster files using different compositing rules
+     </pre>
+
+<p>
+OPTIONS
+</p>
+<pre class="code bash">   <span class="re5">-i</span>     <span class="re5">--input</span>                Input image <span class="kw2">file</span><span class="br0">&#40;</span>s<span class="br0">&#41;</span>. If input contains multiple images, a multi-band output is created <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-o</span>     <span class="re5">--output</span>               Output image <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-p</span>     <span class="re5">--projection</span>           projection <span class="kw1">in</span> EPSG format <span class="br0">&#40;</span>leave blank to copy from input <span class="kw2">file</span>, use EPSG:<span class="nu0">3035</span> to use European projection and to force to European grid <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-e</span>     <span class="re5">--extent</span>               get boundary from extent from polygons <span class="kw1">in</span> vector <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-ulx</span>   <span class="re5">--ulx</span>                  Upper left x value bounding box <span class="br0">&#40;</span><span class="kw1">in</span> geocoordinates <span class="kw1">if</span> georef is <span class="kw2">true</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-uly</span>   <span class="re5">--uly</span>                  Upper left y value bounding box <span class="br0">&#40;</span><span class="kw1">in</span> geocoordinates <span class="kw1">if</span> georef is <span class="kw2">true</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-lrx</span>   <span class="re5">--lrx</span>                  Lower right x value bounding box <span class="br0">&#40;</span><span class="kw1">in</span> geocoordinates <span class="kw1">if</span> georef is <span class="kw2">true</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-lry</span>   <span class="re5">--lry</span>                  Lower right y value bounding box <span class="br0">&#40;</span><span class="kw1">in</span> geocoordinates <span class="kw1">if</span> georef is <span class="kw2">true</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-b</span>     <span class="re5">--band</span>                 band index to crop <span class="br0">&#40;</span>-<span class="nu0">1</span>: crop all bands<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: -<span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-ot</span>    <span class="re5">--otype</span>                Data <span class="kw3">type</span> <span class="kw1">for</span> output image <span class="br0">&#40;</span><span class="br0">&#123;</span>Byte<span class="sy0">/</span>Int16<span class="sy0">/</span>UInt16<span class="sy0">/</span>UInt32<span class="sy0">/</span>Int32<span class="sy0">/</span>Float32<span class="sy0">/</span>Float64<span class="sy0">/</span>CInt16<span class="sy0">/</span>CInt32<span class="sy0">/</span>CFloat32<span class="sy0">/</span>CFloat64<span class="br0">&#125;</span><span class="br0">&#41;</span>. Empty string: inherit <span class="kw3">type</span> from input image <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-of</span>    <span class="re5">--oformat</span>              Output image format <span class="br0">&#40;</span>see also gdal_translate<span class="br0">&#41;</span>. Empty string: inherit from input image <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-ct</span>    <span class="re5">--ct</span>                   color table <span class="br0">&#40;</span><span class="kw2">file</span> with <span class="nu0">5</span> columns: <span class="kw2">id</span> R G B ALFA <span class="br0">&#40;</span><span class="nu0">0</span>: transparent, <span class="nu0">255</span>: solid<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-dx</span>    <span class="re5">--dx</span>                   Output resolution <span class="kw1">in</span> x <span class="br0">&#40;</span><span class="kw1">in</span> meter<span class="br0">&#41;</span> <span class="br0">&#40;</span><span class="nu0">0.0</span>: keep original resolution<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-dy</span>    <span class="re5">--dy</span>                   Output resolution <span class="kw1">in</span> y <span class="br0">&#40;</span><span class="kw1">in</span> meter<span class="br0">&#41;</span> <span class="br0">&#40;</span><span class="nu0">0.0</span>: keep original resolution<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-co</span>    <span class="re5">--co</span>                   options: <span class="re2">NAME</span>=VALUE <span class="br0">&#91;</span>-co <span class="re2">COMPRESS</span>=LZW<span class="br0">&#93;</span> <span class="br0">&#91;</span>-co <span class="re2">INTERLEAVE</span>=BAND<span class="br0">&#93;</span> <span class="br0">&#40;</span>default: <span class="re2">INTERLEAVE</span>=BAND<span class="br0">&#41;</span>
+   <span class="re5">-f</span>     <span class="re5">--flag</span>                 Flag value to put <span class="kw1">in</span> image <span class="kw1">if</span> out of bounds. <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-r</span>     <span class="re5">--resample</span>             Resampling method <span class="br0">&#40;</span><span class="nu0">0</span>: nearest neighbour, <span class="nu0">1</span>: bi-linear interpolation<span class="br0">&#41;</span>. <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+          <span class="re5">--description</span>          Set image description <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-m</span>     <span class="re5">--mrule</span>                Mosaic rule <span class="kw1">for</span> mosaic <span class="br0">&#40;</span><span class="nu0">0</span>: overwrite, <span class="nu0">1</span>: max ndvi, <span class="nu0">2</span>: max Band, <span class="nu0">3</span>: min Band, <span class="nu0">4</span>: valid Band, <span class="nu0">5</span>: mean value, <span class="nu0">6</span>: max voting <span class="br0">&#40;</span>only <span class="kw1">for</span> byte images<span class="br0">&#41;</span>, <span class="nu0">7</span>: median, <span class="nu0">8</span>: <span class="br0">&#40;</span>weighted<span class="br0">&#41;</span> <span class="kw2">sum</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-rb</span>    <span class="re5">--rband</span>                band index used <span class="kw1">for</span> the rule <span class="br0">&#40;</span><span class="kw1">for</span> ndvi, use <span class="re5">--ruleBand</span>=redBand <span class="re5">--ruleBand</span>=nirBand <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-vb</span>    <span class="re5">--validBand</span>            valid band index<span class="br0">&#40;</span>es<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-t</span>     <span class="re5">--invalid</span>              invalid value <span class="kw1">for</span> valid band <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-min</span>   <span class="re5">--min</span>                  flag values smaller or equal to this value <span class="kw2">as</span> invalid. <span class="br0">&#40;</span>default: -1e+08<span class="br0">&#41;</span>
+   <span class="re5">-max</span>   <span class="re5">--max</span>                  flag values larger or equal to this value <span class="kw2">as</span> invalid. <span class="br0">&#40;</span>default: 1e+08<span class="br0">&#41;</span>
+   <span class="re5">-file</span>   <span class="re5">--file</span>                 <span class="kw2">write</span> number of observations <span class="kw1">for</span> each pixels <span class="kw2">as</span> additional layer <span class="kw1">in</span> mosaic <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-w</span>     <span class="re5">--weight</span>               Weights <span class="br0">&#40;</span>type: short<span class="br0">&#41;</span> <span class="kw1">for</span> the mosaic, use one weight <span class="kw1">for</span> each input <span class="kw2">file</span> <span class="kw1">in</span> same order <span class="kw2">as</span> input files are provided<span class="br0">&#41;</span>. Use value <span class="nu0">1</span> <span class="kw1">for</span> equal weights. <span class="br0">&#40;</span>default: <span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-c</span>     <span class="re5">--class</span>                classes <span class="kw1">for</span> multi-band output image: each band represents the number of observations <span class="kw1">for</span> one specific class. Use value <span class="nu0">0</span> <span class="kw1">for</span> no multi-band output image<span class="br0">&#41;</span>. <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-v</span>     <span class="re5">--verbose</span>              verbose <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT1 SECTION "pkmosaic" [1-3769] -->
+<h1 class="sectionedit2" id="examples">Examples</h1>
+<div class="level1">
+<pre class="code bash">pkmosaic <span class="re5">-i</span> input1.tif <span class="re5">-i</span> input2.tif <span class="re5">-o</span> output.tif <span class="co0"># create mosaic from two input images. If images overlap, keep only last image (default rule)</span>
+&nbsp;
+pkmosaic <span class="re5">-i</span> input1.tif <span class="re5">-i</span> input2.tif <span class="re5">-o</span> output.tif <span class="re5">-m</span> <span class="nu0">4</span> <span class="re5">--validBand</span> <span class="nu0">1</span> <span class="re5">-t</span> <span class="nu0">255</span> <span class="re5">-f</span> <span class="nu0">0</span> <span class="co0"># create mosaic from two input images. Values of 255 in band 1 (starting from 0) are masked as invalid (rule=4). Typical use when multi-band image contains cloud mask</span>
+&nbsp;
+pkmosaic <span class="re5">-i</span> input1.tif <span class="re5">-i</span> input2.tif <span class="re5">-o</span> output.tif <span class="re5">-m</span> <span class="nu0">1</span> <span class="re5">--rband</span>=<span class="nu0">0</span> <span class="re5">--rband</span>=<span class="nu0">1</span> <span class="re5">-t</span> <span class="nu0">255</span> <span class="re5">-f</span> <span class="nu0">0</span> <span class="co0"># create maximum NDVI (normalized difference vegetation index) composit. Values of 255 in band 0 (default) are masked as invalid and flagged as 0 if no other valid coverage. Typical use for (e.g., MODIS) images where red and near infrared spectral bands are stored in bands 0 and 1 respectively</span>
+&nbsp;
+pkmosaic <span class="re5">-i</span> input1.tif <span class="re5">-i</span> input2.tif <span class="re5">-i</span> input3.tif <span class="re5">-o</span> output.tif <span class="re5">-m</span> <span class="nu0">5</span> <span class="re5">-w</span> <span class="nu0">0.75</span> <span class="re5">-w</span> <span class="nu0">1.5</span> <span class="re5">-w</span> <span class="nu0">0.75</span> <span class="co0"># create composite image using weighted mean: output=(3/4*input1+6/4*input2+3/4*input2)/3.0 </span></pre>
+
+</div>
+<!-- EDIT2 SECTION "Examples" [3770-4778] -->
+<h2 class="sectionedit3" id="advanced_examples">Advanced examples</h2>
+<div class="level2">
+<pre class="code bash">pkmosaic <span class="re5">-i</span> large.tif $<span class="br0">&#40;</span><span class="kw1">for</span> IMAGE <span class="kw1">in</span> <span class="sy0">*</span>.tif;<span class="kw1">do</span> pkinfo <span class="re5">-i</span> <span class="re1">$IMAGE</span> <span class="re5">--cover</span> $<span class="br0">&#40;</span>pkinfo <span class="re5">-i</span> coverage.tif -bb<span class="br0">&#41;</span>;<span class="kw1">done</span><span class="br0">&#41;</span> <span class="re5">-m</span> <span class="nu0">4</span> <span class="re5">-min</span> <span class="nu0">0</span> <span class="re5">-o</span> output.tif <span class="co0"># create composit of all images found in current directory that cover (part of) coverage.tif. Values smaller or equal to 0 are invalid and flagged as 0 (default flag value) </span></pre>
+
+</div>
+<!-- EDIT3 SECTION "Advanced examples" [4779-5135] -->
+<h2 class="sectionedit4" id="frequently_asked_questions">Frequently Asked Questions</h2>
+<div class="level2">
+
+<p>
+Q1: How do I use the flags -t (–invalid), -min (–min) and -max (–max)?
+</p>
+
+<p>
+Answer: For individual invalid value(s) in input image, use -t (–invalid)
+</p>
+
+<p>
+Usage:
+use unique value for each invalid bands set in -vb (–validBand) or 
+use a single value that will be applied to all invalid bands
+</p>
+
+<p>
+Example:
+</p>
+<pre class="code bash">pkmosaic <span class="re5">-i</span> input1.tif <span class="re5">-i</span> input2.tif <span class="re5">-o</span> output.tif <span class="re5">-t</span> <span class="nu0">0</span> <span class="re5">-t</span> <span class="nu0">255</span> <span class="re5">-vb</span> <span class="nu0">0</span> <span class="re5">-vb</span> <span class="nu0">1</span></pre>
+
+<p>
+will consider 0 in band 0 and 255 in band 1 of input images as no value
+</p>
+<pre class="code bash">pkmosaic <span class="re5">-i</span> input1.tif <span class="re5">-i</span> input2.tif <span class="re5">-o</span> output.tif <span class="re5">-t</span> <span class="nu0">0</span> <span class="re5">-vb</span> <span class="nu0">0</span> <span class="re5">-vb</span> <span class="nu0">1</span></pre>
+
+<p>
+will consider 0 in both bands 0 and 1 of input images as no value
+</p>
+
+<p>
+For range(s) of invalid values in input images: use -min (–min) and -max (–max)
+Usage:
+use unique range set for each invalid bands set in -vb (–validBand)
+</p>
+
+<p>
+Example:
+</p>
+<pre class="code bash">pkmosaic <span class="re5">-i</span> input1.tif <span class="re5">-i</span> input2.tif <span class="re5">-o</span> output.tif <span class="re5">-min</span> <span class="nu0">0</span> <span class="re5">-max</span> <span class="nu0">200</span> <span class="re5">-min</span> <span class="nu0">0</span> <span class="re5">-max</span> <span class="nu0">2</span> <span class="re5">-vb</span> <span class="nu0">0</span> <span class="re5">-vb</span> <span class="nu0">1</span></pre>
+
+<p>
+will consider all negative values in band 0 and 1 of input images as invalid. Values larger or equal to 200 in band 0 will be invalid, as well as values larger or equal to 2 in band 1
+</p>
+
+<p>
+Q2: If I take the mean value as composit rule for multi-band input images, will the output image contain the mean value of overlapping images in each band?
+</p>
+
+<p>
+Answer: Yes
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Frequently Asked Questions" [5136-] -->

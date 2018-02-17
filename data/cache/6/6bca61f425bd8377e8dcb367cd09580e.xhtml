@@ -1,0 +1,11 @@
+
+<h1 class="sectionedit1" id="merging_tiles_into_common_maps">Merging tiles into common maps</h1>
+<div class="level1">
+
+<p>
+This simple command line uses the gdalwarp function <a href="http://www.gdal.org/gdalwarp.html" class="urlextern" target="blanc" title="http://www.gdal.org/gdalwarp.html" rel="nofollow noopener">http://www.gdal.org/gdalwarp.html</a> to merge tiles into a common map.
+You have to run it from a terminal within the correct folder.
+</p>
+<pre class="code"> gdalwarp  -srcnodata &quot;-9999&quot;  -dstnodata &quot;-9999&quot; -of GTiff -ot Int16 -wt Int16     *.asc   ITAveg.tif</pre>
+
+</div>

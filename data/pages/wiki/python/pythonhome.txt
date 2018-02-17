@@ -1,0 +1,45 @@
+====== Python ======
+{{:wiki:python_logo.jpeg?100 |}}
+
+===== Webinar =====
+
+=== Exploitation of High Resolution Satellite Imagery using Open Source Machine Learning Tools ===
+Tom Jones, Earth Observation Specialist, Satellite Applications Catapult
+  * [[http://www.spatial-ecology.net/ost4sem/webinar/TomJonesEOpython/EOTOMJ.PDF |Download presentation]]
+  * [[http://www.spatial-ecology.net/ost4sem/webinar/TomJonesEOpython/SatelliteEODemonstration-TomJ-SAC.IPYNB| Webinar  Jupiter Demo]] on EO data processing with Python 
+
+Material prepared by:\\
+[[ http://www.issia.cnr.it/wp/?portfolio=francesco-lovergine | Francesco Lovergine ]]\\
+\\
+[[https://www.python.org|Python]] is a [[https://en.wikipedia.org/wiki/High-level_programming_language | high level]] powerful and fast programming language with broad links and ability to embed other libraries functionality specifically with respect of geospatial software and procedures. Similarly to R it is a object oriented language. It works with modules and packages inclusive of specific task performing dedicated or specific functions. Specifically a python module is a number of file imported and used while a package is a collection of modules in directories with a specific hierarchy. As an example in geocomputation we largely use packages such as [[http://www.numpy.org/| Numpy ]] //Numerical python//, [[https://www.scipy.org/| Scipy ]] //Scientific python//, [[http://pandas.pydata.org/| Pandas ]] //Python Data Analysis Library// ,  [[https://grasswiki.osgeo.org/wiki/GRASS_and_Python| grass.script]]  //to writing python scripts in GRASS //, [[http://rpy2.bitbucket.org/| Rpy2]] //an interface to R from Phython// and many other. Finally, python is the QGIS programming language so we can use it to write scripting routines or new plugins.
+{{:wiki:numpy_logo.jpeg?170 |}}{{:wiki:scipy_logo.jpeg?100 |}}
+ 
+===== Python Lectures =====
+
+===== Python Tutorials =====
+  * [[ wiki:python:basicpython |  Starting with Python - wiki]] 
+  * [[ wiki:python:basicpython1 | Python basis - wiki]]
+  * [[ wiki:python:basicpython2 | Python for dummies - wiki]]
+  * [[ wiki:python:basicpython3 | Python for not-so-dummies - wiki]]
+  * [[ wiki:python:basicpython4 | Use Python for pattern searching ]]
+  * [[ wiki:python:basicpython5 | Using GDAL/OGR API for GIS analysis ]]
+  * [[ wiki:python:basicpython6 | Call bash command (so gdal/pktools) from python ]]
+  * [[ wiki:python:geocoding | Geocoding with geopy]]
+
+
+ 
+
+===== Python exercises =====
+
+[[ wiki:python:segmentwatershed | Image segmentation using watershed algorithm]]
+  
+
+===== Python links  =====
+
+  * [[http://www.numpy.org/| Numpy ]] Numerical python
+  * [[https://www.scipy.org/| Scipy ]]Scientific python
+  * [[http://pandas.pydata.org/| Pandas ]] Python Data Analysis Library
+  * [[https://grasswiki.osgeo.org/wiki/GRASS_and_Python| grass.script]] writing python scripts in GRASS
+  * [[http://rpy2.bitbucket.org/| Rpy2]] an interface to R from Python - [[http://www.slideshare.net/bytemining/rpy2| nice lecture]] explaining what rpy2 does.
+ 
+

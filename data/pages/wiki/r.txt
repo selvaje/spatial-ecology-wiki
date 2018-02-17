@@ -1,0 +1,58 @@
+====== The R Project for Statistical Computing ======
+[[http://www.r-project.org|R]] is a language and environment for statistical computing and graphics. It is a [[http://www.gnu.org/|GNU]] project and provides a wide variety of statistical (linear and nonlinear modeling, classical statistical tests, time-series analysis, classification, clustering, ...) and graphical techniques, and is highly extensible. R language and environment is shared by a large community in science and geomatic professionals and is often the vehicle of choice for research in statistical methodology. R provides an Open Source route to participation in spatial analysis and ecological modeling.
+
+In this part of the wiki-training site we provide various sections: 
+===== R Lectures =====
+[[http://www.spatial-ecology.net/ost4sem/lecture/R_intro_speco.pdf | download]] or open it from your VM @: ~/ost4sem/lecture/r_intro_speco.pdf\\
+
+===== R Tutorials =====
+
+  * [[ basicr | Starting with R - wiki]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/basic_r.R  | download script]] or  ~/ost4sem/exercise/basic\_adv\_r/basic\_r.R
+  * [[installpkage |Installing a new package - wiki]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/install_packages.R |download script]] or ~/ost4sem/exercise/basic\_adv\_r/install\_packages.R
+  * [[loopsr|Create a script, ifelse condition, loop and graphics - wiki]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/altitude.R |download script]] or  ~/ost4sem/exercise/basic\_adv\_r/altitude.R
+  * [[wiki:rstat:r_geography|Geographical analyses in R - wiki]]. R as a GIS, spatial auto correlation, spatial covariance.
+  * [[grassandr|Embed grass functions in R - wiki]]
+  * [[wiki:rstat:sdmodel| Species Distribution Modeling]] with R
+  * [[wiki:rstat:Rparale| Parallel Processing in R]] by Steve Weston
+  * [[ http://research.computing.yale.edu/training/ycrc-bootcamps/writing-efficient-r-code | Writing Efficient R Code ]] by Steve Weston
+  * [[wiki:rstat:rgwmodel| Intro to geographically weighted models]] **GWmodel package** by Dr. Paul Harris
+
+
+===== R exercises =====
+
+  * [[lm_and_graphicr|A simple linear model and a graphic - wiki]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/linear_reg_model.R |download script]] or  ~/ost4sem/exercise/basic\_adv\_r/linear\_reg\_model.R
+  * [[kappar|Example of kappa statistics - wiki ]] on simulated data. [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/kappastat.R|download script]] or  ~/ost4sem/exercise/basic\_adv\_r/kappastat.R
+  * [[pcem_syneco_r|The auto ecology and synecology of Swiss Stone Pine in a graphic - wiki ]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/advanced_synecology.R|download script]] or ~/ost4sem/exercise/basic\_adv\_r/advanced\_synecology.R
+  * [[bivariate_r|Bivariate plot and visualization of multicollinearity in image - wiki ]]  [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/bivariate.R |download script]] or  ~/ost4sem/exercise/basic\_adv\_r/bivariate.R
+  * [[time_series|Plotting time series of pixel observation retrieved from WELD product]]
+  * [[spec_distrib|Understanding autoecology and synecology to model species distribution - GLM]]
+  * [[spec_distrib2|Understanding autoecology and synecology to model species distribution - Maxent]]
+  * [[vector_deseas |  Mapping disease vector habitat  ]]
+  * [[spdistr1 |  Species Distribution Modeling I  ]]
+  * [[spdistr2 |  Species Distribution Modeling II  ]]
+
+===== R links  =====
+
+  * [[ http://wiki.r-project.org/rwiki/doku.php | R-project official home page ]]
+  * [[http://r-spatial.sourceforge.net/| R Spatial]]
+  * [[http://www.r-tutor.com/gpu-computing/rpud-installation | GPU porocessing with R]]
+  * [[http://geodacenter.asu.edu/r-spatial-projects/| collection of web pages for the analysis of spatial data using R]] University of Arizona
+  * [[http://r4ds.had.co.nz/index.html | R for data science - G. Grolemund and H. Wickham, Online Book]].
+  * [[http://cran.r-project.org/manuals.html|R-project manuals section]]
+  * [[http://rwiki.sciviews.org/doku.php|R wiki]]
+  * [[http://www.ats.ucla.edu/stat/r/|Resources to help you learn and use R]] University of California at Los Angeles Academic Technology Services.
+  * [[http://www.itc.nl/personal/rossiter/pubs/list.htmlpubs_m_R|Online tutorials and examples of applications]] From Professor Rossiter, International Institute for Geo-Information Science and Earth Observation
+  * [[http://www.apsnet.org/education/AdvancedPlantPath/Topics/Top.html|Learnin R with Epidemiology and Ecological applications]] Online tutorial from the American Phytopathological Society
+  * [[http://addictedtor.free.fr/graphiques/|R graphics gallery]] Useful examples of R graphical functions
+  * [[http://www.statmethods.net/index.html|Quick R]] This site help you quickly access R language in your work
+  * [[http://people.biology.ufl.edu/bolker/emdbook/|Ecological Models and Data in R]] Dr. B.M. Bolker web site for a book published by Princeton University. Interesting documentation and exercises.
+
+  * [[https://stat.ethz.ch/mailman/listinfo/| R mailing Lists]]
+  * [[http://www.zoology.ufl.edu/bolker/emdbook/|Ecological models and data in R]] Princeton University
+  * [[http://www.rseek.org/ | R seek function ]] R browser for searching function
+  * [[http://www.dangoldstein.com/search_r.html|Multi-site search engine]] From Dan Goldstein, Assistant Professor of Marketing at London Business School.
+  * [[http://yihui.name/knitr | knitr]] - Elegant, flexible and fast dynamic report generation with R.
+  * [[https://www.rstudio.com/resources/cheatsheets | R studio cheat sheet]] - A colection of short reference cards to quickly use different R libraries.
+
+
+

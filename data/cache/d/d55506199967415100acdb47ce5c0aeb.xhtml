@@ -1,0 +1,125 @@
+
+<h1 class="sectionedit1" id="part_4">Part 4</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li">Introduction to LiDAR</div>
+</li>
+<li class="level1"><div class="li">Point data formats: <abbr title="American Standard Code for Information Interchange">ASCII</abbr>, vector and LAS data</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1 SECTION "Part 4" [1-100] -->
+<h2 class="sectionedit2" id="digital_elevation_models">Digital elevation models</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">digital surface models (DSM)</div>
+</li>
+<li class="level1"><div class="li">digital terrain models (DTM)</div>
+</li>
+<li class="level1"><div class="li">vegetation height models (VHM)</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Digital elevation models" [101-240] -->
+<h2 class="sectionedit3" id="open_source_software_for_processing_las_data">Open source software for processing LAS data</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">las tools from Martin Isenburg (multiple license: partly open, partly commercial) <a href="http://www.cs.unc.edu/~isenburg/lastools/" class="urlextern" target="blanc" title="http://www.cs.unc.edu/~isenburg/lastools/" rel="nofollow noopener">lastools</a></div>
+</li>
+<li class="level1"><div class="li">las tools from Mateusz Loskot (BSD License): <a href="http://www.liblas.org/lastools.html" class="urlextern" target="blanc" title="http://www.liblas.org/lastools.html" rel="nofollow noopener">liblas</a></div>
+</li>
+<li class="level1"><div class="li">SPDLib from Pete Bunting: <a href="http://www.spdlib.org/doku.php?id=spdlib:examples:examples" class="urlextern" target="blanc" title="http://www.spdlib.org/doku.php?id=spdlib:examples:examples" rel="nofollow noopener">SPDLib</a></div>
+</li>
+<li class="level1"><div class="li">pktools creating and filtering DEM raster datasets from LAS files: <a href="http://www.nongnu.org/pktools/html/index.html" class="urlextern" target="blanc" title="http://www.nongnu.org/pktools/html/index.html" rel="nofollow noopener">pktools</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "Open source software for processing LAS data" [241-765] -->
+<h1 class="sectionedit4" id="case_studylidar_products_in_forestry">Case study: LiDAR products in forestry</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li">Input data: forest_31370.laz</div>
+</li>
+<li class="level1"><div class="li">Create digital surface model (DSM)</div>
+</li>
+<li class="level1"><div class="li">Create digital terrain model (DTM)</div>
+</li>
+<li class="level1"><div class="li">Create vegetation height model (VHM)</div>
+</li>
+<li class="level1"><div class="li">Create percentage height values (PHV)</div>
+</li>
+<li class="level1"><div class="li">Create intensity map</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "Case study: LiDAR products in forestry" [766-1033] -->
+<h2 class="sectionedit5" id="set_environment_variables_for_input_and_output_directories">Set environment variables for input and output directories</h2>
+<div class="level2">
+<pre class="code">export INPUTDIR=...
+export OTPUTDIR=...</pre>
+
+</div>
+<!-- EDIT5 SECTION "Set environment variables for input and output directories" [1034-1161] -->
+<h2 class="sectionedit6" id="extract_basic_information">Extract basic information</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT6 SECTION "Extract basic information" [1162-1200] -->
+<h3 class="sectionedit7" id="from_laz_file">from LAZ file</h3>
+<div class="level3">
+<pre class="code">lasinfo $INPUTDIR/forest_31370.laz</pre>
+
+</div>
+<!-- EDIT7 SECTION "from LAZ file" [1201-1276] -->
+<h3 class="sectionedit8" id="from_apex_hyperspectral_dataset">from (APEX) hyperspectral dataset</h3>
+<div class="level3">
+<pre class="code">gdalinfo $INPUTDIR/apex_ql.tif</pre>
+
+</div>
+<!-- EDIT8 SECTION "from (APEX) hyperspectral dataset" [1277-1368] -->
+<h3 class="sectionedit9" id="using_pktools">using pktools</h3>
+<div class="level3">
+<pre class="code">pkinfo -i $INPUTDIR/apex_ql.tif -dx -dy -bb</pre>
+
+</div>
+<!-- EDIT9 SECTION "using pktools" [1369-1453] -->
+<h2 class="sectionedit10" id="create_digital_elevation_models_dem">Create digital elevation models (DEM)</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT10 SECTION "Create digital elevation models (DEM)" [1454-1504] -->
+<h3 class="sectionedit11" id="digital_surface_model_dsm">Digital surface model (DSM)</h3>
+<div class="level3">
+<pre class="code">pklas2img -i $INPUTDIR/forest_31370.laz -o $OUTPUTDIR/forest_dsm.tif -a_srs epsg:31370 $(pkinfo -i $INPUTDIR/apex_ql.tif -dx -dy -bb) -comp max</pre>
+
+</div>
+<!-- EDIT11 SECTION "Digital surface model (DSM)" [1505-1703] -->
+<h3 class="sectionedit12" id="digital_terrain_model_dtm">Digital terrain model (DTM)</h3>
+<div class="level3">
+<pre class="code">pklas2img -i $INPUTDIR/forest_31370.laz -o $OUTPUTDIR/forest_dem_min.tif -a_srs epsg:31370 $(pkinfo -i $INPUTDIR/apex_ql.tif -dx -dy -bb) -comp min
+pkfilterdem -i $OUTPUTDIR/forest_dem_min.tif -o $OUTPUTDIR/forest_dtm.tif -f promorph -dim 3 -dim 17</pre>
+
+</div>
+<!-- EDIT12 SECTION "Digital terrain model (DTM)" [1704-2007] -->
+<h3 class="sectionedit13" id="vegetation_height_model_vhm">Vegetation height model (VHM)</h3>
+<div class="level3">
+<pre class="code">gdal_calc.py -A $OUTPUTDIR/forest_dsm.tif -B $OUTPUTDIR/forest_dtm.tif --outfile=$OUTPUTDIR/forest_vhm.tif --calc=&quot;(A&gt;B)*(A-B)&quot;</pre>
+
+</div>
+<!-- EDIT13 SECTION "Vegetation height model (VHM)" [2008-2192] -->
+<h3 class="sectionedit14" id="create_percentage_height_values_phv">Create percentage height values (PHV)</h3>
+<div class="level3">
+<pre class="code">pklas2img -i $INPUTDIR/forest_31370.laz -o $OUTPUTDIR/forest_profile.tif -a_srs epsg:31370 $(pkinfo -i input/apex_ql.tif -dx -dy -bb) -comp profile -nbin 11</pre>
+
+</div>
+<!-- EDIT14 SECTION "Create percentage height values (PHV)" [2193-2414] -->
+<h3 class="sectionedit15" id="create_intensity_map">Create intensity map</h3>
+<div class="level3">
+<pre class="code">pklas2img -i $INPUTDIR/forest_31370.laz -o $OUTPUTDIR/forest_intensity.tif -a_srs epsg:31370 $(pkinfo -i input/apex_ql.tif -dx -dy -bb) -fir first -n intensity -ot UInt16</pre>
+
+</div>
+<!-- EDIT15 SECTION "Create intensity map" [2415-] -->

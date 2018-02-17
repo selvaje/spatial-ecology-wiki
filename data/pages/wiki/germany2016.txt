@@ -1,0 +1,27 @@
+{{:wiki:spatialecology.png?250|}}{{:wiki:idiv.png?150| https://www.idiv.de/ }}\\
+
+**spatial-ecology** in collaboration with [[ https://www.idiv.de/  | German Centre for Integrative Biodiversity Research (iDiv) ]] is organizing an **Intensive Training** on
+
+====== Geo-Computation in Linux environment ======
+**intermediate and advanced levels**
+
+[[wiki:questGermany  | Questionnaire Germany ]]\\
+[[ sottisGermany | Satisfactory surveys Germany 2016  ]]\\
+[[ https://docs.google.com/document/d/1OoEC7gmiuiTjkpfLLnOL_SXmrdBvvHAEP-6v3y4KPFw/pub | Program]]\\
+
+==== Description of the course =====
+
+
+Over the past decade there has been an explosion in the availability of geographic data for environmental research, for both static and temporal analyses. Examples are remotely sensed data or large biodiversity databases. We are now able to tackle key ecological and environmental questions with unprecedented rigor and generality. Leveraging these data  streams requires new tools and increasingly complex workflows. The course introduces a set of free and open source software (BASH, AWK ,GDAL, GRASS, R, Python, PKTOOLS, OFGT) for performing spatio-temporal analyses of big environmental data in Linux environment. We also introduce multi-core, cloud and cluster computation procedures.
+
+===== Objectives of the course =====
+
+At the end of the course, participants will be able to use open source tools under scripting routines to perform a variety of spatio-temporal analysis and modelling tasks that might be required to execute their own research. The practical sessions emphasize a self-directed learning approach so that participants can continue to develop their analytical skills after the course. Course participants also get basic knowledge on how to carry out “big data” analysis using multicore computation on a local computer as well as using cluster environments via remote servers.
+
+===== Designation/exclusivity statement ===== 
+
+In contrast to a typical GIS and remote sensing course (e. g. those based on commercial software such as ESRI Arc GIS), ours focuses on automated processing and programming concepts for using command-line utilities to process large data sets by means of open source software. A completely unique feature is that I provide, to each course participant, a version of ready to use Linux OS including a custom tailored and rich suite of all the necessary software and course materials ensures: 1) minimum software installation effort 2) standardized working environment 3) easy portability to other computers, and 4) a gentle transition from the host OS to guest OS which does not intimidate beginning users. Finally, rather than providing a set of recipes, I focus on helping students to develop elementary habits and independent learning geo-computation skills, and I help them to find creative solutions and strategies to fix problems. The exact course topics and program will be adjusted to exactly match the preexisting knowledge of the participants.
+
+{{:wiki:img_20160630_165143506-animation.gif}}
+{{:wiki:IMG_20160630_114442290_HDR.jpg}}
+

@@ -1,0 +1,30 @@
+====== Georeferencing images ======
+
+Using GIS we are frequently facing problems of georeferencing images with no projection or adjust the projection of an image with ground control points
+
+===== Georeferencing an undefined projection image using a pre-existing projected map =====
+In this exercise we have available a .tif image of the Mtera reservoir (this image has no projection) and a portion of a Landsat TM satellite image of the Mtera reservoir projected in the UTM36 south system. 
+Input data:\\
+  * ~/ost4sem/exercise/basic_qgis/georeferencing_images/Mtera_noproj.tif  (Tif image with no projection)
+  * ~/ost4sem/exercise/basic_qgis/georeferencing_images/Mtera_utm36s_TM.tif (Landsat Image)
+
+We use reference points from the TM image to georeference the Mtera reservoir unprojected tif image.\\
+**Procedure:**
+  * Open Qgis and load the Mtera_utm36s_TM.tif raster
+  * From the main Qgis menu select  Plugins > Georeferencer > Georeferencer
+  * In the Georeferencer window and select File > Open raster and select the Mtera_noproj.tif as input
+  * Click on Edit > Add a point 
+  * Navigate, zoom in and define a location where to add your first point. Add your first point by clicking and then click on the From map canvas icon
+  * Navigate and zoom in the Landsat derived map to locate the same area as in the unprojected image. Click on the Landsat image and then select OK in the georeferencer.
+  * Add as many points as you can. Points have to be take in N E S W corners of the map to define the outer locations at the edge of your input map.
+  * Select Settings > Transformation settings and define the type of georeference transformation; The resampling method; Output file name; Target resolution and if you like an output name to have a pdf report printed.(see image below)\\
+
+{{:wiki:wikiqgis:transformation_sett.png?600|}}
+ 
+  * Click on the georeference window icon {{:wiki:wikiqgis:play_georeference.png|}}to start the reprojection. Upload the now georeferenced output image and check its consistency.
+
+
+
+ 
+
+

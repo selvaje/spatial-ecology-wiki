@@ -1,0 +1,29 @@
+===== Creating a new Grass project from Qgis =====
+
+Open Qgis:
+type qgis from a bash terminal 
+  * Create a new folder that will be your new Grass DBASE
+
+  mkdir ~/ost4sem/NEW_GRASSDB
+
+  * Go to the menue: plugin > GRASS > New mapset
+  * Select ~/ost4sem/NEW_GRASSDB as new database
+  * Create a new location 
+  * Select the Projection you want to use as location proj.
+  * Create a new mapset
+
+===== Qgis as grass Gui =====
+Open Grass and type qgis &
+
+Select the menu Plugin > GRASS > open GRASS tools \\
+You visualise a GUI with 3 tabs:
+  * Browser: to look at your working directory maps
+  * Modules list: to access grass modules by name and use them
+  * Modules tree: to access grass modules ordered by functions and use them
+
+
+
+
+
+
+

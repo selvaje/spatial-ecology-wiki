@@ -1,0 +1,9 @@
+# From csv to R format
+&nbsp;
+&nbsp;
+indir=&quot;~/ost4sem/project/unidk2010/BiomassExp/input/&quot;
+outdir=&quot;~/ost4sem/project/unidk2010/BiomassExp/output/&quot; 
+&nbsp;
+spdata=read.csv(paste(indir,&quot;spdata.csv&quot;,sep=&quot;&quot;),header=TRUE)
+DBH=read.csv(paste(indir,&quot;DBH.csv&quot;,sep=&quot;&quot;),header=TRUE)
+plotcoor=read.csv(paste(indir,&quot;plotcoor.csv&quot;,sep=&quot;&quot;),header=TRUE)

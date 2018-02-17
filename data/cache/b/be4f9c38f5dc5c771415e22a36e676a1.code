@@ -1,0 +1,7 @@
+   my.data.frame = data.frame(v=1:4,ch=c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;),n=10)
+   my.data.frame
+    v ch  n
+   1 1  a 10
+   2 2  b 10
+   3 3  c 10
+   4 4  d 10

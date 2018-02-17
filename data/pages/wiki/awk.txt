@@ -1,0 +1,35 @@
+====== The AWK language ======
+[[http://en.wikipedia.org/wiki/AWK|AWK]] is a programming language that is designed for processing text files or strings. Developed by Alfred Aho, Peter Weinberger, and Brian Kernighan in the 1970s, it is still one of the fastest ways to process a text file, computing mathematical operation and string manipulation.\\
+In this part of the wiki-training site we provide different sections showing the most important feature of the awk language.\\
+Practically speaking awk is used in substitution of M. Excel and M. Access. 
+In practice awk is used to "reduce" and "squeeze" the data (text data - tables) before importing it to R. Because it has\\
+  * no file size limitations
+  * no row and columns limitations.\\
+
+\\
+In the study cases the awk will be used several times so it should help you understand it very well!
+\\
+You can access the manual page by:
+<code bash>
+man awk
+</code>
+===== AWK Tutorials =====
+  * [[awksintax|The AWK syntax]]
+  * [[awkrun|Running AWK]] - YALE2
+===== AWK exercises =====
+These exercises use the scripts and data stored in ~/ost4sem/exercise/basic_adv_awk \\ 
+
+You can open the script by kate and copy/paste the lines to the terminal.\\ 
+
+You can can also interact with the shell using other commands and inserting comments in the editor.\\
+You can run it directly by:
+<code bash> 
+sh file_name.sh 
+</code> 
+  * [[awkbasic | Basic AWK scripts]] - YALE2
+  * [[awkadvance | Advance AWK scripts]] - YALE2
+
+===== AWK links  =====
+  * [[ http://en.wikipedia.org/wiki/AWK | AWK by wikipedia  ]]
+  * [[ http://cm.bell-labs.com/cm/cs/awkbook/ | AWK book  ]]
+  * [[ http://tldp.org/LDP/Bash-Beginners-Guide/html/chap_06.html  | AWK manual  ]]

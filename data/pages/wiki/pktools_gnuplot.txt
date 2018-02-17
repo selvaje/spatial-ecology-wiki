@@ -1,0 +1,157 @@
+ ===== GNUPLOT introduction =====
+
+ * Command syntax
+ * Function plots
+ * 2D Data plots
+ * Nicer 2D data plots
+ * 2D plots with error bars
+ * 2d plots with transparency
+ * 3d scatterplots with splot
+
+==== Command syntax ====
+
+The most important commands can grouped in two operations:\\
+  * Setting the plotting environment by: //set// command.\\
+  * Plotting the data by: //plot//  and //splot// commands.\\
+
+Syntax:
+       plot {<ranges>}
+            {<function> | {"<datafile>" {datafile-modifiers}}}
+            {axes <axes>} {<title-spec>} {with <style>}
+            {, {definitions,} <function> ...}
+
+
+==== function plots =====
+Gnuplot supports a number of mathematical functions, including trigonometric functions:
+
+<code gnuplot>
+plot \
+     sin(x),\
+     cos(x)
+</code>
+
+==== 2D data plots ====
+<code gnuplot>
+plot \
+     "data/water_landsat_mean_stdev.txt" u 0:1 with lines title 'water',\
+     "data/forest_landsat_mean_stdev.txt" u 0:1 with lines title 'forest'
+replot
+</code>
+
+==== nicer 2D plots ====
+<code gnuplot>
+reset
+set style line 1 lc rgb "dark-blue" linewidth 2
+set style line 2 lc rgb "forest-green" linewidth 2
+set key left
+set grid
+set border linewidth 1.5
+set title 'Top Of Atmosphere signatures from Landsat'
+set xtics ('Blue' 0, 'Green' 1, 'Red' 2, 'NIR' 3, 'SWIR1' 4, 'SWIR2' 5)
+set ylabel 'Digital number'
+set terminal pngcairo
+set output 'data/output/forest_landsat.png'
+plot \
+     "data/water_landsat_mean_stdev.txt" u 0:1 with lines ls 1 title 'water',\
+     "data/forest_landsat_mean_stdev.txt" u 0:1 with lines ls 2 title 'forest'
+set terminal wxt
+replot
+</code>
+
+==== 2D plot with error bars ====
+<code gnuplot>
+reset
+set style line 1 lc rgb "dark-blue" linewidth 2
+set style line 2 lc rgb "forest-green" linewidth 2
+set key left
+set grid
+set border linewidth 1.5
+set title 'Top Of Atmosphere signatures from Landsat'
+set xtics ('Blue' 0, 'Green' 1, 'Red' 2, 'NIR' 3, 'SWIR1' 4, 'SWIR2' 5)
+set ylabel 'Digital number'
+plot \
+     "data/water_landsat_mean_stdev.txt" u 0:1:2 with yerrorbars ls 1 title 'water',\
+     "data/forest_landsat_mean_stdev.txt" u 0:1:2 with yerrorbars ls 2 title 'forest'
+replot
+</code>
+
+==== 2D plot with error bars showing mean and save plot to PNG ====
+<code gnuplot>
+set key left
+set border linewidth 1.5
+set terminal pngcairo
+set output 'data/output/forest_landsat_mean_stdev.png'
+set title 'Top Of Atmosphere signatures from Landsat'
+set xtics ('Blue' 0, 'Green' 1, 'Red' 2, 'NIR' 3, 'SWIR1' 4, 'SWIR2' 5)
+set ylabel 'Digital number'
+set xrange [-0.5:5.5]
+set style line 1 lc rgb "dark-blue" linewidth 2
+set style line 2 lc rgb "forest-green" linewidth 2
+
+plot \
+     "data/water_landsat_mean_stdev.txt" u 0:1:2 with yerrorbars ls 1 notitle,\
+     '' u 0:1 with lines linestyle 2 title 'water',\
+     "data/forest_landsat_mean_stdev.txt" u 0:1:2 with yerrorbars ls 2 notitle,\
+     '' u 0:1 with lines linestyle 1 title 'forest'
+set terminal wxt size 500,350
+replot
+</code>
+
+==== 2D plot with transparency ====
+<code gnuplot>
+reset
+#for list of colours, see also http://www.uni-hamburg.de/Wiss/FB/15/Sustainability/schneider/gnuplot/colors.htm
+set style line 1 lc rgb "dark-blue" linewidth 2
+set style line 2 lc rgb "forest-green" linewidth 2
+#set style fill transparent solid 0.50 noborder
+set style fill transparent solid 0.50
+set key left
+set border linewidth 1.5
+set terminal pngcairo
+set output 'data/output/forest_landsat_mean_stdev_transparent.png'
+set title 'Top Of Atmosphere signatures from Landsat'
+set xtics ('Blue' 0, 'Green' 1, 'Red' 2, 'NIR' 3, 'SWIR1' 4, 'SWIR2' 5)
+set ylabel 'Digital number'
+plot \
+     "data/water_landsat_mean_stdev.txt" u 0:($1-$2):($1+$2) with filledcurve linestyle 1 notitle,\
+     '' u 0:1 with lines linestyle 1 title 'water',\
+     "data/forest_landsat_mean_stdev.txt" u 0:($1-$2):($1+$2) with filledcurve linestyle 2 notitle,\
+     '' u 0:1 with lines linestyle 2 title 'forest'
+set terminal wxt size 500,350
+replot
+</code>
+
+==== 3D scatterplot with splot ====
+<code gnuplot>
+reset
+set style line 1 lc rgb '#800000' lt 1 lw 2 pt 7 ps 1 #brown
+set style line 2 lc rgb '#ff0000' lt 1 lw 2 pt 7 ps 1  #red/orange
+set style line 3 lc rgb '#0060ad' lt 1 lw 2 pt 7 ps 1  #marine blue
+set style line 4 lc rgb '#ffa500' lt 1 lw 2 pt 7 ps 1  #orange/yellow
+set style line 5 lc rgb '#006400' lt 1 lw 2 pt 7 ps 1  #dark green
+set style line 6 lc rgb '#0000ff' lt 1 lw 2 pt 7 ps 1  #blue
+set style line 7 lc rgb '#9400d3' lt 1 lw 2 pt 7 ps 1  #purple
+set style line 8 lc rgb '#ff4500' lt 1 lw 2 pt 7 ps 1  #orange
+set style line 9 lc rgb '#dd181f' lt 1 lw 2 pt 7 ps 1   #red1
+set style line 10 lc rgb '#5e9c36' lt 1 lw 2 pt 7 ps 1  #green
+set border linewidth 1.5
+set title 'Forest/no-forest'
+set key out
+# Legend
+set xlabel 'b0'
+set ylabel 'b1'
+set zlabel 'b2'
+set xtics 50
+set ytics 50
+set ztics 50
+set terminal pngcairo
+set output 'data/output/landcover_landsat7.png'
+splot \
+     'data/clouds.txt' u 3:4:5 ls 1 title 'clouds',\
+     'data/noclouds.txt' u 3:4:5 ls 2 title 'noclouds',\
+     'data/shadows.txt' u 3:4:5 ls 3 title 'shadows',\
+     'data/water.txt' u 3:4:5 ls 4 title 'water',\
+     'data/golf.txt' u 3:4:5 ls 5 title 'golf'
+set terminal wxt size 500,350
+replot
+</code>

@@ -1,0 +1,114 @@
+
+<h2 class="sectionedit1" id="projecting_future_burnt_area_in_the_eu-mediterranean_countries_under_ipcc_sres_a2_b2_climate_change_scenarios">Projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios.</h2>
+<div class="level2">
+
+<p>
+<br/>
+
+Full article at <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/fire_risk.pdf" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/fire_risk.pdf" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/fire_risk.pdf </a>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios." [2-273] -->
+<h3 class="sectionedit2" id="objective">Objective</h3>
+<div class="level3">
+
+<p>
+The aim of this work is to use the results of statistical modelling of historical (1985-2004) monthly burnt areas in European Mediterranean countries, as a function of monthly weather data and derived fire danger indexes, and to analyse potential trends under present and future climate conditions.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Objective" [274-597] -->
+<h3 class="sectionedit3" id="method">Method</h3>
+<div class="level3">
+
+<p>
+Meteorological variables were extracted from the ECMWF, and the FWI system components were computed from 1961 to 2004. Monthly averages of the indexes were used as explanatory variables in a stepwise multiple linear regression analysis, to estimate the monthly burnt areas in each of the five most affected Mediterranean countries of Europe. Significant regression equations and satisfactory coefficients of determination were found, although with remarkable differences between countries. Two IPCC SRES climate change scenarios (A2/B2) were simulated using the the regional climate model HIRHAM. The multiple regression models were than applied to the A2/B2 scenarios results to predict the potential burnt areas in each country. The models pointed out tangible changes in the potential burnt area extent for the future scenarios compared to the actual conditions.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Method" [598-1485] -->
+<h3 class="sectionedit4" id="input_data">Input Data</h3>
+<div class="level3">
+
+<p>
+As input data we use the following datasets:
+</p>
+<ul>
+<li class="level1"><div class="li"> Daily wind, temperature, humidity and precipitation were downloaded from <a href="http://www.ecmwf.int/" class="urlextern" target="blanc" title="http://www.ecmwf.int/" rel="nofollow noopener"> ECMWF </a>.</div>
+</li>
+<li class="level1"><div class="li"> Forest fire data (burnt area and number of fires) were extracted from <a href="http://effis.jrc.ec.europa.eu/" class="urlextern" target="blanc" title="http://effis.jrc.ec.europa.eu/" rel="nofollow noopener"> EFFIS</a>. </div>
+</li>
+<li class="level1"><div class="li"> Nuts3 (province) area is stored in ~/ost4sem/studycase/fire<em>risk/tables/input/nuts3</em>area.asc </div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Input Data" [1486-1888] -->
+<h3 class="sectionedit5" id="computational_implementation">Computational Implementation</h3>
+<div class="level3">
+
+<p>
+The modelling procedure includes only the calculation of the regression equation and its graphic for each EU country. The climate change projection is not described:
+</p>
+<ul>
+<li class="level1"><div class="li">Daily wind, temperature, humidity and precipitation were used to compute the daily FWI by an AWK script.</div>
+</li>
+<li class="level1"><div class="li">Monthly average was calculated using a bash script which includes awk commands: <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/average.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/average.sh" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/sh_script/average.sh</a></div>
+</li>
+<li class="level1"><div class="li">The results are stored in the file <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3.asc" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3.asc" rel="nofollow noopener">  ~/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3.asc </a>.
+<br/>
+</div>
+</li>
+<li class="level1"><div class="li">Monthly sum of burnt area and number of fires was calculated using a bash script which include awk commands.</div>
+</li>
+<li class="level1"><div class="li">The results are stored in the file <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc" rel="nofollow noopener">  ~/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc </a>.
+<br/>
+</div>
+</li>
+<li class="level1"><div class="li">The data integration of 3 input files ( aver<em>month</em>nuts3.asc, input file nuts3<em>area.asc  aver</em>month<em>nuts3</em>fire.asc) is performed by a bash shell / R / gnuplot / script: <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh" rel="nofollow noopener">Download the shell script here</a> or follow the <a href="/dokuwiki/doku.php?id=wiki:fire_statistic_w.sh" class="wikilink1" title="wiki:fire_statistic_w.sh">shell script in wiki format</a> <br/>
+
+<br/>
+</div>
+</li>
+<li class="level1 node"><div class="li">The results are stored at:<br/>
+</div>
+<ul>
+<li class="level2"><div class="li">EU Mediterranean: <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/EUmed.ps" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/EUmed.ps" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/output/EUmed.ps </a><br/>
+</div>
+</li>
+<li class="level2"><div class="li">Portugal: <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/PT.ps" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/PT.ps" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/output/PT.ps </a><br/>
+</div>
+</li>
+<li class="level2"><div class="li">Spain: <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/ES.ps" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/ES.ps" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/output/ES.ps </a><br/>
+</div>
+</li>
+<li class="level2"><div class="li">France Med: <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/FRmed.ps" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/FRmed.ps" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/output/FRmed.ps </a><br/>
+</div>
+</li>
+<li class="level2"><div class="li">Italy: <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/IT.ps" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/IT.ps" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/output/IT.ps </a><br/>
+</div>
+</li>
+<li class="level2"><div class="li">Greece: <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/GR.ps" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/output/GR.ps" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/output/GR.ps </a><br/>
+
+</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "Computational Implementation" [1889-] -->

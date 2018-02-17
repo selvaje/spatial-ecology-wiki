@@ -1,0 +1,5 @@
+Load the joined <span class="kw2">file</span> into GRASS and clean it
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>output <span class="co0"># setting the output file directory</span>
+v.in.ogr <span class="re5">-e</span> <span class="re2">dsn</span>=<span class="re1">$OUTDIR</span><span class="sy0">/</span>join_basedata_markblokc.shp <span class="re2">output</span>=join_basedata_markblokc <span class="re5">--overwrite</span> 
+v.clean <span class="re2">input</span>=join_basedata_markblokc <span class="re2">output</span>=join_basedata_markblokc_c <span class="re2">tool</span>=rmdupl,bpol <span class="re2">error</span>=myerrorjoin
+g.remove <span class="re2">vect</span>=join_basedata_markblokc <span class="co0">#Remove file not cleaned</span>

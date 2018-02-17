@@ -1,0 +1,2 @@
+[[http://kate-editor.org/|Kate]]
+[[http://www.gnu.org/software/emacs/|Emacs]]

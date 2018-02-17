@@ -1,0 +1,18 @@
+/** 
+*  remove old Admin Plugin: allows deleting of unnecessary, outdated files from your DokuWiki system
+*
+* @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+* @author     Taggic <taggic@t-online.de>
+*/
+
+Intro
+------ 
+This is an admin plugin available via admin manager to delete listed files 
+, which only consuming space but useless for your version.
+
+Installation
+------------
+ Just download and extract it as folder "removeold" into your "\lib\plugins" 
+ directory.
+
+ A complete plugin description is available on http://www.dokuwiki.org/plugin:removeold

@@ -1,0 +1,30 @@
+==== Example of Data repository ====
+  * [[ftp://msdis.missouri.edu/pub/| State data repository for Missouri]]
+  * [[http://www.usgs.gov/pubprod/ | National data repository in USA]]
+  * 
+
+
+==== Satellite Data Repository ====
+  * Web Enabled Landsat data: [[http://weld.cr.usgs.gov/|WELD]]
+  * MODIS Normalized Difference Vegetation Index: [[http://glcf.umd.edu/data/ndvi/|MODIS]]
+  * [[http://glcf.umd.edu/data/aster/|ASTER satellite imagery]]
+
+
+===== Vector and Raster base maps layers =====
+  * [[http://websoilsurvey.nrcs.usda.gov/app/WebSoilSurvey.aspx| Soil survey in USA]]
+  * [[http://water.usgs.gov/maps.html|Water ressources]]
+  * 
+===== OpenStreetMap =====
+OpenStreetMap in QGIS: [[http://wiki.openstreetmap.org/wiki/|Wiki]]
+
+==== GPS data ====
+Using smartphones or GPS devices we are able to collect data on the field and upload them into GIS. Quantum gis has different plugin for this.
+
+==== Airborne imagery ====
+**Lidar data** from aerial ported sensors are a very common and used imagery. LiDAR have resolutions of meters and is very usefull for sitre planning. In the terrain modelling and hydrological modelling session we are going to explore such datasets.\\
+  * [[http://www.msdis.missouri.edu/data/lidar/| LiDar data repository in Missoury]]
+
+**Aerial** images like [[https://www.bing.com/|Bing]] is a very usefull layer to locate objects on the field. Bings has also a license 
+
+
+ 

@@ -1,0 +1,359 @@
+====== Burned Area Mapping using Support Vector Machine and Combined Segmentation Random Forest classifiers ======
+The goal of this exercise is to demonstrate how to use Open Source classifiers. We will focus on illustrating command syntax rather than on generating accurate classification results. A more complex script would generate more accurate results but is inappropriate for the time we have in this training session.\\
+\\
+This exercise will use several commands from the following open source programming languages:\\
+  * [[ http://en.wikipedia.org/wiki/Bash_%28Unix_shell%29 | BASH ]] a common Linux scripting language.
+  * [[  http://en.wikipedia.org/wiki/AWK | AWK ]] a scripting language typically use for text data manipulation.
+  * [[ http://en.wikipedia.org/wiki/R_Statistics | R ]] a programming language and software environment for statistical computing and graphics.
+  * [[ http://en.wikipedia.org/wiki/Gdal | GDAL/OGR ]] a library for reading and writing raster/vector geospatial data formats.
+  * [[ http://km.fao.org/OFwiki/index.php/Open_Foris_Geospatial_Toolkit  | Open Foris Geospatial Toolkit ]] a collection of prototype command-line utilities for processing of geographical data.
+  * [[ http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:pk_tools | PKTOOLS ]] a collection of programs written by Pieter Kempeneers in C++ to perform operations on raster images.
+\\
+  * [[ http://kate-editor.org/ | kate ]] will be used as the text editor.\\
+\\
+Many of the commands that can be invoked by these tools have help information that can be viewed as: 
+  * the command name followed by -h (e.g., pkcrop -h )\\
+  * or "man" followed by the command name (e.g., man sort)\\
+\\
+\\
+The burned area mapping will be performed using a summer 2008 WELD seasonal product over the [[ http://www.npr.org/blogs/thetwo-way/2011/07/28/138789103/tundra-fires-and-climate-change-more-bad-news | Anaktuvuk River Fire]] that occurred September 2007 in a Tundra region of the Alaskan North Slope.
+
+|{{:wiki:alaska.png?800}}|\\
+\\
+The summer 2008 WELD product, separate .tif files for each of the 14 WELD bands, is stored at: /home/user/ost4sem/exercise/weld\_data\_processing/x6JIatZlSUMMER2008\\ 
+\\
+To save time, we have pre-generated an ESRI shape file (class_b_nb.shp) that contains vector polygons storing the locations of some visually interpreted burned and unburned areas.  This is stored at: /home/user/ost4sem/exercise/weld\_data\_processing/shp
+ 
+\\
+This exercise will consist of 4 main steps:
+  - Working Directory and Data Preparation (using GDAL and PKTOOLS)
+  - Support Vector Machine Classification (using PKTOOLS)
+  - Combined Segmentation Random Forest Classification (using Open Foris Geospatial Toolkit and R)
+  - Result Visualization (using openev and qgis)
+\\
+You can follow the full methodology in [[http://www.spatial-ecology.net/ost4sem/exercise/weld_data_processing/classification/burned.pdf |  Data flow diagram ]]
+                                                                       
+\\
+These 4 main steps are in the following script and directory: \\
+Script:   /home/user/ost4sem/exercise/weld\_data\_processing/classification.sh\\
+Directory: /home/user/ost4sem/exercise/weld\_data\_processing\\
+\\
+We are ready to start the exercise, we will first open classification.sh using the text editor kate and then copy and paste each command from the script to the terminal.\\
+\\
+Change the directory and open the script classification.sh using kate:
+  cd /home/user/ost4sem/exercise/weld_data_processing/
+  rm -f $HOME/ost4sem/exercise/weld_data_processing/classification.sh
+  wget http://www.spatial-ecology.net/ost4sem/exercise/weld_data_processing/classification.sh 
+  kate /home/user/ost4sem/exercise/weld_data_processing/classification.sh &
+
+\\
+==== Working Directory and Data Preparation ====
+\\
+**Set your working directories:**\\
+\\
+
+  INPUTDIR=/home/user/ost4sem/exercise/weld_data_processing/x6JIatZlSUMMER2008
+  INSHPDIR=/home/user/ost4sem/exercise/weld_data_processing/shp
+  OUTPUTDIR=/home/user/ost4sem/exercise/weld_data_processing/classification
+  mkdir $OUTPUTDIR
+
+We can check that we set these Linux variables correctly by typing, for example: echo $INSHPDIR 
+
+We can now visualize the data for this exercise using commands like:
+
+  # if you do not have $INSHPDIR/class_b_nb.shp
+  cd $INSHPDIR/
+  wget http://www.spatial-ecology.net/ost4sem/exercise/weld_data_processing/shp/class_b_nb.shp
+  wget http://www.spatial-ecology.net/ost4sem/exercise/weld_data_processing/shp/class_b_nb.shx
+  wget http://www.spatial-ecology.net/ost4sem/exercise/weld_data_processing/shp/class_b_nb.qpj
+  wget http://www.spatial-ecology.net/ost4sem/exercise/weld_data_processing/shp/class_b_nb.prj
+  wget http://www.spatial-ecology.net/ost4sem/exercise/weld_data_processing/shp/class_b_nb.dbf
+
+  openev $INPUTDIR/Band1_TOA_REF.TIF
+  openev $INPUTDIR/Band1_TOA_REF.TIF  $INSHPDIR/class_b_nb.shp  # shape file with 2 classes  1=not-burned area, 2=burned area, used by the supervised classification. 
+
+
+
+**Create a binary WELD bad data mask:**\\
+\\
+We will now create a binary mask (with values 0 or 1) that define if a pixel is cloudy (using WELD bands: DT\_Cloud\_State.TIF and ACCA\_State.TIF) or saturated (using WELD band: Saturation\_Flag.TIF)\\
+\\
+To do this first stack the DT\_Cloud_State, ACCA\_State and Saturation\_Flag bands together:
+
+  pkcrop -i $INPUTDIR/DT_Cloud_State.TIF -i $INPUTDIR/ACCA_State.TIF -i $INPUTDIR/Saturation_Flag.TIF -o $OUTPUTDIR/mask_bands.tif
+
+Next, using pkgetmask create a binary mask (mask1-0.tif) where any pixel that is cloudy or saturated in any WELD band is assigned a value of 0 (if not it is assigned a 1 value):
+
+  pkgetmask -ot Int16 -i $OUTPUTDIR/mask_bands.tif -b 0 -b 1 -b 2 --min 1  --max 255  -data 0 -nodata 1 -o  $OUTPUTDIR/mask1-0.tif
+  pkgetmask -ot Int16 -i $OUTPUTDIR/mask_bands.tif -b 0 -b 1 -b 2 --min 1  --max 255  -data 1 -nodata 0 -o  $OUTPUTDIR/mask0-1.tif
+  
+Remove intermediate files created by these commands:
+
+  rm  $OUTPUTDIR/mask_bands.tif
+
+**Stack the 6 reflective wavelength WELD bands:**\\
+\\
+Now we will stack the 6 WELD reflective wavelength bands together into a single file called Bands_stack.tif as:\\
+
+   gdalbuildvrt -overwrite -separate $OUTPUTDIR/Bands_stack.vrt $OUTPUTDIR/mask1-0.tif $INPUTDIR/Band1_TOA_REF.TIF $INPUTDIR/Band2_TOA_REF.TIF  $INPUTDIR/Band3_TOA_REF.TIF  $INPUTDIR/Band4_TOA_REF.TIF  $INPUTDIR/Band5_TOA_REF.TIF  $INPUTDIR/Band7_TOA_REF.TIF 
+   gdal_translate  -co  COMPRESS=LZW -co ZLEVEL=9  $OUTPUTDIR/Bands_stack.vrt $OUTPUTDIR/Bands_stack.tif
+
+
+
+**Rasterize the training:**\\
+\\
+Next we will convert the pre-generated ESRI shape file to a raster (class_b_nb.shp) with three classes: 0 unknown, 1 not-burned, 2 burned. To be useful we need to rasterize the shape file with the same resolution and extent as the WELD bands. This generates a training raster map called class_b_nb.tif as:
+
+  gdal_rasterize  -te  75000 2070010 189990 2200000 -tr 30 30 -l  class_b_nb -a class $INSHPDIR/class_b_nb.shp   $OUTPUTDIR/class_b_nb.tif
+
+Use pkinfo to list out how many pixels are in each class of the training raster map: 
+
+  pkstat -i $OUTPUTDIR/class_b_nb.tif   --hist 
+
+==== Support Vector Machine Classification ====
+\\
+Support Vector Machine Classification is a popular supervised classifier that has some nice properties (that we do not have time to describe here). 
+
+First we will generate a new ESRI training  shape file that contains the 6 WELD reflective wavelength band values, that are not labelled as cloudy or saturated by WELD, at a random sample (0.01%) of the burned and unburned pixel locations defined in the training raster map: 
+
+  rm $INSHPDIR/class_b_nb_4svm.*
+  pkextractimg -i $OUTPUTDIR/Bands_stack.tif -r point -polygon  -s $OUTPUTDIR/class_b_nb.tif -t 0.1 -t 0.1 -c 1 -c 2 -bndnodata 0 -srcnodata 0  -f SQLite -o $INSHPDIR/class_b_nb_4svm.sqlite
+  
+We can check the contents of the resulting training shape file as:
+
+  ogrinfo -al $INSHPDIR/class_b_nb_4svm.sql
+
+Now we will classify the 6 WELD reflective wavelength band values, that are not labelled as cloudy or saturated by WELD, using this new training shape file as: 
+
+  pksvm -m $OUTPUTDIR/mask1-0.tif -msknodata 0 -nodata 0  -i $OUTPUTDIR/Bands_stack.tif -t $INSHPDIR/class_b_nb_4svm.sqlite -o $OUTPUTDIR/classification_svm.tif  
+
+This is a computationally demanding  process (can take 3-12 minutes depending on your laptop) and you can terminate it by pressing ctrl+c. 
+
+We have already stored a version of the results called classification_svm_cp.tif
+
+We can visualize the classification results as: 
+
+  openev $OUTPUTDIR/classification_svm.tif
+
+==== Combined Segmentation Random Forest Classification ====
+\\
+Some researchers like to segment satellite data into objects with similar spectral values, and then classify each segment into different classes. There are many ways of segmenting satellite data, in this exercise we will apply the K-means NN unsupervised classier to the WELD data to generate segments. We will then classify the segments using the Random Forest supervised classifier (a recent classifier with some nice properties that we do not have time to describe). 
+
+\\
+We will follow this procedure: 
+  - Segment the image,
+  - Allocate unique ID values to each segment,
+  - Select "pure" segments that occur only within burned or unburned class training regions,
+  - Calculate the spectral signature of each segment,
+  - Train the Random Forest classifier using the spectral signatures of each "pure" segment,
+  - Apply the Random Forest classifier to all segments to generate a table of classified segments, 
+  - Generate a classified raster image. 
+\\
+**Segment the image:**\\
+\\
+We will segment the 6 WELD reflective wavelength band values, that are not labelled as cloudy or saturated by WELD, using the K-means unsuperivised NN classifier. In this example we tell the K-means unsupervised NN classifier to examine 1% of the WELD data and then label the resulting segments for the entire image into one of 12 classes. Note, we select 12 arbitrarily (and set quite low so the following runs quickly, if we used a number >12 there would be more segments but they would take longer to generate).  
+
+  gdalbuildvrt -overwrite -separate $OUTPUTDIR/Bands_stack.vrt $INPUTDIR/Band1_TOA_REF.TIF $INPUTDIR/Band2_TOA_REF.TIF  $INPUTDIR/Band3_TOA_REF.TIF  $INPUTDIR/Band4_TOA_REF.TIF  $INPUTDIR/Band5_TOA_REF.TIF  $INPUTDIR/Band7_TOA_REF.TIF 
+  gdal_translate  -co  COMPRESS=LZW -co ZLEVEL=9  $OUTPUTDIR/Bands_stack.vrt $OUTPUTDIR/Bands_stack.tif
+  oft-cluster.bash  $OUTPUTDIR/Bands_stack.tif  $OUTPUTDIR/12classes1perc.tif 12  1  $OUTPUTDIR/mask1-0.tif 
+
+Check eventually the results of otbcli_KMeansClassification 
+
+Visualize the resulting segmentation results as: 
+
+  openev $OUTPUTDIR/12classes1perc.tif
+\\
+**Allocate unique ID values to each segment:**\\
+\\
+Each segment is allocated a unique ID number (this process does not use the segment class values): 
+
+  oft-clump  -um $OUTPUTDIR/mask1-0.tif    $OUTPUTDIR/12classes1perc.tif  $OUTPUTDIR/clumpIDsegments.tif
+
+Visualize the resulting labelled segmentation results as: 
+
+  openev  $OUTPUTDIR/clumpIDsegments.tif
+
+
+**Select "pure" segments:**\\
+\\
+We need to be able to select those segments that occur only within the burned or unburned class training regions.
+
+  oft-stat $OUTPUTDIR/clumpIDsegments.tif  $OUTPUTDIR/class_b_nb.tif  $OUTPUTDIR/stat_clumpID_class_b_nb.txt
+
+The resulting output text file stat\_clumpID\_class\_b\_nb.txt is defined with one row per segment and contains summary statistics of the values in the training raster  (recall class_b_nb.tif has pixels defined as one of three classes: 0 unknown, 1 not-burned, 2 burned).  The columns of text file stat_clumpID_class_b_nb.txt are:\\
+segment ID, number of pixels in segment, mean of the class\_b\_nb.tif segment pixel values, standard deviation of the class_b_nb.tif segment pixel values\\
+\\
+Examine the first 12 lines of stat\_clumpID\_class\_b_nb.txt as:
+
+  head -12 $OUTPUTDIR/stat_clumpID_class_b_nb.txt
+
+We will now select "pure" segments that occur only within burned or unburned class training regions defined if the mean of the class\_b\_nb.tif segment pixel values is equal to 1 or to 2 respectively. Moreover, in order to have a robust training we will select only "pure" segments that are defined by >= 4 pixels.
+
+  awk '{ if ($2 >= 4) { if($3==1 || $3==2  ) { print $1, int($3) }}}'  $OUTPUTDIR/stat_clumpID_class_b_nb.txt  > $OUTPUTDIR/pure_clumpID.txt
+  sort -k 1,1 $OUTPUTDIR/pure_clumpID.txt   > $OUTPUTDIR/pure_clumpID_s.txt
+
+\\
+**Calculate the spectral signature of each segment:**\\
+\\
+We will compute the mean reflectance of the pixels in each segment for each of the 6 WELD reflective wavelength bands. 
+
+We will do this for all the segments including the non-pure ones as: 
+
+  oft-stat $OUTPUTDIR/clumpIDsegments.tif  $OUTPUTDIR/Bands_stack.tif  $OUTPUTDIR/clumpID_bandAVG_bandSTD.txt
+
+The resulting output text file clumpID\_bandAVG\_bandSTD.txt is defined with one row per segment and contains summary statistics of the the 6 WELD reflective wavelength bands. The columns of text file clumpID\_bandAVG\_bandSTD.txt are:
+\\
+segment ID, number of pixels in segment, mean of the segment pixel values for each of the 6 WELD bands (6 columns of these), standard deviation of the segment pixel values for each of the 6 WELD bands (6 columns of these)\\
+  
+Examine clumpID_bandAVG_bandSTD.txt as:
+
+  head $OUTPUTDIR/clumpID_bandAVG_bandSTD.txt
+
+From this file we need only the segment ID and the mean values for each of the 6 WELD bands. We can strip this information out using AWK as:
+
+  awk '{ print $1, $3,$4,$5,$6,$7,$8 }' $OUTPUTDIR/clumpID_bandAVG_bandSTD.txt > $OUTPUTDIR/clumpID_bandAVG.txt
+  sort -k 1,1 $OUTPUTDIR/clumpID_bandAVG.txt > $OUTPUTDIR/clumpID_bandAVG_s.txt
+
+We now need to combine the two tables pure\_clumpID\_s.txt and  clumpID\_bandAVG\_s.txt outputting  only the rows describing the "pure" segments. The easiest way to do this is with the join command matching the first columns (segment ID) in the first (labelled as "-1") and second (labelled as "-2") files:  
+
+  join -1 1 -2 1  $OUTPUTDIR/pure_clumpID_s.txt   $OUTPUTDIR/clumpID_bandAVG_s.txt > $OUTPUTDIR/pure_clumpID_bandAVG_s.txt
+
+Examine pure\_clumpID\_bandAVG\_s.txt as:
+
+  head $OUTPUTDIR/pure_clumpID_bandAVG_s.txt
+  
+It is a good idea to attach column names to the top of this file as:
+
+  echo "ID Class MeanB1 MeanB2 MeanB3 MeanB4 MeanB5 MeanB7" > $OUTPUTDIR/pure_clumpID_bandAVG_h.txt
+  cat $OUTPUTDIR/pure_clumpID_bandAVG_s.txt >> $OUTPUTDIR/pure_clumpID_bandAVG_h.txt
+
+Examine the resulting column labelled file pure_clumpID_bandAVG_h.txt as:
+
+  head $OUTPUTDIR/pure_clumpID_bandAVG_h.txt
+
+
+**Train the Random Forest**\\
+\\
+We will train the Random Forest classifier using the mean spectral signatures of each "pure" segment using the R software package. 
+To enter R type:
+
+  R
+
+If you enter R correctly, you will see several lines that describe the version of R you have and how to search for help in R.\\
+\\
+First we must load the R Random Forest library as: 
+
+  library(randomForest)
+
+We will then load the text file pure\_clumpID\_bandAVG\_h.txt into R as:
+
+  training_bandAVG <- read.table('/home/user/ost4sem/exercise/weld_data_processing/classification/pure_clumpID_bandAVG_h.txt', sep=" " , header = TRUE)
+
+To examine the first row of what you have loaded into R type:
+
+  training_bandAVG[1, ]
+
+To examine the first five rows of what you have loaded into R type:
+
+  training_bandAVG[1:5, ]
+
+We need to first define the response variable (burned or unburned) and call is Class as: 
+
+<code>
+training_bandAVG$Class  <-  as.factor (training_bandAVG$Class)
+</code>
+
+We will now develop a random forest training set using the data. The parameters ntree and mytry control the complexity of the random forest (and are set here so that it runs quickly in about 2-5 minutes): 
+
+  fitRF <- randomForest(Class~MeanB1+MeanB2+MeanB3+MeanB4+MeanB5+MeanB7, ntree=100, mytry=4, data=training_bandAVG)
+
+\\ 
+**Apply the Random Forest classifier to all segments**\\
+\\
+We apply the Random Forest classifier to all the segments to generate a table of classified segment values.
+\\
+First we must load the text file segment_bandAVG_s.txt into R:
+
+  clumpID_bandAVG <- read.table('/home/user/ost4sem/exercise/weld_data_processing/classification/clumpID_bandAVG_s.txt', sep=" ") 
+
+Examine the first five rows of what you have loaded into R as:
+
+  clumpID_bandAVG[1:5, ]
+
+We must label the column names of clumpID_bandAVG in the same way as training_bandAVG, to do this type:
+
+  names(clumpID_bandAVG)[2] <- "MeanB1"
+  names(clumpID_bandAVG)[3] <- "MeanB2"
+  names(clumpID_bandAVG)[4] <- "MeanB3"
+  names(clumpID_bandAVG)[5] <- "MeanB4"
+  names(clumpID_bandAVG)[6] <- "MeanB5"
+  names(clumpID_bandAVG)[7] <- "MeanB7"
+
+Re-examine the first five rows (the columns should now be labelled) as:
+
+  clumpID_bandAVG[1:5, ]
+  
+Now we will predict for each segment what class it is using the random forest (this takes < 1 minute):
+
+  predict_class <- predict ( fitRF , clumpID_bandAVG ) 
+  
+Now we need to save the resulting table of classified segment values back out of R to the output directory:
+  
+  write.table (file = '/home/user/ost4sem/exercise/weld_data_processing/classification/predict_class.txt',  predict_class   , sep=" " ,   col.names=FALSE, quote=FALSE) 
+
+Now close R (do not save the workspace image when prompted, just type "n"):
+
+  q()
+  
+Be sure that you exit correctly from R and run the following commands.\\
+\\
+**Generate a classified raster image**\\
+\\
+We need to combine the results in predict_class.txt with clumpID_bandAVG_s.txt, these files have the same number of corresponding rows. Please have a look at the first 10 lines of each of these files as:
+
+  head $OUTPUTDIR/clumpID_bandAVG_s.txt $OUTPUTDIR/predict_class.txt 
+
+The first column of clumpID\_bandAVG\_s.txt is the segment ID, the second column of predict_class.txt is the predicted class. 
+
+We really only want the segment ID and the predicted class, and we can combine them into one file as:
+
+  awk '{ print $2  }'   $OUTPUTDIR/predict_class.txt   >    $OUTPUTDIR/predict_class_2.txt
+  awk '{ print $1  }'   $OUTPUTDIR/clumpID_bandAVG_s.txt    >    $OUTPUTDIR/clumpID_s.txt
+  paste -d " " $OUTPUTDIR/clumpID_s.txt  $OUTPUTDIR/predict_class_2.txt > $OUTPUTDIR/clumpID_class.txt 
+
+Examine clumpID\_class.txt as: 
+
+  head $OUTPUTDIR/clumpID_class.txt
+
+We now use this file to classify the labelled segmentation image clumpIDsegments.tif and we use the binary WELD bad data mask mask1-0.tif to not classify cloudy or saturated pixels as: 
+
+  oft-reclass  -um  $OUTPUTDIR/mask1-0.tif  -oi  $OUTPUTDIR/classification_rf.tif  $OUTPUTDIR/clumpIDsegments.tif
+
+The program oft-reclass will prompt for the following parameters, please just enter the inputs as below:   
+
+-Input reclass file name?  clumpID_class.txt\\
+-Nbr of out bands per input channel? 1 \\
+-Col of input value?  1 \\
+-Col of output value?  2 \\
+-NODATA value?  0\\
+
+
+We can visualize the classification result as:
+
+  openev $OUTPUTDIR/classification_rf.tif 
+
+\\
+For you reference the following screenshots show classification_svm.tif (left) and classification_rf.tif (right)
+
+
+|{{:wiki:svm.png?380}}|{{:wiki:random.png?380}}|
+
+\\
+\\
+  * [[weld_visual | WELD TOA vs. SR ]]
+  * [[weld_visual_fire | WELD visual firer TOA ]]
+
+
+
+
+

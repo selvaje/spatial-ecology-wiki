@@ -1,0 +1,39 @@
+
+
+[[wiki:bash|{{:wiki:logo_linux.jpg?70|Linux bash tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[wiki:r|{{:wiki:rlogo-5.png?70|R tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[wiki:grass|{{:wiki:grasslogo_vector_small.png?60|Grass tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[wikiqgis:qgis|{{:wiki:qgis_m_logo.jpeg?70|Qgis tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[wiki:gdal|{{:wiki:logo_gdal.png?70|Gdal - Ogr tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[wiki:awk|{{:wiki:logo_whitew_awk.png?70|Awk tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[wiki:gnuplot|{{:wiki:gnuplotsm.png?60|Gnuplot tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[http://www.openforis.org/tools/geospatial-toolkit.html|{{:wiki:openforis_logo_210x60.png?180|Open foris geospatial toolkit}}]]{{:wiki:whitespace.png?20|}}
+[[wiki:pk_tools|{{:wiki:pktools_logo.png?45|PKtools tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[wiki:spatialdb|{{:wiki:spatialite-logo-big.png?80|Our SpatiaLite tutorials}}]]{{:wiki:whitespace.png?20|}}
+{{:wiki:python_logo.jpeg?60|}}{{:wiki:whitespace.png?20|}}
+{{:wiki:rasdaman.png?150|}}{{:wiki:whitespace.png?20|}}
+[[wiki:cluster_processing|{{:wiki:gridengine-logo.png?150|Our cluster computing tutorials}}]]{{:wiki:whitespace.png?20|}}
+[[https://www.gnu.org/software/emacs|{{:wiki:logo_emacs.png?60|We like to use GNU-emacs scripting editor}}]]
+[[http://live.osgeo.org/|{{:wiki:osgeolive_logo.png?200|We teach to use OSGeo-live OS}}]]
+
+
+----
+
+[[https://www.gnu.org/|{{:wiki:logo_gnu_small.png?90|We respect user's freedom - Linux/GNU Free software}}]]
+[[wiki:grass|{{:wiki:grasslogo_vector_small.png?80|Our Grass tutorials}}]]
+[[wikiqgis:qgis|{{:wiki:qgis_m_logo.jpeg?80|Our Qgis tutorials}}]]
+[[wiki:gdal|{{:wiki:logo_gdal.png?90|Our Gdal - Ogr tutorials}}]]
+[[wiki:bash|{{:wiki:logo_linux.jpg?100|Our Linux tutorials}}]]
+[[wiki:awk|{{:wiki:logo_whitew_awk.png?80|Our Awk tutorials}}]]
+[[http://www.openforis.org/|{{:wiki:openforis_logo_210x60.png?150|Open foris geospatial toolkit}}]]
+[[wiki:pk_tools|{{:wiki:pktools_logo.png?40|Our PKtools tutorials}}]]
+{{:wiki:proj4_logo.jpeg?60|http://www.osgeo.org/}}
+[[wiki:r|{{:wiki:rlogo-5.png?90|Our PKtools tutorials}}]]
+[[wiki:spatialdb|{{:wiki:spatialite-logo-big.png?100|Our SpatiaLite tutorials}}]]
+[[wiki:startbash|{{:wiki:bash3_logo.png?100|Our bash tutorials}}]]
+{{:wiki:python_logo.jpeg?60|}}
+[[wiki:gnuplot|{{:wiki:gnuplot3_logo.png?70|Our Gnuplot tutorials}}]]
+[[wiki:cluster_processing|{{:wiki:gridengine-logo.png?130|Our cluster computing tutorials}}]]
+[[https://www.gnu.org/software/emacs|{{:wiki:logo_emacs.png?80|We like to use GNU-emacs scripting editor}}]]
+[[http://live.osgeo.org/|{{:wiki:osgeolive_logo.png?200|We teach to use OSGeo-live OS}}]]
+[[www.ubuntu.com/|{{:wiki:logo_ubuntu.jpg?60|We teach to use Ubuntu OS}}]]

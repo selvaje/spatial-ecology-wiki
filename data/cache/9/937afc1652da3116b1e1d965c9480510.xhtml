@@ -1,0 +1,283 @@
+
+<h1 class="sectionedit1" id="parallel_r_using_foreach">Parallel R using foreach</h1>
+<div class="level1">
+
+<p>
+<br/>
+
+Material prepared by Stephen Weston<br/>
+
+<br/>
+
+The object of the exercise is to calculate the Moran&#039;s I index (using R) inside the polygons of the poly_fr_10poly.shp shape file.<br/>
+
+<br/>
+
+<a href="http://www.spatial-ecology.net/ost4sem/lecture/pr.pdf" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/lecture/pr.pdf" rel="nofollow noopener">http://www.spatial-ecology.net/ost4sem/lecture/pr.pdf</a>
+<br/>
+
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Arparale&amp;media=wiki:rstat:10poly.png" class="media" title="wiki:rstat:10poly.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=322d3c&amp;media=wiki:rstat:10poly.png" class="media" alt="" width="400" /></a>
+<br/>
+
+for this exercise you can enter in this directory
+</p>
+<pre class="code">cd /home/user/ost4sem/exercise/basic_adv_gdalogr/</pre>
+
+<p>
+and download this scripts
+</p>
+<pre class="code">wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par1.R
+wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par2.R
+wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par3.R
+wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par4.R
+wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_seq1.R
+wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_seq2.R</pre>
+
+<p>
+<br/>
+
+Sequential for loop
+</p>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_seq1.R" class="mediafile mf_r">wiki/R/moran_seq1.R</a></dt>
+<dd><pre class="code file r">suppressMessages(library(raster))
+suppressMessages(library(rgdal))
+&nbsp;
+# Returns &quot;RasterLayer&quot;
+rasterD &lt;- raster('fagus_sylvatica/2020_TSSP_IP-ENS-A2-SP20_43023435.tif')
+&nbsp;
+# Returns &quot;SpatialPolygonsDataFrame&quot;
+s &lt;- readOGR('poly_fr_10poly.shp', 'poly_fr_10poly')
+npoly &lt;- nrow(s)
+&nbsp;
+# Sequential for loop
+Moran &lt;- double(npoly)
+for (i in 1:npoly) {
+  p &lt;- s[i,]                                # SpatialPolygonsDataFrame
+  rasterDpMask &lt;- mask(rasterD, p)          # RasterLayer
+  Moran[i] &lt;- Moran(rasterDpMask)
+}
+res &lt;- data.frame(id=s@data$id, Moran=Moran)
+print(res)</pre>
+</dd></dl>
+<p>
+Insert the xy crop in the Sequential for loop. The mask command now is performed on smaller raster dataset. 	
+</p>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_seq2.R" class="mediafile mf_r">wiki/R/moran_seq2.R</a></dt>
+<dd><pre class="code file r">suppressMessages(library(raster))
+suppressMessages(library(rgdal))
+&nbsp;
+# Returns &quot;RasterLayer&quot;
+rasterD &lt;- raster('fagus_sylvatica/2020_TSSP_IP-ENS-A2-SP20_43023435.tif')
+&nbsp;
+# Returns &quot;SpatialPolygonsDataFrame&quot;
+s &lt;- readOGR('poly_fr_10poly.shp', 'poly_fr_10poly')
+npoly &lt;- nrow(s)
+&nbsp;
+# Sequential for loop
+Moran &lt;- double(npoly)
+for (i in 1:npoly) {
+  p &lt;- s[i,]                                # SpatialPolygonsDataFrame
+  rasterDp &lt;- crop(rasterD, p, snap='out')  # RasterLayer
+  rasterDpMask &lt;- mask(rasterDp, p)         # RasterLayer
+  Moran[i] &lt;- Moran(rasterDpMask)
+}
+res &lt;- data.frame(id=s@data$id, Moran=Moran)
+print(res)</pre>
+</dd></dl>
+<p>
+Foreach loop that “sends” the full shape file and the full raster to the workers.
+</p>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par1.R" class="mediafile mf_r">wiki/R/moran_par1.R</a></dt>
+<dd><pre class="code file r">suppressMessages(library(raster))
+suppressMessages(library(rgdal))
+suppressMessages(library(doParallel))
+suppressMessages(library(itertools))
+&nbsp;
+nw &lt;- detectCores()
+cl &lt;- makePSOCKcluster(nw)
+registerDoParallel(cl)
+&nbsp;
+# Returns &quot;RasterLayer&quot;
+rasterD &lt;- raster('fagus_sylvatica/2020_TSSP_IP-ENS-A2-SP20_43023435.tif')
+&nbsp;
+# Returns &quot;SpatialPolygonsDataFrame&quot;
+s &lt;- readOGR('poly_fr_10poly.shp', 'poly_fr_10poly')
+npoly &lt;- nrow(s)
+&nbsp;
+# Simplistic parallel foreach loop
+Moran &lt;-
+  foreach(i=1:npoly, .combine='c',
+          .packages=c('raster', 'rgdal')) %dopar% {
+    p &lt;- s[i,]
+    rasterDp &lt;- crop(rasterD, p, snap='out')
+    rasterDpMask &lt;- mask(rasterDp, p)
+    Moran(rasterDpMask)
+  }
+res &lt;- data.frame(id=s@data$id, Moran=Moran)
+print(res)</pre>
+</dd></dl>
+<p>
+Foreach loop that “sends” only one polygon per task and the full raster to the workers
+</p>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par2.R" class="mediafile mf_r">wiki/R/moran_par2.R</a></dt>
+<dd><pre class="code file r">suppressMessages(library(raster))
+suppressMessages(library(rgdal))
+suppressMessages(library(doParallel))
+suppressMessages(library(itertools))
+&nbsp;
+nw &lt;- detectCores()
+cl &lt;- makePSOCKcluster(nw)
+registerDoParallel(cl)
+&nbsp;
+# Returns &quot;RasterLayer&quot;
+rasterD &lt;- raster('fagus_sylvatica/2020_TSSP_IP-ENS-A2-SP20_43023435.tif')
+&nbsp;
+# Returns &quot;SpatialPolygonsDataFrame&quot;
+s &lt;- readOGR('poly_fr_10poly.shp', 'poly_fr_10poly')
+npoly &lt;- nrow(s)
+&nbsp;
+# Parallel, iterating over rows themselves 
+Moran &lt;-
+  foreach(p=isplitRows(s, chunkSize=1), .combine='c',
+          .packages=c('raster', 'rgdal')) %dopar% {
+    rasterDp &lt;- crop(rasterD, p, snap='out')
+    rasterDpMask &lt;- mask(rasterDp, p)
+    Moran(rasterDpMask)
+  }
+res &lt;- data.frame(id=s@data$id, Moran=Moran)
+print(res)</pre>
+</dd></dl>
+<p>
+Foreach loop that “sends” a chunk of polygons and the full raster to the workers
+</p>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par3.R" class="mediafile mf_r">wiki/R/moran_par3.R</a></dt>
+<dd><pre class="code file r">suppressMessages(library(raster))
+suppressMessages(library(rgdal))
+suppressMessages(library(doParallel))
+suppressMessages(library(itertools))
+&nbsp;
+nw &lt;- detectCores()
+cl &lt;- makePSOCKcluster(nw)
+registerDoParallel(cl)
+&nbsp;
+# Returns &quot;RasterLayer&quot;
+rasterD &lt;- raster('fagus_sylvatica/2020_TSSP_IP-ENS-A2-SP20_43023435.tif')
+&nbsp;
+# Returns &quot;SpatialPolygonsDataFrame&quot;
+s &lt;- readOGR('poly_fr_10poly.shp', 'poly_fr_10poly')
+npoly &lt;- nrow(s)
+&nbsp;
+# Parallel, one task chunk per worker
+Moran &lt;-
+  foreach(ss=isplitRows(s, chunks=nw), .combine='c',
+          .packages=c('raster', 'rgdal')) %dopar% {
+    npoly &lt;- nrow(ss)
+    Moran &lt;- double(npoly)
+    for (i in 1:npoly) {
+      rasterDp &lt;- crop(rasterD, ss[i,], snap='out')
+      rasterDpMask &lt;- mask(rasterDp, ss[i,])
+      Moran[i] &lt;- Moran(rasterDpMask)
+    }
+    Moran
+  }
+res &lt;- data.frame(id=s@data$id, Moran=Moran)
+print(res)</pre>
+</dd></dl>
+<p>
+Identify polygon groups, using the centroid in kmean cluster. 
+Foreach loop that “sends” polygons that belong to the same cluster and a cropped  raster (rasterDp) to the workers
+</p>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par4.R" class="mediafile mf_r">wiki/R/moran_par4.R</a></dt>
+<dd><pre class="code file r">suppressMessages(library(raster))
+suppressMessages(library(rgdal))
+suppressMessages(library(doSNOW))
+&nbsp;
+nw &lt;- parallel::detectCores()
+cl &lt;- makeSOCKcluster(nw)
+registerDoSNOW(cl)
+&nbsp;
+# Simple parallel kmeans
+pkmeans &lt;- function(x, centers, iter.max=10, nstart=getDoParWorkers()) {
+  # Combine function returns best result seen so far
+  best &lt;- function(...) {
+    results &lt;- list(...)
+    i &lt;- sapply(results, function(result) result$tot.withinss)
+    results[[which.min(i)]]
+  }
+&nbsp;
+  # Perform a kmeans on each worker by splitting up nstart
+  foreach(ns=idiv(nstart, chunks=getDoParWorkers()),
+          .combine='best', .multicombine=TRUE) %dopar% {
+    kmeans(x, centers, iter.max=iter.max, nstart=ns)
+  }
+}
+&nbsp;
+# Return polygons by cluster
+getcluster &lt;- function(spdf, centers) {
+  # Assume each feature has a single polygon
+  npoly &lt;- nrow(spdf)
+  if (npoly &gt; centers) {
+    x &lt;- t(sapply(1:npoly, function(i) spdf[i,]@polygons[[1]]@labpt))
+    pkmeans(x, centers=centers)$cluster
+  } else {
+    1:npoly
+  }
+}
+&nbsp;
+ipolygons &lt;- function(spdf, f) {
+  it &lt;- isplit(1:nrow(spdf), f)
+&nbsp;
+  nextEl &lt;- function() {
+    x &lt;- nextElem(it)
+    list(value=spdf[x$value,], key=x$key)
+  }
+&nbsp;
+  object &lt;- list(nextElem = nextEl)
+  class(object) &lt;- c('abstractiter', 'iter')
+  object
+}
+&nbsp;
+print(proc.time())
+&nbsp;
+cat('readOGR\n')
+s &lt;- readOGR('clc06_c311/clc06_c311.shp', 'clc06_c311')
+print(proc.time())
+&nbsp;
+cat('kmeans\n')
+clusters &lt;- getcluster(s, 1000 * nw)
+print(proc.time())
+&nbsp;
+cat('Moran\'s I\n')
+pb &lt;- txtProgressBar(max=length(unique(clusters)), style=3)
+progress &lt;- function(n) setTxtProgressBar(pb, n)
+opts &lt;- list(progress=progress)
+&nbsp;
+res &lt;-
+  foreach(ssl=ipolygons(s, clusters), .combine='rbind', .inorder=FALSE,
+          .options.snow=opts, .errorhandling='remove',
+          .packages=c('raster', 'rgdal')) %dopar% {
+    lrasterD &lt;- raster('2020_TSSP_IM-ENS-A2-SP20_43023435.tif')
+    ss &lt;- ssl$value
+    rasterDp &lt;- crop(lrasterD, ss, snap='out')
+    npoly &lt;- nrow(ss)
+    Moran &lt;- double(npoly)
+    for (i in 1:npoly) {
+      x &lt;- crop(rasterDp, ss[i,], snap='out')
+      rasterDpMask &lt;- mask(x, ss[i,])
+      Moran[i] &lt;- Moran(rasterDpMask)
+    }
+    data.frame(id=ss@data$id, cluster=ssl$key[[1]], Moran=Moran)
+  }
+&nbsp;
+cat(sprintf('\nGot %d results\n', nrow(res)))
+print(proc.time())</pre>
+</dd></dl>
+</div>

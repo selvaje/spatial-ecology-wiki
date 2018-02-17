@@ -1,0 +1,57 @@
+
+====== Template for project poposal ======
+click and download\\
+http://www.spatial-ecology.net/virtualM/proj_proposal_template.odp.tar.gz
+
+====== Installation ======
+  * Download the [[http://www.spatial-ecology.net/virtualM/Ubuntu_05062010.7z.zip | Ubuntu_05062010.7z  compressed file]]. This file is 3 825 866 333B (3.56 GB), be sure that you download the full file.
+  * Create a new folder on your c:\ disk and rename it as an example //"virtualOS"//
+  * Take out the zip extention, by renaming the file
+  * Extract ( by http://www.7-zip.org/)  the //Ubuntu_05062010.7z // file in your //C:\virtualOS\// folder. The virtualOS folder will contain ~9 GB of unpacked data. The extracting procedure is quite long less the 1 hour. 
+  * Download and install the [[http://www.vmware.com/products/player/|wmware player]] suitable for your OS. 
+  * Open the vmware player, click on //open a Virtual Machine//; select //C:\virtualOS\ubuntu_050602010\Ubuntu.vmx// and click on //play virtual machine// and select //I copied// option if requested by vmware player
+  * Create a folder in windows C:\vm_data enable the sharing option. This it will be the folder that the students can use to communicate between MW and LinuxVM.
+  * On vmware player select VM\settings\options\shared folders and select //always enabled// and under the path select the  C:\vm_data folder.
+  * On the desktop of the Ubuntu VM there is a folder called shared_on_ws. Confirm that the folder is linked with the C:\vm_data
+  * The root password for the VMUbuntu is "user"
+\\
+
+====== Students ======
+\\
+^Surname^Firstname^Affiliation^Country^Email address^Project idea^
+|Altinoka|Alper|Department of Plant Protection, Agriculture Faculty, Erciyes University|Turkey|altinoka@erciyes.edu.tr|???|
+|Åström|Jens|Department of Ecology, SLU|Sweden|jens.astrom@ekol.slu.se|Explain and predict abundance and distribution patterns of bumblebees and butterflies in southern Norway|
+|Auffret|Alistair|Department of Physical Geography and Quaternary Geology, Stockholm University|Sweden|alistair.auffret@natgeo.su.se|Dispersal of a grassland specialist plant in the rural landscape after restoration from abandoned grasslands and arable fields|
+|Bergsten|Arvid|Systems Ecology, Stockholm University|Sweden|arvid@ecology.su.se|To study habitat networks in forests in Northern Sweden (has forest data)|
+|Bodart|Catherine|Global Environment Monitoring Unit, Institute for Environment and Sustainability, Joint Research Centre – European Commission|Italy|catherine.bodart@jrc.ec.europa.eu|Protecting vegetation cover changes in Africa|
+|Bukontaite|Rasa|Klaipeda University Coastal research and planning institute|Lithuania|rasa@corpi.ku.lt|Spread pathways of zebra mussel in the Lithuanian waters|
+|Endresen|Dag|Nordic Genetic Resources Center, Lund - Department of Agricultural Sciences, Life Sciences, University of Copenhagen|Sweden - Denmark|dag.endresen@nordgen.org|Association between agronomical trait data for plan genetic resources (primitive cultivars, landraces and crop|
+|Espindola|Giovana Mira |National Institute for Space Research (INPE), Institute for Geoinformatics (ifgi)|Brazil|giovanamira@gmail.com|???|
+|Hansen|Line Block|DMU, University of Aarhus|Denmark|lbc@dmu.dk|Analysis of the phosphorus Index in DK or Odense Å Catchment area only|
+|Heimes|Christine|Department of Agriculture and Ecology, Faculty of Life Sciences|Denmark|christineheimes@life.ku.dk|Analysing the geographic mosaic of Barbarea vulgaris-polymorphs in Denmark (and neighbouring countries) with linkage to local plant and herbivore communities|
+|Ipsen|Susan Nasirumbi|Department of Computer Science, University of Copenhagen|Denmark|suntonn@diku.dk|???|
+|Konrad|Maria|DMU, University of Aarhus|Denmark|mthk@dmu.dk|Spatial heterogeneity in the effect of implementing water pollution abatement measures|
+|Mwakalukwa|Ezekiel Edward|Forest & Landscape, Faculty of Life Sciences, University of Copenhagen|Denmark|eem@life.ku.dk|Spacial distribution of biomass in forests|
+|Palmu|Erkki|Department of Chemical Ecology, Lund University|Sweden|erkki.palmu@ekol.lu.se|Cost-benifit analysis – studying dispersal of natural enimies such as Carabids in agricultural landscapes|
+|Petersen|Toke Emil Panduro|Forest & Landscape, Life Sciences, University of Copenhagen|Denmark|tepp@life.ku.dk|Spacio-temporal dynamics|
+|Pradas|Marta Cirach|Center of Research in Environmental Epidemiology (CREAL)|Spain|mcirach@creal.cat|Air pollution modelling using different predictor variables such as land uses, trafic data, population, altitude|
+|Son|Thijs Christiaan van|Department of Biology and Natural History Museum, University of Oslo|Norway|thijs@bio.uio.no|Habitat suitability modeling of molluscan fauna in the Oslofjord|
+|Timmermann|Allan|Department of Biological Sciences, Aarhus University|Denmark|allan.timmermann@biology.au.dk|???|
+|Trubins|Renats|Southern Swedish Forest Research Centre|Sweden|renats.trubins@ess.slu.se|Analysis with k-NN classified satellite sciences for Sweden|
+|Wittwer|Torben|Department of Earth & Ecosystem Sciences, Lund University|Sweden|torben.wittwer@nateko.lu.se|How do land-use pattern determine the distribution of butterflies in Sweden?|
+|Yang|Zhenlin|Lund University|Sweden|zhenlin.yang@nateko.lu.se|Bioclimatic modelling of the vegetation pattern in Northern Sweden|
+
+===== Pasword and login =====
+
+^ Ubuntu 10.04 virtual machine ^^
+|login |user |
+|password |user |
+\\
+\\
+^ www.spatial ecology.net ^^
+|login |unidk2010 |
+|password |unidk2010 |
+\\
+
+[[wiki:surveydk2010|Satisfactory survey]]
+

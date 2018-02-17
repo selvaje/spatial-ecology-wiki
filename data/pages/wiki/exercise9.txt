@@ -1,0 +1,63 @@
+====== Exercise 9: pktools with multi-core processors ======
+In this exercise the following tools will be used:
+  * pktools: pkinfo
+  * bash: for loop, xargs, time, sleep, redirection to /dev/null
+__Create a script /tmp/myscript.sh__
+<code bash>
+INPUT=$1
+NOVALUE=$2
+pkinfo -i $INPUT --ref -mask $NOVALUE
+#sleep 1
+</code>
+__Make the script executable__
+<code bash>
+chmod 755 /tmp/myscript.sh
+</code>
+__Time the following command using a single processor__
+<code bash>
+time for ((NOVALUE=0;NOVALUE<19;++NOVALUE));do pkinfo -i ${LANDSATDIR}/${LANDSATIMG} --ref -mask $NOVALUE;done>/dev/null
+</code>
+The output should be something like
+<code bash>
+real	0m18.691s
+user	0m17.773s
+sys	0m0.776s
+</code>
+__Now do the same with a sleep command of 1 second after each iteration__
+<code bash>
+time for ((NOVALUE=0;NOVALUE<19;++NOVALUE));do pkinfo -i ${LANDSATDIR}/${LANDSATIMG} --ref -mask $NOVALUE;sleep 1;done>/dev/null
+</code>
+The output should be something like
+<code bash>
+real	0m38.022s
+user	0m17.669s
+sys	0m1.168s
+</code>
+
+Question: What could be the difference between real and user time?
+<code bash>
+time for ((NOVALUE=0;NOVALUE<19;++NOVALUE));do echo 19990724_L7E_IP_CW.tif $NOVALUE;done |xargs -n 2 -P 2 /tmp/myscript.sh >/dev/null
+</code>
+
+__Perform the same tasks in parallel with two processors using xargs__
+
+<code bash>
+time for ((NOVALUE=0;NOVALUE<19;++NOVALUE));do echo 19990724_L7E_IP_CW.tif $NOVALUE;done |xargs -n 2 -P 2 /tmp/myscript.sh >/dev/null
+</code>
+
+Notice the real time difference
+<code bash>
+real	0m10.996s
+user	0m20.029s
+sys	0m0.844s
+</code>
+
+__Uncomment the sleep command in the script and perform the same task__
+
+Question: what has happened with the sleep command now?
+
+<code bash>
+real	0m21.392s
+user	0m20.209s
+sys	0m1.284s
+</code>

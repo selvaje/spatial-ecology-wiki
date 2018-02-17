@@ -1,0 +1,2 @@
+   g.list <span class="re2">type</span>=rast <span class="re2">mapset</span>=Vmodel
+   g.region <span class="re5">-p</span>

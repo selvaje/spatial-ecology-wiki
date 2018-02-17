@@ -1,0 +1,28 @@
+====== Calling grass functions within R ======
+we use the spgrass6 R library.
+
+<code r>
+# Code improved from @Curlew found here:\\
+# http://gis.stackexchange.com/questions/84852/apply-r-neighbours-or-neighbourhood-analysis-lecos-plugin-for-qgis-to-3000-ras
+
+#Load libraries
+library(raster)
+library(spgrass6)
+
+#Initate the previously created Location/Mapset
+initGRASS(gisBase = "/usr/lib/grass64", home = tempdir(), \\
+gisDbase = "/path/to/gis/data/directory", \\
+location = "Location", \\
+mapset = "Mapset", override = TRUE) 
+
+# Import all raster to the list "ls"
+ls <- lapply(list.files(".","*.tif"),FUN=raster) 
+for(i in seq_along(ls)){
+execGRASS("r.neighbors", input=names(ls[[i]]), \\
+size=5,output="teste",flags=c("overwrite"))
+
+execGRASS("r.out.gdal", input="teste", \\
+output=paste(paste("/path/to/output/folder",sep="",names(ls[[i]])),sep="",".tif"))
+}
+
+</code>

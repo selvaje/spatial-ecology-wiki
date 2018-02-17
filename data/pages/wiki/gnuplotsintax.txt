@@ -1,0 +1,64 @@
+====== The Gnuplot syntax ======
+Exercise:\\
+Script: open by kate [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh | ~/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh ]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/input.txt | ~/ost4sem/exercise/basic_adv_gnuplot/input.txt ]]\\
+Directory: ~/ost4sem/exercise/basic\_adv\_gnuplot
+
+===== The gnuplot commands =====
+
+The most important commands can grouped in two operations:\\
+  * Setting the plotting environment by: //set// command.\\
+  * Plotting the data by: //plot//  and //splot// commands.\\
+
+Syntax:
+       plot {<ranges>}
+            {<function> | {"<datafile>" {datafile-modifiers}}}
+            {axes <axes>} {<title-spec>} {with <style>}
+            {, {definitions,} <function> ...}
+
+
+
+Here we will concentrate on commands for plotting data in 2D and 3D.\\
+\\
+Enter in gnuplot by:
+<code bash>
+gnuplot
+</code>
+Plot standard function:
+<code gnuplot>
+plot sin (x) 		
+</code>
+Plot your data:
+<code gnuplot>
+plot 'input.txt'   u 3:4 
+</code>
+Query your data by AWK language:
+<code gnuplot>
+plot "<awk '{if($2==2007) print $0 }'  input.txt " u 4:5
+</code>
+Plot two series of data in one plot:
+<code gnuplot>
+plot "<awk '{if($2==2007) print $0 }'  input.txt " u 4:5, "<awk '{if($2==2005) print $0 }'  input.txt " u 4:5,
+</code>
+Sampling your data by AWK language:
+<code gnuplot>
+# 2D plot
+plot "<awk '{if (NR%100== 0) print $0}' aver_month_nuts3.asc " u 4:5
+# 3D plot
+splot "<awk '{if (NR%100== 0) print $0}' aver_month_nuts3.asc " u 4:5:7
+</code>
+Query your data by bash commands:
+<code gnuplot>
+plot "< grep 2005  input.txt " u 4:5
+</code>
+Run a bash command inside gnuplot using the symbol !
+<code gnuplot>
+! head input.txt
+</code>
+Call the bash shell inside gnuplot and return to gnuplot
+<code bash>
+shell
+head input.txt
+exit
+</code>
+

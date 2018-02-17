@@ -1,0 +1,125 @@
+====== Create maps using open layers ======
+
+===== Reproject vector and plot it over google map =====
+
+We use the ward administration boundary of Cornwall as vector layer and overlay it to google map. The ward layer need to be reprojected into epsg:3856 map projection to harmonize maps.
+
+<code r>
+library(dismo)
+system("wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/vector/cornwall_agri.zip")
+system("unzip cornwall_agri.zip")
+
+# load vector
+ward <- shapefile("cornwall.shp") 
+
+# Reproject vector using raster library required by dismo
+ward.84 <- spTransform(ward,CRS("+init=epsg:3857")) 
+
+# Load google map using the "Cornwall" location as google query
+cornwall.sat <- gmap("Cornwall",type="satellite") 
+plot(cornwall.sat)  # plot the map
+
+# Overlay the vector layer on the raster layer
+plot(ward.84, add = TRUE, lwd =1, ext = extent(ward.84), border = "yellow
+
+# Plot small area within a region 
+Lizard.sat <- gmap("Lizard, Cornwall",type="satellite") 
+plot(Lizard.sat)
+
+# Plot small area within a region using google hybrid map
+Lizard.hybrid <- gmap("Lizard, Cornwall",type="hybrid") 
+plot(Lizard.hybrid)" )
+
+# Plot a town suing the terrain google map
+Matera.terrain <- gmap("Matera",type="terrain") 
+plot(Matera.terrain)
+</code>
+
+{{:wiki:rstat:goog_vect.png?250|}}{{:wiki:rstat:matera_gterrain.png?200|}}{{:wiki:rstat:lizard_sat.png?300|}}{{:wiki:rstat:lizard_hybrid.png?300|}}\\
+
+===== Raster layer overlay with OpenStreetMap =====
+
+We use the bounding box of the ward administrative layer in Cornwall UK to download the corresponding study area from OpenStreetMap raster layer. We have to define the bounding box in lat long epsg:4326 projection.\\
+Successively we load the soil carbon map overwrite its projection (British National Grid projection epsg:27700) since the metafile is absent; reproject from epsg :27700 to the OpenStreetMap projection epsg 3857.\\
+Finally we can overlay the carbon soil map to openstreetmap.\\
+<note important>N.B. We have downloaded the soil carbon content map needed here below, in the raster [[wiki:rstat:r_load_rast| data visualization tutorial]].</note>
+
+<code bash>
+# install rjava from the bash shell it is a needed dependency for later
+sudo apt-get install r-cran-rjava
+# enter R as super user
+sudo R
+</code>
+
+
+<code r>
+install.packages("OpenStreetMap")
+library(OpenStreetMap)
+library(rgdal)
+library(raster)
+# Reproject ward layer to lat lon
+ward.LatLon <- spTransform(ward,CRS("+init=epsg:4326"))
+
+#Use lat long extents to load OpenStreetMap layer
+cornwall.osm = openmap(c(lat = ward.LatLon@bbox[2,2],lon= ward.LatLon@bbox[1,1] ),c(lat = ward.LatLon@bbox[2,1],lon = ward.LatLon@bbox[1,2]), minNumTiles = 9, type="osm")
+# Plot the map
+plot(cornwall.osm)
+
+# Load the soil carbon content map for Cornwall. 
+soil.carbon=raster(readGDAL("carS_m9.asc"))
+
+# Write the projection type to this layer
+str(soil.carbon@crs) # check projection
+
+crs(soil.carbon)<- "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"
+str(soil.carbon@crs) # check projection now
+
+#Define the epsg 4326 projection 
+sr4326="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs"
+
+# Reproject from epsg:22770 to epsg:4326
+soil.carbon4326 <-  projectRaster(soil.carbon, crs = sr4326)
+
+Plot the soil carbon map in transparency with OpenStreetMap
+plot(soil.carbon4326, col=rainbow(25, alpha=0.35), add=TRUE)
+
+</code>
+
+{{:wiki:rstat:cornwall_osm.png?300|}}{{:wiki:rstat:soilcar_osm.png?300|}}
+ 
+===== Vector layer overlay with Stamen-Watercolor =====
+
+We Reproject the ward vector layer to lat long (epsg:4326) projection, so we can query and download the stamen watercolor rater map using the openmap function.\\
+Next, we reproject the ward layer in the openStreetMap projection  (epsg:4326) to overlay it with the raster.
+
+<code r>
+
+ward.LatLon <- spTransform(ward,CRS("+init=epsg:4326"))
+cornwall.watercolor = openmap(c(lat = ward.LatLon@bbox[2,2],lon= ward.LatLon@bbox[1,1] ),c(lat = ward.LatLon@bbox[2,1],lon = ward.LatLon@bbox[1,2]), type="stamen-watercolor")
+plot(cornwall.watercolor)
+ward.3857 <- spTransform(ward,CRS("+init=epsg:3857"))
+plot(ward.3857, add = TRUE, lwd =1, ext = extent(ward.3857), border = "darkgreen" )
+</code>
+{{:wiki:rstat:water_cornwall.png?300|}}{{:wiki:rstat:water_vect_cornwall.png?300|}}
+
+===== Define a study area with google, plot OpenStreetMap =====
+The following method allow to define a study area using a google location keyword (e.g. country, town, continent, small village) and use its extent to plot openstreet map. Example for Matera in Italy:\\
+<code r>
+matera.sat <- gmap("Matera",type="satellite"
+matera.LatLon <- spTransform(matera.sat,CRS("+init=epsg:4326"))
+sr <- "+init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+matera.LatLon <-  projectRaster(matera.sat, crs = sr)
+xmin=bbox(matera.LatLon)[1,1]
+xmax=bbox(matera.LatLon)[1,2]
+ymax=bbox(matera.LatLon)[2,2]
+ymin=bbox(matera.LatLon)[2,1]
+matera.osm = openmap( c(lat = ymax, lon = xmin ) , c(lat = ymin, lon = xmax), type="osm")
+plot(matera.osm)
+</code>
+{{:wiki:rstat:plot_matera_google.png?300|}}
+{{:wiki:rstat:matera_osm.png?300|}}
+
+
+
+
+   

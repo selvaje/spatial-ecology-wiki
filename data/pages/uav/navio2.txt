@@ -1,0 +1,121 @@
+====== Flying Pi ======
+{{:uav:drone.png?100|}}{{:uav:pi.png?50|}}{{:sitedesign:siteplann.png?100|}}{{:uav:odm.png?100|}}{{:uav:mavlink.png?200|}}{{:wiki:logo.png?150|}}{{:uav:emlid.png?100|}}\\
+<note important>This is a joint project of passionate open source drone pilots / almost pilots! </note>
+{{:uav:one.png?70|}}{{:uav:due.png?68|}}{{:uav:tre.png?70|}}{{:uav:qua.png?70|}}
+
+[[ https://docs.emlid.com/navio2/Navio-APM/installation-and-running/ | We are stuck here ]], because the info about on how to connect via wifi the navio-raspi to a laptop (or tablet) with a ground station installed where not clear to us. So we did followed and modified [[https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/| this tutorial ]] to use the pi as wifi access point with static ip address and being able to connect whatever device with a wifi device.
+
+==== Summary ====
+  - Update operating system and installing new software
+  - Set up static IP /etc/network/interfaces
+  - Configure hostapd : /etc/hostapd/hostapd.conf and /etc/default/hostapd
+  - Start hostapd at reboot
+
+==== Install software ====
+
+<code bash>
+sudo apt-get update && sudo apt-get dist-upgrade
+sudo apt-get update && sudo apt-get install apm-navio2
+sudo apt-get install hostapd
+</code>
+
+
+==== Static Ip address for wi fii ====
+    sudo nano /etc/network/interfaces
+    
+The file looks like this:
+
+<code bash>
+# interfaces(5) file used by ifup(8) and ifdown(8)
+# Please note that this file is written to be used with dhcpcd
+# For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
+# Include files from /etc/network/interfaces.d:
+source-directory /etc/network/interfaces.d
+allow-hotplug lo
+iface lo inet loopback
+
+allow-hotplug wlan0
+iface wlan0 inet static
+    address 172.24.1.1
+    netmask 255.255.255.0
+    network 172.24.1.0
+    broadcast 172.24.1.255
+
+allow-hotplug eth0
+iface eth0 inet dhcp
+</code>
+
+
+==== Configure hostapd ====
+Create a new configuration file with sudo nano /etc/hostapd/hostapd.conf with the following contents: 
+
+<code bash>
+# This is the name of the WiFi interface we configured above
+interface=wlan0
+
+# Use the nl80211 driver with the brcmfmac driver
+driver=nl80211
+
+# This is the name of the network
+ssid=Navio-AP
+
+# Use the 2.4GHz band
+hw_mode=g
+
+# Use channel 6
+channel=6
+
+# Enable 802.11n
+ieee80211n=1
+
+# Enable WMM
+wmm_enabled=1
+
+# Enable 40MHz channels with 20ns guard interval
+#ht_capab=[HT40]#[SHORT-GI-20]#[DSSS_CCK-40]
+
+# Accept all MAC addresses
+macaddr_acl=0
+
+# Use WPA authentication
+auth_algs=1
+
+# Require clients to know the network name
+ignore_broadcast_ssid=0
+
+# Use WPA2
+wpa=2
+
+# Use a pre-shared key
+wpa_key_mgmt=WPA-PSK
+
+# The network passphrase
+wpa_passphrase=raspberry
+
+# Use AES, instead of TKIP
+rsn_pairwise=CCMP
+</code>
+
+**Next edit the /etc/default/hostapd file**
+    sudo nano /etc/default/hostapd
+be sure you have 
+    DAEMON_CONF="/etc/hostapd/hostapd.conf"
+
+
+==== Start hostapd at reboot ====
+1 create a /etc/launch.navio2 file:
+<code bash>
+#!/bin/bash
+#
+# auto launch ArduCopter
+# 
+ArduCopter-quad -A udp:172.24.1.119:14550
+</code>
+
+2 Add the command 
+   @reboot bash /etc/launch.navio2 &
+
+to the sudo crontab file using:
+   sudo crontab -e 
+
+

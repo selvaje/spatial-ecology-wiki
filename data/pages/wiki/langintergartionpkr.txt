@@ -1,0 +1,101 @@
+====== Languages/Software data integration: GDAL, PKTOOLS and R ======
+\\
+The main aim of this page is to show how to integrate GDAL and R sw under BASH environment. \\
+\\
+**This is a draft and you have to modify according to your needs.**
+\\
+For this we create an exercise using \\
+tif:  ~/ost4sem/exercise/basic\_adv\_gdalogr/fagus\_sylvatica/20*43023435.tif \\
+shp:  ~/ost4sem/exercise/basic\_adv\_gdalogr/fagus\_sylvatica/poly\_fr.shp\\
+or\\
+shp:  ~/Dropbox/poly\_fr.shp
+\\
+The object of the exercise is to calculate the Moran's I index (using R) inside the polygons of the  poly_fr.sh shape file. \\
+\\
+Open the files with openev to get familiar with the geodata.\\
+\\
+Setting WORKING directory. 
+\\
+
+   DIR=~/ost4sem/moran/
+
+\\
+Copy referenced dataset in the working directory.\\
+\\
+<code bash>
+mkdir $DIR
+cd $DIR
+cp ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/20*_TSSP*43023435.tif  $DIR/
+cp ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/poly_fr.*    $DIR/ 
+</code>
+
+=== Split the shapefile ===
+Create two independent shapefile, one for each polygon, using ogr2ogr
+
+   ogr2ogr .......  
+
+
+=== Crop the tif based on the  shapefile ===
+
+Crop the tif and set the out part to -1. Consider later how the -1 is read in R. You do not have compute the Moran's I considering the -1    
+
+<code bash>
+for file in ~/ost4sem/moran/20*43023435.tif ; do 
+   pkcrop -e  .....using shapefile
+   pkcrop -e  .....using the other shapefile 
+done
+</code>
+
+
+=== Calculate Moran's I in R ===
+
+Create a loop that calculates Moran's I (http://en.wikipedia.org/wiki/Moran's_I) to each tif. 
+
+
+<code bash>
+
+
+for file_crop in  ..........  ; do  
+
+export file_crop=$file_crop
+
+
+# start R and import bash variables (the file name)
+
+R --vanilla -q <<EOF
+
+file_crop = Sys.getenv('file_crop')
+library(raster)
+rasterOptions(tmpdir="/tmp")
+
+# load grass raster data 
+
+rastD = raster( paste ("/home/user/ost4sem/moran/",file_crop,sep=""))
+
+# calculate Moran's I
+M_text = Moran(rastD)
+
+#Write the results to a simple text file
+write.table (M_text[1] ,paste("moran_",file_crop,".txt",sep="" )  ,row.names = F , col.names = F)
+EOF
+
+done 
+
+</code>
+
+=== Look at these files (which contain Moran's I for each separate raster) ===
+
+   cat $DIR/moran_*_TSSP_IP-*_43023435_crop.txt 
+
+=== Extract Moran's I average using AWK ===
+
+   cat $DIR/moran_*_TSSP_IP-*_43023435_crop.txt   | awk '{ sum=sum+$1 } END { print sum/NR}  ' 
+
+=== Exercise  ===
+
+Create a unique script and try to run with 
+   bash ~/ost4sem/moran/moran_calc.sh
+
+Solution
+
+   wget http://www.spatial-ecology.net//ost4sem/exercise/basic_adv_gdalogr/moran_calc.sh

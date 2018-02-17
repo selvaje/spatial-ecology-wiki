@@ -1,0 +1,32 @@
+====== Reprojection of data using Quantum GIS ======
+Reprojections are very complex mathematical and geometrical computations. Gdal / ogr libraries are used in Qgis to carry out such data processing.\\
+We recommend before starting with reprojections to acquire the following information
+  * The source projection of the input spatial data 
+  * The target projection of the output spatial data 
+Spatial data projections have standardized codes or parameters. By using these codes/parameter we can be sure that the software is selecting the exact reprojection process that we are carrying out. The Geodetic Parameter Registry code EPSG or the PROJ.4 parameters provide such standardized nomenclature and are available on Qgis.
+
+===== Raster data reprojections =====
+We are going to re-project The Global Land Cover map clipped on Tanzania from the WGS to UTM projections.
+  * Load the ../Data/Raster/GLC2000/GLC2000tanzania.tif file and look at the metadata to find out which is the source projection.
+  * Main Qgis menu > Layer > Properties > Metadata.
+The source data has the following parameters: //+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs//. This corresponds to the //EPSG:4326// code.\\
+We would like to re-project the GLC2000tanzania.tif raster map to the Universe Transverse Mercator: //+proj=utm +zone=35 +south +a=6378249.145 +b=6356514.870 +units=m +towgs84=-160,-6,-302//.
+\\
+  * Select from the main Qgis menu > Raster > Warp \\
+  * Select the GLC2000tanzania.tif as input file\\
+  * Browse to your favourite output folder and write a name for the target map in the //output file// (ex.: GLC2000tanzaniaUTM.tif)
+\\
+  * In the source SRS write: //+proj=longlat +ellps=WGS84 +datum=WGS84 +no defs//
+  * In the target SRS write: //+proj=utm +zone=35 +south +a=6378249.145 +b=6356514.870 +units=m +towgs84=-160,-6,-302// and click ok.
+
+<note tip>
+In the lower part of the Qgis raster warp window you can see the Gdal codes used to perform the reprojection. You can copy the code and paste it on a bash script for producing loops for multiple data reprojections. In our exercise the Gdal code is shown below:
+\\
+//gdalwarp -s_srs "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs" -t_srs "+proj=utm +zone=35 +south +a=6378249.145 +b=6356514.870 +units=m +towgs84=-160,-6,-302" -of GTiff\\
+~/ost4sem/exercise/basic_qgis/data/raster/GLC2000/GLC2000_tanzania ~/ost4sem/exercise/basic_qgis/data/raster/GLC2000/ GLC2000_tanzaniaUTM//\\
+</note>
+\\
+===== Vector data re-projections =====
+The procedure used we just used for raster data can be also applied for vector datausing the ogr plugin and selecting from the Qgis main menu > vector > Data Management Tools > Export to new projection.\\
+
+

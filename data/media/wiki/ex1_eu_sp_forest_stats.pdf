@@ -1,0 +1,81 @@
+# The script below was used to calculate the ha of forest per country in Europe using the JRC derived pan-European Forest map  and the administrative country border of European states.
+
+# In this exercise you should change the script for computing the ha of forest at 1km resolution per each region in Spain.
+# After downloading the derived forest map of spain "spain_forest.zip" and the the administrative boundary of spain "spain.admin.zip" follow the script and consequently modify it.
+
+# NB for Spain use the 23030 EPSG code as geographic reference system
+# The easyest way to solve the exercise is modifiyng the functions and commands without adding new commands.
+
+############################################
+# ESTIMATION OF EU FOREST ha PER COUNTRY
+
+# Create a working directory into the home/user/Document folder
+# Create subdirectories for inputs and outputs files
+mkdir /home/user/Documents/stefano 
+mkdir /home/user/Documents/stefano/input
+mkdir /home/user/Documents/stefano/output
+cd /home/user/Documents/stefano 
+
+# Set input and output directory path as variables
+# the function "export 
+export INPUT=/home/user/Documents/stefano/input
+export OUTPUT=/home/user/Documents/stefano/output
+
+mv /home/user/Downloads/EUforest.tif/ $INPUT
+mv /home/user/Downloads/EU_country_gl_gpwc3.zip/ $INPUT
+unzip $INPUT/EU_country_gl_gpwc3.zip -d $INPUT
+
+cd $INPUT
+gdalwarp   -t_srs EPSG:3035  -s_srs EPSG:3035  EUforest.tif EUforest_proj.tif
+bash ~/ost4sem/exercise/basic_adv_grass/create_location.sh  EUforest_proj.tif EUforest ~/ost4sem/grassdb
+
+# enter n grass
+grass -text ~/ost4sem/grassdb/EUforest/PERMANENT
+
+# rename maps becaus the .tif is a name and confuse the grass format
+g.rename rast=EUforest_proj.tif@PERMANENT,EUforest
+
+# define projection to the "shp" file with ogr2ogr command
+# Note that the syntax for ogr2ogr is :
+# ogr2ogr TARGET_PROJ OUTPUT INPUT
+
+ogr2ogr  -t_srs EPSG:3035  $INPUT/EU_country_gpwv3_proj.shp   $INPUT/EU_country_gpwv3.shp
+
+# Import the ".shp" file in grass vector format
+v.in.ogr dsn=$INPUT/EU_country_gpwv3_proj.shp output=EUcountry 
+
+
+#Look at your raster and vector file availability, you shoukld have access to EUcountry vector file and EUforest raster file
+g.list rast
+g.list vect   
+
+# Set your g.region to include the whole area of interest
+g.region vect=EUcountry res=1000 save=europe --o
+
+
+#Rasterize the European country boundary vector map
+v.to.rast --o input=EUcountry output=EUcountry use=cat
+
+
+#Estimate forest cover per country
+#The following operations are chained in a loop for processing country by country the forest cover statistics:
+#     *      start a loop
+#     *      select a country X and create a raster for this country with value 1: country presence / 0: country absence 
+#     *      produce a series of raster maps including forest cover per country 
+#     *      create a text file estimating number of pixels per pixel category. Category range from 0 ha to 100 ha of forest cover per pixel
+#     *      calculate the total sum of ha of forest cover per country and write results in a summary file
+#     *      stop the loop
+#     *      Print the total sum of European forest cover in the same summary text file
+
+
+for  (( dir=1 ; dir<=46 ; dir ++ ))  ; do
+  r.mapcalc ctry$dir = "if(EUcountry == $dir , 1 ,0 )"
+  r.mapcalc fnfpc_ctry$dir = "if(ctry$dir == 1 , EUforest ,0)"
+  r.stats -c -p -l -n input=fnfpc_ctry$dir output=$OUTPUT/stat_forest_$dir.txt
+  awk '{  print $1 , $2 , $1*$2  }'  $OUTPUT/stat_forest_$dir.txt | awk '{ sum=sum+$3  } END { print sum }' > $OUTPUT/tot_ha_ctry$dir.txt
+  awk -v dir=$dir  '{  print "Total ha of forest in country nbr ", dir , "=", $1 }'  $OUTPUT/tot_ha_ctry$dir.txt >> summary.txt
+done
+
+awk '{ sum=sum+$10  } END { print "Total ha of forest in Europe           = " , sum }' $OUTPUT/summary.txt >> $OUTPUT/summary.txt
+
+## End of script

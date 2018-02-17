@@ -1,0 +1,29 @@
+===== Vlad Merticariu ===== 
+**Jacobs University, Bremen, Germany**\\
+**Large-Scale Scientific Information Systems Research Group**\\
+ 
+==== Summary ====
+Vlad is a computer scientist with a vast expertise in distributed systems, databases, geospatial standards and web service standards compliance. He is a contributor to the rasdaman array database engine, as well as OGC WCS standards ecosystem. Vlad's research interest falls under the category of parallel query processing: a network of machines collaborate for answering a single array database query, by dividing it into independent sub­queries sent to different servers.
+\\
+==== Education ====
+Currently he is completing his PhD entitled "Data Fragmentation and Replication in Distributed Array Databases"  at Jacobs University Bremen, in which he focuses on finding strategies for dynamically partitioning and replicating large amounts of incoming data, with the purpose of maximizing parallelism of outgoing processing operations. \\
+
+==== Key publications ====
+
+  * On the Efficient Evaluation of the Array Joins. Peter Baumann, Vlad Merticariu. IEEE Big Data, Santa 
+Clara, USA, 2015.
+  * Grooming Big Data from Afar. Peter Baumann, Alex Mircea Dumitru, Vlad Merticariu. ACM 
+SigSpatial, Seattle, USA, 2015.
+  * Exploring Cloud Opportunities from an Array Database Perspective. Peter Baumann , Alex Mircea 
+Dumitru, Vlad Merticariu. DANAC, SIGMOD, Snowbird, USA, 2014.
+  * The array database that is not a database: file based array query answering in rasdaman. Peter 
+Baumann, Alex Mircea Dumitru, Vlad Merticariu. SSTD, Munich, USA, 2013.
+  * Breaking the big data barrier by enhancing on-board sensor flexibility. Peter Baumann, Alex Mircea 
+Dumitru, Vlad Merticariu, D. Misev. ACM BigSpatial, Orlando, USA, 2013
+
+==== Projects ====
+
+  * Earthserver project: lead developer for the data partitioning and replication features of rasdaman in 
+distributed environments, developer for the OGC web services offered by rasdaman.
+  * Publicamundi project: co-manager of the project. 
+  

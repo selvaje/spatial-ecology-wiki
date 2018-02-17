@@ -1,0 +1,63 @@
+==== Day 1 ==== 
+Introduction to Open source working environment, permaculture and GIS\\
+=== Morning ===
+  * Knowing eachother
+  * OSE Introduction
+  * OSE Vision ( Site Tour / OSE Site Design Vision)
+  * Spatial Ecology introduction 
+  * Virtual Machine. Virtualbox installation
+  * Linux environment
+  * OSGeoLive
+//Any issues for install ? Guide people before the workshop. 20-30GB of space - min 4GB RAM.//
+=== Afternoon ===
+  * Intro to Geographic Information Systems
+  * Geographic projections, topographic maps, why GIS?
+  * GIS data formats and types
+  * Getting started with Qgis. //Raster vector data format and manipulation - Data filtering and harmonization (projections, clipping, mask) -  Map editing //
+  * Qgis pluggins GRASS Qgis integration
+  * OSE Site Planning Tutorial - Intro to Regenerative Agriculture and Keyline Design - Landscape Architecture (Darren)
+
+==== Day 2 ==== 
+Gathering Data for a Site Plan
+=== Morning ===
+  * Geodatabases
+Online data acquisition: Remote Sensing Data + Open Access Data Repositories\\
+Lidar Digital Elevation Models (DEMs)\\
+Climatic data resources\\
+Open street map and other auxiliary data\\
+Geology, soil maps / landcover, vegetation maps\\
+  * Geography of Landscape - Setting up a new project
+  * Importing a data set
+  * Hydrological modelling for site design
+
+=== Afternoon ===
+Field Data Collection
+  * Capturing and using GPS - Soil / Tree data
+  * Sample in the field / upload data into GIS
+  * Tree Mapping
+  * Topsoil cover, soil permeability, soil structure data collection
+  * Usage exercise – collation of data and input (point surface extrapolation)
+
+==== Day 3 ==== 
+Modeling Site Features\\
+
+=== Morning ===
+  * Terrain modelling for Keyline site design (Slopes, Orientations, Ridges, Valleys).
+  * GIS toolbox for Permaculture and Site design
+
+=== Afternoon ===
+Darren - Intervention
+Applications\\
+Earthworks – Permaculture Design\\
+Using GIS to make a plan for Retaining all Moisture on Site\\
+Using personal weather station and soil properties data\\
+Topography->Slope\\
+Surface water->Water accumulation for water catchment ponds\\
+Subsurface water\\
+My Topsoil Carbon Mapping\\
+Using field data on soils (GPS / organic matter) to generate carbon fertility maps\\
+Creating gradient maps\\
+Point – surface interpolation methods (splines/ modeling algorithm)\\
+Application to soil fertility, soil structure, and soil permeability\\
+
+Evening – Movie Night\\

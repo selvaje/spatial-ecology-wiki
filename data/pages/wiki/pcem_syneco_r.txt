@@ -1,0 +1,128 @@
+====== Plotting the Autoecology and Synecology of Pinus Cembra  ======
+\\
+==== Introduction ====
+   * Autoecology: the branch of ecology which deals with individual species and their reactions to environmental factors. [[http://www.everythingbio.com|sources]]
+   * Synecology : The branch of ecology which deals with the distribution, abundance, demography, and interactions between coexisting populations. 
+
+In this exercise we are going to plot the presence / absence of Pinus Cembra, the presence of its co-occurring species (Larix Decidua and Picea Abies) and the rest of the european tree species according to bioclimatic factors. 
+\\
+
+==== Dataset details ====
+
+^Code ^ Bioclimatic factor ^
+|pr105 | Maximum Temperature warmest month |
+|pr106 | Minimum Temperature coldest month |
+|pr112 | Annual Precipitation  |
+|pr118 | Summer Precipitation |
+|pr134 | Compensated summer ombrothermic index |
+|pr198 | Accumulated Annual Evapotranspiration |
+\\
+
+^Code ^ Tree species ^
+|S116 | Larix decidua |
+|S118 | Picea abies |
+|S123 | Pinus cembra |
+\\
+
+<note warning>
+There are no explanations in the script. Try to understand it and play with its functions.
+</note>
+
+
+==== Hands-on ====
+
+<code r>
+load("~/ost4sem/exercise/
+ basic_adv_r/inputs/advanceRdata")
+
+FFD =advanceRdata
+
+# i = 123
+
+mod <- paste("S",i,sep="")
+presence = subset(FFD,FFD[[mod]]==1)
+absence = subset(FFD,FFD[[mod]]!=1)
+
+presence.larix = subset(FFD,FFD$S116==1)
+presence.picea = subset(FFD,FFD$S118==1)
+
+png("~/ost4sem/exercise/basic_adv_r/outputs/synecology_cembro.png",
+ width = 800, height = 800)
+# png("/home/stefano/ubun/cembro
+# /figures/synecology_cembro1.png", 
+# width = 8, height = 8, units = cm )
+
+nf <- layout(matrix(c(1,2,3,4),2,2,byrow=TRUE), 
+c(1,1), c(1,1), TRUE) 
+layout.show(nf)
+par(mar=c(5,5,1,1))
+
+## plot Annual Precipitation vs Minimum Temperature
+plot(absence$pr112,absence$pr106, 
+ type = "p", col = "gray40", lwd=0.2, pch=19,
+ xlab="Annual precipitation (mm/yr)", 
+ ylab="Mean Min Temp. coldest month", cex.lab = 2)
+
+points(presence.picea$pr112,presence.picea$pr106,
+ type = "p", col = "red", lwd=0.5,pch=20, cex=1)
+
+points(presence.larix$pr112,presence.larix$pr106,
+ type = "p", col = "blue", lwd=0.5,pch=20, cex=1)
+
+points(presence$pr112,presence$pr106, 
+ type = "p", col = "green3", lwd=1,pch=20, cex=2)
+
+
+## plot Summer Precipitation vs Minimum Temperature
+plot(absence$pr118,absence$pr106, 
+ type = "p", col = "grey40", lwd=0.2, pch=19, 
+ xlab="Summer precipitation (mm/yr)", 
+ ylab="", 
+ cex.lab = 2)
+
+points(presence.picea$pr118,presence.picea$pr106,
+ type = "p", col = "red", lwd=0.5,pch=20, cex=1)
+
+points(presence.larix$pr118,presence.larix$pr106,
+ type = "p", col = "blue", lwd=0.5,pch=20, cex=1)
+
+points(presence$pr118,presence$pr106,
+ type = "p", col = "green3", lwd=1, pch=20, cex=2)
+
+## Compensated summer ombrothermic index vs Sum of T non frozen months 
+plot(absence$pr134,absence$pr198, 
+ type = "p", col = "grey40", lwd=0.2, pch=19, 
+ xlab="Summer Ombrothermic index", 
+ ylab="Accumulated ETP (mm/yr)", 
+ cex.lab = 2)
+
+points(presence.picea$pr134,presence.picea$pr198,
+ type = "p", col = "red", lwd=0.5,pch=20, cex=1)
+
+points(presence.larix$pr134,presence.larix$pr198,
+ type = "p", col = "blue", lwd=0.5,pch=20, cex=1)
+ points(presence$pr134,presence$pr198,
+ type = "p", col = "green3", lwd=1, pch=20, cex=2)
+
+legend (13,900, c("Pinus c.","Picea a.","Larix d.","other spp."),
+ bty = "n", col=c("green","red","blue","grey40"), 
+ pch=c(19,20,20,20),cex=2)
+
+
+## Max temp warmest month vs ETP
+plot(absence$pr105,absence$pr198, type = "p", col = "grey40", lwd=0.2, pch=19, xlab="Mean Max. Temp. warmest month", ylab="", cex.lab = 2)
+
+points(presence.picea$pr105,presence.picea$pr198,type = "p", col = "red", lwd=0.5,pch=20, cex=1)
+
+points(presence.larix$pr105,presence.larix$pr198,type = "p", col = "blue", lwd=0.5,pch=20, cex=1)
+
+points(presence$pr105,presence$pr198,type = "p", col = "green3", lwd=1, pch=20, cex=2)
+
+dev.off()
+
+
+</code>
+
+|{{:wiki:synecology_cembro.png?700}}|\\
+
+

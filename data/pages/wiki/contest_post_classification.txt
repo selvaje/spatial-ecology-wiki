@@ -1,0 +1,21 @@
+==== Post classification optimization ====
+=== Sieving filter ===
+<code bash>
+    pksieve -i testmap_feature_fusion.tif -o testmap_feature_fusion_sieved.tif -s 5
+</code>
+
+=== Markov random field model ===
+<code bash>
+    pkfilter -i testmap_feature_fusion.tif -o mrf_feature_fusion.tif -f mrf -dx 3 -dy 3 -ot Float32 -ct none -class 1 -class 10 -class 11 -class 12 -class 13 -class 14 -class 15 -class 2 -class 3 -class 4 -class 5 -class 6 -class 7 -class 8 -class 9
+</code>
+
+=== Classify with Markov random field model ===
+<code bash>
+    pkclassify_svm -i 2013_IEEE_GRSS_DF_Contest_FEATURE_FUSION.tif -t training_feature_fusion.shp -o testmap_feature_fusion_mrf.tif -ct ct.txt -cc 100 -g 1 -prob prob_feature_fusion.tif -pim mrf_feature_fusion.tif -b 140 -b 2 -b 48 -b 0 -b 3 -b 23
+</code>
+
+=== Classify water bodies with LiDAR and NDVI derived features only ===
+<code bash>
+    pkclassify_svm -i 2013_IEEE_GRSS_DF_Contest_FEATURE_FUSION.tif -t training_feature_fusion.shp -o testmap_final_ff.tif -ct ct.txt --ccost 1000 --gamma 1 -b 0 -b 1 -b 2 -b 3 -m testmap_feature_fusion_mrf.tif -mv -6
+</code>
+

@@ -1,0 +1,14 @@
+====== Species Distribution Modelling ======
+Species distribution modeling (SDM) ( or envelope-modeling, habitat modeling, environmental /
+ecological niche-modeling) are spatially based models estimate the similarity of the conditions at any site to the conditions at the locations of known occurrence (and perhaps of non-occurrence) of a phenomenon. (reference Hijmans and Helith). They are used to predict species ranges, biomes, vegetation formations or otherfeatures occurrence with climate and environmental or auxiliary data as predictors. R has may libraries and algorithms to process Species Distribution Models.\\
+{{:wiki:rlogo-5.png?100|}}{{:wiki:rstat:r_sdm.png?100|}}\\
+
+==== Learn SDM in R ====
+
+  * [[https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf| R vignette on SDM]] by Hijmans and Helith.
+  * [[wiki:spdistr1| SDM with generalized distribution models ]] By Adam M. Wilson ( original version) and adapted by Marta Jarzyna, October 2015
+  * [[wiki:spdistr2| Hierarchical Bayesian model for Species Distribution ]] By Adam M. Wilson, adapted by Marta A. Jarzyna, November 2015.
+  * [[wiki:forestmod | SDM with random forest classifier]] By S. Casalegno and G. Amatulli.
+  * [[wiki:vector_deseas| Landscape and Climate Data Logistic Model of Tsetse Distribution in Kenya]][[http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011809 | Moore and Messina 2009]].\\
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/jrc24feb_2010.pdf| Lecture ]] Forest distribution and vulnerability modelling. S. Casalegno
+

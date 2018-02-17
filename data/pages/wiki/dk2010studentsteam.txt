@@ -1,0 +1,8 @@
+======  PhD summer school DK2010 Students Team ======
+In order to know better each other it will be nice to have the picture, name and the relevant aspect of your PhD.\\
+For privacy reason this page will be open only to the students which will be participate in the summer school.\\
+Of course the picture is not compulsory, and also as name a nickname can be used.\\
+The nickname will be so used to refer to a person during the 2 weeks of course.
+
+{{upload>wiki:dk2010studentsteam| prova}}
+

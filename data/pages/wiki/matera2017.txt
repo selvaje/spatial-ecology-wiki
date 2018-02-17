@@ -1,0 +1,23 @@
+{{:wiki:unibas.jpg?100|http://portale.unibas.it}} {{:wiki:yale_univ.png?100|www.yibs.yale.edu}}
+{{:wiki:dicem_small.png?250|http://dicem.unibas.it}}
+\\
+\\
+**Summer School**
+===== GeoComputation using free and open source software =====
+**(basic and advanced levels)**\\
+===== Matera 19 – 23 June 2017 =====
+
+The International Summer School on Geocomputation using free and open source software is an immersion 5 day experience opening new horizon on the use of the outstanding power of the Linux environment and the command line approach to process geospatial data \\
+[[wikistud:matera2017proj | Student's projects ]]\\
+[[https://docs.google.com/document/d/1SNvX6-M4vlY8L9GgC23qiactNHXVxuwgiTwgipvFoFI/pub | Detailed course program ]]\\
+[[wiki:ExpectationMatera2017 | Identifying participant needs/expectations. ]]\\
+[[ wiki:regListMatera17 | Registration List ]]\\
+[[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:matera2017sodisSurv | Satisfactory surveys Matera 2017  ]]
+\\
+Social Beer Evening 22th, starting from 6.30 - 7.00[[ https://www.google.it/maps/place/Camera+Club/@40.6668754,16.6060031,17.5z/data=!4m8!1m2!2m1!1spub!3m4!1s0x0:0x41751a059ccbe334!8m2!3d40.6672261!4d16.6072197   | Camera Club ]] 
+\\
+Social Dinner June 23th, 19.30, at [[ http://www.latalparistorante.it/ |  Ristorante La Talpa ]] [[  https://www.google.it/maps/place/La+Talpa/@40.666974,16.6087261,17.75z/data=!4m12!1m6!3m5!1s0x13477edef9a8099b:0x3be04f978e0c2509!2sLa+Talpa!8m2!3d40.6669707!4d16.609897!3m4!1s0x13477edef9a8099b:0x3be04f978e0c2509!8m2!3d40.6669707!4d16.609897?hl=en | location ]] [[ wiki:dinner2017 | Dinner list   ]]
+<note important>
+[[https://drive.google.com/file/d/0B20AifOzgJUBZmJTekNseWRNaWM/view?usp=sharing | Download python data for tutorial here]]
+</note>
+

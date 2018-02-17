@@ -1,0 +1,363 @@
+====== GRAPPOLO a supercomputer in a superbox ======
+**Grappolo is a project designed to teach cluster computation.**\\
+We have prototyped and developed a portable micro cluster computer (replicating the functioning of the biggest cluster computer facility in the southwest UK ). This tool is similar to the Raspberry pi cluster developed at Southampton University but is aimed towards teaching Geographic Information Systems methods rather than raw computation, it is very low cost ( ~ £130), portable and a perfect replica of an operating system running on a true high performance cluster computer.\\
+{{:wiki:20151201-20151201-wt4a9277.jpg?400|}}{{:wiki:20151201-20151201-wt4a9294.jpg?400|}}{{:wiki:20151201-20151201-wt4a9300.jpg?400|}}
+\\
+<note important>This is still an an ongoing project! Not finished yet. We are working on the OS/ software installation and we will update this page as soon as grappolo will work smoothly fine. 
+</note>
+{{:wiki:img_20150620_120734512-animation.gif?}}
+
+
+[[https://www.raspberrypi.org/magpi-issues/MagPi46.pdf| Grappolo in press]] check out the official raspberry pi magazine (issue 46 - 2016) documenting a showcase use of Grappolo.\\
+{{:wiki:magpi46.png?300|}}
+
+===== Team =====
+Project team and collaborators:\\
+  * Stefano Casalegno, University of Exeter (Project leader)
+  * Andrew Cowley, University of Exeter (brainstorming - software / OS installation)
+  * Oliver Hatfield, Falmouth University (box design and construction)
+  * Andy Smith, Falmouth University  (software ideas support / cabling)
+  * Victoria O'Brien, Spatial Ecology (software OS / installation)
+  * Giuseppe Amatulli, Yale University (software applications for teaching)
+
+===== Goals =====
+   * Build a micro cluster compurer with the same operating system and software of a real HPC (High Performance Computer) for simulating big data processing.
+   * Make it as small as possible so that grappolo can fligh in your hand lugage toghether with your laptop, book, toothbrush and newspaper.
+   * Make it awsome so when you test supercomputing in a pub it will attract people's attention and they might want to learn more about it.
+   * Make it low cost and open source so that is potentially replicable in schools or by any V2 open minded citizens willing to learn new amazing stuff.
+
+===== List of material =====
+We used 3 Raspberry pi's running a light distribution of Linux operating system. Below you can find codings for software installation and hardware assembling. \\
+For the best box ever conceived in the history of boxes....\\
+We used an awesome reddish acrylic Perspex and sawed an alluminium squared box section 15x15.\\
+**Shopping list:**
+  * 3 raspberry pi model 2 - 1GB RAM 4CPU : [[http://cpc.farnell.com/| : 89.78 £]]
+  * 3 sd card 8GB : [[http://www.ebay.co.uk| : 2.75 £ ]]
+  * 1 USB wifi dongle [[http://www.maplin.co.uk/p/maplin-single-band-n150-nano-usb-network-adapter-a71lb|  : 9.99 £]]
+  * Ethernet switch (5 port 10/100M Switch) usb powered [[http://www.ebay.co.uk/itm/Fast-Ethernet-Efficient-Network-Switch-5-Ports-10-100Mbps-for-Desktop-New-/271843904311?| : 5.63£ ]]
+  * 3 usb short cables [[http://www.ebay.co.uk/itm/Micro-USB-8-20CM-Short-Braided-Data-Sync-Cable-Cord-For-Samsung-Galaxy-S3-S4-/400723720012?pt=LH_DefaultDomain_3&var=670268246685&hash=item5d4cfeb74c| 2.97 £]]
+  * 3 ethernet cables  : 0 £ recycled 
+  * Hexagonal spacer female/male RS Stock No. 105-8202 [[http://uk.rs-online.com/| : 5.69 £]]
+  * 4 port USB 5V 2.1A / 1A Power supply [[http://www.dx.com/p/universal-travel-usb-ac-powered-4-port-hub-with-eu-plug-white-2-round-pin-plug-132107#.VXB-w7w57yx| : 6.32 £]]
+  * Aluminium box [[http://www.ebay.co.uk/itm/Aluminium-Square-Box-Section-x-12-pre-cut-Sizes-x-8-Lengths-/360941104777?pt=LH_DefaultDomain_3&var=&hash=item5409c42e89 | 8.25 £]]
+  * Perspex [[http://www.penrynplasticsacrylic.co.uk/product_info.php?id=124| 5.37 £]]
+
+**TOTAL HARDWARE COSTS : 136.75 ** shipping and VAT included
+
+beside hardware costs, to assemble and install grappolo require much time and effort. If you like us to assemble a grappolo for you, please [[stefano@casalegno.net|contact us]]
+
+====== Template operating system ======
+Grappolo consist of 3 raspberry pi we will call them
+  - master (Grid schedler)
+  - node1  (slave or processing node1)
+  - node2  (slave or processing node2)
+Each of these raspi share a template operating system which we will prepare in the following step. Successively,  we will clone the template operating system and in a [[wiki:grappolo_ii| next step ]] we will guide you through the customization of clones into different master and processing nodes.
+
+===== Installing OS =====
+  - [[http://elinux.org/RPi_SD_cards|Check ]] that your SD card is not trash 
+  - [[https://www.raspberrypi.org/downloads/| Download ]] Linux Debian derived operating system: Raspbian Jessie 4.1, released Nov. 2015
+  -  [[http://elinux.org/RPi_Easy_SD_Card_Setup#Using_the_Linux_command_line| and set up the SD card ]]
+  - [[http://elinux.org/RPi_Resize_Flash_Partitions#Manually_resizing_the_SD_card_on_Linux| Resizing the SD card ]] using parted 
+
+    df -h # find out for a partition that matches the roughly 1.something GB 
+    # in our case is sdb2
+    umount /dev/sdb2
+    sudo parted /dev/sdb
+    # enter in parted 
+    $ sudo parted /dev/sdd
+    (parted) unit chs
+    (parted) print
+    (parted) rm 2
+    (parted) mkpart primary 8,40,32 866,80,9 # begin and end of the partition depend on your sd card size
+    (parted) quit
+
+  - Plug Ethernet cable from raspi 1 to home router 
+  - Insert SD in raspberry, 
+  - Power raspi 1 
+  - Open a terminal using a computer connected to the home router (via wireless or cable)
+
+=== check your ip adress ===
+    ifconfig | grep "inet addr"
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet addr:192.168.1.68  Bcast:192.168.1.255  Mask:255.255.255.0
+
+=== search for the ip adress of the raspberry pi ===
+    sudo nmap -sP 192.168.1.1-255
+    Starting Nmap 5.21 ( http://nmap.org ) at 2015-05-23 15:24 BST
+       Nmap scan report for Unknown-28-32-c5-ae-4e-19.home (192.168.1.64)
+       Host is up (0.0029s latency).
+       MAC Address: 28:32:C5:AE:4E:19 (Unknown)
+       Nmap scan report for ace.home (192.168.1.68)
+       Host is up.
+       Nmap scan report for Unknown-e8-06-88-9c-0f-66.home (192.168.1.70)
+       Host is up (0.10s latency).
+       MAC Address: E8:06:88:9C:0F:66 (Unknown)
+       Nmap scan report for raspberrypi.home (192.168.1.80)
+       Host is up (0.015s latency).
+       MAC Address: B8:27:EB:65:6C:FF (Unknown)
+       Nmap scan report for BThomehub.home (192.168.1.254)
+       Host is up (0.013s latency).
+       MAC Address: D0:84:B0:D7:AC:30 (Unknown)
+       Nmap done: 255 IP addresses (5 hosts up) scanned in 5.44 seconds
+You are now ready to connect to raspi1 via ssh, default login and pass are pi, raspberry. 
+    ssh pi@192.168.1.80
+    yes
+you are loged in the raspberry pi. Next steps are easy to do with the raspi-config GUI:
+    sudo raspi-config
+
+  - Change password to masterpi
+  - Set time zone : internationalisation --> london
+  - Set the memory split and change the value to 16 (in advanced options)
+  - change hostname " raspberry" to "grappolo" (in advanced options)
+      sudo apt-get update
+      sudo apt-get upgrade
+      sudo reboot
+      ssh pi@192.168.1.80
+      
+Add user admin (administartor) and remove user pi.\\
+Password for user "admin" = "admin" //...old pass for pi was masterpi// 
+<code bash>
+sudo useradd -m admin
+sudo passwd admin #admin
+sudo nano /etc/group
+# Go through the file adding ,ad to the end of all of the groups that pi is in.  eg:   " adm:x:4:pi,admin  "
+exit
+ssh -X admin@192.168.1.80
+chsh -s /bin/bash #default terminal is bash
+sudo userdel pi
+</code>
+
+=== Set connections configurations ===
+== Connect the grappolo cluster to the outside world  ==
+We will generate a dynamic ip address to connect to the head node "grappolo" to the outside world. This will be be physically done ether via wifi dongle or via a usb-ethernet adapter depending on our working environment. \\
+== Connect nodes within the grappolo cluster ==
+Within the cluster we create a static ip network using the Ethernet ports of each of the 3 raspi.
+The /etc/network/interface configuration file determine the above parameters. We need to insert the name of the wifi network and password wile connecting using the wifi dongle or we need to uncomment the two // eth1// lines if we are using an ethernet connection from the cluster to the external world. The grappolo configuration using the wifi dongle looks like this:
+<code bash>
+pi@grappolo ~ $ cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 10.141.255.254
+netmask 255.255.0.0
+network 10.141.0.0
+broadcast 10.141.255.255
+#gateway 10.141.255.254
+
+# To connect via usb ethernet adaptor instead of wifi, uncomment the next two lines
+#auto eth1
+#iface eth1 inet dhcp
+
+allow-hotplug wlan0
+auto wlan0
+
+iface wlan0 inet dhcp
+#wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+       wpa-ssid "NETWORK_NAME"
+       wpa-psk "NETWORK_PASSWORD"
+</code>
+
+Next we need to reboot and log in via the usb dongle or ethernet-usb:
+       sudo reboot
+       ssh -X pi@192.168.1.81
+       
+And the resulting connection configuration is the following
+<code bash>
+pi@grappolo ~ $ ifconfig
+eth0      Link encap:Ethernet  HWaddr b8:27:eb:b6:4b:a5  
+          inet addr:10.141.255.254  Bcast:10.141.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:69 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:23 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:9100 (8.8 KiB)  TX bytes:3231 (3.1 KiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:72 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:72 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:6288 (6.1 KiB)  TX bytes:6288 (6.1 KiB)
+
+wlan0     Link encap:Ethernet  HWaddr 00:87:31:13:37:aa  
+          inet addr:192.168.1.81  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:455 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:221 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:104200 (101.7 KiB)  TX bytes:29337 (28.6 KiB)
+</code>
+
+
+To read your configuration information (address; netmask; network; broadcast; gateway) you can type:
+     pi@grappolo ~ $ ifconfig | grep -A1 eth0 | tail -1  
+          inet addr:10.141.255.254  Bcast:10.141.255.255  Mask:255.255.0.0
+
+     pi@grappolo ~ $ netstat -nr | tail -2 | awk '{if(NR==1)print "Gateway "$2 \\ 
+                     else print "Destination "$1 }' 
+               Gateway 0.0.0.0
+               Destination 192.168.1.0
+<del>          Gateway 192.168.1.254
+          Destination 192.168.1.0</del>
+We use the 10.141.255 internal static ip address to avoid any inconvenient ip-adress overlap between the dhcp extrnal and static internal cluster network configurations.
+
+===== Install Software =====
+Grappolo is specifically designed to process spatio-temporal data nonetheless could provide excellent teaching platform for cluster processing other data sources not geographically related. We start to install geographic information systems and geospatial libraries and tools:
+
+==== Data processing software ====
+** PROG.4 - Gdal/Ogr - GRASS ** \\
+{{:wiki:grasslogo_vector_small.png?100|}}{{:wiki:logo_gdal.png?100|}} {{:wiki:proj4_logo.jpeg?150|}}
+
+<code bash>
+sudo apt-get install grass grass-doc grass-dev
+</code>
+
+** Openforis Geospatial toolkit ** \\
+[[http://www.openforis.org/tools/geospatial-toolkit|{{:wiki:openforis_logo_210x60.png?300|}}]]
+
+<code bash>
+sudo apt-get install gcc g++ gdal-bin libgdal1-dev \\
+  libgsl0-dev libgsl0ldbl libproj-dev python-gdal \\
+  python-scipy python-tk python-qt4
+# some of the above are already installed
+wget foris.fao.org/static/geospatialtoolkit/releases/OpenForisToolkit.run
+sudo chmod u+x OpenForisToolkit.run
+sudo ./OpenForisToolkit.run
+</code>
+
+
+** PKtools - Processing Kernel for geospatial data ** \\
+[[http://example.com|{{:wiki:pktools_logo.png?70|}}]]
+<code bash>
+sudo apt-get install pktools
+</code>
+
+** AWK, Python and friends ** \\
+{{:wiki:logo_whitew_awk.png?100|}}{{:wiki:python_logo.jpeg?80|https://www.python.org}}{{:wiki:scipy_logo.jpeg?100|www.scipy.org/}}{{:wiki:numpy_logo.jpeg?200|www.numpy.org/}}\\
+AWK, Python, Numpy and Scipy are installed as default Raspian-Jessie OS and as dependencies form the previous libraries.\\
+
+** R language and environment for statistical computing**\\
+{{:wiki:rlogo-5.png?100|}}
+<code bash>
+wget http://cran.rstudio.com/src/base/R-3/R-3.1.2.tar.gz
+mkdir R_HOME
+mv R-3.1.2.tar.gz R_HOME/
+cd R_HOME/
+tar zxvf R-3.1.2.tar.gz
+cd R-3.1.2/
+sudo apt-get install gfortran libreadline6-dev libx11-dev libxt-dev
+./configure
+make
+sudo make install
+# get a coup of tea and start watching Battleship Potemkin you have an hour to wait
+</code>
+
+
+Further we install R library for spatial data analysis and machine learning modelling using the CRAN Task View: [[http://cran.r-project.org/web/views/Spatial.html| Analysis of Spatial Data]] as suggested in http://cran.r-project.org/web/views/ 
+
+     sudo su
+     R
+     install.packages(pkgs="ctv", dependencies=TRUE)
+     # we selected Bristol UK as CRAN repository
+     library("ctv")
+     update.views("Spatial")
+     update.views("MachineLearning")
+
+
+==== Other useful tools ====
+** Emacs editor** \\
+{{:wiki:logo_emacs.png?100|}}\\
+... for people like Giuseppe or Pieter refusing to type on any other black squared thing with a cursor!
+
+<code bash>
+sudo apt-get install emacs
+</code>
+
+I like the bash [[http://ss64.com/bash/locate.html | locate]] command.
+<code bash>
+sudo apt-get install mlocate
+sudo updatedb
+</code>
+
+Insatall **screen** to eventually launch several process in different teminals and leave them open on the background. [[http://ss64.com/bash/screen.html| Screen]] : Multiplex a physical terminal between several processes (typically interactive shells)
+    sudo apt-get install screen
+    
+
+===== Setting Up an NFS Server =====
+The default installation of Grid Engine assumes that the executables corresponding to the sge command are found on a $SGE_ROOT directory sitting on a shared filesystem accessible by all hosts in the cluster [[http://arc.liv.ac.uk/SGE/howto/nfsreduce.html | more info here]].\\
+For this purpose, we use a Network File System (NFS) which is a distributed file system allowing a user on a client computer to access files over a network. We are going to create and share the /usr/local/apps folder between master and slave nodes and be able to install the Grid engine executables and configuration files in the slave nodes. We first install the nfs server in the master:
+
+<code bash> 
+sudo apt-get install nfs-kernel-server portmap nfs-common
+sudo nano /etc/exports
+# append  "/usr/local/apps 10.141.0.0/16(rw,sync)" to the end of /etc/exports file
+
+sudo service rpcbind restart
+sudo /etc/init.d/nfs-kernel-server restart
+</code>
+
+
+<note tip> ** /etc/init.d/nfs-kernel-server status **to check nfs service status
+</note>
+
+<note warning> In previous versions of Debian (ex.: Weezy) it was applied the concept of //Run levels// now replaced by //target units//. If using Raspbian Weezy, the run level need to be switched from 2 to 3 </note>
+
+    runlevel # to check your default run level
+
+Follow the following steps if you need to switch into appropriate [[http://www.tldp.org/LDP/sag/html/run-levels-intro.html| Linux Run Level]] (e.g. A run level is a state of init and the whole system that defines what system services are operating.) 
+Raspi by default is set to a state of run level 2 - Local Multiuser with Networking but without network service (like NFS) - and we want to switch to run level 3 - Full Multiuser with Networking. Once we are in level 3 we can use the two //update-rc.d// command below to allow automatic starting of the nfs servers at reboot.
+
+<code bash> 
+sudo nano /etc/inittab
+# to set default runlevel = 3
+# change id:2:initdefault with: id:3.... it should look like this:
+# The default runlevel.
+# id:3:initdefault:
+sudo update-rc.d nfs-kernel-server defaults
+sudo update-rc.d rpcbind defaults
+sudo apt-get install nfs-kernel-server portmap nfs-common
+sudo nano /etc/exports # add the export as above
+sudo service portmap start
+sudo reboot
+</code>
+
+<note warning> if NFS is still not running at reboot try the lines below </note>
+
+<code bash>
+sudo apt-get purge rpcbind
+sudo apt-get install nfs-kernel-server portmap nfs-common
+sudo nano /etc/exports # edit the exports as above
+sudo service portmap start # this didn't actually worked
+sudo reboot
+</code>
+
+Later we will create a folder in the client server @node1  and mount in as shared with the correspondent folder in grappolo.
+
+===== Clone OS =====
+Shut down grappolo, remove the sd card and insert it in a linux machine. Copy sd image file to computer disk as back up and clone template. 
+     umount /dev/sdb1
+     umount /dev/sdb2
+     sudo dd bs=4M if=/dev/sdb of=jessie_and_softwares.img
+
+This image is also usefull as back up OS template file.
+Now copy the clone template // jessie_and_softwares.img // image in two different SD cards.
+Insert successively the new micro sd cards into a laptop (in our case is mounted at// /dev/sdb //; unmount the card and copy the ".img" using the dd command.
+
+<code bash>
+umount /dev/sdb1
+umount /dev/sdb2
+sudo dd bs=4M if=jessie_and_soft.img of=/dev/sdb
+</code>
+
+====== Customize grid engine master and computing nodes ======
+[[wiki:grappolo_ii| Next ]] we explain how to customize the cloned sd card for master (job scheduler)  and slave (computation) nodes.
+
+====== Users accounts and data storage ======
+[[wiki:grappolo_iii| Next ]] we explain how to add multiple students accounts and add usb drives to the master and computing nodes to read and write data.
+
+
+====== Hands on cluster processing with grappolo ======
+[[wiki:grappolo_basic| Here ]] we explain how to use grappolo for submitting data processing jobs into a grid engine. 

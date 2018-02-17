@@ -1,0 +1,5 @@
+GET http://example.org/rasdaman/ows?service=WMS&amp;version=1.3.0&amp;request=InsertStyle
+    &amp;name=FireMarkup
+    &amp;layer=dessert_area
+    &amp;abstract=This style marks the areas where fires are in progress with the color red
+    &amp;rasqlTransformFragment=case $Iterator when ($Iterator + 2) &gt; 200 then {255, 0, 0} else $Iterator

@@ -1,0 +1,165 @@
+# #########################
+#
+#   Stefano Casalegno
+#   May 2009
+#   stefano@casalegno.net
+#
+# ########################
+########################################################################################
+########################################################################################
+##                                                                                   
+##  Mapping the Natural Vegetation of Italy Using randomForest distribution model     
+##  and a series of 23 environmental Predictor variables.
+##
+##
+##
+##
+##   This script perform the following Operations:
+##
+##    1. Upload The previously computed randomForest model of natural 
+##         vegetation distribution 
+##             
+##
+##    2. Upload GRASS format raster maps of bioclimate and geomormphology into R
+##         SpatialGridDataFrame format
+##
+##    3. Calculate pixel values accordind to the random forest model 
+##          and environmental rasters inported in the SpatialGridDataFrame
+## 
+##    4. Generate an empty map including geographical coordinates 
+##
+##    5. Adding predicted values to the empty and forming a georeferenced map
+## 
+##    6. Exporting the georeferenced R format map to an asciii file 
+##
+## 
+##    Nota bene: This script perform each operation on single tiles of maps 
+##       with an extent of 1500km x 20km and recursively create each tile in 
+##       a loop to complete the whole map generation.
+##
+##
+##########################################################################################
+##########################################################################################
+&nbsp;
+library(rgdal)
+library(maptools)
+library(grid)
+library(randomForest) 
+&nbsp;
+&nbsp;
+&nbsp;
+print(&quot; ------------- NOW CREATE predictors grid stack  -------------&quot;)
+&nbsp;
+### Imoprt model RF
+load(&quot;/home/stefano/ubun/ost4sem/studycase/ITA_veg/R_script/results/RF23tune_ITAveg&quot;)
+&nbsp;
+# from Virtual machine use 
+# load(&quot;/home/ost4sem/studycase/ITA_veg/R_script/results/RF23tune_ITAveg&quot;)
+&nbsp;
+gc()
+&nbsp;
+&nbsp;
+path.rasters = as.character(&quot;/home/stefano/ubun/ost4sem/studycase/ITA_veg/GIS_ITA/ITA_VEGWK/cellhd/&quot;)
+path.results = as.character(&quot;/home/stefano/ubun/ost4sem/studycase/ITA_veg/GIS_ITA/SPATIALDATA/ITAveg_map/&quot;)
+&nbsp;
+# from Virtual machine use 
+# path.rasters = as.character(/home/ost4sem/studycase/ITA_veg/GIS_ITA/ITA_VEGWK/cellhd/&quot;)
+# path.results = as.character(&quot;/home/ost4sem/studycase/ITA_veg/GIS_ITA/SPATIALDATA/ITAveg_map/&quot;)
+&nbsp;
+&nbsp;
+## importing ARC INFO grid into R SpatialGridDataFrame 
+## and generate a spatial data stack with readGDAL function 
+&nbsp;
+tile = c(20*0:114)
+&nbsp;
+for(t in 1:57){
+&nbsp;
+datagrids = readGDAL(paste(path.rasters,&quot;pr104ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))
+datagrids$pr104 = datagrids$band1
+datagrids$pr105 = readGDAL(paste(path.rasters,&quot;pr105ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+datagrids$pr106 = readGDAL(paste(path.rasters,&quot;pr106ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+gc()
+&nbsp;
+datagrids$pr109 = readGDAL(paste(path.rasters,&quot;pr109ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr110 = readGDAL(paste(path.rasters,&quot;pr110ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+gc()
+datagrids$pr111 = readGDAL(paste(path.rasters,&quot;pr111ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr118 = readGDAL(paste(path.rasters,&quot;pr118ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+gc()
+datagrids$pr120 = readGDAL(paste(path.rasters,&quot;pr120ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr123 = readGDAL(paste(path.rasters,&quot;pr123ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+gc()
+datagrids$pr126 = readGDAL(paste(path.rasters,&quot;pr126ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr128 = readGDAL(paste(path.rasters,&quot;pr128ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+gc()
+datagrids$pr131 = readGDAL(paste(path.rasters,&quot;pr131ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr134 = readGDAL(paste(path.rasters,&quot;pr134ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+gc()
+datagrids$pr135 = readGDAL(paste(path.rasters,&quot;pr135ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr136 = readGDAL(paste(path.rasters,&quot;pr136ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+gc()
+datagrids$pr137 = readGDAL(paste(path.rasters,&quot;pr137ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr138 = readGDAL(paste(path.rasters,&quot;pr138ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+datagrids$pr198 = readGDAL(paste(path.rasters,&quot;pr198ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr200 = readGDAL(paste(path.rasters,&quot;pr200ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+gc()
+&nbsp;
+datagrids$pr201 = readGDAL(paste(path.rasters,&quot;pr201ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr202 = readGDAL(paste(path.rasters,&quot;pr202ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+gc()
+datagrids$pr203 = readGDAL(paste(path.rasters,&quot;pr203ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+datagrids$pr204 = readGDAL(paste(path.rasters,&quot;pr204ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))$band1
+&nbsp;
+gc()
+&nbsp;
+cat(&quot; ---- 23 grids inported into datagrids file - now drawing the map------\n&quot;)
+&nbsp;
+&nbsp;
+&nbsp;
+## predict function is used to calculate pixel values and index accordind to the random forest model and original rasters inported 
+&nbsp;
+pred.mapRF = predict (RF23tuned , newdata=datagrids, type=&quot;response&quot;)
+cat(&quot;class predicted\n&quot;)
+&nbsp;
+pred.mapRFindex = predict (RF23tuned , newdata=datagrids, type=&quot;vote&quot;)
+cat(&quot;class index recorded\n&quot;)
+&nbsp;
+cat(&quot;map values for Forest Type calculated and added to predict map vector\n&quot;)
+&nbsp;
+&nbsp;
+## NOW create an empty tile with geographical coordinates to pixel values = 20
+data2map = readGDAL(paste(path.rasters,&quot;pr104ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))
+cat(&quot;geocoordinates inported\n&quot;)
+&nbsp;
+data2map$band1 = 20
+cat(&quot; no data value is now = 15 in this tile[t]\n&quot;)
+&nbsp;
+## NOW adding predicted values to the empty tile[t] 
+&nbsp;
+data2map$band1[as.numeric(dimnames(pred.mapRFindex)[[1]])] = as.numeric(pred.mapRF)
+cat(&quot;class values added to tile[t]\n&quot;)
+&nbsp;
+&nbsp;
+## NOW creating an asciii TILE file for modelled species 
+&nbsp;
+write.asciigrid(data2map, paste(path.results,t,&quot;tile_ITAveg.asc&quot;,sep=&quot;&quot;))
+&nbsp;
+&nbsp;
+cat(&quot;-----------------------------------------Tile&quot;, t,&quot;created--------------------------\n&quot;)
+&nbsp;
+## cleaning up the memory 
+rm(data2map)
+rm(datagrids)
+rm(pred.mapRF)
+rm(pred.mapRFindex)
+gc()
+&nbsp;
+}

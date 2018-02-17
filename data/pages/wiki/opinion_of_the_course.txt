@@ -1,0 +1,93 @@
+
+Sent: 03 October 2013 09:36\\
+To: oikos-listan@wallace.teorekol.lu.se\\
+Subject: [Oikos-listan] Fwd: SPATIO-TEMPORAL ANALYSIS AND BIG DATA PROCESSING USING FREE AND OPEN SOURCE SOFTWARE\\
+\\
+Hi all,
+A great PhD course to expand your ecological toolbox with open-source software. \\
+I went on this course in Copenhagen in 2010, and it was certainly the best and most useful course I took as a PhD student.\\
+\\
+
+  * Dag Endresen\\
+Knowledge Systems Engineer at Global Biodiversity Information Facility\\
+
+Dag has endorsed your work as Intensive trainings in Spatial Ecological Modeling at spatial-ecology.net\\
+
+"//Dear stefano,\\
+I followed the excellent PhD course on Open Source Tools for Spatial Ecology Modeling organized by Stefano Casalegno and Guiseppe Amatulli. \\
+Thanks for an excellent course! \\
+I have made valuable use of the new skills I acquired.//" \\
+\\
+\\
+----
+
+
+  *  ...@uah.es>\\
+Date: 20 January 2012 14:54\\
+Subject: RE: Satisfactory survey\\
+To: Giuseppe Amatulli <giuseppe.amatulli@gmail.com>\\
+\\
+//Hi Giuseppe,
+\\
+I hope you had a good flight back!
+I have already filled in the satisfactory survey and here there are some comments in addition: the course gives the opportunity to get familiar with open source tools. It is very well prepared.  I like that the theory is focus on the main knowledge and the code is taught using examples and exercises. If the course was longer, I would like to do more exercises especially using R and GRASS or a project to face all the steps (preparing data, exploring, modelling, graphing, etc.) but in one week, students should be able to go on by self-learning hopefully.\\
+
+Cheers,// \\
+\\
+\\
+----
+
+  * ...@natgeo.su.se\\
+19 Dec 2011\\
+to me, Stefano\\
+\\
+//Hi Giuseppe and Stefano,\\
+\\
+I forwarded the email to the PhD students at my department. I hope you get enough people together. Thanks again for a great course in Copenhagen last year. I'm still on Ubuntu, but mainly only using R from the course. I never really got the hang of GRASS, but I've been getting into postGIS recently, which is also pretty cool.\\
+\\
+Happy Christmas!//
+\\
+--\\
+PhD Student\\
+Landscape Ecology\\
+Department of Physical Geography and Quaternary Geology\\
+Stockholm University\\
+\\
+\\
+\\
+----
+
+  * ...@lavabit.com\\
+19 Dec 2011\\
+to me\\
+\\
+//Hi Giuseppe,\\
+\\
+I have forwarded an recommended this course to a couple of fellow PhD students here in Oslo. Unfortunately the e-mail came a little late for them to participate. I will keep forwarding e-mails of courses in the future.\\
+\\
+Good luck with the course and I wish you happy holidays before that!\\
+\\
+Cheers,
+\\
+PS! I am still using linux as my main OS. I am also using GRASS still but I am using R more and more, also for spatial analysis ... There is so much you can do in R!//
+\\
+----
+
+  * ...@gmail.com
+	
+16 Apr 2012\\
+\\
+Hello to everybody!
+\\
+Good to know that you (Giuseppe) are well in the north American middle west! Things are moving fast!
+\\
+Thank you for the course, I think with the time we really realize the usefulness of what we learned!
+\\
+
+My Linux usage: In my laptop I have Ubuntu (as you know!) and a virtual machine with Windows (for the complex word documents). 
+In my PC from the office I have still Windows, the Ubuntu is over a virtual machine (generated with the VirutalBox software). 
+Right now I’m going as well into python (plus GDAL and NumPy), as I’m working more with matrices. 
+The first thing I just finished, is an application for a friend: it consist in orthorectifying aerial photographs (from an helicopter), 
+using the external geometry of the acquisition (the angles, etc.) and the DEM (terrain elevations).
+\\
+Best wishes!

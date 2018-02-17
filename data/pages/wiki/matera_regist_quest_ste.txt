@@ -1,0 +1,41 @@
+====== Questionnaire ======
+
+By knowing in advance the programming level of the participants will help us to set a better the course syllabus. No previous programming skills are required to attend the training, but we expect the participants to have strong motivation in learning command line interface. \\
+\\
+Please spend a moment to answer: \\ 
+
+  * In the **Real name** column, write your name or an ALIAS as student "A", "B", ..." 
+  * Select one answer
+  * click on submit
+  * When you finish send an e-mail to giuseppe.amatulli@gmail.com indicating your alias and attach also your bank transfer receipt.\\
+\\
+===== Your programming and scripting knowledge level =====
+\\
+<doodle matera2015any | Do you know how any programming or scripting language ? >
+^ No ^ Yes but very basic ^ Yes ^ 
+</doodle>
+\\
+<doodle matera2015bashSTE | What is your level of Linux Bash programming ? >
+^ Never used ^ I know very basic commands ^ I can write simple scripts ^ Experienced user ^ 
+</doodle>
+\\
+<doodle matera2015PythonSTE | What is your level of Python programming ? >
+^ Never used ^ I know very basic commands ^ I can write simple scripts ^ Experienced user ^ 
+</doodle>
+\\
+<doodle matera2015awkSTE | What is your level of AWK  programming ? >
+^ Never used ^ Basic knowledge ^ Experienced usre ^ 
+</doodle>
+\\
+<doodle matera2015rSTE | What is your knowledge of R language & environment for statistical computing and graphics  >
+^ Never used ^ Only graphical user interface ^ Can write basic scripts ^ Experienced user ^ 
+</doodle>
+
+<doodle matera2015grassSTE | What is your knowledge of GRASS GIS >
+^ Never used ^ Only graphical user interface ^ Basic scripts ^ Complex scripting ^ 
+</doodle>
+
+<doodle matera2015gdalSTE | What is your knowledge of GDAL - OGR >
+^ Never used ^ Only used in QGIS graphical user interface ^ Basic scripts ^ Complex scripting ^ 
+</doodle>
+\\

@@ -1,0 +1,71 @@
+====== Load geographical data and visualize it on R ======
+
+
+===== Vector data visualization =====
+We have followed a [[http://spatial.ly/2013/12/introduction-spatial-data-ggplot2/ | spatial.ly]] tutorial to replicate and improve our case study. Here we work on vector layers, first download a compressed folder in linux environment and extract it and check what you have using bash functions within R.\\
+   system("wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/vector/cornwall_agri.zip")
+   system("unzip cornwall_agri.zip")
+   system("ogrinfo -al cornwall_ward_27700.shp | more ")
+   # ... 
+   # Layer SRS WKT:
+   # (unknown)
+We downloaded a vector shape file in EPSG 27700 but this info is not available in the metadata, so we can update the metadata with projection parameters in a new layer.\\
+   system("ogr2ogr -s_srs EPSG:27700 -t_srs EPSG:27700 cornwall2.shp cornwall_ward_27700.shp")
+   
+=== Spatial Join in R ===
+Using the raster library we can load shape files in R from linux OS folder.
+   library(raster)
+   ward.no.proj <- shapefile("cornwall_ward_27700.shp")
+   ward <- shapefile("cornwall.shp")
+   # Tell the difference between the two layers
+   summary(ward.no.proj)
+   summary(ward)
+
+Then we load  a text table in csv format. 
+   stat = read.csv("SYNT_2002.csv", header=T)
+To join files we need a common identifier. Which is the table and vector file common ID? Find it and merge the files using **merge** function from raster library to then plot the map and save the join vector file in your working directory outside R.\\ 
+    str(stat)
+    str(ward)
+    agri <- merge(ward, stat, by.x='PI', by.y='ID')
+    writeOGR(agri, ".", "agristat", driver="ESRI Shapefile")
+
+The ward administrative boudary in cornwall\\
+{{:wiki:rstat:wardsr.png?200|}}
+\\
+
+Now we can plot in the ward map some features about agriculture using the statistics we have joined to our spatial database using the **ggplot2** library.\\
+Plotting some features of our database (ex: ward surface vs numberof diary livestock per ward) in black and white and in colour.
+   library(ggplot2)
+   # simple visualization black and white
+   p<-ggplot(agri@data, aes(SUM_HA,dairy_v))
+   p+geom_point()
+   # Add some colours
+   p+geom_point(colour="red", size=2)
+   # Add a legend
+   p+geom_point(aes(colour=SUM_HA, size=dairy_v))
+   # Add labels  (these are too many for our cvisualization)
+   p+geom_point(aes(colour=SUM_HA,size=dairy_v))+geom_text(size=8,aes(label=FIRST_NM))
+
+Play with this and plot other informations...
+
+Now we map the number of Diary livestock in Cornwall per each ward. We use fortify ( check ?fortify in R).
+   agri_geom<-fortify(agri, region="PI")
+   agri_geom<-merge(agri_geom, agri@data, by.x="id", by.y="PI")
+   head(agri_geom)
+   ## The map function:
+   ## Map<-ggplot(agri_geom, aes(long,lat, group=group, fill=dairy_v))
+   ## + geom_polygon()+ coord_equal() + 
+   ## labs(x="Easting (m)", y="Northing (m)",fill= "# of livestocks")
+   ## + ggtitle ("Dairy cow in Cornwall")
+   Map<-ggplot(agri_geom, aes(long,lat, group=group, fill=dairy_v))+ geom_polygon()+ coord_equal() + labs(x="Easting (m)", y="Northing (m)",fill= "# of livestocks")+ ggtitle ("Dairy cow in Cornwall")
+   Map
+   # Black and white map
+   Map + scale_fill_gradient(low="white", high="black")
+
+{{:wiki:rstat:ggplot2_r.png?400|}}{{:wiki:rstat:ggplot_bw.png?400|}}\\
+   
+
+
+
+
+

@@ -1,0 +1,49 @@
+====== BigGeoData DEM Mosaic ======
+
+<code bash>
+#!/bin/bash
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#% Mosaic tiles from ASTER dataset  %
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+#####################################
+# set up GRASS enviroment variables
+#####################################
+
+export GISBASE=/usr/lib/grass70
+export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts
+export LD_LIBRARY_PATH="$GISBASE/lib"
+export GISRC=$HOME/.grass7/rc$$
+export GRASS_LD_LIBRARY_PATH="$LD_LIBRARY_PATH"
+export PYTHONPATH="$GISBASE/etc/python:$PYTHONPATH"
+export MANPATH=$MANPATH:$GISBASE/man
+export GIS_LOCK=$$
+
+
+##############
+# unzip files
+##############
+for z in *zip ; do
+   # unzip files
+   unzip -oq  $z 
+done
+
+##########################
+# import files into GRASS
+##########################
+
+# start up grass
+grass -text
+
+# list of files
+demf=$(ls *.tif| grep dem)
+
+# read files into GRASS
+for y in $demf ;do
+   echo "import $y  file..."
+   # import file into grass
+   r.in.gdal in=$y out=$y --o -o
+done
+
+</code>

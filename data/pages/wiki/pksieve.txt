@@ -1,0 +1,28 @@
+====== pksieve ======
+NAME
+   pksieve - sieve filter
+
+SYNOPSIS
+<code bash>
+
+   pksieve -i input -o output [OPTION]
+</code>
+       
+DESCRIPTION
+   Sieve filter input raster file (C++ wrapper around GDALSieveFilter)
+       
+OPTIONS
+<code bash>
+   -i     --input                Input image file (default: <empty string>)
+   -m     --mask                 Mask band indicating pixels to be interpolated (zero valued)  (default: <empty string>)
+   -o     --output               Output image file (default: <empty string>)
+   -b     --band                 the band to be used from input file (default: 0)
+   -c     --connect              the connectedness: 4 directions or 8 directions (default: 8)
+   -s     --size                 raster polygons with sizes smaller than this will be merged into their largest neighbour. No sieve is performed if size = 0 (default: 0)
+   -v     --verbose              verbose mode if > 0 (default: 0)
+</code>
+
+====== Examples ======
+<code bash>
+pksieve -i input.tif -c 8 -s 5 -o ouput.shp # merge all patches smaller than 5 pixels into bigger classes, using 8 connectivity (horizontal, vertical and diagonal)
+</code>

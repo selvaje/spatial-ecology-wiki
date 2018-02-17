@@ -1,0 +1,12 @@
+====== Auto triggering the sensor ======
+Back to [[uav:toolchain|main menue]].\\
+\\
+Different techniques and technologies can be used to trigger the camera or sensor. 
+  * wifii connection
+  * other radio connections
+  * cables
+  * automatic triggering using internal time settings from sensors
+
+In our toolchain we use a triggering cable and this techniques is well explained [[http://ardupilot.org/copter/docs/common-apm-to-chdk-camera-link-tutorial.html|here]] together with details of a PCB circuit for DIY assembling your cable.\\
+
+{{ :uav:circuit.png?600 |}}

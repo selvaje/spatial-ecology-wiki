@@ -1,0 +1,2 @@
+  max(my.data.frame$new) 
+  [1] 40

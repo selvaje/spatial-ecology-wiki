@@ -1,0 +1,51 @@
+====== Use Python for pattern searching ======
+\\
+Material prepared by Stephen Weston
+\\
+
+==== Lecture Introduction to Python ====
+
+  mkdir python
+  cd python
+  wget http://research.computing.yale.edu/sites/default/files/files/python13JUL2016.pdf
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/notebooks/Python_Notebook.ipynb
+  
+==== Exercise ====
+
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/example.txt
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/grep_1.py
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/grep_2.py
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/grep_3.py
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/grep.py
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/sub.py
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/grep_color.py
+  
+
+  ./grep_1.py
+  
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/grep_1.py }}
+
+  ./grep_2.py line example.txt
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/grep_2.py }}
+
+  ./grep_3.py line example.txt
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/grep_3.py }}
+
+  # see the error message 
+  ./grep.py line
+  # correct way to run 
+  ./grep.py line example.txt
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/grep.py }}
+
+   
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/sub.py }}
+
+  ./grep_color.py line example.txt
+  # or 
+  ./grep_color.py  "t[a-z]"   example.txt
+
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/grep_color.py }}

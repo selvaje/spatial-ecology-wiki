@@ -1,0 +1,34 @@
+====== Install ubuntu with spatial-ecology tools in your computer ======
+
+
+====  STEP 1 : Open the virtual machine previously created ==== 
+[[wiki:install_linux|click here]] if you have not create your VM yet
+\\
+
+
+====  STEP 2 : install Remastersys  ==== 
+//Remastersys// is a full system backup including personal data to a live cd or dvd that we will use to install the virtual machine Ubuntu with GIS OS in our computer. (see: http://www.geekconnection.org/remastersys/ )
+     sudo su
+     wget -O - http://www.remastersys.com/ubuntu/remastersys.gpg.key | apt-key add -
+     
+     echo "# added for remastersys repository" >> /etc/apt/sources.list 
+     echo "deb http://www.remastersys.com/ubuntu precise main" >> /etc/apt/sources.list
+     
+     apt-get update 
+     apt-get install remastersys 
+     
+\\
+====  STEP 3 : Create an iso file from Remastersys  ==== 
+  * Click on Application > System tools > Administration > remastersys
+  * Click on Backup
+\\
+====  STEP 3 : Create a start up disk using the iso file  ==== 
+  * Click on Application > System tools > Administration > Startup disk creator
+  * As **Source disc iso** select the iso you just created in the  // home/remastersys/remastersys/  // folder
+  * As ** Disc to use ** select and use a usb stick 
+  * Shut down your VM
+\\
+====  STEP 3 : Select reboot mode from USB stick in your BIOS ==== 
+\\
+====  STEP 4 : Reeboot from USB stick and follow the installation wizard==== 
+You can choose within the wizard to install ubuntu as the only operating system or maintain another operational operating system in your computer.

@@ -1,0 +1,63 @@
+
+<h1 class="sectionedit1" id="exercise_8create_yearly_modis_composite">Exercise 8: Create yearly MODIS composite</h1>
+<div class="level1">
+
+<p>
+In this exercise the following tools will be used:
+</p>
+<ul>
+<li class="level1"><div class="li"> pktools: pkmosaic</div>
+</li>
+<li class="level1"><div class="li"> bash: for loop, echo</div>
+</li>
+</ul>
+
+<p>
+In this exercise we will learn how to create a maximum value composit image when a number of images are available with overlap.
+</p>
+
+<p>
+The MODIS images at 500 m have 7 spectral bands and an additional two bands for the cloud mask and a count value. 
+</p>
+
+<p>
+The cloud mask is defined as: 0 (most likely cloudy), 1 (probably cloudy), 2 (probably cloud free) and 3 (most likely cloud free).
+</p>
+
+<p>
+The count value represents the number of valid images that were used for the composit. see how to create a yearly MODIS composite at 500 m for 2010.
+</p>
+
+<p>
+Select cloud free pixels only (cloud value &gt; 2) and use a compositing rule that selects the maximum NDVI value (rule=1).
+</p>
+
+<p>
+<em class="u">look at the help information how to use pkmosaic</em>
+</p>
+<pre class="code bash">pkmosaic <span class="re5">-h</span></pre>
+<div class="notetip">The MODIS bands at 500 m:<br/>
+
+band 1: red<br/>
+
+band 2: nir<br/>
+
+band 3: blue<br/>
+
+band 4: green<br/>
+
+band 5: nir<br/>
+
+band 6: swir<br/>
+
+band 7: mir<br/>
+
+band 8: cloud mask (3 is cloud free)<br/>
+
+band 9: number of days used for monthly composit<br/>
+
+
+</div><div class="notewarning">Do not forget that pktools start counting from 0
+</div><pre class="code bash">pkmosaic $<span class="br0">&#40;</span><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="co1">${MODIS500DIR}</span><span class="sy0">/</span><span class="nu0">2010</span><span class="sy0">*</span>-MODIS500_CW.tif;<span class="kw1">do</span> <span class="kw3">echo</span> <span class="st0">&quot; -i &quot;</span> <span class="re1">$file</span>;<span class="kw1">done</span><span class="br0">&#41;</span> <span class="re5">-o</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span><span class="nu0">2010</span>-MODIS500_CW.tif <span class="re5">--rband</span> <span class="nu0">0</span> <span class="re5">--rband</span> <span class="nu0">1</span> <span class="re5">-m</span> <span class="nu0">1</span> <span class="re5">--validBand</span> <span class="nu0">7</span> <span class="re5">-min</span> <span class="nu0">2</span></pre>
+
+</div>

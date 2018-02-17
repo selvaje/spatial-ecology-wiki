@@ -1,0 +1,45 @@
+===== NAME =====
+**ost4sem_average.sh**
+
+===== DESCRIPTION =====
+A nice combination of AWK script with bash argumens request.
+Calculate average of column txt files base on CLASS/ID column.\\
+all the row and column  are processed\\
+in case no CLASS/ID column in the file crate a dummy variable (e.g 1 ) for all che row\\
+the file has to be sorted base on the  CLASS/ID column!!!\\
+input_s.asc\\
+ID V1 V2 V3\\
+1  3  5  3\\
+1  5  7  5\\
+2  2  1  1\\
+output.asc\\
+1  4  6  4\\
+2  2  1  1\\
+
+$1 input.asc\\
+$2 output.asc\\
+===== SYNOPSIS =====
+~/sh/average.sh input_s.asc output.asc\\
+
+reply to the questions manualy\\
+or use the EOF sintax\\
+\\
+sh ./average.sh input_s.asc output.asc <<EOF\\
+y/n\ \ \ \ \ \ \ \ \ \ "The first row is an header (y/n) = "\\
+1/2/3/4/...\ \ \ \ "Position of the master ClASS/ID column (1/2/3/4/....)  = "\\
+1/2/3/4/...\ \ \ \ "Precision of the average results (Decimal number 1/2/3/... ) = "\\
+EOF\\
+
+===== DOWNLOAD =====
+Download python script: [[http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_average.sh | ost4sem_average.sh ]]\\
+===== EXAMPLE =====
+
+<code bash>
+chmod 777 ost4sem_average.sh
+sort -k 2,2 input.asc > input_s.asc
+~/sh/ost4sem_average.sh input_s.asc output.asc <<EOF
+y
+2
+4
+EOF
+</code>

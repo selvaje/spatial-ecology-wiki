@@ -1,0 +1,3 @@
+<span class="kw1">for</span> a <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">cat</span> rasterlist<span class="br0">&#41;</span> ; <span class="kw1">do</span>  
+v.what.rast     <span class="re2">map</span>=resp_p70<span class="sy0">@</span>Vmodel   <span class="re2">raster</span>=<span class="re1">$a</span><span class="sy0">@</span>import     <span class="re2">column</span>=<span class="co1">${a:0:5}</span>      
+<span class="kw1">done</span>

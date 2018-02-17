@@ -1,0 +1,40 @@
+====== Exercise 3b: Study phenology from MODIS NDVI time series (forest vector) ======
+In this exercise the following tools will be used:
+  * pktools: pkextract, pkstatogr
+  * bash: for loop, redirection (> and >>)
+  * gdal/ogr tools: ogr2ogr
+
+If not performed yet in [[wiki:exercise2b|Exercise 2b: Phenology of forest and golf course]]
+
+__Extract golf courses from points of interests in Cornwall and reproject to EPSG:3035 (ETRS89/LAEA)__
+
+<code bash>
+ogr2ogr -t_srs epsg:3035 -where 'NAME like "Golf course:%"' ${OUTPUTDIR}/exercise2/cornwall_golf_3035.shp ${VECTORDIR}/cornwall_poi.shp
+</code>
+
+__Remove old output__
+
+<code bash>
+rm -f ${OUTPUTDIR}/exercise3/golf_ndvi_mean_stdev.txt
+</code>
+__Extract NDVI time series from golf in Cornwall (mean value for each polygon)__
+
+<note warning>
+make sure to set OUTPUTDIR and vector file is available
+</note>
+
+<code bash>
+for MONTH in 01 02 03 04 05 06 07 08 09 10 11 12;do
+    MODIS250IMG=2006${MONTH}-A_MOT_CX-MED16_3500035000-AA.tif
+    rm -f ${OUTPUTDIR}/exercise3/golf_modis_${MONTH}.shp
+    echo "extract NDVI for month $MONTH"
+    pkextract -i ${OUTPUTDIR}/exercise3/2006${MONTH}-MODIS250_CW_NDVI.tif -s ${OUTPUTDIR}/exercise3/cornwall_golf_3035.shp -m ${OUTPUTDIR}/exercise3/2006${MONTH}-MODIS250_CW_MASK.tif -msknodata 0 -o ${OUTPUTDIR}/exercise3/golf_modis_${MONTH}.shp -bn NDVI --ftype Integer
+    echo "calculate statistics using pkstatogr"
+    pkstatogr -i ${OUTPUTDIR}/exercise3/golf_modis_${MONTH}.shp -n NDVI -mean -stdev| awk '{print $4,$6}' >> ${OUTPUTDIR}/exercise3/golf_ndvi_mean_stdev.txt
+done
+</code>
+\\
+
+__Plot the profiles in gnuplot__ (click [[gnuplot3b | here]] for the code).
+
+__Try different smoothing functions in gnuplot__ (click [[gnuplot3c | here]] for the code).

@@ -1,0 +1,64 @@
+
+<h1 class="sectionedit1" id="pkextract">pkextract</h1>
+<div class="level1">
+
+<p>
+NAME
+</p>
+<pre class="code"> pkextract - extract values from raster file</pre>
+
+<p>
+SYNOPSIS
+</p>
+<pre class="code bash">   pkextract <span class="re5">-i</span> input <span class="re5">-s</span> sample <span class="br0">&#91;</span>OPTION<span class="br0">&#93;</span></pre>
+
+<p>
+DESCRIPTION
+</p>
+<pre class="code"> Extract pixel values from raster file based on raster or vector sample
+     </pre>
+
+<p>
+OPTIONS
+</p>
+<pre class="code bash">   <span class="re5">-i</span>     <span class="re5">--image</span>                Input image <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-s</span>     <span class="re5">--sample</span>               Input sample <span class="kw2">file</span> <span class="br0">&#40;</span>shape<span class="br0">&#41;</span> or class <span class="kw2">file</span> <span class="br0">&#40;</span>e.g. Corine CLC<span class="br0">&#41;</span> <span class="kw1">if</span> class option is <span class="kw1">set</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-m</span>     <span class="re5">--mask</span>                 Mask image <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-f</span>     <span class="re5">--flag</span>                 Mask value where image is invalid. If a single mask is used, <span class="kw2">more</span> flags can be set. If <span class="kw2">more</span> masks are used, use one value <span class="kw1">for</span> each mask. <span class="br0">&#40;</span>default: <span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-c</span>     <span class="re5">--class</span>                Class<span class="br0">&#40;</span>es<span class="br0">&#41;</span> to extract from input sample image. Use <span class="re5">-1</span> to process every class <span class="kw1">in</span> sample image, or <span class="nu0">0</span> to extract all non-flagged pixels from sample <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-o</span>     <span class="re5">--output</span>               Output sample <span class="kw2">file</span> <span class="br0">&#40;</span>image <span class="kw2">file</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-k</span>     <span class="re5">--keep</span>                 Keep original features <span class="kw1">in</span> output vector <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-bu</span>    <span class="re5">--bu</span>                   Buffer output shape <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-g</span>     <span class="re5">--geo</span>                  geo coordinates <span class="br0">&#40;</span>default: <span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-down</span>  <span class="re5">--down</span>                 down sampling factor. Can be used to create grid points <span class="br0">&#40;</span>default: <span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-t</span>     <span class="re5">--threshold</span>            threshold <span class="kw1">for</span> selecting samples <span class="br0">&#40;</span>randomly<span class="br0">&#41;</span>. Provide probability <span class="kw1">in</span> percentage <span class="br0">&#40;</span><span class="sy0">&gt;</span><span class="nu0">0</span><span class="br0">&#41;</span> or absolute <span class="br0">&#40;</span><span class="sy0">&lt;</span><span class="nu0">0</span><span class="br0">&#41;</span>. Use multiple threshold values <span class="br0">&#40;</span>e.g. <span class="re5">-t</span> <span class="nu0">80</span> <span class="re5">-t</span> <span class="nu0">60</span><span class="br0">&#41;</span> is <span class="kw2">more</span> classes are to be extracted with random selection. Use value <span class="nu0">100</span> to <span class="kw1">select</span> all pixels <span class="kw1">for</span> selected class<span class="br0">&#40;</span>es<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">100</span><span class="br0">&#41;</span>
+   <span class="re5">-min</span>   <span class="re5">--min</span>                  minimum number of samples to <span class="kw1">select</span> <span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-bo</span>    <span class="re5">--boundary</span>             boundary <span class="kw1">for</span> selecting the sample <span class="br0">&#40;</span>default: <span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-rb</span>    <span class="re5">--rbox</span>                 rectangular boundary box <span class="br0">&#40;</span>total width <span class="kw1">in</span> m<span class="br0">&#41;</span> to draw around the selected pixel. Can not combined with class option. Use multiple rbox options <span class="kw1">for</span> multiple boundary boxes. Use value <span class="nu0">0</span> <span class="kw1">for</span> no box<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-cbox</span>  <span class="re5">--cbox</span>                 circular boundary <span class="br0">&#40;</span>diameter <span class="kw1">in</span> m<span class="br0">&#41;</span> to draw around the selected pixel. Can not combined with class option. Use multiple cbox options <span class="kw1">for</span> multiple boundary boxes. Use value <span class="nu0">0</span> <span class="kw1">for</span> no box<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-circ</span>  <span class="re5">--circular</span>             circular disc kernel boundary <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-ft</span>    <span class="re5">--ftype</span>                Field <span class="kw3">type</span> <span class="br0">&#40;</span>only Real or Integer<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: Real<span class="br0">&#41;</span>
+   <span class="re5">-lt</span>    <span class="re5">--ltype</span>                Label type: In16 or String <span class="br0">&#40;</span>default: Integer<span class="br0">&#41;</span>
+   <span class="re5">-bn</span>    <span class="re5">--bname</span>                Field name of output shape <span class="kw2">file</span> <span class="br0">&#40;</span>default: B<span class="br0">&#41;</span>
+   <span class="re5">-cn</span>    <span class="re5">--cname</span>                name of the class label <span class="kw1">in</span> the output vector <span class="kw2">file</span> <span class="br0">&#40;</span>default: label<span class="br0">&#41;</span>
+   <span class="re5">-l</span>     <span class="re5">--line</span>                 create OGRPolygon <span class="kw2">as</span> geometry instead of points. Only <span class="kw1">if</span> sample option is also of polygon type. Use <span class="nu0">0</span> <span class="kw1">for</span> OGRPoint <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-b</span>     <span class="re5">--band</span>                 band index to crop. Use <span class="re5">-1</span> to use all bands<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: -<span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-r</span>     <span class="re5">--rule</span>                 rule how to report image information per feature. <span class="nu0">0</span>: value at each point <span class="br0">&#40;</span>or at centroid of the polygon <span class="kw1">if</span> line is not <span class="kw1">set</span><span class="br0">&#41;</span>, <span class="nu0">1</span>: mean value <span class="br0">&#40;</span>written to centroid of polygon <span class="kw1">if</span> line is not <span class="kw1">set</span><span class="br0">&#41;</span>, <span class="nu0">2</span>: proportion classes, <span class="nu0">3</span>: custom, <span class="nu0">4</span>: minimum of polygon<span class="br0">&#41;</span>. <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-v</span>     <span class="re5">--verbose</span>              verbose mode <span class="kw1">if</span> <span class="sy0">&gt;</span> <span class="nu0">0</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT1 SECTION "pkextract" [1-3367] -->
+<h1 class="sectionedit2" id="examples">Examples</h1>
+<div class="level1">
+<pre class="code bash">pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> points.shp <span class="re5">-o</span> extracted.shp <span class="co0"># extract all bands from input.tif to extracted.shp at pixel locations defined in points.shp.</span>
+&nbsp;
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> polygons.shp <span class="re5">-o</span> extracted.shp <span class="re5">-l</span> <span class="re5">-b</span> <span class="nu0">0</span> <span class="co0"># extract band 0 from input.tif to extracted.shp at pixel locations covered by polygons.shp.</span>
+&nbsp;
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> polygons.shp <span class="re5">-o</span> extracted.shp <span class="re5">-l</span> <span class="re5">-r</span> <span class="nu0">1</span> <span class="re5">-b</span> <span class="nu0">1</span> <span class="co0"># extract band 1 from input.tif to extracted.shp at centroid of polygon.</span>
+&nbsp;
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> sample.tif <span class="re5">-o</span> extracted.shp <span class="re5">-t</span> <span class="nu0">10</span> <span class="re5">-c</span> <span class="nu0">1</span> <span class="re5">-c</span> <span class="nu0">2</span> <span class="re5">-c</span> <span class="nu0">3</span> <span class="co0"># extract all bands for 10 percent of the samples in sample.tif where sample.tif equals 1,2 or 3 (class values) to extracted.shp.</span>
+&nbsp;
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> sample.tif <span class="re5">-o</span> extracted.shp <span class="re5">-t</span> <span class="re5">-5000</span> <span class="re5">-c</span> <span class="nu0">1</span> <span class="co0"># extract all bands for a maximum of 5000 samples (if available) for each class in sample.tif to extracted.shp.</span></pre>
+
+</div>
+<!-- EDIT2 SECTION "Examples" [3368-] -->

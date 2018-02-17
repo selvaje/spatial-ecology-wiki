@@ -1,0 +1,29 @@
+====== Advance GDAL and OGR script======
+Gdal and OGR combined with awk and other bash commands can be used to create your own geotools.
+===== Build up your geo-tools =====
+Exercise:\\
+Script: open by kate but do not modify [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/tif2ascUL.sh | ~/ost4sem/exercise/basic_adv_gdalogr/tif2ascUL.sh]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/input.tif | ~/ost4sem/exercise/basic_adv_gdalogr/input.tif ]]\\
+Directory: ~/ost4sem/exercise/basic_adv_gdalogr\\
+\\
+Read the explanation carefully and try to understand the script, returning to the following questions:\\
+1. line\\
+Which is the format indicated by "-of AAIGrid"? What is its typical structure?\\
+What indicates the $1 symbol?\\
+Run only the first line using input.tif and open the grid_asc.asc using //more.//\\
+What is this file?\\
+2. line\\
+Explain the awk syntax. If you do not know, search on the Internet.\\
+Run it. Open the file output.
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_gdalogr 
+sh  tif2ascULND.sh  input.tif output.asc
+</code>
+Use openev to check whether the pixel values are correct.\\
+\\
+A more complicated script is this tif2ascULsmp.sh \\
+Open it, study it and run! Enjoy!\\
+\\
+Exercise: 
+Using the catted images of your country run a  tif2ascUL.sh or more complicate tif2ascULsmp.sh for all the images by a loop.
+

@@ -1,0 +1,119 @@
+====== A Landscape and Climate Data Logistic Model of Tsetse Distribution in Kenya ======
+Reference at [[http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011809 | Moore and Messina 2009]].\\
+{{:wiki:untitled.png?300|}}{{:wiki:tsetse_sinecology.png?500|}}{{:wiki:tzee_covariate.png?300|}}\\
+Reference at [[http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011809 | Moore and Messina 2009]].
+\\
+
+====== A Landscape and Climate Data Logistic Model of Tsetse Distribution in Uganda ======
+
+<code R| SDM.R >
+
+library(raster)
+library(ggplot2)
+library(gplots)
+library(mgcv)
+library(hier.part)
+library(rasterVis)
+
+# The Environmental data Import
+# variable list acronyms /home/user/ost4sem/exercise/geodata_SDM/SuppTab1.pdf 
+
+# Variable selection is tricky business and we're not going to dwell on it here... We'll use the following variables.
+# Precipitation Seasonality
+ug_bio_15 =raster ("/home/user/ost4sem/exercise/geodata_SDM/precipitation/ug_bio_15.tif")
+# Temperature Seasonality
+ug_bio_4 = raster ("/home/user/ost4sem/exercise/geodata_SDM/temperature/ug_bio_4.tif")
+# Normalized Difference Vegetation Index (Mean)
+NDVImean =raster ("/home/user/ost4sem/exercise/geodata_SDM/vegetation/NDVImean08-11.tif") 
+names(NDVImean) = "NDVImean"
+# Gross Primary Productivity (Mean)
+GPPmean =raster ("/home/user/ost4sem/exercise/geodata_SDM/vegetation/GPPmean08-11.tif") 
+names(LAImean) = "LAImean"
+# Leaf Area Index (Mean)
+LAImean = raster ("/home/user/ost4sem/exercise/geodata_SDM/vegetation/LAImean08-11.tif") 
+names(LAImean) = "LAImean"
+# Digital elevation model 
+GMTED2010 = raster ("/home/user/ost4sem/exercise/geodata_SDM/dem/GMTED2010.tif") 
+# Human influence 
+human =   raster("/home/user/ost4sem/exercise/geodata_SDM/humaninfluence/humanInfluence.tif")
+# Lat Long
+rasterX = raster ("/home/user/ost4sem/exercise/geodata_SDM/latlong/rasterX.tif")
+rasterY = raster ("/home/user/ost4sem/exercise/geodata_SDM/latlong/rasterY.tif")
+names(human) = "human"
+
+# Read the environmental data in as a raster stack
+env=stack( GMTED2010 , ug_bio_15, ug_bio_4, NDVImean, GPPmean, LAImean, rasterX, rasterY, human ,  full.names = TRUE )
+plot(env)
+
+# Scaling and centering the environmental variables to zero mean and variance of 1, using the scale function is typically a good idea.
+vars = c("GMTED2010", "ug_bio_15","ug_bio_4","NDVImean","GPPmean","LAImean","rasterX", "rasterY" , "human")
+senv=scale(env[[vars]])
+plot(senv)
+
+# Load presence and absence
+
+presence = read.table ("/home/user/ost4sem/exercise/geodata_SDM/latlong/presence.txt")
+absence = read.table ("/home/user/ost4sem/exercise/geodata_SDM/latlong/absence.txt")
+points=as.data.frame(rbind(presence, absence))
+names(points) = c("X","Y","PA")
+coordinates(points)= ~X+Y
+
+table(points$PA)
+
+plot(ug_bio_15)
+points(subset( points , PA == 0 )  , pch = 1  )
+points(subset( points , PA == 1 ) , col='red' , pch =3 )
+
+# Annotate the point records with the scaled environmental data
+
+points.annot=raster::extract(senv, points , na.rm=F , SP = T , df=TRUE)
+points.annot$PA = points$PA
+# eliminate NA
+points.annot=na.omit(points.annot)
+
+# Variable selection 
+# Covariate correlation
+# Scatterplot matrix of the available environmental data.
+
+splom(senv,varname.cex=2)
+
+hier.part(points.annot$PA, points.annot[,2:9] , fam = "binomial",gof = "Rsqu")
+
+# Model Fitting
+# Fit a simple GLM to the data
+
+m1glm=glm(PA ~ ug_bio_4, data=points.annot,family=binomial(logit))
+m2glm=glm(PA ~ ug_bio_4 + ug_bio_15 + LAImean + NDVImean, data=points.annot,family=binomial(logit))
+
+m1gam=gam(PA ~ GMTED2010 + ug_bio_4+ ug_bio_15 + NDVImean, data=points.annot,family=binomial(logit))
+m2gam=gam(PA ~ GMTED2010 + ug_bio_4+ ug_bio_15 + NDVImean + human + s(rasterX, rasterY), data=points.annot,family=binomial(logit))
+
+
+# Feel free to try various model formulas (adding or removing terms) and see how the model performs.
+
+p1glm=raster::predict(senv,m1glm,type="response", 
+                   file="/home/user/ost4sem/exercise/geodata_SDM/prediction/p1glm.tif",overwrite=T)
+p2glm=raster::predict(senv,m2glm,type="response",
+                   file="/home/user/ost4sem/exercise/geodata_SDM/prediction/p2glm.tif",overwrite=T)
+
+p1gam=raster::predict(senv,m1gam,type="response",
+                   file="/home/user/ost4sem/exercise/geodata_SDM/prediction/p1gam.tif",overwrite=T)
+p2gam=raster::predict(senv,m2gam,type="response",
+                   file="/home/user/ost4sem/exercise/geodata_SDM/prediction/p2gam.tif",overwrite=T)
+
+plot(p1gam)
+points(subset( points , PA == 0 )  , pch = 1  )
+points(subset( points , PA == 1 ) , col='red' , pch =3 )
+
+</code>
+
+more example:\\
+https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro2/hSDM_intro.md
+https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro/SDM.md
+\\
+the vignette from the dismo package is also a great resource.\\
+http://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf\\
+\\
+find the right probability thresholds\\
+http://cran.r-project.org/web/packages/OptimalCutpoints/OptimalCutpoints.pdf\\
+\\

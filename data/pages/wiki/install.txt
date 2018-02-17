@@ -1,0 +1,30 @@
+
+
+====== Create a virtual machine with spatial ecological modelling software ======
+The virtual machine **VM** includes software for GIS data processing and all Open Source tools used in spatial-ecology.net\\
+The use of a VM allows you not to install linux ubuntu in your computer but just to use it. 
+  * [[install_linux | How to create the Virtual machine and enrich UBUNTU with GIS and RS sw.   ]] \\
+\\
+
+====== Access spatial-ecology ubuntu from a Virtual Machine ====== 
+  * [[ installVM | How access the ubuntu operating system from a virtualization software]]\\
+\\
+
+====== Install ubuntu in your computer  ======
+Install spatial-ecology ubuntu from the Virual Machine.
+This can be done as single partition: Ubuntu will be the only operating system available in your computer.\\
+As a secon option you can install Ubuntu in a partition of your disk (to maintain a second operating system available).\\
+  * [[ install_one |  How to install linux from the VM]]\\
+\\
+
+====== Pktools ======
+To install, please check http://pktools.nongnu.org/html/index.html#pktools_installation
+\\
+\\
+
+====== Other  ======
+
+  * [[info_tips|Info Tips]]
+
+  * [[ssh_tips| SSH tips]]
+  * [[raspi_HPC| Raspberry pi cluster]] 

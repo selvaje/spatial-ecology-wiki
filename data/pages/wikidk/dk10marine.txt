@@ -1,0 +1,1198 @@
+====== Habitat Suitability and uncertainty Modeling of Mollusk Fauna ======
+\\
+  * Download the project proposal [[http://www.spatial-ecology.net/ost4sem/project/unidk2010/MARINE/documents/Copenhagen2010.pdf  |  Copenhagen2010.pdf ]].
+\\
+===== INTRODUCTION =====
+
+** I work together with Jens, see [[dk10mbee | MODB&B]]. We use basically the same workflow and methods, but with different data sets.**
+
+==== General framework of this analysis ====
+
+There are many methods available within the framework of Habitat Suitability Modeling (HMS). Common to all of them is that there will be a varying degree of uncertainty related to all of them depending on the variance related to the fitted values. This uncertainty is a key issue in HMS and needs to be addressed if we want our predictions to be valid in and useful to management and decision-makers. Jens and I address a simple method to visualize the uncertainty inherent to a particular prediction. This method is based on a random pick of drawn from our predictions based on the functions rnorm and rpois in R. These n random picks, based on the mean and SD of the fitted values of the model, can be considered as what would be likely to observe in the field if we went to each pixel n times.
+
+==== Project objectives ====
+
+I had the following goals of this last week of coding:
+
+1) Using, or at least touching, as many as possible of the tools taught during the first week of the course.
+
+  * Bash 
+  * AWK
+  * Bash-scripting of GRASS
+  * GRASS & Qgis
+  * R
+  * ImageMagick
+
+2) Avoid manual editing of files in spreadsheets or text editors.
+
+3) Looping over repetitive operations.
+
+4) Make the code as general as possible (still a way to go...).
+  * This would allow for creating functions (at least in R).
+
+5) Prepare a species data set and a predictor data set and merge/join them.
+
+6) Fit a GLM and GAM model to the Mollusk richness.
+
+7) Predict both models to new data (i.e. unsampled areas).
+
+8) Model uncertainty in the models by drawing random values from the fitted functions (i.e. "new fieldtrips").
+
+9) Visualize uncertainty by making movies of predicted outcomes of the uncertainty models.
+  
+
+
+\\
+===== METADATA =====
+==== Raster data ====
+  * Bathymetry (DEM)
+    * Res = 1 m, Extension = 1000 x 1050 m
+  * Terrain variables derived from DEM
+    * BPI, slope, aspect, curvature
+  * Sea current data - bottom, surface, and water column
+    * res = 15 m
+  * Acoustic classification from single-beam
+  * Habitat model (based on BPI, slope, and depth)
+==== Vector Data ====
+  * Stations - 28 stations in total
+==== Text files and tables ====
+  * Grainsize (sediment)
+  * Species-Abundance Matrix
+  * Predictor Matrix
+==== Ortophoto ====
+\\
+===== METHOD =====
+==== WORKFLOW ====
+  * Preparing two predictor datasets (EnvMat.txt and EnvMat2.csv) using bash, awk, and GRASS.
+
+  * Merging species data set with predictor data sets in R.
+
+  * Fitting GLM and GAM models in R using mollusk richness per sampled station as the response variable.
+
+  * Prepared a data frame holding the new data to which I want to predict (in R).
+
+  * Predicting to new data/unvisited areas for both GLM and GAM models.
+
+  * In an attempt to estimate uncertainty of our models, Jens and I were using the rnorm function in R to simulate the possible outcome of new "field trips".
+
+  * Making an animation to visualize the uncertainty discovered by the "field trips"
+
+\\
+===== DATA IMPORT =====
+<code bash>
+### Habitat Suitability and uncertainty Modeling of Mollusk Fauna
+### Thijs Chr. van Son (Jens Åstrøm)
+ 
+INDIR=~/a/ost4sem/input			# setting the input file directory 
+OUTDIR=~/a/ost4sem/output 		# setting the output file directory 
+ 
+### Extracting data from Grainsize.csv and put it into EnvMat.txt
+cd $INDIR
+# awk '{ print NF }' EnvMat.csv		# there are 8 columns 
+
+#######################################################################
+#######################################################################
+################ PREPARATION OF PREDICTOR DATA SET ####################
+#######################################################################
+#######################################################################
+
+#######################################################################
+############## Extracting grainsize parameters in R ###############
+#######################################################################
+
+### For each Station:
+## - linearly interpolate between known grainsize points
+## - extract percentiles
+## - calculate grainsize parameters
+## - load percentiles and parameters in a matrices
+
+# Importing the grainsize sediment data
+Grainsize <- read.csv("/home/thijs/a/PhD_data/Fielddata/EnvData/stut_grsz_compl.csv")
+str(Grainsize)
+head(Grainsize)
+
+## Fixing a typo
+Grainsize$dry.wt <- Grainsize$dry.weigth
+str(Grainsize)
+
+## Extracting the 0-2 cm layer
+Upper <- Grainsize[Grainsize$layer == "0-2", ] # Here the subset function can be used also
+str(Upper)
+head(Upper)
+
+## Creating a matrix to hold all parameters for each replicate
+AllReps <- unique(Upper$sta.rep)
+a <- length(AllReps)
+Params <- c("Median", "Sorting", "Skewness", "Kurtosis")
+Param.mat <- matrix(data = NA, nrow = length(AllReps), ncol = length(Params))
+
+## Defining objects to be used in Function(dt, percV) and
+## creates a matrix to hold percentiles for each replicateubuntu
+percV <- c(5, 16, 25, 50, 75, 84, 95)
+o <- length(percV)
+dt <- Upper
+Perc.mat <- matrix(data = NA, nrow = length(AllReps), ncol = length(percV))
+
+## Sourcing my functions
+source("/home/thijs/a/R/RCode/my_functions.r")
+
+## Run the PPsLog-function in a loop over all stations
+for (i in seq(length = a)) {
+    Rep.i <- AllReps[i]
+    dt.i <- dt[dt$sta.rep == Rep.i, ]
+    # output <- PPsGeo(dt.i, percV)
+    output <- PPsLog(dt.i, percV)
+    Param.mat[i, ] <- output$a
+    Perc.mat[i, ] <- output$b
+    }
+
+## Setting the colnames and rownames of Param.mat
+colnames(Param.mat) <- Params
+rownames(Param.mat) <- seq(1:35)
+Param.mat
+
+## Coerce the matrix into a data frame  
+Param.mat.df <- as.data.frame(Param.mat)
+str(Param.mat.df)
+
+## Adding the stations to the data frame
+Param.mat.df$Reps <- AllReps
+
+## Selecting Stations, Median,and Sorting
+Param.mat.df <- subset(Param.mat.df, select = c("Reps", "Median", "Sorting"))
+
+## Stringsplit of the Reps column, which contain  both station and replicate in one string (e.g. 1_1)
+# The following splits the Reps column in two, and splitting at the underscore ("_")
+Rep_split <- strsplit(as.character(Param.mat.df$Reps), "_")	# Creates a list of splitted values
+
+## Unlist the list created above and convert it into a matrix 
+Rep_split <- matrix(unlist(Rep_split), ncol=2, byrow = TRUE)
+
+## Adding the Rep_split outcome to Param.mat.df
+Param.mat.df$Station <- Rep_split[, 1]
+Param.mat.df$Replicate <- Rep_split[, 2]
+
+## Reshaping the data
+# Reshape can be used to apply functions within a variable containing subvariables
+# For example, I had some stations that had 3 replicates, and I wanted the mean of those
+# replicates per station
+require(reshape)
+Param_melt <- melt(Param.mat.df, c("Reps","Station","Replicate"))
+Param.mat.df <- cast(Param_melt, formula = Station~variable, mean)
+
+## Making a vector containg selected stations (i.e. stations of interest)
+Station <- c(1:24,101:104)
+Station <- as.data.frame(Station)
+
+## Merging Param.mat.df and Station
+# This selects all the Stations in x, removes the stations in y
+# that is not present in x, and gives NA values to stations in x
+# not found in y
+Param.mat.df <- merge(x = Station, y = Param.mat.df, by.x = "Station",
+	by.y = "Station", all.x = TRUE)
+
+## Writing the df to a .txt file
+indir = "/home/ost4sem/project/input/"
+write.table(Param.mat.df, file = paste(indir, "Grain.txt", sep = ""), sep = " ",
+	row.names = FALSE)
+
+############################################################################
+############# IMPORTING OTHER ENVIRONMENTAL VARIABLES IN R #################
+############################################################################
+
+# Importing to set -9999 as NAs
+Vars <- read.table(file = paste(indir, "Variables.txt", sep = ""), header = TRUE, sep = " ",
+	na.strings = -9999)
+
+# Writing back to a txt file. Using white space as fieldseparator (thats what bash likes...)
+write.table(Vars, file = paste(indir, "VarsNA.txt", sep = ""), sep = " ",
+	row.names = FALSE)
+
+# Extracting all the columns containing the smallest sediment fraction (phi=10)
+# Also extract the station and replicate
+less63.df <- subset(Upper, Upper$phi == 10, select = c("station", "rep", "frequency"))
+
+## Reshaping the data
+require(reshape)
+Less_melt <- melt(less63.df, c("station","rep"))
+less63.df <- cast(Less_melt, formula = station~variable, mean)
+
+## Merge less63.df and Station
+less63.df <- merge(x = Station, y = less63.df, by.x = "Station",
+	by.y = "station", all.x = TRUE)
+
+# write as txt
+write.table(less63.df, file = paste(indir, "less63.txt", sep=""), sep = " ",
+	row.names = FALSE)
+
+## Save the image (i.e. all objects)
+save.image(file = paste(indir, "Predictors.rdata", sep = ""))
+
+########################################################################
+########### COMBINING TEXT FILES INTO ENVMAT.CSV USING BASH ############
+########################################################################
+
+# Make sure the files have a space as field separator
+head -1 Grain.txt
+head -1 VarsNA.txt
+head -1 less63.txt
+
+# Change the fieldseparator of Grainsize.csv
+# the first gsub argument is the old fs and the second the new fs
+### NB! Bash always work with space separated files
+# awk '{ gsub("," , " ") ; print }' Grainsize.csv > GrainSize.csv
+# rm Grainsize.csv 
+
+## sorting the common field of both files
+# Using the sort function alone moves the header information
+# and puts it somewhere else
+# sort -k 1,1 GrainSize.csv > Grainsize_s.csv
+# sort -k 3,3 EnvVar.csv > EnvVar_s.csv
+
+## The following using awk and sort keeps the header untouched
+awk 'NR==1; {if(NR > 1) {print $0 | "sort -k 1,1"}}' Grain.txt > GrainS.txt
+awk 'NR==1; {if(NR > 1) {print $0 | "sort -k 3,3"}}' VarsNA.txt > VarsNAS.txt
+awk 'NR==1; {if(NR > 1) {print $0 | "sort -k 1,1"}}' less63.txt > less63S.txt
+
+## Check if the sort worked correctly
+cat  GrainS.txt
+cat  VarsNAS.txt
+cat  less63S.txt
+
+## Join first VarsNAS and less63S
+join --header -1 3 -2 1 VarsNAS.txt less63S.txt > Temp.txt
+## Then join Temp.txt and GrainS
+join --header -1 1 -2 1 Temp.txt GrainS.txt > EnvMatUS.txt
+
+## Sorting EnvMatUS to get the stations in numerical order
+awk 'NR==1; {if(NR > 1) {print $0 | "sort -nk 1,1"}}' EnvMatUS.txt > EnvMat.txt
+
+
+########################################################################
+############## POPULATING MY PREDICTOR DATASET IN GRASS ################
+########################################################################
+
+######## Setting the GRASS variables in Bash is not working... #########
+
+## Setting GRASS variables in BASH
+#echo "LOCATION_NAME: Stuteberget" 	> $HOME/.grassrc6
+#echo "MAPSET: thijs"            	>> $HOME/.grassrc6
+#echo "DIGITIZER: none"        		>> $HOME/.grassrc6
+#echo "GRASS_GUI: -text"        			>> $HOME/.grassrc6
+#echo "GISDBASE: /home/thijs/a/grassdata"      >> $HOME/.grassrc6
+
+# path to GRASS binaries and libraries:  
+# export GISBASE=/usr/lib/grass64
+#export GISBASE=/opt/grass-42555
+#export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts:/opt/grass/bin
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$GISBASE/lib"
+#export GISRC=/home/thijs/.grassrc6
+#export GRASS_LD_LIBRARY_PATH=/opt/grass-42555/lib
+# use process ID (PID) as lock file number: 
+#export GIS_LOCK=$$
+
+
+## Opening grass
+grass64 -wxpython /home/thijs/a/grassdata/Stuteberget/thijs
+
+## Checking the region
+g.region -p
+
+## Checking available rasters
+g.list rast
+
+
+########################################################################
+####### POPULATING THE EnvMat.txt FILE  WITH PREDICTOR VARIABLES #######
+###################### BASH SCRIPTING OF GRASS #########################
+########################################################################
+### 			scriptname: vwhatrast.sh
+########################################################################
+###			1. Import Stations to GRASS		     ###
+###			2. v.what.rast in a loop		     ###
+########################################################################
+
+#!/bin/sh
+
+DIR=/home/thijs/a/ost4sem
+INDIR=/home/thijs/a/ost4sem/input
+OUTDIR=/home/thijs/a/ost4sem/output
+
+## After saving the filename, do:
+#chmod u+x /home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh
+
+## In the terminal, do:
+# export GRASS_BATCH_JOB=/home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh ; grass64 -text /home/thijs/a/grassdata/Stuteberget/thijs
+## To deactivate the batch job mode, run:
+# unset GRASS_BATCH_JOB
+
+cd $INDIR
+
+## Checking available vector files
+# g.list vect
+
+## Extracting and appending two vectors containg station information
+v.out.ascii SamplingStations@thijs fs=, > Stations.csv
+v.out.ascii BigStations_new@PERMANENT fs=, > BigStations.csv
+echo "Reading Stations.csv to the terminal"
+echo "------------------------------------"
+cat Stations.csv
+echo "------------------------------------"
+echo "Reading BigStations.csv to the terminal"
+echo "------------------------------------"-5
+cat BigStations.csv
+echo "------------------------------------"
+# Changing the numbering of the stations in BigStations.csv
+awk -F "," '{ OFS="," ; print $1, $2, $3+100 }' BigStations.csv >> Stations.csv
+echo "Reading both files when appended"
+echo "--------------------------------"
+cat Stations.csv
+echo "END ----------------------------"
+
+## Importing Stations.txt
+v.in.ascii input=$INDIR/Stations.csv output=EnvMatCop fs=, columns="utm_x double, utm_y double, station int" --o
+echo "Printing the attribute table of the enewly created vector"
+echo "---------------------------------------------------------"
+db.select EnvMatCop
+echo "END------------------------------------------------------"
+
+## Populating the EnvMatCop using v.what.rast
+# First, add columns to the attribute table
+v.db.addcol map=EnvMatCop columns="depth double, ac3 int, ac4 int, surmax double, bpi25 double, maxcur25 double"
+echo "Checking if the operation was successful"
+echo "----------------------------------------"
+db.select EnvMatCop
+echo "END-------------------------------------"
+
+# Create vectors or arrays to hold the information over which to loop
+echo "depth ac3 ac4 surmax bpi25 maxcur25" > colnames.txt
+rastnames="bathy_background 3cl_12.5m 4cl_12.5m speed_sur_max_stut BPI_25 maxic_25"
+
+## Looping v.what.rast over all rasters and colnames in a one-to-one way
+col=0
+for raster in `echo $rastnames` ; do
+	col=$((col+1))
+	colnames=`awk -v col=$col '{ print $col }' colnames.txt`
+	echo $raster  $colnames  
+	v.what.rast vect=EnvMatCop rast=$raster col=$colnames
+done
+echo "-------------------------"
+echo "Checking the output again"
+echo "-------------------------"
+v.db.select EnvMatCop
+echo "END ---------------------"
+
+## Write it out as a csv file
+v.out.ascii EnvMatCop fs=, columns=utm_x,utm_y,station,depth,ac3,ac4,surmax,bpi25,maxcur25 > EnvMat2.csv
+echo "-----------------------------------"
+echo "Checking if the file is good"
+echo "-----------------------------------"
+cat EnvMat2.csv
+echo "END--------------------------------"
+
+## It seems like the file lost its header through v.out.ascii, this can easily be added in R.
+########################################################################
+
+
+########################################################################
+############## IMPORTING SPECIES ABUNDANCE MATRIX IN R #################
+########################################################################
+### MOLLUSCA ###
+## Created by T. van Son June 14, 2010
+
+## Load the saved image from above
+load(file = "/home/thijs/a/ost4sem/input/Predictors.rdata")
+
+## Importing the Mollusca Matrix
+setwd("/home/thijs/a/PhD_data/Fielddata/SpeciesData/Mollusca")
+Moll <- read.csv(file = "Mollusca_matrix.csv", header = TRUE)
+names(Moll)
+# [1] "Sta"   "Gr"      "StaGr" "Abr.alb" "Abr.nit" "Apo.pes" "Arc.isl"
+# [8] "Ant.ent" "Ast.ell" "Ast.mon" "Ast.sul" "Ast.sp"  "Buc.und" "Buc.sp" 
+# [15] "Cor.gib" "Cus.cus" "Cyl.alb" "Dia.min" "Eus.mon" "Hia.arc" "Kur.bid"
+# [22] "Lep.cae" "Mac.cal" "Mya.tru" "Mya.sp"  "Myt.edu" "Nuc.ten" "Nuc.per"
+# [29] "Per.min" "Per.ova" "Pse.sep" "Ris_fam" "Tel.fer" "Thy.equ" "Thy.fle"
+# [36] "Thy.gou" "Thy.sar" "Thy.spp" "Thy.sp"  "Biv.ind" "Gas.ind"
+str(Moll)
+
+## Removing Biv.ind, Gas.ind, Thy.spp, and Thy.sp columns
+Moll <- Moll[, 1:37]
+names(Moll)
+str(Moll)
+dim(Moll)	# 139 37
+
+## In the df Moll the data is listed per grab pr station
+## Summarising the grabs per station and store it in MollSt
+
+## This works for station one
+sapply(Moll[Moll$Sta == 1, 4:39], na.rm = TRUE, FUN = sum)
+as.vector(sapply(Moll[Moll$Sta == 1, 4:39], na.rm = TRUE, FUN = sum))
+
+## Unique stations
+AllStations <- unique(Moll$Sta)
+AllSpecies <- names(Moll[, 4:37])
+p <- length(AllStations)
+MollSt <- matrix(data = NA, nrow = length(AllStations), ncol = length(AllSpecies))
+
+## Looping over all stations
+# the sapply function needs to be wrapped by as.vector, otherwise it will return
+# the names of the species along with the sum of the species per station. Compare
+# the sapply code with and without the as.vector wrapping (See above).
+
+  for (i in seq(length = p)) {
+    Sta.i <- AllStations[i]
+    temp <- as.vector(sapply(Moll[Moll$Sta == Sta.i, 4:37], na.rm = TRUE, FUN = sum))
+    MollSt[i, ] <- temp		# for each iteration row i is fed into MollSt
+    }
+
+## Coercing into a dataframe
+MollSt <- as.data.frame(MollSt, row.names = AllStations)
+colnames(MollSt) <- AllSpecies
+str(MollSt)
+names(MollSt)
+
+## Adding the Stations to the dataframe MollSt
+MollSt$Station <- c(1:24, 101:104)
+
+
+## Calculating species abundance and richness per station
+AbundSt <- as.vector(rowSums(MollSt, na.rm = TRUE))
+AbundSt
+# Coercing into a dataframe and adding stations
+AbundSt <- as.data.frame(AbundSt)
+AbundSt$Station <- Station
+
+## Calculating species richness
+DiversSt <- as.vector(rowSums(MollSt > 0, na.rm = TRUE))
+DiversSt
+# Coercing into a dataframe and adding stations
+DiversSt <- as.data.frame(DiversSt)
+DiversSt$station <- c(1:24, 101:104)
+</code>
+\\
+===== DATA PROCESSING =====
+\\
+<code r>
+
+########################################################################
+########################################################################
+####################### MODEL FITTING IN R #############################
+########################################################################
+########################################################################
+
+################## FIRST ATTEMPT WITH POINT DATA #######################
+EnvMat.df <- read.table(file = paste(indir, "EnvMat.txt", sep = ""), header = TRUE)
+
+## Checking for collinearity
+# Reading in some pair functions
+panel.hist <- function(x, ...)
+     {
+         usr <- par("usr"); on.exit(par(usr))
+         par(usr = c(usr[1:2], 0, 1.5) )
+         h <- hist(x, plot = FALSE)
+         breaks <- h$breaks; nB <- length(breaks)
+         y <- h$counts; y <- y/max(y)
+         rect(breaks[-nB], 0, breaks[-1], y, col="cyan", ...)
+     }
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor, ...)
+     {
+         usr <- par("usr"); on.exit(par(usr))
+         par(usr = c(0, 1, 0, 1))
+         r <- abs(cor(x, y))
+         txt <- format(c(r, 0.123456789), digits=digits)[1]
+         txt <- paste(prefix, txt, sep="")
+         if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+         text(0.5, 0.5, txt, cex = cex.cor * r)
+     }
+
+# Plotting a nice pair plot to check for collinearity
+pairs(EnvMat.df[, 4:11], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# na.action is not working...
+
+str(EnvMat.df)
+str(DiversSt)
+
+## Merging EnvMat.df and DiverSt
+Richness.df <- merge(DiversSt, EnvMat.df)
+
+## Changing the variable name of the richness column
+names(Richness.df)[2] <- "rich"
+
+########################################################################
+########## FITTING A GLM MODEL USING POINT DATA PREDICTORS #############
+########################################################################
+
+## First fit
+fit <- glm(rich ~ toc + pendep + bmd2g + frequency + Sorting,
+	data = Richness.df)
+summary(fit)
+plot(fit)
+# Shapiro test - test for normality
+shapiro.test(resid(fit))
+# Histogram of richness
+hist(Richness.df$rich, breaks=15)
+# updating the model
+# .~. -the first point is to explain the same response, ~ means as a 
+# function of the same respones var, the last point tells to use the
+# same expl vars as before -frequency
+fit2 <- update(fit, .~. -frequency)
+summary(fit2)
+anova(fit, fit2, test = "F")
+
+# Looking the model matrix
+model.matrix(fit)
+coef(fit)
+model.matrix(fit) %*% coef(fit) # is the same as the fitted values
+fitted(fit)
+
+## Save the image (i.e. all objects)
+save.image(file = paste(indir, "Richness.rdata", sep = ""))
+
+########################################################################
+########## FITTING A GLM MODEL USING RASTER DATA PREDICTORS #############
+########################################################################
+
+load(file = "/home//ost4sem/project/input/Richness.rdata")
+EnvMat2.df <- read.csv(file = paste(indir, "EnvMat2.csv", sep = ""), header = F)
+
+## Removing duplicated x,y, and station columns
+EnvMat2.df <- EnvMat2.df[, 4:12]
+
+## Adding the column names of EnvMat2.df
+colnames(EnvMat2.df) <- c("utm_x", "utm_y", "station", "depth", "ac3", "ac4", "surmax", "bpi25", "maxcur25")
+str(EnvMat2.df)
+
+## ac3 and ac4 are actually factors
+EnvMat2.df$fac3 <- as.factor(EnvMat2.df$ac3)
+EnvMat2.df$fac4 <- as.factor(EnvMat2.df$ac4)
+
+## Checking for collinearity among Predictors
+pairs(EnvMat2.df[, c(4, 7:11)], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# maxic25 and bpi25 are highly correlated. Leaving out maxic25 in further analysis
+
+##
+str(EnvMat2.df)
+str(DiversSt)
+
+# Changing the variable name of the richness
+names(DiversSt)[1] <- "rich"
+
+## Merging EnvMat.df and DiverSt
+Richness2.df <- merge(EnvMat2.df, DiversSt)
+
+## First fit with the new predictors
+fitn <- glm(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitn)
+plot(fitn)
+# Shapiro test - test for normality
+shapiro.test(resid(fitn))
+# Histogram of richness
+hist(Richness2.df$rich, breaks=15)
+
+# Looking at the model matrix
+model.matrix(fitn)
+coef(fitn)
+model.matrix(fitn) %*% coef(fitn) # is the same as the fitted values
+fitted(fitn)
+
+## Save the image (i.e. all objects)
+save.image(file = paste(indir, "Richness.rdata", sep = ""))
+
+########################################################################
+############### PREDICTING TO NEW DATA/UNSAMPLED AREAS #################
+######### BASED ON GLM MODEL AND RASTER POINT PREDICTOR DATA ###########
+########################################################################
+
+## Starting GRASS 
+grass64 -wxpython /home/user/ost4sem/grassdb/Stuteberget/thijs
+
+## Generating a new mapset to hold new map subsets
+g.mapset -c mapset=ost4sem	# the -c option tells GRASS to create a new mapset if the mapset doesnt exist
+g.mapset -l
+g.gisenv
+
+## Setting/checking the region sttings in GRASS
+g.region -p
+g.list region
+g.region region=QTC_grids -p # 80 x 84 = 6720 cells
+
+## Adding the thijs mapset
+g.mapsets addmapset=thijs
+
+## Generating map subsets so that every map has the same extension and res 
+r.mapcalc "depth=bathy_background"
+r.mapcalc "surmax=speed_sur_max_stut"
+r.mapcalc "bpi25=BPI_25"
+
+## Checking the extension and res of the map subsets
+r.info surmax
+
+## Start R
+R
+load(file = "/home/user/ost4sem/project/input/Richness.rdata")
+## Load the spgrass6 package
+require(spgrass6)
+system("g.region region=QTC_grids -p")
+## Loading Predictor rasters from GRASS to R
+Rasters <- c("depth", "ac3", "ac4", "surmax", "bpi25")
+# p <- length(Rasters)
+Spdf.names <- c("depth", "ac3", "ac4", "surmax", "bpi25")
+Temp.mat <- matrix(data = NA, nrow = 6720, ncol = 5, byrow = T)
+
+# for loop
+for (i in 1:5) {
+	name <- Spdf.names[i]
+	rast <- Rasters[i]
+	print(name); print(rast)
+	name <<- readRAST6(rast) 	# double arrow assigns the object to the global env
+	Temp.mat[, i] <- (name@data[, 1])
+}
+
+## Checking the Temp Matrix
+head(Temp.mat)
+
+## Coerce into a data frame
+Preddata <- as.data.frame(Temp.mat)
+colnames(Preddata) <- c("depth", "ac3", "ac4", "surmax", "bpi25")
+
+## ac3 and ac4 are factors
+Preddata$fac3 <- as.factor(Preddata$ac3)
+Preddata$fac4 <- as.factor(Preddata$ac4)
+str(Preddata)
+head(Preddata)
+
+## Predicting to new area
+prediction <- predict(fitn, newdata = Preddata, type = "response")
+str(prediction)
+
+## Adding the predicted data to an existing raster holding
+## the geographical information the set region
+name$new <- prediction
+
+## Writing raster back to GRASS
+writeRAST6(name, "firstpred", zcol="new", overwrite = T)
+
+#########################################################################
+################### RANDOMISATION OF PREDICTED DATA #####################
+#########################################################################
+
+## "Another" day in the field observing the richness of molluscs
+name$rnorm.pred<-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+
+## Writing raster back to GRASS 
+writeRAST6(name, "rnorm.pred", zcol="rnorm.pred", overwrite=T)
+
+#########################################################################
+###### MAKING AN ANIMATION OF THE UNCERTAINTY OF THE PREDICTIONS ########
+################## Script modified from Jens Åstrøm #####################
+#########################################################################
+setwd("/home/user/ost4sem/project/output")
+
+## Setting the region - this also relates to the resolution of the pngs made
+system("g.region region=QTC_grids -p")
+
+## Making fifty "trips" to the field collecting each pixel, and write the
+## outcome back to GRASS
+
+for(i in 1:50){
+name$rnorm<-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+
+writeRAST6(name ,paste("rnorm",i,sep="") ,zcol="rnorm" ,overwrite=T)
+}
+
+## Making a png pic of every new prediction
+system("for i in `seq 1 50`
+ do
+  r.out.png input=rnorm$i output=rnorm$i
+   g.remove rast=rnorm$i
+    done")
+
+## Convert all png pics into a movie
+system("convert -delay 20 *.png 80r_84c_rnorm.mpg")
+
+#indir = "/home/user/ost4sem/project/input/"
+#save.image(file = paste(indir, "Richness.rdata", sep = ""))
+
+########### MAKING A NEW ANIMATION WITH A HIGHER RESOLUTION ###############
+## Creating a new mapset to hold rasters within the QTC_grids region with res=1
+system("g.mapset -c mapset=stut1m")
+system("g.region region=QTC_grids res=1 -p")
+
+## Resample the raster maps to a finer grid using interpolation
+## Is not giving the wanted result...
+#system("r.resamp.interp input=depth_12.5 output=depth_1")
+#system("r.resamp.interp input=surmax_12.5 output=surmax_1")
+#system("r.resamp.interp input=bpi25_12.5 output=bpi_1")
+#system("r.resamp.interp input=ac3_12.5 output=ac3_1")
+#system("r.resamp.interp input=ac4_12.5 output=ac4_1")
+
+## using r.mapcalc to make map subsets
+system("r.mapcalc 'ac3_1=ac3_12.5'")
+system("r.mapcalc 'ac4_1=ac4_12.5'")
+system("r.mapcalc 'depth_1=depth_12.5'")
+system("r.mapcalc 'surmax_1=surmax_12.5'")
+system("r.mapcalc 'bpi25_1=bpi25_12.5'")
+
+### Predicting to the new map subset raster files
+## Loading Predictor rasters from GRASS to R
+Rasters <- c("depth_1", "ac3_1", "ac4_1", "surmax_1", "bpi25_1")
+# p <- length(Rasters)
+Spdf.names <- c("depth", "ac3", "ac4", "surmax", "bpi25")
+Temp.mat <- matrix(data = NA, nrow = 1050000, ncol = 5, byrow = T)
+
+# for loop
+for (i in 1:5) {
+	name <- Spdf.names[i]
+	rast <- Rasters[i]
+	print(name); print(rast)
+	name <<- readRAST6(rast) 	# double arrow assigns the object to the global env
+	Temp.mat[, i] <- (name@data[, 1])
+}
+
+## Checking the Temp Matrix 
+head(Temp.mat)
+
+## Coerce into a data frame
+Preddata <- as.data.frame(Temp.mat)
+colnames(Preddata) <- c("depth", "ac3", "ac4", "surmax", "bpi25")
+
+## ac3 and ac4 are factors
+Preddata$fac3 <- as.factor(Preddata$ac3)
+Preddata$fac4 <- as.factor(Preddata$ac4)
+str(Preddata)
+head(Preddata)
+
+## Predicting to new area
+prediction <- predict(fitn, newdata = Preddata, type = "response")
+str(prediction)
+
+## Adding the predicted data to an existing raster
+name$new <- prediction
+
+## Writing raster back to GRASS
+writeRAST6(name, "firstpred_1", zcol="new", overwrite = T)
+# Starting Qgis
+system("qgis &")
+
+## "Another" day in the field observing the richness of molluscs
+name$rnorm.pred<-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+
+## Writing raster back to GRASS 
+writeRAST6(name, "rnorm.pred_1", zcol="rnorm.pred", overwrite=T)
+
+##############################################################################
+############ RANDOMISATION OF PREDICTED DATA OF HIGH RESOLUTION ##############
+##############################################################################
+
+### Now, making another 20 "trips" to the field and write it back to GRASS ###
+## Now the res=1, so nrows=1000 and ncols=1050
+## Only making 20 "trips"
+
+for(i in 1:20){
+name$rnorm<-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+
+writeRAST6(name ,paste("rnorm",i,sep="") ,zcol="rnorm" ,overwrite=T)
+}
+
+## Making a png pic of every new prediction
+system("for i in `seq 1 20`
+ do
+  r.out.png input=rnorm$i output=rnorm$i
+   g.remove rast=rnorm$i
+    done")
+
+## Convert all png pics into an animation using ImageMagick
+system("convert -delay 20 *.png 1000r_1050c_rnorm.mpg")
+
+save.image(file = paste(indir, "Richness.rdata", sep = ""))
+
+
+########################################################################
+############### PREDICTING TO NEW DATA/UNSAMPLED AREAS #################
+######### BASED ON GAM MODEL AND RASTER POINT PREDICTOR DATA ###########
+########################################################################
+
+load(file = "/home/user/ost4sem/project/input/Richness.rdata")
+
+## Using the Richness2.df
+str(Richness2.df)
+head(Richness2.df)
+
+## Fitting a gam
+require(mgcv)
+fitgam <- gam(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitgam)
+str(fitgam)
+# Shapiro test - test for normality
+shapiro.test(resid(fitgam))
+
+# Looking at the model matrix
+model.matrix(fitgam)
+coef(fitgam)
+model.matrix(fitgam) %*% coef(fitgam) # is the same as the fitted values
+fitted(fitgam)
+
+## Predicting to new area
+prediction.gam <- predict(fitgam, newdata = Preddata, type = "response")
+str(prediction.gam)
+
+## Adding the predicted data to an existing raster
+name$newgam <- prediction.gam
+
+## Writing raster back to GRASS
+writeRAST6(name, "predgam_1", zcol="newgam", overwrite = T)
+
+
+## Another day in the field observing the richness of molluscs
+name$rnorm.predgam<-rnorm(nrow(name),name$newgam,sd=sd(resid(fitgam)))
+
+## Writing raster back to GRASS
+writeRAST6(name, "rnormgam_1", zcol="rnorm.predgam", overwrite = T)
+
+
+### Now, making another fifty "trips" to the field and write it back to GRASS ###
+## Now the res=1, so nrows=1000 and ncols=1050
+## Only making 20 "trips"
+setwd("/home/user/ost4sem/project/output")
+
+for(i in 1:15){
+name$rnormgam<-rnorm(nrow(name),name$newgam,sd=sd(resid(fitgam)))
+
+writeRAST6(name ,paste("rnormgam",i,sep="") ,zcol="rnormgam" ,overwrite=T)
+}
+
+## Making a png pic of every new prediction
+system("for i in `seq 1 15`
+ do
+  r.out.png input=rnormgam$i output=rnormgam$i
+   g.remove rast=rnormgam$i
+    done")
+
+## Convert all png pics into an animation using ImageMagick
+system("convert -delay 20 *.png 1000r_1050c_rnorm_gam.mpg")
+cd ~/ost4sem/project
+</code>
+\\
+==== CONDENSED WORKFLOW ====
+
+This is just a selection of the code, the complete output can be found above.
+
+==== Preparation of predictor data sets ====
+
+I had to prepare two predictor data sets. One that was based on point data (EnvMat.txt) and another that was based on raster data (EnvMat2.csv).
+
+<code bash>
+########################################################################
+##### COMBINING TEXT FILES OF POINT DATA INTO EnvMat.txt USING BASH ####
+########################################################################
+
+# Make sure the files have a space as field separator
+head -1 Grain.txt
+head -1 VarsNA.txt
+head -1 less63.txt
+
+# Change the fieldseparator of Grainsize.csv
+# the first gsub argument is the old fs and the second the new fs
+### NB! Bash always work with space separated files
+# awk '{ gsub("," , " ") ; print }' Grainsize.csv > GrainSize.csv
+# rm Grainsize.csv 
+
+## sorting the common field of both files
+# Using the sort function alone moves the header information
+# and puts it somewhere else
+# sort -k 1,1 GrainSize.csv > Grainsize_s.csv
+# sort -k 3,3 EnvVar.csv > EnvVar_s.csv
+
+## The following using awk and sort keeps the header untouched
+awk 'NR==1; {if(NR > 1) {print $0 | "sort -k 1,1"}}' Grain.txt > GrainS.txt
+awk 'NR==1; {if(NR > 1) {print $0 | "sort -k 3,3"}}' VarsNA.txt > VarsNAS.txt
+awk 'NR==1; {if(NR > 1) {print $0 | "sort -k 1,1"}}' less63.txt > less63S.txt
+
+## Check if the sort worked correctly
+cat  GrainS.txt
+cat  VarsNAS.txt
+cat  less63S.txt
+
+## Join first VarsNAS and less63S
+join --header -1 3 -2 1 VarsNAS.txt less63S.txt > Temp.txt
+## Then join Temp.txt and GrainS
+join --header -1 1 -2 1 Temp.txt GrainS.txt > EnvMatUS.txt
+
+## Sorting EnvMatUS to get the stations in numerical order
+awk 'NR==1; {if(NR > 1) {print $0 | "sort -nk 1,1"}}' EnvMatUS.txt > EnvMat.txt
+
+###########################################################################
+# PREPARING AND POPULATING THE EnvMat2.csv FILE  WITH PREDICTOR VARIABLES #
+###################### BASH SCRIPTING OF GRASS ############################
+###########################################################################
+### 			scriptname: vwhatrast.sh
+###########################################################################
+###			1. Import Stations to GRASS		     ######
+###			2. v.what.rast in a loop		     ######
+###########################################################################
+
+#!/bin/sh
+
+DIR=/home/thijs/a/ost4sem
+INDIR=/home/thijs/a/ost4sem/input
+OUTDIR=/home/thijs/a/ost4sem/output
+
+## After saving the filename, do:
+#chmod u+x /home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh
+
+## In the terminal, do:
+# export GRASS_BATCH_JOB=/home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh ; grass64 -text /home/thijs/a/grassdata/Stuteberget/thijs
+## To deactivate the batch job mode, run:
+# unset GRASS_BATCH_JOB
+
+cd $INDIR
+
+## Checking available vector files
+# g.list vect
+
+## Extracting and appending two vectors containg station information
+v.out.ascii SamplingStations@thijs fs=, > Stations.csv
+v.out.ascii BigStations_new@PERMANENT fs=, > BigStations.csv
+echo "Reading Stations.csv to the terminal"
+echo "------------------------------------"
+cat Stations.csv
+echo "------------------------------------"
+echo "Reading BigStations.csv to the terminal"
+echo "------------------------------------"-5
+cat BigStations.csv
+echo "------------------------------------"
+# Changing the numbering of the stations in BigStations.csv
+awk -F "," '{ OFS="," ; print $1, $2, $3+100 }' BigStations.csv >> Stations.csv
+echo "Reading both files when appended"
+echo "--------------------------------"
+cat Stations.csv
+echo "END ----------------------------"
+
+## Importing Stations.txt
+v.in.ascii input=$INDIR/Stations.csv output=EnvMatCop fs=, columns="utm_x double, utm_y double, station int" --o
+echo "Printing the attribute table of the enewly created vector"
+echo "---------------------------------------------------------"
+db.select EnvMatCop
+echo "END------------------------------------------------------"
+
+## Populating the EnvMatCop using v.what.rast
+# First, add columns to the attribute table
+v.db.addcol map=EnvMatCop columns="depth double, ac3 int, ac4 int, surmax double, bpi25 double, maxcur25 double"
+echo "Checking if the operation was successful"
+echo "----------------------------------------"
+db.select EnvMatCop
+echo "END-------------------------------------"
+
+# Create vectors or arrays to hold the information over which to loop
+echo "depth ac3 ac4 surmax bpi25 maxcur25" > colnames.txt
+rastnames="bathy_background 3cl_12.5m 4cl_12.5m speed_sur_max_stut BPI_25 maxic_25"
+
+## Looping v.what.rast over all rasters and colnames in a one-to-one way
+col=0
+for raster in `echo $rastnames` ; do
+	col=$((col+1))
+	colnames=`awk -v col=$col '{ print $col }' colnames.txt`
+	echo $raster  $colnames  
+	v.what.rast vect=EnvMatCop rast=$raster col=$colnames
+done
+echo "-------------------------"
+echo "Checking the output again"
+echo "-------------------------"
+v.db.select EnvMatCop
+echo "END ---------------------"
+
+## Write it out as a csv file
+v.out.ascii EnvMatCop fs=, columns=utm_x,utm_y,station,depth,ac3,ac4,surmax,bpi25,maxcur25 > EnvMat2.csv
+echo "-----------------------------------"
+echo "Checking if the file is good"
+echo "-----------------------------------"
+cat EnvMat2.csv
+echo "END--------------------------------"
+</code>
+
+The mollusk richness file was ready from before (or needed only minor modifications)
+
+Merging the mollusk richness and predictor data set 
+
+<code r>
+#######################################################################
+####### MERGING THE SPECIES RICHNESS AND THE EnvMat2.csv FILES ########
+#######################################################################
+EnvMat2.df <- read.csv(file = paste(indir, "EnvMat2.csv", sep = ""), header = F)
+
+## Removing duplicated x,y, and station columns
+EnvMat2.df <- EnvMat2.df[, 4:12]
+
+## Adding the column names of EnvMat2.df
+colnames(EnvMat2.df) <- c("utm_x", "utm_y", "station", "depth", "ac3", "ac4", "surmax", "bpi25", "maxcur25")
+str(EnvMat2.df)
+
+## ac3 and ac4 are actually factors
+EnvMat2.df$fac3 <- as.factor(EnvMat2.df$ac3)
+EnvMat2.df$fac4 <- as.factor(EnvMat2.df$ac4)
+
+## Checking for collinearity among Predictors
+pairs(EnvMat2.df[, c(4, 7:11)], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# maxic25 and bpi25 are highly correlated. Leaving out maxic25 in further analysis
+
+##
+str(EnvMat2.df)
+str(DiversSt)
+
+# Changing the variable name of the richness
+names(DiversSt)[1] <- "rich"
+
+## Merging EnvMat.df and DiverSt
+Richness2.df <- merge(EnvMat2.df, DiversSt)
+</code>
+
+==== Model parametrization ====
+
+Fitting GLM and GAM models in R using mollusk richness as the response variable
+
+<code r>
+########################################################
+####### FITTING A GLM TO RASTER DATA PREDICTORS ########
+########################################################
+fitn <- glm(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitn)
+str(fitn)
+plot(fitn)
+
+########################################################
+####### FITTING A GAM TO RASTER DATA PREDICTORS ########
+########################################################
+require(mgcv)
+fitgam <- gam(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitgam)
+str(fitgam)
+plot(fitgam)
+</code>
+
+==== Model prediction ====
+
+Prepare new data to predict to in R, and predict to new data/unvisited areas using both the GLM and the GAM models.
+
+<code r>
+########################################################################
+######### PREPARING AND PREDICTING TO NEW DATA/UNSAMPLED AREAS #########
+############ BASED ON GLM MODEL AND RASTER PREDICTOR DATA ##############
+########################################################################
+
+## Creating a new mapset to hold rasters within the QTC_grids region with res=1
+## Working from within R
+system("g.mapset -c mapset=stut1m")
+system("g.region region=QTC_grids res=1 -p")
+
+## Resample the raster maps to a finer grid using interpolation
+## Is not giving the wanted result...
+#system("r.resamp.interp input=depth_12.5 output=depth_1")
+#system("r.resamp.interp input=surmax_12.5 output=surmax_1")
+#system("r.resamp.interp input=bpi25_12.5 output=bpi_1")
+#system("r.resamp.interp input=ac3_12.5 output=ac3_1")
+#system("r.resamp.interp input=ac4_12.5 output=ac4_1")
+
+## using r.mapcalc to make map subsets
+system("r.mapcalc 'ac3_1=ac3_12.5'")
+system("r.mapcalc 'ac4_1=ac4_12.5'")
+system("r.mapcalc 'depth_1=depth_12.5'")
+system("r.mapcalc 'surmax_1=surmax_12.5'")
+system("r.mapcalc 'bpi25_1=bpi25_12.5'")
+
+### Predicting to the new map subset raster files
+## Loading Predictor rasters from GRASS to R
+Rasters <- c("depth_1", "ac3_1", "ac4_1", "surmax_1", "bpi25_1")
+# p <- length(Rasters)
+Spdf.names <- c("depth", "ac3", "ac4", "surmax", "bpi25")
+Temp.mat <- matrix(data = NA, nrow = 1050000, ncol = 5, byrow = T)
+
+# for loop
+for (i in 1:5) {
+	name <- Spdf.names[i]
+	rast <- Rasters[i]
+	print(name); print(rast)
+	name <<- readRAST6(rast) 	# double arrow assigns the object to the global env
+	Temp.mat[, i] <- (name@data[, 1])
+}
+
+## Checking the Temp Matrix 
+head(Temp.mat)
+
+## Coerce into a data frame
+Preddata <- as.data.frame(Temp.mat)
+colnames(Preddata) <- c("depth", "ac3", "ac4", "surmax", "bpi25")
+
+## ac3 and ac4 are factors
+Preddata$fac3 <- as.factor(Preddata$ac3)
+Preddata$fac4 <- as.factor(Preddata$ac4)
+str(Preddata)
+head(Preddata)
+
+########################################################
+####### PREDICTING TO NEW DATA/UNSAMPLED AREAS #########
+########### USING GAM AND RASTER PREDICTORS ############
+########################################################
+prediction.gam <- predict(fitgam, newdata = Preddata, type = "response")
+str(prediction.gam)
+
+## Adding the predicted data to an existing raster
+name$newgam <- prediction.gam
+
+## Writing raster back to GRASS
+writeRAST6(name, "predgam_1", zcol="newgam", overwrite = T)
+
+########################################################
+############## RANDOMIZED "FIELD TRIPS" ################
+######### MODIFIED FROM JENS ÅSTRØM'S SCRIPT ###########
+########################################################
+### making 15 "trips" to the field and write it back to GRASS
+## Now the res=1, so nrows=1000 and ncols=1050
+## Only making 15 "trips"
+setwd("/home/user/ost4sem/project/output")
+
+for(i in 1:15){
+name$rnormgam<-rnorm(nrow(name),name$newgam,sd=sd(resid(fitgam)))
+
+writeRAST6(name ,paste("rnormgam",i,sep="") ,zcol="rnormgam" ,overwrite=T)
+}
+
+## Making a png pic of every new prediction
+system("for i in `seq 1 15`
+ do
+  r.out.png input=rnormgam$i output=rnormgam$i
+   g.remove rast=rnormgam$i
+    done")
+
+## Convert all png pics into an animation using ImageMagick
+system("convert -delay 20 *.png 1000r_1050c_rnorm_gam.mpg")
+cd ~/ost4sem/project
+
+</code>
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+  * GLM and GAM model prediction
+
+{{:wikidk:glm_prediction_1m.png?250x250|GLM_prediction_1m}}
+{{:wikidk:gam_prediction_1m.png?250x250|GAM_prediction_1m}}
+
+  * Randomized GLM output
+
+{{:wikidk:rnorm_glm23.png?250x250|rnorm_glm23}} 
+{{:wikidk:rnorm_glm24.png?250x250|rnorm_glm24}}
+
+  - Randomized GAM output
+
+{{:wikidk:rnorm_gam14.png?250x250|rnorm_gam14}}
+{{:wikidk:rnorm_gam15.png?250x250|rnorm_gam15}}
+
+Insert a map and related table or graphics if available\\
+Discuss the biological or geographical significance of results
+\\

@@ -1,0 +1,13 @@
+
+==== Bioclimatic Predictor Variables ====
+Bioclimatic variables available to model the Italian Natural Forest formation suitability. (T = mean monthly temperature; T=temperature;
+P=precipitation; Mn= mean; Max= maximum; Min = minimum; Ac = accomulated; mnt = month).
+\\
+{{:wiki:env_predictors.png|}}
+\\
+
+==== Soil derived Predictor Variables ====
+1km resolution Raster layers of Soil Factors from the European Soil Database used as predictor variables in the Italian Natural Forest suitability model. (see http://eusoils.jrc.ec.europa.eu)
+\\
+{{:wiki:soil_rasters.png|}}
+\\

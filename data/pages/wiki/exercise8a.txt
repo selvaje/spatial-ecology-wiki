@@ -1,0 +1,48 @@
+====== Exercise 8a: Image classification: create training sample and masks ======
+pktools: pkinfo, pkmosaic, pksetmask, pkextract
+
+__Create mosaic from FMAP2006 for same coverage:__
+<code bash>
+pkmosaic $(pkinfo -cover $(for file in ${FMAPDIR}/CM-FMAP_2006_*-AA.tif;do echo " -i $file";done) $(pkinfo -bb -i ${LANDSATDIR}/${LANDSATIMG})) $(pkinfo -bb -i ${LANDSATDIR}/${LANDSATIMG} -dx -dy) -o ${OUTPUTDIR}/exercise8/fmap2006.tif
+</code>
+
+__Merge all masks into single mask (start with cloud mask and add other masks). Recode mask values as follows:__
+
+<note tip>
+notice that cloudmask is not only input but also mask!
+</note>
+
+<code bash>
+pksetmask -i ${OUTPUTDIR}/exercise6/cloudmask_dil.tif -m ${OUTPUTDIR}/exercise6/cloudmask_dil.tif -msknodata 1 -nodata 255 -m ${OUTPUTDIR}/exercise8/fmap2006.tif -msknodata 251 -nodata 251 -m ${OUTPUTDIR}/exercise6/shadowmask.tif -msknodata 1 -nodata 254 -o ${OUTPUTDIR}/exercise8/mask.tif -ct ${FMAPDIR}/ct_ftyp.txt
+</code>
+
+<note>
+sea: 251\\
+shadow: 254\\
+cloud: 255\\
+</note>
+
+__Create a self-sufficient training sample for classifier: output vector contains both label and spectral information (can take a wile, approx 20 min)__
+
+<code bash>
+pkextract -i ${LANDSATDIR}/${LANDSATIMG} -s ${OUTPUTDIR}/exercise7/osm_merged.sqlite -o ${OUTPUTDIR}/exercise8/training.sqlite -r mean -f SQLite -m ${OUTPUTDIR}/exercise8/mask.tif -msknodata 251 -msknodata 254 -msknodata 255
+</code>
+
+__Classify Landsat image using training sample and masks: sea (251), shadow (254), clouds (255)__
+
+<note tip>
+pkclassify supports two modes for training samples:
+\\
+1. automatic mode: vector file has an Integer attribute representing the classes in a one-to-one relation  (e.g., '1'= class 1, '2'= class 2)\\
+2. manual mode: vector file has a String attribute representing the classes in a many-to-one relation (e.g., 'forest'= class 1, 'grass'= class 2, 'residential'= class 2)
+</note>
+
+__Classification in manual mode:__
+
+<code bash>
+pkclassify_svm -i ${LANDSATDIR}/${LANDSATIMG} -t ${OUTPUTDIR}/exercise8/training.sqlite -m ${OUTPUTDIR}/exercise8/mask.tif -msknodata 251 -msknodata 254 -msknodata 255 -o ${OUTPUTDIR}/exercise8/19990724_L7E_IM_FMAP.tif -label landuse -c commercial -r 2 -c forest -r 1 -c grass -r 2 -c industrial -r 2 -c meadow -r 2 -c residential -r 2 -ct ${OUTPUTDIR}/exercise8/ct_ftyp.txt
+</code>
+
+<note tip>
+-msknodata values will be retained in classification output as "normal values". You can set a real nodata value using option -nodata (default value = 0).
+</note>

@@ -1,0 +1,1 @@
+pksieve <span class="re5">-i</span> input.tif <span class="re5">-c</span> <span class="nu0">8</span> <span class="re5">-s</span> <span class="nu0">5</span> <span class="re5">-o</span> ouput.shp <span class="co0"># merge all patches smaller than 5 pixels into bigger classes, using 8 connectivity (horizontal, vertical and diagonal)</span>

@@ -1,0 +1,94 @@
+====== Exercise 5a: Find thresholds for cloud mask ======
+
+In this exercise, the following tools will be used:
+  * pktools:  pkascii2ogr, pkextract, pkstatogr, pkdumpogr
+  * bash: cat, redirection
+
+__Create a directory for this exercise__
+
+<code bash>
+mkdir -p ${OUTPUTDIR}/exercise5
+</code>
+
+<note tip>
+Landsat bands:
+  * band 1: blue (0.45 - 0.515 \mu m)
+  * band 2: green (0.525 - 0.605 \mu m)
+  * band 3: red (0.63 - 0.69 \mu m)
+  * band 4: nir (0.75 - 0.90 \mu m)
+  * band 5: swir 1 (1.55 - 1.75 \mu m)
+  * band 6 (6a): tir 1 (10.40 - 12.5 \mu m)
+  * band 7 (6b): tir 2
+  * band 8 (7): swir 2 (2.09 - 2.35 \mu m)
+  * band9: pan-chromatic
+</note>
+
+__Find the geographic coordinates for cloud pixels__
+
+<code bash>
+cat > ${OUTPUTDIR}/exercise5/clouds.txt <<EOF
+cloud 3222350 3123150
+cloud 3123150 3123635
+cloud 3221195 3123750
+cloud 3219120 3122590
+EOF
+</code>
+
+__Find the geographic coordinates for non cloud pixels__
+
+<code bash>
+cat > ${OUTPUTDIR}/exercise5/clouds.txt <<EOF
+nocloud 3269100 3135160
+nocloud 3269150 3134935
+nocloud 3272665 3135925
+nocloud 3272460 3135730
+nocloud 3273560 3136620
+EOF
+</code>
+
+__Create vector file for clouds__
+
+<code bash>
+pkascii2ogr -i ${OUTPUTDIR}/exercise5/clouds.txt -x 1 -y 2 -n label --ot String -a_srs epsg:3035 -o ${OUTPUTDIR}/exercise5/clouds.shp
+</code>
+
+__Create vector file for cloud free pixels__
+
+<code bash>
+pkascii2ogr -i ${OUTPUTDIR}/exercise5/noclouds.txt -x 1 -y 2 -n label --ot String -a_srs epsg:3035 -o ${OUTPUTDIR}/exercise5/noclouds.shp
+</code>
+
+__Extract LANDSAT cloud pixels__
+
+<code bash>
+pkextract -i ${LANDSATDIR}/${LANDSATIMG} -s ${OUTPUTDIR}/exercise5/clouds.shp -o ${OUTPUTDIR}/exercise5/clouds_landsat.shp 
+</code>
+
+__Extract LANDSAT cloud free pixels__
+
+<code bash>
+pkextract -i ${LANDSATDIR}/${LANDSATIMG} -s ${OUTPUTDIR}/exercise5/noclouds.shp -o ${OUTPUTDIR}/exercise5/noclouds_landsat.shp 
+</code>
+
+__Calculate mean and stdev cloud pixels__
+
+<code bash>
+pkstatogr -i ${OUTPUTDIR}/exercise5/clouds_landsat.shp -n B0 -n B1 -n B2 -n B3 -n B4 -n B5 -n B6 -n B7 -mean -stdev| awk '{print $4,$6}' > ${OUTPUTDIR}/exercise5/clouds_landsat_mean_stdev.txt
+</code>
+
+__Calculate mean and stdev nocloud pixels__
+
+<code bash>
+pkstatogr -i ${OUTPUTDIR}/exercise5/noclouds_landsat.shp -n B0 -n B1 -n B2 -n B3 -n B4 -n B5 -n B6 -n B7 -mean -stdev| awk '{print $4,$6}' > ${OUTPUTDIR}/exercise5/noclouds_landsat_mean_stdev.txt
+</code>
+
+__Dump ogr to ascii text file__
+
+<code bash>
+pkdumpogr -i ${OUTPUTDIR}/exercise5/clouds_landsat.shp -n label -n B0 -n B1 -n B2 -n B3 -n B4 -n B5 -n B6 -n B7 > ${OUTPUTDIR}/exercise5/clouds_landsat.txt
+pkdumpogr -i ${OUTPUTDIR}/exercise5/noclouds_landsat.shp -n label -n B0 -n B1 -n B2 -n B3 -n B4 -n B5 -n B6 -n B7 > ${OUTPUTDIR}/exercise5/noclouds_landsat.txt
+</code>
+
+Plot the profiles in gnuplot (click [[gnuplot5a | here]] for the code)
+
+__Find appropriate thresholds for bands 1,4 and 7 to create a cloud mask__

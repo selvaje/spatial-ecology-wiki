@@ -1,0 +1,22 @@
+# remember: to make this section run you have to start rstudio from with GRASS GIS
+# all GRASS comands are then used with
+#system(&quot;command&quot;)
+# check if GRASS GIS is running:
+system (&quot;g.version&quot;, intern = TRUE)
+&nbsp;
+system(
+  &quot;#see the region information
+   g.region -p
+   g.list rast
+&nbsp;
+  #import raster 
+  r.in.gdal input=pathtofile output=path to file
+&nbsp;
+  # region to fit raster
+  g.region rast=final_class
+  &quot;)
+&nbsp;
+# get areas for different classes and write to a data.frame
+lcc_areas &lt;- read.table(
+  text = system(&quot;r.stats -a -c -p final_class&quot;, intern=TRUE),  # -a = area,-c = count, -p = percentage
+  col.names = c(&quot;class&quot;,&quot;area&quot;,&quot;pixel_count&quot;,&quot;percent_area&quot;))

@@ -1,0 +1,7 @@
+<span class="kw2">cat</span> <span class="sy0">&gt;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise5<span class="sy0">/</span>clouds.txt <span class="co2">&lt;&lt;EOF
+nocloud 3269100 3135160
+nocloud 3269150 3134935
+nocloud 3272665 3135925
+nocloud 3272460 3135730
+nocloud 3273560 3136620
+EOF</span>

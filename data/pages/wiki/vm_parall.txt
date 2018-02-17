@@ -1,0 +1,5 @@
+As default the VM is using one processor. You can increase the number of processor in the settings di Virtual box.
+So shutdown the VM go to settings and click like in the figure. 
+
+{{:wiki:setenableio.png?400|}}\\
+{{:wiki:processor.png?400|}}

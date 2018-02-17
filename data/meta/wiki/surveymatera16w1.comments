@@ -1,0 +1,146 @@
+a:5:{s:5:"title";s:20:" Please answer here ";s:6:"status";i:1;s:6:"number";i:12;s:8:"comments";a:12:{s:32:"49a9684a35e3810d6d113ff94181a77c";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test78.40.168.165";s:4:"name";s:14:"Paolo Prosperi";s:4:"mail";s:22:"paolo.prosperi@fao.org";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465566781;}s:3:"raw";s:246:"I would probably do a longer training course for the amount of software and information presented.
+IMHO, the hydrology session (the university research presented) was too long.
+Foresee a backup solution if local internet connection does not work.";s:5:"xhtml";s:299:"
+<p>
+I would probably do a longer training course for the amount of software and information presented.
+<abbr title="In my humble opinion">IMHO</abbr>, the hydrology session (the university research presented) was too long.
+Foresee a backup solution if local internet connection does not work.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"49a9684a35e3810d6d113ff94181a77c";}s:32:"c8725af635a5a66484fdf1e45bee2b70";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test78.40.168.165";s:4:"name";s:17:"Silvia Franceschi";s:4:"mail";s:27:"silvia.franceschi@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465566892;}s:3:"raw";s:513:"This training met only partially my expectations, I thought to make spend some more time on R instead we did really only very few.
+Regarding the rest, in my honest opinion, the GRASS part is too long and not really specific for a beginner (I already use GRASS).
+PK-Tools we didn't see at all, a presentation is not enough to start to get confidence with the software. I would have preferred to see less tools but with more time for individual work on them.
+
+Very good the python session, only just a little short!";s:5:"xhtml";s:538:"
+<p>
+This training met only partially my expectations, I thought to make spend some more time on R instead we did really only very few.
+Regarding the rest, in my honest opinion, the GRASS part is too long and not really specific for a beginner (I already use GRASS).
+PK-Tools we didn&#039;t see at all, a presentation is not enough to start to get confidence with the software. I would have preferred to see less tools but with more time for individual work on them.
+</p>
+
+<p>
+Very good the python session, only just a little short!
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"c8725af635a5a66484fdf1e45bee2b70";}s:32:"f1c644cb1099574b836c9fe8ae2d0c65";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"carolina.collaro";s:4:"name";s:16:"Carolina Collaro";s:4:"mail";s:26:"carolina.collaro@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465567007;}s:3:"raw";s:424:"I have received a lot of useful information and I hope to be able to follow them alone!
+I suggest to include a pre-day introductory course in order to have more time for exercises. What is missing in the course is in fact a greater practical application of examples, cases study etc..The few case study showed were too rapid to give space to the lessons. Better a day longer but have more time to apply what we have learned.";s:5:"xhtml";s:435:"
+<p>
+I have received a lot of useful information and I hope to be able to follow them alone!
+I suggest to include a pre-day introductory course in order to have more time for exercises. What is missing in the course is in fact a greater practical application of examples, cases study etc..The few case study showed were too rapid to give space to the lessons. Better a day longer but have more time to apply what we have learned.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"f1c644cb1099574b836c9fe8ae2d0c65";}s:32:"f06821f9ae18005ae737090a6e5a2c9e";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.210";s:4:"name";s:9:"Uli Weber";s:4:"mail";s:22:"uweber@bgc-jena.mpg.de";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465567014;}s:3:"raw";s:260:"I have very much enjoyed the course.
+your broad overview, touching interesting details, assures the first own steps successful, and easy to choose the tools upon individual interest.
+I also believe, your on aim to promote open source tools works out very well.";s:5:"xhtml";s:271:"
+<p>
+I have very much enjoyed the course.
+your broad overview, touching interesting details, assures the first own steps successful, and easy to choose the tools upon individual interest.
+I also believe, your on aim to promote open source tools works out very well.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"f06821f9ae18005ae737090a6e5a2c9e";}s:32:"cb658590bb1d31190e9e92f843c62275";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.195";s:4:"name";s:12:"Nick Triozzi";s:4:"mail";s:17:"ntriozzi@amnh.org";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465567170;}s:3:"raw";s:852:"Mostly.. I did not expect to become an expert in 1 week, but having a new tool set (LVM) at my disposal is something to look forward to. 
+
+1. Internet is essential. I realize it was out of your control, but not having access prevents students from looking up questions they have or bookmarking useful websites, etc.
+
+2. It would be better not to feature skype-in lecturers. It was a treat to hear from Pieter Krempneers, but at that point I did not understand enough about PKTools to effectively follow the discussion.
+
+3. Very happy to have lunch each day, and it was nice that Alba could organize a tour for students.
+
+4. Lovergine, Amatulli, and Casalegno are very good teachers. I'm looking forward to the 2nd week because I still have questions about something more directly related to the kind of data I work with.
+
+5. Would recommend to others.
+";s:5:"xhtml";s:1098:"
+<p>
+Mostly.. I did not expect to become an expert in 1 week, but having a new tool set (LVM) at my disposal is something to look forward to. 
+</p>
+<ol>
+<li class="level1"><div class="li">Internet is essential. I realize it was out of your control, but not having access prevents students from looking up questions they have or bookmarking useful websites, etc.
+</div>
+</li>
+<li class="level0"><div class="li">It would be better not to feature skype-in lecturers. It was a treat to hear from Pieter Krempneers, but at that point I did not understand enough about PKTools to effectively follow the discussion.
+</div>
+</li>
+<li class="level0"><div class="li">Very happy to have lunch each day, and it was nice that Alba could organize a tour for students.
+</div>
+</li>
+<li class="level0"><div class="li">Lovergine, Amatulli, and Casalegno are very good teachers. I&#039;m looking forward to the 2nd week because I still have questions about something more directly related to the kind of data I work with.
+</div>
+</li>
+<li class="level0"><div class="li">Would recommend to others.
+</div>
+</li>
+</ol>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"cb658590bb1d31190e9e92f843c62275";}s:32:"f194a02571f688c29211c6494f226197";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.212";s:4:"name";s:5:"Ehsan";s:4:"mail";s:14:"ek221@le.ac.uk";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465567191;}s:3:"raw";s:248:"I would like for the future training just to focus on  just one software ( for example Python) so enough time will be spent on learning/exercises and so on.. However, it is really good to have a general knowledge about all the open source tools.
+  ";s:5:"xhtml";s:256:"
+<p>
+I would like for the future training just to focus on  just one software ( for example Python) so enough time will be spent on learning/exercises and so on.. However, it is really good to have a general knowledge about all the open source tools.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"f194a02571f688c29211c6494f226197";}s:32:"0d5e00572d2f26f26b304b4c1ed8998d";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test78.40.168.165";s:4:"name";s:9:"Muyang Lu";s:4:"mail";s:20:"lvmuyang@foxmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465567251;}s:3:"raw";s:389:"Overall, the command line sections are easier to follow than the graphical interface parts. Maybe it is a good idea to print out the syllabus for everyday's courses, just to give an overview about the data we are going to deal with (like we can start with introducing the concepts of objects, classes in Python rather than jump start to the exercises; rasters and vector maps in GIS etc.).";s:5:"xhtml";s:405:"
+<p>
+Overall, the command line sections are easier to follow than the graphical interface parts. Maybe it is a good idea to print out the syllabus for everyday&#039;s courses, just to give an overview about the data we are going to deal with (like we can start with introducing the concepts of objects, classes in Python rather than jump start to the exercises; rasters and vector maps in GIS etc.).
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"0d5e00572d2f26f26b304b4c1ed8998d";}s:32:"a51a6dffe452f888a42fefc803a5314e";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.208";s:4:"name";s:12:"Yanlong Wang";s:4:"mail";s:18:"my991203@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465567279;}s:3:"raw";s:222:"Teachers taught us with content accommodated on webpage. The font size is too small, so I can't see them clearly. We can't see these webpage with our computer, because we can't connect the internet. It is not a good thing.";s:5:"xhtml";s:248:"
+<p>
+Teachers taught us with content accommodated on webpage. The font size is too small, so I can&#039;t see them clearly. We can&#039;t see these webpage with our computer, because we can&#039;t connect the internet. It is not a good thing.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"a51a6dffe452f888a42fefc803a5314e";}s:32:"0c670a182be1246fde90f68182b4f0d8";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.211";s:4:"name";s:24:"Ana Maria Prieto Ramirez";s:4:"mail";s:31:"ana-maria.prieto-ramirez@ufz.de";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465567281;}s:3:"raw";s:515:"For some topics, like analysis of spatial data with R, the answer to question 7 is 'basic'. Either the group should be splitted inot three, or go directly to analysis in the second group. It was a pitty to skip this part.
+
+I think that the trainers are highly qualified in terms of the knowledge and expertise that they have. However i think they lack some pedagogical capacities to explain complicated themes. Having those capacities the course could be more interactive and appropriation of knowledge much faster.";s:5:"xhtml";s:545:"
+<p>
+For some topics, like analysis of spatial data with R, the answer to question 7 is &#039;basic&#039;. Either the group should be splitted inot three, or go directly to analysis in the second group. It was a pitty to skip this part.
+</p>
+
+<p>
+I think that the trainers are highly qualified in terms of the knowledge and expertise that they have. However i think they lack some pedagogical capacities to explain complicated themes. Having those capacities the course could be more interactive and appropriation of knowledge much faster.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"0c670a182be1246fde90f68182b4f0d8";}s:32:"084de5df80f495bc31baed50d74cb5f9";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.195";s:4:"name";s:16:"Roxanne Leberger";s:4:"mail";s:26:"roxanne.leberger@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465571699;}s:3:"raw";s:476:"Very nice week, I would suggest these improvements:
+
+-- Skip the PKtool (better to focus more on the other tools)
+
+-- Change the order of the learning cessions: start by bash and awk as you did, and then Python and R. Put GRASS and QGIS at the end, allowing us to use maybe python commands to deal with QGIS, and have more time to digest Python and ask questions (GRASS is mainly about knowing its functions).
+
+-- A short lecture to introduce the tools
+
+Thanks a lot anyway :)";s:5:"xhtml";s:526:"
+<p>
+Very nice week, I would suggest these improvements:
+</p>
+
+<p>
+– Skip the PKtool (better to focus more on the other tools)
+</p>
+
+<p>
+– Change the order of the learning cessions: start by bash and awk as you did, and then Python and R. Put GRASS and QGIS at the end, allowing us to use maybe python commands to deal with QGIS, and have more time to digest Python and ask questions (GRASS is mainly about knowing its functions).
+</p>
+
+<p>
+– A short lecture to introduce the tools
+</p>
+
+<p>
+Thanks a lot anyway :)
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"084de5df80f495bc31baed50d74cb5f9";}s:32:"fa667e9f580abd976e9d7a7d74366d74";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test88.45.185.18";s:4:"name";s:15:"Iacopo Ferrario";s:4:"mail";s:19:"iacopo.ff@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465670935;}s:3:"raw";s:608:"The course met my expectation. It provides an overview of the different tools and softwares that I could not have covered alone and now I believe I am able for self-teaching myself some of them. It has been a challenge to go through all these languages and techniques nevertheless I have appreciated your way of teaching. 
+I would suggest to find the time for some exercises and applications of the tools. I think you should first introduce Python and then QGIS and GRASS. If internet is down is almost impossible to follow. 
+I have really enjoyed the lunch all together and the social dinner!
+Thanks a lot
+ ";s:5:"xhtml";s:617:"
+<p>
+The course met my expectation. It provides an overview of the different tools and softwares that I could not have covered alone and now I believe I am able for self-teaching myself some of them. It has been a challenge to go through all these languages and techniques nevertheless I have appreciated your way of teaching. 
+I would suggest to find the time for some exercises and applications of the tools. I think you should first introduce Python and then QGIS and GRASS. If internet is down is almost impossible to follow. 
+I have really enjoyed the lunch all together and the social dinner!
+Thanks a lot
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"fa667e9f580abd976e9d7a7d74366d74";}s:32:"6a3440fe50a28c63ba15ef1540de2fff";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test139.191.247.0";s:4:"name";s:11:"Olga Vigiak";s:4:"mail";s:21:"olga.vigiak@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1465803240;}s:3:"raw";s:1555:"Thanks a lot, this course jump started me on many open-source tools to be used for complex data analysis. I will need to work on them on my own to build up on the experience, but now I know what to look for and how to go about it, so the course was very effective. 
+The course gave a great overview of (most) tools, but at the cost of missing some more in-depth work, so it generated some confusion, and I missed more discussion on 'what is the right tool for what' (got that for the first part, but missed a bit for the last two/three days).
+just a suggestion: it could be maybe helpful to build on a single case study from 'scratch', developing it step by step with different tools (e.g. starting on preparatory datasets, then visualization, then modelling + statistical analysis). by doing this, strengths and weaknesses of each tool could be highlighted, and we would spend less time downloading (sigh!) different data for each exercise. 
+I also missed the 'temporal' analysis dimension - but really, there was already a lot in these five days. 
+knowing already something of R I was hoping to get more of GRASS, but clearly this depends on participant previous experience (in fact other participants wanted it the other way around). maybe allowing for an afternoon of in depth work on one tool of choice (e.g. one between R, GRASS, or python) could help meeting all expectations (but difficult to organize).
+In any case, I got a lot out of it, and availability of tutorials on internet helps following things we may have missed in class. well done.   ";s:5:"xhtml";s:1599:"
+<p>
+Thanks a lot, this course jump started me on many open-source tools to be used for complex data analysis. I will need to work on them on my own to build up on the experience, but now I know what to look for and how to go about it, so the course was very effective. 
+The course gave a great overview of (most) tools, but at the cost of missing some more in-depth work, so it generated some confusion, and I missed more discussion on &#039;what is the right tool for what&#039; (got that for the first part, but missed a bit for the last two/three days).
+just a suggestion: it could be maybe helpful to build on a single case study from &#039;scratch&#039;, developing it step by step with different tools (e.g. starting on preparatory datasets, then visualization, then modelling + statistical analysis). by doing this, strengths and weaknesses of each tool could be highlighted, and we would spend less time downloading (sigh!) different data for each exercise. 
+I also missed the &#039;temporal&#039; analysis dimension - but really, there was already a lot in these five days. 
+knowing already something of R I was hoping to get more of GRASS, but clearly this depends on participant previous experience (in fact other participants wanted it the other way around). maybe allowing for an afternoon of in depth work on one tool of choice (e.g. one between R, GRASS, or python) could help meeting all expectations (but difficult to organize).
+In any case, I got a lot out of it, and availability of tutorials on internet helps following things we may have missed in class. well done.<br/>
+
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"6a3440fe50a28c63ba15ef1540de2fff";}}s:11:"subscribers";a:1:{s:17:"ntriozzi@amnh.org";a:3:{s:4:"hash";s:32:"5d41c5babb8ea0d60f61121c572e6945";s:6:"active";b:0;s:11:"confirmsent";b:1;}}}

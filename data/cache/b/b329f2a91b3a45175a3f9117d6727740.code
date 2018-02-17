@@ -1,0 +1,2 @@
+pkmosaic -i /home/user/My_project/Raster/bio12_06_masked_Sweden.tif -i /home/user/My_project/Raster/bio12_16_masked_Sweden.tif -o /home/user/My_project/Raster/bio12_masked_Sweden_merged.tif
+pkmosaic -i /home/user/My_project/Raster/bio12_06_masked_Norway.tif -i /home/user/My_project/Raster/bio12_07_masked_Norway.tif -i /home/user/My_project/Raster/bio12_16_masked_Norway.tif -o /home/user/My_project/Raster/bio12_masked_Norway_merged.tif

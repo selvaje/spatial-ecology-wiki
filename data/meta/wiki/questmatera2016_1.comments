@@ -1,0 +1,65 @@
+a:5:{s:5:"title";s:32:" Questionnaire Discussion Forum ";s:6:"status";i:1;s:6:"number";i:6;s:8:"comments";a:6:{s:32:"7edf48f152af3a2939da1892f104bb0b";a:8:{s:4:"user";a:5:{s:2:"id";s:19:"test173.164.137.114";s:4:"name";s:16:"Carolina Collaro";s:4:"mail";s:26:"carolina.collaro@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1459531904;}s:3:"raw";s:727:"Hi,
+firstly I am happy to learn from professors of my mother tongue, even if the course will be in English, of course. I foresee to better understand with questions and sharing ideas also after the hours of the course. At the University of Bayreuth, where actually I am following a Master in Global Change Ecology, it is imperative to use R and remote sensing image processing. So, for my thesis, I would like to improve my quantity and quality of learning in this field. I hope to make a thesis with a lot of data sharing and so I really need to understand R and QGIS to analyse Landsat and Modis images, as an example. In the future, I wish to follow research in this so beautiful field.
+Yours sincerely,
+Carolina Collaro    ";s:5:"xhtml";s:740:"
+<p>
+Hi,
+firstly I am happy to learn from professors of my mother tongue, even if the course will be in English, of course. I foresee to better understand with questions and sharing ideas also after the hours of the course. At the University of Bayreuth, where actually I am following a Master in Global Change Ecology, it is imperative to use R and remote sensing image processing. So, for my thesis, I would like to improve my quantity and quality of learning in this field. I hope to make a thesis with a lot of data sharing and so I really need to understand R and QGIS to analyse Landsat and Modis images, as an example. In the future, I wish to follow research in this so beautiful field.
+Yours sincerely,
+Carolina Collaro<br/>
+
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"7edf48f152af3a2939da1892f104bb0b";}s:32:"b58570cbfbe59e0197a192df6edd5804";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test217.199.1.157";s:4:"name";s:17:"Silvia Franceschi";s:4:"mail";s:27:"silvia.franceschi@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1459927657;}s:3:"raw";s:180:"The program of the course is very interesting and I would be happy to improve my knowledge in programming and scripting.
+I am very interested in Python and R.
+
+Best regards
+
+Silvia";s:5:"xhtml";s:209:"
+<p>
+The program of the course is very interesting and I would be happy to improve my knowledge in programming and scripting.
+I am very interested in Python and R.
+</p>
+
+<p>
+Best regards
+</p>
+
+<p>
+Silvia
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"b58570cbfbe59e0197a192df6edd5804";}s:32:"fa0511a1effc7af0783c74e9dee5bd31";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test88.209.32.73";s:4:"name";s:15:"Bravedo Mwaanga";s:4:"mail";s:24:"mwaangabravedo@yahoo.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1459978016;}s:3:"raw";s:693:"Hi, I will be very happy to join the interesting and challenging world of spatial data analysis. I am studying an MSc Global Change ecology at University of Bayreuth, during this time I have acquired valuable insights on ecological and environmental issues covering both biophysical and social aspects. The issues patterning to how biophysical and social aspects interact and the feedback loops between them are thereof significant interest to me. The analysis of such interactions and understanding feedback loops lie within the methods which this summer school addresses. I am very interested in R, ArcGIS, ENVI and other open source software and approaches for analysis of ecological data. ";s:5:"xhtml";s:704:"
+<p>
+Hi, I will be very happy to join the interesting and challenging world of spatial data analysis. I am studying an MSc Global Change ecology at University of Bayreuth, during this time I have acquired valuable insights on ecological and environmental issues covering both biophysical and social aspects. The issues patterning to how biophysical and social aspects interact and the feedback loops between them are thereof significant interest to me. The analysis of such interactions and understanding feedback loops lie within the methods which this summer school addresses. I am very interested in R, ArcGIS, ENVI and other open source software and approaches for analysis of ecological data. 
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"fa0511a1effc7af0783c74e9dee5bd31";}s:32:"0d0320872b314433ee51b7b3214b0fb2";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test130.79.75.137";s:4:"name";s:12:"Yanlong Wang";s:4:"mail";s:18:"my991203@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1461186432;}s:3:"raw";s:201:"I am interested in spatial data analysis, although I am not familiar with the area. I hope I can do relative research based on the knowledge learning from the summer school.
+
+Best regards
+
+Yanlong Wang";s:5:"xhtml";s:230:"
+<p>
+I am interested in spatial data analysis, although I am not familiar with the area. I hope I can do relative research based on the knowledge learning from the summer school.
+</p>
+
+<p>
+Best regards
+</p>
+
+<p>
+Yanlong Wang
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"0d0320872b314433ee51b7b3214b0fb2";}s:32:"b2e1b6bee530f18786d6cb2639866893";a:8:{s:4:"user";a:5:{s:2:"id";s:31:"test45.32.36.219,113.108.133.50";s:4:"name";s:9:"Muyang Lu";s:4:"mail";s:20:"lvmuyang@foxmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1461305285;}s:3:"raw";s:440:"I am going to join the Jetz Lab for my PhD study this summer, and eager to getting started in processing geo-reference data and conducting spatial analysis. My master's projects involves some rudiments of spatial analysis in which I only dealt with a handful of polygon data with R. I look forward to using this training opportunity as a starting point for my future research, wherein I can address more conservation/biodiversity questions.";s:5:"xhtml";s:456:"
+<p>
+I am going to join the Jetz Lab for my PhD study this summer, and eager to getting started in processing geo-reference data and conducting spatial analysis. My master&#039;s projects involves some rudiments of spatial analysis in which I only dealt with a handful of polygon data with R. I look forward to using this training opportunity as a starting point for my future research, wherein I can address more conservation/biodiversity questions.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"b2e1b6bee530f18786d6cb2639866893";}s:32:"dd986fd255d2996ded8fa2286d2e46fc";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test216.73.251.115";s:4:"name";s:16:"Nicholas Triozzi";s:4:"mail";s:17:"ntriozzi@amnh.org";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1462461932;}s:3:"raw";s:1417:"
+I'm a geography graduate student at Hunter College, CUNY in New York City specializing in GIS. I am currently employed by the American Museum of Natural History where I manage all things geospatial for the North American Archaeology Lab. My GIS software of choice is ArcGIS but I have some experience with QGIS. I have built web mapping applications and frequently publish WMS and WFS to an organizational account with ArcGIS Online so that our team can work better with collaborators. During fieldwork I routinely use a total station, handheld GPS/GNSS devices, and I have experience operating Phantom Vision 3 Drone. I have used imagery collected by drone to render DEMs and enhance maps of archaeology excavations. I also generate 3D models with photogrammetry and CT scanning. 
+
+I hope to learn about different tools available for GIS processes and access and manipulate data using scripts. I find limitations in ArcGIS and I'd like to explore how writing custom code can enhance analysis potential. At work I have access to an astronomical amount of data just waiting to be interpreted geospatially.  Immediately following the second week course I am off to Sicily to work with an archaeology team to map out an excavation area and render 3D representations of it. I have convinced them to rent a drone for this purpose. I hope to use the skills picked up in this course to better the quality of work in Sicily.";s:5:"xhtml";s:1446:"
+<p>
+I&#039;m a geography graduate student at Hunter College, CUNY in New York City specializing in GIS. I am currently employed by the American Museum of Natural History where I manage all things geospatial for the North American Archaeology Lab. My GIS software of choice is ArcGIS but I have some experience with QGIS. I have built web mapping applications and frequently publish WMS and WFS to an organizational account with ArcGIS Online so that our team can work better with collaborators. During fieldwork I routinely use a total station, handheld GPS/GNSS devices, and I have experience operating Phantom Vision 3 Drone. I have used imagery collected by drone to render DEMs and enhance maps of archaeology excavations. I also generate 3D models with photogrammetry and CT scanning. 
+</p>
+
+<p>
+I hope to learn about different tools available for GIS processes and access and manipulate data using scripts. I find limitations in ArcGIS and I&#039;d like to explore how writing custom code can enhance analysis potential. At work I have access to an astronomical amount of data just waiting to be interpreted geospatially.  Immediately following the second week course I am off to Sicily to work with an archaeology team to map out an excavation area and render 3D representations of it. I have convinced them to rent a drone for this purpose. I hope to use the skills picked up in this course to better the quality of work in Sicily.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"dd986fd255d2996ded8fa2286d2e46fc";}}s:11:"subscribers";a:3:{s:24:"mwaangabravedo@yahoo.com";a:3:{s:4:"hash";s:32:"e820e6bf8a1b45ba094fb7568507ccba";s:6:"active";b:1;s:11:"confirmsent";b:1;}s:18:"my991203@gmail.com";a:3:{s:4:"hash";s:32:"af1539447f99f5f748e05ef66bc6fdc9";s:6:"active";b:1;s:11:"confirmsent";b:1;}s:20:"lvmuyang@foxmail.com";a:3:{s:4:"hash";s:32:"38bf2a0cb210ff1bf140c4887a10e0c9";s:6:"active";b:0;s:11:"confirmsent";b:1;}}}

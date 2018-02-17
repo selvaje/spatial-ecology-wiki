@@ -1,0 +1,103 @@
+====== Homework ======
+===== Exercise number 1: RP ratio  =====
+
+With the sh script:  /home/user/ost4sem/exercise/rp_ratio/rp_ratio.sh , we compute the Limited filling of the potential Pinus Cembra range. In this script we have processed data of an area covering the Alps and Carpathians.
+
+In this exercise you will:\\
+\\
+1 - Compute R, P and calculate the R/P ratio for a limited study region of your choice.
+To select the boundaries of your limited area you can use Qgis. 
+  * Upload grassdb/europe/EUforest/EUcountry and ~/ost4sem/grassdb/europe/PCEM/pcem_euforgen 
+  * Zoom to an area of your choice where Pinus Cembra occurs (pcem_euforgen = 1). 
+  * Detect the boundary extents N, S, E, W of your newest study area.\\
+You can for example choose to highlight the area of Switzerland or Austria ! 
+\\
+2 - After processing the data, save the report outputs table for the pcem_realized map as R_sutudentXX.txt \\
+\\
+3 - Save the report outputs table for the pcem_potential map as P_tudentXX.txt\\
+\\
+4 - Now reprocess your calculations for the same limited study region as before, but change the pixel resolution of your analysis to 3 x 3 km resolution (This resolution will probably not be exactly 3km but very close). Create an output map as shown in the rp_ratio.sh script but this time modify the commands and save the map as studentXX_map.png\\
+
+Be carefull!! The P_tudentXX.txt and R_sutudentXX.txt reports and the R/P ratio needs to be at 1km resolution, and the studentXX_map.png needs to be saved at 3 x 3 km resolution. 
+
+5 - Send an email to unizar2010@spatial-ecology.net with the subject of email as "Exercise 1 - student name - student computer number". 
+In the email include\\
+  * Copy and paste the line from the terminal including studentX@gisvm:directory$.
+Copy and paste the content of P_tudentXX.txt and R_sutudentXX.txt and include the studentXX_map.png.
+
+If you like you can include your newest modified sh script.\\
+\\
+\\
+
+===== Exercise number 2: Bash shell =====
+Send an email to unizar2010@spatial-ecology.net with the title of the exercise.\\
+In the first line of the email copy and paste the line from the terminal including userX@gisvm:directory$.\\
+Explain in your own language what have you done and why.  Be creative!  More example of scripts are welcome, and will be evaluated in a positive way.\\
+ 
+  - Using any files in the ost4sem directory make 3 examples of the use of "basename" command. Search on the Internet and use the main command.\\
+  - Using the file in  ~/ost4sem/exercise/basic_adv_bash/aver_month_nuts3_fire.asc make a file (aver_month_nuts3_fireNOIT.asc) which does not include the fire in Italy (indicate in first column by IT). We have already used the command but read the manual to check for the correct option. \\
+\\
+===== Exercise number 3: AWK and Bash =====
+Send an email to unizar2010@spatial-ecology.net with the title of the exercise.\\
+In the first line of the email copy and paste the line from the terminal including userX@gisvm:directory$.\\
+
+  - Using the file in  ~/ost4sem/exercise/basic_adv_bash/aver_month_nuts3_fire.asc create a new file (counties_sum.asc) that reports in five lines the total sum of the burned area ( BAREA ) for the PT ES FR IT GR.\\
+Use a combination of Bash and AWK commands. Commands and similar examples are presented in the wiki AWK language page, you just have to combine them.\\
+
+  - Explain in your own language what have you done and why. Be creative! More examples of scripts are welcome, and will be evaluated in a positive way.\\
+\\
+======  Knowing each other's email ======
+Please send an email to info@spatial-ecology.net with the following info 
+
+  * Name Surname - machine number 
+
+  * What is your background ?\\
+//example: Geographer, Doctor in medicine, Environmental Engineer ..//
+\\
+\\
+  * Master thesis / PhD thesis objectives / keywords ? \\
+//Example: Mapping floods risks in Spain - GIS, Floods model - Hydrology - risk assessment//
+\\
+\\
+  * Do you have experience using Linux OS  ? \\ 
+//Yes, basic user - or Yes, advanced Linux user - or  None// \\
+\\
+\\
+  * Do you currently use any programming languages?\\
+//None or - Python, Visual Basic, C+, R, Grass + Shell// \\
+\\
+\\
+  * What are your interests and expectations from this training ?\\
+example: // Get familiar with Linux and R // or \\
+example: // Learn to use Grass // or \\
+example: // Learn to use Linux Operating System and Bash scripting // or \\
+example: // Overview on different tools in GIS and spatial data management and analysis // \\
+\\
+\\
+This information is very interesting for us and will enable us to adapt our week of training to your interests and technical skills.
+Information will be removed from our email account after this week and will not be redistributed or used for any purpose other than this training course.
+\\ 
+\\
+====== Satisfaction survey ======
+
+<doodle Will you use and progress using OS tools in future?>
+^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R Yes ^ R No ^  
+</doodle>
+\\
+<doodle Do you feel to be able to independently get information and learn about the use of a function? >
+^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R Yes ^ R No ^
+</doodle>
+\\
+<doodle Do you see any interest in using OS spatial analysis tools in your job?>
+^ Yes ^  No ^ Little ^
+</doodle>
+\\
+<doodle Which part of the course did you prefer and would have liked to see in more detail?  >
+^ Bash ^ Awk ^ Gdal ^ Gnuplot ^ Grass ^ Qgis ^ R ^ Theory ^ exercise ^ Study case ^
+</doodle>
+\\
+<doodle Do you think the training was well adapted with respect to your needs, your skills and knowledge? >
+^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+</doodle>
+\\
+If you have any remarks or suggestions for improving this training course, please write to us at unizar2010@spatial-ecology.net

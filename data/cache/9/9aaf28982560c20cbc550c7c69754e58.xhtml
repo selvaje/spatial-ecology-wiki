@@ -1,0 +1,202 @@
+
+<h1 class="sectionedit1" id="comparison_of_top_of_atmosphere_reflectance_vs_surface_reflectance">Comparison of Top of Atmosphere Reflectance vs Surface Reflectance</h1>
+<div class="level1">
+
+<p>
+The currently available WELD products (Version 1.5) have not been atmospherically corrected and so they store what is called Top of Atmosphere (TOA) reflectance. In the next major planned WELD product version the data will be atmospherically corrected to provide surface reflectance. 
+</p>
+
+<p>
+In this exercise we will examine TOA and surface monthly reflectance for the July 2010 monthly product sensed over a forested area of Virginia where atmospheric scattering and absorption is quite apparent. 
+<br/>
+
+<br/>
+
+<strong>Set your working directories:</strong>
+</p>
+
+<p>
+The data are stored at are stored at: /home/user/ost4sem/exercise/weld<em>data</em>processing/visualization 
+</p>
+
+<p>
+So: 
+</p>
+<pre class="code">DIR=/home/user/ost4sem/exercise/weld_data_processing/visualization
+cd $DIR</pre>
+
+<p>
+The TOA and surface reflectance for WELD bands 3 (red reflectance), 2 (green reflectance), 1 (blue reflectance) are stored in files Band321<em>SR</em>REF<em>ln</em>h20v05.tif and Band321<em>TOA</em>REF<em>ln</em>h20v05.tif respectively. To save time we have stored the files already as stack .tif images and we have already taken the natural logarithm of the bands so that they look cool.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Comparison of Top of Atmosphere Reflectance vs Surface Reflectance" [1-1176] -->
+<h3 class="sectionedit2" id="true_color_image_visualization">True Color Image Visualization</h3>
+<div class="level3">
+
+<p>
+We will now visualize the natural logarithm stack of both images with openev as:
+</p>
+<pre class="code">openev $DIR/Band321_SR_REF_ln_h20v05.tif $DIR/Band321_TOA_REF_ln_h20v05.tif  &amp;</pre>
+
+<p>
+We can change the minimum and maximum values that are displayed for each band (this is called contrast stretching) to better visualize the data by right clicking on the layers window:
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/lib/exe/detail.php?id=wiki%3Aweld_visual&amp;media=wiki:leyer_icon.png" class="media" title="wiki:leyer_icon.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=6327d6&amp;media=wiki:leyer_icon.png" class="media" alt="" width="500" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT3 TABLE [1572-1603] -->
+<p>
+<br/>
+
+We can change the band order (Red Band:3, Green Band:2, Blue Band:1) or change the minimum (Scale Min:4.9) and maximum (Scale Min:8.9) log(reflectance) display values as below. Remember to press the keyboard “enter” every time that you insert a value.
+<br/>
+
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/lib/exe/detail.php?id=wiki%3Aweld_visual&amp;media=wiki:bands_icon.png" class="media" title="wiki:bands_icon.png"><img src="/lib/exe/fetch.php?w=400&amp;tok=e67188&amp;media=wiki:bands_icon.png" class="media" alt="" width="400" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [1866-1897] -->
+<p>
+<br/>
+
+Use the same minimum and maximum display values for the Band321<em>SR</em>REF<em>ln</em>h20v05.tif and Band321<em>TOA</em>REF<em>ln</em>h20v05.tif files and look at the the differences. 
+For example, the following screen-shots show Top of Atmosphere Reflectance (left) and Surface Reflectance (right) with the same contrast stretch minima and maxima.<br/>
+
+<br/>
+
+</p>
+<div class="table sectionedit5"><table class="inline">
+	<tr class="row0">
+		<td class="col0" colspan="2"><a href="/lib/exe/detail.php?id=wiki%3Aweld_visual&amp;media=wiki:toa_ref.png" class="media" title="wiki:toa_ref.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=11671b&amp;media=wiki:toa_ref.png" class="media" alt="" width="500" /></a></td><td class="col2"><a href="/lib/exe/detail.php?id=wiki%3Aweld_visual&amp;media=wiki:sr_ref.png" class="media" title="wiki:sr_ref.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=275a2c&amp;media=wiki:sr_ref.png" class="media" alt="" width="500" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT5 TABLE [2229-2282] -->
+<p>
+<br/>
+
+After the visualization you can close all the windows of openev.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "True Color Image Visualization" [1177-2350] -->
+<h3 class="sectionedit6" id="histogram_visualization">Histogram  Visualization</h3>
+<div class="level3">
+
+<p>
+<br/>
+
+We will now generate histograms of each band of the TOA and surface reflectance data. We will use stack images that have not been logarithm transformed so that the reflectance is stored as usual for the WELD reflective wavelength bands with values from 0 (reflectance = 0) to 10,000 (reflectance = 1). 
+</p>
+
+<p>
+The command “pkinfo  - -hist” creates a two column table containing each unique pixel value and its frequency (count expressed as a percentage) in the image. We will use a “for loop” to call pkinfo three times to extract the frequency values in the three bands. Pay attention, for pkinfo, band 1 must be labelled as “-b 0”, band 2 as “-b 1” and band 3 as “-b 2”.<br/>
+
+</p>
+<pre class="code">for band in 0 1 2 ; do 
+  bandname=`expr $band + 1`
+  pkinfo  --hist --rel  -b $band  -i $DIR/Band123_SR_REF_h20v05.tif    &gt; $DIR/hist_band$bandname&quot;_SR_REF_h20v05.txt&quot; 
+  pkinfo  --hist --rel  -b $band  -i $DIR/Band123_TOA_REF_h20v05.tif   &gt; $DIR/hist_band$bandname&quot;_TOA_REF_h20v05.txt&quot; 
+done</pre>
+
+<p>
+Examine the resulting TOA reflectance histogram files as:
+</p>
+<pre class="code">head $DIR/hist_band1_TOA_REF_h20v05.txt
+head $DIR/hist_band2_TOA_REF_h20v05.txt
+head $DIR/hist_band3_TOA_REF_h20v05.txt</pre>
+
+<p>
+Examine the resulting surface reflectance histogram files as:
+</p>
+<pre class="code">head $DIR/hist_band1_SR_REF_h20v05.txt
+head $DIR/hist_band2_SR_REF_h20v05.txt
+head $DIR/hist_band3_SR_REF_h20v05.txt</pre>
+
+<p>
+We will use use gnuplot to create a histogram for each TOA and surface reflectance band:<br/>
+
+<br/>
+
+Band 1 blue
+</p>
+<pre class="code">gnuplot -p &lt;&lt;EOF
+set xrange [1:2000] 
+set yrange [0:1] 
+set ylabel &quot;Number of pixels %&quot;
+set xlabel &quot;Reflectance&quot;
+plot &quot;hist_band1_SR_REF_h20v05.txt&quot; lc rgb &quot;blue&quot; pt 7  , &#039;hist_band1_TOA_REF_h20v05.txt&#039; lc rgb &quot;blue&quot; pt 6 
+EOF</pre>
+
+<p>
+<br/>
+
+Band 2 green
+</p>
+<pre class="code">gnuplot -p &lt;&lt;EOF
+set xrange [1:2000] 
+set yrange [0:1] 
+set ylabel &quot;Number of pixels %&quot;
+set xlabel &quot;Reflectance&quot;
+plot &quot;hist_band2_SR_REF_h20v05.txt&quot; lc rgb &quot;green&quot; pt 7  , &#039;hist_band2_TOA_REF_h20v05.txt&#039; lc rgb &quot;green&quot; pt 6 
+EOF</pre>
+
+<p>
+<br/>
+
+Band 3 red 
+</p>
+<pre class="code">gnuplot -p &lt;&lt;EOF
+set xrange [1:2000] 
+set yrange [0:1] 
+set ylabel &quot;Number of pixels %&quot;
+set xlabel &quot;Reflectance&quot;
+plot &quot;hist_band3_SR_REF_h20v05.txt&quot; lc rgb &quot;red&quot; pt 7  , &#039;hist_band3_TOA_REF_h20v05.txt&#039; lc rgb &quot;red&quot; pt 6
+EOF</pre>
+
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit7"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/lib/exe/detail.php?id=wiki%3Aweld_visual&amp;media=wiki:hist_band1.png" class="media" title="wiki:hist_band1.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=74ccb0&amp;media=wiki:hist_band1.png" class="media" alt="" width="800" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT7 TABLE [4598-4629] -->
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit8"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/lib/exe/detail.php?id=wiki%3Aweld_visual&amp;media=wiki:hist_band2.png" class="media" title="wiki:hist_band2.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=15beb4&amp;media=wiki:hist_band2.png" class="media" alt="" width="800" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT8 TABLE [4633-4664] -->
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit9"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/lib/exe/detail.php?id=wiki%3Aweld_visual&amp;media=wiki:hist_band3.png" class="media" title="wiki:hist_band3.png"><img src="/lib/exe/fetch.php?w=800&amp;tok=addb05&amp;media=wiki:hist_band3.png" class="media" alt="" width="800" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT9 TABLE [4668-4699] -->
+<p>
+<br/>
+
+As more atmospheric scattering occurs at shorter wavelengths the difference between the TOA and surface reflectance is greatest for the shorter wavelength bands (blue, then green, then red).
+Note, the green surface reflectance peak is higher than the red and blue surface reflectance peaks which is expected for data sensed over a vegetated area. 
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Histogram  Visualization" [2351-] -->

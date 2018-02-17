@@ -1,0 +1,37 @@
+====== Exercise 3a: Study phenology from MODIS NDVI time series (forest vector) ======
+
+In this exercise the following tools will be used:
+  * pktools: pkcreatect, pkndvi, pkgetmask, pkextract, pkstatogr
+  * bash: for loop, redirection (>>)
+  * awk: basic
+
+\\
+__Create directory for this exercise__
+
+<code bash>
+mkdir -p ${OUTPUTDIR}/exercise3
+</code>
+
+\\
+__Remove old output__
+
+<code bash>
+rm -f ${OUTPUTDIR}/exercise3/forest_ndvi_mean_stdev.txt
+</code>
+
+\\
+__Extract NDVI time series from forest in Cornwall (mean value for each polygon)__
+
+<code bash>
+for MONTH in 01 02 03 04 05 06 07 08 09 10 11 12;do
+	echo "create NDVI image for month $MONTH"
+	pkndvi -min 0 -max 100 -dst_s 100 -r ndvi -ot Byte -b 0 -b 1 -i ${MODIS250DIR}/2006${MONTH}-MODIS250_CW.tif -o ${OUTPUTDIR}/exercise3/2006${MONTH}-MODIS250_CW_NDVI.tif
+	echo "create NDVI mask (values smaller than 0.5 should not be forested)"
+	pkgetmask -i ${OUTPUTDIR}/exercise3/2006${MONTH}-MODIS250_CW_NDVI.tif -o ${OUTPUTDIR}/exercise3/2006${MONTH}-MODIS250_CW_MASK.tif -min 50 -max 100 -data 1 -nodata 0
+    rm -f ${OUTPUTDIR}/exercise3/forest_modis_${MONTH}.shp
+    echo "extract NDVI for month $MONTH"
+    pkextract -i ${OUTPUTDIR}/exercise3/2006${MONTH}-MODIS250_CW_NDVI.tif -s ${OUTPUTDIR}/exercise1/cornwall_forest_3035.shp -m ${OUTPUTDIR}/exercise3/2006${MONTH}-MODIS250_CW_MASK.tif -msknodata 0 -o ${OUTPUTDIR}/exercise3/forest_modis_${MONTH}.shp -r mean -polygon -bn NDVI --ftype Integer
+    echo "calculate statistics using pkstatogr"
+    pkstatogr -i ${OUTPUTDIR}/exercise3/forest_modis_${MONTH}.shp -n NDVI -mean -stdev| awk '{print $4,$6}' >> ${OUTPUTDIR}/exercise3/forest_ndvi_mean_stdev.txt
+done
+</code>

@@ -1,0 +1,37 @@
+====== Parallel R using foreach  ======
+\\
+Material prepared by Stephen Weston\\
+\\
+The object of the exercise is to calculate the Moran's I index (using R) inside the polygons of the poly\_fr\_10poly.shp shape file.\\
+\\
+http://www.spatial-ecology.net/ost4sem/lecture/pr.pdf
+\\
+\\
+{{:wiki:rstat:10poly.png?400|}}
+\\
+for this exercise you can enter in this directory
+
+  cd /home/user/ost4sem/exercise/basic_adv_gdalogr/
+and download this scripts
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par1.R
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par2.R
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par3.R
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par4.R
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_seq1.R
+  wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_seq2.R
+  
+\\
+Sequential for loop
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_seq1.R}}
+Insert the xy crop in the Sequential for loop. The mask command now is performed on smaller raster dataset. 	
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_seq2.R}}
+Foreach loop that "sends" the full shape file and the full raster to the workers.
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par1.R}}
+Foreach loop that "sends" only one polygon per task and the full raster to the workers
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par2.R}}
+Foreach loop that "sends" a chunk of polygons and the full raster to the workers
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par3.R}}
+Identify polygon groups, using the centroid in kmean cluster. 
+Foreach loop that "sends" polygons that belong to the same cluster and a cropped  raster (rasterDp) to the workers
+{{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par4.R}} 	
+

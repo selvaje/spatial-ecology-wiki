@@ -1,0 +1,141 @@
+====== Spatial analysis of soil parameters ======
+ Spatial analysis of field measurements of soil moisture/dielectric permittivity and electrical resistivity.\\
+
+===== INTRODUCTION =====
+
+==== General framework of this analysis ====
+ Application of geophysical measurements to investigate Time Domain Reflectometers (TDR) soil moisture variability.
+
+==== Project objectives ====
+Application of geo-statistical methodology with the aim of:\\
+  * Investigate the spatial structure of every sampled variable (soil moisture, dielectric permittivity, electrical resistivity). \\
+  * Study the cross-correlation between two pairs of variables: soil moisture vs electrical resistivity and dielectric permittivity vs electrical resistivity. 
+ 
+
+===== METADATA =====
+
+==== Text files and tables ====
+  * A data set for each of the three sites (named siteA, siteB, siteC)\\
+  * Input data are 3 tables with *.xls or *.csv or *.dbf file type.\\
+  * The file named siteA_march is a data.frame with 492 rows and 15 variables.\\
+  * The file named siteB_march is a data frame with 533 rows and 15 variables.\\
+  * The file named siteC_march is a data frame with 178 rows and 10 variables.\\
+
+
+\\
+===== METHOD =====
+  - Importazione dati in ambiente R (o GRASS o QGIS)
+  - Analisi organizzaione dei dati nel file
+  - Produzione di mappe delle tre variabili.
+
+
+\\
+===== DATA IMPORT =====
+  * Set working directory, load libraries and import data 
+
+<code r>
+
+ setwd("/home/user/ost4sem/project") ## set working directory//
+ 
+ require(gstat) #load libraries
+ require(rgdal)
+ require(foreign)
+
+#reaing files
+ 
+ siteA_march <- read.dbf("/home/user/ost4sem/project/input/siteA_march.dbf")  # *.dbf file
+
+ siteB_march <- read.csv("/home/user/ost4sem/project/input/siteB_march.csv")  # *csv file
+
+ siteC_march <- read.csv("/home/user/ost4sem/project/input/siteC_march.csv")  # *.csv file
+
+ ls() #check working space objects
+</code>
+\\
+
+===== DATA PROCESSING =====
+\\
+  * This is for checking data files and perform preliminary actions on data
+
+<code r>
+
+  str(siteA_march)  #check data structure
+  str(siteB_march)
+  str(siteC_march)
+
+## The file named siteB_march has a coloumn, named X, with only NA values
+## we can delete it 
+
+  siteB_march$X <- NULL
+  str(siteB_march) #check again the file 
+
+
+  mydata <- list(siteA_march, siteB_march, siteC_march) #creates a list with all my three data frame
+  ls() #check it
+
+
+# if we want to rename variables EST and NORD like x and y 
+
+for(i in 1:3) {
+  mydata[[i]]$x <- mydata[[i]]$EST
+  mydata[[i]]$y <- mydata[[i]]$NORD
+  mydata[[i]]$NORD <- NULL
+  mydata[[i]]$EST <- NULL
+  }
+
+ class(mydata) #which class are my data???
+
+ for(i in 1:3) coordinates(mydata[[i]]) <- ~x+y    #### changes mydata from data.frame to spatial object
+
+ class(mydata) #and now which is the structure?
+ str(mydata) # how is the structure ?
+
+#plot mydata 
+  spplot(mydata[[1]], "KA") 
+  spplot(mydata[[1]], "PERC") ## there is an evident outlier for both variables at the same poin
+
+## explore data set to better understand the nature of the outlier: where is it? what's the reason of these apparent outlier values
+
+  summary(mydata[[1]]$KA)
+  summary(mydata[[1]]$PERC)
+
+  hist(mydata[[1]]$KA, nclass=100)
+  boxplot(mydata[[1]]$KA) #si vede chiaramente
+
+  which.max(mydata[[1]]$PERC)   #what is the position of the outlier 
+  which.max(mydata[[1]]$KA)   
+##...is in the same row
+ 
+ #looking at the values it is evident that this is a typing mistake: there is a deimal indicator missing 
+#so we just have to divide our PERC and KA values by 10
+
+  mydata[[1]]$KA[492] <- mydata[[1]]$KA[492]/10
+  mydata[[1]]$KA[492]
+  mydata[[1]]$PERC[492] <- mydata[[1]]$PERC[492]/10
+  mydata[[1]]$PERC[492]
+
+##well done :)
+
+#################################################################################################################################################################
+
+### If we need to export vector file to use them in Qgis or GRASS (or ESRI) GIS
+
+  mydsn <- "/home/user/ost4sem/project/output/" ## put the output here 
+
+for(i in 1:3) writeOGR(obj= mydata[[1]], dsn= mydsn, layer= paste("site_vector_",i, sep=""), driver= "ESRI Shapefile")
+
+  list.files() ##check the vector file creation 
+
+#################################################################################################################################################################
+
+ </code>
+\\
+
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+Insert a map and related table or graphics if available\\
+Discuss the biological or geographical significance of results
+\\

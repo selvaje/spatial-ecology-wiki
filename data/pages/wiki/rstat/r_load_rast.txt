@@ -1,0 +1,77 @@
+====== Raster data processing in R - load and plot maps ======
+[[wiki:rstat:r_geography|Back to spatial analyses in R]]
+<note warning>WORK IN PROGRESS DO NOT FOLLOW THIS PAGE</note>
+
+We can create a temporary folder to process data frm this tutorial migrate to this folder and enter R from there so owr wR working directory will be this one
+
+    mkdir visualR
+    cd visualR
+    R
+
+
+===== Raster data visualization =====
+We  start using two libraries raster and rgdal:
+    library(rgdal)  # link to Gdal/Ogr functions with R to import data
+    library(raster) # More spatial data functionality ex: create raster stack layer or compute and Moran I
+
+Using the **system** R function we can access bash commands and download data using **wget** function:
+    system("wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/raster/ZONES_m9.asc")
+
+Where are the data stored now? can you see them? They are in yoyr system folder visualR not loaded in R. To load them and plot them in R we can use readGDAL and raster plot function:
+<code R>
+MapFromGdal=readGDAL("ZONES_m9.asc")
+MapFromRasterLib=raster(MapFromGdal)
+plot(MapFromRasterLib) # Visualize the map and legend
+plot(MapFromRasterLib, col=c("blue","red","green3","orangeplot function of r basic package"), legend=F, axes=F, main="Map of zones",cex.main=3, cex=2, cex.legend=3, box=F)
+legend(131000,110000,c("Coastal","West","Centre","East"), bty = "n",  pch=c(15,15,15,15), pt.cex=c(2.5,2.5,2.5),  cex=3,  col=c("blue","red","green3","orange"))
+</code>
+ 
+{{:wiki:rstat:r_map_cornwall.png?200|Output from raster plot function}} This is the output of the plot function of the raster package which is different from the plot function from R basic package. \\
+
+=== Multiple layers plotting in R  ===
+The script below preform the following in a loop. The first task is to create a list object and a vector object of names, the n for each layer we do the following:
+  * download layer in working directory
+  * load layer layer from working directory to the R List 
+Finally we are ready to store layers from the list to a RasterBrick object available from the raster library and plot the brick with default raster color scheme.
+
+<code R>
+map_names=c("agri_m9.asc","carA_m9.asc","carS_m9.asc","mitR_m9.asc","prod_m9.asc","pvl_R_m9.asc","recA_m9.asc","recL_m9.asc","recT_m9.asc","urbR_m9.asc","winR_m9.asc","ZONES_m9.asc")
+#- Plot environmental services and zones of Cornwall
+import12=vector("list",12) 
+str(import12)
+for ( x in c(1:12) ){ 
+system(paste0("wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/raster/",map_names[x]))
+import12[[x]]=raster(readGDAL(map_names[x]))
+}
+MAPS=brick(import12[[1]],import12[[2]],import12[[3]],import12[[4]],import12[[5]],import12[[6]],import12[[7]],import12[[8]],import12[[9]],import12[[10]],import12[[11]],import12[[12]])
+plot(MAPS)
+</code>
+
+{{:wiki:rstat:map_r2.png?200|}}
+Here what you should see.\\
+Now we can do some data cleaning (redefining NA values) and plotting the maps into a png file saved outside R with a specific color palette and a legend:
+<code R>
+
+length(which(complete.cases(import12[[1]]@data@values)==FALSE)) # complete.cases return a logical vector indicating which cases are complete i.e. have no missing values.
+length(import12[[1]]@data@values)
+import12[[5]]@data@values[which(complete.cases(import12[[1]]@data@values)==FALSE)]=NA # data cleaning
+
+mycolor=topo.colors(100)
+mycolor[1]="#a6a6a6" # or 808080 are grey
+TITLE=c("Agriculture","Carbon above ground","Carbon in soil","Flood mitigation","Plant production","Solar energy","Aesthetic","Recreation","Tourism","Urban development","Wind energy","Zones of Cornwall")
+png(paste("priority_maps.png",sep=""), width = 1600, height = 1200)
+nf <- layout(matrix(c(1:12),3,4,byrow=TRUE), c(1,1), c(1,1), TRUE) ; layout.show(nf) ; par(mar=c(5,5,3,5))
+for ( x in c(1,2,3,4,5,7,8,9,10,11,6) ){ 
+r=import12[[x]]
+plot(r, col=mycolor, legend=F, axes=F, main=TITLE[x],cex.main=3, cex=2, cex.legend=3, box=F)
+if (x==6){plot(r, legend.only=TRUE, col=mycolor, legend.width=6, legend.shrink=0.75, axis.args=list(at=c(0,50,89),  labels=c(0,50,100),  cex.axis=2.2))}
+}
+r=import12[[12]]
+plot(r, col=c("blue","red","green3","orange"), legend=F, axes=F, main="Zones of Cornwall",cex.main=3, cex=1.8, box=F)
+legend(131000,110000,c("Coastal","West","Centre","East"), bty = "n",  pch=c(15,15,15,15), pt.cex=c(2.5,2.5,2.5),  cex=3,  col=c("blue","red","green3","orange"))
+dev.off()
+</code>
+
+The output map:\\
+{{:wiki:rstat:priority_maps.png?300|}}
+\\

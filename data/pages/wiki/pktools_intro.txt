@@ -1,0 +1,113 @@
+====== Part 1 ======
+
+  * Introduction to vector and raster data (raster_images.pdf)
+  * Introduction to open source geodata tools
+ 
+===== Introduction to vector and raster data =====
+
+  * raster_images.pdf
+
+===== Introduction to open source geodata tools =====
+
+==== Visualization of raster and vector data ====
+
+  * openev
+  * QGIS
+  * [[exercise1a | exercise 1a]]: Use of openev and ogr tool. Reprojection of vectors and feature selection
+  * [[exercise1b | exercise 1b]]: Convert forest vector file to KML vector for visualisation in GoogleEarth
+
+==== Basic geospatial raster data processing ====
+
+== Format conversion: gdal_translate ==
+
+Check the usage of gdal_translate on website and via command line:
+
+<code>
+gdal_translate --help
+</code>
+
+In its most basic form, without any options, gdal_transform copies an input
+image to an output image:
+
+<code>
+gdal_translate input output
+</code>
+
+Converting image or data formats is almost as simple. Check the available raster formats using
+
+<code>
+gdalinfo --formats
+</code>
+
+An interesting format is the VRT driver is a format driver for GDAL that allows a virtual GDAL dataset to be composed from other GDAL datasets. As opposed to physical data, the virtual data are described by XML files that are linked to some physical data sets.
+
+As an example, the following example converts a Landsat image in GTiff format into a virtual data set (VRT):
+
+<code>
+gdal_translate 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW.vrt -of VRT
+</code>
+
+You can perform operations on the virtual data, such as scaling:
+
+<code>
+gdal_translate 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW.vrt -of VRT -scale 0 255 0 100
+</code>
+
+== Image (re-)projections: gdalwarp ==
+
+Check the usage of gdalwarp on website and via command line:
+
+<code>
+gdalwarp --help
+</code>
+
+The Landsat image over Cornwall is in a European projection (ETRS89/LAEA: epgs:3035). To obtain the image in the British national grid (epsg:27700), we can either do it directly:
+
+<code>
+gdalwarp -of GTiff -co INTERLEAVE=BAND -co COMPRESS=LZW -t_srs epsg:27700 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW_27700_direct.tif
+</code>
+
+Or we can combine several processing steps by using the resulting virtual data set from the previous step as input for gdalwarp.
+
+<code>
+gdalwarp -of VRT -t_srs epsg:27700 19990724_L7E_IP_CW.vrt 19990724_L7E_IP_CW_27700.vrt
+</code>
+
+We can thus postpone the creation of the physical data (in GTiff format) until the very end, which saves the creation of large temporary files and data input/output (I/O).
+
+<code>
+gdal_translate -co INTERLEAVE=BAND -co COMPRESS=LZW -of GTiff 19990724_L7E_IP_CW_27700.vrt 19990724_L7E_IP_CW_27700.tif
+</code>
+
+As a default, GDAL (gdal_translate and gdalwarp) writes GTiff bands as interleaved by pixel. By using the creation options (-co) for INTERLEAVE and COMPRESS, we can change this. 
+
+== Spatial and spectral image subsetting ==
+
+We want to crop the Landsat image to the following bounding box:
+
+<note>
+ULX=3217600
+ULY=3127850
+LRX=3225650
+LRY=3119900
+</note>
+
+<code>
+gdal_translate -projwin 3217600 3127850 3225650 3119900 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW_crop.tif
+</code>
+
+We now want to create a quick look of the Landsat image in JPEG format, using false colors:
+
+<code>
+gdal_translate -ot Byte -scale -outsize 20% 20% -b 4 -b 3 -b 2 -of JPEG 19990724_L7E_IP_CW.tif 19990724_L7E_IP_CW.jpg
+</code>
+
+
+  * Vector and raster data processing
+  * Displaying vector and raster data
+  * Visualizing spatial data statistics
+
+==== Basic geospatial vector data processing ====
+
+  * [[ pktools_sqlite | Openstreetmap, SQLite and sql commands ]]: exercise 7
+

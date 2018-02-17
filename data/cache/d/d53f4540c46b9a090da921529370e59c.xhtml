@@ -1,0 +1,116 @@
+
+<h1 class="sectionedit1" id="spatial-ecology_s_best_gis_software">spatial-ecology&#039;s best GIS software</h1>
+<div class="level1">
+
+<p>
+<strong>tag</strong>: Python, GIS, free and opensource, Linux<br/>
+
+<br/>
+
+</p>
+
+<p>
+Spatial Ecology&#039;s choice on GIS software to use, develop and promote its community of users and developers follow slightly different principles compared to other initiatives. We emphasise less on user friendliness, for us it is rather important if the chosen software is the most performing and adapted one for BigGeo data computation applications. Overall, we followed in our ranking these parameters of choice:<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> We targeted the most performing technology, regardless to its complexity and user friendliness;</div>
+</li>
+<li class="level1"><div class="li"> It needs to have broad algorithm and functions availability;</div>
+</li>
+<li class="level1"><div class="li"> It needs to have responsive community of users for help;</div>
+</li>
+<li class="level1"><div class="li"> It needs to be <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" class="urlextern" target="blanc" title="https://en.wikipedia.org/wiki/Free_and_open-source_software" rel="nofollow noopener"> FOSS</a> free and open source;</div>
+</li>
+<li class="level1"><div class="li"> Linux compatible;</div>
+</li>
+</ul>
+
+<p>
+Looking at the most commonly used GIS softwares and considering the last two bullet points in our priority list (<abbr title="Free &amp; Open-Source Software">FOSS</abbr>, Linux), our choice between available products shrinks down to 7 (see highlighted in yellow and grey in the list below). 
+</p>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Ablog%3Atemporary&amp;media=wiki:blog:mostcommongis2.png" class="media" title="wiki:blog:mostcommongis2.png"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:blog:mostcommongis2.png" class="media" title="Most used GIS software" alt="Most used GIS software" /></a>
+Sources:
+ Pietro Zambelli P, Gebbert S and Ciolli M. (2013). Pygrass: An Object Oriented Python Application Programming Interface (<abbr title="Application Programming Interface">API</abbr>) for Geographic Resources Analysis Support System (GRASS) Geographic Information System (GIS). <em>ISPRS Int. J. Geo-Inf.</em> <strong>2</strong>, 201-219; doi:10.3390/ijgi2010201
+</p>
+<div class="notetip">In addition to our list, we found more proprietary licensed and commercial software: Geomedia (Hexagon Geospatial); Global Mapper (Blue Marble); Manifold GIS (Manifold); Smallworld (General Electric); Bentley Map ; MapViewer and Surfer (Golden Software); Maptitude (Caliper Corporation); SuperGIS (Supergeo Technologies); AutoCAD Map 3D (Autodesk); Tatuk GIS; MicroImages (TNTgis); MapMaker Pro (MapMaker); XMap (Delorme); MapRite (Envitia)
+
+</div>
+</div>
+<!-- EDIT1 SECTION "spatial-ecology's best GIS software" [1-1937] -->
+<h3 class="sectionedit2" id="desktop">Desktop</h3>
+<div class="level3">
+
+<p>
+Furthermore, we add to our ranking the necessity of choosing between a <strong>desktop application</strong> (5 products left in green+grey+yellow from the list). <br/>
+
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Desktop" [1938-2108] -->
+<h3 class="sectionedit3" id="hpc_cluster">HPC cluster</h3>
+<div class="level3">
+
+<p>
+In 2005 we started working on BigGeo data for processing thousands of layers at continental scale from remote sensing and auxiliary data. Desktops where slow, we needed an application running scripting routines on the lab&#039;s Linux HPC clusters with its grid scheduler. ArcInfo was not available on our cluster. GRASS was the most ready to go choice between the remaining 5 options (c.f. Qgis, GRASS, gvSIG, Saga-GIS, Udig). Due to the fact the we succeeded to install it on the cluster and we were familiar with ArcInfo AML language, we started to get our hands into Bash, so the switch between AML and Grass was smooth. We started using GRASS GIS with its natural scripting language (at that time Linux Bash) and merged AWK and GDAL/OGR functions in our scripting routines.<br/>
+
+</p>
+
+</div>
+<!-- EDIT3 SECTION "HPC cluster" [2109-2907] -->
+<h3 class="sectionedit4" id="broad_choice_of_algorithms">Broad choice of algorithms</h3>
+<div class="level3">
+
+<p>
+GRASS and QGIS have broad spectrum of functionality ( more than 350 GRASS modules and another huge 3rd party <a href="https://grasswiki.osgeo.org/wiki/AddOns" class="urlextern" target="blanc" title="https://grasswiki.osgeo.org/wiki/AddOns" rel="nofollow noopener">AddOns functionality</a>. GRASS is between  <a href="http://www.journals.elsevier.com/environmental-modelling-and-software/most-cited-articles/" class="urlextern" target="blanc" title="http://www.journals.elsevier.com/environmental-modelling-and-software/most-cited-articles/" rel="nofollow noopener"> the most cited GIS software in Environmental modelling</a>. Qgis has an exponential production of plugins availability.
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Broad choice of algorithms" [2908-3351] -->
+<h3 class="sectionedit5" id="add_python_to_the_game">Add Python to the game</h3>
+<div class="level3">
+
+<p>
+At that time Qgis was an early stage project, but it rapidly evolved; also GRASS switched to Python scripting then. These are two reasons (we might discuss more in a future blog) why we are now focus on building capacity and training skills in Python. 
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Add Python to the game" [3352-3638] -->
+<h3 class="sectionedit6" id="close_the_choice_loop_with_qgis">Close the choice loop with Qgis</h3>
+<div class="level3">
+
+<p>
+Due to its great potentials in overlaying and visualization, we adopted Qgis as best <abbr title="Graphical User Interface">GUI</abbr> GIS tool. We started using Qgis in 2006 learning from a training organized by Paolo Cavallini from <a href="http://www.faunalia.eu/" class="urlextern" target="blanc" title="http://www.faunalia.eu/" rel="nofollow noopener"> Faunalia</a>. We now follow up Qgis development and learning/using different plugins according to our specific needs.<br/>
+
+Whereas we are aware of Saga-GIS and the many algorithms available, we are able to access those from Qgis and Python scripts. Until now we have never really explored gvSIG as our range of processing tools is rich enough. Nevertheless, we are open-minded and always looking into the latest software, hoping to discover new potentials.<br/>
+
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Close the choice loop with Qgis" [3639-4350] -->
+<h3 class="sectionedit7" id="conclusion">Conclusion</h3>
+<div class="level3">
+
+<p>
+<strong>Spatial Ecology&#039;s top GIS software are GRASS and QGIS</strong>.<br/>
+
+They have cutting edge technology and includes a broad spectrum of algorithm and GIS functionality; They stand upon a responsive community of opens source users and developers for asking help; They are free and open source; Linux compatible, and can be installed in computer clusters and parallelized/clusterized. between desktops cpu.
+</p>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+Cheers
+</p>
+
+<p>
+your <em>Spatial Ecology Team</em>
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Conclusion" [4351-] -->

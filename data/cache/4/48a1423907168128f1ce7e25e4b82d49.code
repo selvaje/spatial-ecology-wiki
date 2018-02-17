@@ -1,0 +1,14 @@
+<span class="co0"># calculate  slope </span>
+gdaldem slope <span class="re5">-s</span> <span class="nu0">111120</span> <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>slope.tif 
+&nbsp;
+<span class="co0"># calculate  apect</span>
+gdaldem aspect -zero_for_flat <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>aspect.tif 
+&nbsp;
+<span class="co0"># calculate  Terrain Ruggedness Index TRI  </span>
+gdaldem TRI <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>tri.tif 
+&nbsp;
+<span class="co0"># calculate  Topographic Position Index TPI</span>
+gdaldem TPI <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>tpi.tif 
+&nbsp;
+<span class="co0"># calculate  Roughness   </span>
+gdaldem roughness <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>roughness.tif 

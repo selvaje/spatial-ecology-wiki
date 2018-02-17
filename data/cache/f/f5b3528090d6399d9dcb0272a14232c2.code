@@ -1,0 +1,85 @@
+&nbsp;
+# current directory /home/user/summerschool
+# move all files to ~/home/user/summerschool/project/input
+&nbsp;
+# set the working directories
+&nbsp;
+export INDIR=~/summerschool/project/input
+export OUTDIR=~/summerschool/project/output
+&nbsp;
+cd /home/user/summerschool 
+cp rasta.* $INDIR
+cp mot_ezer_darbinis.* $INDIR
+cp idreisinta.* $INDIR
+cp dideles_upes.* $INDIR
+cp ezerai_monitoringas.* $INDIR
+cp ezerai_rasta.* $INDIR
+cp upes.* $INDIR
+cp vandens_telkiniai.* $INDIR
+&nbsp;
+# enter manualy in grass after have been created manualy the location river
+&nbsp;
+grass -text /home/user/summerschool/project/grassdb/river/PERMANENT
+&nbsp;
+#copy the folder which we created
+# ogrinfo  $INDIR/*.shp | head -20
+&nbsp;
+ogrinfo $INDIR/rasta.shp   #polygon
+ogrinfo $INDIR/mot_ezer_darbinis.shp  #polygon
+ogrinfo $INDIR/idreisinta.shp # polygon
+ogrinfo $INDIR/dideles_upes.shp   #polygon
+ogrinfo $INDIR/ezerai_monitoringas.shp   #polygon
+ogrinfo $INDIR/ezerai_rasta.shp      #polygon
+ogrinfo $INDIR/upes.shp             #line
+ogrinfo $INDIR/vandens_telkiniai.shp   #polygon
+&nbsp;
+# man v.in.ogr
+&nbsp;
+v.in.ogr dsn=$INDIR/rasta.shp output=rasta_vector
+v.in.ogr dsn=$INDIR/mot_ezer_darbinis.shp output=mot_darb_vector
+v.in.ogr dsn=$INDIR/dideles_upes.shp output=dideles_upes_vector --overwrite
+v.in.ogr dsn=$INDIR/ezerai_rasta.shp output=ezerai_rasta_vector --overwrite
+v.in.ogr dsn=$INDIR/upes.shp output=upes_vector --overwrite
+v.in.ogr dsn=$INDIR/vandens_telkiniai.shp output=vandens_telkiniai_vector --overwrite
+v.in.ogr dsn=$INDIR/ezerai_monitoringas.shp output=ezerai_monitoringas_vector --overwrite
+&nbsp;
+g.proj -p $INDIR/idreisinta.shp
+g.proj -p $INDIR/rasta.shp
+&nbsp;
+#change units from degree to meters
+ogr2ogr -s_srs EPSG:4126 -t_srs EPSG:3346 $INDIR/idreisinta_prj.shp  $INDIR/idreisinta.shp
+&nbsp;
+v.in.ogr dsn=$INDIR/idreisinta_prj.shp output=idreisinta_vector --overwrite
+&nbsp;
+# g.gisenv
+# g.list vect
+&nbsp;
+# Setting the study area and resolution
+g.region n=6194190 s=6171340 w=604070 e=624090 res=10
+&nbsp;
+d.mon start=x0
+d.vect idreisinta_vector
+&nbsp;
+d.mon start=x0
+d.vect ezerai_rasta_vector
+&nbsp;
+d.mon start=x0
+d.vect dideles_upes_vector
+&nbsp;
+d.mon start=x0
+d.vect upes_vector
+&nbsp;
+d.mon start=x0
+d.vect vandens_telkiniai_vector
+&nbsp;
+d.mon start=x0
+d.vect ezerai_monitoringas_vector
+&nbsp;
+v.to.rast input=idreisinta_vector output=Idreisinta_raster_map10 col=SHAPE_Area --overwrite
+v.to.rast input=rasta_vector output=rasta_raster_map10 col=SHAPE_Area  --overwrite
+v.to.rast input=dideles_upes_vector output=DUraster_map10 col=SHAPE_area  --overwrite
+v.to.rast input=upes_vector output=Uraster_map10 col=shape_leng  --overwrite
+v.to.rast input=vandens_telkiniai_vector output=VTraster_map10 col=SHAPE_area  --overwrite 
+v.to.rast input=ezerai_monitoringas_vector output=EMraster_map10 col=SHAPE_area --overwrite
+&nbsp;
+####################################

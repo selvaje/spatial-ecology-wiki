@@ -1,0 +1,152 @@
+====== Part 2 ======
+
+  * Introduction to pktools
+  * Image filtering
+  * Image compositing
+  * Information extraction from raster/vector images
+
+===== Introduction to pktools =====
+
+==== Basic concepts and web page ====
+
+ * http://pktools.nongnu.org
+
+==== Installation of tools ====
+
+ * linux_install.pdf
+ * installation of pktools
+
+==== Image filtering ====
+
+  * smoothing
+  * wavelet transform
+  * morphological filters
+  * ...
+
+Open the lena image in an image viewer (e.g., openev)
+
+<code>
+openev -h lena.tif
+</code>
+
+<note>
+[[http://www.cs.cmu.edu/~chuck/lennapg/lenna.shtml|interesting background information on the lena image]]
+</note>
+
+Try different filtering techniques.
+
+== Smoothing filter ==
+
+<code>
+pkfilter -i lena.tif -f smooth -o lena_smooth.tif
+</code>
+
+== Sobel edge detection ==
+
+<code>
+pkfilter -i lena.tif -f sobelx -o lena_sobelx.tif
+pkfilter -i lena.tif -f sobely -o lena_sobely.tif
+</code>
+
+== Discrete wavelet transform ==
+
+Forward wavelet transform
+
+<code>
+pkfilter -i lena.tif -f dwt -o lena_dwt.tif -ot Float32
+</code>
+
+Inverse wavelet transform
+
+<code>
+pkfilter -i lena_dwt.tif -f dwti -o lena_dwtdwti.tif -ot Byte
+</code>
+
+Compare both images with an image viewer.
+
+Note on JPG2000 (based on discrete wavelet transform). Check the result on ignoring high frequency content:
+
+Perform the forward discrete wavelet transform
+
+<code>
+pkfilter -i lena.tif -f dwt -o lena_dwt.tif -ot Float32
+</code>
+
+Crop the low pass filter result only (in both X and Y):
+
+<note tip>
+The image is of size 512x512
+</note>
+
+<note warning>
+Geotransform information is different for projected and not-projected images\\
+projected images: dy is negative!\\
+not-projected images: dy is positive!
+</note>
+ 
+<code>
+pkcrop -i lena_dwt.tif -o lena_ll.tif -ulx 0 -uly 0 -lrx 256 -lry 256
+</code>
+
+Then set the image extent to the original image, setting all other components to 0:
+
+<code>
+pkcrop -i lena_ll.tif -o lena_ll.tif -ulx 0 -uly 0 -lrx 512 -lry 512 -nodata 0
+</code>
+
+<note tip>
+Notice input and output are the same (which works due to the line by line operation)
+</note>
+
+Calculate the inverse discrete wavelet transform on the low pass filter components only:
+
+<code>
+pkfilter -i lena_ll.tif -o lena_compressed.tif -f dwti -ot Byte
+</code>
+
+Though we threw away one fourth of the image, the reconstructed image is still looking nice. Zoom in on the hair and check that fine details are missing in the reconstructed image.
+
+== Morphological filtering ==
+
+  * erode
+  * dilate
+  * close
+  * open
+
+  * [[exercise6b | exercise 6b]]: Morphological filtering applied to cloud masking
+
+==== Image mosaicking and compositing ====
+
+Some definitions first:
+
+== Image reprojection ==
+transforms an image from one (source) projection to a new (target) projection. 
+
+== Image warping ==
+the process of registering an image with a georeferenced grid. The transformation of image coordinates (row and columns) to georeferenced coordinates (X and Y) is based on computing least squares fit
+polynomials from a provided set of ground control points (GCP). 
+
+== Image mosaicing ==
+stiches multiple georeferenced input images to a single output image that covers the union bounding boxes of the individual input images. 
+
+GDAL utilities gdalwarp and gdal_merge.py can deal with reprojection, warping and mosaicing.
+
+== Image compositing ==
+Combining multiple input images that overlap. Pixel values have in overlapping areas need to be resolved to a new value according to some composit rule. Typical rules to compose the new value are: maximum or minimum value and mean or median value. 
+
+There is currently no tools in GDAL dealing with image compositing where the user can select its own rules. We will use pkmosaic for this.
+
+[[http://pktools.nongnu.org/html/md_doc_pkmosaic.html#pkmosaic|Reference for pkmosaic]]
+
+[[http://pktools.nongnu.org/html/md_doc_examples_pkmosaic.html#examples_pkmosaic|Examples]]
+
+  * [[ exercise10 | Image composits using pkmosaic ]]: exercise 10
+
+==== Information extraction from raster and vector data ====
+
+[[http://pktools.nongnu.org/html/md_doc_pkextract.html#pkextract|Reference for pkextract]]
+
+[[http://pktools.nongnu.org/html/md_doc_examples_pkextract.html#examples_pkextract|Examples]]
+
+  * [[ pktools_extraction | Vector overlays and extraction ]]: exercises 1-5
+

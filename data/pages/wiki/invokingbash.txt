@@ -1,0 +1,40 @@
+===== Invoking a Bash Script =====
+
+  * Any collection of bash commands may be stored in a file; a shell script file (usually called namefile.sh ).\\
+  * The collection of bash commands can be written and saved in a text editor (kate).\\
+  * Bash can be invoked to execute the commands in that file by typing sh namefile.sh.\\
+Example:
+  - Open a text editor and write
+<code bash>
+echo "How many files/folders i have in this directory?" 
+ls | wc -l
+</code>
+  - Save the file in the current directory as //myfirstscript.sh//
+  - Run it by typing.
+<code bash>
+bash myfirstscript.sh
+</code>
+Of course myfirstscript.sh can include several commands and can be run recursively.\\
+Like other programming languages bash has variables and flow control statements: e.g. if-then-else, while, for, goto.\\
+Moreover it is possible to insert other scripts built up under other software languages.\\
+
+===== The use of arguments by invoking a Bash Script =====
+Arguments or parameters are variables that can be inserted after "sh myfirstscript" and are are passed to your script.\\
+The use of arguments has the following syntax:\\
+//bash filename.sh argument1 argument2 argument3 ....//\\
+and in the script the arguments are recalled as:\\
+//argument1 = $1//\\
+//argument2 = $2//\\
+.....\\
+Example:\\
+  - Open a text editor and write:
+<code bash>
+echo "use $1"
+echo "to create $2" 
+</code>
+  - Save the file in the current directory as //myfirstscript.sh//
+  - Run it by typing:
+<code bash>
+bash myfirstscript.sh input.txt output.txt
+</code>
+The use of arguments are very useful to create a little script that computes operation that are later recalled in other scripts. A practical example is to create a script called //average.sh// that calculate the average in a column data using the input.txt file and produces the output.txt file.

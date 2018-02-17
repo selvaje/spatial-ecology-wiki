@@ -1,0 +1,729 @@
+
+<h1 class="sectionedit1" id="introduction_to_r">Introduction to R</h1>
+<div class="level1">
+
+<p>
+The object of this document is to help you starting to use the R environment for statistical analysis and graphics. <br/>
+
+You can read and follow the the text.  At the same time you can copy the commands included, into the frames part of this document and paste them in an interactive R session. <br/>
+
+Once you have familiarity with the general functioning of R and of R&#039;s objects you can further advance in learning R with online manuals and  guides. There is a large variety of documentation available at
+</p>
+<ul>
+<li class="level1"><div class="li">  <a href="http://www.r-project.org" class="urlextern" target="blanc" title="http://www.r-project.org" rel="nofollow noopener">www.r-project.org</a>. </div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.statmethods.net/index.html" class="urlextern" target="blanc" title="http://www.statmethods.net/index.html" rel="nofollow noopener">http://www.statmethods.net/index.html</a> </div>
+</li>
+<li class="level1"><div class="li"> <a href="http://wiki.r-project.org/rwiki/doku.php" class="urlextern" target="blanc" title="http://wiki.r-project.org/rwiki/doku.php" rel="nofollow noopener">http://wiki.r-project.org/rwiki/doku.php</a> </div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+In addition to efficacious learning tools, we would recommend that the user experiments with commands by, for example, trying different options to those stated. 
+This experimentation is an important part of learning R using this synthetic document.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Introduction to R" [1-904] -->
+<h2 class="sectionedit2" id="starting_r_installing_packages_getting_help_stopping_r">Starting R, installing packages, getting help, stopping R</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT2 SECTION "Starting R, installing packages, getting help, stopping R" [905-974] -->
+<h3 class="sectionedit3" id="start_r">Start R</h3>
+<div class="level3">
+
+<p>
+From a shell window type: 
+</p>
+<pre class="code">R</pre>
+
+<p>
+In the bash terminal the following text will appear:
+</p>
+<pre class="code">R version 2.10.0 (2009-10-26)
+Copyright (C) 2009 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type &#039;license()&#039; or &#039;licence()&#039; for distribution details.
+Natural language support but running in an English locale\\
+R is a collaborative project with many contributors.
+Type &#039;contributors()&#039; for more information and
+&#039;citation()&#039; on how to cite R or R packages in publications.
+Type &#039;demo()&#039; for some demos, &#039;help()&#039; for on-line help, or
+&#039;help.start()&#039; for an HTML browser interface to help.
+Type &#039;q()&#039; to quit R.</pre>
+
+<p>
+the <strong>&gt;</strong> sign and the following blinking cursor is advising you that you are in the R environment.
+Enter in <em class="u">administrative mode</em> type <strong>sudo R</strong> and you will be able to install the packages
+</p>
+<pre class="code">stefano@stefano-linux:~\$ sudo R</pre>
+
+</div>
+<!-- EDIT3 SECTION "Start R" [975-1979] -->
+<h3 class="sectionedit4" id="install_a_new_package">Install a new package</h3>
+<div class="level3">
+
+<p>
+install.packages(pkgs=“PACKAGE NAME”, lib= “library directories where to install the packages”, dependencies=TRUE)
+</p>
+<pre class="code">install.packages(pkgs=&quot;randomForest&quot;, lib= &quot;/usr/lib/R/site-library&quot;, dependencies=TRUE)</pre>
+
+<p>
+to verify which packages you have installed and where the library directories are, type:
+</p>
+<pre class="code">library()
+class                   Functions for Classification
+colorspace              Color Space Manipulation
+gdata                   Various R programming tools for data
+                        manipulation
+gtools                  Various R programming tools
+maptools                Tools for reading and handling spatial objects
+MASS                    Main Package of Venables and Ripleys MASS
+mda                     Mixture and flexible discriminant analysis
+nnet                    Feed-forward Neural Networks and Multinomial
+                        Log-Linear Models
+randomForest            Breiman and Cutlers random forests for
+                        classification and regression
+rgdal                   Bindings for the Geospatial Data Abstraction
+                        Library
+sp                      classes and methods for spatial data
+spatial                 Functions for Kriging and Point Pattern
+                        Analysis
+vcd                     Visualizing Categorical Data
+xtable                  Export tables to LaTeX or HTML
+Packages in library &#039;/usr/lib/R/site-library&#039;:
+base                    The R Base Package
+boot                    Bootstrap R (S-Plus) Functions (Canty)
+class                   Functions for Classification
+grid                    The Grid Graphics Package
+KernSmooth              Functions for kernel smoothing for Wand &amp; Jones
+                        (1995)
+lattice                 Lattice Graphics
+MASS                    Main Package of Venables and Ripleys MASS
+Matrix                  Sparse and Dense Matrix Classes and Methods
+methods                 Formal Methods and Classes
+mgcv                    GAMs with GCV/AIC/REML smoothness estimation
+                        and GAMMs by PQL
+nlme                    Linear and Nonlinear Mixed Effects Models
+nnet                    Feed-forward Neural Networks and Multinomial
+                        Log-Linear Models
+rpart                   Recursive Partitioning
+spatial                 Functions for Kriging and Point Pattern
+                        Analysis
+splines                 Regression Spline Functions and Classes
+stats                   The R Stats Package
+stats4                  Statistical Functions using S4 Classes
+ survival                Survival analysis, including penalised
+                        likelihood.
+tcltk                   Tcl/Tk Interface
+tools                   Tools for Package Development
+utils                   The R Utils Package
+(END)</pre>
+
+<p>
+To exit the list of library mode type q
+</p>
+<pre class="code">q</pre>
+
+</div>
+<!-- EDIT4 SECTION "Install a new package" [1980-4943] -->
+<h3 class="sectionedit5" id="getting_help">Getting help</h3>
+<div class="level3">
+
+<p>
+R gives help on function and commands. Online help also provides useful information. Getting used to R help is key to successful statistical modelling. The online help can be accessed in <abbr title="HyperText Markup Language">HTML</abbr> format by typing:
+</p>
+<pre class="code">help.start()</pre>
+
+<p>
+A keyword search is possible using the Search Engine and Keywords link.
+You can also use the help() or ? functions. For example, if we want to know how to use the matrix() function, the
+following two commands are equivalents:
+</p>
+<pre class="code">help(matrix)
+? matrix</pre>
+
+<p>
+Once you are in the help section, you can use “enter” to scroll down the menu and q to go back to the R prompt.<br/>
+
+</p>
+
+<p>
+The <strong>str(object.name)</strong> command is used to display the internal structure of an R object<br/>
+
+The <strong>summary(object.name)</strong> command gives a <em>summary</em> of a <strong>a</strong> object, usually a statistical summary but it is <em>generic</em> meaning it has different operations for different classes of <strong>a</strong><br/>
+
+</p>
+
+<p>
+<strong>dir()</strong> show files in the current directory<br/>
+
+<strong>ls.str()</strong> str() for each variable in the search path<br/>
+
+<strong>getwd()</strong> is asking for the current working directory<br/>
+
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Getting help" [4944-6020] -->
+<h3 class="sectionedit6" id="stop_r">Stop R</h3>
+<div class="level3">
+<pre class="code">q()</pre>
+
+<p>
+When you quit, R will ask you if you want to save the workspace (that is, all of the variables you have defined in this session); say “no” in order to avoid clutter.
+</p>
+
+<p>
+Should an R command seem to be stuck or take longer than you’re willing to wait, type <strong>Control-C</strong>.<br/>
+
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Stop R" [6021-6322] -->
+<h3 class="sectionedit7" id="calling_linux_shell_scripting_commands">Calling Linux shell scripting commands</h3>
+<div class="level3">
+
+<p>
+<strong>system(“…”)</strong> is used to call any Linux scripting commands within the R environment
+</p>
+<blockquote><div class="no">
+</div></blockquote>
+
+<p>
+&gt; system(&quot;pwd&quot;)
+</p>
+</div></blockquote>
+
+<p>
+
+i
+</p>
+
+<p>
+s equal to write 
+getwd()
+</p>
+
+</div>
+<!-- EDIT7 SECTION "Calling Linux shell scripting commands" [6323-6507] -->
+<h2 class="sectionedit8" id="inputs_and_outputs">Inputs and outputs</h2>
+<div class="level2">
+
+<p>
+Once you have opened an R session and eventually loaded the relevant library you can start exploring your data
+</p>
+
+</div>
+<!-- EDIT8 SECTION "Inputs and outputs" [6508-6651] -->
+<h3 class="sectionedit9" id="loading_data">Loading data</h3>
+<div class="level3">
+
+<p>
+<strong>load(file.name)</strong> function, loads R type datasets written with the save function 
+ load(file.name) 
+</p>
+
+</div>
+<!-- EDIT9 SECTION "Loading data" [6652-6777] -->
+<h3 class="sectionedit10" id="saving_data">Saving data</h3>
+<div class="level3">
+
+<p>
+<strong>save(object.name.1, object.name.2, … )</strong> function saves the specified object in XDR platform independent binary format
+</p>
+
+</div>
+<!-- EDIT10 SECTION "Saving data" [6778-6923] -->
+<h3 class="sectionedit11" id="reading_tables">Reading tables</h3>
+<div class="level3">
+
+<p>
+<strong>read.table()</strong> Reads a file in table format and creates a data frame from it, with cases corresponding to lines and variables to fields in the file. (Use the help menu for details). For instance the function read.csv() is set to read comma separated files. read.csv(file.name, header = TRUE, sep = “,”, quote=“\”“, dec=”.“, fill =TRUE,  comment.char=”“, …)
+</p>
+<pre class="code">landuse04=read.csv(&quot;~/ost4sem/studycase/Lab_scripts/inputs/2004_landuse.csv&quot;, header=TRUE, sep=&quot;,&quot;, dec=&quot;.&quot;, na.string=&quot;:&quot;)</pre>
+
+</div>
+<!-- EDIT11 SECTION "Reading tables" [6924-7437] -->
+<h3 class="sectionedit12" id="show_variables_and_data_currently_existing_in_your_workspace">Show variables and data currently existing in your workspace</h3>
+<div class="level3">
+
+<p>
+the list function ls() 
+</p>
+<pre class="code">ls()
+&gt; [1] &quot;landuse04&quot;</pre>
+
+</div>
+<!-- EDIT12 SECTION "Show variables and data currently existing in your workspace" [7438-7560] -->
+<h3 class="sectionedit13" id="save_and_remove_data_or_r_objects">Save and remove data or R objects</h3>
+<div class="level3">
+
+<p>
+<strong>save(file, …)</strong> saves the specified objects (…) in the XDR platform-independent binary format
+</p>
+<pre class="code">save(landuse04, file=&quot;~/ost4sem/studycase/Lab_scripts/outputs/landuse2004&quot;)</pre>
+
+<p>
+<strong>save.image(file)</strong> saves all objects
+</p>
+<pre class="code">save(file=&quot;~/ost4sem/studycase/Lab_scripts/outputs/landuse2004_and_more&quot;)</pre>
+
+<p>
+<strong>rm(file, …)</strong> removes objects which you have created or data you have uploaded
+</p>
+<pre class="code">rm(landuse04)</pre>
+
+<p>
+No objects are present in the memory now, use ls function to check it
+</p>
+<pre class="code">ls()
+character(0)</pre>
+
+<p>
+But because you saved the landuse2004 data you can reload it using the <strong>load()</strong> function and check its structrure using the <strong>str</strong> function
+</p>
+<pre class="code">load(&quot;~/ost4sem/studycase/Lab_scripts/outputs/landuse2004&quot;)
+str(landuse04)</pre>
+
+<p>
+as a result you will see the following information:
+</p>
+<pre class="code">&#039;data.frame&#039;:   72 obs. of  13 variables:                    
+$ geographic.Unit                     : Factor w/ 72 levels &quot;be10 Région de Bruxelles-Capitale/Brussels Hoofdstedelijk Gewest&quot;,..: 20 17 16 22 19 18 15 2 1 8 ...                                                                                                                                            
+ $ landuse                             : logi  NA NA NA NA NA NA ...                                                                                   
+ $ total.Total.area                    : num  NA NA NA NA NA ...                                                                                       
+ $ agriarea.Utilized.agricultural.area : num  NA NA NA NA NA ...                                                                                       
+ $ arabland.Arable.land                : num  NA NA NA NA NA ...                                                                                       
+ $ forest.Wooded.area                  : num  NA NA NA NA NA ...
+ $ garden.Private.gardens              : num  NA NA NA NA NA NA 0.2 0 0 0.1 ...
+ $ grasland.Permanent.grassland        : num  NA NA NA NA NA ...
+ $ greenfod.Green.fodder.on.arable.land: num  NA NA NA NA NA ...
+ $ fallow.Fallow                       : num  NA NA NA NA NA NA 23.6 0 0 7.4 ...
+ $ olivepl.Olive.plantations           : int  NA NA NA NA NA NA 0 0 0 0 ...
+ $ permcrop.Permanent.crops            : num  NA NA NA NA NA NA 21.4 0 0 19.2 ...
+ $ vineyard.Vineyards                  : num  NA NA NA NA NA NA 0 0 0 0 ...
+&gt;</pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT13 SECTION "Save and remove data or R objects" [7561-9972] -->
+<h2 class="sectionedit14" id="variables_and_calculations">Variables and calculations</h2>
+<div class="level2">
+
+<p>
+R has an interactive calculations function. The command is executed and results are displayed.<br/>
+
+R uses:  +, -, /, and ^  for addition, subtraction, multiplication, division and exponentiation, respectively.
+</p>
+<pre class="code">2+2 </pre>
+
+<p>
+R will execute and display
+</p>
+<pre class="code">&gt; [1] 4</pre>
+
+<p>
+the [1] at the beginning of the line is just R printing an index of element numbers. If you print a result that displays on multiple lines, R will put an index at the beginning of each line.
+</p>
+<pre class="code">2*5
+[1] 10</pre>
+<pre class="code">10/2
+[1] 5</pre>
+<pre class="code">2^3
+[1] 8</pre>
+
+</div>
+<!-- EDIT14 SECTION "Variables and calculations" [9973-10506] -->
+<h3 class="sectionedit15" id="variable_settings">Variable settings</h3>
+<div class="level3">
+
+<p>
+you can simply create a variable by typing:
+<strong>variable name = function, constant or calculation.</strong> <br/>
+
+Example:<br/>
+
+</p>
+<pre class="code">x =3*2</pre>
+
+<p>
+The results of 3*2 is not displayed. In fact, the x variable value is stored in the memory without printing it. To display the x value you can use: 
+</p>
+<pre class="code">print(x) 
+[1] 6</pre>
+
+<p>
+or 
+</p>
+<pre class="code">x
+[1] 6</pre>
+
+<p>
+Most users apply a similar syntax using the <strong>←</strong> character string instead of the = character.
+</p>
+<pre class="code">x &lt;- 3
+x
+[1] 3</pre>
+
+</div>
+<!-- EDIT15 SECTION "Variable settings" [10507-10961] -->
+<h1 class="sectionedit16" id="also_remember_that_r_is_case_sensitive_print_x_or_x_is_different_from_x_for_instance">Also remember that R is case sensitive, print(X) or X is different from x. For instance:</h1>
+<div class="level1">
+<pre class="code">a &lt;- 3
+a
+[1] 3
+A
+Error: object &#039;A&#039; not found</pre>
+
+<p>
+Variable names in R must begin with a letter, followed by alphanumeric characters. 
+</p>
+<pre class="code">3e = 2
+Error: unexpected input in &quot;3e &quot;</pre>
+
+<p>
+In long names you can use ”.“ or “_” as in: 
+</p>
+
+<p>
+very.long.variable.name.X or very<em>long</em>variable<em>name</em>Y but you can’t use blank spaces in variable names. 
+Avoid single letter names such us: c, l, q, t, C, D, F, I, and T, which are either built-in R functions or hard to tell apart.
+</p>
+<pre class="code">very.long.variable.name.X3 = 3
+very.long.variable.name.X3
+[1] 3</pre>
+
+</div>
+<!-- EDIT16 SECTION "Also remember that R is case sensitive, print(X) or X is different from x. For instance:" [10962-11592] -->
+<h3 class="sectionedit17" id="interactive_calculations">Interactive calculations</h3>
+<div class="level3">
+
+<p>
+Once you have defined the variables you can use them in interactive calculations :<br/>
+
+</p>
+
+<p>
+  b = 2<em>2
+  a = 2</em>3
+</p>
+<pre class="code">a*b
+[1] 24</pre>
+
+<p>
+And you can use variables in formulas :<br/>
+
+</p>
+<pre class="code">c = 60 /(a+b)
+c</pre>
+
+<p>
+ [1] 6
+</p>
+
+<p>
+typing a;b you can display a and b variables at the same time:<br/>
+
+</p>
+<pre class="code">a;b
+[1] 6
+[1] 4</pre>
+
+<p>
+If you omit to close a parenthesis, R will display a <em>+</em> sign. 
+</p>
+<pre class="code">c = 60 /(a+b
++</pre>
+
+<p>
+In this case you can either close the parenthesis in the next line or type ctrl + c to go back to a new starting prompt. 
+</p>
+
+</div>
+<!-- EDIT17 SECTION "Interactive calculations" [11593-12123] -->
+<h3 class="sectionedit18" id="operators_order">Operators order</h3>
+<div class="level3">
+
+<p>
+When using more complex formulas be aware of the importance of the order of operators. Parenthesis have priority on exponentiation, or powers, then comes multiplication and division, and finally addition and subtraction. The following command:<br/>
+
+</p>
+<pre class="code">C = ((a + 2 * sqrt(b))/(a + 8 * sqrt(b)))/2
+C
+[1] 0.2272727</pre>
+
+<p>
+is different from:<br/>
+
+</p>
+<pre class="code">C = a + 2 * sqrt(b) / a + 8 * sqrt(b) / 2
+C
+[1] 14.66667</pre>
+
+<p>
+as well as 
+</p>
+<pre class="code">100-40/2^4
+[1] 97.5</pre>
+
+<p>
+is different from:<br/>
+
+</p>
+<pre class="code">(100-40)/2^4 
+[1] 3.75</pre>
+
+<p>
+and
+</p>
+<ol>
+<li class="level1"><div class="li">2^4</div>
+</li>
+</ol>
+
+<p>
+  [1] -16
+</p>
+
+<p>
+is different from: <br/>
+
+</p>
+<pre class="code">(-2)^4
+[1] 16</pre>
+
+</div>
+<!-- EDIT18 SECTION "Operators order" [12124-12701] -->
+<h3 class="sectionedit19" id="logical_values">Logical values</h3>
+<div class="level3">
+
+<p>
+R can perform conditional tests and generate True or False values as results. <br/>
+
+</p>
+<pre class="code">x = 60
+x &gt; 100
+[1] FALSE</pre>
+<pre class="code">x &gt;   3
+[1] TRUE</pre>
+<pre class="code">x = 100
+[1] TRUE</pre>
+
+<p>
+Logical values can be stored as variables: 
+</p>
+<pre class="code">x = 60
+logical.value =  x &gt;  3
+logical.value
+[1] TRUE</pre>
+
+</div>
+<!-- EDIT19 SECTION "Logical values" [12702-12991] -->
+<h1 class="sectionedit20" id="r_objects">R objects</h1>
+<div class="level1">
+
+<p>
+The entities that R operates on are technically known as objects. Examples are vectors of numeric (real) or complex values, vectors of logical values and vectors of character strings. These are known as “atomic” structures since their components are all of the same type, or mode (namely numeric, complex, logical, character and raw). 
+R also operates on objects called lists, which are of mode list. These are ordered sequences of objects which individually can be of any mode. Lists are known as “recursive” rather than atomic structures since their components can themselves be lists in their own right.<br/>
+
+</p>
+
+<p>
+The other recursive structures are those of mode function and expression. Functions are the objects that form part of the R system along with similar user written functions, which we discuss in some detail later. Expressions as objects form an advanced part of R which will not be discussed in this guide, except indirectly when we discuss formulae used with modeling in R.<br/>
+
+</p>
+
+<p>
+By the mode of an object we mean the basic type of its fundamental constituents. This is a special case of a “property” of an object. Another property of every object is its length. The functions mode(object) and length(object) can be used to find out the mode and length of any defined structure 10.<br/>
+
+</p>
+
+<p>
+Further properties of an object are usually provided by attributes(object) (see &#039;Getting and setting attributes&#039;). Because of this, mode and length are also called “intrinsic attributes” of an object. For example, if z is a complex vector of length 100, then in an expression mode(z) is the character string “complex” and length(z) is 100.<br/>
+
+</p>
+
+</div>
+<!-- EDIT20 SECTION "R objects" [12992-14666] -->
+<h2 class="sectionedit21" id="vectors">Vectors</h2>
+<div class="level2">
+
+<p>
+Vectors are combinations of scalars in a string structure. Vector values must all be of the same mode. Thus any given vector must be unambiguously either logical, numeric, complex, character or raw. (The only apparent exception to this rule is the special “value” listed as NA for quantities which are not available, but in fact there are several types of NA). Note that a vector can be empty and still have a mode. For example the empty character string vector is listed as character(0) and the empty numeric vector as numeric(0). <br/>
+
+</p>
+
+<p>
+<strong>c(…)</strong> is the generic function to combine arguments with the default forming a vector; with RECURSIVE=TRUE descends through lists combining all elements into one vector.<br/>
+
+To see details for the generic function c(…) and combine arguments forming a vector: 
+</p>
+<pre class="code">? c </pre>
+
+<p>
+As an example we can create a simple vector of seven values by typing: <br/>
+
+</p>
+<pre class="code">c(2,3,4,5,10,5,8)
+[1]  2  3  4  5 10  5  8</pre>
+
+<p>
+We can generate a sequence using the syntax :<br/>
+
+</p>
+<pre class="code">1:10
+[1]  1  2  3  4  5  6  7  8  9 10</pre>
+
+<p>
+<strong>seq()</strong> <br/>
+
+We can generate the same sequence of <em>1:10</em> command using the seq() function. The syntax will be :<br/>
+
+</p>
+<pre class="code"> seq(1,10)
+[1]  1  2  3  4  5  6  7  8  9 10</pre>
+
+<p>
+The seq() function “seq(from = number, to = number, by = number)” allows you to create a vector starting from one value to another by a defined increment:<br/>
+
+</p>
+<pre class="code">seq(1,10, 0.25)
+[1]  1.00  1.25  1.50  1.75  2.00  2.25  2.50  2.75  3.00  3.25  3.50  3.75
+[13]  4.00  4.25  4.50  4.75  5.00  5.25  5.50  5.75  6.00  6.25  6.50  6.75
+[25]  7.00 7.25  7.50  7.75  8.00  8.25  8.50  8.75  9.00  9.25  9.50  9.75
+[37]  10.0</pre>
+<pre class="code">seq(from = 1, to = 10, by =  0.25)
+[1]  1.00  1.25  1.50  1.75  2.00  2.25  2.50  2.75  3.00  3.25  3.50  3.75
+[13]  4.00  4.25  4.50  4.75  5.00  5.25  5.50  5.75  6.00  6.25  6.50  6.75
+[25]  7.00  7.25  7.50  7.75  8.00  8.25  8.50  8.75  9.00  9.25  9.50  9.75
+[37] 10.00</pre>
+
+<p>
+<strong>rep()</strong>  The replicate function  “rep(x,times)”  allows you to replicate a vector several times in a more complex vector. 
+Calculations can also be included to form vectors, and functions can be combined in the same command:<br/>
+
+</p>
+<pre class="code">one2tree = 1:3 
+rep(one2tree,10) </pre>
+
+<p>
+ [1] 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3
+</p>
+<pre class="code">c(10*0:10)
+[1]   0  10  20  30  40  50  60  70  80  90 100</pre>
+<pre class="code">rep(c (5*40:1, 5*1:40, 5, 6,7,8, 3, 2001:2014), 2)
+[1]  200  195  190  185  180  175  170  165  160  155  150  145  140  135  130
+[16]  125  120  115  110  105  100   95   90   85   80   75   70   65   60   55
+[31]   50   45   40   35   30   25   20   15   10    5    5   10   15   20   25
+[46]   30   35   40   45   50   55   60   65   70   75   80   85   90   95  100
+[61]  105  110  115  120  125  130  135  140  145  150  155  160  165  170  175
+[76]  180  185  190  195  200    5    6    7    8    3 2001 2002 2003 2004 2005
+[91] 2006 2007 2008 2009 2010 2011 2012 2013 2014  200  195  190  185  180  175
+[106]  170  165  160  155  150  145  140  135  130  125  120  115  110  105  100
+[121]   95   90   85   80   75   70   65   60   55   50   45   40   35   30   25
+[136]   20   15   10    5    5   10   15   20   25   30   35   40   45   50   55
+[151]   60   65   70   75   80   85   90   95  100  105  110  115  120  125  130
+[166]  135  140  145  150  155  160  165  170  175  180  185  190  195  200    5
+[181]    6    7    8    3 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011
+[196] 2012 2013 2014</pre>
+<pre class="code">rep(seq(1,3,0.5),3)
+[1] 1.0 1.5 2.0 2.5 3.0 1.0 1.5 2.0 2.5 3.0 1.0 1.5 2.0 2.5 3.0</pre>
+
+</div>
+<!-- EDIT21 SECTION "Vectors" [14667-18229] -->
+<h2 class="sectionedit22" id="array">Array</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT22 SECTION "Array" [18230-18248] -->
+<h2 class="sectionedit23" id="matrix">Matrix</h2>
+<div class="level2">
+
+<p>
+Matrices, or more generally arrays, are multi-dimensional generalizations of vectors. In fact, they are vectors that can be indexed by two or more indices and will be printed in special ways. See Arrays and matrices.<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Factors provide compact ways to handle categorical data. (See Factors).</div>
+</li>
+<li class="level2"><div class="li"> Lists are a general form of vector in which the various elements need not be the same type, and are often themselves vectors or lists. Lists provide a convenient way to return the results of a statistical computation. (See Lists).</div>
+</li>
+</ul>
+
+<p>
+<br/>
+Matrix() function creates a matrix from the given set of values. We use the matrix(x, nrow=, ncol=) function to set the matrix cell values, the number of rows and the number of columns. We can use the colnames() and rownames() functions to set the column and row names of the matrix-like object.
+</p>
+<pre class="code">matrix(data = NA, nrow = 2, ncol = 3) 
+example.matrix = matrix(0,2,3)
+example.matrix
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0</pre>
+<pre class="code">example.matrix[1,]
+[1] 0 0 0</pre>
+<pre class="code">example.matrix[,2]
+[1] 0 0</pre>
+<pre class="code">example.matrix[1,] = 1:3
+example.matrix[2,] = c(5,10,4)
+example.matrix
+     [,1] [,2] [,3]
+[1,]    1    2    3
+[2,]    5   10    4</pre>
+
+<p>
+  matrix.head = c(“col a”,”col b“,”column c“)
+</p>
+<pre class="code">matrix.side = c(&quot;first raw&quot;,&quot;second raw&quot;)
+str(matrix.side)
+chr [1:2] &quot;first raw&quot; &quot;second raw&quot;</pre>
+
+<p>
+When using ” “  we create and refer to a character type “chr” input
+</p>
+<pre class="code">numeric.vector = c(rep(c (5*10:1, 5, 6), 2))
+character.vector  = as.character(numeric.vector)
+str(character.vector)
+chr [1:24] &quot;50&quot; &quot;45&quot; &quot;40&quot; &quot;35&quot; &quot;30&quot; &quot;25&quot; &quot;20&quot; &quot;15&quot; &quot;10&quot; ...</pre>
+<pre class="code">colnames(example.matrix) = matrix.head
+rownames(example.matrix) = matrix.side
+example.matrix
+           col a col b column c
+first row      1     2        3
+second row     5    10        4</pre>
+<pre class="code">str(example.matrix)
+num [1:2, 1:3] 1 5 2 10 3 4
+ - attr(*, &quot;dimnames&quot;)=List of 2
+  ..$ : chr [1:2] &quot;first row&quot; &quot;second row&quot;
+  ..$ : chr [1:3] &quot;col a&quot; &quot;col b&quot; &quot;column c&quot;</pre>
+
+</div>
+<!-- EDIT23 SECTION "Matrix" [18249-20259] -->
+<h2 class="sectionedit24" id="data_frames">Data Frames</h2>
+<div class="level2">
+
+<p>
+Data frames are matrix-like structures, in which the columns can be of different types. Think of data frames as `data matrices&#039; with one row per observational unit but with (possibly) both numerical and categorical variables. Many experiments are best described by data frames: the treatments are categorical but the response is numeric. 
+</p>
+
+</div>
+<!-- EDIT24 SECTION "Data Frames" [20260-20623] -->
+<h2 class="sectionedit25" id="functions">Functions</h2>
+<div class="level2">
+
+<p>
+Functions are themselves objects in R which can be stored in the project&#039;s workspace. This provides a simple and convenient way to extend R. (See &#039;Writing your own functions&#039;). 
+</p>
+
+</div>
+<!-- EDIT25 SECTION "Functions" [20624-] -->

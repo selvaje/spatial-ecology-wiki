@@ -1,0 +1,169 @@
+====== Geospatial Python crash course, part 2 ======
+
+===== Some examples of code =====
+
+Some example of reasonable complicated programs:
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/01/SimpleGIS.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/02/fmtDecode.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/02/GeoJSON.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/02/structDemo.py }}
+
+===== Playing with network =====
+
+Python is a general purpose language, so it can be used for network applications.
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/01_urlretrieve.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/02_earthquake-data.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/03_ftp.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/04_ftp-url.py }}
+
+===== Zip files and others =====
+
+It can be used to manipulate archive files:
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/05_zipfile.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/06_zipfile-loop.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/07_tarfile-create.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/08_tarfile-extract.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/09_cloud-zipfile.py }}
+
+
+===== Playing with XML =====
+
+
+Many useful file formats are of XML type (e.g. KML) and Python has a good deals of modules to manage them:
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/10_kml-minidom.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/01_kml-etree.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/12_make-kml-strings.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/13_make-kml-etree.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/14_gpx-soup.py }}
+
+===== Playing with some geospatial modules =====
+
+Some very basic geospatial snippets of code;
+
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/15_shapely-wkt.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/16_ogr-wkt.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/17_json.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/18_geojson.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/19_ogr.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/20_pyshp.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/21_dbfpy.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/22_shapely.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/23_gdal.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/24_numpy.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/25_PIL.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/26_PNGC.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/04/27_PDF.py }}
+
+===== Using OGR =====
+
+Let us see some very basic useful snippets of OGR code which could be combined together to build more complicated things:
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/03/01_ogr.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/03/02_ogr.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/03/03_ogr.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/03/04_ogr.py }}
+
+Playing with projection in OGR and UTM modules:
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/06-utm2latlon.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/07-latlon2utm.py }}
+
+//Hands on work: write a couple of programs to convert coordinates taken from input (hint: sys.stdin), command line, etc.
+//
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/08-reprojection.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/09-read-shp.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/10-change-shp.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/11-add-field.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/12-merge.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/13-split.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/14-pip.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/15-attr-sel.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/16-dot-density.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/17-choropleth.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/18-excel.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/05/19-nmea.py }}
+
+
+===== Playing with rasters =====
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/01-swap-bands.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/02-histogram.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/03-stretch.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/04-clip.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/05-classify.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/06-threshold.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/07-extract.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/08-draw.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/06/09-change.py }}
+
+
+
+
+
+----
+
+===== Some introductory readings =====
+
+[[http://en.wikipedia.org/wiki/Flood_fill|Flood fill algotithms]]
+
+[[http://en.wikipedia.org/wiki/Dijkstra's_algorithm|Dijkstra algorithm]]
+
+[[http://en.wikipedia.org/wiki/A-star_algorithm|A* simple algorithm]]
+
+[[https://www.wunderground.com/weather/api/|Weather underground API]]
+

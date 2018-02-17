@@ -1,0 +1,108 @@
+====== DESCRIPTION ======
+
+A nice combination of [[ http://km.fao.org/OFwiki/index.php/Open_Foris_Geospatial_Toolkit | Open Foris Geospatial Toolkit ]], in particular oft-stat, and AWK to calculate r pearson coefficent between two immages.\\
+\\
+oft-pearson.bash  <input> <output> [mask]\\
+\\
+The output is a text file reporting the r pearson coefficient.
+The mask can be 0-1, 0 for no data and 1 for data, or 0-1-2-3......\\
+In case of a mask with multi-class it reports the r pearson for each class.\\
+It can be used also to calculate how the r-pearson change at geographical level, simpling creating a mask id where the pixel size is 10 time the pixel size of the input.tif. 
+The results output txt file will report a r-pearson value for each id.
+The output txt can then been used to reclassify the id-image using [[ http://km.fao.org/OFwiki/index.php/Oft-reclass | oft-reclass. ]]\\
+In case of species distribution modeling can be used to identify local correlation between two variables or between the results of two models.\\
+\\
+Download the file oft-pearson.bash
+    chmod 777 oft-pearson.bash
+    sudo mv oft-pearson.bash /usr/local/bin/
+
+
+<code bash| oft-pearson.bash>
+
+#!/bin/bash
+# giuseppe.amatulli@gmail.com  18
+# calculate the  pearson's coefficient r between two bands
+# $1 = input image containing the two bands
+# $2 = txt file containing the r coefficent for each class
+# $3 = input image containg categories data or mask image.
+# 0 considering as no data
+# 1 2 3 categories classes
+# slightly modified by anssi to check the nbr of input image bands etc
+
+version=1.01
+
+args=$#
+
+if [ $args != 2 -a $args != 3 ] ; then
+echo "Usage <input> <output> [mask]"
+echo "Input has to be an image with 2 band"
+echo "Output is a text file reporting the r for each class"
+exit
+elif [ $args -eq 3 ] ; then 
+if [ ! -f $3  ]  ; then 
+echo "Mask file missing"
+exit
+else
+UseMask="-um $3"     
+fi
+fi
+
+echo "Calculating pearson cofficient for each class using file $1"
+
+if [ -f $3  ]  ; then 
+input=$1
+bands=`gdalinfo $input|grep -c  ^Band" "`
+    
+if [ $bands -ne 2 ] ; then
+
+echo "The input image has to have two bands"
+exit
+fi
+else
+echo "File $input does not exist"
+fi
+
+	
+
+
+# force to be Float64 in case of high number. 
+
+oft-calc  -ot Float64 $input  /tmp/tifb1xb2$$.tif  <<EOF
+5
+#1 #2 *
+#1 1 *
+#2 1 *
+#1 #1 *
+#2 #2 *
+EOF
+
+oft-stat -i /tmp/tifb1xb2$$.tif   -o /tmp/tifb1xb2$$.txt $UseMask  -nostd &>/dev/null
+
+# formula for the pearson coefficient
+# sum obtained using  average * obs
+# print (obs * xysum - xsum * ysum)/((sqrt(obs*x2sum - xsum*xsum)) * (sqrt(obs*y2sum - ysum*ysum)))
+
+#1 = x
+#2 = y
+
+#1 #2 *     xysum  $3   
+#1 1 *      xsum   $4    
+#2 1 *      ysum   $5    
+#1 #1 *     x2sum  $6   
+#2 #2 *     y2sum  $7   
+
+# in case of using mask as uncillary layers it return the pearson for each class results
+# use oft-reclass if you want obtained a map of pearson for each class.
+
+if [ -n "$UseMask"  ] ; then 
+awk '{ print $1 , (($2*$3*$2 - $4*$2*$5*$2))/((sqrt($2*$6*$2 - $4*$2*$4*$2))*(sqrt($2*$7*$2 - $2*$5*$2*$5 )))}' /tmp/tifb1xb2$$.txt > $2
+else 
+awk '{ print      (($2*$3*$2 - $4*$2*$5*$2))/((sqrt($2*$6*$2 - $4*$2*$4*$2))*(sqrt($2*$7*$2 - $2*$5*$2*$5 )))}' /tmp/tifb1xb2$$.txt > $2
+fi 
+
+rm /tmp/tifb1xb2$$.txt /tmp/tifb1xb2$$.tif
+
+</code>
+
+
+\\

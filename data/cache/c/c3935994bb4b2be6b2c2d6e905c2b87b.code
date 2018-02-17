@@ -1,0 +1,4 @@
+<span class="co0"># Make sure rasql is in your path</span>
+<span class="kw3">source</span> <span class="sy0">/</span>etc<span class="sy0">/</span>profile.d<span class="sy0">/</span>rasdaman
+<span class="co0"># Run the query</span>
+rasql <span class="re5">-q</span> <span class="st_h">'SELECT m FROM RAS_COLLECTIONNAMES as m&quot; --out string</span>

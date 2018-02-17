@@ -1,0 +1,146 @@
+
+<h2 class="sectionedit1" id="name">NAME</h2>
+<div class="level2">
+
+<p>
+<strong>ost4sem_average_w.sh</strong>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "NAME" [1-44] -->
+<h2 class="sectionedit2" id="description">DESCRIPTION</h2>
+<div class="level2">
+
+<p>
+A nice combination of AWK script with bash argumens request.
+</p>
+
+<p>
+Calculate wighted average of column txt files base on CLASS/ID column and WEIGHTED  column<br/>
+
+the CLASS/ID column can be a number or a string<br/>
+
+the WEIGHTED column has to be a number <br/>
+
+all the row and column  are processed<br/>
+
+for the  WEIGHTED column the sum is reported<br/>
+
+in case no CLASS/ID column in the file crate a dummy variable (e.g 1 ) for all che row <br/>
+
+the file has to be sorted base on the  CLASS/ID column!!!<br/>
+
+more input_s.asc <br/>
+
+w v1 v2 v3 ID w v4 ID <br/>
+
+2 2  3  4   1 1 4  1 <br/>
+
+1 2  3  5   1 2 4  2 <br/>
+
+1 2  3  4   2 2 4  2 <br/>
+
+1 2  3  4   2 3 6  2 <br/>
+
+2 4  5  7   3 4 6  3 <br/>
+
+3 6  7  7   3 5 6  3 <br/>
+
+more output.asc <br/>
+
+w     v1    v2  v3  ID  w   v4   ID<br/>
+
+3.00 2.00 3.00 4.33 1 1.33 4.00 1.33<br/>
+
+2.00 2.00 3.00 4.00 2 2.50 5.00 2.00<br/>
+
+5.00 5.20 6.20 7.00 3 4.60 6.00 3.00<br/>
+
+</p>
+
+</div>
+<!-- EDIT2 SECTION "DESCRIPTION" [45-920] -->
+<h2 class="sectionedit3" id="synopsis">SYNOPSIS</h2>
+<div class="level2">
+
+<p>
+sh ~/sh/average.sh input<em>s.asc output.asc <br/>
+
+then insert manualy the request <br/>
+
+or in case of bash script use <abbr title="End of file">EOF</abbr> sintax<br/>
+
+sh ./average.sh input</em>s.asc output.asc «<abbr title="End of file">EOF</abbr> <br/>
+
+y<br/>
+
+5<br/>
+
+6<br/>
+
+2 <br/>
+
+<abbr title="End of file">EOF</abbr><br/>
+
+</p>
+
+<p>
+$1 input.asc<br/>
+
+$2 output.asc<br/>
+
+</p>
+
+</div>
+<!-- EDIT3 SECTION "SYNOPSIS" [921-1180] -->
+<h2 class="sectionedit4" id="synopsis1">SYNOPSIS</h2>
+<div class="level2">
+
+<p>
+~/sh/average.sh input_s.asc output.asc<br/>
+
+</p>
+
+<p>
+reply to the questions manualy<br/>
+
+or use the <abbr title="End of file">EOF</abbr> sintax<br/>
+
+<br/>
+
+sh ./average.sh input_s.asc output.asc «<abbr title="End of file">EOF</abbr><br/>
+
+y/n          “The first row is an header (y/n) = “<br/>
+
+1/2/3/4/…    “Position of the master ClASS/ID column (1/2/3/4/….)  = “<br/>
+
+1/2/3/4/…    “Precision of the average results (Decimal number 1/2/3/… ) = “<br/>
+
+<abbr title="End of file">EOF</abbr><br/>
+
+</p>
+
+</div>
+<!-- EDIT4 SECTION "SYNOPSIS" [1181-1588] -->
+<h2 class="sectionedit5" id="download">DOWNLOAD</h2>
+<div class="level2">
+
+<p>
+Download python script: <a href="http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_average_w.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_average_w.sh" rel="nofollow noopener"> ost4sem_average_w.sh </a><br/>
+
+</p>
+
+</div>
+<!-- EDIT5 SECTION "DOWNLOAD" [1589-1733] -->
+<h2 class="sectionedit6" id="example">EXAMPLE</h2>
+<div class="level2">
+<pre class="code bash"><span class="kw2">chmod</span> <span class="nu0">777</span> ost4sem_average.sh
+<span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">2</span>,<span class="nu0">2</span> input.asc <span class="sy0">&gt;</span> input_s.asc
+~<span class="sy0">/</span>sh<span class="sy0">/</span>ost4sem_average.sh input_s.asc output.asc <span class="co2">&lt;&lt;EOF
+y
+2
+4
+EOF</span></pre>
+
+</div>
+<!-- EDIT6 SECTION "EXAMPLE" [1734-] -->

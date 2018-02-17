@@ -1,0 +1,51 @@
+====== Exercise 7a: Download vectors from Openstreetmap ======
+pktools: pkinfo
+GDAL/OGR: gdaltransform
+bash: wget, mv
+
+__Create a directory for this exercise__
+
+<code bash>
+mkdir -p ${OUTPUTDIR}/exercise7
+</code>
+
+__Find bounding box in ETRS89/LAEA coordinates: __
+
+<code bash>
+pkinfo -bb -i ${LANDSATDIR}/${LANDSATIMG}
+</code>
+
+--ulx=3200000 --uly=3223750 --lrx=3394000 --lry=3091500
+
+__Convert to WGS85 (epsg:4326)__
+
+<code bash>
+gdaltransform -s_srs epsg:3035 -t_srs epsg:4326
+3200000 3223750
+-6.12149425235321 51.005834806829 0
+3394000 3091500
+-3.05910611391153 50.189810829506 0
+</code>
+
+In format minx,miny,maxx,maxy:\\
+<code>
+-6.1214942523532, 50.189810829506, -3.05910611391153, 51.005834806829 
+</code>
+
+You can download a vector in your browser (or wget)
+
+<note warning>
+Downloading can take a while (425 MB to download)
+</note>
+
+<code bash>
+wget http://overpass.osm.rambler.ru/cgi/xapi_meta?*[bbox=-6.121,50.190,-3.059,51.0058]
+</code>
+
+You will get a file in XML format: xapi_meta.xml 
+
+__Rename to osm__
+
+<code bash>
+mv ~/Downloads/xapi_meta.xml ${OUTPUTDIR}/exercise7/xapi_meta.osm
+</code>

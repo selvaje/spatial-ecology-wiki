@@ -1,0 +1,12 @@
+<span class="st0">&quot;&quot;&quot;Convert a shapefile from lat/lon to UTM&quot;&quot;&quot;</span>
+<span class="kw1">import</span> shapefile
+<span class="kw1">import</span> utm
+r <span class="sy0">=</span> shapefile.<span class="me1">Reader</span><span class="br0">&#40;</span><span class="st0">&quot;NYC_MUSEUMS_GEO&quot;</span><span class="br0">&#41;</span>
+w <span class="sy0">=</span> shapefile.<span class="me1">Writer</span><span class="br0">&#40;</span>r.<span class="me1">shapeType</span><span class="br0">&#41;</span>
+w.<span class="me1">fields</span> <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>r.<span class="me1">fields</span><span class="br0">&#41;</span>
+w.<span class="me1">records</span>.<span class="me1">extend</span><span class="br0">&#40;</span>r.<span class="me1">records</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="kw1">for</span> s <span class="kw1">in</span> r.<span class="me1">iterShapes</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+  lon<span class="sy0">,</span>lat <span class="sy0">=</span> s.<span class="me1">points</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+  y<span class="sy0">,</span>x<span class="sy0">,</span>zone<span class="sy0">,</span>band <span class="sy0">=</span> utm.<span class="me1">from_latlon</span><span class="br0">&#40;</span>lat<span class="sy0">,</span>lon<span class="br0">&#41;</span>
+  w.<span class="me1">point</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>
+w.<span class="me1">save</span><span class="br0">&#40;</span><span class="st0">&quot;NYC_MUSEUMS_UTM&quot;</span><span class="br0">&#41;</span>

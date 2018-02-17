@@ -1,0 +1,149 @@
+====== Getting started with Qgis ======
+
+To get familiar with Qgis we will look at the following:
+  - Qgis graphical user interface
+  - Qgis Plugins
+  - Import data (vector and raster)
+  - Perform spatial analysis on rasters and vectors
+  - Perform other analysis using Grass functionality
+\\
+\\
+===== Qgis GUI =====
+Start Qgis from the upper Ubuntu Bar selecting : Application > Science > Qgis\\
+The Qgis GUI is basically composed by:
+
+=== Main menu ===
+{{:wiki:wikiqgis:main_menu_qgis.png?200|Main qgis menu}}; 
+\\
+=== Map visualization window ===
+To navigate and visualize maps\\
+{{:wiki:wikiqgis:vizualiz_qgis.png?100|Visualization window}}\\
+\\
+=== Toolbars ===
+Access different GIS functions \\
+{{:wiki:wikiqgis:toolbars.png?600| Qgis toolbars}} including as an example the //map navigation toolbar// {{:wiki:wikiqgis:map_navig_toolbar.png|Map Navigation Toolbar}} to zoom in and out maps. \\
+\\
+=== Panels ===
+Such as the //layer panel// to organize uploaded data \\
+{{:wiki:wikiqgis:layers_panel.png?300|Layers panel}}\\
+
+=== Coordinate capture panel ===
+To select locations and know their geographical coordinates.\\
+{{:wiki:wikiqgis:coordinate_caputre_panel.png?150|Coordinate capture panel}}\\
+Different Panels and toolbars exist and we can visualize it selecting them from the Qgis Main menu > Views. 
+\\
+\\
+===== Qgis plugins =====
+Several GIS functions are provided by Qgis plugins. To access plugins we can download them and install them from the Main menu > plugins > Fetch python plugins\\
+\\
+\\
+===== Import data =====
+Qgis allows to import all Gdal/Ogr map format and immediately reproject them on the fly to the same geographic reference system for a quick visualization. On the lower right side of Qgis GUI click on the CRS status logo {{:wiki:wikiqgis:crs_logo.png|QGIS CRS status function}} to access the project properties > Coordinate Reference System tab and be sure to have active the tab on the //enable 'on the fly' CRS transformation//.
+\\
+\\
+==== Import raster data ====
+Download the Land Cover map of Africa:\\
+The land cover map of Africa (raster data) available at the  [[http://forobs.jrc.ec.europa.eu/products/glc2000/glc2000.php| JRC's Global Land cover year 2000 map]] [[http://forobs.jrc.ec.europa.eu/products/glc2000/products.php|Download here]]
+
+  * Download the map and save it to a new created ~/tmpqgis folder and extract the zip file
+
+  * From the Qgis menu select: Layer > Add raster layer ..  or click on the manage layers toolbar {{:wiki:wikiqgis:openraster.png|}} icon
+
+  * click on browse and search for ~/tmpqgis/Grid/africa_v5/hdr.adf  file, then select it
+
+  * click on open
+
+
+==== Import vectors ====
+== Administrative boundary ==
+    * Download the global administrative boundary available to download from the [[http://geodata.grid.unep.ch/download/admin98_li_shp.zip|UNEP geodata web portal]]. Save it to our working directory ~/tmp_qgis/
+    * From the Qgis menu select: Layer > Add vector layer ..  or click on the manage layers toolbar {{:wiki:wikiqgis:openvector.png|}} icon
+    * Click on browse and search for the admin98.shp file, select it
+    * Click on open
+
+== Open street map data for Tanzania ==
+[[http://download.geofabrik.de/africa/tanzania-latest.shp.zip| Download ]] OSM data for tanzania.
+\\
+<note tip>
+Qgis uses the [[http://www.gdal.org/Gdal/Ogr | Gdal / ogr Geospatial Data Abstraction Library ]] to import and export vector and raster data. 
+</note>
+\\
+===== Working with vectors =====
+
+==== Query and clipping  vectors ====
+
+Open the global administrative boundary and select the administrative layers of Tanzania. Create a new vector layer including the just selected Tanzania administrative boundary. 
+  * On the Layer panel > Left click on the//admin98// data, then > Open attribute table
+
+  * The attribute Table pops up; type //Tanzania// in the //Look for// option and select //in// CNTRY_NAME and click the search button; click on the Show selected records only and close the Attribute Table window
+
+  * Click on Layer > Save vector layer as .. > browse the target folder for the output and write a name of your choice (ex.:  ~/tmp_qgis/vector/admin_tanzania.shp
+
+==== Join attributes tables and query  ====
+
+Create a map of natural parks in a sub region of Tanzania (Arusa, Dodoma, Iringa) :\\
+We need information from the administrative boundary in Tanzania and natural areas. They are available on two different vector layers.\\
+\\
+Open the polygon vector layer corresponding to OSM natural areas in Tanzania. We exclude natural areas which are not intersecting the administrative boundary. Next we merge the attribute table of OSM to the administrative boundary. Finally we select natural areas within the regions of interest. Afterwards we can create a new vector layer including the selected natural areas.
+
+  * Open the tanzania_natural.shp and admin_tanzania.shp files in the ~/tmp_qgis/vector folder and subfolder.
+  * Visualize maps and play with colors and legends double clicking on maps names in the layer panel.
+  * Select vector from Qgis menu → geoprocessing tool → intersect 
+
+
+{{:wiki:wikiqgis:intersect.png? 700 |process the intersection}}\\
+\\
+\\
+1. Save the intersection as tanzaniaintersectnatural \\
+2. Zoom in and out to find out what an intersection of vectors is about \\
+3. From Qgis menu select vector > Data Management Tools > join attributes by location \\
+4. In the Join attributes by location pop up windows select //tanzaniaintersecnatural// In the Target vector layer option; //admintanzania// in the join vector layer option; //take attributes of first located feature// as Attribute Summary option; \\
+5. Browse ../vector/ folder and write natural_admin_tanzania as output file name, then click OK (see below)
+
+\\
+{{:wiki:wikiqgis:join_attribute_table.png? 500|}}
+\\
+
+Now we have created a new polygon vector layer called natural_admin_tanzania.shp including natural areas and administrative boundary attributes. We use this last layer to query by a sql statement the cities of a particular administrative region:
+
+  * Left click on the natural_admin_tanzania layer > Open attribute table
+  * Click on advanced search and type or click the following query in the //search query builder//
+
+<code>
+ADMIN_NAME = 'Arusa' OR ADMIN_NAME = 'Dodoma' OR ADMIN_NAME = 'Iringa'
+</code>
+
+  * In the Qgis menu go to layer > Save selection as vector file ...
+  * Browse the ~/../vector/ folder and save the file as //selectednaturalareas.shp//
+\\
+
+
+
+===== Working with rasters =====
+
+
+==== Clipping  rasters ====
+
+  * Load the //admin_tanzania.shp// vector layer and the GLC2000 of Africa  //africa_v5.bil// raster file
+  * Zoom in using the {{:wiki:wikiqgis:zoomin.png|}} icon and select a limited area from Africa including Tanzania
+  * Select in the menu Raster → Clipper → Output file; browse to ~/tmp_qgis/ folder and write a name of your choice such as //GLC2000_tanzania.tif \\
+
+  * Select a limited area from East Africa area corresponding to Tanzania; go back to the raster Clipper window and click ok\\
+
+  * Double click on the //africa_v5// layer in the Layers panel  
+\\
+
+Try to reproduce a final Land cover map of Tanzania including country borders and landcover classes like the one here below.
+\\
+\\
+{{:wiki:wikiqgis:lc_tanzania.png? 700 | }} 
+\\ 
+\\ 
+ ** Statistics using Grass plugin **
+
+\\ 
+1. Create a grass working environment \\
+2. Load the raster map \\
+3. Find the statistical tool \\
+
+

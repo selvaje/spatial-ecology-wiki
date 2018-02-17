@@ -1,0 +1,134 @@
+
+<h3 class="sectionedit1" id="install_wwwspatial-ecologynet_in_the_vm_localhost">Install www.spatial-ecology.net in the VM (localhost)</h3>
+<div class="level3">
+
+<p>
+In case the wiki has been modify on the ftp rerun step 1-2-4-7
+</p>
+
+<p>
+1) Get root addimistration right
+</p>
+<pre class="code"> sudo su 
+ cd /var/www/   </pre>
+
+<p>
+2) Download the full wiki from the server
+</p>
+<pre class="code"> Prima di fare il download pulere il cahce and hisotory nell admin
+ wget -m ftp://speco:Ost4sem_pw4@spatial-ecology.net/dokuwiki</pre>
+
+<p>
+3) Download the wiki index from the server
+</p>
+<pre class="code"> wget -m ftp://speco:Ost4sem_pw4@spatial-ecology.net/index.php</pre>
+
+<p>
+4) Give full permission to
+</p>
+<pre class="code"> chmod -R 777 /var/www/spatial-ecology.net
+ chmod 777 /var/www/spatial-ecology.net/index.php</pre>
+
+<p>
+5) Edit the /var/www/spatial-ecology.net/index.php
+</p>
+<pre class="code"> gedit /var/www/spatial-ecology.net/index.php</pre>
+
+<p>
+and change  header(“Location: /dokuwiki/doku.php”);
+to<br/>
+
+header(“Location: ./dokuwiki/doku.php”): <br/>
+
+<br/>
+
+in osgeo8.5 mv /var/www/spatial-ecology.net/ /var/www/html
+<br/>
+<br/>
+6) Install usefull apache2 (skip in case of update of the wiki)
+</p>
+<pre class="code"> sudo apt-get install apache2 libapache2-mod-php5</pre>
+
+<p>
+7) For start the apache server try also 
+</p>
+<pre class="code"> sudo service apache2 restart</pre>
+
+<p>
+8) check the <a href="http://localhost/spatial-ecology.net" class="urlextern" target="blanc" title="http://localhost/spatial-ecology.net" rel="nofollow noopener">http://localhost/spatial-ecology.net</a>
+</p>
+<pre class="code"> firefox http://localhost/spatial-ecology.net</pre>
+
+</div>
+<!-- EDIT1 SECTION "Install www.spatial-ecology.net in the VM (localhost)" [1-1161] -->
+<h3 class="sectionedit2" id="multicore_upload">Multicore upload</h3>
+<div class="level3">
+
+<p>
+tu spead up multicore upload….non definitivo da lavorarci su.
+</p>
+<pre class="code">cd /var/www/spatial-ecology.net/dokuwiki
+find . -name &quot;*&quot;   |  xargs -n 1 -P 6 bash -c &#039; ftp -in &lt;&lt;EOF 
+open spatial-ecology.net
+user speco Ost4sem_pw4 
+put $1 ./dokuwiki/$1
+close 
+bye
+EOF
+&#039; _</pre>
+
+</div>
+<!-- EDIT2 SECTION "Multicore upload" [1162-1466] -->
+<h3 class="sectionedit3" id="setting_permision_for_the_wiki">Setting permision for the wiki</h3>
+<div class="level3">
+
+<p>
+Si possono settare le permision in fireFTP right clik.
+Disolito<br/>
+
+conf  700<br/>
+
+conf/* 600<br/>
+
+<br/>
+
+bin 700<br/>
+
+bin/* 600<br/>
+
+</p>
+
+<p>
+Dopo l&#039;aggiornamento il template era scomporso.
+ho aggiornata la version del php sul server 
+<a href="https://www.fatcow.com/controlpanel/cgiManagement/phpplus.html" class="urlextern" target="blanc" title="https://www.fatcow.com/controlpanel/cgiManagement/phpplus.html" rel="nofollow noopener">https://www.fatcow.com/controlpanel/cgiManagement/phpplus.html</a>
+ora la version e&#039; php 5.3
+</p>
+
+<p>
+per questo file 
+/ost4sem_dokuwiki/conf/users.auth.php  0400  solo in lettura perche altrimenti i crakkisti creavano degli user. 
+</p>
+
+<p>
+Per la pulizia del sito ho usato qesto script in locale sulla mia macchina. 
+Il virus era un java script injection the metteva una linea con dentro 74ed9f alla fine di moltio file. 
+Pertanto ho cancellato in tutti file la parte finale dopo la 74ed9f.
+</p>
+<pre class="code"> cd /var/www/spatial-ecology.net 
+ find . -type f | xargs grep -Hn 74ed9f | awk -F : &#039;{ print $1 }&#039;  &gt; list_virus_file.txt 
+
+ for file in `cat  list_virus_file.txt ` ;  do 
+ echo $file 
+ awk &#039; {   if ($1 == &quot;/*74ed9f*/&quot;) {   exit } else { print }    }&#039;   $file  &gt;   $file&quot;tmp&quot;
+ mv    $file&quot;tmp&quot;    $file
+ done </pre>
+
+<p>
+Per la pulizia del cache 
+</p>
+<pre class="code">find ./cache/?/ -type f -mtime +2 -print0 | xargs -0r rm -f
+find ./attic/   -type f -mtime +2 -print0 | xargs -0r rm -f</pre>
+
+</div>
+<!-- EDIT3 SECTION "Setting permision for the wiki" [1467-] -->

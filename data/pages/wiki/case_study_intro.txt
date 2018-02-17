@@ -1,0 +1,11 @@
+===== Case studies =====
+
+These two case studies take a real example of research application and drives the students through the full scripting-process in order to get to the final maps and graphics which highlight the conclusions.\\
+
+  * [[wiki:firemod | Projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios. ]]
+  * [[wiki:forestmod | Modelling and mapping the Natural Forest Distribution of Italy and predicting changes for the year 2080 under IPCC SRES A2a scenario.]]
+  * [[wiki:urbanmod | Urban and Peri-Urban Tree Cover in European Cities: Current Distribution and Future Vulnerability Under Climate Change Scenarios.]] Computational implementation of the //Global Warming// book chapter published by Intech Open Access Publisher.
+  * [[wiki:delate | delate ]]
+\\
+\\
+\\

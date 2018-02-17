@@ -1,0 +1,342 @@
+
+<h1 class="sectionedit1" id="getting_started_with_qgis">Getting started with Qgis</h1>
+<div class="level1">
+
+<p>
+To get familiar with Qgis we will look at the following:
+</p>
+<ol>
+<li class="level1"><div class="li"> Qgis graphical user interface</div>
+</li>
+<li class="level1"><div class="li"> Qgis Plugins</div>
+</li>
+<li class="level1"><div class="li"> Import data (vector and raster)</div>
+</li>
+<li class="level1"><div class="li"> Perform spatial analysis on rasters and vectors</div>
+</li>
+<li class="level1"><div class="li"> Perform other analysis using Grass functionality</div>
+</li>
+</ol>
+
+<p>
+<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Getting started with Qgis" [1-296] -->
+<h2 class="sectionedit2" id="qgis_gui">Qgis GUI</h2>
+<div class="level2">
+
+<p>
+Start Qgis from the upper Ubuntu Bar selecting : Application &gt; Science &gt; Qgis<br/>
+
+The Qgis <abbr title="Graphical User Interface">GUI</abbr> is basically composed by:
+</p>
+
+</div>
+
+<h4 id="main_menu">Main menu</h4>
+<div class="level4">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:main_menu_qgis.png" class="media" title="wiki:wikiqgis:main_menu_qgis.png"><img src="/dokuwiki/lib/exe/fetch.php?w=200&amp;tok=e870d7&amp;media=wiki:wikiqgis:main_menu_qgis.png" class="media" title="Main qgis menu" alt="Main qgis menu" width="200" /></a>; 
+<br/>
+
+</p>
+
+</div>
+
+<h4 id="map_visualization_window">Map visualization window</h4>
+<div class="level4">
+
+<p>
+To navigate and visualize maps<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:vizualiz_qgis.png" class="media" title="wiki:wikiqgis:vizualiz_qgis.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=312df5&amp;media=wiki:wikiqgis:vizualiz_qgis.png" class="media" title="Visualization window" alt="Visualization window" width="100" /></a><br/>
+
+<br/>
+
+</p>
+
+</div>
+
+<h4 id="toolbars">Toolbars</h4>
+<div class="level4">
+
+<p>
+Access different GIS functions <br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:toolbars.png" class="media" title="wiki:wikiqgis:toolbars.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=755a1f&amp;media=wiki:wikiqgis:toolbars.png" class="media" title=" Qgis toolbars" alt=" Qgis toolbars" width="600" /></a> including as an example the <em>map navigation toolbar</em> <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:map_navig_toolbar.png" class="media" title="wiki:wikiqgis:map_navig_toolbar.png"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:wikiqgis:map_navig_toolbar.png" class="media" title="Map Navigation Toolbar" alt="Map Navigation Toolbar" /></a> to zoom in and out maps. <br/>
+
+<br/>
+
+</p>
+
+</div>
+
+<h4 id="panels">Panels</h4>
+<div class="level4">
+
+<p>
+Such as the <em>layer panel</em> to organize uploaded data <br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:layers_panel.png" class="media" title="wiki:wikiqgis:layers_panel.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=ea2d64&amp;media=wiki:wikiqgis:layers_panel.png" class="media" title="Layers panel" alt="Layers panel" width="300" /></a><br/>
+
+</p>
+
+</div>
+
+<h4 id="coordinate_capture_panel">Coordinate capture panel</h4>
+<div class="level4">
+
+<p>
+To select locations and know their geographical coordinates.<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:coordinate_caputre_panel.png" class="media" title="wiki:wikiqgis:coordinate_caputre_panel.png"><img src="/dokuwiki/lib/exe/fetch.php?w=150&amp;tok=a69e8b&amp;media=wiki:wikiqgis:coordinate_caputre_panel.png" class="media" title="Coordinate capture panel" alt="Coordinate capture panel" width="150" /></a><br/>
+
+Different Panels and toolbars exist and we can visualize it selecting them from the Qgis Main menu &gt; Views. 
+<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Qgis GUI" [297-1320] -->
+<h2 class="sectionedit3" id="qgis_plugins">Qgis plugins</h2>
+<div class="level2">
+
+<p>
+Several GIS functions are provided by Qgis plugins. To access plugins we can download them and install them from the Main menu &gt; plugins &gt; Fetch python plugins<br/>
+
+<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Qgis plugins" [1321-1513] -->
+<h2 class="sectionedit4" id="import_data">Import data</h2>
+<div class="level2">
+
+<p>
+Qgis allows to import all Gdal/Ogr map format and immediately reproject them on the fly to the same geographic reference system for a quick visualization. On the lower right side of Qgis <abbr title="Graphical User Interface">GUI</abbr> click on the CRS status logo <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:crs_logo.png" class="media" title="wiki:wikiqgis:crs_logo.png"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:wikiqgis:crs_logo.png" class="media" title="QGIS CRS status function" alt="QGIS CRS status function" /></a> to access the project properties &gt; Coordinate Reference System tab and be sure to have active the tab on the <em>enable &#039;on the fly&#039; CRS transformation</em>.
+<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Import data" [1514-1973] -->
+<h3 class="sectionedit5" id="import_raster_data">Import raster data</h3>
+<div class="level3">
+
+<p>
+Download the Land Cover map of Africa:<br/>
+
+The land cover map of Africa (raster data) available at the  <a href="http://forobs.jrc.ec.europa.eu/products/glc2000/glc2000.php" class="urlextern" target="blanc" title="http://forobs.jrc.ec.europa.eu/products/glc2000/glc2000.php" rel="nofollow noopener"> JRC&#039;s Global Land cover year 2000 map</a> <a href="http://forobs.jrc.ec.europa.eu/products/glc2000/products.php" class="urlextern" target="blanc" title="http://forobs.jrc.ec.europa.eu/products/glc2000/products.php" rel="nofollow noopener">Download here</a>
+</p>
+<ul>
+<li class="level1"><div class="li">Download the map and save it to a new created ~/tmpqgis folder and extract the zip file
+</div>
+</li>
+<li class="level1"><div class="li">From the Qgis menu select: Layer &gt; Add raster layer ..  or click on the manage layers toolbar <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:openraster.png" class="media" title="wiki:wikiqgis:openraster.png"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:wikiqgis:openraster.png" class="media" alt="" /></a> icon
+</div>
+</li>
+<li class="level1"><div class="li">click on browse and search for ~/tmpqgis/Grid/africa_v5/hdr.adf  file, then select it
+</div>
+</li>
+<li class="level1"><div class="li">click on open</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "Import raster data" [1974-2630] -->
+<h3 class="sectionedit6" id="import_vectors">Import vectors</h3>
+<div class="level3">
+
+</div>
+
+<h5 id="administrative_boundary">Administrative boundary</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Download the global administrative boundary available to download from the <a href="http://geodata.grid.unep.ch/download/admin98_li_shp.zip" class="urlextern" target="blanc" title="http://geodata.grid.unep.ch/download/admin98_li_shp.zip" rel="nofollow noopener">UNEP geodata web portal</a>. Save it to our working directory ~/tmp_qgis/</div>
+</li>
+<li class="level2"><div class="li"> From the Qgis menu select: Layer &gt; Add vector layer ..  or click on the manage layers toolbar <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:openvector.png" class="media" title="wiki:wikiqgis:openvector.png"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:wikiqgis:openvector.png" class="media" alt="" /></a> icon</div>
+</li>
+<li class="level2"><div class="li"> Click on browse and search for the admin98.shp file, select it</div>
+</li>
+<li class="level2"><div class="li"> Click on open</div>
+</li>
+</ul>
+
+</div>
+
+<h5 id="open_street_map_data_for_tanzania">Open street map data for Tanzania</h5>
+<div class="level5">
+
+<p>
+<a href="http://download.geofabrik.de/africa/tanzania-latest.shp.zip" class="urlextern" target="blanc" title="http://download.geofabrik.de/africa/tanzania-latest.shp.zip" rel="nofollow noopener"> Download </a> OSM data for tanzania.
+<br/>
+
+</p>
+<div class="notetip">Qgis uses the <a href="http://www.gdal.org/Gdal/Ogr" class="urlextern" target="blanc" title="http://www.gdal.org/Gdal/Ogr" rel="nofollow noopener"> Gdal / ogr Geospatial Data Abstraction Library </a> to import and export vector and raster data. 
+
+</div>
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Import vectors" [2631-3432] -->
+<h2 class="sectionedit7" id="working_with_vectors">Working with vectors</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT7 SECTION "Working with vectors" [3433-3466] -->
+<h3 class="sectionedit8" id="query_and_clipping_vectors">Query and clipping  vectors</h3>
+<div class="level3">
+
+<p>
+Open the global administrative boundary and select the administrative layers of Tanzania. Create a new vector layer including the just selected Tanzania administrative boundary.
+</p>
+<ul>
+<li class="level1"><div class="li"> On the Layer panel &gt; Left click on the<em>admin98</em> data, then &gt; Open attribute table</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> The attribute Table pops up; type <em>Tanzania</em> in the <em>Look for</em> option and select <em>in</em> CNTRY_NAME and click the search button; click on the Show selected records only and close the Attribute Table window</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Click on Layer &gt; Save vector layer as .. &gt; browse the target folder for the output and write a name of your choice (ex.:  ~/tmp<em>qgis/vector/admin</em>tanzania.shp</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT8 SECTION "Query and clipping  vectors" [3467-4151] -->
+<h3 class="sectionedit9" id="join_attributes_tables_and_query">Join attributes tables and query</h3>
+<div class="level3">
+
+<p>
+Create a map of natural parks in a sub region of Tanzania (Arusa, Dodoma, Iringa) :<br/>
+
+We need information from the administrative boundary in Tanzania and natural areas. They are available on two different vector layers.<br/>
+
+<br/>
+
+Open the polygon vector layer corresponding to OSM natural areas in Tanzania. We exclude natural areas which are not intersecting the administrative boundary. Next we merge the attribute table of OSM to the administrative boundary. Finally we select natural areas within the regions of interest. Afterwards we can create a new vector layer including the selected natural areas.
+</p>
+<ul>
+<li class="level1"><div class="li">Open the tanzania<em>natural.shp and admin</em>tanzania.shp files in the ~/tmp_qgis/vector folder and subfolder.</div>
+</li>
+<li class="level1"><div class="li">Visualize maps and play with colors and legends double clicking on maps names in the layer panel.</div>
+</li>
+<li class="level1"><div class="li">Select vector from Qgis menu → geoprocessing tool → intersect </div>
+</li>
+</ul>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:intersect.png" class="media" title="wiki:wikiqgis:intersect.png"><img src="/dokuwiki/lib/exe/fetch.php?w=700&amp;tok=2ff6b4&amp;media=wiki:wikiqgis:intersect.png" class="medialeft" title="process the intersection" alt="process the intersection" width="700" /></a><br/>
+
+<br/>
+
+<br/>
+
+1. Save the intersection as tanzaniaintersectnatural <br/>
+
+2. Zoom in and out to find out what an intersection of vectors is about <br/>
+
+3. From Qgis menu select vector &gt; Data Management Tools &gt; join attributes by location <br/>
+
+4. In the Join attributes by location pop up windows select <em>tanzaniaintersecnatural</em> In the Target vector layer option; <em>admintanzania</em> in the join vector layer option; <em>take attributes of first located feature</em> as Attribute Summary option; <br/>
+
+5. Browse ../vector/ folder and write natural<em>admin</em>tanzania as output file name, then click OK (see below)
+</p>
+
+<p>
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:join_attribute_table.png" class="media" title="wiki:wikiqgis:join_attribute_table.png"><img src="/dokuwiki/lib/exe/fetch.php?w=500&amp;tok=06e2cb&amp;media=wiki:wikiqgis:join_attribute_table.png" class="media" alt="" width="500" /></a>
+<br/>
+
+</p>
+
+<p>
+Now we have created a new polygon vector layer called natural<em>admin</em>tanzania.shp including natural areas and administrative boundary attributes. We use this last layer to query by a sql statement the cities of a particular administrative region:
+</p>
+<ul>
+<li class="level1"><div class="li">Left click on the natural<em>admin</em>tanzania layer &gt; Open attribute table</div>
+</li>
+<li class="level1"><div class="li">Click on advanced search and type or click the following query in the <em>search query builder</em></div>
+</li>
+</ul>
+<pre class="code">ADMIN_NAME = &#039;Arusa&#039; OR ADMIN_NAME = &#039;Dodoma&#039; OR ADMIN_NAME = &#039;Iringa&#039;</pre>
+<ul>
+<li class="level1"><div class="li">In the Qgis menu go to layer &gt; Save selection as vector file …</div>
+</li>
+<li class="level1"><div class="li">Browse the ~/../vector/ folder and save the file as <em>selectednaturalareas.shp</em>
+<br/>
+</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT9 SECTION "Join attributes tables and query" [4152-6463] -->
+<h2 class="sectionedit10" id="working_with_rasters">Working with rasters</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT10 SECTION "Working with rasters" [6464-6498] -->
+<h3 class="sectionedit11" id="clipping_rasters">Clipping  rasters</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">Load the <em>admin<em>tanzania.shp<em> vector layer and the GLC2000 of Africa  </em>africa</em>v5.bil</em> raster file</div>
+</li>
+<li class="level1"><div class="li">Zoom in using the <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:zoomin.png" class="media" title="wiki:wikiqgis:zoomin.png"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:wikiqgis:zoomin.png" class="media" alt="" /></a> icon and select a limited area from Africa including Tanzania</div>
+</li>
+<li class="level1"><div class="li">Select in the menu Raster → Clipper → Output file; browse to ~/tmp<em>qgis/ folder and write a name of your choice such as <em>GLC2000_tanzania.tif <br/>
+
+
+  * Select a limited area from East Africa area corresponding to Tanzania; go back to the raster Clipper window and click ok<br/>
+
+
+  * Double click on the </em>africa</em>v5<em> layer in the Layers panel<br/>
+<br/>
+
+
+Try to reproduce a final Land cover map of Tanzania including country borders and landcover classes like the one here below.
+<br/>
+
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Astartqgis_online&amp;media=wiki:wikiqgis:lc_tanzania.png" class="media" title="wiki:wikiqgis:lc_tanzania.png"><img src="/dokuwiki/lib/exe/fetch.php?w=700&amp;tok=fc8120&amp;media=wiki:wikiqgis:lc_tanzania.png" class="medialeft" title=" " alt=" " width="700" /></a> 
+<br/>
+
+<br/>
+
+ <strong> Statistics using Grass plugin </strong>
+
+<br/>
+
+1. Create a grass working environment <br/>
+
+2. Load the raster map <br/>
+
+3. Find the statistical tool <br/>
+
+
+
+
+</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT11 SECTION "Clipping  rasters" [6499-] -->

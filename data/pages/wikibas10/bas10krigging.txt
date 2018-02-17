@@ -1,0 +1,184 @@
+====== Use of environmental geostatitical methods for the study of soil heavy-metals concentration ======
+\\
+
+===== INTRODUCTION =====
+
+Geostatistical techniques, as the Kriging technique, are widely used for the study and mapping of soil heavy-metals concentration.
+
+==== Project objectives ====
+
+The main objective of this project was to automate the modeling and mapping steps for the application of the Kriging technique.
+\\
+
+===== METADATA =====
+
+The dataset used for the study contains the sampling results (n=70), measured using a regular grid of 200m width, made on the perimeter of an industrial area; in particular were sampled the soil's concentration of following heavy-metals: Al, As, Be, Cd, Co, Cr, Cu, Hg, Mn, Ni, Pb, Sb, Se, Sn, Tl, V and Zn.
+
+==== Text files and tables ====
+
+The data set was imported in R environment from an *.txt file to a "data-frame" file that presents the following structure:
+\\
+<code r>
+str(punti)
+'data.frame':   70 obs. of  17 variables:
+ $ COD: Factor w/ 70 levels "ST1 ","ST10 ",..: 1 12 23 33 44 55 65 69 70 2 ...
+ $ X  : num  2580900 2581100 2581300 2581500 2579100 ...                      
+ $ Y  : num  4495500 4495500 4495500 4495500 4495300 ...                      
+ $ AS : num  23.59 30.5 23 17.27 9.75 ...                                     
+ $ BE : num  3.64 5.16 4.43 3.2 2.51 2.11 2.05 2.9 1.18 2.21 ...              
+ $ CD : num  0.19 0.32 0.29 0.15 0.11 0.14 0.13 0.15 0.17 0.1 ...             
+ $ CO : num  26.4 84 25.1 23.9 11.5 ...
+ $ CR : num  55.5 55.1 53.9 82.6 39 ...
+ $ CU : num  34.2 38.3 39.2 46.7 23.1 ...
+ $ NI : num  36.7 39.4 39.2 57.1 18.6 ...
+ $ PB : num  49.9 69.1 51.1 32 35.5 ...
+ $ SB : num  1.07 1.49 1.17 0.77 0.92 0.75 0.92 0.89 0.7 0.75 ...
+ $ SE : num  0.91 1.26 1.19 0.91 0.61 0.78 0.43 0.59 0.37 0.38 ...
+ $ SN : num  3.31 6.08 3.91 3.85 3.62 3.57 3 3.95 1.93 2.62 ...
+ $ TL : num  1.31 2.13 1.65 0.94 0.96 0.64 0.95 1.13 0.67 1.25 ...
+ $ V  : num  113.5 133.2 110.2 126.4 72.5 ...
+ $ ZN : num  127.7 126.1 143.9 153.8 95.3 ...
+</code>
+\\
+
+===== METHOD =====
+
+The data analysis was done by means of the following steps:\\
+* statistical analysis: data distribution control and their validation;\\
+* geostatistical analysis: study of the variogram map, experimental semi-variogram creation, choice of the model and its parameters (nugget, range and sill);\\
+* Kriging interpolation: creation of the isoconcentration maps and their cross-validation.
+\\
+===== DATA IMPORT =====
+<code r>
+punti=read.csv2("~/ost4sem/project/input/punti.csv", header=T)
+</code>
+\\
+===== DATA PROCESSING =====
+
+A preliminary statistical analysis was performed to individuate the presence of eventual outliers, that were then eliminated from the original dataset, and to verify the data normality or log-normality distribution.
+\\
+The following R packages were used during this analysis:
+
+<code r>
+#installo i paccheti necessari
+install.packages(c("outliers", "nortest", "automap"))
+</code>
+
+The visualization of the box-plot and the normal-qqplot provide an initial idea about the presence of outliers.
+<code r>
+#creo i boxplot
+a=3
+for (i in c("As","Be","Cd","Co","Cr","Cu","Ni","Pb","Sb","Se","Sn","Tl","V","Zn")){
+    png(paste("~/ost4sem/project/output/boxplot_",i,".png",sep=""),width = 800, height = 800)
+    a=a+1
+    boxplot(punti[[a]], main=i, cex.main=3, cex=2, axes=F, col=7)
+    axis(2, cex.axis=2)
+    box()
+    dev.off()
+}
+</code>
+{{:wiki:boxplot_selow.png|}}
+<code r>
+#creo i qqplot
+a=3
+for (i in c("As","Be","Cd","Co","Cr","Cu","Ni","Pb","Sb","Se","Sn","Tl","V","Zn")){
+    png(paste("~/ost4sem/project/output/qqplot_",i,".png",sep=""),width = 800, height = 800)
+    a=a+1    
+    par(mar=c(6,6,5,1))
+    qqnorm(punti[[a]], main=i, cex.main=3, cex=2,
+     axes=F, xlab="Theoretical Quantiles",ylab="Sample Quantiles", cex.lab=2 )
+    axis(2, cex.axis=2)
+    axis(1, cex.axis=2)
+    box()
+    qqline(punti[[a]], lwd=2, col="red")
+    dev.off()
+}
+</code>
+{{:wiki:qqplot_selow.png|}}
+\\
+The outliers individuated were then eliminated using the "outliers" package. 
+
+<code r>
+#rimuovo gli outliers
+library(outliers)
+elementi_wo=punti
+for (i in c(4:17)){
+elementi_wo[[i]]= rm.outlier(punti[[i]], fill=TRUE)
+}
+</code>
+
+The histograms provide an initial idea about the data distribution.
+
+<code r>
+#creo gli istogrammi
+a=3
+for (i in c("As","Be","Cd","Co","Cr","Cu","Ni","Pb","Sb","Se","Sn","Tl","V","Zn")){
+    png(paste("~/ost4sem/project/output/ist_",i,".png",sep=""),width = 800, height = 800)
+    a=a+1
+    par(mar=c(6,6,5,1))
+    hist(elementi_wo[[a]], main=i, cex.main=3, axes=F, xlab="Concentration",ylab="Frequency", cex.lab=2, col=3)
+    axis(2, cex.axis=2)
+    axis(1, cex.axis=2)
+    box()
+    dev.off()
+}
+</code>
+{{:wiki:ist_selow.png|}}
+\\
+For the study of the data distribution the Lilliefors's test was used.
+<code r>
+# verifico la normalità o la log-normalità della distribuzione dei dati ed elimino quelli con distribuzione non gaussiana
+library(nortest)
+elementi_norm=elementi_wo
+test=matrix(data = NA, nrow = 1, ncol = 14,dimnames = list("p-value", c("As","Be","Cd","Co","Cr","Cu","Ni","Pb","Sb","Se","Sn","Tl","V","Zn")))
+for (i in c(4:17)){
+  if (lillie.test(elementi_wo[[i]])[[2]]>=0.01){
+  elementi_norm[[i]]=elementi_wo[[i]] 
+  test_=lillie.test(elementi_wo[[i]]) 
+  test[,i-3]=test_[[2]]}
+  else
+      if (lillie.test(log(elementi_wo[[i]]))[[2]]>=0.01){
+	elementi_norm[[i]]=log(elementi_wo[[i]])
+	test_=lillie.test(elementi_wo[[i]]) 
+	test[,i-3]=test_[[2]]}
+      else{
+	elementi_norm[[i]]=0
+	test_=lillie.test(elementi_wo[[i]]) 
+	test[,i-3]=test_[[2]]}
+write.table(test, file = "test_normalità.txt")
+}
+</code>
+\\
+
+==== Model parametrization ====
+
+The "automap" package was used to obtain the experimental semi-variogram and to compare the use of several models (shperical, exponential, gaussian and Matern model).
+
+==== Model prediction ====
+
+The best model was then used for the Kriging technique and the heavy-metals distribution concentration maps were obtained. 
+
+==== Validation ====
+
+A cross-validation for the comparison of the estimated values and the sampled ones was done and the maps of the standard error distribution were then obtained. 
+
+<code r>
+#kriging
+library(sp)
+coordinates(elementi_norm) = ~X + Y
+library(automap)
+a=2
+for (i in c("As","Be","Cd","Co","Cr","Cu","Ni","Pb","Sb","Se","Sn","Tl","V","Zn")){
+  if (mean(elementi_norm[[a]])!=0){
+    png(paste("~/ost4sem/project/output/automap_",i,".png",sep=""),width = 800, height = 800)
+    plot(autoKrige(elementi_norm[[a]]~1,elementi_norm, model = c("Sph", "Exp", "Gau", "Ste")))    
+    dev.off()}
+  else print(paste(i, "non ha distribuzione normale", sep=" "))
+a=a+1
+}
+</code>
+===== RESULTS and DISCUSSION =====
+Insert a map and related table or graphics if available\\
+Discuss the biological or geographical significance of results\\
+{{:wiki:automap_se.png|}}
+\\

@@ -1,0 +1,548 @@
+====== Upscaling of soil sample data to landscape scale ======
+
+Matthias Siewert - INK, Stockholms Universitet, Stockholm, Sweden
+
+===== INTRODUCTION =====
+
+==== General framework of the analysis ====
+Soils in permafrost environments have been identified as a major pool of soil organic carbon (SOC) (Tarnocai et al. 2009). To map SOC soil pedon data is often thematically upscaled using landcover classifications (LCC) (Hugelius et al. 2010).  
+
+==== Project objectives ====
+The soil pedon data is calculated from individual samples for different depths. The SOC storage is calculated for the top 30 cm and the top 100 cm of soil cover. This calculation can be quite cumbersome, as soil sampling in the field is guided by natural conditions and sampling intervals and storage intervals have to be adjusted. The processed spatial point information is then combined with area coverage information from a LCC to calculate total landscape soil carbon storage. 
+
+==== Project objectives ====
+ The project objetives are as following:
+
+  - soil sample table preparation (read excel sheet with R)
+  - table query per soil pedon (R)
+  - simple statistical summary (R)
+  - read LCC raster (GRASS in R)
+  - areal summary of LCC (GRASS in R)
+  - thematic upscaling of soil pedon data with LCC areas (R)
+
+===== METADATA =====
+There are two main data inputs to this project. Input number one is a table with information on 27 soil pedons from the Kytalyk study site in northeastern Siberia, Russia. The data set contains information over 400 soil samples and interpolated space between the samples, which amounts to 650 rows of data. Furthermore more than more then 10 parameters of metadata is included. The main interest of the dataset is the carbon content as measured with loss on ignition (LOI) at 550°C. Combining this with bulk density can be used to calculate the carbon storage per pedon and then per squaremeter.
+Input number two is a land cover classification derived from a very high resolution (2mx2m) geoeye satellite image. The LCC is stored as a raster file and has 10 classes, including classes for masked and unclassified pixels.
+Both datasets have been acquired with funding from the PAGE21 permafrost project.
+
+{{:wikistudholland:kytalyk.png|}}
+
+
+===== METHOD =====
+
+The largest part of the analysis consists of summarizing the soil sampling data. This has to implement a lot of exceptions. Different sampling depths will be queried. For the O-horizon this corresponds mostly to the samples, but for the deeper horizons the sampling intervall does not correspond to the query intervals. To be able to query the dataset in mm intervals, the dataset is divided into intervals of 1 mm. Thus the dataset with 650 rows corresponding to samples of usually ~3-15 cm depth is inflated to 37 000 rows.The query depths are the expressed in mm. Furthermore most pedons have three replicates for the O-horizon. This leads to a mean depth of the O-horizon that does not correspond to the true depth of the O-horizon. Therefore alternate sampling depths have to be defined to compensate for these shifts .  
+
+
+===== Computational implementation =====
+
+For convenience Rstudio is chosen as the main environment. The land cover classification is stored in GRASS as a raster. To access the raster first GRASS is started and then Rstudio from within GRASS. By loading the spgrass6 package in Rstudio, GRASS commands can be call from within Rstudio.
+
+Start Grass from command line:
+
+''grass -text''
+
+from the GRASS shell start rstudio:
+
+''GRASS 6.4.3 (Kytalyk):~ > rstudio &''
+
+The following R code is shortend to explain some essentials. The original code hase more then 300 lines and is shown at the end of the page. First the data is imported and a subset is created:
+
+<code R>
+######
+#author: Matthias Siewert
+# matthias.siewert@natgeo.su.se
+# This script is to read in soil sample data and to summarize the data per pedon.
+# Started 2013-12-20
+# 
+#######
+#install.packages("gdata")
+library(gdata)   # to read excel files
+library(plyr)    # very usefull package for table calculations, with an excellent documentation.
+
+getwd()
+list.files()
+
+# First we read in an excel file with the pedon data (only first sheet will be imported)
+data <- read.xls('KY_21_copy2.xlsx')
+
+# see columns by number
+colnames(data, do.NULL = TRUE, prefix = "col")
+# for simplicity: rename the column columns to common format
+colnames(data)[3] <- "pedon"
+colnames(data)[4] <- "transect"
+....
+
+# we create a new data.frame with a subset of the original datset
+#to avoid complications and to minimize computation time
+datanew <- data.frame(data[3],data[4],data[9],data[25],data[19],data[11],data[12],data[13],data[68],data[60])
+datanew <- subset(datanew, datanew$sam_type != "C14")
+datanew <- subset(datanew, datanew$sam_type != "exc")
+
+#inserts an index at the beginning
+datanew$index <- seq(1,(0+nrow(datanew)))
+col_idx <- grep("index", names(datanew))
+datanew <- datanew[, c(col_idx, (1:ncol(datanew))[-col_idx])]
+
+#create output data.frame
+dataout<- data.frame(unique(data[3]))
+colnames(dataout)[1] <- "pedon_unique"
+
+</code>
+
+Head of datanew: 
+<code R>
+ 	row.nam	index	pedon	trans	ol	sam_t	Materi	sam_top	sam_bot	sam_depth	pf.table	SOC_500
+1	518	500	KY-EXP-01	KY-EXP	 	sam	SILTY CLAY	0.0	4.0000	4.0	NA	0.4810000
+2	519	501	KY-EXP-01	KY-EXP	 	sam	SILTY CLAY	13.0	17.0000	4.0	NA	0.4430000
+3	520	502	KY-EXP-01	KY-EXP	 	sam	SILTY CLAY	20.0	24.0000	4.0	NA	0.5120000
+</code>
+
+This code shows a simple way to extract data from a large dataset by subgroups (here pedons).
+The result is merged into a data.frame called "dataout".
+
+<code R>
+########################################
+### extraction of SOC_500_OL
+
+SOC_500_OL.t <- ddply(d, .(pedon), summarise, 
+                     SOC_500_OL=sum(SOC_500) / length(unique(ol)))
+dataout <- merge(dataout,SOC_500_OL.t,by.x="pedon_unique",by.y="pedon", all=TRUE)
+</code>
+
+To extract for specific depths, these have to be defined. Exeptions render this sometimes cumbersome. Here it is resolved by ifelse statements placed after different steps:
+
+<code R>
+########################################
+#### extraction for specific depths
+########################################
+#adjusted depth of 30###################
+temp <- merge(mean_ol_depth.t, depthOL1,by.x="pedon",by.y="pedon", all=TRUE)
+temp$sum <- 30 - (temp$mean_ol_depth - temp$depthOL1)
+temp2<- ddply(d, .(pedon), summarise, length(unique(ol)))
+temp$adj_depth_30 <- ifelse (temp2$..1 == 1, 30 , temp$sum)
+# eliminate the surplus rows and merge into dataout
+temp[2:4] <- list(NULL) 
+dataout <- merge(dataout,temp,by.x="pedon_unique",by.y="pedon", all=TRUE)
+#if there is no OL the adj_dept_30 will show NA, so we replace the NA with 30cm 
+dataout$adj_depth_30 <- (ifelse(is.na(dataout$adj_depth_30), 30, dataout$adj_depth_30)) 
+head(dataout)
+</code>
+
+The following function divides all samples into increments of 0.1 mm and divides the SOC value between the incremments. This inflated the original file from 650 rows to 37 000.
+
+<code R>
+######## blow up the data ####### (cruel part)
+# if this function does not work, you have either
+#    NA value in sam_bot, sam_top or SOC_500
+#    repeating a sample depth of 0
+#    or an increment that is smaller then the seqence
+
+datanew_inc <- do.call(rbind, lapply(seq(nrow(datanew)), function(x) {
+  tmp <- seq(datanew$sam_top[x], datanew$sam_bot[x], by=0.1)
+  sam_top_inc <- head(tmp, -1)
+  sam_bot_inc <- tmp[-1]
+  SOC_500_inc <- datanew$SOC_500[x] / length(sam_top_inc)
+  data.frame(pedon = datanew$pedon[x], datanew$ol[x], sam_top_inc, sam_bot_inc, SOC_500_inc)
+}))
+</code>
+
+This is the head of the inflated dataset:
+
+<code R>
+ 	pedon	datanew	sam_top_inc	sam_bot_inc	SOC_500_inc
+1	 KY-EXP-01	 	0.0	0.1	0.012025
+2 	KY-EXP-01	 	0.1	0.2	0.012025
+3	KY-EXP-01	 	0.2	0.3	0.012025
+4	KY-EXP-01	 	0.3	0.4	0.012025
+</code>
+
+The following section combines the increments of 0.1 mm back together according to specified depths. It assumes that the orginal file containes all increments of depth, e.g. no gaps.
+
+<code R>
+result <- do.call(rbind, by(datanew_inc_nool, datanew_inc_nool$pedon, function(x) {
+  Samp <- as.character(x$pedon[1])
+  idx <- Samp == as.character(dataout$pedon_unique)
+  sequ <- seq(dataout$fake_0[idx], (dataout$adj_depth_30[idx]-0.1),by=0.1)
+  sequ_trans <- transform(as.character(sequ))  #this line is due to a problem with %in% not working with two numerics in the next line
+  idx2 <- x$sam_top_inc %in% sequ_trans[,]
+  data.frame(d_int = paste(dataout$fake_0[idx],"-",dataout$adj_depth_30[idx]),
+             SOC_OL_bot_to_30 = sum(x$SOC_500_inc[idx2]))
+}))
+</code>
+
+To combine the pedon data with the landcover classification, information on the classes is imported.
+The data is then summarized per class.
+
+<code R>
+#merge info on categories to dataout
+#read the file with the class information
+ky_classes <- read.csv("~/Dropbox/UNI/SU_Russia_data/R/ky_classes.csv")
+dataout <- merge(dataout,ky_classes,by.x="pedon_unique",by.y="pedon", all=TRUE)
+
+#summarizing
+datasummary <- ddply(dataout, .(class_new), summarise, 
+      n=length(SOC_30cm),
+      mean_SOC_30cm=mean(SOC_30cm), stdev_30cm=sd(SOC_30cm),
+      mean_SOC_100cm=mean(SOC_100cm),stdev_100cm=sd(SOC_100cm) )
+</code>
+
+To perform the thematic upscaling of the pedon data using the land cover classficiation, the area data from the LCC is needed. For this we query the LCC using GRASS from within Rstudio. 
+
+<code R>
+# remember: to make this section run you have to start rstudio from with GRASS GIS
+# all GRASS comands are then used with
+#system("command")
+# check if GRASS GIS is running:
+system ("g.version", intern = TRUE)
+
+system(
+  "#see the region information
+   g.region -p
+   g.list rast
+
+  #import raster 
+  r.in.gdal input=pathtofile output=path to file
+
+  # region to fit raster
+  g.region rast=final_class
+  ")
+
+# get areas for different classes and write to a data.frame
+lcc_areas <- read.table(
+  text = system("r.stats -a -c -p final_class", intern=TRUE),  # -a = area,-c = count, -p = percentage
+  col.names = c("class","area","pixel_count","percent_area"))
+</code>
+
+Now we can easily calculate the carbon storage by multiplying the Kg/m² pedon data with the area data from the LCC:
+
+<code R>
+cstorage <- merge(lcc_areas,datasummary,by.x="class",by.y="class_new", all=TRUE)
+cstorage$Total_SOC_30cm <- cstorage$area * cstorage$mean_SOC_30cm
+cstorage$Total_SOC_100cm <- cstorage$area * cstorage$mean_SOC_100cm
+</code>
+
+===== RESULTS and DISCUSSION =====
+
+This table shows the results from the thematic upscaling:
+
+<code R>
+class	label	        area m^2per_ar  meanSOC_100cm	TotalSOC_100cm_Kt
+0	 Unclassified	82108	0.17%	    NA	    NA
+1	 Grass 	        2652684	5.42%	23.925	 63.47
+2	 Shore 	        1473340	3.01%	    NA	    NA
+3	 Water 	        2267424	4.63%	    NA	    NA
+4	 Low shrub      2955504	6.04%	21.201	 62.66
+5	 Dw.shrub tuna  9048672	18.49%	25.047	226.65
+6	 Sphag. domin	8564312	17.50%	31.962	273.73
+7	 Sedge/grass 	1156851223.65%	31.364	362.83
+8	 Nontussoc tund 3135964	6.41%	26.722	 83.80
+9	 Tussock tundra 3941744	8.06%	29.130	114.82
+10	 Masked Pixels	3235560	6.61%	    NA	    NA
+
+</code>
+
+Different methods are used for handle the soil data organized in a table. This includes among others reading the table by row, comparing it with lists or combining different tables.  While the build in apply functions (lapply, sapply,..) are very useful for this, the plyr package seems to offer this functionality in a very efficient way. Another option would be the use of sql language in combination with an sqlite file for datastorage , which sounds very promising. The use of sql has the advantage, that queries can also be used for spatial data and thus only one query language has to be learned. 
+
+To call Rstudio from within GRASS is very useful, if one is mainly concerned with table calculation. While the raster package certainly can perform many tasks, the advantages of the GRASS database seem quite convincing. 
+
+
+
+===== Bibliography =====
+
+G. Hugelius, P. Kuhry, C. Tarnocai, and T. Virtanen, “Soil organic carbon pools in a periglacial landscape: a case study from the central Canadian Arctic,” Permafrost and Periglacial Processes, vol. 21, no. 1, pp. 16–29, Jan. 2010.
+
+
+C. Tarnocai, J. G. Canadell, E. A. G. Schuur, P. Kuhry, G. Mazhitova, and S. Zimov, “Soil organic carbon pools in the northern circumpolar permafrost region,” Global Biogeochemical Cycles, vol. 23, no. 2, p. 11, Jun. 2009.
+
+
+===== THE FULL R SCRIPT =====
+
+<code R>
+######
+#author: Matthias Siewert
+# matthias.siewert@natgeo.su.se
+# This script is to read in soil sample data and to summarize the data per pedon.
+# Started 2013-12-20
+# 
+#######
+# the second part of the script is using GRASS commands using the spgrass6 package
+# to make this part run, you have to start R from within GRASS GIS,
+# you can even do this by starting rstudio from within GRASS and then open the project 
+# you are working.
+
+#install.packages("gdata")
+library(gdata)   # to read excel files
+library(plyr)
+
+getwd()
+list.files()
+
+# read in the excel sheet (only first sheet will be imported)
+data <- read.xls('KY_21_copy2.xlsx')
+
+
+# see columns by number
+colnames(data, do.NULL = TRUE, prefix = "col")
+# for simplicity: rename the column columns to common format
+colnames(data)[3] <- "pedon"
+colnames(data)[4] <- "transect"
+colnames(data)[9] <- "ol"
+colnames(data)[11] <- "sam_top"
+colnames(data)[12] <- "sam_bot"
+colnames(data)[13] <- "sam_depth"
+colnames(data)[25] <- "sam_type"
+colnames(data)[60] <- "SOC_500"
+#View(data)
+
+# we create a new data.frame to avoid complications and to minimize computation time
+datanew <- data.frame(data[3],data[4],data[9],data[25],data[19],data[11],data[12],data[13],data[68],data[60])
+datanew <- subset(datanew, datanew$sam_type != "C14")
+datanew <- subset(datanew, datanew$sam_type != "exc")
+
+#inserts an index at the beginning
+datanew$index <- seq(1,(0+nrow(datanew)))
+col_idx <- grep("index", names(datanew))
+datanew <- datanew[, c(col_idx, (1:ncol(datanew))[-col_idx])]
+
+#View(datanew)
+#create output data.frame
+dataout<- data.frame(unique(data[3]))
+colnames(dataout)[1] <- "pedon_unique"
+
+#create two subset with ol and without
+d  <- subset(datanew, datanew$ol != "")   # creates a subset containing only OL samples
+d2 <- subset(datanew, datanew$ol == "")  # creates a subset containing no OL samples
+
+########################################
+### extraction of SOC_500_OL
+
+SOC_500_OL.t <- ddply(d, .(pedon), summarise, 
+                     SOC_500_OL=sum(SOC_500) / length(unique(ol)))
+dataout <- merge(dataout,SOC_500_OL.t,by.x="pedon_unique",by.y="pedon", all=TRUE)
+
+########################################
+#### extraction of SOC_500_MIN_TOT
+SOC_500_MIN_TOT.t <- ddply(d2, .(pedon), summarise, 
+                     SOC_500_MIN_TOT=sum(SOC_500))
+dataout <- merge(dataout,SOC_500_MIN_TOT.t,by.x="pedon_unique",by.y="pedon", all=TRUE)
+
+########################################
+#### extraction for specific depths
+########################################
+
+############# to start from zero were no OL is specified, we need a fake 0 value.
+dataout$fake_0 <- rep(0,nrow(dataout))  
+
+####### need first mean ol depth########
+mean_ol_depth.t <- ddply(d, .(pedon), summarise, 
+                      mean_ol_depth=sum(sam_depth) / length(unique(ol)))
+dataout <- merge(dataout,mean_ol_depth.t,by.x="pedon_unique",by.y="pedon", all=TRUE)
+#View(dataout)
+#difference to real OL1
+dOL1 <- subset(datanew, datanew$ol == "OL1")   # creates a subset containing only OL samples
+depthOL1 <- ddply(dOL1, .(pedon), summarise, depthOL1=sum(sam_depth))
+########################################
+
+#adjusted depth of 30###################
+temp <- merge(mean_ol_depth.t, depthOL1,by.x="pedon",by.y="pedon", all=TRUE)
+temp$sum <- 30 - (temp$mean_ol_depth - temp$depthOL1)
+temp2<- ddply(d, .(pedon), summarise, length(unique(ol)))
+temp$adj_depth_30 <- ifelse (temp2$..1 == 1, 30 , temp$sum)
+# eliminate the surplus rows and merge into dataout
+temp[2:4] <- list(NULL) 
+dataout <- merge(dataout,temp,by.x="pedon_unique",by.y="pedon", all=TRUE)
+#if there is no OL the adj_dept_30 will show NA, so we replace the NA with 30cm 
+dataout$adj_depth_30 <- (ifelse(is.na(dataout$adj_depth_30), 30, dataout$adj_depth_30)) 
+head(dataout)
+#########################################
+#adjusted depth of 100###################
+dataout$adj_depth_100 <- 100-(30-dataout$adj_depth_30 )
+
+######## blow up the data ####### (cruel part)
+# The following function divides all samples into increments of 0.1 mm and divides
+# the SOC value between the incremments.
+
+# if this function does not work, you have either
+#    NA value in sam_bot, sam_top or SOC_500
+#    repeating a sample depth of 0
+#    or an increment that is smaller then the seqence
+
+# ### For all data:
+# datanew_inc <- do.call(rbind, lapply(seq(nrow(datanew)), function(x) {
+#   tmp <- seq(datanew$sam_top[x], datanew$sam_bot[x], by=0.1)
+#   sam_top_inc <- head(tmp, -1)
+#   sam_bot_inc <- tmp[-1]
+#   SOC_500_inc <- datanew$SOC_500[x] / length(sam_top_inc)
+#   data.frame(pedon = datanew$pedon[x], datanew$ol[x], sam_top_inc, sam_bot_inc, SOC_500_inc)
+# }))
+# # strip OLs from datanew_inc, since the OLs are pooled further up. They need to be added back to the sum later on
+# datanew_inc_nool <- subset(datanew_inc, datanew_inc$datanew.ol.x.== "")
+
+### for the interpolated bottom data
+# This part will interpolate the bottom section to match it with the depth of adj_depth_100.
+
+# first we check wether all bot data is coherent with the ice content ICE should be = 0
+temp <- ddply(datanew,.(pedon),summarise,bot_Material=tail(Material,1),bot_SOC_500=tail(SOC_500,1))
+dataout<- merge(dataout,temp,by.x="pedon_unique",by.y="pedon", all=TRUE)
+
+## now we add an interpolation row for those pedons where the adju_100 is below the actual sampling
+#this creates a new data.frame 
+temp <- with(dataout,data.frame(pedon_unique, transect=NA, ol="bot_100", sam_type="intp", 
+                                 Material="intp", sam_top=NA,
+                                 sam_bot=ifelse(adj_depth_100 >=100,adj_depth_100,"temp"),#only interpolate if adj_100 over 100
+                                 sam_depth=NA, pf.table=NA, SOC_500=NA))
+temp <- temp[temp$pedon_unique %in% datanew$pedon,]        # only use Samp in dat1
+colnames(temp)[1] <- "pedon"
+#we copy our values for the new bottom into it
+temp$sam_top   <- aggregate(sam_bot~pedon,datanew,tail,1)$sam_bot
+temp$sam_depth <- aggregate(sam_depth~pedon,datanew,tail,1)$sam_depth
+temp$transect  <- aggregate(transect~pedon,datanew,tail,1)$transect
+temp$SOC_500   <-(aggregate(SOC_500~pedon,datanew,tail,1)$SOC_500)/
+                 (aggregate(sam_depth~pedon,datanew,tail,1)$sam_depth)
+temp <- subset(temp, temp$sam_bot != "temp") #only interpolate if adj_100 over 100
+temp$sam_bot <- as.numeric(as.character(temp$sam_bot))
+temp$SOC_500   <- temp$SOC_500 * (temp$sam_bot - 100)
+# now we merge it back to datanew
+temp$index <- seq(10000,(9999+nrow(temp)))
+datanew <- rbind(datanew,temp)
+datanew <- datanew[order(datanew$pedon,datanew$index),]
+
+#get rid of data were the new bottom 100 is shallower than the profile.
+temp <- ifelse(datanew$sam_top>=datanew$sam_bot, TRUE, FALSE)
+datanew <- subset(datanew, temp == FALSE)
+
+# The following function divides all samples into increments of 0.1 mm and divides
+# the SOC value between the incremments.
+
+# if this function does not work, you have either
+#    NA value in sam_bot, sam_top or SOC_500
+#    repeating a sample depth of 0
+#    or an increment that is smaller then the seqence
+
+datanew_inc <- do.call(rbind, lapply(seq(nrow(datanew)), function(x) {
+  tmp <- seq(datanew$sam_top[x], datanew$sam_bot[x], by=0.1)
+  sam_top_inc <- head(tmp, -1)
+  sam_bot_inc <- tmp[-1]
+  SOC_500_inc <- datanew$SOC_500[x] / length(sam_top_inc)
+  data.frame(pedon = datanew$pedon[x], datanew$ol[x], sam_top_inc, sam_bot_inc, SOC_500_inc)
+}))
+
+# strip OLs from datanew_inc, since the OLs are pooled further up. They need to be added back to the sum later on.
+datanew_inc_nool <- subset(datanew_inc, datanew_inc$datanew.ol.x.!= "OL1")
+datanew_inc_nool <- subset(datanew_inc_nool, datanew_inc_nool$datanew.ol.x.!= "OL2")
+datanew_inc_nool <- subset(datanew_inc_nool, datanew_inc_nool$datanew.ol.x.!= "OL3")
+
+
+########################################
+#### extraction
+########################################
+
+# The following section combines the increments of 0.1 mm to specified depths. 
+# it assumes that the orginal file containes all increments of depth, e.g. no gaps.
+
+########################################
+#### extraction of SOC_500_30cm ########
+# This section will extract the SOC_500_30cm.
+# We have the value for the OL further up. Here we calculate the value below the OL donw to the adjusted 30cm depth
+
+
+
+result <- do.call(rbind, by(datanew_inc_nool, datanew_inc_nool$pedon, function(x) {
+  Samp <- as.character(x$pedon[1])
+  idx <- Samp == as.character(dataout$pedon_unique)
+  sequ <- seq(dataout$fake_0[idx], (dataout$adj_depth_30[idx]-0.1),by=0.1)
+  sequ_trans <- transform(as.character(sequ))  #this line is due to a problem with %in% not working with two numerics in the next line
+  idx2 <- x$sam_top_inc %in% sequ_trans[,]
+  data.frame(d_int = paste(dataout$fake_0[idx],"-",dataout$adj_depth_30[idx]),
+             SOC_OL_bot_to_30 = sum(x$SOC_500_inc[idx2]))
+}))
+# merge the result into dataout
+dataout <- merge(dataout,result,by.x="pedon_unique",by.y="row.names", all=TRUE)
+# OL layer plus the rest down to the adjusted 30 cm. If there is no OL, just take the 0-30 value.
+dataout$SOC_30cm <- ifelse(is.na(dataout$SOC_500_OL), 0,dataout$SOC_500_OL) + dataout$SOC_OL_bot_to_30
+
+########################################
+#### extraction of SOC_500_100cm #######
+# This section will extract the SOC_500_100cm.
+# We have the value for the OL further up. Here we calculate the value below the OL down to the adjusted 100cm depth
+
+result2 <- do.call(rbind, by(datanew_inc_nool, datanew_inc_nool$pedon, function(x) {
+  Samp <- as.character(x$pedon[1])
+  idx <- Samp == as.character(dataout$pedon_unique)
+  sequ <- seq(dataout$fake_0[idx], (dataout$adj_depth_100[idx]-0.1),by=0.1)
+  sequ_trans <- transform(as.character(sequ))  #this line is due to a problem with %in% not working with two numerics in the next line
+  idx2 <- x$sam_top_inc %in% sequ_trans[,]
+  data.frame(d_int = paste(dataout$fake_0[idx],"-",dataout$adj_depth_100[idx]),
+             SOC_OL_bot_to_100 = sum(x$SOC_500_inc[idx2]))
+}))
+# merge the result into dataout
+dataout <- merge(dataout,result2,by.x="pedon_unique",by.y="row.names", all=TRUE)
+# OL layer plus the rest down to the adjusted 30 cm. If there is no OL, just take the 0-30 value.
+dataout$SOC_100cm <- ifelse(is.na(dataout$SOC_500_OL), 0,dataout$SOC_500_OL) + dataout$SOC_OL_bot_to_100
+
+
+
+########################################
+#### evaluate the classes
+########################################
+#merge info on categories to dataout
+#read the file with the class information
+ky_classes <- read.csv("~/Dropbox/UNI/SU_Russia_data/R/ky_classes.csv")
+#merge
+dataout <- merge(dataout,ky_classes,by.x="pedon_unique",by.y="pedon", all=TRUE)
+
+datasummary <- ddply(dataout, .(class_new), summarise, 
+      n=length(SOC_30cm),
+      mean_SOC_30cm=mean(SOC_30cm), stdev_30cm=sd(SOC_30cm),
+      mean_SOC_100cm=mean(SOC_100cm),stdev_100cm=sd(SOC_100cm) )
+
+#################################################################################################################
+#######  combine the data with the area information 
+#################################################################################################################
+
+# the most elegant way to do this is to use R from within GRASS and then call GRASS commands
+
+# here we start to work with Grass
+# to make this section run you have to start rstudio from with GRASS GIS
+
+library(spgrass6)
+
+# all GRASS comands are then used with
+#system("command")
+
+# check if GRASS GIS is running:
+system ("g.version", intern = TRUE)
+
+system(
+  "#see the region information
+   g.region -p
+   g.list rast
+
+  #import raster 
+  #r.in.gdal input=pathtofile output=path to file
+
+  # region to fit raster
+  g.region rast=final_class
+  ")
+
+# get areas for different classes and write to a data.frame
+lcc_areas <- read.table(
+  text = system("r.stats -a -c -p final_class", intern=TRUE),  # -a = area,-c = count, -p = percentage
+  col.names = c("class","area","pixel_count","percent_area"))
+# save file
+# write.table(test1, file="grass_class_areas.txt")
+#combine it with the labels
+ky_class_label <- read.csv("~/Dropbox/UNI/SU_Russia_data/R/ky_class_label.csv",colClasses = "character")
+lcc_areas <- merge(lcc_areas,ky_class_label,by.x="class",by.y="class")
+
+
+
+#####################################################################################
+############  carbon storage
+#####################################################################################
+
+cstorage <- merge(lcc_areas,datasummary,by.x="class",by.y="class_new", all=TRUE)
+cstorage$Total_SOC_30cm <- cstorage$area * cstorage$mean_SOC_30cm
+cstorage$Total_SOC_100cm <- cstorage$area * cstorage$mean_SOC_100cm
+
+</code>

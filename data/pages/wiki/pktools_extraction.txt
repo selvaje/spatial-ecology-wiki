@@ -1,0 +1,14 @@
+==== Vector overlays and extraction ====
+
+  * [[exercise1a | exercise 1a]]: Use of openev and ogr tool. Reprojection of vectors and feature selection
+  * [[exercise1b | exercise 1b]]: Convert forest vector file to KML vector for visualisation in GoogleEarth
+  * [[exercise2a | exercise 2a]]: Extract Landsat spectra from forest vector
+  * [[exercise2b | exercise 2b]]: Extract Landsat spectra over golf courses
+  * [[exercise3a | exercise 3a]]: Study phenology from MODIS NDVI time series (forest vector)
+  * [[exercise3b | exercise 3b]]: Study phenology from MODIS NDVI time series (golf course vector)
+  * [[exercise4a | exercise 4a]]: Study phenology from MODIS NDVI time series (pixels)
+  * [[exercise4b | exercise 4b]]: Long time series from MODIS 500 m NDVI (pixels)
+  * [[exercise4c | exercise 4c]]: Long time series from MODIS 500 m NDVI (mean)
+  * [[exercise4d | exercise 4d]]: Create animation GIF for NDVI time series
+  * [[exercise5a | exercise 5a]]: Find thresholds for Landsat bands 1,4,7 to create cloud mask
+  * [[exercise5b | exercise 5b]]: Extract shadow and water pixels

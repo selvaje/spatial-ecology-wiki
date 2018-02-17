@@ -1,0 +1,14 @@
+<span class="co1"># Unzip a shapefile</span>
+<span class="kw1">import</span> <span class="kw3">zipfile</span>
+<span class="kw2">zip</span> <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;hancock.zip&quot;</span><span class="sy0">,</span> <span class="st0">&quot;rb&quot;</span><span class="br0">&#41;</span>
+zipShape <span class="sy0">=</span> <span class="kw3">zipfile</span>.<span class="me1">ZipFile</span><span class="br0">&#40;</span><span class="kw2">zip</span><span class="br0">&#41;</span>
+shpName<span class="sy0">,</span> shxName<span class="sy0">,</span> dbfName <span class="sy0">=</span> zipShape.<span class="me1">namelist</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+shpFile <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>shpName<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span>
+shxFile <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>shxName<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span>
+dbfFile <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>dbfName<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span>
+shpFile.<span class="me1">write</span><span class="br0">&#40;</span>zipShape.<span class="me1">read</span><span class="br0">&#40;</span>shpName<span class="br0">&#41;</span><span class="br0">&#41;</span>
+shxFile.<span class="me1">write</span><span class="br0">&#40;</span>zipShape.<span class="me1">read</span><span class="br0">&#40;</span>shxName<span class="br0">&#41;</span><span class="br0">&#41;</span>
+dbfFile.<span class="me1">write</span><span class="br0">&#40;</span>zipShape.<span class="me1">read</span><span class="br0">&#40;</span>dbfName<span class="br0">&#41;</span><span class="br0">&#41;</span>
+shpFile.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+shxFile.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+dbfFile.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

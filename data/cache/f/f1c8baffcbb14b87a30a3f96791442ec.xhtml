@@ -1,0 +1,127 @@
+
+<h2 class="sectionedit1" id="bivariate_plot_of_predictor_variables_correlation_for_testing_multicollinearity">Bivariate plot of predictor variables correlation for testing multicollinearity</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"><span class="curid"><a href="/dokuwiki/doku.php?id=wiki:bivariate_r" class="wikilink1" title="wiki:bivariate_r">Multicollinearity</a></span> is a statistical phenomenon in which two or more predictor variables in a multiple regression model are highly correlated.<br/>
+
+In the presence of multicollinearity, the estimate of one variable&#039;s impact on y while checking for the others tends to be less precise than if predictors were uncorrelated with one another (sources Wikipedia).<br/>
+</div>
+</li>
+</ul>
+
+<p>
+Plotting a bivariate correlation matrix between predictor variables ranked according to their importance in a random forest model, allows us to study the potential effect of multicollinearity.
+We expect high correlated variables having similar ranking values and the opposite.<br/>
+
+</p>
+
+<p>
+<br/>
+
+<br/>
+
+</p>
+<pre class="code r"># load libraries
+library(foreign) # needed for  &quot;read.dbf&quot;
+library(gdata) # needed for &quot;drop levels&quot;
+library(lattice)
+\\
+# load predictors DataFrame and clean it from the NA values
+&nbsp;
+INPUT = (&quot;~/ost4sem/exercise/basic_adv_r/inputs/&quot;)
+OUTPUT = (&quot;~/ost4sem/exercise/basic_adv_r/outputs/&quot;)
+&nbsp;
+# load data
+load(paste(INPUT,&quot;predictor_rank&quot;,sep=&quot;&quot;))
+&nbsp;
+# select and rank data
+pred44 = subset(predictor_rank, select =c(pr123,pr103,pr101,pr120,pr126,pr127,pr128,pr200,pr201,pr111,pr136,pr202,pr138,pr134,pr198,pr110,pr131,pr122,pr104,pr118,pr105,pr106,pr137,pr102,pr139,pr135,pr108,pr121,pr109,pr2626,pr124,pr199,pr129,pr116,pr125,pr203,pr112,pr114,pr117,pr113,pr107,pr204,pr115,pr119))
+pred44$pr2626  = as.numeric(pred44$pr2626)
+&nbsp;
+&nbsp;
+# Create a bivariate correlation matrix using adjusted R squared error values
+mat = matrix(NA, nrow=44, ncol=44)
+for (li in 1:44){
+for (co in 1:44){
+temp = lm(pred44[[li]]~ pred44[[co]])
+mat[li,co] = summary(temp)$adj.r.squared
+}}
+colnames(mat)= names(pred44)
+rownames(mat) = names(pred44)
+&nbsp;
+&nbsp;
+# ------ Define a function for plotting a matrix ------ #
+# original function image()
+# modified function : http://www.phaget4.org/R/image_matrix.html
+myImagePlot &lt;- function(x, ...){
+     min &lt;- min(x)
+     max &lt;- max(x)
+     yLabels &lt;- rownames(x)
+     xLabels &lt;- colnames(x)
+     title &lt;-c()
+  # check for additional function arguments
+  if( length(list(...)) ){
+    Lst &lt;- list(...)
+    if( !is.null(Lst$zlim) ){
+       min &lt;- Lst$zlim[1]
+       max &lt;- Lst$zlim[2]
+    }
+    if( !is.null(Lst$yLabels) ){
+       yLabels &lt;- c(Lst$yLabels)
+    }
+    if( !is.null(Lst$xLabels) ){
+       xLabels &lt;- c(Lst$xLabels)
+    }
+    if( !is.null(Lst$title) ){
+       title &lt;- Lst$title
+    }
+  }
+# check for null values
+if( is.null(xLabels) ){
+   xLabels &lt;- c(1:ncol(x))
+}
+if( is.null(yLabels) ){
+   yLabels &lt;- c(1:nrow(x))
+}
+&nbsp;
+layout(matrix(data=c(1,2), nrow=1, ncol=2), widths=c(4,1), heights=c(1,1))
+&nbsp;
+ # Red and green range from 0 to 1 while Blue ranges from 1 to 0
+ ColorRamp &lt;- rgb( seq(0,1,length=256),  # Red
+                   seq(0,1,length=256),  # Green
+                   seq(1,0,length=256))  # Blue
+ ColorLevels &lt;- seq(min, max, length=length(ColorRamp))
+&nbsp;
+ # Reverse Y axis
+ reverse &lt;- nrow(x) : 1
+ yLabels &lt;- yLabels[reverse]
+ x &lt;- x[reverse,]
+&nbsp;
+ # Data Map
+ par(mar = c(3,5,2.5,2))
+ image(1:length(xLabels), 1:length(yLabels), t(x), col=ColorRamp, xlab=&quot;&quot;,
+ ylab=&quot;&quot;, axes=FALSE, zlim=c(min,max))
+ if( !is.null(title) ){
+    title(main=title)
+ }
+axis(BELOW&lt;-1, at=1:length(xLabels), labels=xLabels, cex.axis=0.7)
+ axis(LEFT &lt;-2, at=1:length(yLabels), labels=yLabels, las= HORIZONTAL&lt;-1,
+ cex.axis=0.7)
+&nbsp;
+ # Color Scale
+ par(mar = c(3,2.5,2.5,2))
+ image(1, ColorLevels,
+      matrix(data=ColorLevels, ncol=length(ColorLevels),nrow=1),
+      col=ColorRamp,
+      xlab=&quot;&quot;,ylab=&quot;&quot;,
+      xaxt=&quot;n&quot;)
+ layout(1)
+}
+# ----- END plot function ----- #
+&nbsp;
+paste(OUTPUT,&quot;predictor_rank&quot;,sep=&quot;&quot;)
+png(paste(INPUT,&quot;bivariate_correlation.png&quot;,sep=&quot;&quot;),width = 1500, height = 1000)
+myImagePlot(mat, xlabels=dimnames(mat)[[1]], ylabels=dimnames(mat)[[1]],  title=c(&quot;Bivariate correlations of predictor variables - Adjusted r squared values&quot;),cex=2) 
+dev.off()</pre>
+
+</div>

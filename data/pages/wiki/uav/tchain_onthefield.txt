@@ -1,0 +1,35 @@
+====== Flight ======
+Back to [[uav:toolchain|main menue]].\\
+\\
+
+<note warning>Read and get informed on legislation for the country you are flying</note>
+<note>  [[https://3dr.com/kb/safety/|Drone safety information for planes and copters]]</note>
+
+<note tip>
+Iris+ have several safety functions:\\
+  * [[https://3dr.com/kb/failsafe-overview/|Fail-Safe overview]]
+  * [[https://3dr.com/kb/failsafe-configuration/|Fail-Safe Configurations]]
+  * [[https://www.cloud-surfer.net/2014/10/06/battery-failsafe-on-iris/| Battery failsafe]]
+  * [[https://www.youtube.com/watch?v=ZXt7Wp90eHw|Geofence]] 100m altitude, 150m distance to pilot radius.
+</note>
+
+Follow the steps below to take off:
+  - Start the camera in USB waiting mode and connect the triggering cable
+  - Position the drone in the lunch position
+  - Test battery level
+  - turn on radio control win **RTL off** mode and LTR
+  - Connect Iris+ batteries
+  - Press safety button until is solid red
+  - Wait Iris+ for flashing Green light
+  - Arm motors holding left stick of radio control down-right until the motors spinn.
+  - Take off
+  - Turn radiuo control in Auto mode
+
+During the flight
+  - Monitor time of flight
+  - Have a permanent view on the drone and be ready to take control or switch on RTL if needed
+
+After landing
+  - Disarm motor, hold left stick down-right until motors stop spinning
+  - Detach Iris+ battery
+  - Turn off camera

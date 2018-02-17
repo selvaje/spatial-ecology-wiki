@@ -1,0 +1,28 @@
+<span class="co1">#!/us/bin/env python</span>
+<span class="kw1">import</span> <span class="kw3">os</span><span class="sy0">,</span> <span class="kw3">sys</span>
+<span class="kw1">from</span> osgeo <span class="kw1">import</span> gdal
+<span class="kw1">from</span> osgeo.<span class="me1">gdalconst</span> <span class="kw1">import</span> *
+&nbsp;
+driver <span class="sy0">=</span> gdal.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">'GTiff'</span><span class="br0">&#41;</span>
+driver.<span class="me1">Register</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+fn <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw3">os</span>.<span class="me1">environ</span>.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'DATADIR'</span><span class="sy0">,</span> <span class="st0">'.'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+                  <span class="st0">'2020_TSSP_IP-ENS-A2-SP20_43023435.tif'</span><span class="br0">&#41;</span>
+ds <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>fn<span class="sy0">,</span> GA_ReadOnly<span class="br0">&#41;</span>
+<span class="kw1">if</span> ds <span class="kw1">is</span> <span class="kw2">None</span>:
+    <span class="kw1">print</span> <span class="st0">'Error opening'</span><span class="sy0">,</span> fn
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+cols <span class="sy0">=</span> ds.<span class="me1">RasterXSize</span>
+rows <span class="sy0">=</span> ds.<span class="me1">RasterYSize</span>
+bands <span class="sy0">=</span> ds.<span class="me1">RasterCount</span>
+<span class="kw1">print</span> cols<span class="sy0">,</span> rows<span class="sy0">,</span> bands
+&nbsp;
+geotransform <span class="sy0">=</span> ds.<span class="me1">GetGeoTransform</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> geotransform
+&nbsp;
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>bands<span class="br0">&#41;</span>:
+    band <span class="sy0">=</span> ds.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span>i + <span class="nu0">1</span><span class="br0">&#41;</span>
+    d <span class="sy0">=</span> band.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> band.<span class="me1">XSize</span><span class="sy0">,</span> band.<span class="me1">YSize</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> d.<span class="me1">shape</span><span class="sy0">,</span> d.<span class="me1">dtype</span>
+    <span class="kw1">print</span> d.<span class="kw2">min</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> d.<span class="kw2">max</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> d.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

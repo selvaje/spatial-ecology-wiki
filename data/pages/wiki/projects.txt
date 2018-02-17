@@ -1,0 +1,66 @@
+
+====== Matera 2017 International Summer School ======
+GeoComputation using free and open source software Matera 19 – 23 June 2017 \\
+
+[[wikistud:matera2017proj | Matera 2017 Projects ]]
+
+
+====== Projects: University of Copenhagen 2010 ======
+
+  * [[wikidk:dk10animal | ANIMAL_MOVEMENT ]]  Cost path analysis
+  * [[wikidk:dk10forestgrow | FOREST_GROWTH ]]  Forest dynamics in space and time
+  * [[wikidk:dk10zebramussel | ZEBRA_MUSSEL ]]  Spread pathways of Zebra mussel //Dreissena polymorpha// in the Lithuania water 
+  * [[wikidk:dk10envelop | ENVELOPE_MODELS  ]]  Envelope models of plants and butterflies
+  * [[wikidk:dk10mbee|MOD_B_B ]]  Butterfly and Bumblebee modelling
+  * [[wikidk:dk10marine | MARINE ]]  Fine-scale Spatial-Ecological Modelling of Marine Benthic Fauna
+  * [[wikidk:dk10tanzania | TANZANIA ]]  Exploratory data analysis of forest biomass in Iringa, Tanzania
+  * [[wikidk:dk10agrinut|AGRI_NUTRIENTS]]  Agricultural nutrient loss
+  * [[wikidk:dk10ecowether|ECOWETHER]]  Spatial interpolation for linking socio-economic data with weather data
+
+
+====== Projects: University of Basilicata 2010 ======
+
+  * [[wikibas10:bas10mtaveg|MTA VEG]] Vegetation pattern dynamics using multi-temporal MODIS data
+  * [[wikibas10:bas10mtaland|FLOW DET]] Flooded areas detection
+  * [[wikibas10:bas10mtasoil|SOIL MOISTURE]] Spatial analysis of soil parameters
+  * [[wikibas10:bas10vector|Vector]] Vector data manipulation
+  * [[wikibas10:bas10vector3d|3D Vector]] 3D Vector data manipulation
+  * [[wikibas10:bas10rxls|R xls]] Process and analysis of Excel tables in R
+  * [[wikibas10:bas10bacteria|BACTERIA]] Image pattern analysis of microorganism in microscope images
+  * [[wikibas10:bas10krigging|Krigging OS]] Mapping Soil contaminants using krigging model
+  * [[wikibas10:bas10biomas|BIOMAS]] Forest Biomass estimate from Vector to raster data analysis
+\\
+
+^Project Title ^ topic ^ context ^ People ^
+|MTA VEG | Multi temporal data analysis | Vegetation pattern analysis | Annalaura |
+|MTA LAND | Multi temporal data analysis | Land degradation vulnerability | Vito, Mariapia |
+|SOILMOSITURE | Multi temporal data analysis | Soil humidity estimate | Giuseppe |
+|Vector | Vector data manipulation | Floods | Luciana, Andrea, Leonardo, Sara |
+|3D vector |  Vector data manipulation | Data Vizualization | Alfonso, Giovanni, Emiliano |
+|R xls | Processing xls tables | Surface degradation | Laura, Sergio, Giovanna |
+|BACTERIA | Image pattern analysis | Microbiology | Netula, Aladin |
+|KriggingOS | Krigging Model | Soil contaminants | Pietro |
+|BIOMAS | Vector to raster analysis | Forest Biomass estimate | Vito, Giusy |
+\\   
+
+Edit and then copy + paste a [[bas10template|template]] of the wiki project section.
+
+
+\\
+^Project Title ^ topic ^ 
+| MODB&B | Butterfly and Bumblebee modelling |   
+| VUG | The value of urban green |  
+| GENEPOOL | A lifeboat to the gene pool, prediction of crop trait properties |  
+| ECOWETHER | Spatial interpolation for linking socio-economic data with weather data | 
+| COSTPATH | Cost path analysis for Clethrionomys rufocanus movement |  
+| BIOMAS | Carbon storage and sequestration in dry miombo woodlands in Tanzania | 
+| MARINE | Fine-scale Spatial-Ecological Modelling of Marine Benthic Fauna | 
+| EXPDATA | Exploratory data analysis |  
+| PLAPROB | Predicting plant species occurrence probabilities after land-use change |  
+| MBUTER | Butterflies in agriculture landscape |  
+| GLOBALCHANGE | Global Monitoring of Tropical Forest Cover Changes | 
+| MUSSEL | Spread pathways of Dreissena polymorpha in the Lithuania water | 
+| DISPERSAL | Dispersal of Natural Enemies in the Agricultural Landscape | 
+| ALPINE | The bioclimatic model in Alpine mountains | 
+
+\\

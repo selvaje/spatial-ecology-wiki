@@ -1,0 +1,11 @@
+a:5:{s:5:"title";s:17:" Name & Pictures ";s:6:"status";i:1;s:6:"number";i:2;s:8:"comments";a:2:{s:32:"403ae9beb14bb621a695467954b80ddc";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test32.212.56.25";s:4:"name";s:8:"Giuseppe";s:4:"mail";s:27:"giuseppe.amatulli@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1426982861;}s:3:"raw";s:10:"Arrive at ";s:5:"xhtml";s:21:"
+<p>
+Arrive at 
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"403ae9beb14bb621a695467954b80ddc";}s:32:"62941f512d58830d4422f2bf64c8c602";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test141.2.253.19";s:4:"name";s:6:"Aidin ";s:4:"mail";s:16:"niamir@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1433156755;}s:3:"raw";s:48:"How to add pictures? This is the question.
+FIXME";s:5:"xhtml";s:131:"
+<p>
+How to add pictures? This is the question.
+<img src="/dokuwiki/lib/images/smileys/fixme.gif" class="icon" alt="FIXME" />
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"62941f512d58830d4422f2bf64c8c602";}}s:11:"subscribers";N;}

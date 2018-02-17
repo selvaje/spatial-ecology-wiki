@@ -1,0 +1,32 @@
+
+===== Some advanced modules =====
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/07/01-shaded-relief.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/07/02-contour.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/07/03-drawContours.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/07/04-grid.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/07/05-dem2img.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/07/06-colorize.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/07/07-mesh.py }}
+
+===== More advanced modules =====
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/08/01-ndvi.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/08/02-ndvi-classify.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/08/03-flood-fill.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/08/04-least-cost_model.py }}
+
+{{gh> https://github.com/fpl/geotutorial_basic/blob/master/08/05-least-cost-path.py }}
+
+
+
+

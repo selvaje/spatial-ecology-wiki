@@ -1,0 +1,52 @@
+| ID | Participant | Affiliation | Country | Course edition | Year | email |
+| 1 | Christos Kalogeropoulos | Aristotle University of Thessaloniki | Greece | Matera | 2015 |  |
+| 2 | Thomas Katagis | Aristotle University of Thessaloniki | Greece | Matera | 2015 | |
+| 3 | Erin Hodgess | University of Houston | USA | Matera | 2015 | |
+| 4 | Enrico Simonetti | University of Camerino | Italy | Matera | 2015 | |
+| 5 | Christian Wohlfart | DLR | Germany | Matera | 2015 | |
+| 6 | Karan Kakouei | Leibniz-Institute of Freshwater Ecology and Inland Fischeries | Germany | Matera | 2015 |
+| 7 | Achim Haeger | School for Field Studies | Costa Rica | AMatera | 2015 | |
+| 8 | Cédric Scherer | University of Potsdam | Germany | Matera | 2015 | |
+| 9 | Zhendong Wu | Lund University | Sweden | Matera | 2015 | |
+| 10 | Aidin Niamir | Senckenberg Biodiversity and Climate Research Centre | Germany | Matera | 2015 | |
+| 11 | Marco Tavoloni | University of Camerino | Italy | Matera | 2015 | |
+| 12 | Helmi Saidi | Istituto per lo Studio degli Ecosistemi | Italy | Matera | 2015 | |
+| 13 | Alzira G.Ramos | University of Lisbon | Portugal | Matera | 2015 | |
+| 14 | Mauro Viccaro | University of Basilicata | Italy | Matera | 2015 | |
+| 15 | Hadewij Sint | Rothamsted Research | United Kingdom | Matera | 2015 | |
+| 16 | Juliana Stropp | Joint Research Center | EU | Matera | 2015 | |
+| 17 | Martin Weiss | Joint Research Center | EU | Matera | 2015 | | 	 	 
+| 18 | Yelena Finegold	| FAO | USA | Matera | 2015 |  |
+| 19 | Xeni Kechagioglou | GFT | Italy | Matera | 2015 | |
+| 20 | Alba Nicoletta Mininni | University of Basilicata | Italy |Matera | 2015 | |
+| 21 | Angela FIORE | University of Basilicata | Italy | Matera | 2015 | |
+| 22 | Simone Vaccari | LTS International | United Kingdom | Matera | 2015 | |
+| 23 | Juan Arevalo Torres  | Joint Research Center | EU | Matera | 2015 | |
+| 24 | Marco Trombetti | Joint Research Center | EU | Matera | 2015 | |
+| 25 | Philipp Rauneker| Centre for Agricultural Landscape Research (ZALF) | Germany | Matera | 2015 | |
+| 26 | Cristina Rosales | Joint Research Center | EU | Matera | 2015 | |
+| 27 | Stefania Pace | ENEA | Italy | Matera | 2015 | |
+| 28 | Jusper Ronoh | International Livestock Resaerch institute | Kenya | Nairobi | 2015 | jusronohk@gmail.com
+| 29 | ANES OTWANI | Kenya Tsetse and Trypanosomiasis Eradication Council | Kenya | Nairobi | 2015 | ikolot17@gmail.com |
+| 30 | Joanna Auma | BRI-KALRO | Kenya | Nairobi | 2015 | joanna.auma@kalro.org |
+Mark	Nanyingi	Male	34	KEMRI-CDC (Locum-TDY)	Kenya	mnanyingi@kemricdc.org
+WINNIE	OKEYO	Female	NA	Biotechniology Research Institute-KALRO	Kenya	okeyo.winnie@gmail.com
+AGAPITUS	KATO	Male	45	Makerere University	Uganda	agapituskato@gmail.com
+Judith	Chemuliti	Female	NA	Biotechniology Research Institute-KALRO	Kenya	chemuliti@gmail.com
+Yalwala	Jumba	Male	32	US Army Medical Research Unit-K/KEMRI,	Kenya	santos.yalwala@usamru-k.org
+Luke	Lukaria	Male	40	Kenya Wildlife Service	Kenya	lukaria@yahoo.com
+Alfred	Ochieng	Male	42	Jaramogi Oginga Odinga University of Science and Technology	Kenya	alfred.ochieng@gmail.com
+Tania	Bishola	Female	24	University of Nairobi	Kenya	taniabishola@gmail.com
+Damaris	Matoke	Female	NA	International Centre for Insect Physiology and Ecology (icipe)	Kenya	dmatoke@icipe.org
+Freddy	Bangelesa	Male	24	Agricultural Sciences/UNIKIN	DRC	ir.fbangelesa@hotmail.fr
+Bateta		Female	40	Biotechniology Research Institute-KALRO	Kenya	batetarw@yahoo.com
+Muriithi	Murungi	Male	NA	KENYA MEDICAL RESEARCH INSTITUTE	Kenya	mmurungi@kemri.org
+Annrose	Mwangi	Female	27	University of Nairobi	Kenya	arosemwangi@gmail.com
+Beatrice	Ongadi	Female	NA	Kenya Medical Research Institute	Kenya	bongadi@kemri.org
+Julie	MESSOMO	Female	33	Cameroon Utilities Corporation	Cameroon	messjulie@gmail.com
+Chadrack	Mvula	Male	23	Agricultural Sciences/UNIKIN	DRC	chadrackf@ymail.com
+David	Mburu	Male	NA	Pwani University	Kenya	d.mburu@pwaniuniversity.ac.ke
+Jared	Bakuza	Male	43	University of Dar es Salaam	Tanzania	bakuzaj@duce.ac.tz
+Peter	Ogweng	Male	37	Makerere University	Uganda	pogweng65@yahoo.com
+Faith	Obange	Female	30	University of Nairobi	Kenya	faith07obange@gmail.com                                          
+George	Makau	Male	NA	International Centre for Insect Physiology and Ecology (icipe)	Kenya	gmakau@icipe.org

@@ -1,0 +1,113 @@
+====== Exploratory analysis of air quality database ======
+
+===== INTRODUCTION =====
+The context of this study consider the damage of calcarenite stone in archeological site caused by weathering and pollution. Much interest focus on previsional risk assessment.\\
+The degradation of the cultural heritage begins immediately after its implementation and the speed of its degradation depends on both natural and anthropogenic factors. The process of deterioration is progressive and irreversible, and the timing and mode of impact is different depending on the characteristics of materials, physico-chemical agents and  biological processes that are involved. It is evident that the conservation and restoration of such structures require the understanding of physical-chemical and biological processes causing the deterioration of materials, and the knowledge of restoration strategies.
+At today, the limits imposed by EU regulations about air pollution have been issued aiming at the safeguard of human health and ecosystem, but not considering the damages to the archaeological sites.
+
+===== Project objectives =====
+We carry out a preliminary analysis of the available air quality database.\\
+\\
+===== METADATA =====
+Excell file including 16899 observations for 13 variables.\\
+\\
+===== METHOD =====
+
+  * import xls table in R
+  * plot air quality fluctuations vs h for one day
+
+
+===== METADATA =====
+Excell file including 16899 observations for 13 variables.\\
+\\
+
+===== METHOD =====
+
+  * import xls table in R
+  * plot air quality fluctuations vs h for one day
+
+\\
+===== DATA IMPORT AND PROCESSING=====
+The following script is used to:
+  - import xls table
+  - subset data using the following parameters: CO, NO, NO2, NOX, SO2, Pm10, O3
+  - compute the means of each subset
+  - plot subset of parameters fluctuation during one day
+ 
+<code r>
+#1.Import xls data
+library (gdata) #library for import xls
+input.path = ("/home/user/ost4sem/project/r_script/")
+qualiaria= read.xls (paste (input.path,"SanNicola_dal_01_01_2010_Al_30_04_2010.xls", sep=""))
+str (qualiaria)
+
+# 2.subset qualiaria using Parametro =CO 
+qualiaria.co = subset(qualiaria, qualiaria$Parametro=="CO")
+qualiaria.no = subset(qualiaria, qualiaria$Parametro=="NO")
+qualiaria.no2 = subset(qualiaria, qualiaria$Parametro=="NO2")
+qualiaria.noX = subset(qualiaria, qualiaria$Parametro=="NOX")
+qualiaria.so2 = subset(qualiaria, qualiaria$Parametro=="SO2")
+qualiaria.pm10 = subset(qualiaria, qualiaria$Parametro=="PM10")
+qualiaria.o3 = subset(qualiaria, qualiaria$Parametro=="O3")
+
+NOmean = mean (qualiaria.no$Media)
+NO2mean = mean (qualiaria.no2$Media)
+NOXmean = mean (qualiaria.noX$Media)
+SO2mean = mean (qualiaria.so2$Media)
+PM10mean = mean (qualiaria.pm10$Media)
+O3mean = mean (qualiaria.o3$Media)
+str (qualiaria.co)
+
+#3. COmean
+# mean (qualiaria.co$Media)
+COmean = mean (qualiaria.co$Media) # memory date
+
+
+
+#5. Save graphics
+png("~/ost4sem/exercise/basic_adv_r/outputs/qualiaria.co.png", width=800, height=800)
+plot (qualiaria.co$Media) 
+dev.off()
+system(" display ~/ost4sem/exercise/basic_adv_r/outputs/qualiaria.co.png") #to view the graphic
+
+#6.Save more graphics in one graphic
+png("/home/user/ost4sem/project/output/qualiaria24h.to.png", width=1600, height=800)
+# par(mar=c(4,2,4,2))
+par(mar=c(7,8,9,1))
+plot (log(qualiaria.no$Media[1:24],2), 
+  type="l", ylim=c(0,5.2), lwd=6, axes=FALSE, main="Daily Air fluctuations" ,
+  xlab="hours", 
+  ylab="Air components (log)", 
+  cex.main=3, cex.lab=3)
+points (abs(log(qualiaria.co$Media[1:24],2)), type="l",col= "red",lwd=6) 
+points (abs(log(qualiaria.no2$Media[1:24],2)), type="l",col= "brown",lwd=6)
+points (abs(log(qualiaria.noX$Media[1:24],2)), type="l", col= "green",lwd=6)
+points (abs(log(qualiaria.o3$Media[1:24],2)), type="l",col= "blue",lwd=6)
+points (abs(log(qualiaria.pm10$Media[1:24],2)), type="l",col= "orange",lwd=6)
+points (abs(log(qualiaria.so2$Media[1:24],2)), type="l", col= "grey",lwd=6)
+axis(2, cex.axis=2)
+axis(1, at=seq(1,24,by=4), labels=seq(1,24,by=4), cex.axis=2)
+box()
+
+legend(14,5.3, 
+legend = c("CO","No2","No"), 
+col=c("black","red","brown"),
+bty="n",
+lty=1,
+lwd=4,
+cex=2)
+
+legend(18,5.3, 
+legend = c("NoX","O3","Pm10","So2"), 
+col=c("green","blue","orange","grey"),
+bty="n",
+lty=1,
+lwd=4,
+cex=2)
+dev.off()
+
+</code>
+
+** Output image **
+
+{{:wiki:qualiaria24h.to.png?1000|}}

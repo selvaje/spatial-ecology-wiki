@@ -1,0 +1,2 @@
+  sort(my.data.frame$new) 
+  [1] 10 11 20 40

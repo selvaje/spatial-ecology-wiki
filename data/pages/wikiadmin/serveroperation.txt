@@ -1,0 +1,86 @@
+==== Install www.spatial-ecology.net in the VM (localhost)  ====
+
+In case the wiki has been modify on the ftp rerun step 1-2-4-7
+
+1) Get root addimistration right
+   sudo su 
+   cd /var/www/   
+2) Download the full wiki from the server
+   Prima di fare il download pulere il cahce and hisotory nell admin
+   wget -m ftp://speco:Ost4sem_pw4@spatial-ecology.net/dokuwiki
+3) Download the wiki index from the server
+   wget -m ftp://speco:Ost4sem_pw4@spatial-ecology.net/index.php
+4) Give full permission to
+   chmod -R 777 /var/www/spatial-ecology.net
+   chmod 777 /var/www/spatial-ecology.net/index.php
+5) Edit the /var/www/spatial-ecology.net/index.php
+   gedit /var/www/spatial-ecology.net/index.php
+and change  header("Location: /dokuwiki/doku.php");
+to\\
+header("Location: ./dokuwiki/doku.php"): \\
+\\
+in osgeo8.5 mv /var/www/spatial-ecology.net/ /var/www/html
+\\      
+6) Install usefull apache2 (skip in case of update of the wiki)
+   sudo apt-get install apache2 libapache2-mod-php5
+7) For start the apache server try also 
+   sudo service apache2 restart
+8) check the http://localhost/spatial-ecology.net
+   firefox http://localhost/spatial-ecology.net
+
+
+==== Multicore upload ====
+
+tu spead up multicore upload....non definitivo da lavorarci su.
+
+  cd /var/www/spatial-ecology.net/dokuwiki
+  find . -name "*"   |  xargs -n 1 -P 6 bash -c ' ftp -in <<EOF 
+  open spatial-ecology.net
+  user speco Ost4sem_pw4 
+  put $1 ./dokuwiki/$1
+  close 
+  bye
+  EOF
+  ' _
+
+==== Setting permision for the wiki ====
+
+Si possono settare le permision in fireFTP right clik.
+Disolito\\
+conf  700\\
+conf/* 600\\
+\\
+bin 700\\
+bin/* 600\\
+
+Dopo l'aggiornamento il template era scomporso.
+ho aggiornata la version del php sul server 
+https://www.fatcow.com/controlpanel/cgiManagement/phpplus.html
+ora la version e' php 5.3
+
+
+per questo file 
+/ost4sem_dokuwiki/conf/users.auth.php  0400  solo in lettura perche altrimenti i crakkisti creavano degli user. 
+
+
+Per la pulizia del sito ho usato qesto script in locale sulla mia macchina. 
+Il virus era un java script injection the metteva una linea con dentro 74ed9f alla fine di moltio file. 
+Pertanto ho cancellato in tutti file la parte finale dopo la 74ed9f.
+
+
+   cd /var/www/spatial-ecology.net 
+   find . -type f | xargs grep -Hn 74ed9f | awk -F : '{ print $1 }'  > list_virus_file.txt 
+  
+   for file in `cat  list_virus_file.txt ` ;  do 
+   echo $file 
+   awk ' {   if ($1 == "/*74ed9f*/") {   exit } else { print }    }'   $file  >   $file"tmp"
+   mv    $file"tmp"    $file
+   done 
+
+
+Per la pulizia del cache 
+
+
+  find ./cache/?/ -type f -mtime +2 -print0 | xargs -0r rm -f
+  find ./attic/   -type f -mtime +2 -print0 | xargs -0r rm -f
+

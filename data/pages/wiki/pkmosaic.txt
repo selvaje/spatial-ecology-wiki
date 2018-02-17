@@ -1,0 +1,91 @@
+====== pkmosaic ======
+NAME
+   pkmosaic - mosaic and composit raster files
+
+SYNOPSIS
+<code bash>
+   pkmosaic -i input -o output [OPTION]
+</code>
+       
+DESCRIPTION
+   Create mosaics and composit raster files using different compositing rules
+       
+OPTIONS
+<code bash>
+   -i     --input                Input image file(s). If input contains multiple images, a multi-band output is created (default: <empty string>)
+   -o     --output               Output image file (default: <empty string>)
+   -p     --projection           projection in EPSG format (leave blank to copy from input file, use EPSG:3035 to use European projection and to force to European grid (default: <empty string>)
+   -e     --extent               get boundary from extent from polygons in vector file (default: <empty string>)
+   -ulx   --ulx                  Upper left x value bounding box (in geocoordinates if georef is true) (default: 0)
+   -uly   --uly                  Upper left y value bounding box (in geocoordinates if georef is true) (default: 0)
+   -lrx   --lrx                  Lower right x value bounding box (in geocoordinates if georef is true) (default: 0)
+   -lry   --lry                  Lower right y value bounding box (in geocoordinates if georef is true) (default: 0)
+   -b     --band                 band index to crop (-1: crop all bands) (default: -1)
+   -ot    --otype                Data type for output image ({Byte/Int16/UInt16/UInt32/Int32/Float32/Float64/CInt16/CInt32/CFloat32/CFloat64}). Empty string: inherit type from input image (default: <empty string>)
+   -of    --oformat              Output image format (see also gdal_translate). Empty string: inherit from input image (default: <empty string>)
+   -ct    --ct                   color table (file with 5 columns: id R G B ALFA (0: transparent, 255: solid) (default: <empty string>)
+   -dx    --dx                   Output resolution in x (in meter) (0.0: keep original resolution) (default: 0)
+   -dy    --dy                   Output resolution in y (in meter) (0.0: keep original resolution) (default: 0)
+   -co    --co                   options: NAME=VALUE [-co COMPRESS=LZW] [-co INTERLEAVE=BAND] (default: INTERLEAVE=BAND)
+   -f     --flag                 Flag value to put in image if out of bounds. (default: 0)
+   -r     --resample             Resampling method (0: nearest neighbour, 1: bi-linear interpolation). (default: 0)
+          --description          Set image description (default: <empty string>)
+   -m     --mrule                Mosaic rule for mosaic (0: overwrite, 1: max ndvi, 2: max Band, 3: min Band, 4: valid Band, 5: mean value, 6: max voting (only for byte images), 7: median, 8: (weighted) sum (default: 0)
+   -rb    --rband                band index used for the rule (for ndvi, use --ruleBand=redBand --ruleBand=nirBand (default: 0)
+   -vb    --validBand            valid band index(es) (default: 0)
+   -t     --invalid              invalid value for valid band (default: 0)
+   -min   --min                  flag values smaller or equal to this value as invalid. (default: -1e+08)
+   -max   --max                  flag values larger or equal to this value as invalid. (default: 1e+08)
+   -file   --file                 write number of observations for each pixels as additional layer in mosaic (default: false)
+   -w     --weight               Weights (type: short) for the mosaic, use one weight for each input file in same order as input files are provided). Use value 1 for equal weights. (default: 1)
+   -c     --class                classes for multi-band output image: each band represents the number of observations for one specific class. Use value 0 for no multi-band output image). (default: 0)
+   -v     --verbose              verbose (default: false)
+</code>
+
+====== Examples ======
+<code bash>
+pkmosaic -i input1.tif -i input2.tif -o output.tif # create mosaic from two input images. If images overlap, keep only last image (default rule)
+
+pkmosaic -i input1.tif -i input2.tif -o output.tif -m 4 --validBand 1 -t 255 -f 0 # create mosaic from two input images. Values of 255 in band 1 (starting from 0) are masked as invalid (rule=4). Typical use when multi-band image contains cloud mask
+
+pkmosaic -i input1.tif -i input2.tif -o output.tif -m 1 --rband=0 --rband=1 -t 255 -f 0 # create maximum NDVI (normalized difference vegetation index) composit. Values of 255 in band 0 (default) are masked as invalid and flagged as 0 if no other valid coverage. Typical use for (e.g., MODIS) images where red and near infrared spectral bands are stored in bands 0 and 1 respectively
+
+pkmosaic -i input1.tif -i input2.tif -i input3.tif -o output.tif -m 5 -w 0.75 -w 1.5 -w 0.75 # create composite image using weighted mean: output=(3/4*input1+6/4*input2+3/4*input2)/3.0 
+</code>
+===== Advanced examples =====
+<code bash>
+pkmosaic -i large.tif $(for IMAGE in *.tif;do pkinfo -i $IMAGE --cover $(pkinfo -i coverage.tif -bb);done) -m 4 -min 0 -o output.tif # create composit of all images found in current directory that cover (part of) coverage.tif. Values smaller or equal to 0 are invalid and flagged as 0 (default flag value) 
+</code>
+===== Frequently Asked Questions =====
+Q1: How do I use the flags -t (--invalid), -min (--min) and -max (--max)?
+
+Answer: For individual invalid value(s) in input image, use -t (--invalid)
+
+Usage:
+use unique value for each invalid bands set in -vb (--validBand) or 
+use a single value that will be applied to all invalid bands
+
+Example:
+<code bash>
+pkmosaic -i input1.tif -i input2.tif -o output.tif -t 0 -t 255 -vb 0 -vb 1
+</code>
+will consider 0 in band 0 and 255 in band 1 of input images as no value
+<code bash>
+pkmosaic -i input1.tif -i input2.tif -o output.tif -t 0 -vb 0 -vb 1
+</code>
+will consider 0 in both bands 0 and 1 of input images as no value
+
+For range(s) of invalid values in input images: use -min (--min) and -max (--max)
+Usage:
+use unique range set for each invalid bands set in -vb (--validBand)
+
+Example:
+<code bash>
+pkmosaic -i input1.tif -i input2.tif -o output.tif -min 0 -max 200 -min 0 -max 2 -vb 0 -vb 1
+</code>
+will consider all negative values in band 0 and 1 of input images as invalid. Values larger or equal to 200 in band 0 will be invalid, as well as values larger or equal to 2 in band 1
+
+
+Q2: If I take the mean value as composit rule for multi-band input images, will the output image contain the mean value of overlapping images in each band?
+
+Answer: Yes

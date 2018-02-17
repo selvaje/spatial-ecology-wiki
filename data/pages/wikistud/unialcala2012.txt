@@ -1,0 +1,48 @@
+{{:wiki:unialcala.png|}}
+====== University of Alcalà (Madrid) Spain ======
+===== Location =====
+
+The next training is organized at the University of Alcalà (Madrid) Spain, Geography Department, between 9-13 January 2012.\\
+\\
+We have room (Aula de Cartografía) in the first floor de "Facultad de Filosofía y Letras" , street "Calle de los Colegios, 2, 28801 Alcalá de Henares (http://g.co/maps/gwntv).\\
+Monday 9 we will meet in the entrance of the main entrance (8.30-9.0 exact time will be update later on).
+
+===== PROGRAM =====
+
+We will carry out one week intensive training (7h day during 5 days) in “Open Source Tools for Spatial Ecological Modeling” using R, GRASS, AWK, gdal under Linux Environment.\\
+Concerning the program we will skim through all the subjects in the http://www.spatial-ecology.net
+emphasizing  the command line procedure rather the clicking actions. It will be a really an hands-on course.
+\\
+
+
+===== ACCOMODATION =====
+
+
+- Bedel Hotel (http://www.hotelhusaelbedel.com/)\\
+- Cervantes Hotel (http://www.hcervantes.es)\\
+\\
+- Hostal Don Juan I ( http://www.hostaldonjuani.com )\\
+\\
+- Cisneros Hotel (http://www.cisneroshotel.com/)\\
+\\
+
+
+
+===== STUDENT'S LIST =====
+^ Nbr ^ Name ^  Payed  ^ email ^
+|1|Julia Chacón Labella | | juliachacon@gmail.com |  |
+|2|Stefano Orsini | *sp  | sorsini@agr.unipi.it |
+|3|Irena Bertoncelj | *sp | Irena.Bertoncelj@nib.si |
+|4|Toni Monleon | | amonleong@wanadoo.es |
+|5|Dario Rodriguez |  | |
+|6|Marc Padilla | * | marc.padilla@uah.es |
+|7|Vanesa Moreno | * | vanesa.moreno@uah.es |
+|8|Ricardo Cardozo | * | carlos.cardozo@uah.es |
+|9|Verónica Pascual | * | veronica.pascual@uah.es |
+|10|Olga Viedma | | olga.viedma@uclm.es |
+|11|Antonio J Castro | | |
+|12|John Gajardo (online) | | johngajardo@gmail.com |
+|13|Francisco Moral | *  | paco.moral@gmail.com |
+|14|Sergi Costafreda' | | scaumedes@gmail.com |  
+|15| Milan Kobal  | * | milan.kobal@gozdis.si |
+|16|Lara Arroyo Mendez | | Lara.Arroyo@uclm.es |

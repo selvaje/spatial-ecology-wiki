@@ -1,0 +1,50 @@
+<span class="kw1">def</span> point_in_poly<span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="sy0">,</span>poly<span class="br0">&#41;</span>:
+   <span class="co1"># check if point is a vertex</span>
+   <span class="kw1">if</span> <span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span> <span class="kw1">in</span> poly: <span class="kw1">return</span> <span class="kw2">True</span>
+&nbsp;
+   <span class="co1"># check if point is on a boundary</span>
+   <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>poly<span class="br0">&#41;</span><span class="br0">&#41;</span>:
+      p1 <span class="sy0">=</span> <span class="kw2">None</span>
+      p2 <span class="sy0">=</span> <span class="kw2">None</span>
+      <span class="kw1">if</span> i<span class="sy0">==</span><span class="nu0">0</span>:
+         p1 <span class="sy0">=</span> poly<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+         p2 <span class="sy0">=</span> poly<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+      <span class="kw1">else</span>:
+         p1 <span class="sy0">=</span> poly<span class="br0">&#91;</span>i-<span class="nu0">1</span><span class="br0">&#93;</span>
+         p2 <span class="sy0">=</span> poly<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+      <span class="kw1">if</span> p1<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">==</span> p2<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="kw1">and</span> p1<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">==</span> y <span class="kw1">and</span> x <span class="sy0">&gt;</span> <span class="kw2">min</span><span class="br0">&#40;</span>p1<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> p2<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span> <span class="kw1">and</span> x <span class="sy0">&lt;</span> <span class="kw2">max</span><span class="br0">&#40;</span>p1<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> p2<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+         <span class="kw1">return</span> <span class="kw2">True</span>
+&nbsp;
+   n <span class="sy0">=</span> <span class="kw2">len</span><span class="br0">&#40;</span>poly<span class="br0">&#41;</span>
+   inside <span class="sy0">=</span> <span class="kw2">False</span>
+&nbsp;
+   p1x<span class="sy0">,</span>p1y <span class="sy0">=</span> poly<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+   <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>n+<span class="nu0">1</span><span class="br0">&#41;</span>:
+      p2x<span class="sy0">,</span>p2y <span class="sy0">=</span> poly<span class="br0">&#91;</span>i % n<span class="br0">&#93;</span>
+      <span class="kw1">if</span> y <span class="sy0">&gt;</span> <span class="kw2">min</span><span class="br0">&#40;</span>p1y<span class="sy0">,</span>p2y<span class="br0">&#41;</span>:
+         <span class="kw1">if</span> y <span class="sy0">&lt;=</span> <span class="kw2">max</span><span class="br0">&#40;</span>p1y<span class="sy0">,</span>p2y<span class="br0">&#41;</span>:
+            <span class="kw1">if</span> x <span class="sy0">&lt;=</span> <span class="kw2">max</span><span class="br0">&#40;</span>p1x<span class="sy0">,</span>p2x<span class="br0">&#41;</span>:
+               <span class="kw1">if</span> p1y <span class="sy0">!=</span> p2y:
+                  xints <span class="sy0">=</span> <span class="br0">&#40;</span>y-p1y<span class="br0">&#41;</span>*<span class="br0">&#40;</span>p2x-p1x<span class="br0">&#41;</span>/<span class="br0">&#40;</span>p2y-p1y<span class="br0">&#41;</span>+p1x
+               <span class="kw1">if</span> p1x <span class="sy0">==</span> p2x <span class="kw1">or</span> x <span class="sy0">&lt;=</span> xints:
+                  inside <span class="sy0">=</span> <span class="kw1">not</span> inside
+      p1x<span class="sy0">,</span>p1y <span class="sy0">=</span> p2x<span class="sy0">,</span>p2y
+&nbsp;
+   <span class="kw1">if</span> inside: <span class="kw1">return</span> <span class="kw2">True</span>
+   <span class="kw1">return</span> <span class="kw2">False</span>
+&nbsp;
+<span class="co1"># Test a point inside the polygon for inclusion</span>
+myPolygon <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#40;</span>-<span class="nu0">70.593016</span><span class="sy0">,</span>-<span class="nu0">33.416032</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#40;</span>-<span class="nu0">70.589604</span><span class="sy0">,</span>-<span class="nu0">33.415370</span><span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#40;</span>-<span class="nu0">70.589046</span><span class="sy0">,</span>-<span class="nu0">33.417340</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#40;</span>-<span class="nu0">70.592351</span><span class="sy0">,</span>-<span class="nu0">33.417949</span><span class="br0">&#41;</span><span class="sy0">,</span>
+<span class="br0">&#40;</span>-<span class="nu0">70.593016</span><span class="sy0">,</span>-<span class="nu0">33.416032</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+lon <span class="sy0">=</span> -<span class="nu0">70.592000</span>
+lat <span class="sy0">=</span> -<span class="nu0">33.416000</span>
+&nbsp;
+<span class="kw1">print</span> point_in_poly<span class="br0">&#40;</span>lon<span class="sy0">,</span> lat<span class="sy0">,</span> myPolygon<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># test an vertex for inclusion</span>
+lon <span class="sy0">=</span> -<span class="nu0">70.593016</span>
+lat <span class="sy0">=</span> -<span class="nu0">33.416032</span>
+<span class="kw1">print</span> point_in_poly<span class="br0">&#40;</span>lon<span class="sy0">,</span> lat<span class="sy0">,</span> myPolygon<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;

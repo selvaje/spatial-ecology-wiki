@@ -1,0 +1,1 @@
+pkcrop <span class="re5">-i</span> large.tif $<span class="br0">&#40;</span>pkinfo <span class="re5">-i</span> small.tif -bb<span class="br0">&#41;</span> <span class="re5">-o</span> output.tif <span class="co0"># crop raster image large.tif to the bounding box of raster image small.tif</span>

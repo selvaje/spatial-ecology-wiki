@@ -1,0 +1,16 @@
+====== Using Geographic Information Systems and Remote Sensing to study disease vector habitat ======
+
+
+http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:wikiqgis:qgis-kenya
+
+http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:basicgrasskenya
+
+http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:grasskenyaextract 
+
+http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:basicbash
+
+http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:gdalbasic_kenya
+
+http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:basicr
+
+http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:vector_deseas

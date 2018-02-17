@@ -1,0 +1,123 @@
+====== Getting started with Qgis ======
+Start Qgis from the Upper Ubuntu Bar selecting : Application > Science > Qgis\\
+The Qgis GUI is basically composed by:
+  * **main menu**  {{:wiki:wikiqgis:main_menu_qgis.png?200|Main qgis menue}}; 
+  * a **map visualization window** to navigate and visualize maps\\
+{{:wiki:wikiqgis:vizualiz_qgis.png?100|Visualization window}}\\
+  * **toolbars** to access different gis functions \\
+{{:wiki:wikiqgis:toolbars.png?600| Qgis toolbars}} including as an example the //map navigation toolbar// {{:wiki:wikiqgis:map_navig_toolbar.png|Map Navigation Toolbar}} to zoom in and out maps. \\
+  * **panels** such as the //layer panel// to organize uploaded data \\
+{{:wiki:wikiqgis:layers_panel.png?300|Layers panel}}\\
+or the coordinate capture panel to select locations and know their geographical coordinates.\\
+{{:wiki:wikiqgis:coordinate_caputre_panel.png?150|Coordinate caputre panel}}\\
+Different Panels and toolbars exists and we can visualize it or not selecting them from the Qgis Main menue > Views. 
+
+===== Qgis plugins =====
+Several GIS functions are provided by Qgis plugins. To access plugins we can download them and install them from the Main menue > plugins > Fetch python plugins\\
+
+===== Import data =====
+Qgis allows to import all Gdal/Ogr map format and immediately reproject them on the fly to the same geographic reference system for a quick visualization. On the lower right side of qgis gui click on the CRS status logo {{:wiki:wikiqgis:crs_logo.png|QGIS CRS status function}} to access the project properties > Coordinate Reference System tab and be sure to have active the tab on the //enable 'on the fly' CRS transformation//.
+
+==== Import raster data ====
+    * From the Qgis menu select: Layer > Add raster layer ..  or click on the menage layers toolbar {{:wiki:wikiqgis:openraster.png|}} icon\\
+    * click on browse and search for the GLC2000_east_africa.tif file located in the 
+~/ost4sem/exercise/basic_qgis/data/raster/GLC2000/ folder and select it 
+    * click on open
+
+
+==== Import vectors ====
+    * From the Qgis menu select: Layer > Add vector layer ..  or click on the menage layers toolbar {{:wiki:wikiqgis:openvector.png|}} icon 
+    * click on browse and search for the East_Africa.shp file located in the 
+~/ost4sem/exercise/basic_qgis/data/vector/administrative  folder, select it 
+    * click on open
+\\
+\\
+<note tip>
+The administrative boundary for East Africa are derived by a selection of the original world administrative boundary available to download from the [[http://geodata.grid.unep.ch/download/admin98_li_shp.zip|UNEP geodata web portal]]. The land cover of east Africa raster map is derived by a portion of the  [[http://bioval.jrc.ec.europa.eu/products/glc2000/glc2000.php| JRC's Global Land cover year 2000 map]] [[http://bioval.jrc.ec.europa.eu/products/glc2000/products.php|Download here]]\\
+</note>
+\\
+
+===== Working with vectors =====
+
+==== Query and clipping  vectors ====
+We now open the administrative boundary of East Africa, select the administrative layers of Tanzania and create a new vector layer inclusive of the newly selected Tanzania administrative boundary.
+
+  * On the Layer panel → Left click on the //East_Africa// data, then → Open attribute table
+  * The attribute Table pops up type //Tanzania// in the //Look for option// and select in CNTRY NAME and click the search button; click on the Show selected records only and close the Attribute Table window
+
+  * Click on Layer > Save vector layer as .. > brows the target folder for the output and write a name of your choice (ex.:  ~/ost4sem/exercise/basic_qgis/data/vector/administrative/tanzania.tif )
+
+==== Join attributes tables and query  ====
+We open a new point vector layer corresponding to populated places in Tanzania, we merge the attribute table to the administrative boundary in Tanzania and select cities within the regions of Morogoro, Pwani and Dar es Salaam. Afterwards we can create a new vector layer inclusive of the selected cities.
+
+  * Open the city_tanzania.shp and tanzania.shp files in the ~/ost4sem/exercise/basic_qgis/data/vector/administrative  folder \\
+Visualize maps and play with colors and legends double clicking on maps names in the layer panel. Try to create the map shown below.\\
+{{:wiki:wikiqgis:city_tanzania.png?400|City in zanzania}}
+  * From Qgis menue select vector > Data Management Tools > join attributes by location
+  * In the Join attributes by location pop up windows select //city tanzania// in the Target vector layer option
+  * Select //tanzania// in the join vector layer option;
+  * Select //take attributes of first located feature// as Attribute Summary option
+  * Browse ../vector/administrative folder and write city_admin_tanzania as output file name then click on OK (see below)
+\\
+{{:wiki:wikiqgis:join_window.png?500|}}
+\\
+\\
+Now we have created a new point vector layer called city_admin_tanzania.shp including cities and administrative boundary attributes. We use this last layer to query by a sql statement the cities of a particular administrative region:
+  * Left click on the city_admin_tanzania layer → Open attribute table
+  * Click on advanced search and type or click the following query in the //search query builder//
+
+<code>
+ADMIN_NAME = 'Morogoro' OR ADMIN_NAME = 'Pwani' OR ADMIN_NAME = 'Dar es Salaam'
+</code>
+
+  * In the qgis menu go to layer → Save selection as vector file ...
+  * Browse the ~/ost4sem/exercise/basic_qgis/data/vector/administrative folder and save the file as //morogoropwanyDeScities.shp//.
+  * The final map should look like the one below.
+
+{{:wiki:wikiqgis:selected_cities.png|Cities of Morogoro, Pwani and Dar es Salaam}}
+
+==== Load X Y coordinate point data from txt file to vector file ====
+
+Frequently vector point data are provided in text files with formats looking like the one here below:
+
+<code>
+ID,x,w,attribute\\
+1,170000,8671000,white\\
+2,169600,8671000,blue\\
+3,169200,8671000,white\\
+4,169600,8672000,black\\
+…
+</code>
+
+To import such text file we can use the delimited text plugins of qgis:
+  * Select Plugins > Delimited text > Add delimited text layer from the qgis menu
+  * From the Create a layer from a Delimited text pop up window type a space in the delimiter string option\\
+<note important>The space string is used for our text input file, otherwise the string can be tab or comma or semicolon accordingly to the input data availability.</note>\\
+  * Browse and select the input text file as an example the ../Data/Point/FieldPlotsdemo.txt
+  * Select the x and y field and an output file name and path and click on OK as shown below
+\\
+{{:wiki:wikiqgis:vect_from_txt.png?600|}}
+\\
+===== Working with rasters =====
+\\
+==== Clipping  rasters ====
+
+  * Load the tanzania.shp vector layer and the GLC2000eastafrica.tif raster file
+  * Zoom in using the {{:wiki:wikiqgis:zoomin.png|}} icon and select a limited area from East Africa including Tanzania
+  * Select in the menu Raster > Clipper > Output file; browse to ~/ost4sem/exercise/basicqgis/data/raster/GLC2000/ folder and write a name at your choice such as GLC2000tanzania.tif
+  * Select a limited area from East Africa area corresponding to Tanzania ; go back to the raster Clipper window and click ok
+  * Double click on the //GLC2000tanzania// layer in the Layers panel
+  * Go to symbology > colour map and select colormap > Load style
+  * Brows to ~/ost4sem/exercise/basicqgis/data/raster/GLC2000/GLC2000.qml select it click to apply and OK\\
+Try to reproduce a final Land cover map of Tanzania including country borders and landcover classes like the one here below.
+\\
+{{:wiki:wikiqgis:lc_tanzania.png|}}
+
+
+
+
+
+
+
+
+

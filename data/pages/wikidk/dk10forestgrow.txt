@@ -1,0 +1,282 @@
+====== FOREST DYNAMICS IN SPACE AND TIME ======
+Renats Trubins. Southern Swedish Forest Research Centre, SLU.
+
+===== INTRODUCTION =====
+
+Future state of forest landscape is strongly affected by applied forest management. In Sweden the dominant practice is even-aged management. It implies harvesting forest stands in blocks, usually in the range of a few hectars, and consequent establishing of a new generation of trees on the area. Such management results in a landscape consisting of a mosaic of forest stands with all trees within a stand belonging to the same generation and often to the same species. The lower limits of the age of forest stands when harvesting them is allowed are defined in the Forest Code. Within the legal boundaries, it is forest owner that decides when a forest stand is eventually harvested. The actual age at which forest stands are cut, called rotation age,  is crucial for the economical performance of forest as wood factory but also for ecological and social functions of forest in landscape. Any rotation age is too short for forest to fully realize its ecological role while economically, according to the most of approaches, extending it beyond a certain number of years very soon makes the wood production unprofitable. Thus there is a need for balancing different expectations from forests. This makes simulations of the effects of forest management strategies in space and time relevant in different contexts.
+
+This work initially was envisaged to provide an input for the Animal Movement project by simulating future development of a forest landscape. The results of the simulation can be used as a base for ecological and spatial analyses as are used the data on the actual state of the landscape.
+
+
+In this study I modeled only the age of forest stands in the landscape. To simulate forest development in terms of volume growth requires a ready growth model or a very large amount of data to create such a model. Such a task would have gone far beyond the scope of this course. However, despite the simplicity of my simulation modeling it still can be useful for following reasons.
+
+  -  For many important ecological functions of the forest in landscape it is the age that is the crucial parameter. Some species find their habitats only in forest stands older than certain age and constituted by certain tree species.
+  - Simulating forest development in a spatially explicit way, based on spatially explicit data allows for exploring spatial characteristics of the simulated future states of the landscape in connection with simulated forest age.
+  - Cutting levels expressed in terms of area (in absence of volume data) still allow for an indirect assessment of the simulated scenarios in terms of resource sustainability.
+  - As with the volume growth excluded the model becomes very simple, the computation is much faster.
+
+==== General framework of this analysis ====
+Simulation modeling is a common technique used to assess and compare development scenarios based on different assumptions concerning policies and management with the aim to provide decision support.
+
+==== Project objectives ====
+To simulate forest landscape development under different assumptions concerning forest management in order to provide a basis for ecological analyses of the simulated future states of the landscape and to compare assumed forest management strategies.
+
+===== METADATA =====
+==== Raster data ====
+
+Forest cover description in raster including:
+- age
+- volume by species
+
+(more descriptors are available but not used in this study)
+
+The data is compiled by classifying satellite images and data from the sample plots of the National Forest Inventory of Sweden and presents the state of 2005.
+The method of classification is k-NN (k- closest neighbour).
+The resolution is 25 m.
+
+The data is compiled at the Swedish University of Agricultural Sciences and is available for download at at http://skogskarta.slu.se/
+
+
+
+
+
+
+
+===== METHOD =====
+
+The simulations were performed on data describing a forested landscape in Vasterbotten county in Sweden. The assumptions concerning forest management were the following. Rotation age for
+  * pine stands 110 years,
+  * spruce stands 80 years, 
+  * birch stands 70 years. 
+
+Two scenarios were simulated:
+  - With no constraints except the rotation ages applied
+  - With constrained maximum cutting area per period (5% of total forest area)
+In the first scenario principal assumption underlying the model were that all the forest that exceeded the rotation age was removed within one period, that after removal a new generation of trees starts growing immediately and that the dominant tree species  remains the same over time. In the second scenario the potential cutting area was compared with the max allowed and when the potential cuttings exceeded the limit, a number of pixels corresponding to the max allowed area was randomly distributed within the potential cutting areas. 
+
+In order to choose between the different forest management programs, forest stands needed to be classified by species. For this initial classification data on volume by species were used. A simple rule was applied choosing the species that gave the highest volume in a given pixel. When several species had same volume at the location, the species were prioritized in the following order: pine, spruce and, at last, birch. Contorta pine stands that are also present in the region were classified as pine. A special class of pine was used where the volume proportion of pine was higher the 70% as this was the criterion used for the analyses by the Animal Movement (cost path analysis) group.
+
+Development was simulated for 20 periods à 5 years with an output age raster file produced for each period. Statistics on cuttings by species (area) where compiled in a text files. All computations were made at a pixel level with no segmentation or aggregation of pixels into larger blocks to represent the stands. Computation were performed in GRASS mainly using various r.mapcalc functions. All the GRASS computations were embedded in scripts compiled in BASH and AWK languages. QGIS was used for visualisation. 
+
+
+
+===== DATA IMPORT =====
+
+<code bash>
+##############################DOWNLOAD AND EXPLORE DATA########################################################################
+
+wget ftp://salix.slu.se/download/skogskarta/2005/2005__Sweden_all.rar 
+
+#Downloads the data to current directory (INPUT). It was not possible do download Væsterbottens læn separately because of the specific letter characters.
+
+# compute min and max for all the file *.tif
+
+for file in *.tif ; do 
+  echo $file ; gdalinfo -mm $file  | grep "Min/Max" 
+done 
+
+# change geographicqal projection (can be seen in gdalinfo) from EPSG:2400 RT 90 2.5 gon W to EPSG:3006 SWEREF99 (beacuse it is newer)
+
+for file in *.tif ; do
+filename=`basename $file .tif` 
+  echo $file $filename"_prj.tif"  
+  gdalwarp -s_srs  EPSG:2400   -t_srs   EPSG:3006   $file $filename"_prj.tif" 
+done 
+
+
+#Create new GRASS locations by r.in.gdal command in GRASS
+
+r.in.gdal input=input_raster output=output_GRASS_raster location=new_Location --overwrite
+r.in.gdal input=/ost4sem/project/unidk2010/INPUT/Lan24/AGE_24_P_05_prj.tif output=AGE_24_P_05_grass  location=Sweden --overwrite
+
+
+#Import other rasters (as the location is created - no need to set new location again)
+
+cd ~/ost4sem/project/unidk2010/INPUT/Lan24
+for m in *_prj.tif; do
+filename=`basename $m .tif`
+  echo $m $filename
+  r.in.gdal input=~/ost4sem/project/unidk2010/INPUT/Lan24/$m output=$filename"_grass" --overwrite
+done
+
+g.region n=7200000  s=7150000    w=600000   e=700000  --overwrite 
+</code>
+
+===== DATA PROCESSING =====
+\\
+
+<code bash>
+
+##############################CLASSSIFICATION########################################################################
+
+#The routine creates a classification of forest into different forest type defined by dominant tree species
+#In order to assign different forest management programms, in this case i.e. final felling ages, every forest pixel needs to be assigned a type. Here are conidered 4 forest types: 
+# type 1 where pine or contorta has the highest volume
+# type 2 where spruce has the highest volume
+# type 3 where birch has the highest volume
+# type 4 a special type where pine constitutes at least 0.7 of the total volume for given pixel 
+# where more than one species have equal volume the types are priritized in the following order type 4, type 1, type 2, type 3
+
+# Compare volumes of different tree species and record the max in a new file
+r.mapcalc max_gr=max"(BIRCHVOL_24_P_05_prj_grass , CONTORTAVOL_24_P_05_prj_grass , PINEVOL_24_P_05_prj_grass , SPRUCEVOL_24_P_05_prj_grass)"
+
+#The order matters! Choose forest type: pine>=0,7(4), pine(1), spruce(2), birch(3).
+r.mapcalc species=if"(max_gr==BIRCHVOL_24_P_05_prj_grass, 3 , 0 )"
+r.mapcalc species=if"(max_gr==SPRUCEVOL_24_P_05_prj_grass, 2 , species )"
+r.mapcalc species=if"(max_gr==PINEVOL_24_P_05_prj_grass || CONTORTAVOL_24_P_05_prj_grass, 1 , species )"
+r.mapcalc species=if"(PINEVOL_24_P_05_prj_grass >= (0.7*TOTALVOL_24_P_05_prj_grass), 4 , species )"
+
+
+</code>
+
+
+
+<code bash>
+
+##################################SIMULATION##################################################################
+
+ 
+
+#Set the rotation ages (ie age when the forest clearfelled)#
+
+rpine=110
+rspruce=80
+rbirch=70
+echo "Rotation age: Pine $rpine years, Spruce $rspruce years, Birch $rbirch years" > report.txt
+
+  #Set number of periods (5 years) for simulation#
+  n=20
+  echo "Number of periods="$n >> report.txt
+
+
+#Set the lengh (nr of years) of a period
+l=5
+echo "Length of a period=$l years" >> report.txt
+
+
+#Set the allowed cut as a percentage of the total forest area
+aff=5
+
+#Set the initial age raster (period 0)
+r.mapcalc age_0=AGE_24_P_05_prj_grass
+
+# Set NULLL for no data value (-32768) to make it easier for creating histogramms later on
+r.null map=age_0 setnull=-32768
+
+#Calculate the allowed cutting area in pixels (lm) for all forests (here only sums the total forest area, continuation see below)
+r.mapcalc areatotal=if"( age_0 >= 0, 1, 0 )"
+r.sum rast=areatotal > areatotal.txt
+
+lm=`awk  -v aff=$aff '{ printf("%.0f\n", $3*aff/100) }' areatotal.txt` #THIS WORKS!!!!!!!!!!!!!!!!!!!!! 5 is the percentage of total forest area allowed to be cut within 1 period
+echo "Allowed cutting level - $aff % of the total forest area PER PERIOD" >> report.txt
+echo "Allowed cutting area per period $lm pixels" >> report.txt
+
+#Print the column headings for the report in the sum1.txt
+awk 'BEGIN { print "Period" , "Species" , "Clearcut area", "Unit" }' > sum1.txt
+
+#Run the loop. age_1, age_2 etc are the age files after periods 1,2 etc given the specified rotation ages
+
+for nn in `seq 1 $n`; do
+
+  echo Period $nn
+  np=$(($nn-1))
+  r.mapcalc age_$nn=age_$np
+
+        #Identify potential cutting areas (in pixels)
+	r.mapcalc cuts_$nn=if"( species==1 & age_$nn > $rpine , 1 , 0 )"     
+	r.mapcalc cuts_$nn=if"( species==4 & age_$nn > $rpine , 1 , cuts_$nn )"       
+	r.mapcalc cuts_$nn=if"( species==2 & age_$nn > $rspruce , 1 , cuts_$nn )" 
+	r.mapcalc cuts_$nn=if"( species==3 & age_$nn > $rbirch , 1 ,  cuts_$nn )" 
+
+	#Sum all the potential cutting area (in pixels)
+	r.sum rast=cuts_$nn > sum.txt
+	pcuts=`awk '{ printf ("%.0f\n", $3) }' sum.txt`
+	echo "Area of forest that reached minimum allowed cutting age $pcuts pixels" >> report.txt
+	#counts the pixels selected for cutting
+
+			      #Test if the identified potential cutting area (pcuts) exceeds the allowed limit (lm) If it exceeds it randomly choose an area equal to lm out of the potential cuts
+			      
+			      if [ $pcuts -gt $lm ] ; then
+			      
+			      echo "Potential cutting area exceeds the allowed area of $aff % of forest area per period" >> report.txt
+
+			      r.null map=cuts_$nn setnull=0
+	  
+			      r.random input=cuts_$nn n=$lm raster_output=re_cuts_$nn --overwrite
+
+			      r.mapcalc cuts_$nn=re_cuts_$nn
+			      
+			      g.remove re_cuts_$nn
+
+			      r.sum rast=cuts_$nn > sum.txt
+			      pcuts=$lm 
+			      
+			       #NULL values must be replace back by 0 (zeros) to make the next test.
+			      r.null map=cuts_$nn null=0	
+
+			      fi
+
+	    # When the cutting area (pcuts) is reset to (lm) the cuttings can be executed - i.e. the age raster can be manipulated. Cuts_$nn raster contains now all the "approved" cuts
+	    echo "Approved area of cuttings $pcuts pixels" >> report.txt
+	    
+
+	    # Thus the age in the age_$nn raster has to be reset for pixels where the cut is "approved" in cuts_$nn raster as results from the previous manipulations.
+	    
+
+	    r.mapcalc age_$nn=if"( cuts_$nn==1, 0 , age_$nn )"
+
+	    r.mapcalc pinecuts=if"( cuts_$nn==1 & species==1, 1, 0)"
+	    r.sum rast=pinecuts > cuts.txt
+	    awk -v nn=$nn '{ print  nn, "     ", "Pine", "     ", $3/16, "    ", "ha" }'  cuts.txt >> sum1.txt
+	    
+	    r.mapcalc pine07cuts=if"( cuts_$nn==1 & species==4, 1, 0)"
+	    r.sum rast=pine07cuts > cuts.txt
+	    awk -v nn=$nn '{ print  nn, "     ", "Pine07", "   ", $3/16, "    ", "ha" }'  cuts.txt >> sum1.txt
+
+	    r.mapcalc sprucecuts=if"( cuts_$nn==1 & species==2, 1, 0)"
+	    r.sum rast=sprucecuts > cuts.txt
+	    awk -v nn=$nn '{ print  nn, "     ", "Spruce", "   ", $3/16, "    ", "ha" }'  cuts.txt >> sum1.txt
+
+	    r.mapcalc birchcuts=if"( cuts_$nn==1 & species==3, 1, 0)"
+	    r.sum rast=birchcuts > cuts.txt
+	    awk -v nn=$nn '{ print  nn, "     ", "Birch", "    ", $3/16, "    ", "ha" }'  cuts.txt >> sum1.txt
+
+    
+	    # Here I use the same sum1.txt file because it should conatin the pcuts_$nn count as it has rewritten last time in the while routine
+	    # In this version report is created only for total cut area together
+	    awk -v nn=$nn '{ print  nn, "     ", "all", "      ", $3/16, "    ", "ha" }'  sum.txt >> sum1.txt
+
+# Update age before next period
+r.mapcalc age_$nn=age_$nn + $l
+
+done
+</code>
+
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+
+
+Map 1. Initial forest age before the simulation. (Lighter green - young, darker green - older, 100 years and more)
+{{:wikidk:age_0new.png?400}} 
+
+Map 2. Forest age after 10 periods (50 years) according to the first (no max cutting are constraint)
+\\ {{:wikidk:agenc_10new.png?400}}
+
+Map3 and Map4. Forest after 20 periods (100 years) according to the first (no max cutting are constraint) and the second (with constrained max cutting area) scenarios. 
+{{:wikidk:agenc_20new.png?400}}  {{:wikidk:ageac_20new.png?400}}
+\\ 
+\\
+
+Figure 1. Initial forest age structure:vertical axis shows area; horizontal axes age (*10) in years
+\\ {{:wikidk:map_0.png?450}} 
+\\ 
+\\ 
+Figure 2 and 3. Forest age structure after 10 simulation periods (50 years): on the left - scenario with no constraint, on the right - scenario with constrained max cutting area per period
+\\ {{:wikidk:mapnc_10.png?450}} {{:wikidk:mapac_10.png?450}}
+\\ 
+\\
+Figure 4 and 5. Forest age structure after 20 simulation periods (100 years): on the left - scenario with no constraint, on the right - scenario with constrained max cutting area per period
+\\ {{:wikidk:mapnc_20.png?450}} {{:wikidk:mapac_20.png?450}}

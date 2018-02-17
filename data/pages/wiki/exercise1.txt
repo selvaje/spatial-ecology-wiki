@@ -1,0 +1,44 @@
+__Open the Landsat image with the image viewer openev:__
+<code bash>
+openev -h ${LANDSATDIR}/${LANDSATIMG}
+</code>
+
+__Select different band settings (false colour images)__
+
+consult web page with landsat bands for different thematic band settings
+<note important>natural (true) colour image for Landsat imagery: R=band 3(red), G=band 2 (green), B=band1 (blue)</note>
+zoom in on particular area of interest
+  * method 1: + button
+  * method 2: control button + drag window
+  * method 3: control button + left mouse button
+zoom out from particular area of interest
+  * method 1: - button
+  * method 2: control button + right mouse button
+  * method 3: use fit all layers button (square box with arrow in each corners)
+
+__create vector with forested areas by selecting forest from cornwall_natural.shp and reprojecting to epsg:3035 (ETRS89:LAEA)__
+<code bash>
+ogr2ogr -t_srs epsg:3035 -where "TYPE in ('forest')" ${VECTORDIR}/cornwall_forest_3035.shp ${VECTORDIR}/cornwall_natural.shp
+</code>
+
+__open forest vector in openev on top of landsat raster image__
+
+question: can you distinguish forest from other vegetated areas?
+
+question: can you easily distinguish forest from inland water?
+
+__select the standard false colour composite__
+
+<note tip>standard false colour image for Landsat: R=band 4(NIR), G=band 3(red), B=band2(green)</note>
+
+Interesting web sites for interpreting Landsat images:
+
+http://web.pdx.edu/~emch/ip1/bandcombinations.html
+
+http://zulu.ssc.nasa.gov/mrsid/tutorial/Landsat%20Tutorial-V1.html
+
+<note tip>Do not forget to enhance raster when loading new bands using button with horizontal line</note>
+
+question: what does vegetation look like in this false colour image, why?
+
+question: what about water and forest now?

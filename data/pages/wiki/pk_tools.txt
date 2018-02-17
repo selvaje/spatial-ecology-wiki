@@ -1,0 +1,32 @@
+====== PKTOOLS ======
+For more information, please consult home page: http://pktools.nongnu.org
+
+All utilities in pktools use command line options and have a built in help
+<note tip>use the -h option to get help</note>
+<note warning>pktools ALWAYS use -i for input and -o for output (unlike GDAL utilities that commonly use last argument as output and second but last argument as input)</note>
+
+===== Install =====
+To install, please check http://pktools.nongnu.org/html/index.html#pktools_installation
+
+
+===== Course =====
+
+<note warning>
+Set the [[pktools_environment | environment variables]] and copy the [[pktools_data| data]]
+</note>
+
+  * [[ pktools_intro | Raster and vector data processing using GDAL/OGR ]]: part 1
+  * [[ pktools_basic | Introduction to pktools ]]: part 2
+  * [[ pktools_advanced | Machine learning: image classification ]]: part 3
+  * [[ pktools_lidar | Point data from LiDAR acquisitions: creating digital elevation models ]]: part 4
+  * [[ pktools_gnuplot | Introduction to gnuplot ]]: part 5
+
+===== Exercises =====
+
+  * [[ pktools_extraction | Vector overlays and extraction ]]: exercises 1-5
+  * [[ pktools_filtering | Masking and filtering ]]: exercise 6
+  * [[ pktools_sqlite | Openstreetmap, SQLite and sql commands ]]: exercise 7
+  * [[ pktools_classification | Image classification ]]: exercise 8
+  * [[ exercise9 | Multicore processing with pktools ]]: exercise 9
+  * [[ exercise10 | Image composits using pkmosaic ]]: exercise 10
+  * [[ contest_script | IEEE data fusion contest 2013 ]] : exercise 11

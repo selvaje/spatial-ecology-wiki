@@ -1,0 +1,65 @@
+~~NOCACHE~~
+
+====== A suite of global, cross-scale topographic variables for environmental and biodiversity modeling ======
+Scripting procedure to recreate derived and aggregated topographic variables using [[ http://topotools.cr.usgs.gov/GMTED_viewer/ | Global Multi-resolution Terrain Elevation Data 2010 (GMTED2010)  ]]
+Script written by Giuseppe Amatulli
+
+This example contains the following steps: 
+
+- Download the GMTED2010 digital elevation model (DEM)
+- Calculate the topographic variables using gdal commands 
+- Calculate the topographic variables using grass7 commands
+- Aggregate the topographic variables to different resolution using pktools 
+- Create a plot in R 
+
+<note tip> 
+These scripts have been tested in Ubuntu Linux environment. 
+Microsoft Windows users: consider installing the [[http://live.osgeo.org/en/index.html |  OSGEO-Live Virtual machine  ]] that has GRASS GIS 7 already installed and follow the [[ http://pktools.nongnu.org/html/md_installation_linux.html#installation_linux | installation instruction ]]  to install [[ http://pktools.nongnu.org/html/index.html | pktools ]].
+</note>
+
+==== Use gdaldem to create topographic variables =====
+
+   # download the script 
+   wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/grass/sc1_topography_varGDAL.sh
+   bash sc1_topography_varGDAL.sh
+
+{{gh> https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/grass/sc1_topography_varGDAL.sh}}
+
+==== Use GRASS to create others topographic variables =====
+
+   wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/grass/sc2_topography_varGRASS.sh
+
+Create the GRASS GIS data base and enter GRASS: 
+
+   grass70 -text -c elevation.tif  grass_location
+   # run the script
+   bash sc2_topography_varGRASS.sh
+   
+
+{{gh> https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/grass/sc2_topography_varGRASS.sh}}
+
+Additional topographic variables can be create using:
+  * [[ https://grass.osgeo.org/grass70/manuals/addons/r.diversity.html | r.diversity ]] which calculate Pielou, Renyi, Shannon and Simpson indices.\\
+  * [[https://grass.osgeo.org/grass70/manuals/r.texture.html | r.texture ]] which generate images with textural features as first order statistic and second order (so-called grey level co-occurrence matrices). 
+
+==== Use PKtools to aggregate categorical topographic variables =====
+
+https://github.com/tuanmu/RS_tools/blob/master/Aggregation_GLCM.py
+
+==== Use PKtools to aggregate continues topographic variables =====
+
+   wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/grass/sc3_aggregation_varPKTOOLS.sh
+   bash sc3_aggregation_varPKTOOLS.sh
+
+{{gh> https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/grass/sc3_aggregation_varPKTOOLS.sh}}
+
+==== Use R to plot a variable =====
+
+   wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/grass/sc4_plot_varR.R   
+start R 
+   R
+   source ("sc4_plot_varR.R")
+
+{{gh> https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/grass/sc4_plot_varR.R}}
+
+{{:wiki:vrm.png?320|}} {{:wiki:geom_1kmsha.png?320|}} 

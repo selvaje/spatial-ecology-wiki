@@ -1,0 +1,101 @@
+
+<h2 class="sectionedit1" id="name">NAME</h2>
+<div class="level2">
+
+<p>
+<strong>ost4sem_average.sh</strong>
+</p>
+
+</div>
+<!-- EDIT1 SECTION "NAME" [1-41] -->
+<h2 class="sectionedit2" id="description">DESCRIPTION</h2>
+<div class="level2">
+
+<p>
+A nice combination of AWK script with bash argumens request.
+Calculate average of column txt files base on CLASS/ID column.<br/>
+
+all the row and column  are processed<br/>
+
+in case no CLASS/ID column in the file crate a dummy variable (e.g 1 ) for all che row<br/>
+
+the file has to be sorted base on the  CLASS/ID column!!!<br/>
+
+input_s.asc<br/>
+
+ID V1 V2 V3<br/>
+
+1  3  5  3<br/>
+
+1  5  7  5<br/>
+
+2  2  1  1<br/>
+
+output.asc<br/>
+
+1  4  6  4<br/>
+
+2  2  1  1<br/>
+
+</p>
+
+<p>
+$1 input.asc<br/>
+
+$2 output.asc<br/>
+
+</p>
+
+</div>
+<!-- EDIT2 SECTION "DESCRIPTION" [42-518] -->
+<h2 class="sectionedit3" id="synopsis">SYNOPSIS</h2>
+<div class="level2">
+
+<p>
+~/sh/average.sh input_s.asc output.asc<br/>
+
+</p>
+
+<p>
+reply to the questions manualy<br/>
+
+or use the <abbr title="End of file">EOF</abbr> sintax<br/>
+
+<br/>
+
+sh ./average.sh input_s.asc output.asc «<abbr title="End of file">EOF</abbr><br/>
+
+y/n          “The first row is an header (y/n) = “<br/>
+
+1/2/3/4/…    “Position of the master ClASS/ID column (1/2/3/4/….)  = “<br/>
+
+1/2/3/4/…    “Precision of the average results (Decimal number 1/2/3/… ) = “<br/>
+
+<abbr title="End of file">EOF</abbr><br/>
+
+</p>
+
+</div>
+<!-- EDIT3 SECTION "SYNOPSIS" [519-926] -->
+<h2 class="sectionedit4" id="download">DOWNLOAD</h2>
+<div class="level2">
+
+<p>
+Download python script: <a href="http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_average.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_average.sh" rel="nofollow noopener"> ost4sem_average.sh </a><br/>
+
+</p>
+
+</div>
+<!-- EDIT4 SECTION "DOWNLOAD" [927-1067] -->
+<h2 class="sectionedit5" id="example">EXAMPLE</h2>
+<div class="level2">
+<pre class="code bash"><span class="kw2">chmod</span> <span class="nu0">777</span> ost4sem_average.sh
+<span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">2</span>,<span class="nu0">2</span> input.asc <span class="sy0">&gt;</span> input_s.asc
+~<span class="sy0">/</span>sh<span class="sy0">/</span>ost4sem_average.sh input_s.asc output.asc <span class="co2">&lt;&lt;EOF
+y
+2
+4
+EOF</span></pre>
+
+</div>
+<!-- EDIT5 SECTION "EXAMPLE" [1068-] -->

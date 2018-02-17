@@ -1,0 +1,626 @@
+====== GRAPPOLO a supercomputer in a superbox ======
+**Grappolo is a project designed to teach cluster computation.**
+
+
+
+{{:wiki:grappolo_square.jpg| }} {{:wiki:imgp9498.jpg?230}}
+We have prototyped and developed a portable micro cluster computer (replicating the functioning of the biggest cluster computer facility in the southwest UK ). This tool is similar to the Raspberry pi cluster developed at Southampton University but is aimed towards teaching Geographic Information Systems methods rather than raw computation, it is very low cost ( ~ £130), portable and a perfect replica of an operating system running on a true high performance cluster computer.
+<note important>This is still an an ongoing project! Not finished yet. We are working on the OS/ software installation and we will update this page as soon as grappolo will work smoothly fine. 
+</note>
+{{:wiki:img_20150620_120734512-animation.gif?}}
+[[wiki:grappolo]]
+===== Goals =====
+   * Build a micro cluster compurer with the same operating system and software of a real HPC (High Performance Computer) for simulating big data processing.
+   * Make it as small as possible so that grappolo can fligh in your hand lugage toghether with your laptop, book, toothbrush and newspaper.
+   * Make it awsome so when you test supercomputing in a pub it will attract people's attention and they might want to learn more about it.
+   * Make it low cost and open source so that is potentially replicable in schools or by any V2 open minded citizens willing to learn new amazing stuff.
+
+====== Software and hardware ======
+We used 3 Raspberry pi's running a light distribution of Linux operating system. Below you can find codings for software installation and hardware assembling. \\
+For the best box ever conceived in the history of boxes....\\
+We used an awesome reddish perspex and sawed an alluminium squared box section 15x15.
+
+====== Project team and collaborators ======
+
+  * Stefano Casalegno (Project leader)
+  * Andrew Cowly (brainstorming - software / OS installation)
+  * Oliver Hatfield (box design and construction)
+  * Andy Smith (software ideas support / cabling)
+  * Victoria O'Brien (software OS / installation)
+  * Giuseppe Amatulli (software applications for teaching)
+
+This protect is sponsored by www.spatial-ecology.net we are a not for profit organization in the UK helping people to learn open source technology for spatio-temporal data analyses, modelling and big data processing.
+
+ 
+===== List of material =====
+  * 3 raspberry pi model 2 - 1GB RAM 4CPU : [[http://cpc.farnell.com/| : 89.78 £]]
+  * 3 sd card 8GB : [[http://www.ebay.co.uk| : 2.75 £ ]]
+  * 1 usb wifi dongle [[http://www.maplin.co.uk/p/maplin-single-band-n150-nano-usb-network-adapter-a71lb|  : 9.99 £]]
+  * Ethernet switch (5 port 10/100M Switch) usb powered [[http://www.ebay.co.uk/itm/Fast-Ethernet-Efficient-Network-Switch-5-Ports-10-100Mbps-for-Desktop-New-/271843904311?| : 5.63£ ]]
+  * 3 usb short cables [[http://www.ebay.co.uk/itm/Micro-USB-8-20CM-Short-Braided-Data-Sync-Cable-Cord-For-Samsung-Galaxy-S3-S4-/400723720012?pt=LH_DefaultDomain_3&var=670268246685&hash=item5d4cfeb74c| 2.97 £]]
+  * 3 ethernet cables  : 0 £ recycled 
+  * Hexagonal spacer female/male RS Stock No. 105-8202 [[http://uk.rs-online.com/| : 5.69 £]]
+  * 4 port USB 5V 2.1A / 1A Power supply [[http://www.dx.com/p/universal-travel-usb-ac-powered-4-port-hub-with-eu-plug-white-2-round-pin-plug-132107#.VXB-w7w57yx| : 6.32 £]]
+  * Alluminium box [[http://www.ebay.co.uk/itm/Aluminium-Square-Box-Section-x-12-pre-cut-Sizes-x-8-Lengths-/360941104777?pt=LH_DefaultDomain_3&var=&hash=item5409c42e89 | 8.25 £]]
+  * Perspex [[http://www.penrynplasticsacrylic.co.uk/product_info.php?id=124| 5.37 £]]
+
+**TOTAL COSTS : 136.75 ** shipping and VAT included
+===== Installing OS =====
+  - [[http://elinux.org/RPi_SD_cards|Check ]] that your SD card is not trash 
+  - [[http://elinux.org/RPi_Easy_SD_Card_Setup#Using_the_Linux_command_line| Download raspiam weezy OS and set up ]] the SD card 
+  -  Plug Ethernet cable from raspi 1 to home router 
+  -  Insert SD in raspberry, 
+  - power raspi 1 
+  - Open a terminal using a computer connected to the home router (via wireless or cable)
+==== check your ip adress ====
+    ifconfig | grep "inet addr"
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet addr:192.168.1.68  Bcast:192.168.1.255  Mask:255.255.255.0
+          
+==== search for the ip adress of the raspberry pi====
+    sudo nmap -sP 192.168.1.1-255
+    Starting Nmap 5.21 ( http://nmap.org ) at 2015-05-23 15:24 BST
+       Nmap scan report for Unknown-28-32-c5-ae-4e-19.home (192.168.1.64)
+       Host is up (0.0029s latency).
+       MAC Address: 28:32:C5:AE:4E:19 (Unknown)
+       Nmap scan report for ace.home (192.168.1.68)
+       Host is up.
+       Nmap scan report for Unknown-e8-06-88-9c-0f-66.home (192.168.1.70)
+       Host is up (0.10s latency).
+       MAC Address: E8:06:88:9C:0F:66 (Unknown)
+       Nmap scan report for raspberrypi.home (192.168.1.80)
+       Host is up (0.015s latency).
+       MAC Address: B8:27:EB:65:6C:FF (Unknown)
+       Nmap scan report for BThomehub.home (192.168.1.254)
+       Host is up (0.013s latency).
+       MAC Address: D0:84:B0:D7:AC:30 (Unknown)
+       Nmap done: 255 IP addresses (5 hosts up) scanned in 5.44 seconds
+You are now ready to connect to raspi1 via ssh, default login and pass are pi, raspberry. 
+    ssh pi@192.168.1.80
+    yes
+you are loged in the raspberry pi. Next steps are easy to do with the raspi-config GUI:
+    sudo raspi-config
+
+  - Expand file system - Resize the partition
+  - Change password to masterpi
+  - Set time zone : internationalisation --> london
+  - Set the memory split and change the value to 16 (in advanced options)
+  - change hostname " raspberry" to "grappolo" (in advanced options)
+      sudo apt-get update
+      sudo apt-get upgrade
+      sudo reboot
+      ssh pi@192.168.1.80
+      
+Add user admin (administartor) and remove user pi.\\
+Password for user "admin" = "admin" //...old pass for pi was masterpi// 
+<code bash>
+sudo useradd -m admin
+sudo passwd admin #admin
+sudo nano /etc/group
+# Go through the file adding ,ad to the end of all of the groups that pi is in.  eg:   " adm:x:4:pi,admin  "
+exit
+ssh -X admin@192.168.1.80
+chsh -s /bin/bash #default terminal is bash
+sudo userdel pi
+</code>
+
+==== Set connections configurations ====
+== Connect the grappolo cluster to the outside world  ==
+We will generate a dynamic ip address to connect to the head node "grappolo" to the outside world. This will be be physically done ether via wifi dongle or via a usb-ethernet adapter depending on our working environment. \\
+== Connect nodes within the grappolo cluster ==
+Within the cluster we create a static ip network using the Ethernet ports of each of the 3 raspi.
+The /etc/network/interface configuration file determine the above parameters. We need to insert the name of the wifi network and password wile connecting using the wifi dongle or we need to uncomment the two // eth1// lines if we are using an ethernet connection from the cluster to the external world. The grappolo configuration using the wifi dongle looks like this:
+<code bash>
+pi@grappolo ~ $ cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 10.141.255.254
+netmask 255.255.0.0
+network 10.141.0.0
+broadcast 10.141.255.255
+#gateway 10.141.255.254
+
+# To connect via usb ethernet adaptor instead of wifi, uncomment the next two lines
+#auto eth1
+#iface eth1 inet dhcp
+
+allow-hotplug wlan0
+auto wlan0
+
+iface wlan0 inet dhcp
+#wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+       wpa-ssid "NETWORK_NAME"
+       wpa-psk "NETWORK_PASSWORD"
+</code>
+
+Next we need to reboot and log in via the usb dongle or ethernet-usb:
+       sudo reboot
+       ssh -X pi@192.168.1.81
+       
+And the resulting connection configuration is the following
+<code bash>
+pi@grappolo ~ $ ifconfig
+eth0      Link encap:Ethernet  HWaddr b8:27:eb:b6:4b:a5  
+          inet addr:10.141.255.254  Bcast:10.141.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:69 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:23 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:9100 (8.8 KiB)  TX bytes:3231 (3.1 KiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:72 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:72 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:6288 (6.1 KiB)  TX bytes:6288 (6.1 KiB)
+
+wlan0     Link encap:Ethernet  HWaddr 00:87:31:13:37:aa  
+          inet addr:192.168.1.81  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:455 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:221 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:104200 (101.7 KiB)  TX bytes:29337 (28.6 KiB)
+</code>
+
+
+To read your configuration information (address; netmask; network; broadcast; gateway) you can type:
+     pi@grappolo ~ $ ifconfig | grep -A1 eth0 | tail -1  
+          inet addr:10.141.255.254  Bcast:10.141.255.255  Mask:255.255.0.0
+
+     pi@grappolo ~ $ netstat -nr | tail -2 | awk '{if(NR==1)print "Gateway "$2 \\ 
+                     else print "Destination "$1 }' 
+               Gateway 0.0.0.0
+               Destination 192.168.1.0
+<del>          Gateway 192.168.1.254
+          Destination 192.168.1.0</del>
+We use the 10.141.255 internal static ip address to avoid any inconvenient ip-adress overlap between the dhcp extrnal and static internal cluster network configurations.  
+
+       
+==== Install Software ====
+** R language and environment for statistical computing**\\
+{{:wiki:rlogo-5.png?100|}}{{:wiki:logo_whitew_awk.png?100|}}
+<code bash>
+wget http://cran.rstudio.com/src/base/R-3/R-3.1.2.tar.gz
+mkdir R_HOME
+mv R-3.1.2.tar.gz R_HOME/
+cd R_HOME/
+tar zxvf R-3.1.2.tar.gz
+cd R-3.1.2/
+sudo apt-get install gfortran libreadline6-dev libx11-dev libxt-dev
+./configure
+make
+sudo make install
+# get a coup of tea and start watching Battleship Potemkin you have an hour to wait
+</code>
+
+** PROG.4 - GDAL/OGR / GRASS ** geospatial libraries \\
+{{:wiki:logo_gdal.png?100|}}{{:wiki:grasslogo_vector_small.png?100|}}
+
+<code bash>
+sudo apt-get install grass grass-doc grass-dev
+</code>
+
+** Emacs editor** \\
+{{:wiki:logo_emacs.png?100|}}\\
+... for people like Giuseppe or Pieter refusing to type on any other black squared thing with a cursor!
+
+<code bash>
+sudo apt-get install emacs
+</code>
+==== Install other useful tools ====
+I like the bash [[http://ss64.com/bash/locate.html | locate]] command.
+<code bash>
+sudo apt-get install mlocate
+sudo updatedb
+</code>
+==== Setting Up an NFS Server ====
+The default installation of Grid Engine assumes that the excutables corresponding to the sge command are found on a $SGE_ROOT directory sitting on a shared filesystem accessible by all hosts in the cluster [[http://arc.liv.ac.uk/SGE/howto/nfsreduce.html | more info here]].\\
+For this purpose, we use a Network File System (NFS) which is a distributed file system allowing a user on a client computer to access files over a network. We are going to create and share the /usr/local/apps folder between master and slave nodes and be able to install the Grid engine executables and configuration files in the slave nodes. We first install the nfs server in the master:
+
+<code bash> 
+sudo apt-get install nfs-kernel-server portmap nfs-common
+sudo nano /etc/exports
+# append  "/usr/local/apps 10.141.0.0/16(rw,sync)" to the end of /etc/exports file
+
+sudo service rpcbind restart
+sudo /etc/init.d/nfs-kernel-server restart
+</code>
+
+Next you need to switch into appropriate [[http://www.tldp.org/LDP/sag/html/run-levels-intro.html| Linux Run Level]] (e.g. A run level is a state of init and the whole system that defines what system services are operating.) 
+Raspi by default is set to a state of run level 2 - Local Multiuser with Networking but without network service (like NFS) - and we want to switch to run level 3 - Full Multiuser with Networking. Once we are in level 3 we can use the two //update-rc.d// command below to allow automatic starting of the nfs servers at reboot.
+
+<code bash> 
+sudo nano /etc/inittab
+# to set default runlevel = 3
+# change id:2:initdefault with: id:3.... it should look like this:
+# The default runlevel.
+# id:3:initdefault:
+sudo update-rc.d nfs-kernel-server defaults
+sudo update-rc.d rpcbind defaults
+sudo apt-get install nfs-kernel-server portmap nfs-common
+sudo nano /etc/exports # add the export as above
+sudo service portmap start
+sudo reboot
+</code>
+
+<note tip> ** /etc/init.d/nfs-kernel-server status **to check nfs service status\\
+** runlevel ** to check your default run level
+</note>
+
+<note warning> if is not running at reboot try the lines below </note>
+
+<code bash>
+sudo apt-get purge rpcbind
+sudo apt-get install nfs-kernel-server portmap nfs-common
+sudo nano /etc/exports # edit the exports as above
+sudo service portmap start # this didn't actually worked
+sudo reboot
+</code>
+
+Later we will create a folder in the client server @node1  and mount in as shared with the correspondent folder in grappolo.
+
+
+==== Do a partial backup ====
+Shut down the raspi, remove the sd card and insert it in a linux machine. Copy sd image file to computer disk as back up.
+     umount /dev/sdb1
+     umount /dev/sdb2
+     sudo dd bs=4M if=/dev/sdb of=raspian_grassR_masterpw.img
+
+===== Install Grid Engine - Master pi ====
+Grid Engine is typically used on a computer farm or high-performance computing (HPC) cluster and is responsible for accepting, scheduling, dispatching, and managing the remote and distributed execution of large numbers of standalone, parallel or interactive user jobs. It also manages and schedules the allocation of distributed resources such as processors, memory, disk space.\\
+{{:wiki:gridengine-logo.png?200|}}\\
+We use the open source [[http://gridscheduler.sourceforge.net/ |Open Grid Schcheduler|]] as batch-queuing system. This is one of the most common software used in HPC clusters around the world and we aim at teaching its use.\\
+We will first install some dependency packages that I've found missing in raspian.
+<code bash>
+sudo apt-get install csh  # csh shell
+sudo apt-get install libpam0g-dev
+sudo apt-get install lesstif2-dev
+</code> 
+
+Then compile 
+<code bash> 
+wget http://softlayer-ams.dl.sourceforge.net/project/gridscheduler/GE2011.11p1/GE2011.11p1.tar.gz
+tar zvxf GE2011.11p1.tar.gz
+cd GE2011.11p1/source
+export LDFLAGS=-L/usr/lib/arm-linux-gnueabihf
+./aimk -no-java -no-jni -no-secure -spool-classic -no-dump -only-depend
+./scripts/zerodepend
+./aimk -no-java -no-jni -no-secure -spool-classic -no-dump depend
+./aimk -no-java -no-jni -no-secure -spool-classic -no-dump -no-qmon
+</code> 
+Have a tea and a siesta... for a 30min ...
+
+The compilation succeeded. First edit the /etc/hosts file making sure the internal ip-address is correct.
+
+
+<code bash>
+127.0.0.1       localhost
+::1             localhost ip6-localhost ip6-loopback
+fe00::0         ip6-localnet
+ff00::0         ip6-mcastprefix
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+
+10.141.255.254  grappolo
+</code>
+
+Now install as follow:
+<code bash>
+sudo mkdir -p /usr/local/apps/sge/2011.11p1
+sudo su
+chmod 777 /usr/local/apps/sge/2011.11p1/
+exit
+export PATH=$PATH:/usr/local/apps/sge/2011.11p1/bin/linux-arm/
+export SGE_ROOT=/usr/local/apps/sge/2011.11p1
+cd  /usr/local/apps/sge/2011.11p1
+scripts/distinst -all -local -noexit
+cd $SGE_ROOT
+./install_qmaster
+</code>
+
+The interactive install console will start and we have follow similar settings to those suggested @ [[http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslSge | FslSGE ]]:\\
+  * press enter at the intro screen
+  * press "y" and then specify **admin** as the user id
+  * leave the install dir as /opt/sge
+  * You will now be asked about port configuration for the master, normally you would choose the default (2) which uses the /etc/services file 
+  * accept the sge_qmaster info
+  * You will now be asked about port configuration for the master, normally you would choose the default (2) which uses the /etc/services file
+  * accept the sge_execd info
+  * leave the cell name as "default"
+  * Enter **grappolo** as the appropriate cluster name when requested
+  * leave the spool dir as is
+  * press "n" for no windows hosts!
+  * press "y" (permissions are set correctly)
+  * press "y" for all hosts in one domain
+  * For the Java available on your Qmaster answer "n" for the wish to use SGE Inspect or SDM then enable the JMX MBean server
+  * press enter to accept the directory creation notification
+  * enter "classic" for classic spooling (berkeleydb may be more appropriate for large clusters)
+  * press enter to accept the next notice
+  * enterthe default "20000-20100" as the GID range (increase this range if you have execution nodes capable of running more than 100 concurrent jobs)
+  * accept the default spool dir or specify a different folder (for example if you wish to use a shared or local folder outside of SGE_ROOT
+  * email address enter default (no email)
+  * press "n" to refuse to change the parameters you have just configured
+  * press enter to accept the next notice
+  * press "y" to install the startup scripts
+  * press enter twice to confirm the following messages
+  * press "n" for a file with a list of hosts
+  * enter the node1 as names of your hosts who will be able to administer and submit jobs (enter alone to finish adding hosts)
+  * shadow hosts (press "default")
+  * choose "1" for normal configuration and agree with "y"
+  * press enter to accept the next message and "n" to refuse to see the previous screen again and then finally enter to exit the installer 
+
+You will have to go through the same process for node1\\
+Create a new /etc/profile.d/grappolo.sh scripts with links of our system configurations and grid engine environment. Then reboot and start the grid engine
+
+<code bash>
+sudo leafpad /etc/profile.d/grappolo.sh
+# add the following 3 lines to this script.
+export SGE_ROOT=/usr/local/apps/sge/2011.11p1
+export SGE_CELL="default"
+export PATH=$PATH:/usr/local/apps/sge/2011.11p1/bin/linux-arm/
+# save and close grappolo.sh
+sudo reboot
+ssh ssh -X pi@192.168.1.81 # again from your computer and start the sge
+etc/init.d/sgemaster.grappolo start
+
+# cd $SGE_ROOT/default/common/
+# ./sgemaster start
+# ./sgeexecd start
+</code>
+
+
+=== Do a partial backup ===
+Shut down grappolo, remove the sd card and insert it in a linux machine. Copy sd image file to computer disk as back up.
+     umount /dev/sdb1
+     umount /dev/sdb2
+     sudo dd bs=4M if=/dev/sdb of=raspian_SGEgrassR_masterpw.img
+
+
+
+===== Install Grid Engine on Nodes ====
+
+First add the node1 ip-address to the hosts list in the master node //grappolo//
+<code bash>
+sudo nano  /etc/hosts
+# append this "10.141.0.1      node1" at the end of file 
+</code>
+
+==== Clone node1 ====
+Insert a new micro sd card into a laptop (in our case is mounted at// /dev/mmcblk0 //; unmount the card and copy the ".img" we have previously created with raspian OS grass and R installed.
+
+<code bash>
+umount /dev/mmcblk0p1
+umount /dev/mmcblk0p2
+sudo dd bs=4M if=/media/leXar/raspian_grassR_masterpw of=/dev/mmcblk0
+</code>
+
+Log into the pi-node : 
+  * change hostname “grappolo” to “node1” ; 
+<code bash>sudo nano /etc/hostname </code>
+  * change password to //node1pw//  and later //node2pw//
+ <code bash>passwd </code>
+  * edit the /etc/network/interfaces file as below: 
+<code bash>
+auto lo
+iface lo inet loopback
+
+auto eth0
+allow-hotplug eth0
+iface eth0 inet static
+address 10.141.0.1 # use ....141.0.2 in node2
+netmask 255.255.0.0
+network 10.141.0.0
+broadcast 10.141.255.255
+gateway 10.141.255.254
+</code>
+  * Add ip-address of node1, node2 and grappolo in the /etc/hosts file list as below
+<code bash>
+127.0.0.1       localhost
+::1             localhost ip6-localhost ip6-loopback
+fe00::0         ip6-localnet
+ff00::0         ip6-mcastprefix
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+
+10.141.255.254  grappolo
+10.141.0.1      node1
+10.141.0.2      node2
+</code>
+
+Link grid engine environment and executables in a new grappolo.sh script that looks like this
+<code bash>
+cat /etc/profile.d/grappolo.sh
+export SGE_ROOT=/usr/local/apps/sge/2011.11p1
+export PATH=$PATH:/usr/local/apps/sge/2011.11p1/bin/linux-arm/
+</code>
+
+Now shut-down node 1 and create a micro sd card for node 2 as above and of course replacing "node1" with "node2". Then Plug node1, node2 and grappolo togheter and continue the installation mounting nfs shared folders 
+
+Link the /usr/local/apps folder in grappolo using the nfs: 
+  * can create a folder in node1 
+  * mount it in as shared with the correspondent folder in grappolo. 
+
+<code bash>
+sudo mkdir /usr/local/apps
+sudo mount grappolo:/usr/local/apps /usr/local/apps
+</code>
+
+To allow auto mount /usr/local/apps in node1 and 2 at reeboot, edit the  /etc/fstab file and append the following line  : 
+<code bash>
+grappolo:/usr/local/apps	/usr/local/apps	nfs	rsize=8192,wsize=8192,timeo=14,intr,rw	0	0
+</code>
+
+Allow grappolo to ssh into node1 without a password
+Exit from node1, generate a key pair and copy the key from grappolo to node1. 
+<code bash>
+pi@node1 exit
+pi@grappolo ~ $ ssh-keygen -t rsa -P ""
+pi@grappolo ~ $ ssh-copy-id admin@node1
+pi@grappolo ~ $ ssh admin@node1
+pi@node1 ~ $ 
+</code>
+
+Allow node1 to ssh into grappolo without a password (the other way around from before:
+Log in from node1, to grappolo 
+
+generate a key pair and copy the key from grappolo to node1. 
+<code bash>
+pi@node1 ~ $ ssh-keygen -t rsa -P ""
+pi@node1 ~ $ ssh-copy-id 'admin@grappolo'
+pi@node1 ~ $ ssh admin@grappolo
+pi@grappolo ~ $ 
+</code>
+
+===== Install Hadoop dependencies and environment =====
+==== Install Java ====
+   sudo apt-get install openjdk-7-jdk
+   java -version
+   #java version "1.7.0_75"
+   #OpenJDK Runtime Environment (IcedTea 2.5.4) (7u75-2.5.4-1~deb7u1+rpi1)
+   #OpenJDK Zero VM (build 24.75-b04, mixed mode)
+
+
+==== Create and config Hadoop user and groups ====
+   sudo addgroup hadoop
+   #Enter new UNIX password: 
+   hduserpw
+   #type return for the next 4 questions
+     * Give hduser the ability to sudo 
+   sudo adduser hduser sudo # gives the ability to hduser sudo
+     * Login as hduser  
+   logout 
+   ssh hduser@192.168.1.80
+
+=== Setup ssh  ===
+Generate a key pair to login without password
+   ssh-keygen -t rsa -P ""
+   
+Copy public key into user authorized key store  
+<code bash> 
+   cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+</code>   
+Verify if ssh works on localhost without password for hduser
+   ssh localhost
+   #yes
+   exit # Go back to previous shell (pi/root).
+ 
+==== Install Hadoop ====
+<code bash>
+wget http://apache.mirrors.spacedump.net/hadoop/core/hadoop-1.2.1/hadoop-1.2.1.tar.gz
+sudo tar -vxzf hadoop-1.2.1.tar.gz -C /usr/local
+cd /usr/local
+sudo mv hadoop-1.2.1/  hadoop
+sudo chown -R hduser:hadoop hadoop
+</code> 
+
+=== Configure the user environment ===
+<code bash>
+cd
+nano .bashrc
+#add to file:
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-armhf
+export HADOOP_INSTALL=/usr/local/hadoop
+export PATH=$PATH:$HADOOP_INSTALL/bin
+# save and close .bashrc
+sudo reboot
+</code>
+
+=== Configure Hadoop ===
+login as hduser
+
+<code bash>
+hadoop version
+#Hadoop 1.2.1
+#Subversion https://svn.apache.org/repos/asf/hadoop/common/branches/branch-1.2 -r 1503152
+#Compiled by mattf on Mon Jul 22 15:23:09 PDT 2013
+#This command was run using /usr/local/hadoop/hadoop-core-1.2.1.jar
+</code>
+
+Set up environment that defines some overall runtime parameters:
+<code bash>
+nano /usr/local/hadoop/conf/hadoop-env.sh
+#edited at end:
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-armhf
+export HADOOP_HEAPSIZE=272
+</code>
+
+CORE-SITE.XML
+<code bash>
+nano /usr/local/hadoop/conf/core-site.xml
+#Add these lines in file:
+<configuration>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/fs/hadoop/tmp</value>    <description>Sets the operating directory for Hadoop data.
+    </description>
+  </property>
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://localhost:54310</value>    <description>The name of the default file system.  A URI whose
+    scheme and authority determine the FileSystem implementation.
+    The URI's scheme determines the config property (fs.SCHEME.impl) naming
+    the FileSystem implementation class.  The URI's authority is used to
+    determine the host, port, etc. for a filesystem.  
+    </description>
+  </property>
+</configuration>
+
+</code>
+
+MAPRED-SITE.XML
+<code bash>
+nano /usr/local/hadoop/conf/mapred-site.xml
+#added following:
+<property>
+    <name>mapred.job.tracker</name>
+    <value>localhost:54311</value>
+    <description>The host and port that the MapReduce job tracker runs
+    at.  If "local", then jobs are run in-process as a single map
+    and reduce task.
+    </description>
+  </property>
+
+</code>
+
+HDFS-SITE.XML 
+<code bash>
+nano /usr/local/hadoop/conf/hdfs-site.xml
+#added following:
+<property>
+    <name>dfs.replication</name>
+    <value>1</value>
+    <description>Default block replication.
+    The actual number of replications can be specified when the file is created.
+    The default is used if replication is not specified in create time.
+    </description>
+  </property>
+</code>
+Create working directory and set permission:
+<code bash>
+sudo mkdir -p /fs/hadoop/tmp
+sudo chown hduser:hadoop /fs/hadoop/tmp
+sudo chmod 750 /fs/hadoop/tmp/
+
+</code>
+
+Format the working directory:
+<code bash>
+/usr/local/hadoop/bin/hadoop namenode -format
+</code>
+==== Create node 1, 2 ...  ====
+Rename the cloned operating system pi@head as pi@node1
+go to raspi-config --> advanced hostname\\ 
+Rename the cloned operating system pi@head as pi@node1
+Change password to node1pw
+Change static ip        address 192.168.1.82  to 192.168.1.81  
+     sudo nano /etc/network/interfaces
+     address 192.168.1.81
+
+
+     

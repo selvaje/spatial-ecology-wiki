@@ -1,0 +1,30 @@
+==== Image classification ====
+
+__Create an ASCII text file ct.txt for the following color table__
+
+<code>
+1 0 180 0 255
+2 0 120 0 255
+3 0 135 70 255
+4 0 70 0 255
+5 170 123 18 255
+6 0 187 191 255
+7 118 0 0 255
+8 214 214 246 255
+9 119 119 119 255
+10 204 171 127 255
+11 218 175 122 255
+12 97 97 97 255
+13 182 175 95 255
+14 0 234 0 255
+15 205 24 58 255
+16 100 100 100 255
+</code>
+
+{{ :wiki:contest:contest_legend.jpg?nolink |}}
+
+=== Classify image using CASI bands only ===
+<code bash>
+    pkclassify_svm -i 2013_IEEE_GRSS_DF_Contest_CASI.tif -t training_casi.shp -o testmap_casi.tif -ct ct.txt
+</code>
+

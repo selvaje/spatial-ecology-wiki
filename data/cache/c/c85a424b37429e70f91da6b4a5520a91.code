@@ -1,0 +1,7 @@
+  my.data.frame = data.frame(vector=1:4,character=c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;),const.vector=10,row.names =c(&quot;data1&quot;,&quot;data2&quot;,&quot;data3&quot;,&quot;data4&quot;))
+  my.data.frame
+        vector character const.vector
+  data1      1         a           10
+  data2      2         b           10
+  data3      3         c           10
+  data4      4         d           10

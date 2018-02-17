@@ -1,0 +1,72 @@
+
+====== Transform a simple "for loop" in multicore "for loop"  ======
+
+[[http://en.wikipedia.org/wiki/Multi-core_processor | Multi-core processor ]] are very common used in desk-top and lab-top pc.
+If a pc has 8 processors you should open 8 programs or terminal to use all of them. But this is not an efficient way for stand-alone processing routines.\\ 
+\\
+Let's consider that you want run a gdalwarp command to several tif files (*.tif), to perform a re-projection. 
+\\
+   cd ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+
+==== For Loop ====
+
+You may run the full process by applying the loop in the usual way:
+<code bash>
+time  ( for file in 20?0_TSSP_IP-ENS-A2-SP20_43023435.tif ; do 
+    gdalwarp -r cubic -tr 0.008 0.008 -t_srs EPSG:4326 $file  proj_$file -overwrite
+done )
+</code>
+
+In this way only one processor will be used. The others will be just sleeping or eventually swap when the process is applied to another tif.\\  
+
+For example, the following picture shows the processing time during the for loop. As you can see only one processor, the red one, is working.
+|{{:wiki:for_loop.png}}|
+\\
+
+==== xargs loop  ====
+The //**xargs**// command allows to run a process splitting the task to several processors numerically defined by the user:
+
+<code bash>
+
+ls 20?0_TSSP_IP-ENS-A2-SP20_43023435.tif  | xargs -n 1 -P 2  bash -c $'
+
+file=$1
+gdalwarp -r cubic -tr 0.008 0.008 -t_srs EPSG:4326 $file  proj_$file -overwrite
+
+' _ 
+
+</code>
+The //-n// option identifies the argument. The argument is the variable imported inside the loop. \\
+The argument is identifies with $1 and for a better understanding renamed to file (file=$1).\\
+The //-P// option identify the processors (in this case 2) used to run the full line inside -c $' ...... ' _ \\
+\\
+This will process\\
+- the first tif in processor number 1 (orange line)\\
+- the second tif in processor number 2 (red line)\\
+than\\
+- the third  tif in processor number 1 (orange line)\\
+\\
+For example, the following picture shows the processing time during the xargs loop. As you can see two processors are running simultaneously, and the whole processing time is shorter. 
+\\
+|{{:wiki:xargs.png}}|
+\\
+
+The use of more arguments is also possible
+<code bash>
+time  for file in 20?0_TSSP_??-ENS-A2-SP20_43023435.tif  ; do for res in 0.008 0.08 ; do echo $file $res ; done ; done | xargs -n 2 -P 2 bash -c $'
+
+file=$1
+res=$2
+gdalwarp -r cubic -tr $res $res -t_srs EPSG:4326 $file RES$res"_"$file -overwrite
+
+' _
+</code>
+This will process\\
+- the first tif  with res = 0.008  in processor number 1\\
+- the first tif  with res = 0.08  in processor number 2\\
+and then\\
+\\
+- the second tif  with res = 0.008  in processor number 1\\
+- the second tif  with res = 0.08   in processor number 2\\
+and so on....
+\\

@@ -1,0 +1,101 @@
+====== Short lectures and presentations ======
+\\
+\\
+===== Introduction to the training =====
+Introducing the tutors, objectives, topics and schedule of the training. Getting to know each other.
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/introduction.pdf|download]] or open the presentation from your local VM @: ~/ost4sem/lecture/introduction.pdf\\
+\\
+===== Introduction to Linux and Open Source tools =====
+Linux     environment, why and what to use; Why to use Unix/Linux and command line for solving complex research questions.
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/hands_on_Linux_OS.pdf | download]] or open the presentation from your local VM @: ~/ost4sem/lecture/hands_on_Linux_OS.pdf\\
+\\
+
+
+=====  Perform GIS and Remote Sensing analysis under Linux OS =====
+
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/First_step4GIS-RS_analysis_in_linux.pdf | download ]].**\\
+Giuseppe Amatulli, Ph.D.; Program in Spatial Biodiveristy Science and Conservation (SBSC) - Yale University\\
+RSUG meeting - Monday 4 November from 5 to 6pm in ESC 110. Yale University \\
+\\
+In the last decades there has been an explosion of available data for environmental spatio-temporal research. This “big data” allows us to address a number of old and new important research questions with unprecedented rigor and generality. Beside this, reproducible research requires code that is easily published without license constraints and complex work-flows that are able to integrate different data analysis methods. Open-source software under Linux OS provides a valid and powerful alternative which can be used in desktop PCs, laptops and also in remote servers, such as the one at Yale HPC.\\
+
+During the seminar I will show how to install a Linux-like Virtual Machine (LVM) in your lap-top (so bring your lap-top) and how to use the http://www.spatial-ecology.net platform to become a self-taught programmer. We will work with the most powerful GIS and RS libraries such as GDAL/OGR and their related applications.\\
+
+The LVM is an ad-hoc customization of the Ubuntu distribution with Remote Sensing, GIS and Statistics open source software; with sample geo-data, scripts, and example exercises directly linked with the material stored at http://www.spatial-ecology.net. All the materials, data and software are under the Common Public License agreement so feel free to redistribute or install in other PCs.\\
+
+In order to speed up the LVM installation process please follow the [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:installvm|   “Access spatial-ecology Ubuntu from a Virtual Machine “ procedure]].\\
+
+This procedure does not install a Linux beside Windows or MacOS, but inside Windows or MacOS. In other words your main OS will be remain Windows or MacOS, and you will boot the PC as before. There is not any risk for your data or for your main OS.\\
+\\
+===== How to take part in this training =====
+General presentation of the training working environment: Virtual machine, Ubuntu OS and the training wiki infrastructure.
+  * [[http://www.spatial-ecology.net/ost4sem/lecture//hands_on_ost4sem.pdf|download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/hands_on_ost4sem.pdf\\
+\\
+===== Introduction to spatial ecological modeling =====
+Defining and discussing ecological models and spatial ecology. Presentation of various applications, and examples of models.
+
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/sp_eco_model_intro.pdf|download]] or open the presentation from your local VM @: ~/ost4sem/lecture/sp_eco_model_intro.pdf \\
+\\
+
+==== Case study: Forest Suitability and Climate Change ====
+In this case study we process data for Forest Habitat Suitability Modeling and Climate Change projections.\\
+Presenting the theory and basic assumptions in niche modeling and potential habitat suitability mapping. The Random Forest machine learning ensemble model and the technical procedure for plotting current and future habitat distribution maps.
+
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/jrc24feb_2010.pdf|download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/jrc24feb_2010.pdf\\
+\\
+
+==== Case study: Forest fire and climate change ====
+In this case study we process data for projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios.\\
+Presenting the statistical modeling of historical (1985-2004) monthly burnt areas in European Mediterranean countries, as a function of monthly weather data and derived fire danger indexes, and how to analyse potential trends under present and future climate conditions.
+
+  *  [[http://www.spatial-ecology.net/ost4sem/lecture/fire_climate_change.pdf|download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/fire_climate_change.pdf\\
+\\
+
+==== Case study: Natural vegetation and climate change ====
+In this case study we modelling and map the Natural Forest Distribution in Italy and predict habitat suitability changes for the year 2080 under IPCC SRES A2a scenario. We use the randomforest machine learning algorithm in R and prepare data in bash and GRASS.
+
+  *  [[http://www.spatial-ecology.net/ost4sem/lecture/mod_natveg_randomforest.pdf|download]] \\
+\\
+
+===== Introduction to UNIX LINUX =====
+General presentation of Unix Linux and the Bash shell programming environment.
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/unixlinux.pdf|download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/unixlinux.pdf\\
+\\
+
+===== Introduction to AWK =====
+General presentation of AWK programming language for processing text-based data.
+NOT AVAILABLE  * [[http://www.spatial-ecology.net/ost4sem/lecture/awk.pdf|download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/awk.pdf\\
+\\
+
+===== Introduction to GDAL OGR  =====
+General presentation of GDAL and OGR: Geospatial Data Abstraction Libraries.
+NOT AVAILABLE  * [[http://www.spatial-ecology.net/ost4sem/lecture/gdal.pdf|download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/gdal.pdf\\
+\\
+
+===== Introduction to R  =====
+General presentation of the R language and environment for statistical computing and graphics.
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/r_intro.pdf|Download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/r_intro.pdf\\
+\\
+===== Introduction to GRASS =====
+General presentation of GRASS: Geographical Resources Analysis Support System.
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/grass_intro.pdf|Download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/grass_intro.pdf\\
+\\
+===== Introduction to Quantum Gis =====
+General presentation of Qgis: a user friendly Open Source Geographic Information System licensed under the GNU General Public License.
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/qgis_intro.pdf|Download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/qgis_intro.pdf\\
+\\
+===== Introduction to Gnuplot  =====
+General presentation of Gnuplot: a portable command-line driven graphing utility, for visualising mathematical functions and data interactively.
+NOT AVAILABLE  * [[http://www.spatial-ecology.net/ost4sem/lecture/gnuplot.pdf|Download]] or open the presentation from your local VM @:  ~/ost4sem/lecture/gnuplot.pdf\\
+\\
+
+===== More Image processing  =====
+[[http://www.spatial-ecology.net/ost4sem/lecture/PieterDaniel_lecture.pdf| A presentation ]] and hands on guide to:
+  * geo data processing using QGIS gui
+  * introduction to spatialite
+  * Ogr simple features library
+  * Satellite Image classification
+  * Advanced geoprocessing
+
+
+

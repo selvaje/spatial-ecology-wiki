@@ -1,0 +1,10 @@
+   RFint = predict (RF23tuned, newdata=respredFT8, type=&quot;response&quot; )
+   #RFint = predict (RF, newdata=respredFT8, type=&quot;class&quot; )
+   RFint.cmx = confusion(RFint, respredFT8$FType)
+   RFint.k = Kappa(RFint.cmx, weights = c (&quot;Equal-Spacing&quot;))
+&nbsp;
+   #save(RFint.cmx,file=&quot;~/ost4sem/studycase/ITA_veg/results/RFint.cmx_ITAveg&quot;)
+   #save(RFint.k,file=&quot;~/ost4sem/studycase/ITA_veg/results/RFint.k_ITAveg&quot;)
+   save(RFint.cmx,file=&quot;~/ost4sem/studycase/ITA_veg/myresults/RFint.cmx_ITAveg&quot;)
+   save(RFint.k,file=&quot;~/ost4sem/studycase/ITA_veg/myresults/RFint.k_ITAveg&quot;)
+   cat(&quot; Kapa statistic computed for INTERNAL validation of Random Forest Model\n&quot;)

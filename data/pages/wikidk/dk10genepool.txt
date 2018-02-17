@@ -1,0 +1,142 @@
+====== TITLE ======
+==== Gap analysis in genebank collections to assist the planning of collecting expeditions ====
+\\
+  * Download the project proposal [[http://www.spatial-ecology.net/ost4sem/project/unidk2010/GEENPOOL/documents/20100628_Trait_Mining_KU-LIFE_GIS.pdf | 20100628_Trait_Mining_KU-LIFE_GIS.pdf ]].
+\\
+===== INTRODUCTION =====
+==== General framework of this analysis ====
+
+=== Genebank collections ===
+Genebank collections aim to represent the genetic diversity in cultivated plants and their crop wild relatives. The many different populations and cultivars from the crop species are represented often by a significant number of separate samples in the genebanks. Plant genetic resources (germplasm) are often conserved ex situ as frozen seed samples in large cold stores (orthodox seeds). Vegetative collections of living plants are another ex situ conservation form when the method of frozen seed is unappropriate (eg. recalcitrant or unorthodox seeds). Wild germplasm can be conserved in situ, for example through the assignment of protected areas to cover the natural habitat of these species. Most contries worldwide have established (or is planning to establish) an ex situ conservation facility for germplasm. There is an estimated total of 1 700 genebanks worldwide (FAO, 2009). The aboundance of crop wild relatives is monitored and matched to the precence in protected areas. Conservation of the genetic diversity in the most important food crop species is an important task to secure future food security.
+
+=== Gap analysis ===
+Gap analysis to detect missing samples in the genebank collections and assist the planning of germplasm collecting expeditions. The geographic representativeness of the genebank collections can be assesed by comparing the predicted species distribution (model) with the current sampled locations (genebank accessions). The geographic representativeness is not satisfactory if the crop species (crop wild relative) is predicted to be present in an area and no germplasm sample is collected from this area. The environmental representativeness of the genebank collections can be assesed by clustering the locations where the crop species is predicted to be present by environmental parameters. These clusters can be illustrated and identified by a dendrogram. The clusters of the dendrogram with no genebank accession will identify an environment were the environmental representativeness of the germplasm collections is unsatisfactory.
+
+
+==== Project objectives ====
+
+Identify gaps in the genebank germplasm collections to assist in the planning of new collecting expeditions.
+
+Target species for the planned collecting activities in southern Sweden during the summer of 2010: 
+  * Artemisia absinthhium L. (wormwood) http://en.wikipedia.org/wiki/Artemisia_absinthium 
+  * Asparagus officinalis L. (asparagus) http://en.wikipedia.org/wiki/Asparagus_officinalis 
+  * Beta vulgaris ssp. maritima (L.) Arcangeli (sea beet) http://en.wikipedia.org/wiki/Sea_beet 
+  * Crambe maritima L. (sea kale) http://en.wikipedia.org/wiki/Crambe_maritima 
+
+
+\\
+===== METADATA =====
+==== Raster data ====
+==== Vector Data ====
+  Climate data: http://www.worldclim.org/ (1 km, 5 km resolution)
+==== Text files and tables ====
+
+== Species occurrence data from the GBIF portal: http://data.gbif.org ==
+  * Artemisia absinthium L. (wormwood) - **7 364** georeferenced records
+  * Asparagus officinalis L. (asparagus) - **4 064** georeferenced records
+  * Beta vulgaris ssp. maritima (L.) Arcangeli (sea beet) - **6 538** georeferenced records
+  * Crambe maritima L. (sea kale) - **2 398** georeferenced records
+
+== Germplasm samples (genebank accessions) from EURISCO: http://eurisco.ecpgr.org ==
+  * Artemisia absinthium L. (wormwood) - **55** georeferenced records
+  * Asparagus officinalis L. (asparagus) - **108** georeferenced records
+  * Beta vulgaris ssp. maritima (L.) Arcangeli (sea beet) - **299** georeferenced records
+  * Crambe maritima L. (sea kale) - **39** georeferenced records
+
+== SESTO: http://sesto.nordgen.org ==
+  * Artemisia absinthium L. (wormwood) - **2** georeferenced records
+  * Asparagus officinalis L. (asparagus) - **15** georeferenced records
+  * Beta vulgaris ssp. maritima (L.) Arcangeli (sea beet) - **31** georeferenced records
+  * Crambe maritima L. (sea kale) - **8** georeferenced records
+
+==== Ortophoto ====
+\\
+===== METHOD =====
+
+  * Prepare datasets, crop species occurrences and genebank accessions
+  * Calculate the species distribution model to identify suitable environments
+  * Identify gaps in the genebank collections for predicted suitable environments
+  * Environmental and geographic representativeness of genebank collections for crop species
+
+A preliminary species distribution model can be calculated using the 2.5-minute resolution (5 km) climate data from worldclim. After tuning the procedure and cutting the climate data to a suitable mask for Scandinavia or perhaps all of Europe, a second fine species distribution model can be calculated using the 30-second resolution (1 km) climate data from worldclim.
+
+Steps:
+  * Occurrences of genebank samples (frozen seed samples)
+  * Occurrences of the same species from surveys, herbaria and botanical gardens, etc
+  * Species distribution models based on all occurrence points for each species
+
+
+
+{{:wiki:grasslogo_vector_small.png|}}
+\\
+
+===== DATA IMPORT =====
+<code bash>
+# insert here your script with notes in "#" \\
+# example\\
+cd ~/ost4sem/project
+</code>
+\\
+===== DATA PROCESSING =====
+\\
+<code r>
+# insert here your script with notes in # \\
+# example\\
+cd ~/ost4sem/project
+</code>
+\\
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+Insert a map and related table or graphics if available\\
+Discuss the biological or geographical significance of results
+\\
+
+===== LITTERATURE =====
+Ramirez, J., A. Jarvis, D.G. Debouck, C. Khoury, L. Guarino, N. Castaneda (2010). How well do we preserve agricultural biodiversity? Gap analysis and the Phaseolus case study. [Online Poster] Available from: http://www.slideshare.net/CIAT/howwellpreserveagriculturalbioversity (verified 2010-07-01)
+
+Jarvis, A., J. Ramirez, N. Castaneda, R. Hijmans and J. van Etten (2009) Gap Analysis. [Online Presentation] Available from: http://www.slideshare.net/laguanegna/nora-c-gap-analysis-focused-on-acutifolii-and-rugosi-sections (verified 2010-07-01) 
+
+Jarvis, A., J. Ramirez, N. Castaneda, S. Gaiji, L. Guarino, H. Tobon, D. Amariles (2009) Value of a coordinate: geographic analysis of agricultural biodiversity. [Online Presentation] Available from http://www.slideshare.net/CIAT/andy-j-value-of-a-coordinate-montpellier-nov-2009 (verified 1 July, 2010) and http://www.tdwg.org/proceedings/article/view/555 (verified 1 July, 2010). Weitzman, A.L. (ed.) Proceedings of TDWG annual conference 2009, Montpellier, France, November 9-13, 2009.
+
+Gap analysis. Maps to improve germplasm collecting missions. [Online Web site] Available from: http://gisweb.ciat.cgiar.org/GapAnalysis (verified 2010-7-01) Copyright 2009 by Bioversity International, IRRI, CIAT.
+
+FAO (2009). Draft second report on the State of the World’s Plant Genetic Resources for Food and Agriculture - Final version (CGRFA-12/09/Inf.7 Rev.1). [Online]. Available at ftp://ftp.fao.org/docrep/fao/meeting/017/ak528e.pdf (verified 1 July, 2010). Commission on genetic resources for food and agriculture, Food and Agriculture Organization of the United Nations, Rome. 
+
+Maxted, N., and S. Kell (FAO 2009). Establishment of a global network for the in situ conservation of crop wild relatives: status and needs. [Online] Available from: ftp://ftp.fao.org/docrep/fao/meeting/017/ak570e.pdf (verified 1 July, 2010). Commission on genetic resources for food and agriculture, Food and Agriculture Organization of the United Nations, Rome.
+
+Maxted, N., Dulloo, E., Ford-Lloyd, B.V., Iriondo, J. and Jarvis, A. (2008a). Genetic gap analysis: a tool for more effective genetic conservation assessment. Diversity and Distributions, 14: 1018–1030.
+
+Maxted, N., S. Kell (2009). Establishment of a global network for the in situ conservation of crop wild relatives: status and needs. [Online] Available from http://pgrforum.org/documents/Global_in_situ_CWR_conservation_network.pdf (verified 1 July, 2010). PGR Forum, 
+
+Major online germplasm databases:
+* EURISCO. http://eurisco.ecpgr.org/home_page/home.php 
+* SINGER. http://www.singer.cgiar.org/ 
+* USDA GRIN. http://www.ars-grin.gov/ 
+
+Species occurrence data from the GBIF portal: http://data.gbif.org
+Germplasm samples (genebank accessions) from 
+ * EURISCO: http://eurisco.ecpgr.org (European genebank portal)
+ * SINGER: http://singer.cgiar.org (CGIAR genebank portal)
+ * USDA GRIN: http://www.ars-grin.gov/ (USA genetic resources information network)
+ * Genesys: http://www.genesys-pgr.org/ (Global gateway to genetic resources)
+ * SESTO: http://sesto.nordgen.org (Nordic genetic resources)
+
+
+----
+----
+===== ALTERNATIVE further work =====
+
+Alternative extra task - if time allows...
+
+==== Predictive association between crop traits and eco-geographic data (FIGS, trait mining) ====
+
+http://www.figstraitmine.com/ 
+http://www.slideshare.net/DagEndresen/predictive-association-between-trait-data-and-ecogeographic-data-for-nordic-barley-landraces 
+http://www.slideshare.net/DagEndresen/20091125-trait-mining-prebreeding-workshop-alnarp-2577861 
+
+Repeat previous trait-mining analysis with open source tools (R, GRASS, etc). Compare with results found with MATLAB and the PLS Toolbox package (multi-way data analysis, N-PLS, PARAFAC, SIMCA, PLS-DA).
+
+\\

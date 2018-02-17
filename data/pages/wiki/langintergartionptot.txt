@@ -1,0 +1,162 @@
+
+
+====== Languages/Software data integration: GRASS and R ======
+\\
+The main aim of this page is to show how to integrate GRASS and R sw under BASH environment. \\
+For this we create an exercise using ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/20*43023435.tif and   ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/poly_fr.shp. 
+The object of the exercise is to calculate the Moran's I index (using R) inside the polygons of the  poly_fr.sh shape file. \\
+\\
+Open the files with openev to get familiar with the geodata.\\
+\\
+Setting WORKING directory. 
+\\
+   DIR=~/ost4sem/grassdbnew/
+=== Create a location in a new grass database using a referenced dataset. ===
+\\ 
+Copy referenced dataset in the working directory.
+\\
+<code bash>
+mkdir $DIR
+cd $DIR
+cp ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/2020_TSSP_IM-ENS-A2-SP20_43023435.tif   $DIR/2020_TSSP_IM-ENS-A2-SP20_43023435.tif
+</code>
+
+Rather than using the GRASS GUI to create a location we can run a bash script (create_location.sh) which create a location (in our case called EU_location) using an existing dataset (in our case 2020_TSSP_IM-ENS-A2-SP20_43023435.tif).\\
+\\
+The create_location.sh scripts need 3 arguments:\\
+\\
+create_location.sh rasterfile newlocation_name [GISDBASE]\\
+
+<code bash>
+bash ~/ost4sem/exercise/basic_adv_grass/create_location.sh   2020_TSSP_IM-ENS-A2-SP20_43023435.tif  EU_location ~/ost4sem/grassdbnew 
+</code>
+
+At this point the location has been created and we can start grass in the EU_location.
+=== Setting GRASS variables for GRASS bash job ===
+
+GRASS needs to know the Location and the Mapset to start. This can be done by the GRASS GUI or by a command line ( e.g. grass -text ~/ost4sem/grassdb/europe/PCEM). \\
+GRASS saves the starting settings in a text file called /home/user/.grassrc6. You can open this file by //more  /home/user/.grassrc6//   \\
+\\
+We can create the .grassrc6 file based on the LOCATION and MAPSET that we want enter.
+\\
+<code bash>
+echo "LOCATION_NAME: EU_location"                >  $HOME/.grassrc6
+echo "MAPSET: PERMANENT"                         >> $HOME/.grassrc6
+echo "DIGITIZER: none"                           >> $HOME/.grassrc6
+echo "GRASS_GUI: text"                           >> $HOME/.grassrc6
+echo "GISDBASE: /home/user/ost4sem/grassdbnew"   >> $HOME/.grassrc6
+</code>
+
+Now we can set/export the paths to the GRASS binaries and libraries and we can start GRASS by using GISRC=~/.grassrc6
+
+<code bash>
+export GISBASE=/usr/lib/grass64
+export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts
+export LD_LIBRARY_PATH="$GISBASE/lib"
+export GISRC=~/.grassrc6
+</code>
+
+Grass create a file .gislock which prevent to use the same location under different grass section.\\
+Therefore we can create an unique  .gislock file using the $$ simbol that produce a unique process ID (PID) number.
+
+<code bash>
+export GIS_LOCK=$$
+</code>
+
+Test if you enter correctly in GRASS by running the g.gisenv
+
+<code bash>
+g.gisenv
+</code>
+
+=== Import all tif  dataset in GRASS ===
+At this point we are ready to import the ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/20*43023435.tif files in GRASS using r.in.gdal command. 
+<code bash>
+for file in ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/20*43023435.tif ; do 
+   r.in.gdal input=$file output=$(basename $file .tif) --o 
+done
+</code>
+
+To keep clean the GRASS Mapset we can remove the dataset that we used to create the location. 
+
+<code bash>
+g.remove rast=2020_TSSP_IM-ENS-A2-SP20_43023435.tif
+</code>
+
+
+=== Import poly shape file in GRASS ===
+Import a polygon shape file of two regions into GRASS using v.in.ogr command.
+<code bash>
+v.in.ogr dsn=/home/user/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/poly_fr.shp  output=poly_fr  --overwrite -o
+</code>
+
+
+=== Setting region ===
+Set a working region using poly_fr and create small datasets (using r.mask) before importing into R.
+
+<code bash>
+# convert vector to raster 
+v.to.rast input=poly_fr output=poly_fr  use=attr  column=id  --overwrite
+# setting the region
+g.region vect=poly_fr@PERMANENT res=1000
+
+# create a mask using the polygon ID=1 (left polygon)
+r.mapcalc "poly_fr1 = if ( poly_fr == 1 , 1 , null()  ) "
+
+# apply the mask (all the following operation will be based on the region and mask settings)
+r.mask input=poly_fr1 -o
+ 
+# loop through all the rasters and 'mask' them (set all masked values to NA)
+for file in `g.mlist type=rast  pattern=20*IP*35  `; do 
+r.mapcalc  "'$file"_fr1"'" =  "'$file'" 
+done
+
+</code>
+
+=== Calculate Moran's I in R ===
+
+Create a loop that calculates Moran's I (http://en.wikipedia.org/wiki/Moran's_I) to each raster in GRASS. 
+
+
+<code bash>
+
+# get the list of rasters with names that start with "20", followed by "IP", and ending with "_fr1"
+for file_fr1 in `g.mlist type=rast  pattern=20*IP*_fr1  `; do  
+export file_fr1=$file_fr1
+
+
+# start R and import bash variables (the file name)
+
+R --vanilla -q <<EOF
+
+file_fr1 = Sys.getenv('file_fr1')
+library(raster)
+rasterOptions(tmpdir="/tmp")
+
+# load grass raster data 
+
+rastD = raster( paste ("/home/user/ost4sem/grassdbnew/EU_location/PERMANENT/cellhd/",file_fr1,sep=""))
+
+# calculate Moran's I
+M_text = Moran(rastD, w=9)
+
+#Write the results to a simple text file
+write.table (M_text[1] ,paste("moran_",file_fr1,".txt",sep="" )  ,row.names = F , col.names = F)
+EOF
+
+done 
+
+</code>
+
+=== Look at these files (which contain Moran's I for each separate raster) ===
+
+   cat $DIR/moran_*_TSSP_IP-*_43023435_fr1.txt 
+
+=== Extract Moran's I average using AWK ===
+
+   cat $DIR/moran_*_TSSP_IP-*_43023435_fr1.txt   | awk '{ sum=sum+$1 } END { print sum/NR}  ' 
+
+=== Exercise  ===
+Using the right side polygon in the poly_fr calculate the Moran's I and compare the results with the Moran's index obtained in the previous calculation. Create a unique script and try to run with 
+   bash ~/ost4sem/exercise/GRASS_R_integration/grass_r_integration.sh
+ 

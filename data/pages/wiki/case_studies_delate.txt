@@ -1,0 +1,78 @@
+===== Case studies =====
+
+These two study cases take a real example of research application and drives the students trough the full scripting-process in order to arrive to the final maps and graphics which highlights the conclusions.\\
+
+  * [[wiki:firemod | Projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios. ]]
+  * [[wiki:forestmod | Modelling and mapping the Natural Forest Distribution of Italy and predicting changes for the year 2080 under IPCC SRES A2a scenario.]]
+
+
+\\
+\\
+\\
+
+
+===== Modelling and mapping the Natural Forest Distribution of Italy and predicting changes for the year 2080 under IPCC SRES A2a scenario =====
+==== Objective ====
+The goal of this work is to simulate potential changes of Italian natural forest distribution under climate change scenario.\\
+\\
+==== Introduction ====
+In the period between 1950 and 2000, natural disturbance has caused each year several millions of cubic meters of forest damage [[wiki:case_studies#bibliography|(Schelhaas et al. 2003)]]. An increase of forest damage can be foreseen directly and indirectly due to climate change projections [[wiki:case_studies#bibliography|(McCarthy et al. 2001)]]. In the latest decades not only have damaged areas been reforested, but a trend of afforestation of agricultural land has been observed with a general increase in forested land [[wiki:case_studies#bibliography|(Kuusela 1996)]]. European forest landscapes are changing shape and content. Next century afforestation and reforestation will be a crucial decision policy making topic in the context of landscape management towards European sustainability. Our study is linked to conservation policy making approaching theoretical distributional modelling, ecological theory and applied landscape management. This is achieved combining fine resolution predictors with homogeneous and dense field data by means of robust modelling techniques.\\
+Within this applied spatial ecoogical modeling theme, we modelled actual and future Natural forest categories in Italy and estimated the shifts in vegetation in the period 2000–2080 under IPCC SRES A2a scenario. The actual and future distribution of the 10 most dominant European Forest Categories (EEA, 2006) are simulated using Random Forest classifier. Random Forest is a ensemble model machine learning techniques and relates the natural forest formations in Italy and environmental predictor surface maps.\\
+Environmental predictor variables have a resolution of 1km<sup>2</sup> pixel and include soil factors (European Soil Database), bioclimatic factors (Worldclim database, [[wiki:case_studies#bibliography|Hijmans et al. 2005)]] and topographic factors (SRTM digital elevation model). See [[[[wiki:case_studies#input data|Input Data]] section.\\ According to the future climatic simulation we expect Mediterranean vegetation to gain suitability areas and temperate forest to dicrease their extent. In mountainous areas vegetation belts are expected to shift towards upper altitude levels.\\  
+\\
+==== Method ====
+In our approach we model the current distribution of the natural forest in Italy according to environmental variables. For doing so we are going to construct an input response / predictor table relating the distribution of the Natural forest formations in Italy with climatic, soil and geomorphologic factors. Successively we use the input response/ predictor table and the machine learning ensemble classifier Random Forest [[wiki:case_studies#bibliography|(Breiman, 2001)]] to create a forest type / environmental factors predictive model.\\
+Once the model is trained for the current climate we are going project vegetation shift under future climate conditions.\\
+\\
+==== Input Data ====
+As input data we use the following datasets:
+  * Map of the Natural Vegetation of Europe [[case_studies#Bibliography|(Bohn et al. 2000)]] reclassified in forest categories according to the European Forest Types [[case_studies#Bibliography|(EEA 2006)]] classification scheme. 
+  * Climatic data: twenty years averaged monthly minimum, maximum and accumulated precipitation from the http://www.worldclim.org datasets [[case_studies#Bibliography|(Hijmans et al., 2005)]] and derived bioclimatic factors as described in [[wiki:pubste|Casalegno et al. 2010]] see  [[wiki:predictor_table]]
+  * Future climate projections derived from the http://worldclim.org datraset. We use the [[http://www.ipcc.ch/|IPCC]] Special Report on Emission Scenario A2a storyline [[case_studies#Bibliography|(IPCC, 2001)]] future climate projection simulated by an averaged Genaral Circulation Model [[http://en.wikipedia.org/wiki/Global_climate_model|GCM]]. Original averaged GCM are HADCM3 (Hadley Centre Coupled Model version 3) [[case_studies#Bibliography|(Collins et al., 2001)]], CCCMA (Canadian Centre for Climate Modelling and Analysis) [[case_studies#Bibliography|(Kim et al., 2003)]], CSIRO (Commonwealth Scientific and Industrial Research Organisation) [[case_studies#Bibliography|(Gordon and O’Farrell, 1997)]].
+  * Geo-morphological factors derived from the [[http://www2.jpl.nasa.gov/srtm/|SRTM]] digital elevation model [[case_studies#Bibliography|(Farr et al., 2007)]] minimum, maximum, mean altitudes, altitude standard deviation, slope and dominant orientation (north, south, east, west).
+  * Soil variables selected from the [[http://eusoils.jrc.ec.europa.eu/|European Soil Database]] [[case_studies#Bibliography|(King et al., 1995; Heineke et al., 1998)]]: soil parent material (eight classes) and FAO soil type classification (25 classes).\\
+\\
+
+==== Computational Implementation ====
+The modelling and mapping procedure include the following steps and relative scripts:\\
+\\
+  * Generate a response predictor input table using a bash shell / grass script: [[http://www.spatial.ecology.net/downloads/ITAveg_respred_table.sh|Download the shell script here]] or follow the [[itaveg_respred_table_sh|shell script in wiki format]] \\
+  * Modeling the current distribution of the Natural Forest Vegetation of Italy: [[http://www.spatial.ecology.net/downloads/randomforest_itaveg.R|Download the .R script here]] or follow the [[randomforest_itaveg_r|R script in wiki format]] \\
+  * Mapping the current Natural Forest Vegetation in Italy: [[http://www.spatial.ecology.net/downloads/map_rf_itaveg.R|Download the R script here]] or follow the [[map_rf_itaveg_r|R script in wiki format]] \\
+  * Generate future climate prediction surface map for the year 2080 and the IPCC A2a ENS model: [[http://www.spatial.ecology.net/downloads/itaveg_fut_clim_rasters.sh|Download the bash shell / grass script here]] or follow the [[itaveg_fut_clim_rasters_sh|shell script in wiki format]] \\
+  * Mapping the future projections of the Natural Forest Vegetation in Italy: [[http://www.spatial.ecology.net/downloads/map_rf_itaveg_ens2080.R|Download the R script here]] or follow the [[map_rf_itaveg_ens2028_r|R script in wiki format]] \\
+  * Merging map tiles into a single image: [[http://www.spatial.ecology.net/downloads/merge_ascii.sh|Download the bash shell GDAL command here]] or follow the [[merge_ascii_sh|GDAL command line description in wiki format]] \\
+\\
+==== Bibliography ====
+  * Bohn U., Gollub G., Hettwer C. 2000. Map of the Natural Vegetation of Europe. Bonn: Federal Agency for Nature Conservation.
+
+  * Breiman, L., 2001. Random forests. Machine Learning 45 (1), 5–32.
+
+  * Collins, M., Tett, S., Cooper, C., 2001. The internal climate variability of hadcm3, a version of the hadley centre coupled  model without flux adjustments. Climate Dynamics 17, 61–68.
+
+  * EEA 2006. European Forest Types: Categories and types for sustainable forest management reporting and policy. European Environmental Agency Technical report no 9/2006. Copenhagen. ISSN 175-2237.
+
+  * Farr, T. G., Rosen, P., Caro, E., Crippen, R., Duren, R., Hensley, S., Kobrick, M., Paller, M., Rodriguez, E., Roth, L., Seal, D., Shaffer, S., Shimada, J., Umland, J., Werner, M., Oskin, M., Burbank, D., Alsdorf, D., 2007. The shuttle radar topography mission. Rev. Geophys 45. 
+ 
+  * Gordon, H., O’Farrell, S., 1997. Transient climate change in the csiro coupled model with dynamic sea ice. Monthly Waether Review 125(5), 875907.
+
+  * Heineke, H., Eckelmann, W., Thomasson, A., Jones, R., Montanarella, L., Buckley, B., 1998. Land Information Systems Developments for planning the sustainable use of land resources. Research Report. European Soil Boureau, Luxembourg.
+
+  * Hijmans, R. J., S.E. Cameron, J.L. Parra, Jones, P. G., and Jarvis, A., 2005: Very high resolution interpolated
+       climate surfaces for global land areas. International Journal of Climatology, 25: 1965-1978
+  * IPCC, 2001. Climate Change 2001: The Scientific Basis. Contribution of Working Group I to the Third Assessment Report of the Intergovernmental Panel on Climate Change, cambridge university press Edition. Cambridge University Press,, Cambridge, United Kingdom.
+
+  * Kim, S.-J., Flato, G., Boer, G., 2003. A coupled climate model simulation of the last glacial maximum, part 2: approach  to equilibrium climate. Dynamics 20, 635–661.
+
+  * King, D., Jones, R., Thomasson, A., 1995. European Land Information Systems for Agro-environmental Monitoring. Office for the Official Publications of the European Communities, Luxembourg.
+
+  * Kuusela, K. 1996. Forest resources in Europe 1950-1990. Cambridge University Press.
+
+  * McCarthy JJ, Canziani OF, et al. (eds) (2001) Climate Change 2001: Impacts, Adaptation, and Vulnerability. Contribution of Working Group II to the Third Assessment Report of the Intergovernmental Panel on Climate Change (IPCC). Cambridge University Press, Cambridge.
+
+  * Shelhaas, M-J., Nabuurs, G-J., Schuck, A..2003. Natural disturbances in the European forests in the 19th and 20th centuries. Global Change Biology:, 1620–1633.
+
+
+
+
+

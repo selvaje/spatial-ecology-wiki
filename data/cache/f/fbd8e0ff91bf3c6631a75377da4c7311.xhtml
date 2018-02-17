@@ -1,0 +1,29 @@
+
+<h1 class="sectionedit1" id="grass70_create_location_using_ancillary_layer">GRASS70 Create Location using ancillary layer</h1>
+<div class="level1">
+
+<p>
+Create a location in a new grass database using a referenced dataset.<br/>
+
+<br/>
+
+Create a new GrassDataBase and copy the input.tif 
+</p>
+<pre class="code bash"><span class="kw2">rm</span> <span class="re5">-rf</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+<span class="kw2">cp</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>input.tif ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>input.tif</pre>
+
+<p>
+Define a projection to the input.tif
+</p>
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+gdalwarp   -t_srs EPSG:<span class="nu0">4326</span>  -s_srs EPSG:<span class="nu0">4326</span>  input.tif input_proj.tif</pre>
+
+<p>
+Run the grass70 command  which create the newlocation based on the input_proj.tif 
+</p>
+<pre class="code bash"><span class="kw2">rm</span> <span class="re5">-rf</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>newlocation
+grass70 <span class="re5">-text</span> <span class="re5">-c</span> <span class="re5">-c</span> input_proj.tif newlocation ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew </pre>
+<pre class="code bash">r.in.gdal <span class="re2">input</span>=input_proj.tif  <span class="re2">output</span>=input_proj</pre>
+
+</div>

@@ -1,0 +1,36 @@
+====== pkndvi ======
+NAME
+   pkndvi - calculate vegetation index raster file
+
+SYNOPSIS
+<code bash>
+   pkndvi -i input -o output [OPTION]
+</code>
+       
+DESCRIPTION
+   Calculate different vegetation indices, based on multi-band input raster file
+       
+OPTIONS
+<code bash>
+   -i     --input                input image file (default: <empty string>)
+   -o     --output               output image file containing ndvi (default: <empty string>)
+   -b     --band                 Bands to be used for vegetation index (see rule option) (default: 0)
+   -r     --rule                 Rule for index. [ndvi (b1-b0)/(b1+b0)|gvmi (b0+0.1)-(b1+0.02))/((b0+0.1)+(b1+0.02)))|vari (b1-b2)/(b1+b2-b0)|diff (b1-b0)|scale. (default: ndvi)
+   -t     --invalid              Mask value where image is invalid. (default: 0)
+   -f     --flag                 Flag value to put in image if not valid (0) (default: 0)
+   -ct    --ct                   color table (file with 5 columns: id R G B ALFA (0: transparent, 255: solid) (default: <empty string>)
+   -d     --description          Set image description (default: <empty string>)
+   -m     --minmax               minimum and maximum values for ndvi (limit all values smaller/larger to min/max (default: 0)
+   -e     --eps                  epsilon, contraint division by zero (default: 0)
+   -s     --scale                scale[0] is used for input, scale[1] is used for output: DN=scale[1]*ndvi+offset[1] (default: 1)
+   -off   --offset               offset[0] is used for input, offset[1] is used for output (see also scale option (default: 0)
+   -ot    --otype                Data type for output image ({Byte/Int16/UInt16/UInt32/Int32/Float32/Float64/CInt16/CInt32/CFloat32/CFloat64}). Empty string: inherit type from input image (default: Byte)
+   -of    --oformat              Output image format (see also gdal_translate). Empty string: inherit from input image (default: GTiff)
+   -co    --co                   options: NAME=VALUE [-co COMPRESS=LZW] [-co INTERLEAVE=BAND] (default: INTERLEAVE=BAND)
+   -v     --verbose              verbose mode if > 0 (default: 0)
+</code>
+
+====== Examples ======
+<code bash>
+pkndvi -i input.tif -o ndvi.tif -b 0 -b 1 -ot Byte -s 1 -s 100 -m 0 -m 1 # create ndvi image, based on multi-band input.tif (RED=band 0, Near Infrared=band1). Limit ndvi values to [0,1], but scale output from [0,100].
+</code>

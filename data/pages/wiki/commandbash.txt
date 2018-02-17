@@ -1,0 +1,9 @@
+====== Bash commands ======
+
+The most important commands can be found on [[http://files.fosswire.com/2007/08/fwunixref.pdf|Unix/Linux Command Reference]]\\
+In this course we will mainly use the\\
+  * File Commands
+These are commands that are able to manipulate a text file such as, move, rename, cat, read the header, read the tail of a file.
+  * Searching
+These are commands that are able to search withinin a file for a specific pattern (word). These are very useful for making queries in a file. In particular the grep command will be used several times.\\
+\\

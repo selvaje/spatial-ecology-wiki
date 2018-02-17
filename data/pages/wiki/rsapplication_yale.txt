@@ -1,0 +1,55 @@
+====== Remotely Sensed Vegetation Productivity: Normalized Difference Vegetation Index (NDVI) ======
+
+
+===== 1. Create a working directory of your choice =====
+
+
+   mkdir /home/user/ost4sem/exercise/Alaska_NDVI
+
+===== 2. Setting the working directory & download landsat imagery  =====
+ 
+
+   cd /home/user/ost4sem/exercise/Alaska_NDVI
+   wget http://e4ftl01.cr.usgs.gov/WELD/WELDAKSE.001/2007.06.01/Alaska.summer.2007.h06v02.doy153to242.v1.5.hdf
+   wget http://e4ftl01.cr.usgs.gov/WELD/WELDAKSE.001/2008.06.01/Alaska.summer.2008.h06v02.doy153to242.v1.5.hdf
+
+
+
+===== 3. Convert the .hdf files to individual bands  .tif =====
+
+   for file in `gdalinfo Alaska.summer.2007.h06v02.doy153to242.v1.5.hdf | grep NAME | awk -F "=" '{print $2}'` ; do
+      gdal_translate $file   ${file:77}"_2007".tif
+   done
+   for file in `gdalinfo Alaska.summer.2008.h06v02.doy153to242.v1.5.hdf | grep NAME | awk -F "=" '{print $2}'` ; do
+      gdal_translate $file   ${file:77}"_2008".tif
+   done
+
+===== 4. Create a 2007 and 2008 summer landsat composite =====
+
+   gdal_merge.py -separate  -o SUMMER_TOA_2007.tif   Band1_TOA_REF_2007.tif Band2_TOA_REF_2007.tif Band3_TOA_REF_2007.tif Band4_TOA_REF_2007.tif 
+   gdal_merge.py -separate  -o SUMMER_TOA_2008.tif   Band1_TOA_REF_2008.tif Band2_TOA_REF_2008.tif Band3_TOA_REF_2008.tif Band4_TOA_REF_2008.tif 
+
+
+===== 5. Mask out cloud pixels =====
+
+   pksetmask -i SUMMER_TOA_2007.tif -m ACCA_State_2007.tif --operator '=' --msknodata 1 --nodata -32768 -o SUMMER_TOA_2007_mask.tif
+   pksetmask -i SUMMER_TOA_2008.tif -m ACCA_State_2008.tif --operator '=' --msknodata 1 --nodata -32768 -o SUMMER_TOA_2008_mask.tif
+
+
+===== 6. Crop composite images to region of interest =====
+
+   gdal_translate -projwin 100735 2170503 175864 2098452 SUMMER_TOA_2007_mask.tif SUMMER_TOA_2007_mask_crop.tif
+   gdal_translate -projwin 100735 2170503 175864 2098452 SUMMER_TOA_2008_mask.tif SUMMER_TOA_2008_mask_crop.tif
+
+===== 7. Create 2007 and 2008 NDVI =====
+
+   gdal_calc.py -A SUMMER_TOA_2007_mask_crop.tif --A_band=4 -B SUMMER_TOA_2007_mask_crop.tif --B_band=3 --outfile=NDVI_2007.tif --type='Float32' --calc="(A.astype(float)-B)/(A.astype(float)+B)" --overwrite   
+   gdal_calc.py -A SUMMER_TOA_2008_mask_crop.tif --A_band=4 -B SUMMER_TOA_2008_mask_crop.tif --B_band=3 --outfile=NDVI_2008.tif --type='Float32' --calc="(A.astype(float)-B)/(A.astype(float)+B)" --overwrite  
+
+===== 8. Create a NDVI differnce image =====
+
+   gdal_calc.py -A NDVI_2007.tif -B NDVI_2008.tif --outfile=NDVI_2007to2008_difference.tif --type='Float32'  --calc="(B-A)" --overwrite  
+
+ 
+
+

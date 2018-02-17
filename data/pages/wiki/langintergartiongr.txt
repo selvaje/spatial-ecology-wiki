@@ -1,0 +1,82 @@
+====== Languages/Software data integration: GDAL and OFT-TOOLS ======
+\\
+The main aim of this page is to show how to integrate GDAL and OFT-TOOLS command line under BASH environment.\\
+\\
+A simple example is presented    /ost4sem/exercise/basic\_adv\_gdalogr  [[ http://www.spatial-ecology.net//ost4sem/exercise/basic_adv_gdalogr/integrationPK-OFT-TOOLS.sh |  here ]]
+   cd /home/user/ost4sem/exercise/basic_adv_gdalogr/
+   wget http://www.spatial-ecology.net//ost4sem/exercise/basic_adv_gdalogr/integrationGDAL-OFT-TOOLS.sh
+   gedit /home/user/ost4sem/exercise/basic_adv_gdalogr/integrationGDAL-OFT-TOOLS.sh &
+
+\\
+Giving a vector file (.shp) with two polygons and and several images (.tif) we want calculate the average and the standard deviation of all pixels which belong to each polygon. \\
+\\
+{{:wiki:rstat:10poly.png?400|}}
+\\
+=== Setting WORKING directory === 
+
+   DIR=~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+   cd $DIR
+   
+=== Download the data (skip if the data are already in the directory) ===
+   # vector
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/poly_fr.dbf
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/poly_fr.prj
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/poly_fr.shp
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/poly_fr.shx
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/poly_fr.qpj
+
+   # raster
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/2020_TSSP_IM-ENS-A2-SP20_43023435.tif  
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/2050_TSSP_IM-ENS-A2-SP20_43023435.tif  
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/2080_TSSP_IM-ENS-A2-SP20_43023435.tif
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/2020_TSSP_IP-ENS-A2-SP20_43023435.tif  
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/2050_TSSP_IP-ENS-A2-SP20_43023435.tif  
+   wget  http://spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/2080_TSSP_IP-ENS-A2-SP20_43023435.tif
+
+
+
+=== Get familiar with the data ===
+
+   ogrinfo -al   poly_fr.shp
+   gdalinfo $DIR/2050_TSSP_IP-ENS-A2-SP20_43023435.tif
+   openev $DIR/2050_TSSP_IP-ENS-A2-SP20_43023435.tif poly_fr.shp
+
+=== Calculate average and standard deviation of all the pixels inside the polygons  ===
+
+Rasterize the shape file 
+
+   gdal_rasterize  -tr 1000 1000 -l  poly_fr  -a id  $DIR/poly_fr.shp  $DIR/poly_fr.tif
+
+Crop the images 
+
+<code bash>
+# Get boundary information
+
+ulx=$(gdalinfo $DIR/poly_fr.tif | grep "Upper Left" | awk '{ gsub ("[(),]","") ; print  $3  }')
+uly=$(gdalinfo $DIR/poly_fr.tif | grep "Upper Left" | awk '{ gsub ("[(),]","") ; print  $4  }')
+lrx=$(gdalinfo $DIR/poly_fr.tif | grep "Lower Right" | awk '{ gsub ("[(),]","") ; print $3  }')
+lry=$(gdalinfo $DIR/poly_fr.tif | grep "Lower Right" | awk '{ gsub ("[(),]","") ; print $4  }')
+
+for file in $DIR/20*43023435.tif ; do 
+    filename=`basename $file .tif`
+    gdal_translate -projwin $ulx $uly $lrx $lry   $file   $DIR/$filename"_crop.tif"
+done
+</code>
+
+Calculate average and standard deviation inside the polygons
+
+<code bash>
+for file in $DIR/20*crop.tif ; do
+   filename=`basename $file .tif`  
+   oft-stat -i $file  -o  $DIR/$filename".txt"  -um $DIR/poly_fr.tif
+done
+</code>
+
+Check the results
+
+   head $DIR/*crop.txt
+
+
+
+
+

@@ -1,0 +1,6 @@
+=== Create a quicklook ===
+<code bash>
+    pkcrop -i 2013_IEEE_GRSS_DF_Contest_CASI.tif -o 2013_IEEE_GRSS_DF_Contest_CASI_ql.tif -b 60 -b 40 -b 20 --autoscale 0 --autoscale 255 -ot Byte
+</code>
+
+{{ :wiki:contest:2013_ieee_grss_df_contest_casi_ql_byte_normalize.png?nolink&300 |}}

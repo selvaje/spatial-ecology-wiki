@@ -1,0 +1,7 @@
+<span class="st0">&quot;&quot;&quot;Convert utm to lat/lon&quot;&quot;&quot;</span>
+<span class="kw1">import</span> utm
+y <span class="sy0">=</span> <span class="nu0">479747.0453210057</span>
+x <span class="sy0">=</span> <span class="nu0">5377685.825323031</span>
+zone <span class="sy0">=</span> <span class="nu0">32</span>
+band <span class="sy0">=</span> <span class="st0">'U'</span>
+<span class="kw1">print</span> utm.<span class="me1">to_latlon</span><span class="br0">&#40;</span>y<span class="sy0">,</span>x<span class="sy0">,</span>zone<span class="sy0">,</span>band<span class="br0">&#41;</span>

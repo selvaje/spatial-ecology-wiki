@@ -1,0 +1,21 @@
+====== Geographical analyses with R ======
+A wide variety of R packages are available to read, visualize and process vector and raster maps with R. An [[https://cran.r-project.org/web/views/Spatial.html| overview of R packages ]] for the analyses of spatial data.\\
+
+
+  * [[wiki:rstat:r_load_rast|Load and plot raster maps in R]]. Download layers from online data repositories, plot maps and save images with legends.
+  * [[wiki:rstat:r_load_vect|Load and plot vector maps in R]]. Download layers, perform a spatial join between tables and GOS layers, plot maps with and related statistics.
+  * [[wiki:rstat:r_load_proj| Load and plot online maps ]] reproject and overlay raster and vector layers.
+  * [[wiki:rstat:r_cohen_kappa| Kappa statistics tutorial]] for comparing categorical maps.
+  * Analysis of the [[wiki:rstat:r_spat_covar| spatial covariance]] between maps.
+  * [[wiki:rstat:r_cross]]
+
+
+===== Interesting readings =====
+
+  * [[http://sites.lsa.umich.edu/zhukov/wp-content/uploads/sites/140/2014/08/rtutorial-slides-1.pdf| Yuri M. Zhukov ]] Basics of Geographic Analysis in R
+  * [[http://www.maths.lancs.ac.uk/~rowlings/Teaching/UseR2012/cheatsheet.html| R Spatial Cheatsheet]]
+  * [[http://rspatial.r-forge.r-project.org/gallery | sp and lattice libraries ]] to visualize spatial data.
+  * [[http://flowingdata.com/2011/05/11/how-to-map-connections-with-great-circles/ | geosphere package ]] tutorial on mapping connections.
+  * [[http://www.ceb-institute.org/bbs/wp-content/uploads/2011/09/handout_ggplot2.pdf|a ggplot2 tutorial]]
+  * [[https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf| ggplot2 cheatsheet ]]
+  * [[http://neondataskills.org/R/Raster-Data-In-R/| NEON]] tutorial on R raster data. NEON is devoted to open data and open source in science and education.

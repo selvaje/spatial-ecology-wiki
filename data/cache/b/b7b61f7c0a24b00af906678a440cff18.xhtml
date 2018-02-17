@@ -1,0 +1,214 @@
+
+<h1 class="sectionedit1" id="using_grass_for_image_analysis">Using GRASS for image analysis.</h1>
+<div class="level1">
+
+<p>
+GRASS can be used to perform remote sensing image analysis in terms of preprocessing classification and validation. 
+The image analysis commands are starting with suffix “ i. ” ( i.class , i.maxlik ). They can be run in the bash shell and can be applied to any grass raster layer.<br/>
+
+They are listed and described in the following <a href="http://grass.osgeo.org/grass64/manuals/html64_user/imagery.html" class="urlextern" target="blanc" title="http://grass.osgeo.org/grass64/manuals/html64_user/imagery.html" rel="nofollow noopener"> page </a>.
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Using GRASS for image analysis." [1-455] -->
+<h3 class="sectionedit2" id="image_preprocessing">Image Preprocessing</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="georeferencing">Georeferencing</h4>
+<div class="level4">
+
+<p>
+The easiest way to georeferencing an image is by using the <a href="http://gama.fsv.cvut.cz/~landa/grass/swf/georect.html" class="urlextern" target="blanc" title="http://gama.fsv.cvut.cz/~landa/grass/swf/georect.html" rel="nofollow noopener"> Georectifier a wxGUI extension </a><br/>
+
+Start wxpython by 
+</p>
+<pre class="code"> g.gui wxpython </pre>
+
+</div>
+<!-- EDIT2 SECTION "Image Preprocessing" [456-704] -->
+<h3 class="sectionedit3" id="image_classification">Image classification</h3>
+<div class="level3">
+
+<p>
+Here a table try to summarize the main important command for Classification methods in GRASS.
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<thead>
+	<tr class="row0">
+		<th class="col0"> </th><th class="col1">radiometric unsupervised</th><th class="col2">radiometric supervised</th><th class="col3">radiometric supervised</th><th class="col4">radiometric &amp; geometric supervised</th>
+	</tr>
+	</thead>
+	<tr class="row1">
+		<td class="col0">Image Preprocessing</td><td class="col1 centeralign" colspan="4">  r.seg  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">Preprocessing</td><td class="col1">i.cluster</td><td class="col2">i.class (monitor digitizing)</td><td class="col3">i.gensig (using training maps)</td><td class="col4">i.gensigset(using training maps)</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">Classification</td><td class="col1">i.maxlik</td><td class="col2">i.maxlik</td><td class="col3">i.maxlik</td><td class="col4"> i.smap</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">Remarks</td><td class="col1">automated run based on image statistics</td><td class="col2">requires digitalization of training areas</td><td class="col3">requires digitalization of training areas</td><td class="col4">requires digitalization of training areas</td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [832-1324] -->
+<p>
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> The preprocessing phase capture spectral signatures for land cover in order to later use the the classifier algorithm.</div>
+</li>
+<li class="level1"><div class="li"> The classificatio phase perform the rial classification based on the signature collected by the previews steps. </div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="unsupervised_classification">Unsupervised classification</h4>
+<div class="level4">
+
+<p>
+Setting working directory
+</p>
+<pre class="code bash"><span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_remote_sensing 
+<span class="kw3">cd</span> <span class="re1">$INDIR</span></pre>
+
+<p>
+In this directory there is a .tar.gz file, the typical file after a download. We need to untar and unzip
+</p>
+<pre class="code bash"><span class="kw2">tar</span> xzf LT51680652009340MLK01.tar.gz</pre>
+
+<p>
+These are the 7 bands of Landsat.<br/>
+
+Now we select a study a small study area by cutting large images using gdal<em>translate, previous a re-projection operation by gdal</em>warp.<br/>
+
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> L5168065_06520091206_B<span class="br0">&#91;</span><span class="nu0">1</span>-<span class="nu0">9</span><span class="br0">&#93;</span><span class="nu0">0</span>.TIF ; <span class="kw1">do</span> 
+    <span class="re2">imagename</span>=<span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$file</span> .TIF<span class="sy0">`</span>   <span class="co0"># select the file name without the extension.</span>
+    <span class="kw2">rm</span>  <span class="re1">$imagename</span><span class="st0">&quot;_prj.tif&quot;</span>
+    gdalwarp  -s_srs EPSG:<span class="nu0">32636</span> -t_srs <span class="st0">&quot;+proj=utm +zone=36 +south +a=6378249.145 +b=6356514.870 +units=m +towgs84=-160,-6,-302&quot;</span> <span class="re1">$file</span> tmp.tif
+    gdal_translate <span class="re5">-co</span> <span class="st0">&quot;COMPRESS=LZW&quot;</span> <span class="re5">-projwin</span> <span class="nu0">760000</span> <span class="nu0">9260000</span> <span class="nu0">860000</span> <span class="nu0">9190000</span> tmp.tif <span class="re1">$imagename</span><span class="st0">&quot;_cut.tif&quot;</span>
+    <span class="kw2">rm</span> <span class="re1">$file</span>    <span class="co0"># remove imput file </span>
+<span class="kw1">done</span> 
+<span class="kw2">rm</span> tmp.tif <span class="sy0">*</span>.txt README.GTF</pre>
+
+<p>
+After this operation the directory contain just the needed files.<br/>
+
+Now we can start import data in Grass by creating a new grass location based on the prepared data. 
+</p>
+<pre class="code bash">~<span class="sy0">/</span>sh<span class="sy0">/</span>create_location_gr.sh  L5168065_06520091206_B10_cut.tif  grass_location  ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_remote_sensing</pre>
+
+<p>
+Enter in grass manually 
+</p>
+<pre class="code"> grass64 -text ~/ost4sem/exercise/basic_remote_sensing/grass_location/PERMANENT </pre>
+
+<p>
+<br/>
+<br/>
+List the rast. Start the python gui and see the file by loading it. 
+</p>
+<pre class="code bash">g.list rast ; g.gui wxpython <span class="sy0">&amp;</span></pre>
+
+<p>
+Import the other channels 
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>_cut.tif ; <span class="kw1">do</span> 
+    <span class="re2">RAST</span>=<span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$file</span> _cut.tif<span class="sy0">`</span>
+    r.in.gdal <span class="re2">in</span>=<span class="re1">$file</span>  <span class="re2">out</span>=<span class="re1">$RAST</span> 
+<span class="kw1">done</span></pre>
+
+<p>
+Remove initial data set
+</p>
+<pre class="code bash">g.remove <span class="re2">rast</span>=L5168065_06520091206_B10_cut ; g.list rast</pre>
+<ul>
+<li class="level1"><div class="li"> Visualize the bands by the python gui. Search for the appropriate button to load the image.</div>
+</li>
+<li class="level1"><div class="li"> Visualize  an RGB color layer. Search for the appropriate button to load the a RGB color layer.</div>
+</li>
+</ul>
+<pre class="code bash"><span class="co0"># create an RGB color layer</span>
+r.composite  <span class="re2">r</span>=L5168065_06520091206_B10   <span class="re2">g</span>=L5168065_06520091206_B20   <span class="re2">b</span>=L5168065_06520091206_B30 <span class="re2">out</span>=L5168065_06520091206_B123 <span class="re5">--overwrite</span>
+<span class="co0"># group the bands </span>
+i.group <span class="re2">group</span>=L5168065_06520091206  <span class="re2">subgroup</span>=L5168065_06520091206  <span class="re2">input</span>=L5168065_06520091206_B10,L5168065_06520091206_B20,L5168065_06520091206_B30,L5168065_06520091206_B40,L5168065_06520091206_B50,L5168065_06520091206_B60,L5168065_06520091206_B70</pre>
+
+<p>
+Unsupervised classification.<br/>
+
+Generate unsupervised statistics for 5 classes.
+</p>
+<pre class="code bash">i.cluster  <span class="re2">group</span>=L5168065_06520091206  <span class="re2">subgroup</span>=L5168065_06520091206 <span class="re2">sigfile</span>=L5168065_06520091206_sig <span class="re2">classes</span>=<span class="nu0">5</span> <span class="re2">reportfile</span>=L5168065_06520091206.txt</pre>
+
+<p>
+Assign pixels to classes, create classified image and relative rejected image. 
+</p>
+<pre class="code bash">i.maxlik <span class="re2">group</span>=L5168065_06520091206 <span class="re2">subgroup</span>=L5168065_06520091206 <span class="re2">sigfile</span>=L5168065_06520091206_sig <span class="re2">class</span>=L5168065_06520091206_class  <span class="re2">reject</span>=L5168065_06520091206_reject</pre>
+
+<p>
+Visualize the results by the gui opening L5168065<em>06520091206</em>class and L5168065<em>06520091206</em>reject
+Compare visually the classified map and the RGB layer. 
+</p>
+
+</div>
+
+<h5 id="exercise">Exercise</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li">Exercise: making the same procedure but change the level of separability between the classes. See the command i.cluster option separation.<br/>
+</div>
+</li>
+<li class="level1"><div class="li">Exercise: make a lop for two level of separability. </div>
+</li>
+</ul>
+
+</div>
+
+<h4 id="supervised_classification">Supervised classification</h4>
+<div class="level4">
+
+<p>
+Create different band combination.
+</p>
+<pre class="code bash">r.composite  <span class="re2">r</span>=L5168065_06520091206_B10   <span class="re2">g</span>=L5168065_06520091206_B20   <span class="re2">b</span>=L5168065_06520091206_B30 <span class="re2">out</span>=L5168065_06520091206_B123 <span class="re5">--overwrite</span>
+r.composite  <span class="re2">r</span>=L5168065_06520091206_B20   <span class="re2">g</span>=L5168065_06520091206_B30   <span class="re2">b</span>=L5168065_06520091206_B40 <span class="re2">out</span>=L5168065_06520091206_B234 <span class="re5">--overwrite</span>
+r.composite  <span class="re2">r</span>=L5168065_06520091206_B30   <span class="re2">g</span>=L5168065_06520091206_B40   <span class="re2">b</span>=L5168065_06520091206_B50 <span class="re2">out</span>=L5168065_06520091206_B345 <span class="re5">--overwrite</span></pre>
+
+<p>
+Create a editing polygon classes by qgis or by wxpython. See the procedure in <a href="/dokuwiki/doku.php?id=wiki:wikiqgis:editqgis" class="wikilink1" title="wiki:wikiqgis:editqgis">Editing and creating a vector in QGIS </a>
+<br/>
+
+Transform vector training map to raster model:<br/>
+
+Import shape vector ~/ost4sem/exercise/basic<em>remote</em>sensing/class.shp<br/>
+
+I if is not available use ~/ost4sem/exercise/basic<em>remote</em>sensing/class_examples.shp<br/>
+
+</p>
+<pre class="code bash">v.in.ogr <span class="re5">-o</span> <span class="re2">dsn</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_remote_sensing<span class="sy0">/</span>class_examples.shp <span class="re2">output</span>=class <span class="re2">min_area</span>=<span class="nu0">0.0001</span> <span class="re2">snap</span>=-<span class="nu0">1</span> <span class="re2">cnames</span>=classid
+v.to.rast <span class="re2">in</span>=class   <span class="re2">out</span>=class  <span class="re2">use</span>=attr <span class="re2">col</span>=classid <span class="re2">labelcol</span>=name <span class="re5">--o</span></pre>
+
+<p>
+Visualize the class rast by the python gui.<br/>
+
+Generate statistics from training areas. This is a long process, so do not run but just use the results that are already stored
+</p>
+<pre class="code bash">i.gensigset <span class="re2">group</span>=L5168065_06520091206  <span class="re2">subgroup</span>=L5168065_06520091206  <span class="re2">sig</span>=L5168065_06520091206_sig     <span class="re2">training</span>=class</pre>
+
+<p>
+Perform supervised classification with two methods
+</p>
+<pre class="code bash">i.smap   <span class="re2">group</span>=L5168065_06520091206  <span class="re2">subgroup</span>=L5168065_06520091206  <span class="re2">sig</span>=L5168065_06520091206_sig <span class="re2">out</span>=s_map
+i.maxlik <span class="re2">group</span>=L5168065_06520091206  <span class="re2">subgroup</span>=L5168065_06520091206  <span class="re2">sig</span>=L5168065_06520091206_sig <span class="re2">class</span>=m_map</pre>
+
+<p>
+Visualize the python gui results s<em>map and m</em>map by the 
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Image classification" [705-] -->

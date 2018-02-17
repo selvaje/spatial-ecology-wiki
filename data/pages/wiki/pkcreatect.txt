@@ -1,0 +1,38 @@
+====== pkcreatect ======
+NAME
+   pkcreatect - create colour table
+
+SYNOPSIS
+<code bash>
+   pkcreatect [OPTION]
+</code>
+       
+DESCRIPTION
+   Create, attach or remove a colour table to or from a raster file
+       
+OPTIONS
+<code bash>
+   -i     --input                Input image file (default: <empty string>)
+   -o     --output               Output image file (default: <empty string>)
+   -l     --legend               Create legend as png file (default: <empty string>)
+   -dim   --dim                  number of columns and rows in legend. (default: 100)
+   -m     --min                  minimum value (default: 0)
+   -M     --max                  maximum value (default: 100)
+   -g     --grey                 grey scale (default: false)
+   -ct    --ct                   color table (file with 5 columns: id R G B ALFA (0: transparent, 255: solid) (default: <empty string>)
+   -d     --description          Set image description (default: <empty string>)
+   -of    --oformat              Output image format (see also gdal_translate). Empty string: inherit from input image (default: GTiff)
+   -co    --co                   options: NAME=VALUE [-co COMPRESS=LZW] [-co INTERLEAVE=BAND] (default: INTERLEAVE=BAND)
+   -v     --verbose              verbose (default: false)
+</code>
+
+====== Examples ======
+<code bash>
+pkcreatect -i image.tif -o image_ct.tif -m 0 -M 50 # attach color table to image with values between 0 and 50
+
+pkcreatect -i image.tif -o image_ct.tif -m 0 -M 100 -l legend.tif # attach grey scale "color" table to image with values between 0 and 100 and create a legend image (annotation needs to be drawn manually)
+
+pkcreatect -i image.tif -o image_ct.tif -ct colourtable.txt # attach predefined color table to image
+ 
+pkcreatect -i image.tif -o image_noct.tif -ct none # remove color table from image
+</code>

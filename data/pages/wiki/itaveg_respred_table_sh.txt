@@ -1,0 +1,221 @@
+===== Modeling Italian Natural Forest Vegetation: a shell script for producing an input response / predictor table  =====
+This shell script prepares a response/ predictor "raw" table from input raster predictor variables and raster response point value. We use bash scripting commands within a grass terminal window.\\
+The objective of this script is to upload into Grass format files all environmental predictor surface maps. We then select several response variable point locations and associate predictors to response variables within the newest geo-database. Response points are randomly sampled from the Natural Vegetation Map of Europe. This map is already available in its reclassified forest formation scheme [[wiki:case_studies#input data|see input data]]. Predictor raster represents bioclimatic, soil and geomorphologic environmental conditions.\\
+The final vector point geo-dataset will be available for modeling using the next R script.
+ 
+==== Create a new grass location and import the Natural Vegetation Map of Europe ====
+<note important>Create new location using grass 7 : Use grass GUI or terminal or qgis grass plugin. For grass 6.4 you can use the below scripting technique.</note>
+
+Create a location in a new grass database using a referenced dataset.\\
+\\
+Create a new GrassDataBase and using an input layer with the predefined projection :
+
+<code bash>
+mkdir ~/ost4sem/grassdbnew/
+cd ~/ost4sem/grassdbnew
+gdalwarp   -t_srs EPSG:3035  -s_srs EPSG:3035 ~/ost4sem/studycase/ITA_veg/Bohn_nat_veg/bon18a/hdr.adf ~/ost4sem/studycase/ITA_veg/bon18proj.tif
+grass -text -e -c ~/ost4sem/studycase/ITA_veg/bon18proj.tif  europe ~/ost4sem/grassdbnew
+</code>
+
+\\
+
+
+
+==== Open grass and set a new Mapset and study area extent ====
+
+\\
+From a linux terminal make sure you are in the LOCATION folder and open grass
+
+<code bash>
+   cd ~/ost4sem/grassdbnew/europe/
+   grass -text ~/ost4sem/grassdbnew/europe/PERMANENT
+</code>
+
+Create a new Mapset. Name it "Vmodel" 
+<code bash>
+ g.mapset mapset=Vmodel -c
+</code>
+
+\\
+If you correctly entered grass you should visualise the following text:
+  g.gisenv
+  GISDBASE=/home/stefano/ost4sem/grassdbnew
+  LOCATION_NAME=europe
+  MAPSET=Vmodel
+  MONITOR=x2
+  GRASS_GUI=text
+  GRASS 6.4.0RC5 (europe):~/ost4sem/grassdb/europe > 
+
+
+We have created our Location by importing the raster layer format of the Natural Vegetation Map of Europe [[wiki:case_studies#bibliography|(Bohn et al., 2003)]] already reclassified in 14 Forest Categories according to the European Environmental Agency : European forest Types classification scheme [[wiki:case_studies#bibliography|(EEA 2006)]].
+
+We now copy the map into our Vmodel mapset and rename it //potveg\_europe//
+<code bash>
+  r.in.gdal input=/home/user/ost4sem/studycase/ITA_veg/bon18proj.tif    output=potveg_europe
+
+</code>
+
+look at the existing files
+<code bash>
+   g.list type=rast mapset=Vmodel
+   g.region -p
+</code>
+
+get info of the new imported potveg\_europe raster
+
+<code bash>
+   r.info map=potveg_europe@Vmodel
+</code>
+
+set a study area 
+   g.region n=2900000 s=1420000 w=3960000 e=5100000 res=1000 save=italy --o
+
+print the active region settings
+   g.region -p
+
+==== Clip European data to Italian extent and create a mask ====
+
+clip the European Natural Vegetation Map to the study area
+<code bash>
+   r.mapcalc "potveg_ita = if(potveg_europe@Vmodel >= 0,potveg_europe@Vmodel, null())"
+</code>
+
+create a mask from the study area Italy
+<code bash>
+   r.mapcalc "mask_ita = if(potveg_ita@Vmodel >= 0, 1, null())"
+</code>
+
+set the study area as mask  
+<code bash>
+   r.mask raster=mask_ita@Vmodel
+</code>
+
+==== Import the raster predictor variables and resize them into the Italian extent ====
+  * Import Raster predictor variables at European Extent from ARC INFO GRID format to GRASS format
+  * Clip raster to the italian extent
+  * Delete european extent rasters
+
+<note important>Data might not be available at // ~/ost4sem/studycase/ITA_veg/data/ // because of limited disk space. Original data can be downloaded at [[www.worldclim.org|worldclim.org web site]] \\
+
+Or you could check if grass format data clipped for Italy are available here // ~/ost4sem/grassdb/europe/Vmodel/cellhd/ // and if available, you can adjust the forloop below to directly import grass data for the Italian study area to your grass mapset. Something like ... will work\\
+
+    r.in.gdal -o input=~/ost4sem/grassdb/europe/Vmodel/cellhd/pr10"$dir"ita output=pr10$dir"ita" --overwrite \\
+
+Another way to follow this tutorial is to copy the full mapset folder and add it to the current location using:\\
+    cp  -r  grassdb/europe/Vmodel import
+    g.mapsets mapset=import operation=add
+</note>
+
+
+
+import all ArcInfo raster files predictor variables into GRASS format
+<code bash>
+    for  (( dir=1 ; dir<=9 ; dir ++ ))  ; do
+       r.in.gdal -o input="/home/user/ost4sem/studycase/ITA_veg/data/PRESENT/pr10"$dir"/hdr.adf"  output=pr10$dir"europe"  --overwrite
+    done
+   
+    for  (( dir=10 ; dir<=39 ; dir ++ ))  ; do
+       r.in.gdal -o input="/home/user/ost4sem/studycase/ITA_veg/data/PRESENT/pr1"$dir"/hdr.adf"  output=pr1$dir"europe"  --overwrite
+    done
+    
+    for  dir in  198 199 ; do
+       r.in.gdal -o input="/home/user/ost4sem/studycase/ITA_veg/data/PRESENT/pr"$dir"/hdr.adf"  output=pr$dir"europe"  --overwrite
+    done
+    
+    for  dir in  200 201 202 203 204 205 250 254 255 257 258 259 262 264 265 292 293 294  ; do
+       r.in.gdal -o input="/home/user/ost4sem/studycase/ITA_veg/data/physic_pr/pr"$dir"/hdr.adf"  output=pr$dir"europe"  --overwrite
+    done
+</code> 
+  
+Clip GRASS FORMAT Raster predictor variables from the European to the Italian extent.
+
+<code bash>
+    for  (( pr=1 ; pr<=9 ; pr ++ ))  ; do
+       r.mapcalc pr10$pr"ita" = pr10$pr"europe"@Vmodel 
+    done
+   
+    for  (( pr=10 ; pr<=39 ; pr ++ ))  ; do
+       r.mapcalc pr1$pr"ita" = pr1$pr"europe"@Vmodel
+    done
+   
+    for  pr in  198 199 200 201 202 203 204 205 250 254 255 257 258 259 262 264 265 292 293 294 ; do
+       r.mapcalc pr$pr"ita" = pr$pr"europe"@Vmodel
+    done
+</code>  
+
+Remove European extent GRASS FORMAT Raster predictor variables
+<code bash>
+    for  (( pr=2 ; pr<=9 ; pr ++ ))  ; do
+       g.remove rast=pr10$pr"europe@Vmodel"
+    done
+   
+    for  (( pr=10 ; pr<=39 ; pr ++ ))  ; do
+       g.remove rast=pr1$pr"europe@Vmodel" 
+    done
+   
+    for  pr in  198 199 200 201 202 203 204 205 250 254 255 257 258 259 262 264 265 292 293 294; do
+       g.remove rast=pr$pr"europe@Vmodel" 
+    done
+ </code>  
+  
+Question: check the difference of extent between pr101europe and pr101ita raster maps ?
+
+
+==== Create a response variable X and Y random location points ====
+
+   * Generate a raster map layer and vector point map containing randomly located points within the Natural Vegetation Map
+   r.random input=potveg_ita  n=7000 raster_output=response_pix vector_output=response_pnts1 --overwrite
+
+<note warning>
+In the original sh script,the number of random points were 7000, here we use 70 points to make this faster:
+</note>
+
+
+   #r.random input=potveg_ita@Vmodel  n=7000 vector_output=resp_p  --overwrite
+   r.random input=potveg_ita@Vmodel  n=70 vector_output=resp_p70  --overwrite
+
+==== Associate the predictors values to the response variable location points ====
+check the layer properties
+   v.info map=resp_p70@Vmodel
+
+remove existing attribute table of vector map
+   v.db.droptable map=resp_p70@Vmodel -f
+
+Generate a new empty table with one column per predictor. We want to sample at random point locations plus two columns per x and y coordinates:
+
+   v.db.addtable map=resp_p70@Vmodel  columns="pr101 double,pr102 double,pr103 double,pr104 double,pr105 double,pr106 double,pr107 double,pr108 double,pr109 double,pr110 double,pr111 double,pr112 int,pr113 int,pr114 int,pr115 double,pr116 int,pr117 int,pr118 int,pr119 int,pr120 double,pr121 double,pr122 int,pr123 double,pr124 double,pr125 double,pr126 double,pr127 double,pr128 double,pr129 double,pr130 double,pr131 double,pr132 int,pr133 int,pr134 double,pr135 double,pr136 double,pr137 double,pr138 double,pr139 double,pr198 double,pr199 double,pr200 int,pr201 int,pr202 int,pr203 double,pr204 double,pr205 int,pr250 int,pr254 int,pr255 int,pr257 int,pr258 int,pr259 int,pr262 int,pr264 int,pr265 int,pr292 int,pr293 double,pr294 int,xcoor double,ycoor double,FType int"
+  
+Print column types and names of table linked to vector map 
+   v.db.connect -c map=resp_p70@Vmodel
+
+Print database connection
+   v.db.connect -p map=resp_p70@Vmodel
+
+Create a rasterlist text file including the list of raster file names we want to sample.\\
+
+   g.list type=raster pattern=pr* mapset=import > rasterlist
+
+Once you create the rasterlist, uploads predictor raster values of each map at positions of vector points to the table. \\
+In our case we sample for all raster files in the list their values in correspondence to the x y points locations, corresponding to the vector point list randomly generated in the Natural Vegetation Map.\\
+
+<code bash>  
+for a in $(cat rasterlist) ; do  
+v.what.rast     map=resp_p70@Vmodel   raster=$a@import     column=${a:0:5}      
+done
+</code>     
+
+
+==== Associate the response variable values to the response variable location points  ====
+Uploads response point values for the Forest Category of the Natural Vegetation Map.\\
+   v.what.rast     map=resp_p70@Vmodel       raster=potveg_ita@Vmodel     column=ftype
+
+==== Add x and y coordinates values to each of the the point locations of the vector table ====
+Create new vector (points) from database table containing coordinates. 
+**v.to.db** Load values from vector to database. In uploaded/printed category values '-1' is used for 'no category' and 'null'/'-' if category cannot be found or multiple categories were found. 
+
+   v.to.db -p map=resp_p70@Vmodel type=point layer=1 option=coor column=xcoor,ycoor
+   v.to.db  map=resp_p70@Vmodel type=point layer=1 option=coor column=xcoor,ycoor
+
+The response variable imput table is now ready to be used in the modeling process. You can continue the Italian Natural Forest Vegetation modeling study case using the following [[wiki:randomforest_itaveg_r|R script]].\\
+End of script.
+

@@ -1,0 +1,53 @@
+====== Hands-on in Geo-spatial open-source software ======
+\\
+**Dr. Giuseppe Amatulli, Ajay ranipeta**\\
+\\
+These workshops integrate the computational skills to process geo-data for environmental analysis, Geographic Information Systems and Remote Sensing application using Open Source software in a Linux OS. The workshops are drop-in, but we strongly encourage people to pre-register by sending an email to giuseppe.amatulli@yale.edu to have full access to the material needed for the workshops and the Linux-like Virtual Machine (LVM) pre-installed in participants’ personal computers. This LVM is an ad-hoc customization of the Ubuntu distribution with Remote Sensing, GIS and Statistics open source software; with sample geo-data, scripts, and example exercises linked with the material stored at http://www.spatial-ecology.net. The installation of the LVM effectively installs Linux inside Windows or MacOS. In other words, your main OS will remain Windows or MacOS, and you will boot the PC as before. There is no risk to your data or for your main OS.\\
+\\
+**When?: Two appointments in two different days: Wednesday and Thursday**\\
+\\
+**Where?: StatLab KBT**\\
+\\
+===== Workshop 1: Introduction to Linux as platform for open source spatial analysis (Giuseppe) ======
+\\
+Wednesday, February   3rd   from 5pm to 7pm\\
+Thursday,    February 11th   from 5pm to 7pm\\
+  * [[startbash|Starting with Bash]]
+  * [[commandbash| The most important commands]] - [[http://files.fosswire.com/2007/08/fwunixref.pdf|Unix/Linux Command Reference]]
+  * [[tab | Command/filename completion and Keyboard shortcuts ]]
+  * [[basicbash | Basic bash scripts]]\\
+This introductory session will focus upon the fundamental concepts and skills needed to begin using Linux OS for the exploration and analysis of spatial data. During the first half of the workshop, we will install a Linux Virtual Machine (LVM) on your lap-top and explore the materials available at http://www.spatial-ecology.net. During the second half of the workshop we, will learn essential Linux commands to navigate directories, copy and move files, compress/uncompress files, etc.\\
+This workshop assumes NO PRIOR KNOWLEDGE of any programming language or Linux OS functionality, but does require working knowledge of the fundamentals of an Operating Systems (Files, Folders, etc…). The LVM installed during this workshop will be used during the full workshop series.\\
+\\
+====== Workshop 2: Introduction to GRASS GIS (Giuseppe) ======
+\\
+Wednesday, February   17th  from 5pm to 7pm\\
+Thursday,   February    25th  from 5pm to 7pm\\
+  * [[basicgrass7|Starting with GRASS 7]]
+  * [[GRASScreatelocation  |  GRASS70 Create Location using ancillary layer ]]
+This workshop introduces students to the powerful Geographic Resources Analysis Support System (GRASS) GIS software to manipulate raster and vector data. We will see the graphical user interface and use simple BASH scripts to automate many common geo-data processing tasks such as cropping and re-projecting images. You will learn how to script processes for complex geo-functions.\\
+This workshop assumes BASIC KNOWLEDGE of BASH command lines and basic knowledge of Geographic Information Systems concepts (projection, buffer, overlay, etc…). Participants will need a pre-installed Linux Virtual Machine in their own laptops to follow the workshop.
+\\
+====== Workshop 3: Raster/Vector processing using GDAL/OGR libraries and pktools (Giuseppe) ======
+\\
+Wednesday, March 2nd         from 5pm to 7pm\\
+Thursday,    March 10th        from 5pm to 7pm\\
+  * [[http://www.gdal.org/ | GDAL - Geospatial Data Abstraction Library ]]
+  * [[ http://spatialreference.org/ | Spatial Projection Reference Database ]] 
+  * [[http://pktools.nongnu.org/html/index.html | pktools - Processing Kernel for geospatial data ]]
+  * [[gdalbasic_kenya | Basic GDAL and OGR for Kenya ]]
+This workshop introduces students to the powerful Geospatial Data Abstraction Library (GDAL), the OGR libraries, and pktools software to perform Geographic Information Systems and Remote Sensing analysis. You will use simple BASH scripts to automate many common geo-data processing tasks such as cropping and re-projecting, mosaicing, and filtering images. You will learn how to script processes for complex geo-functions.\\
+This workshop assumes PRIOR KNOWLEDGE of BASH command lines (acquired during Workshop 1) and basic knowledge of Geographic Information Systems and Remote Sensing concepts (projection, spectral signature, etc...). Participants will need a pre-installed Linux Virtual Machine on their own laptops to follow the workshop.
+\\
+====== Workshop 4: Processing images using python GDAL-API and NumPy (Ajay) ======
+\\
+Wednesday, March 30th from 5pm to 7pm\\
+Thursday,  April  7th from 5pm to 7pm\\
+\\
+material at https://github.com/funkycoda/sbsc-osgeo-workshop
+\\
+\\
+This workshop introduces students to the powerful Geospatial Data Abstraction Library (GDAL) - API and NumPy for image-matrix operation using Python. You will use simple python scripts to perform image manipulation such as filtering or aggregation. You will learn how to script processes for complex geo-functions.\\
+This workshop assumes NO PRIOR KNOWLEDGE of python command lines but basic knowledge of Geographic Information Systems and Remote Sensing concepts (projection, spectral signature, etc...). Participants will need a pre-installed Linux Virtual Machine on their own laptops to follow the workshop.\\
+\\
+ 

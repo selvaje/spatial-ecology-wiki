@@ -1,0 +1,2 @@
+<span class="kw2">grep</span> 05 MMDD.txt <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">'BEGIN { print &quot;Month&quot;} {print }'</span> <span class="sy0">&gt;</span> head_MM.txt
+<span class="kw2">more</span> head_MM.txt

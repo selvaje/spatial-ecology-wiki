@@ -1,0 +1,20 @@
+====== Exercise 4c: Study long time series of mean NDVI ======
+In this exercise the following tools will be used:
+  * pktools: pkinfo
+  * bash: for loop
+  * awk: basic
+
+__Use the statistics option (--stat) from pkinfo to calculate min, max, mean and std dev of image__
+
+__Use basic bash to filter values only__
+
+<code bash>
+for YEAR in 2006 2007 2008 2009 2010;do 
+    echo "processing year ${YEAR}"
+    for MONTH in 01 02 03 04 05 06 07 08 09 10 11 12; do 
+	pkinfo -i ${OUTPUTDIR}/exercise4/${YEAR}${MONTH}-MODIS500_CW_NDVI.tif -stat
+    done| awk '{print $2,$4,$6,$8}' > ${OUTPUTDIR}/exercise4/mean_ndvi_${YEAR}.txt
+done
+</code>
+
+__plot the profiles in gnuplot (click [[gnuplot4c | here]] for the code)__

@@ -1,0 +1,106 @@
+a:5:{s:5:"title";s:32:" Questionnaire Discussion Forum ";s:6:"status";i:1;s:6:"number";i:18;s:8:"comments";a:18:{s:32:"41c96089aa75baa1ba04f28abb583f33";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test128.114.177.60";s:4:"name";s:13:"Sara Baguskas";s:4:"mail";s:17:"baguskas@ucsc.edu";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1429566150;}s:3:"raw";s:488:"I am interested in achieving a stronger ability to approach spatial data analysis and representation. I am specifically interested in R because I am trying to develop my coding skills for data analysis and generating figures using that program, so it would be nice to consolidate my skills. However, I anticipate that the skills acquired during this short-course will extend beyond a particular program, but will increase confidence in how to acquire and use spatial data for research. 
+
+";s:5:"xhtml";s:497:"
+<p>
+I am interested in achieving a stronger ability to approach spatial data analysis and representation. I am specifically interested in R because I am trying to develop my coding skills for data analysis and generating figures using that program, so it would be nice to consolidate my skills. However, I anticipate that the skills acquired during this short-course will extend beyond a particular program, but will increase confidence in how to acquire and use spatial data for research. 
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"41c96089aa75baa1ba04f28abb583f33";}s:32:"594fb2d78b4178b75e1cc8ff5defc6d2";a:8:{s:4:"user";a:5:{s:2:"id";s:34:"test141.105.164.160,10.211.192.226";s:4:"name";s:12:"Lacey Hughey";s:4:"mail";s:22:"lacey.hughey@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1429953817;}s:3:"raw";s:491:"Since I am very new to R and command line interfaces, I would like to develop a level of comfort with basic statistical analyses and a familiarity with the resources available for spatio-temporal data analysis that will enable me to pursue more advanced questions in the future. My project relies on analyzing large amounts of spatial data on animal locations in relation to environmental variables. Any case studies or examples related to animal movement would be much appreciated.
+
+Thanks!";s:5:"xhtml";s:511:"
+<p>
+Since I am very new to R and command line interfaces, I would like to develop a level of comfort with basic statistical analyses and a familiarity with the resources available for spatio-temporal data analysis that will enable me to pursue more advanced questions in the future. My project relies on analyzing large amounts of spatial data on animal locations in relation to environmental variables. Any case studies or examples related to animal movement would be much appreciated.
+</p>
+
+<p>
+Thanks!
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"594fb2d78b4178b75e1cc8ff5defc6d2";}s:32:"75d0ab42b16c01594789b413680c7e29";a:8:{s:4:"user";a:5:{s:2:"id";s:7:"jieshen";s:4:"name";s:8:"Jie Shen";s:4:"mail";s:19:"shenjiepp@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1430517242;}s:3:"raw";s:440:"I am familar with ArcGis and some software for mapping because my major is in cartography and GIS. I am very interesting in the analysis of spatial and temporal data and visualization. Also I am very interesting in how to integrate the result of data capturing, data analysing and data visualization.If you can introduce the technique of how to use the high performance computing for the big data analysis, I will be very glad.
+Thanks
+Jie 
+";s:5:"xhtml";s:450:"
+<p>
+I am familar with ArcGis and some software for mapping because my major is in cartography and GIS. I am very interesting in the analysis of spatial and temporal data and visualization. Also I am very interesting in how to integrate the result of data capturing, data analysing and data visualization.If you can introduce the technique of how to use the high performance computing for the big data analysis, I will be very glad.
+Thanks
+Jie 
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"75d0ab42b16c01594789b413680c7e29";}s:32:"aa5a6b0b0b69c9e87320454c90f27639";a:8:{s:4:"user";a:5:{s:2:"id";s:15:"test186.30.3.24";s:4:"name";s:13:"Ivan Gonzalez";s:4:"mail";s:27:"gonzalez.ivan90@hotmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1431275401;}s:3:"raw";s:269:"I have some experience in R and  Python (and ArcPy library) making iterative analysis. I would like to learn how to do these kind of scripts in a such powerful tool as GRASS/AwK/GDAL and if is possible 'call' GRASS executions trough R commands.
+
+Greetings from Colombia";s:5:"xhtml";s:299:"
+<p>
+I have some experience in R and  Python (and ArcPy library) making iterative analysis. I would like to learn how to do these kind of scripts in a such powerful tool as GRASS/AwK/GDAL and if is possible &#039;call&#039; GRASS executions trough R commands.
+</p>
+
+<p>
+Greetings from Colombia
+</p>
+";s:6:"parent";N;s:7:"replies";a:1:{i:0;s:32:"3bbaf3a1ca935794a4cbf071236467e4";}s:4:"show";b:1;s:3:"cid";s:32:"aa5a6b0b0b69c9e87320454c90f27639";}s:32:"00d2af4062fd1c459fed97cb7bfe38b7";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test174.52.65.41";s:4:"name";s:14:"Karis Tenneson";s:4:"mail";s:13:"karist@uw.edu";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1431280006;}s:3:"raw";s:374:"I would like to get a better sense of strengths, weaknesses of the alternative FOSS programs for different geospatial tasks. I'm also keenly interested in learning how to integrate tools into one workflow (e.g., calling other functions or scripts using one software from another - I've done some of this with the system function in R, but I still have a lot to learn).
+Karis";s:5:"xhtml";s:448:"
+<p>
+I would like to get a better sense of strengths, weaknesses of the alternative <abbr title="Free &amp; Open-Source Software">FOSS</abbr> programs for different geospatial tasks. I&#039;m also keenly interested in learning how to integrate tools into one workflow (e.g., calling other functions or scripts using one software from another - I&#039;ve done some of this with the system function in R, but I still have a lot to learn).
+Karis
+</p>
+";s:6:"parent";N;s:7:"replies";a:1:{i:0;s:32:"7a298df2762a6a93e42fc5ca81d6867d";}s:4:"show";b:1;s:3:"cid";s:32:"00d2af4062fd1c459fed97cb7bfe38b7";}s:32:"ed8e11003bce2823a6693217d157135f";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test140.194.140.15";s:4:"name";s:13:"Bart Kowalski";s:4:"mail";s:19:"bkowalski@csumb.edu";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1431451278;}s:3:"raw";s:1053:"My interest in the workshop is threefold: 
+First, I'd like to learn about capabilities of open source software for geospatial analysis. I am an ArcGIS user, and I have experience with ERDAS, so I'd like to see if I can conduct analysis at same level of complexity using open source software. 
+Second, I'd like to learn how to integrate R and Python into geospatial/remote sensing analysis.
+Three, I'd like to conduct data formatting in Python (I have much more experience in R than Python, so in the past, I have called on R from python to format data in ArcGIS environment,  and I'd like to know how to do that without R for simplicity ( I realize this last one may be a bit out of scope of the workshop, but if we can get provided some examples of code how to do that, that would be great).
+It would be very beneficial for my learning if the workshop focused on specific examples, and we could go through scripts together to understand what each line of code does. Lectures with a lot of programming jargon typically get me disengaged fairly quickly. ";s:5:"xhtml";s:1089:"
+<p>
+My interest in the workshop is threefold: 
+First, I&#039;d like to learn about capabilities of open source software for geospatial analysis. I am an ArcGIS user, and I have experience with ERDAS, so I&#039;d like to see if I can conduct analysis at same level of complexity using open source software. 
+Second, I&#039;d like to learn how to integrate R and Python into geospatial/remote sensing analysis.
+Three, I&#039;d like to conduct data formatting in Python (I have much more experience in R than Python, so in the past, I have called on R from python to format data in ArcGIS environment,  and I&#039;d like to know how to do that without R for simplicity ( I realize this last one may be a bit out of scope of the workshop, but if we can get provided some examples of code how to do that, that would be great).
+It would be very beneficial for my learning if the workshop focused on specific examples, and we could go through scripts together to understand what each line of code does. Lectures with a lot of programming jargon typically get me disengaged fairly quickly. 
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"ed8e11003bce2823a6693217d157135f";}s:32:"a411f8b919659c1b596c150ef07d6d4b";a:8:{s:4:"user";a:5:{s:2:"id";s:19:"test128.111.104.229";s:4:"name";s:15:"Tatiana Kuplich";s:4:"mail";s:18:"tkuplich@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1431536282;}s:3:"raw";s:286:"I would like to be able to integrate the spatial domain in the temporal analysis of Vegetation Indexes, such as the MODIS/NDVI. I have been working with Southern Brazilian Pampa grasslands and trying to relate its phenology with different environmental and meteorogical characteristics.";s:5:"xhtml";s:297:"
+<p>
+I would like to be able to integrate the spatial domain in the temporal analysis of Vegetation Indexes, such as the MODIS/NDVI. I have been working with Southern Brazilian Pampa grasslands and trying to relate its phenology with different environmental and meteorogical characteristics.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"a411f8b919659c1b596c150ef07d6d4b";}s:32:"ea10adc8b391aa9ad08c6a49e2a4b2e5";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test129.49.125.162";s:4:"name";s:12:"Karina Yager";s:4:"mail";s:27:"karina.yager@stonybrook.edu";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1431546608;}s:3:"raw";s:340:"Aquire new skills to apply in research areas of interest: bigdata processing of Landsat imagery; Integration of multiple datasets over space and time; NDVI analysis with specific thresholds for different regions and integration with other datasets (e.g. DEM). New to coding, but extensive experience with RS analysis using ENVI & ERMapper. ";s:5:"xhtml";s:355:"
+<p>
+Aquire new skills to apply in research areas of interest: bigdata processing of Landsat imagery; Integration of multiple datasets over space and time; NDVI analysis with specific thresholds for different regions and integration with other datasets (e.g. DEM). New to coding, but extensive experience with RS analysis using ENVI &amp; ERMapper. 
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"ea10adc8b391aa9ad08c6a49e2a4b2e5";}s:32:"6de088fd9b063d30486fb84d5504cb84";a:8:{s:4:"user";a:5:{s:2:"id";s:14:"test172.2.22.6";s:4:"name";s:9:"Indy Hurt";s:4:"mail";s:19:"indy.hurt@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1431891566;}s:3:"raw";s:264:"I am working with OpenStreetMap planet files and history files.  The history files contain every edit along with metadata and a time stamp.  I am interested in time series analysis to better understand the development of this dataset as it relates to data quality.";s:5:"xhtml";s:275:"
+<p>
+I am working with OpenStreetMap planet files and history files.  The history files contain every edit along with metadata and a time stamp.  I am interested in time series analysis to better understand the development of this dataset as it relates to data quality.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"6de088fd9b063d30486fb84d5504cb84";}s:32:"722201d0b28db878441af51102e9f61b";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test76.115.150.48";s:4:"name";s:16:"Geoffrey Johnson";s:4:"mail";s:15:"gmj@uoregon.edu";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1431954204;}s:3:"raw";s:381:"I hope to gain a deeper understanding of the best uses for different software platforms, and some of the computing language details for making those platforms efficient. I want to become more capable with maximizing the efficiency of computing in general and try using cluster and web-based computing. I am also interested in using these platforms for data management if possible. ";s:5:"xhtml";s:392:"
+<p>
+I hope to gain a deeper understanding of the best uses for different software platforms, and some of the computing language details for making those platforms efficient. I want to become more capable with maximizing the efficiency of computing in general and try using cluster and web-based computing. I am also interested in using these platforms for data management if possible. 
+</p>
+";s:6:"parent";N;s:7:"replies";a:1:{i:0;s:32:"53643917b44dd2806c37973386ab3a8a";}s:4:"show";b:1;s:3:"cid";s:32:"722201d0b28db878441af51102e9f61b";}s:32:"ac121b7952e19bc7e72cc7e36b138b80";a:8:{s:4:"user";a:5:{s:2:"id";s:19:"test104.175.217.234";s:4:"name";s:16:"Geoffrey Fricker";s:4:"mail";s:19:"africker@g.ucla.edu";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1431973103;}s:3:"raw";s:355:"I'm currently a user of ArcGIS, ENVI, python and R, however I'm interested in open-source software for research purposes, potentially including open-source tools to process lidar (PDAL).  Additionally, I want to learn more about OS software for educational purposes to design courses to teach these tools to undergrads and grads at the University level.  ";s:5:"xhtml";s:418:"
+<p>
+I&#039;m currently a user of ArcGIS, ENVI, python and R, however I&#039;m interested in open-source software for research purposes, potentially including open-source tools to process lidar (PDAL).  Additionally, I want to learn more about <abbr title="Operating System">OS</abbr> software for educational purposes to design courses to teach these tools to undergrads and grads at the University level.<br/>
+
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"ac121b7952e19bc7e72cc7e36b138b80";}s:32:"b4e29655a9382204d27c30cac73dda0b";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test96.50.239.233";s:4:"name";s:15:"Susan Cousineau";s:4:"mail";s:25:"susan.cousineau@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1432015369;}s:3:"raw";s:582:"I'm interested in integrating large datasets into an ecological and epidemiological/genetic data modelling framework, particularly using LIDAR data in conjunction with land use, plant ID, soil qualities, management regimes, disease prevalence, and genetic distributions. I have used R extensively at a basic to an intermediate level, ArcGIS to a limited degree, and made varying attempts to teach myself QGIS and Python. After learning Mathematica and LaTeX I grew much more comfortable with coding and am looking forward to developing a more powerful platform for future research. ";s:5:"xhtml";s:598:"
+<p>
+I&#039;m interested in integrating large datasets into an ecological and epidemiological/genetic data modelling framework, particularly using LIDAR data in conjunction with land use, plant ID, soil qualities, management regimes, disease prevalence, and genetic distributions. I have used R extensively at a basic to an intermediate level, ArcGIS to a limited degree, and made varying attempts to teach myself QGIS and Python. After learning Mathematica and LaTeX I grew much more comfortable with coding and am looking forward to developing a more powerful platform for future research. 
+</p>
+";s:6:"parent";N;s:7:"replies";a:1:{i:0;s:32:"630dd5e0a9581b8a47c2bb5fd2966cc9";}s:4:"show";b:1;s:3:"cid";s:32:"b4e29655a9382204d27c30cac73dda0b";}s:32:"7a298df2762a6a93e42fc5ca81d6867d";a:8:{s:4:"user";a:5:{s:2:"id";s:19:"test186.155.114.193";s:4:"name";s:13:"Ivan Gonzalez";s:4:"mail";s:27:"gonzalez.ivan90@hotmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1433732351;}s:3:"raw";s:111:"I would like to make the same: call functions from another software. I hope that we can learn how-to. Greetings";s:5:"xhtml";s:122:"
+<p>
+I would like to make the same: call functions from another software. I hope that we can learn how-to. Greetings
+</p>
+";s:6:"parent";s:32:"00d2af4062fd1c459fed97cb7bfe38b7";s:7:"replies";a:1:{i:0;s:32:"22b9212b2fb475bd923554d9903c9311";}s:4:"show";b:1;s:3:"cid";s:32:"7a298df2762a6a93e42fc5ca81d6867d";}s:32:"3bbaf3a1ca935794a4cbf071236467e4";a:8:{s:4:"user";a:5:{s:2:"id";s:11:"ost4sem_giu";s:4:"name";s:8:"Giuseppe";s:4:"mail";s:27:"giuseppe.amatulli@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1433838663;}s:3:"raw";s:52:"Yes, all these points will be address in the course.";s:5:"xhtml";s:63:"
+<p>
+Yes, all these points will be address in the course.
+</p>
+";s:6:"parent";s:32:"aa5a6b0b0b69c9e87320454c90f27639";s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"3bbaf3a1ca935794a4cbf071236467e4";}s:32:"22b9212b2fb475bd923554d9903c9311";a:8:{s:4:"user";a:5:{s:2:"id";s:11:"ost4sem_giu";s:4:"name";s:8:"Giuseppe";s:4:"mail";s:27:"giuseppe.amatulli@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1433838784;}s:3:"raw";s:112:"Yes Karis and Ivan, we will have a dedicate session of sw integration to build up dynamic scripting procedure.  ";s:5:"xhtml";s:127:"
+<p>
+Yes Karis and Ivan, we will have a dedicate session of sw integration to build up dynamic scripting procedure.<br/>
+
+</p>
+";s:6:"parent";s:32:"7a298df2762a6a93e42fc5ca81d6867d";s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"22b9212b2fb475bd923554d9903c9311";}s:32:"53643917b44dd2806c37973386ab3a8a";a:8:{s:4:"user";a:5:{s:2:"id";s:11:"ost4sem_giu";s:4:"name";s:8:"Giuseppe";s:4:"mail";s:27:"giuseppe.amatulli@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1433838956;}s:3:"raw";s:181:"Please consider that we will not cover any web application and real data management. We will focus more in data analysis using scripting routines in local pc and in remote server.  ";s:5:"xhtml";s:196:"
+<p>
+Please consider that we will not cover any web application and real data management. We will focus more in data analysis using scripting routines in local pc and in remote server.<br/>
+
+</p>
+";s:6:"parent";s:32:"722201d0b28db878441af51102e9f61b";s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"53643917b44dd2806c37973386ab3a8a";}s:32:"630dd5e0a9581b8a47c2bb5fd2966cc9";a:8:{s:4:"user";a:5:{s:2:"id";s:11:"ost4sem_giu";s:4:"name";s:8:"Giuseppe";s:4:"mail";s:27:"giuseppe.amatulli@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1433839375;}s:3:"raw";s:71:"Pieter will have a nice example of LIDAR and Land Use classification.  ";s:5:"xhtml";s:86:"
+<p>
+Pieter will have a nice example of LIDAR and Land Use classification.<br/>
+
+</p>
+";s:6:"parent";s:32:"b4e29655a9382204d27c30cac73dda0b";s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"630dd5e0a9581b8a47c2bb5fd2966cc9";}s:32:"0ee68c68e3cdc85401a87733ba1af66c";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test96.250.120.73";s:4:"name";s:13:"Gregg Verutes";s:4:"mail";s:21:"gverutes@stanford.edu";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1434137607;}s:3:"raw";s:221:"I have basic to intermediate knowledge of all the softwares and libraries in this survey.  I would like to further hone these skills and learn how to link them together to leverage the strengths of each of these packages.";s:5:"xhtml";s:232:"
+<p>
+I have basic to intermediate knowledge of all the softwares and libraries in this survey.  I would like to further hone these skills and learn how to link them together to leverage the strengths of each of these packages.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"0ee68c68e3cdc85401a87733ba1af66c";}}s:11:"subscribers";a:1:{s:19:"shenjiepp@gmail.com";a:3:{s:4:"hash";s:32:"3e890247899a567e9ea5b944524cdf79";s:6:"active";b:0;s:11:"confirmsent";b:1;}}}

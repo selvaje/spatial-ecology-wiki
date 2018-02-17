@@ -1,0 +1,218 @@
+====== draft advanced R raster package  ======
+ideas here http://www.slideshare.net/cgiarclimate/raster-package-jacob-9485246
+
+raster library and spatial data mainpulation
+
+? getData works with SRTM data
+http://www.worldclim.org
+http://www.gadm.org
+http://srtm.csi.cgiar.org/
+http://diva-gis.org/gdata administrative, population and more... 
+
+wc = getData("worldclim",var="prec",res=10)
+
+<code R - delete_raster_lib.r>
+
+library(raster)
+x <- raster(ncol=36, nrow=18, xmn=-1000, xmx=1000, ymn=-100, ymx=900)
+random.values=sample(0:1,648,replace=T)
+values(x)=random.values
+projection(x)="+proj=utm +zone=48 +datum=WGS84"
+res(x)=res(x)*2
+
+
+
+
+## gstat examples
+library(raster)
+library(gstat)
+data(meuse)
+
+## inverse distance weighted (IDW)
+r <- raster(system.file("external/test.grd", package="raster"))
+data(meuse)
+mg <- gstat(id = "zinc", formula = zinc~1, locations = ~x+y, data=meuse, nmax=7, set=list(idp = .5))
+z <- interpolate(r, mg)
+z <- mask(z, r)
+MAPS=brick(r,z)
+plot(MAPS,main=c("Row data","IDW interpolation"))
+
+
+## kriging set up
+coordinates(meuse) <- ~x+y
+projection(meuse) <- projection(r)
+
+## ordinary kriging
+v <- variogram(log(zinc)~1, meuse)
+m <- fit.variogram(v, vgm(1, "Sph", 300, 1))
+gOK <- gstat(NULL, "log.zinc", log(zinc)~1, meuse, model=m)
+OK <- interpolate(r, gOK)
+OK <- mask(OK, r)
+MAPS=brick(r,z,OK)
+plot(MAPS,main=c("Row data","IDW interpolation","Orinary Krigging"))
+
+## universial kriging
+vu <- variogram(log(zinc)~elev, meuse)
+mu <- fit.variogram(vu, vgm(1, "Sph", 300, 1))
+gUK <- gstat(NULL, "log.zinc", log(zinc)~elev, meuse, model=mu)
+names(r) <- 'elev'
+UK <- interpolate(r, gUK, xyOnly=FALSE)
+UK<- mask(UK, r)
+MAPS=brick(r,z,OK,UK)
+plot(MAPS,main=c("Row data","IDW interpolation","Orinary Krigging","Universal Krigging"))
+
+
+## co-kriging
+gCoK <- gstat(NULL, 'log.zinc', log(zinc)~1, meuse)
+gCoK <- gstat(gCoK, 'elev', elev~1, meuse)
+gCoK <- gstat(gCoK, 'cadmium', cadmium~1, meuse)
+gCoK <- gstat(gCoK, 'copper', copper~1, meuse)
+coV <- variogram(gCoK)
+plot(coV, type='b', main='Co-variogram')
+coV.fit <- fit.lmc(coV, gCoK, vgm(model='Sph', range=1000))
+coV.fit
+plot(coV, coV.fit, main='Fitted Co-variogram')
+coK <- interpolate(r, coV.fit)
+coK<- mask(coK, r)
+MAPS=brick(r,z,OK,UK,coK)
+plot(MAPS,main=c("Row data","IDW interpolation","Orinary Krigging","Universal Krigging","co-Krigging"))
+
+### Machine learning techniques
+
+Plot Ice 
+ # from NSIDC sea ice concentration file
+     baseurl <- "ftp://sidads.colorado.edu/pub/DATASETS/"
+     # southern hemisphere
+     f <- paste(baseurl, "nsidc0081_nrt_nasateam_seaice/south/nt_20130114_f17_nrt_s.bin", sep='')
+     # or northern hemisphere
+     # f <- paste(baseurl, "nsidc0081_nrt_nasateam_seaice/north/nt_20130105_f17_nrt_n.bin", sep='')
+     
+     download.file(f, basename(f), mode = "wb")
+     ice <- raster(basename(f))
+
+</code>
+
+====== Draft satisfactory survey ======
+Since 2008 we asked our students to give us some feed backs.
+\\
+\\
+===== Student's interest in in open source =====
+
+<doodle twentw2013_1| Why did you attend the training?> 
+^to acquire new expertise^to improve skills^to discuss issues^no similar course found^
+</doodle>
+
+<doodle twentw2013_2|Are you interested in progress  and use OS tools in future?>
+^ Yes ^ No ^ 
+</doodle>
+
+<doodle twentw2013_3| Do you see any interest in using Open Source tools in your current and future job ?>
+^ Yes ^  No ^ Little ^
+</doodle>
+
+<doodle twentw2013_4| Will you use and keep on learning Open Sources tools in future ?>
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  AWK yes ^ AWK no ^
+</doodle>
+
+===== Self learning =====
+<doodle twentw2013_5|Do you feel that you are now able to independently learn OS tools? >
+^ ^ yes ^ no ^
+</doodle>
+
+<doodle twentw2013_6|Do you feel to be able to independently improve and learn more about Open Source tools ? >
+^ ^ Bash Yes ^ Bash No ^ AWK yes ^ AWK no ^ Gdal yes ^ Gdal no ^  Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R yes ^ R no ^
+</doodle>
+
+\\
+===== How do you judge the training ===== 
+\\
+<doodle twentw2013_7|Do you think the training was well adapted in respect of your needs, your skills and knowledge ?>
+^  ^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+</doodle>
+
+<doodle twentw2013_8| Which part of the course would have liked to see in more in detail ? >
+^  ^ Bash ^ AWK ^ Gdal ^ Gnuplot ^ Grass ^ Qgis ^ R ^ Theory ^ Exercise ^ Exercise/ Tutorials ^ personal projects ^
+</doodle>
+
+<doodle twentw2013_9| The trainers were clear and prepared ?>
+^ ^ Very well ^  Yes enough prepared  ^ Not enough ^
+</doodle>
+
+<doodle twentw2013_10|The trainer's supervision during some coding exercises was satisfactory ? >
+^ Very much ^  yes satisfactory  ^ not enough ^
+</doodle>
+
+
+===Jan survey===
+<doodle twentw2013_11|In the last month did you use OS for what purpose ?>
+^ Professional ^  Personal ^ Both ^ None ^
+</doodle>
+
+
+<doodle twentw2013_12|Still interested using in open source ?>
+^ Yes ^ No ^ 
+</doodle>
+
+<doodle twentw2013_13| After one month you still use which tools ?>
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  AWK yes ^ AWK no ^
+</doodle>
+\\
+====== Set up the raspberry pi ======
+
+144.173.78.225\\
+===== Web server =====
+
+we followed [[http://www.penguintutor.com/linux/raspberrypi-webserver|penguiontutor]] to set upour web server.\\
+
+ ** 1. Start with the set up of the RASPI OS in the sd card**
+  * [[http://www.raspberrypi.org/downloads|download]] the raspbian OS
+
+    cd Software
+    unzip 2013-09-25-wheezy-raspbian.zip
+    df -h # to see what devices are currently mounted 
+        
+then plug the sd card on computer\\
+    df -h # to see what the mount name for the sd card (main are: /dec/sd1 and /dev/sd2)
+    umonut /dev/sdd1
+    umonut /dev/sdd2
+    dd bs=4M if=~/2012-12-16-wheezy-raspbian.img of=/dev/sdd
+    
+now get a cup of cofee it will take a while. When finished, remove sd card and plug it to the raspi
+
+
+** 2. Built the Web server** \\
+We have a static IP adress: 144.173.78.225
+    ssh  -X pi@144.173.78.225
+    sudo dpkg-reconfigure tzdata
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo useradd -m ste # add ste as user
+    sudo passwd ste # mypi
+    sudo nano /etc/group # Go through the file adding ,user1 to the end of all of the groups that pi is in.  eg:   " adm:x:4:pi,ste  "
+    exit
+    ssh  -X ste@144.173.78.225
+    sudo raspi-config # go to "8 advanced options" >> "A3 memory split"	 and chande to 34
+
+    sudo apt-get install apache2
+    sudo apt-get install mysql-server
+    sudo apt-get install php5
+    sudo apt-get install php5-mysql
+
+===== dokuwiki =====
+
+   sudo apt-get install imagemagick # for using the dokuwiki
+  * [[http://download.dokuwiki.org/|download ]] dokuwiki from your comp  
+  * move it to the raspi
+
+    ste@grunf:~$ scp Downloads/dokuwiki-03f83c1316e22f345638135074883903.tgz  ste@144.173.78.225:~/
+    
+  * Unzip
+     tar -xvf dokuwiki-03f83c1316e22f345638135074883903.tgz
+  * move the dokuwiki to the web server directory and give rights to write 
+    sudo mv dokuwiki /var/www/
+    sudo chmod 777  -R /var/www/dokuwiki/data
+    sudo chmod 777   /var/www/dokuwiki/lib/plugins/
+    sudo chmod 755   /var/www/dokuwiki/lib/
+    sudo chmod 777   /var/www/dokuwiki/conf/
+    
+

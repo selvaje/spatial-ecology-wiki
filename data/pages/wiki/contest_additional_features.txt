@@ -1,0 +1,13 @@
+==== Create additional features for data fusion ====
+
+=== Create NDVI image from CASI image ===
+<code bash>
+    pkndvi -r ndvi -b 67 -b 115 -dst_s 10000 -ot UInt16 -i 2013_IEEE_GRSS_DF_Contest_CASI.tif -o 2013_IEEE_GRSS_DF_Contest_NDVI.tif
+</code>
+{{ :wiki:contest:2013_ieee_grss_df_contest_ndvi.png?nolink |}}    
+
+=== Create linear features ===
+<code bash>
+    pkfilter -f linearfeature -ot UInt16 -i 2013_IEEE_GRSS_DF_Contest_NDVI.tif -o 2013_IEEE_GRSS_DF_Contest_LINEAR.tif -l1 -l2
+</code>
+{{ :wiki:contest:2013_ieee_grss_df_contest_linear.png?nolink |}}

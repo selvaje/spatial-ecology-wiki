@@ -1,0 +1,192 @@
+
+<h2 class="sectionedit1" id="gnuplot_introduction">GNUPLOT introduction</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">Command syntax</div>
+</li>
+<li class="level1"><div class="li">Function plots</div>
+</li>
+<li class="level1"><div class="li">2D Data plots</div>
+</li>
+<li class="level1"><div class="li">Nicer 2D data plots</div>
+</li>
+<li class="level1"><div class="li">2D plots with error bars</div>
+</li>
+<li class="level1"><div class="li">2d plots with transparency</div>
+</li>
+<li class="level1"><div class="li">3d scatterplots with splot</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1 SECTION "GNUPLOT introduction" [1-200] -->
+<h3 class="sectionedit2" id="command_syntax">Command syntax</h3>
+<div class="level3">
+
+<p>
+The most important commands can grouped in two operations:<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Setting the plotting environment by: <em>set</em> command.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Plotting the data by: <em>plot</em>  and <em>splot</em> commands.<br/>
+</div>
+</li>
+</ul>
+
+<p>
+Syntax:
+</p>
+<pre class="code">     plot {&lt;ranges&gt;}
+          {&lt;function&gt; | {&quot;&lt;datafile&gt;&quot; {datafile-modifiers}}}
+          {axes &lt;axes&gt;} {&lt;title-spec&gt;} {with &lt;style&gt;}
+          {, {definitions,} &lt;function&gt; ...}</pre>
+
+</div>
+<!-- EDIT2 SECTION "Command syntax" [201-608] -->
+<h3 class="sectionedit3" id="function_plots">function plots</h3>
+<div class="level3">
+
+<p>
+Gnuplot supports a number of mathematical functions, including trigonometric functions:
+</p>
+<pre class="code gnuplot"><span class="kw1">plot</span> \
+     <span class="kw4">sin</span><span class="br0">&#40;</span><span class="kw5">x</span><span class="br0">&#41;</span><span class="sy0">,</span>\
+     <span class="kw4">cos</span><span class="br0">&#40;</span><span class="kw5">x</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT3 SECTION "function plots" [609-780] -->
+<h3 class="sectionedit4" id="d_data_plots">2D data plots</h3>
+<div class="level3">
+<pre class="code gnuplot"><span class="kw1">plot</span> \
+     <span class="st0">&quot;data/water_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'water'</span><span class="sy0">,</span>\
+     <span class="st0">&quot;data/forest_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'forest'</span>
+<span class="kw1">replot</span></pre>
+
+</div>
+<!-- EDIT4 SECTION "2D data plots" [781-990] -->
+<h3 class="sectionedit5" id="nicer_2d_plots">nicer 2D plots</h3>
+<div class="level3">
+<pre class="code gnuplot"><span class="kw1">reset</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">1</span> lc rgb <span class="st0">&quot;dark-blue&quot;</span> <span class="kw5">linewidth</span> <span class="nu0">2</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">2</span> lc rgb <span class="st0">&quot;forest-green&quot;</span> <span class="kw5">linewidth</span> <span class="nu0">2</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+key%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">key</span></a> <span class="kw5">left</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+grid%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">grid</span></a>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+border%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">border</span></a> <span class="kw5">linewidth</span> <span class="nu0">1.5</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'Top Of Atmosphere signatures from Landsat'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xtics%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xtics</span></a> <span class="br0">&#40;</span><span class="st0">'Blue'</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="st0">'Green'</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="st0">'Red'</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="st0">'NIR'</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="st0">'SWIR1'</span> <span class="nu0">4</span><span class="sy0">,</span> <span class="st0">'SWIR2'</span> <span class="nu0">5</span><span class="br0">&#41;</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+ylabel%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">ylabel</span></a> <span class="st0">'Digital number'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+terminal%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">terminal</span></a> pngcairo
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+output%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">output</span></a> <span class="st0">'data/output/forest_landsat.png'</span>
+<span class="kw1">plot</span> \
+     <span class="st0">&quot;data/water_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <span class="kw5">ls</span> <span class="nu0">1</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'water'</span><span class="sy0">,</span>\
+     <span class="st0">&quot;data/forest_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <span class="kw5">ls</span> <span class="nu0">2</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'forest'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+terminal%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">terminal</span></a> wxt
+<span class="kw1">replot</span></pre>
+
+</div>
+<!-- EDIT5 SECTION "nicer 2D plots" [991-1600] -->
+<h3 class="sectionedit6" id="d_plot_with_error_bars">2D plot with error bars</h3>
+<div class="level3">
+<pre class="code gnuplot"><span class="kw1">reset</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">1</span> lc rgb <span class="st0">&quot;dark-blue&quot;</span> <span class="kw5">linewidth</span> <span class="nu0">2</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">2</span> lc rgb <span class="st0">&quot;forest-green&quot;</span> <span class="kw5">linewidth</span> <span class="nu0">2</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+key%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">key</span></a> <span class="kw5">left</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+grid%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">grid</span></a>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+border%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">border</span></a> <span class="kw5">linewidth</span> <span class="nu0">1.5</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'Top Of Atmosphere signatures from Landsat'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xtics%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xtics</span></a> <span class="br0">&#40;</span><span class="st0">'Blue'</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="st0">'Green'</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="st0">'Red'</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="st0">'NIR'</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="st0">'SWIR1'</span> <span class="nu0">4</span><span class="sy0">,</span> <span class="st0">'SWIR2'</span> <span class="nu0">5</span><span class="br0">&#41;</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+ylabel%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">ylabel</span></a> <span class="st0">'Digital number'</span>
+<span class="kw1">plot</span> \
+     <span class="st0">&quot;data/water_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span><span class="sy0">:</span><span class="nu0">2</span> <span class="kw5">with</span> <span class="kw5">yerrorbars</span> <span class="kw5">ls</span> <span class="nu0">1</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'water'</span><span class="sy0">,</span>\
+     <span class="st0">&quot;data/forest_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span><span class="sy0">:</span><span class="nu0">2</span> <span class="kw5">with</span> <span class="kw5">yerrorbars</span> <span class="kw5">ls</span> <span class="nu0">2</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'forest'</span>
+<span class="kw1">replot</span></pre>
+
+</div>
+<!-- EDIT6 SECTION "2D plot with error bars" [1601-2150] -->
+<h3 class="sectionedit7" id="d_plot_with_error_bars_showing_mean_and_save_plot_to_png">2D plot with error bars showing mean and save plot to PNG</h3>
+<div class="level3">
+<pre class="code gnuplot"><span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+key%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">key</span></a> <span class="kw5">left</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+border%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">border</span></a> <span class="kw5">linewidth</span> <span class="nu0">1.5</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+terminal%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">terminal</span></a> pngcairo
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+output%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">output</span></a> <span class="st0">'data/output/forest_landsat_mean_stdev.png'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'Top Of Atmosphere signatures from Landsat'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xtics%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xtics</span></a> <span class="br0">&#40;</span><span class="st0">'Blue'</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="st0">'Green'</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="st0">'Red'</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="st0">'NIR'</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="st0">'SWIR1'</span> <span class="nu0">4</span><span class="sy0">,</span> <span class="st0">'SWIR2'</span> <span class="nu0">5</span><span class="br0">&#41;</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+ylabel%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">ylabel</span></a> <span class="st0">'Digital number'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xrange%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xrange</span></a> <span class="br0">&#91;</span><span class="sy0">-</span><span class="nu0">0.5</span><span class="sy0">:</span><span class="nu0">5.5</span><span class="br0">&#93;</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">1</span> lc rgb <span class="st0">&quot;dark-blue&quot;</span> <span class="kw5">linewidth</span> <span class="nu0">2</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">2</span> lc rgb <span class="st0">&quot;forest-green&quot;</span> <span class="kw5">linewidth</span> <span class="nu0">2</span>
+&nbsp;
+<span class="kw1">plot</span> \
+     <span class="st0">&quot;data/water_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span><span class="sy0">:</span><span class="nu0">2</span> <span class="kw5">with</span> <span class="kw5">yerrorbars</span> <span class="kw5">ls</span> <span class="nu0">1</span> <a target="blanc" href="http://www.google.com/search?q=%22set+notitle%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">notitle</span></a><span class="sy0">,</span>\
+     <span class="st0">''</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <span class="kw5">linestyle</span> <span class="nu0">2</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'water'</span><span class="sy0">,</span>\
+     <span class="st0">&quot;data/forest_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span><span class="sy0">:</span><span class="nu0">2</span> <span class="kw5">with</span> <span class="kw5">yerrorbars</span> <span class="kw5">ls</span> <span class="nu0">2</span> <a target="blanc" href="http://www.google.com/search?q=%22set+notitle%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">notitle</span></a><span class="sy0">,</span>\
+     <span class="st0">''</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <span class="kw5">linestyle</span> <span class="nu0">1</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'forest'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+terminal%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">terminal</span></a> wxt <a target="blanc" href="http://www.google.com/search?q=%22set+size%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">size</span></a> <span class="nu0">500</span><span class="sy0">,</span><span class="nu0">350</span>
+<span class="kw1">replot</span></pre>
+
+</div>
+<!-- EDIT7 SECTION "2D plot with error bars showing mean and save plot to PNG" [2151-2943] -->
+<h3 class="sectionedit8" id="d_plot_with_transparency">2D plot with transparency</h3>
+<div class="level3">
+<pre class="code gnuplot"><span class="kw1">reset</span>
+<span class="co1">#for list of colours, see also http://www.uni-hamburg.de/Wiss/FB/15/Sustainability/schneider/gnuplot/colors.htm</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">1</span> lc rgb <span class="st0">&quot;dark-blue&quot;</span> <span class="kw5">linewidth</span> <span class="nu0">2</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">2</span> lc rgb <span class="st0">&quot;forest-green&quot;</span> <span class="kw5">linewidth</span> <span class="nu0">2</span>
+<span class="co1">#set style fill transparent solid 0.50 noborder</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> fill <span class="kw5">transparent</span> <span class="kw5">solid</span> <span class="nu0">0.50</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+key%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">key</span></a> <span class="kw5">left</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+border%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">border</span></a> <span class="kw5">linewidth</span> <span class="nu0">1.5</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+terminal%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">terminal</span></a> pngcairo
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+output%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">output</span></a> <span class="st0">'data/output/forest_landsat_mean_stdev_transparent.png'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'Top Of Atmosphere signatures from Landsat'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xtics%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xtics</span></a> <span class="br0">&#40;</span><span class="st0">'Blue'</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="st0">'Green'</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="st0">'Red'</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="st0">'NIR'</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="st0">'SWIR1'</span> <span class="nu0">4</span><span class="sy0">,</span> <span class="st0">'SWIR2'</span> <span class="nu0">5</span><span class="br0">&#41;</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+ylabel%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">ylabel</span></a> <span class="st0">'Digital number'</span>
+<span class="kw1">plot</span> \
+     <span class="st0">&quot;data/water_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="br0">&#40;</span><span class="sy0">$</span><span class="nu0">1</span><span class="sy0">-$</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="sy0">:</span><span class="br0">&#40;</span><span class="sy0">$</span><span class="nu0">1</span><span class="sy0">+$</span><span class="nu0">2</span><span class="br0">&#41;</span> <span class="kw5">with</span> filledcurve <span class="kw5">linestyle</span> <span class="nu0">1</span> <a target="blanc" href="http://www.google.com/search?q=%22set+notitle%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">notitle</span></a><span class="sy0">,</span>\
+     <span class="st0">''</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <span class="kw5">linestyle</span> <span class="nu0">1</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'water'</span><span class="sy0">,</span>\
+     <span class="st0">&quot;data/forest_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="br0">&#40;</span><span class="sy0">$</span><span class="nu0">1</span><span class="sy0">-$</span><span class="nu0">2</span><span class="br0">&#41;</span><span class="sy0">:</span><span class="br0">&#40;</span><span class="sy0">$</span><span class="nu0">1</span><span class="sy0">+$</span><span class="nu0">2</span><span class="br0">&#41;</span> <span class="kw5">with</span> filledcurve <span class="kw5">linestyle</span> <span class="nu0">2</span> <a target="blanc" href="http://www.google.com/search?q=%22set+notitle%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">notitle</span></a><span class="sy0">,</span>\
+     <span class="st0">''</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <span class="kw5">linestyle</span> <span class="nu0">2</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'forest'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+terminal%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">terminal</span></a> wxt <a target="blanc" href="http://www.google.com/search?q=%22set+size%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">size</span></a> <span class="nu0">500</span><span class="sy0">,</span><span class="nu0">350</span>
+<span class="kw1">replot</span></pre>
+
+</div>
+<!-- EDIT8 SECTION "2D plot with transparency" [2944-3937] -->
+<h3 class="sectionedit9" id="d_scatterplot_with_splot">3D scatterplot with splot</h3>
+<div class="level3">
+<pre class="code gnuplot"><span class="kw1">reset</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">1</span> lc rgb <span class="st0">'#800000'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span> <span class="co1">#brown</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">2</span> lc rgb <span class="st0">'#ff0000'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>  <span class="co1">#red/orange</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">3</span> lc rgb <span class="st0">'#0060ad'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>  <span class="co1">#marine blue</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">4</span> lc rgb <span class="st0">'#ffa500'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>  <span class="co1">#orange/yellow</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">5</span> lc rgb <span class="st0">'#006400'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>  <span class="co1">#dark green</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">6</span> lc rgb <span class="st0">'#0000ff'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>  <span class="co1">#blue</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">7</span> lc rgb <span class="st0">'#9400d3'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>  <span class="co1">#purple</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">8</span> lc rgb <span class="st0">'#ff4500'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>  <span class="co1">#orange</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">9</span> lc rgb <span class="st0">'#dd181f'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>   <span class="co1">#red1</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+style%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">style</span></a> li<span class="sy0">ne</span> <span class="nu0">10</span> lc rgb <span class="st0">'#5e9c36'</span> <span class="kw5">lt</span> <span class="nu0">1</span> <span class="kw5">lw</span> <span class="nu0">2</span> pt <span class="nu0">7</span> ps <span class="nu0">1</span>  <span class="co1">#green</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+border%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">border</span></a> <span class="kw5">linewidth</span> <span class="nu0">1.5</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'Forest/no-forest'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+key%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">key</span></a> <span class="kw5">out</span>
+<span class="co1"># Legend</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xlabel%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xlabel</span></a> <span class="st0">'b0'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+ylabel%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">ylabel</span></a> <span class="st0">'b1'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+zlabel%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">zlabel</span></a> <span class="st0">'b2'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xtics%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xtics</span></a> <span class="nu0">50</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+ytics%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">ytics</span></a> <span class="nu0">50</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+ztics%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">ztics</span></a> <span class="nu0">50</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+terminal%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">terminal</span></a> pngcairo
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+output%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">output</span></a> <span class="st0">'data/output/landcover_landsat7.png'</span>
+<span class="kw1">splot</span> \
+     <span class="st0">'data/clouds.txt'</span> u <span class="nu0">3</span><span class="sy0">:</span><span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span> <span class="kw5">ls</span> <span class="nu0">1</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'clouds'</span><span class="sy0">,</span>\
+     <span class="st0">'data/noclouds.txt'</span> u <span class="nu0">3</span><span class="sy0">:</span><span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span> <span class="kw5">ls</span> <span class="nu0">2</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'noclouds'</span><span class="sy0">,</span>\
+     <span class="st0">'data/shadows.txt'</span> u <span class="nu0">3</span><span class="sy0">:</span><span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span> <span class="kw5">ls</span> <span class="nu0">3</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'shadows'</span><span class="sy0">,</span>\
+     <span class="st0">'data/water.txt'</span> u <span class="nu0">3</span><span class="sy0">:</span><span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span> <span class="kw5">ls</span> <span class="nu0">4</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'water'</span><span class="sy0">,</span>\
+     <span class="st0">'data/golf.txt'</span> u <span class="nu0">3</span><span class="sy0">:</span><span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span> <span class="kw5">ls</span> <span class="nu0">5</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'golf'</span>
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+terminal%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">terminal</span></a> wxt <a target="blanc" href="http://www.google.com/search?q=%22set+size%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">size</span></a> <span class="nu0">500</span><span class="sy0">,</span><span class="nu0">350</span>
+<span class="kw1">replot</span></pre>
+
+</div>
+<!-- EDIT9 SECTION "3D scatterplot with splot" [3938-] -->

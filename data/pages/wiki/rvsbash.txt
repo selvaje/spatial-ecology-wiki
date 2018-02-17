@@ -1,0 +1,15 @@
+=== R vs BASH ===
+
+== Create a text file and understand pc performance ==
+
+in bash
+
+<code bash>
+time seq 1  100000000  > /tmp/test.txt 
+</code>
+
+in R
+
+<code R>
+ptm <- proc.time() ;  a = seq(1, 100000000 )   ; proc.time() - ptm
+</code>

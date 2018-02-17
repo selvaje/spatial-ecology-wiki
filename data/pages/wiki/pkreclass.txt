@@ -1,0 +1,43 @@
+====== pkreclass ======
+NAME
+   pkreclass - replace pixel values in raster file
+
+SYNOPSIS
+<code bash>
+   pkreclass -i input -o output [OPTION]
+</code>
+       
+DESCRIPTION
+   Reclassify pixels from class to reclass using command line options or ASCII code file
+       
+OPTIONS
+<code bash>
+   -i     --input                Input image (default: <empty string>)
+   -m     --mask                 Mask image(s) (default: <empty string>)
+   -t     --invalid              Mask value(s) where image is invalid. Use one value for each mask, or multiple values for a single mask. (default: 1)
+   -f     --flag                 Flag value to put in image if not valid (0) (default: 0)
+   -code   --code                 Recode text file (2 colums: from to) (default: <empty string>)
+   -c     --class                list of classes to reclass (in combination with reclass option) (default: <empty string>)
+   -r     --reclass              list of recoded class(es) (in combination with class option) (default: <empty string>)
+   -ct    --ct                   color table (file with 5 columns: id R G B ALFA (0: transparent, 255: solid) (default: <empty string>)
+   -o     --output               Output mask file (default: <empty string>)
+   -ot    --otype                Data type for output image ({Byte/Int16/UInt16/UInt32/Int32/Float32/Float64/CInt16/CInt32/CFloat32/CFloat64}). Empty string: inherit type from input image (default: <empty string>)
+   -b     --band                 band index to replace (other bands are copied to output) (default: 0)
+   -n     --fname                field name of the shape file to be replaced (default: label)
+   -co    --co                   options: NAME=VALUE [-co COMPRESS=LZW] [-co INTERLEAVE=BAND] (default: INTERLEAVE=BAND)
+   -d     --description          Set image description (default: <empty string>)
+   -v     --verbose              verbose (default: 0)
+</code>
+
+====== Examples ======
+<code bash>
+pkreclass -i input1.tif -o output.tif -c 1 -r 0 -c 2 -r 0 # replace pixel values 1 and 2 with value 0
+
+pkreclass -i vector.shp -o output.shp -c FROM -r TO -n INFIELD # replace FROM with TO in field INFIELD (of type string) in vector file vector.shp and write to new vector output.shp
+</code>
+===== Advanced examples =====
+<code bash>
+for((i=0;i<256;++i));do if(($i<100));then echo "$i 1";else echo "$i 0";fi;done > code.txt; pkreclass -i input1.tif -o output.tif --code code.txt; # replace all values smaller than 100 with 1, all other values with 0
+
+pkreclass -i input1.tif -o output.tif $(for((i=0;i<256;++i));do if(($i<100));then echo -n " -c $i " " -r 1";else echo " -c $i " " -r 0";fi;done) # same as previous but without temporary file
+</code>

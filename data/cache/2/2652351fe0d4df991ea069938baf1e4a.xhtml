@@ -1,0 +1,135 @@
+
+<h1 class="sectionedit1" id="advance_awk_scripts">Advance AWK scripts</h1>
+<div class="level1">
+
+<p>
+Exercise:<br/>
+
+Script: open by kate <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/adv_awk.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/adv_awk.sh" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_awk/adv_awk.sh </a><br/>
+
+Data: <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/input.txt" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/input.txt" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_awk/input.txt </a><br/>
+
+Directory: ~/ost4sem/exercise/basic<em>adv</em>awk<br/>
+
+<br/>
+
+</p>
+<pre class="code bash">kate ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_awk<span class="sy0">/</span>adv_awk.sh <span class="sy0">&amp;</span></pre>
+
+</div>
+<!-- EDIT1 SECTION "Advance AWK scripts" [1-444] -->
+<h3 class="sectionedit2" id="mathematical_operation">Mathematical operation</h3>
+<div class="level3">
+
+<p>
+Extract the maximum value:
+</p>
+<pre class="code awk">cd <span class="sy4">~</span><span class="sy3">/</span>ost4sem<span class="sy3">/</span>exercise<span class="sy3">/</span>basic_adv_awk
+awk '<span class="br0">&#123;</span> <span class="kw1">if</span> <span class="br0">&#40;</span>NR<span class="sy2">&gt;</span><span class="nu0">1</span><span class="br0">&#41;</span> <span class="br0">&#123;</span><span class="kw1">if</span> <span class="br0">&#40;</span><span class="re0">$4</span><span class="sy2">&gt;</span>max<span class="br0">&#41;</span> max= <span class="re0">$4</span> <span class="br0">&#125;</span><span class="br0">&#125;</span> <span class="kw2">END</span> <span class="br0">&#123;</span><span class="kw5">print</span> max <span class="br0">&#125;</span>'  input.txt</pre>
+
+<p>
+Sum the values in a column:
+</p>
+<pre class="code awk">awk ' <span class="kw2">BEGIN</span> <span class="br0">&#123;</span> sum=<span class="nu0">0</span> <span class="br0">&#125;</span> <span class="br0">&#123;</span> sum=sum<span class="sy3">+</span><span class="re0">$4</span><span class="br0">&#125;</span> <span class="kw2">END</span> <span class="br0">&#123;</span><span class="kw5">print</span> sum <span class="br0">&#125;</span>'  input.txt</pre>
+
+<p>
+Sum the values in a column under a specific condition:
+</p>
+<pre class="code awk">awk '<span class="br0">&#123;</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="re0">$3</span><span class="sy2">==</span><span class="nu0">7</span><span class="br0">&#41;</span> sum=sum<span class="sy3">+</span><span class="re0">$5</span><span class="br0">&#125;</span> <span class="kw2">END</span> <span class="br0">&#123;</span><span class="kw5">print</span> sum <span class="br0">&#125;</span>'  input.txt</pre>
+
+<p>
+Sum the values in a column under two specific conditions:
+</p>
+<pre class="code awk">awk '<span class="br0">&#123;</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="re0">$3</span><span class="sy2">==</span><span class="nu0">7</span> <span class="sy1">&amp;&amp;</span> <span class="re0">$2</span><span class="sy2">==</span><span class="nu0">2005</span>  <span class="br0">&#41;</span> sum=sum<span class="sy3">+</span><span class="re0">$5</span><span class="br0">&#125;</span> <span class="kw2">END</span> <span class="br0">&#123;</span><span class="kw5">print</span> sum <span class="br0">&#125;</span>'  input.txt</pre>
+
+</div>
+<!-- EDIT2 SECTION "Mathematical operation" [445-1023] -->
+<h3 class="sectionedit3" id="a_bash_awk_tool_for_computing_the_average_of_columns_based_on_class_id_column">A Bash/Awk tool for computing the average of columns based on  CLASS/ID column</h3>
+<div class="level3">
+
+<p>
+In this example we build a bash/awk tool able to calculate the average of columns based on  CLASS/ID column.
+we use the <strong>sort</strong> bash function<br/>
+
+</p>
+<pre class="code bash"><span class="kw2">more</span>  ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>studycase<span class="sy0">/</span>fire_risk<span class="sy0">/</span>sh_script<span class="sy0">/</span>average.sh</pre>
+
+<p>
+The file has to be sorted base on the  CLASS/ID column!!!
+Sort the file, run the script, and replay to the questions:
+</p>
+<pre class="code bash"><span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">2</span>,<span class="nu0">2</span>  input.txt <span class="sy0">&gt;</span> input_s.txt 
+<span class="kw2">sh</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>studycase<span class="sy0">/</span>fire_risk<span class="sy0">/</span>sh_script<span class="sy0">/</span>average.sh input_s.txt output.txt</pre>
+
+<p>
+The same file can be run in a macro script using the following commands:
+</p>
+<pre class="code bash"><span class="kw2">sh</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>studycase<span class="sy0">/</span>fire_risk<span class="sy0">/</span>sh_script<span class="sy0">/</span>average.sh input_s.txt output.txt <span class="co2">&lt;&lt;EOF
+n
+2
+2
+EOF</span></pre>
+
+<p>
+Even more complicated is building up a script to calculate the weighted average. 
+</p>
+<pre class="code bash"><span class="kw2">more</span>  ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>studycase<span class="sy0">/</span>fire_risk<span class="sy0">/</span>sh_script<span class="sy0">/</span>average_w.sh</pre>
+
+</div>
+<!-- EDIT3 SECTION "A Bash/Awk tool for computing the average of columns based on  CLASS/ID column" [1024-1940] -->
+<h3 class="sectionedit4" id="query_a_dataset_on_the_basis_of_the_header_name">Query a dataset on the basis of the header name</h3>
+<div class="level3">
+
+<p>
+We create an example table saved as test.csv:
+</p>
+<pre class="code bash"><span class="kw3">echo</span> ID,column_1,colum_b,colum_c,TOTAL <span class="sy0">&gt;</span> test.csv
+<span class="kw3">echo</span> <span class="nu0">1</span>,<span class="nu0">3</span>,<span class="nu0">5</span>,<span class="nu0">6</span>,<span class="nu0">14</span> <span class="sy0">&gt;&gt;</span> test.csv
+<span class="kw3">echo</span> <span class="nu0">2</span>,<span class="nu0">5</span>,<span class="nu0">4</span>,<span class="nu0">6</span>,<span class="nu0">15</span>  <span class="sy0">&gt;&gt;</span> test.csv
+<span class="kw3">echo</span> <span class="nu0">3</span>,<span class="nu0">8</span>,<span class="nu0">4</span>,<span class="nu0">6</span>,<span class="nu0">18</span>  <span class="sy0">&gt;&gt;</span> test.csv</pre>
+<div class="notetip"> In this example we also deal with .csv file (comma separated values text file). For this reason we need to use the option -F, to define our input file as csv.
+</div>
+<p>
+We create two subset files corresponding to the “ID” and to the “column_b” (first file) and “ID” and “TOTAL” (second file).
+</p>
+<pre class="code bash"><span class="kw1">for</span> COLNAME <span class="kw1">in</span>  colum_b TOTAL ; <span class="kw1">do</span>
+<span class="kw2">awk</span> -F, <span class="re5">-v</span> <span class="re2">COLNAME</span>=<span class="re1">$COLNAME</span> <span class="st_h">' { if (NR==1)  { for (col=1;col&lt;=NF;col++) { if ($col==COLNAME) {colprint=col}}}  else  {print $1 &quot;,&quot; $colprint }}  '</span> test.csv <span class="sy0">&gt;</span> <span class="re1">$COLNAME</span>.csv 
+<span class="kw1">done</span></pre>
+
+</div>
+<!-- EDIT4 SECTION "Query a dataset on the basis of the header name" [1941-2740] -->
+<h3 class="sectionedit5" id="subset_a_limited_number_of_column_headers_and_query_the_dataset_on_the_basis_of_the_header_subset_selection">Subset a limited number of column headers and query the dataset on the basis of the header subset selection</h3>
+<div class="level3">
+
+<p>
+We have a dataset with 100 columns and 3 rows
+</p>
+<pre class="code bash"><span class="kw3">echo</span> <span class="sy0">`</span><span class="kw2">seq</span> <span class="re5">-s</span> \, <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">100</span><span class="sy0">`</span>  <span class="sy0">&gt;</span> test.csv
+<span class="kw3">echo</span> <span class="sy0">`</span><span class="kw2">seq</span> <span class="re5">-s</span> \, <span class="nu0">2</span> <span class="nu0">20</span> <span class="nu0">2000</span><span class="sy0">`</span>  <span class="sy0">&gt;&gt;</span> test.csv
+<span class="kw3">echo</span> <span class="sy0">`</span><span class="kw2">seq</span> <span class="re5">-s</span> \, <span class="nu0">2</span> <span class="nu0">200</span> <span class="nu0">20000</span><span class="sy0">`</span>  <span class="sy0">&gt;&gt;</span> test.csv
+<span class="kw2">awk</span> -F,  <span class="st_h">' { print NF }'</span> test.csv
+<span class="kw2">awk</span> -F,  <span class="st_h">' { print NR }'</span> test.csv</pre>
+
+<p>
+We would like to select the first 5,  the 25th and the 90th to the 94th colums from the total 100 colums (Fields in AWK) in our dataset.
+We redirect the list of the selection in a “list<em>of</em>columns.csv” file
+</p>
+<pre class="code bash"><span class="kw2">awk</span> -F,  <span class="st_h">' {  for(i=1;i&lt;6; i++) if(NR==1) printf(&quot;%s&quot;,$i&quot; &quot; ) ; if(NR==1)  printf(&quot;%s&quot;,$25&quot; &quot; ) ; for(i=90;i&lt;95; i++) if(NR==1) printf(&quot;%s&quot;,&quot; &quot;$i  )   }'</span> test.csv <span class="sy0">&gt;</span> list_of_columns.csv</pre>
+
+<p>
+Finally we carry out a query of the original dataset on the basis of the columns previously selected. 
+</p>
+<pre class="code bash"><span class="kw1">for</span> COLNAME <span class="kw1">in</span>  <span class="sy0">`</span><span class="kw2">cat</span> list_of_columns.csv<span class="sy0">`</span> ; <span class="kw1">do</span>
+<span class="kw3">echo</span> <span class="re1">$COLNAME</span>
+<span class="kw2">awk</span> -F, <span class="re5">-v</span> <span class="re2">COLNAME</span>=<span class="re1">$COLNAME</span> <span class="st_h">' { if (NR==1)  { for (col=1;col&lt;=NF;col++) { if ($col==COLNAME) {colprint=col}}}  else  {print $1 &quot;,&quot; $colprint }} '</span> test.csv <span class="sy0">&gt;</span> OUTPUT_subset_<span class="re1">$COLNAME</span>.csv 
+<span class="kw1">done</span></pre>
+
+</div>
+<!-- EDIT5 SECTION "Subset a limited number of column headers and query the dataset on the basis of the header subset selection" [2741-3905] -->
+<h1 class="sectionedit6" id="merge_multiple_files_in_multiple_columns_of_one_file">Merge multiple files in multiple columns of one file</h1>
+<div class="level1">
+<pre class="code">pr -m -t -s, File1.txt File2.txt File3.txt  |  awk &#039;BEGIN{print &quot;Column1,Column2,Column3&quot;} {print$0}&#039; &gt; multiple_coulumn_output_file.csv</pre>
+<div class="noteimportant">File 1 to 3 have only one coulmn
+</div>
+</div>
+<!-- EDIT6 SECTION "Merge multiple files in multiple columns of one file" [3906-] -->

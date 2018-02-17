@@ -1,0 +1,93 @@
+===== Create a dem from point data =====
+Exercise:\\
+Script: open by kate [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/dem/dem.sh | ~/ost4sem/exercise/basic_adv_gdalogr/dem/dem.sh & ]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/dem/M0227-[1-4]N.H29 | ~/ost4sem/exercise/basic_adv_gdalogr/dem/M0227-[1-4]N.H29 ]]\\
+Directory: ~/ost4sem/exercise/basic_adv_gdalogr/dem\\
+\\
+Before running the script migrate to ~/ost4sem/exercise/basic_adv_gdalogr/dem and return to the following questions:\\
+\\
+//Do the M0227-[1-4]N.H29 files  have a header?\\
+How many lines do the files have?\\
+Is it the same for all the files?\\
+Plot one file in 3D using gnuplot.\\
+Sample the data using awk.\\
+Plot all the files in gnuplot.\\
+Can we create a dem from this file?\\
+Are all the files geographically contiguous.?\\
+Is there an overlap between the files?\\
+Which is the gdal command that allows me to create a surface from points data?//\\
+\\
+Merge all the files into one file:\\
+  * Get rid of the header lines.\\
+  * Merge the first and second columns.\\
+
+<code bash>
+rm point.asc 
+for file in M* ; do
+    awk '{if (NF<=3) print $1 $2,$3 }'  $file  >> point.asc  
+done
+</code>
+
+
+At this point the file point.asc includes all the previous files and can be sorted based on the first column.
+
+<code bash>
+sort -k 1,1   point.asc  > point_s.asc 
+</code>
+
+The point that will have the same coordinates will be closed and can be deleted. 
+Create a header for the csv file.
+
+<code bash>
+rm point.csv
+echo "\"X\",\"Y\",\"Z\"" > point.csv 
+</code>
+//Why there is the "\" simbol?//\\ 
+
+Create an AWK script able to delete the numbers that are equal.  Do not copy/paste the awk script from the wiki, copy it from the source script. **THIS CAN BE ALSO DONE WITH A BASH COMMAND** search.
+
+<code bash>
+awk '{  
+    if(NR==1) { 
+	    old=$1 
+            z=$2 
+            print substr($1,1,6) "," substr($1,7,7) "," $2  
+	} 
+    else 
+	{
+	    if($1!=old) {
+		    print substr(old,1,6) "," substr(old,7,7) "," z ; 
+		    old=$1 ; 
+		    z=$2}
+	}
+} 
+END { 
+    print substr(old,1,6) "," substr(old,7,7) "," z ; 
+    old=$1 ; 
+    z=$2  
+}'  point_s.asc  >> point.csv
+</code>
+The file point.csv can be used as an input file to create a point ogr format.\\
+Read carefully "READING COMMA SEPARATED VALUES" at [[ http://www.gdal.org/gdal_grid.html | http://www.gdal.org/gdal_grid.html ]]\\
+and explain how it is working\\
+<code bash>
+echo "<OGRVRTDataSource>" > point.vrt
+echo "    <OGRVRTLayer name=\"point\">" >>  point.vrt
+echo "        <SrcDataSource>point.csv</SrcDataSource>"  >>  point.vrt 
+echo "	      <GeometryType>wkbPoint</GeometryType>"  >>  point.vrt  
+echo "	      <GeometryField encoding=\"PointFromColumns\" x=\"X\" y=\"Y\" z=\"Z\"/> "  >>  point.vrt 
+echo "    </OGRVRTLayer>"  >>   point.vrt  
+echo "</OGRVRTDataSource>"  >>   point.vrt 
+</code>
+
+You have created a point file in ogr format. \\
+You can use gdal_grid to create a regular grid (raster).\\
+Two ways are performed using two interpolation methods.
+
+<code bash>
+gdal_grid -a average:radius1=25:radius2=25:angle=0.0:min_points=1:nodata=-9 -outsize 100 100 -of EHdr -ot Float32 -l point point.vrt 25avg.tif 
+</code>
+
+Open the two 25avg.tif and by openev.\\
+Read the image characteristic by gdalinfo.\\
+Make a new image with pixel size  = 100

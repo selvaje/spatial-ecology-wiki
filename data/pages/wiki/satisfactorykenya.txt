@@ -1,0 +1,107 @@
+====== Satisfaction Survey ======
+We hope you have found this workshop useful and that it will help you in your future work.  Please give us some feed back to help us improve our workshops.
+\\
+===== Overall satisfaction =====
+1) Why did you attend the training? \\
+(25 students reply to this question)
+^ To acquire new expertise ^ To improve my current skills ^ To meet others using these tools ^ General knowledge ^
+^ 21 ^ 17 ^ 10 ^ 8 ^
+
+2) Did the training meet your expectations? \\
+(25 students reply to this questions)
+^ Exceeded expectations ^ Met my goals ^ This was OK ^ Not very helpful to me ^
+^ 21 ^ 12 ^ 1 ^ 0 ^ 
+
+3) How was the balance between theory and exercise?\\
+(25 students reply to this questions)
+^ The balance was good ^ Want more exercise ^ Want more theory ^
+^ 17 ^ 13 ^ 0 ^ 
+
+4) Was the training well adapted in respect of your needs, your skills and knowledge?\\
+(25 students replay to this questions)
+^ Advanced and too difficult ^  Well adapted ^ Basic and boring ^
+^ 0 ^ 25 ^ 0 ^
+
+5) Is there a part of the course you would have liked to see in more in detail?\\
+(25 students reply to this questions)
+^ Models ^ R ^  QGIS ^ GRASS ^ GDAL ^
+^ 22 ^ 19 ^ 11 ^ 15 ^ 9 ^
+
+6) Overall how would you rate this workshop?\\
+(25 students reply to this questions)
+^ Extremely useful ^ Very useful ^ Somewhat useful ^ Not very useful ^
+^ 22 ^ 4 ^ 0 ^ 0 ^
+
+\\
+===== Student's background =====
+
+7) What is your academic or professional level?\\
+(25 students reply to this questions)
+^ Master Student ^ PhD ^ Post-Doc ^ Professor ^ Technician ^ Other ^
+^ 10 ^ 5 ^ 2 ^ 0 ^ 1 ^ 8 ^
+
+8) Check the box for any of these geospatial tools used before?\\
+(25 students reply to this questions)
+^ R ^ QGIS ^ GRASS ^ GDAL ^ Spatial Modeling ^
+^ 14 ^ 12 ^ 0 ^ 1 ^ 5 ^
+
+9) What field would you most likely apply these to?\\
+(25 students reply to this questions)
+^ Vector Biology ^ Invasion Biology ^ Ecology ^ Environmental Planning ^ Other ^
+^ 19 ^ 3 ^ 12 ^ 7 ^ 6 ^
+
+\\
+===== Student's interest in geospatial analysis after attending the training =====
+10) Are you interested in learning more about Open Source geospatial tools in the future?\\
+(24 students reply to this questions)
+^ Yes ^ No ^ Maybe ^
+^ 24 ^ 0 ^ 0 ^
+
+11) Will these Open Source tools help you in your current and future jobs?
+(25 students replay to this questions)
+^ Yes ^ No ^ A Little ^ Maybe ^
+^ 25 ^ 0 ^ 0 ^
+
+12) Which Open Source geospatial tools do you plan to use?\\
+(25 students reply to this questions)
+^ Models Yes ^ Models No ^ R yes ^ R no ^ Qgis yes ^ Qgis no ^ Grass yes ^ Grass no ^ Gdal yes ^ Gdal no  ^ 
+^ 23 ^ 1 ^ 24 ^ 0 ^ 24 ^ 0 ^ 20 ^ 0 ^ 20 ^ 0 ^ 
+
+\\
+===== Self learning =====
+
+13) Do you feel able to independently improve and learn more about Open Source geospatial tools?\\
+(25 students reply to this questions)
+^ Models Yes ^ Models No ^  R yes ^ R no ^ Qgis yes ^ Qgis no ^ Grass yes ^ Grass no ^ Gdal yes ^ Gdal no  ^
+^ 17 ^ 6 ^ 22 ^ 1 ^ 24 ^ 0 ^ 21 ^ 2 ^ 22 ^ 1 ^
+
+14) Confident in being able to learn more about these tools on your own?\\
+(25 students reply to this questions)
+^  Strong ^ Intermediate ^ Very Little ^ Maybe ^
+^ 10 ^ 15 ^ 0 ^ 0 ^
+
+\\
+===== How do you rate the training ===== 
+
+15) The trainers were clear and prepared?\\
+(25 students reply to this questions)
+^  Very well ^  Yes prepared enough ^ Not enough ^
+^ 25 ^ 0 ^ 0 ^ 
+
+16) Was satisfactory the trainer's assistance during the exercises?\\
+(25 students reply to this questions)
+^  Very helpful ^  They did enough ^ Not enough help ^
+^ 21 ^ 4 ^ 0 ^ 
+
+17) Would you recommend this training to others?\\
+(25 students reply to this questions)
+^  Yes ^  Maybe ^ No ^
+^ 25 ^ 0 ^ 0 ^
+===== Open section =====
+\\
+Please include in the personal statement these two points:
+\\
+1) Peoples/institutions that could be benefit from this training workshop\\
+2) Opinions of the course\\
+\\
+~~DISCUSSION | Personal Statement ~~

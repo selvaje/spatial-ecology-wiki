@@ -1,0 +1,10 @@
+XYcoor=xyFromCell(Agri,1:12769)
+Agri=import12[[1]]
+CarSoil=import12[[3]]
+Agri.CarSoil&lt;-na.omit(data.frame(Agri@data@values,CarSoil@data@values,XYcoor))
+modified.ttest(rank(Agri.CarSoil[[1]]),rank(Agri.CarSoil[[2]]),matrix(ncol=2,nrow=length(Agri.CarSoil[[1]]),c(Agri.CarSoil[[3]],Agri.CarSoil[[4]])))
+# Corrected Pearson’s correlation for spatial autocorrelation
+# 
+# F-statistic: 11.2706 on 1 and 350.2359 DF, p-value: 9e-04
+# alternative hypothesis: true autocorrelation is not equal to 0
+# sample correlation: -0.1766

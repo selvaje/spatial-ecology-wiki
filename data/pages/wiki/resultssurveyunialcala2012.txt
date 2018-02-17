@@ -1,0 +1,55 @@
+**Will you use and progress using Open Sources tools in future?**
+^ Students ^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  
+^ 8 ^ 6	^ 2 ^ 6 ^ 2 ^ 8 ^ ^ 8 ^ 1 ^ 8 ^ ^
+\\
+**Do you feel to be able to independently improve and learn more about Open Source tools?**
+^ Students ^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ 
+^ 8 ^ 8 ^ ^ 8 ^ ^ 8 ^ ^ 8 ^ 1 ^ 7 ^ ^
+\\
+**Do you see any interest in using Open Source tools in your current and future job?**
+^ Students ^ Yes ^  No ^ Little ^
+^ 8 ^ 8 ^ ^ 2 ^
+\\
+**Which part of the course would have liked to see in more in detail?**
+^ Students ^ Bash ^ Gdal ^ Gnuplot ^ Grass ^ R ^ Qgis ^ Theory ^ Exercise ^ Tutorials ^
+^ 8 ^ 3 ^ 3 ^ 2 ^ 3 ^ 7 ^ 3 ^ 2 ^ 7 ^ 1 ^
+\\
+**Do you think the training was well adapted in respect of your needs, your skills and knowledge?**
+^ Students ^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+^ 8 ^ ^ 8 ^ ^  
+\\
+**The trainers were clear and prepared ?**
+^ Students ^ Very well ^  Yes enough prepared  ^ Not enough ^
+^ 8 ^ 8 ^ ^ ^ 
+\\
+**The trainer's supervision during some coding exercises was satisfactory?**
+^ Students ^ Very much ^  yes satisfactory  ^ not enough ^ not at all ^
+^ 8 ^ 8 ^ ^ ^ ^
+\\
+**The training organization was correctly carried out?**
+^ Students ^ Virtual Machine OK ^ Virtual Machine no ^ Slides OK ^ Slides No ^ Vikipedia OK ^ Vikipedia no ^ Schedule OK  ^ Schedule NO ^
+^ 8 ^ 8 ^ ^ 8 ^ ^ 8 ^ ^ 8 ^ ^
+\\
+**Did you like the example to simulate a cluster processing?**
+^ Students ^ Yes ^  No  ^ Yes but i did not get very well ^
+^ 8 ^ 3 ^ ^ 8 ^
+\\
+**Will you be able to replicate a small script for cluster processing?**
+^ Students ^ Yes ^  No  ^ Yes but i will encounter several problems ^
+^ 8 ^ 2 ^ ^ 8 ^
+\\
+**The training finished last week. Are you now using Ubuntu?**
+^ Students ^ No ^ Yes as VM ^ Yes as full installation ^ Yes as live usb/cd ^
+^ 8 ^ 2 ^ 3 ^ 3 ^ ^
+\\
+**After one week are you using command line in the terminal?**
+^ Students ^ No ^ Yes ^ No but i will start soon ^
+^ 8 ^ 4 ^ 1 ^ 4 ^
+\\
+**Are you interested to follow a more advance course in programming?**
+^ Students ^ No ^ Not yet ^ Yes ^ Yes but only R ^ Yes but only GRASS ^ Yes but only python ^
+^ 8 ^ ^ 1 ^ 5 ^ 2 ^ ^ 2^
+\\
+
+Please if you have any remark or suggestions for improving this training write to giuseppe.amatulli@gmail.com.
+Fell free to write your positive/negative impression. We will use it us feedback for next training.

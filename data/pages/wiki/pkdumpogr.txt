@@ -1,0 +1,30 @@
+====== pkdumpogr ======
+NAME
+   pkdumpogr - dump vector file
+
+SYNOPSIS
+<code bash>
+   pkdumpogr -i input [OPTION]
+</code>
+       
+DESCRIPTION
+   Dump (columns of) vector file to standard output or ASCII text file
+       
+OPTIONS
+<code bash>
+   -i     --input                Input shape file (default: <empty string>)
+   -o     --output               Output ASCII file (default: <empty string>)
+   -n     --name                 names of the attributes to select. Each attribute is stored in a separate band. Default is ALL: write all attributes (default: ALL)
+   -pos   --pos                  include position (x and y) (default: false)
+   -t     --transpose            transpose output (does not work for -n ALL  (default: false)
+   -v     --verbose              verbose (Default: 0) (default: 0)
+</code>
+
+====== Examples ======
+<code bash>
+pkdumpogr -i input.shp # dump entire content of vector file to standard output 
+
+pkdumpogr -i input.shp -o output.txt -n ATTRIBUTE -pos # dump only ATTRIBUTE of vector file including x and y position and output to ASCII file
+
+pkdumpogr -i input.shp -o output.txt -n ATTRIBUTE1 -n ATTRIBUTE2 -t # dump the two attributes ATTRIBUTE1 and ATTRIBUTE2 of vector file and transpose output
+</code>

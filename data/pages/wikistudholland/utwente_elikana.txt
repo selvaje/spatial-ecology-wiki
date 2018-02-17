@@ -1,0 +1,64 @@
+====== Linking Elephant Movement and NDVI in Ugalla ecosystem, Western Tanzania======
+
+
+
+
+By Elikana Kalumanga
+
+===== INTRODUCTION =====
+
+
+Little is known on the ecology of elephants and other large mammals in Western Tanzania (Caro, 1999; Westert, 2006). To contribute to the ecological knowledge of elephants in Western Tanzania, I intend to test the hypothesis that elephant movements are mostly correlated to the high vegetation NDVI values among other social, economic and environmental factors. Elephants are the largest surviving terrestrial mammal on the planet earth. Compared to other wild mammals, elephants play a vital ecological role in their range ecosystem as ecosystem engineers. In most ecosystems, elephants have modified their habitats, thus supporting the very survival and existence of several other wild species. Knowledge on how elephants move in Ugalla ecosystem will help informed elephant conservation. Compared to many other ecosystems and protected areas in Tanzania, Ugalla ecosystem is managed differently; partly is managed as Game Reserves, Forest Reserves, Game Controlled Areas and Wildlife Management Areas. However, we are yet to understand how elephant move across these protected areas. 
+
+
+
+
+
+==== PROJECT OBJECTIVES and SUGGESTION====
+  - Loading elephant GPS track clean  data and reproject into MODIS sinusoidal projection/ or  into the projected coordinate system WCS 84/UTM zone 36S
+  - Download MODIS-NDVI (e.g. modis composite 16) temporally synchronized with GPS (use wget command in bash)  
+  - Extract value from NDVI co-occurring in GPS tracks and produce txt file. 
+
+===== METADATA =====
+Both vector and raster data were used. Vector data includes the CSV files containing elephant GPS lat-long coordinates. The Raster data includes the MODIS HDF NDVI images.
+
+
+
+
+
+
+
+
+
+===== Computational implementation-Command Line (work in progress)=====
+Some further explanation of the overall analyses and of each step
+paste your code here
+<code bash - mycode>
+#/bin/bash
+# Comment your code to make it more easy to understand. 
+wget ftp://something.rar 
+
+for file in *.tif ; do 
+  echo $file ; gdalinfo -mm $file  | grep "Min/Max" 
+done 
+
+</code>
+
+Describe your second code if needed, what it does ...
+
+<code R>
+# my R code here
+
+</code>
+
+
+
+
+
+===== RESULTS and DISCUSSION =====
+Show us the output of the analyses upload images if needed with "add images" link in the upper bar of this window while editing
+
+   
+
+
+//Later on after the training you could improve the script and upgrade your wiki project page//

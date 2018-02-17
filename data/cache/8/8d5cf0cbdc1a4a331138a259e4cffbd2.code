@@ -1,0 +1,30 @@
+#######################################################################
+####### MERGING THE SPECIES RICHNESS AND THE EnvMat2.csv FILES ########
+#######################################################################
+EnvMat2.df &lt;- read.csv(file = paste(indir, &quot;EnvMat2.csv&quot;, sep = &quot;&quot;), header = F)
+&nbsp;
+## Removing duplicated x,y, and station columns
+EnvMat2.df &lt;- EnvMat2.df[, 4:12]
+&nbsp;
+## Adding the column names of EnvMat2.df
+colnames(EnvMat2.df) &lt;- c(&quot;utm_x&quot;, &quot;utm_y&quot;, &quot;station&quot;, &quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;, &quot;maxcur25&quot;)
+str(EnvMat2.df)
+&nbsp;
+## ac3 and ac4 are actually factors
+EnvMat2.df$fac3 &lt;- as.factor(EnvMat2.df$ac3)
+EnvMat2.df$fac4 &lt;- as.factor(EnvMat2.df$ac4)
+&nbsp;
+## Checking for collinearity among Predictors
+pairs(EnvMat2.df[, c(4, 7:11)], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# maxic25 and bpi25 are highly correlated. Leaving out maxic25 in further analysis
+&nbsp;
+##
+str(EnvMat2.df)
+str(DiversSt)
+&nbsp;
+# Changing the variable name of the richness
+names(DiversSt)[1] &lt;- &quot;rich&quot;
+&nbsp;
+## Merging EnvMat.df and DiverSt
+Richness2.df &lt;- merge(EnvMat2.df, DiversSt)

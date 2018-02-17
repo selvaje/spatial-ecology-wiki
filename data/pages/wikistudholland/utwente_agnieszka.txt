@@ -1,0 +1,255 @@
+====== Effects of landscape and climate on reptiles ======
+
+Agnieszka H. Malinowska, Wageningen University
+
+===== INTRODUCTION =====
+In the Netherlands there are seven species of reptiles which occupy mostly heathlands and peat bogs – land cover types that declined sharply in the last 50 years. Existing heathlands and peat bogs are now highly fragmented and threatened with excessive nitrogen deposition and desiccation due to water table management for agricultural purposes [[http://www.sciencedirect.com/science/article/pii/S0006320713001523|(Wamelink et al. 2013)]]. Besides heathlands and peat bogs, reptiles in the Netherlands are found in dunes and natural grasslands - their habitat niche is narrower than in the south of Europe, where they also occupy cooler and more moist habitats with dense vegetation [[http://books.google.nl/books?hl=en&lr=&id=vkK3AcQ7ahMC&oi=fnd&pg=PA225&dq=henle+effects+climate+change+reptiles&ots=9xC2EwucJx&sig=Szupu0N1d7SICZARB8KwBnrJO_0#v=onepage&q=henle%20effects%20climate%20change%20reptiles&f=false|(Henle et al. 2010)]].
+
+The objective of this project is to find the effects of landscape configuration, landscape quality and climate on the occurrence and possibly abundance of Dutch reptiles. During the course I plan to do the analysis for smooth snake //(Coronella austriaca)//
+
+   
+==== General framework of the analysis ====
+  - Background: correlating species occurence with environmental variables, similar approach to the one described in paper of [[http://onlinelibrary.wiley.com/doi/10.1111/1365-2656.12118/abstract|Fernández-Chacón et al (2013)]]
+  - keywords: landscape fragmentation, species occurence, Bayesian dynamic occupation model
+  - future outlook: the study should be extendable to other species and to other habitats as well as to many more input data (including opportunistic data from e.g. [[http://observado.org|observado.org]]); the results of the analysis will feed individual-based model together with future climate model to predict species persistence in the future climate
+ 
+==== Project objectives ====
+
+  * Create a landscape as seen by a species in a form of habitat patches in vector format
+  * Prepare landscape covariates: patch characteristics, groundwater table, critical load exceedance for nitrogen
+  * Prepare climate covariates: from Delta project
+  * Combine information on the species (detections/non-detections or abundances) from transects with habitat patches
+  * Combine response and explanatory variables in a format to be used by PRESENCE or other statistical software
+
+
+===== METADATA =====
+Species data are property of RAVON (Reptile, Amphibian and Fish Conservation Netherlands) and are a result of yearly species monitoring from 1994 untill now. Climate data for each year come from the other project (Delta) and are extrapolated from meteo stations to a grid covering whole Netherlands. Landscape data come from various sources.
+
+==== Vector data ====
+  * map of physical-geographical regions of the Netherlands
+  * Top10 - topographic map of the Netherlands: because it is very big, I use export shapefiles of certain polygons (heath, sand, forest, roads)
+  * shapefile with transects of reptile monitoring
+
+==== Raster data ====
+  * Land Use Netherlands map (LGN) [[http://www.wageningenur.nl/nl/Expertises-Dienstverlening/Onderzoeksinstituten/Alterra/Faciliteiten-Producten/Kaarten-en-GISbestanden/Landgebruik.htm]]
+  * groundwater table for the Netherlands
+  * critical load exceedance for nitrogen in the Netherlands
+  * climate data for the whole Netherlands
+
+
+
+===== METHOD =====
+I use GRASS to get the covariates for my analysis. Then I use R to generate input files and I run PRESENCE from R in a batch and get the results. Below you can find a code in bash/GRASS to do the GIS manipulations to get the covariates.
+
+
+
+===== Computational implementation =====
+
+<code bash>
+
+################################################################################################
+## Agnieszka Malinowska      20.01.2014						              ##
+## Project for SPATIO-TEMPORAL ANALYSIS AND BIG DATA PROCESSING USING FOSS                    ##
+################################################################################################
+
+#######################################################
+# create a new grass project with a new location
+
+cd ~/ost4sem
+ls ~/ost4sem
+
+#create project folder
+mkdir ~/ost4sem/snake_project
+
+#create grass database folder 
+mkdir ~/ost4sem/snake_project/grassdb
+
+#mount a shared folder with data from my windows computer
+sudo mount -a -t vboxsf PhD /media/sf_PhD
+# allow write/read permission to the folder
+sudo mount -t vboxsf -o uid=1000,gid=1000 PhD /media/sf_PhD
+
+# copy one raster file to the grass database to create a new location from it
+cp /media/sf_PhD/data/rain.tif /home/user/ost4sem/snake_project/grassdb/rain.tif
+cd ~/ost4sem/snake_project/grassdb
+
+#to create a new location, open in bash the existing script create_location.sh and as an input #give a name of the raster file, name of the new location folder and a path to a grass database
+bash /home/user/ost4sem/exercise/basic_adv_grass/create_location.sh rain.tif netherlands /home/user/ost4sem/snake_project/grassdb
+ 
+#open grass 
+grass64 -text /home/user/ost4sem/snake_project/grassdb/netherlands/PERMANENT
+
+#check current grass environment settings
+g.gisenv
+
+#check current projection details
+g.region -p
+
+#####################################################
+# PREPROCESSING (1/2)
+# import all the necessary data
+
+#import raster data -o means override projection (so use the projection of the location)
+r.in.gdal input=/media/sf_PhD/data/gvg_floatr1.tif output=gvg -o --overwrite 
+ 
+#import vector data
+v.in.ogr dsn=/media/sf_PhD/data/heide.shp output=heath_org snap=1e-09 --overwrite
+v.in.ogr dsn=/media/sf_PhD/data/zand.shp output=sand_org --overwrite
+v.in.ogr dsn=/media/sf_PhD/data/Export_reptielen2t.shp output=transects --overwrite 
+v.in.ogr dsn=/media/sf_PhD/data/FGR.shp output=fgr --overwrite
+#this one does not work ERROR: Unable to write feature (negative offset)
+v.in.ogr dsn=/media/sf_PhD/data/bos.shp output=forest_org --overwrite
+
+#build the topography, not sure if this is needed 
+#Q: I don't uderstand why v.categry shows only centroids if there are boundaries as well?
+v.category input=heath_org option=report
+v.build map=heath_org
+v.category input=heath_org option=report
+
+#Q: how to do it more efficiently? can I use some kind of indexing? wildcards? I want to drop all but the first collumn (2:ncol)
+v.info -c map=heath_org
+v.db.dropcol map=heath_org column=IDENTIFICA
+v.db.dropcol map=heath_org column=FYSIEKVOOR
+v.db.dropcol map=heath_org column=TOP10_ID
+v.db.dropcol map=heath_org column=FYSIEKVO_1
+v.db.dropcol map=heath_org column=VOORKOMEN_
+v.db.dropcol map=heath_org column=VOORKOMEN1
+v.db.dropcol map=heath_org column=OBJECTBEGI
+v.db.dropcol map=heath_org column=VERSIEBEGI
+v.db.dropcol map=heath_org column=BRONACTUAL
+v.db.dropcol map=heath_org column=BRONBESCHR
+v.db.dropcol map=heath_org column=BRONNAUWKE
+v.db.dropcol map=heath_org column=SHAPE_AREA
+v.db.dropcol map=heath_org column=SHAPE_LEN
+v.db.dropcol map=heath_org column=GEOMETRIE_
+
+v.db.droptable map=sand_org -f
+v.build map=sand_org
+
+# list mapsets
+g.mapset -l
+
+#list available maps:
+g.list vect  
+g.list rast
+
+######################################################
+# PREPROCESSING (2/2)
+# clip existing maps to a clipshape, which is high sands (hz from fgr)
+
+#clip the vector data
+#show attribute table
+v.db.select map=fgr
+#show one column only
+v.db.select map=fgr column="AFK"
+#select attributes that meet a condition (only fgr category hz) and make a map "high_sand" that will be the project clip/mask
+v.extract input=fgr output=high_sand where="AFK = 'hz'"
+
+#select from other maps only areas within high sands
+v.overlay ainput=transects binput=high_sand output=transects_hz operator=and --overwrite
+v.overlay -t ainput=heath_org binput=high_sand output=heath_hs operator=and --overwrite
+v.overlay ainput=sand_org binput=high_sand output=sand_hs operator=and --overwrite
+
+#clip the raster data
+#convert clip polygon to raster
+v.to.rast in=high_sand out=high_sand_r use=val value=1
+#calculate new raster map 
+r.mapcalc "gvg_hs = if(high_sand_r,gvg)"
+
+######################################################
+# MAKE HABITAT PATCHES
+
+#merge polygons that are closer than 100m to each other into multipart features because animals see e.g. 2 polygons 5m apart as one habitat patch (see figures attached)
+
+#aggregate polygons with a changeable distance tolerance
+# make a buffer around all polygons
+export BUFF_DIST=100
+v.buffer input=heath_hs output=heath_buff distance=$(($BUFF_DIST/2)) --overwrite 
+#look at the result
+v.category input=heath_buff option=report
+
+#something similar to Multipart-To-Singlepart (in arcGIS): divide buffer, which is now one multipart polygon, to separate buffers
+#remove all categories from all centroids and check the result   #change names to the same with --overwrite
+v.category input=heath_buff output=heath_buf1 type=centroid option=del cat=-1 layer=1 --overwrite
+#and check the results
+v.category input=heath_buf1 option=report
+#and then add new categories with
+v.category input=heath_buf1 output=heath_buf2 type=centroid option=add cat=1 step=1 layer=1 --overwrite
+#and check the results
+v.category input=heath_buf2 option=report
+#there is no table associated with this map
+v.info map=heath_buf2 -c
+#add table and make a new column to store the centroid IDs (cat)
+v.db.addtable map=heath_buf2 columns="buff_id integer"
+#copy cat to column buff_id
+v.db.update map=heath_buf2 col=buff_id qcol="cat"
+#check the result
+echo "SELECT * FROM heath_buf2 WHERE cat < 8" | db.select
+
+#to get rid of all the unecessary columns, drop the table and build topography again
+db.droptable -f table=heath_hs
+v.build map=heath_hs
+
+#overlay heath patches on buffers to get both ids in one table
+v.overlay ainput=heath_hs binput=heath_buf2 output=heath_ovrl operator=and --overwrite
+#patches belongng to the same buffer have the same b_cat
+echo "SELECT * FROM heath_ovrl WHERE cat < 8" | db.select
+#dissolve heath patches based on buffer id (b_cat) to make multipart patches 
+v.dissolve input=heath_ovrl output=heath column=b_cat --overwrite
+
+# some display options to verify the result
+#start a display monitor
+d.mon start=x2
+#display the maps
+#original patches
+d.vect map=heath_hs -c
+#buffers multipart
+d.vect map=heath_buff -c
+#buffers singlepart
+d.vect map=heath_buf2 -c
+#heath patches
+d.vect map=heath -c
+#interactively zoom the map
+d.zoom -h
+#after closing display monitor go back to the default region (zoom out)
+g.region -d
+
+#later: incorporate barriers (motorways)
+
+######################################################
+# CALCULATE PATCH CHARACTERISTICS
+
+#	heath area
+#create new attribute table (because the old one was droped) and column
+v.info -c map=heath
+v.db.addtable map=heath 
+v.db.addcol map=heath col="area_m2 DOUBLE PRECISION"
+#calculate polygon areas
+v.to.db map=heath option=area col=area_m2 unit=me
+
+# 	presence (yes/no) of sand (stuifzand) as a measure of habitat heterogeneity 
+#	forest edge length
+#	wet/dry heath %
+#       other covariates
+
+#work in progress ...
+
+######################################################
+# GET TRANSECT CHARACTERISTICS
+
+# for each transect, find what are the intersecting patches and their summarised characteristics
+
+#work in progress ...
+
+</code>
+
+
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+
+   * Making ecologically meaningful heath patches: a) heath polygons b) singlepart buffer c) multipart buffer d) heath patches as multipart polygons\\
+{{:wikistudholland: Malinowska_wiki_pic1.png | a) heath polygons b) singlepart buffer c) multipart buffer d) heath patches as multipart polygons}}
+

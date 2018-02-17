@@ -1,0 +1,132 @@
+===== An Assessment of temporal and spatial variability of metal bioavailability =====
+tips\\
+http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:pcem_syneco_r
+google r graphic gallery
+===== INTRODUCTION =====
+The project assessed the temporal variability of water characteristics as well as the speciation of metals  in a manner which reflects different aquatic environments. 
+==== General framework of the analysis ====
+  - Background: Metals can behave as contaminants if present in excess, resulting in potentially adverse biological effects. Factors contributing to this issue can range from changes in land use and a variety of commercial developments. Given the potential impacts of human activity, it is important to identify how these water bodies are being affected and whether conditions worsen or improve with time. Policy developments have been moving towards the establishment of Environmental Quality Standards (EQS) to manage the presence of metals in the environment. Environmental Quality Standards define concentrations of specific chemicals in the environment that are protective of the aquatic life. The importance of accounting for temporal differences in the bioavailable metal fractions is especially important when performing a risk assessment for EQS derivations. 
+  - Keywords: speciation, bioavailability, Risk Assessment, Environmental Quality Standards, Water Framework Directive
+ 
+==== Project objectives ====  
+  - Model the relationship between land use and surface water quality 
+  - Produce plots to show metal concentrations
+==== Project objectives suggestions====
+focus on point 2.
+===== METADATA =====
+Long term surface water quality data from different UK freshwater sites were supplied by the Center of Ecology and Hydrology (CEH) to provide a representative range of different geochemical environments and site characteristics (land use, geology, geochemistry), from undisturbed environments to sites being influenced by human activities or higher than usual natural sources. Monthly concentrations were obtained for physical variables (pH, Temperature, DO, Flow), nutrients (PO4, NH4, NO3), major anions and cations (Ca, Mg) and metals (Cu, Zn, Pb) for the period 1998-2005. 
+
+
+
+==== Vector data ====
+  * link to vector data if available [[http://www.myvector_data_are_here]]
+
+==== Raster data ====
+  * [[http://www.myraster_data_are_here| link to raster data if available]]
+
+==== Other data sources====
+  * [[http://www.myraster_data_are_here| link to other data if needed]]
+
+===== METHOD =====
+Describe your script. If you use a specific algorithm [[http://www.mylink.net| link ]] the bibliographic references.
+
+
+===== Computational implementation =====
+Some further explanation of the overall analyses and of each step
+# my R code here
+
+# normality test
+
+shapiro.test(Cu)
+
+# fill in censored data
+
+Install.packages(“NADA”)
+
+riverros=cenros(Cu, CuCen)
+
+plot(riverros)
+
+summary(riverros)
+
+as.data.frame(riverros)
+
+# fill in missing values
+
+install.packages(“MICE”)
+
+imp=mice(R01, m = 5, imputationMethod = norm.boot, maxit = 5, diagnostics = TRUE)
+
+imp$imputation$Cu
+
+complete(imp)
+
+# plot the time series data
+
+spec=read.csv(file="speciation2.csv")
+
+# change the date format
+
+spec$Date=as.Date(spec$Date,format="%d/%m/%Y",order="dmy")
+
+head(spec)
+
+str(spec)
+
+names=names(spec)[2:9]
+
+# plot concentrations with the legend
+
+speclong=reshape(spec, idvar = "id", varying = list(names), v.names="outcome",direction = "long")
+
+speclong$time2=factor(speclong$time,labels=rep("   ",2))
+
+d3=c((speclong$Date[1]),(speclong$Date[696]))
+
+d4=as.Date((d3[1]-28)+365.3*(0:7))
+
+interaction.plot(speclong$Date,speclong$time2,speclong$outcome,xaxt="n",type="l",pch=20,xlab="", ylab=expression(paste(Concentration ~ (~mu~g/L))),trace.label="",col=rainbow(8))
+
+axis(side=1, at=0:7*12+1, labels=strftime(d4, format="%d-%m-%Y"), cex.axis=0.8,las=2) 
+mtext("Date",1,at=43,line=4)
+text(105,4.5/(10^11),expression(paste(CuCO[3])),cex=0.7)
+text(105.5,2.5/(10^11),expression(paste(CuHCO[3])),cex=0.7)
+text(106.2,1.5/(10^11),expression(paste(Cu(CO[3])^2)),cex=0.7)
+text(112,1.7/(10^11),"+",cex=0.7)
+text(103.2,8.9/(10^12),expression(paste(Cu^2)),cex=0.7)
+text(106,9.2/(10^12),"+",cex=0.7)
+text(104.5,5/(10^12),expression(paste(CuOH)),cex=0.7)
+text(108,5.7/(10^12),"+",cex=0.7)
+text(106,2.8/(10^12),expression(paste(CuSO[4])),cex=0.7)
+
+# multiple comparison test for unequal sample size
+
+Install.packages (“DTK”)
+
+DTK.test(Copper, seasons, a=0.05)
+
+DTK.plot(DTK.test)
+
+# fit distributions
+
+Install.packages (“MASS”)
+
+fitdistr(NOECCu, "gamma")
+
+plot(x, pgamma(x, shape=4.90, rate=0.05), type="l")
+
+plot(ecdf(NOECCu), cex=0.2, add=TRUE)
+
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+Show us the output of the analyses upload images if needed with "add images" link in the upper bar of this window while editing
+
+
+
+
+
+
+//Later on after the training you could improve the script and upgrade your wiki project page//

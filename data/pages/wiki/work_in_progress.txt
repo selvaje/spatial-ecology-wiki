@@ -1,0 +1,33 @@
+
+
+templete otp for odp ( presentations) [[http://www.spatial-ecology.net/ost4sem/lecture/lecture_odp/ost4sem.otp|link]]
+
+[[http://www.spatial-ecology.net/ost4sem/basic_shell_awk.sh|sh]]\\
+[[http://www.spatial-ecology.net/ost4sem/lecture/lecture_odp/UnixLinux.odp.pdf|odp]]\\
+[[http://www.spatial-ecology.net/ost4sem/exercise/basic_r/r_script/R_basic.R|R script]]\\
+[[http://www.spatial-ecology.net/ost4sem/admin/flyer/flyer_ost4sem.pdf|flyer pdf]]\\
+
+<code r - http://www.spatial-ecology.net/ost4sem/exercise/basic_r/r_script/R_basic.R>
+http://www.spatial-ecology.net/ost4sem/exercise/basic_r/r_script/R_basic.R
+</code>
+\\
+<file r - http://www.spatial-ecology.net/ost4sem/exercise/basic_r/r_script/R_basic.R>
+http://www.spatial-ecology.net/ost4sem/exercise/basic_r/r_script/R_basic.R
+</file>
+
+
+<note>
+This is my note ! Remember it!!
+</note>
+
+<note important>
+Warning ! You're about to lose your mind ;-)
+</note>
+
+<note tip>
+The clues are in the images.
+</note>
+
+<note warning>
+Beware of the dog when you open the door !!
+</note>

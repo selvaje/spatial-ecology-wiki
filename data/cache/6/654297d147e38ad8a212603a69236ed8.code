@@ -1,0 +1,15 @@
+<span class="co0">### title</span>
+<span class="co0">### authors</span>
+<span class="co0">#### this script is going to perform.... </span>
+&nbsp;
+<span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input   <span class="co0"># setting the input file directory </span>
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>output <span class="co0"># setting the output file directory </span>
+&nbsp;
+<span class="kw2">mkdir</span> <span class="re1">$INDIR</span>
+<span class="kw2">mkdir</span> <span class="re1">$OUTDIR</span>
+&nbsp;
+<span class="co0">## add the variables</span>
+&nbsp;
+<span class="kw3">cd</span> <span class="re1">$INDIR</span>
+<span class="kw3">echo</span> the input <span class="kw2">file</span> directory is : <span class="re1">$INDIR</span><span class="sy0">/</span>input.txt
+<span class="kw3">echo</span> the output <span class="kw2">file</span> directory is : <span class="re1">$INDIR</span><span class="sy0">/</span>output.txt

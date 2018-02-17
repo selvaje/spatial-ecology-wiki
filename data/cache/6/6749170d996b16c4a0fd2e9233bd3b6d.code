@@ -1,0 +1,5 @@
+pi<span class="sy0">@</span>node1 <span class="kw3">exit</span>
+pi<span class="sy0">@</span>grappolo ~ $ <span class="kw2">ssh-keygen</span> <span class="re5">-t</span> rsa <span class="re5">-P</span> <span class="st0">&quot;&quot;</span>
+pi<span class="sy0">@</span>grappolo ~ $ ssh-copy-id admin<span class="sy0">@</span>node1
+pi<span class="sy0">@</span>grappolo ~ $ <span class="kw2">ssh</span> admin<span class="sy0">@</span>node1
+pi<span class="sy0">@</span>node1 ~ $ 

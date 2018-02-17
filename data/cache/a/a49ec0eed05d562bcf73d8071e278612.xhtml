@@ -1,0 +1,140 @@
+
+<h2 class="sectionedit1" id="a_simple_linear_regression_model_and_plotting_a_graphic">A Simple linear regression model and plotting a graphic</h2>
+<div class="level2">
+
+<p>
+Regression is used to analyze relationships between continuous variables. In statistics, <strong>simple linear regression</strong> is the least squares estimator of a linear regression model with a single predictor variable. It describes the linear relationship between a predictor variable, plotted on the x-axis, and a response variable, plotted on the y-axis. Simple linear regression fits a straight line through the set of n points. The sum of squared residuals of the model is the smallest possible.<br/>
+
+The fitted line has the slope equal to the correlation between y and x, corrected by the ratio of standard deviation of these variables. The intercept of the fitted line is such that it passes through the center of mass (x, y) of the data points.<br/>
+
+Suppose there are n data points {y<sub>i</sub>, x<sub>i</sub>}, where i = 1, 2, …, n. <br/>
+
+The goal is to find the equation of the straight line <strong><em>y = α + β x</em></strong> <br/>
+
+</p>
+
+<p>
+This would provide a “best” fit for the data points: such as a line that minimizes the sum of squared residuals of the linear regression model. 
+</p>
+
+</div>
+<!-- EDIT1 SECTION "A Simple linear regression model and plotting a graphic" [1-1135] -->
+<h3 class="sectionedit2" id="data">Data</h3>
+<div class="level3">
+
+<p>
+As a first example of a linear model we use the Orange data set. This data includes measurements of the growth of a sample of five orange trees at a location in California.<br/>
+
+The response is the circumference of the tree at a particular height from the ground (often converted to “diameter at breast height”).
+</p>
+<pre class="code r">data(Orange)
+str(Orange)</pre>
+<div class="notetip">R include many datasets in memory. Different library carry different datasets as well. To know more about your data availability type<pre class="code">data()</pre>
+
+</div>
+</div>
+<!-- EDIT2 SECTION "Data" [1136-1671] -->
+<h3 class="sectionedit3" id="plotting_data">Plotting data</h3>
+<div class="level3">
+
+<p>
+To see how age and circumference data are related use the <strong>plot(x,y)</strong> function 
+</p>
+<pre class="code r">plot(Orange$circumference,Orange$age) # plotting the default layout
+&nbsp;
+# Now add some graphical parameters
+plot(Orange$circumference, Orange$age , xlab=&quot;Age&quot;, ylab=&quot;Circumference&quot;, main=&quot;Growth of five orange trees in California&quot; ) 
+&nbsp;
+## See the differences by the tree sampled
+points(Orange$circumference[Orange$Tree==1], Orange$age[Orange$Tree==1], pch=1, col=&quot;black&quot;)
+points(Orange$circumference[Orange$Tree==2], Orange$age[Orange$Tree==2], pch=2, col=&quot;blue&quot;)
+points(Orange$circumference[Orange$Tree==3], Orange$age[Orange$Tree==3], pch=3, col=&quot;red&quot;)
+points(Orange$circumference[Orange$Tree==4], Orange$age[Orange$Tree==4], pch=4, col=&quot;magenta&quot;)
+points(Orange$circumference[Orange$Tree==5], Orange$age[Orange$Tree==5], pch=5, col=&quot;green&quot;)
+&nbsp;
+lines(Orange$circumference[Orange$Tree==1], Orange$age[Orange$Tree==1], pch=1, col=&quot;black&quot;)
+lines(Orange$circumference[Orange$Tree==2], Orange$age[Orange$Tree==2], pch=2, col=&quot;blue&quot;)
+lines(Orange$circumference[Orange$Tree==3], Orange$age[Orange$Tree==3], pch=3, col=&quot;red&quot;)
+lines(Orange$circumference[Orange$Tree==4], Orange$age[Orange$Tree==4], pch=4, col=&quot;magenta&quot;)
+lines(Orange$circumference[Orange$Tree==5], Orange$age[Orange$Tree==5], pch=5, col=&quot;green&quot;)</pre>
+
+</div>
+<!-- EDIT3 SECTION "Plotting data" [1672-2995] -->
+<h3 class="sectionedit4" id="simple_linear_regression_model">Simple Linear Regression model</h3>
+<div class="level3">
+
+<p>
+We will now fit a simple linear model to circumference as a function of age.
+To perform linear regression we create a linear model using the lm (linear model) function: 
+Note that the variables are in the opposite order from the plot command, which is plot(x,y), whereas the linear model <em>lm(Y~x)</em> is read as <em>model Age as a function of circumference</em>
+</p>
+<pre class="code r">orange.lm=lm(Orange$age~Orange$circumference)</pre>
+
+<p>
+The lm command produces no output at all, but it creates orange.lm as an object<br/>
+
+i.e. a data structure consisting of multiple parts, holding the results of a regression analysis with Age being modeled as a function of Circumference. R needs additional commands to extract the desired information about the model or display results graphically.
+</p>
+
+<p>
+To get a summary of the results, enter the command 
+</p>
+<pre class="code"> summary(orange.lm)</pre>
+
+<p>
+You will vizualize the following information:
+</p>
+<pre class="code r">Call:
+lm(formula = Orange$age ~ Orange$circumference)
+&nbsp;
+Residuals:
+    Min      1Q  Median      3Q     Max
+-317.88 -140.90  -17.20   96.54  471.16
+&nbsp;
+Coefficients:
+                     Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)           16.6036    78.1406   0.212    0.833
+Orange$circumference   7.8160     0.6059  12.900 1.93e-14 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+&nbsp;
+Residual standard error: 203.1 on 33 degrees of freedom
+Multiple R-squared: 0.8345,     Adjusted R-squared: 0.8295
+F-statistic: 166.4 on 1 and 33 DF,  p-value: 1.931e-14</pre>
+
+<p>
+R sets up model objects so that the function summary “knows” that orange.lm was created by lm, and produces an appropriate summary of results for an lm object.<br/>
+
+The table of coefficients gives the estimated regression line as age = 16.6036 + 7.8160 × circumference, and associated with each coefficient is the standard error of the estimate the t-statistic value for testing whether the coefficient is nonzero, and the p-value corresponding to the t-statistic. Below the table, the adjusted R-squared gives the estimated fraction of the variance explained by the regression line, and the p-value in the last line is an overall test for significance of the model against the null hypothesis that the response variable is independent of the predictors.
+</p>
+
+<p>
+To add the regression line in the previously plotted graphic:
+</p>
+<pre class="code r">abline(orange.lm, cex=3, col=&quot;brown&quot;)</pre>
+
+<p>
+You can get the coefficients by using the coef function:
+</p>
+<pre class="code r"> coef(orange.lm)
+ (Intercept) Orange$circumference
+   16.603609             7.815998</pre>
+
+<p>
+You can also “interrogate” orange.lm directly. Type names(orange.lm) to get a list of the components of orange.lm, and then use the $ symbol to extract components according to their names.
+</p>
+<pre class="code r"> &gt; names(orange.lm)
+   [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;
+   [5] &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;
+   [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</pre>
+
+<p>
+For more information (perhaps more than you want) about orange.lm, use str(orange.lm) (for structure). You can get the regression coefficients this way:
+</p>
+<pre class="code r"> orange.lm$coefficients
+ (Intercept) Orange$circumference
+   16.603609             7.815998
+&nbsp;</pre>
+
+</div>
+<!-- EDIT4 SECTION "Simple Linear Regression model" [2996-] -->

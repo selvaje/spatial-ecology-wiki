@@ -1,0 +1,210 @@
+
+<h1 class="sectionedit1" id="bash_script">Bash script</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1 SECTION "Bash script" [1-26] -->
+<h1 class="sectionedit2" id="setting_variables">Setting Variables</h1>
+<div class="level1">
+
+<p>
+Any programming language needs variables.<br/>
+
+You define a variable as follows:<br/>
+
+</p>
+<pre class="code">x=home</pre>
+
+<p>
+never insert space before and after the =.<br/>
+
+You recall the <em>x</em> variable by using <em>$x</em>
+</p>
+<pre class="code">echo $x</pre>
+
+<p>
+A variable can be the results of a command included in backquote ():<br/>
+
+Example:<br/>
+
+</p>
+<pre class="code">y=`ls`
+echo $y</pre>
+
+<p>
+Another way to retrieve the result of a command is to insert the command between <em>$(ls)</em> rather <em><code>ls</code></em><br/>
+
+</p>
+<pre class="code">y=$(ls)
+echo $y</pre>
+
+<p>
+So <em>x</em> it will be the list of the file stored in the directory where you are working.<br/>
+
+You can also use the variable in the command options:<br/>
+
+</p>
+<pre class="code">grep $x file.txt   </pre>
+
+<p>
+It will search the word <em>home</em> in file.txt
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Setting Variables" [27-702] -->
+<h1 class="sectionedit3" id="flow_control_statements">Flow Control Statements</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT3 SECTION "Flow Control Statements" [703-740] -->
+<h2 class="sectionedit4" id="the_for_loop">The for loop</h2>
+<div class="level2">
+
+<p>
+The syntax of <em>for loop</em> is<br/>
+
+<em>for var in wordlist do</em><br/>
+
+    <em>command(s)</em><br/>
+
+<em>done</em><br/>
+
+The command(s) is executed once for each <em>word</em> (or item) in the <em>wordlist</em>, and each time the variable var contains the value of that word.<br/>
+
+</p>
+<pre class="code bash"><span class="kw1">for</span> i <span class="kw1">in</span> a b c d f ; <span class="kw1">do</span>
+     <span class="kw3">echo</span> the value of i is <span class="re1">$i</span>
+<span class="kw1">done</span></pre>
+
+<p>
+in one line you can write:
+</p>
+<pre class="code bash"><span class="kw1">for</span> i <span class="kw1">in</span> a b c d f ; <span class="kw1">do</span>  <span class="kw3">echo</span> the value of i is <span class="re1">$i</span> ; <span class="kw1">done</span></pre>
+
+<p>
+The <em>wordlist</em> can be also <em>numberlist</em> and 
+You can use also the result of a command to create the <em>wordlist</em> or <em>numberlist</em>:<br/>
+
+</p>
+<pre class="code bash"><span class="kw1">for</span> i <span class="kw1">in</span> <span class="sy0">`</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">5</span><span class="sy0">`</span> ; <span class="kw1">do</span>
+     <span class="kw3">echo</span> the value of i is <span class="re1">$i</span>
+<span class="kw1">done</span></pre>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+For numerical sequences this syntax is often used:<br/>
+
+<em>for ( (i=number; i&lt;number; i++ ) ) ; do</em><br/>
+
+    <em>command(s)</em><br/>
+
+<em>done</em><br/>
+
+</p>
+
+<p>
+The command(s) is executed once for each <em>number</em> in the <em>numberlist</em>, and each time the variable var contains the value of that number. 
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">i</span>=<span class="nu0">1</span>; i<span class="sy0">&lt;</span><span class="nu0">10</span>; i++ <span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">do</span>
+     <span class="kw3">echo</span> the value of i is <span class="re1">$i</span>
+<span class="kw1">done</span></pre>
+
+<p>
+in one line you can write:
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">i</span>=<span class="nu0">1</span>; i<span class="sy0">&lt;</span><span class="nu0">10</span>; i++ <span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">do</span>   <span class="kw3">echo</span> the value of i is <span class="re1">$i</span> ; <span class="kw1">done</span></pre>
+
+</div>
+<!-- EDIT4 SECTION "The for loop" [741-1901] -->
+<h2 class="sectionedit5" id="the_for_while_loop">The for while loop</h2>
+<div class="level2">
+
+<p>
+In this course the while loop will not be used, but you can easily find it on the web, just google: <em>The while loop bash</em><br/>
+
+</p>
+
+</div>
+<!-- EDIT5 SECTION "The for while loop" [1902-2058] -->
+<h2 class="sectionedit6" id="the_if_then_condition">The if... then condition</h2>
+<div class="level2">
+
+<p>
+The syntax of <em>if … then </em> is:<br/>
+
+<em>if [expression]; then</em><br/>
+
+   <em>code if &#039;expression&#039; is true.</em><br/>
+
+<em>fi</em><br/>
+
+The code to be executed if the expression within braces is true can be found after the &#039;then&#039; word and before &#039;fi&#039; which indicates the end of the conditionally executed code.<br/>
+
+Example:<br/>
+
+</p>
+<pre class="code bash"><span class="re2">x</span>=<span class="kw2">tree</span>
+<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$x</span> = <span class="st0">&quot;tree&quot;</span> <span class="br0">&#93;</span>; <span class="kw1">then</span>
+<span class="kw3">echo</span> x is equal <span class="kw2">tree</span> 
+<span class="kw1">fi</span></pre>
+
+</div>
+<!-- EDIT6 SECTION "The if... then condition" [2059-2478] -->
+<h2 class="sectionedit7" id="the_ifthenelse_condition">The if...then...else condition</h2>
+<div class="level2">
+
+<p>
+The syntax of <em>if … then ….else </em> is:<br/>
+
+<em>if [ expression ]; then</em><br/>
+
+   <em>code if &#039;expression&#039; is true<br/>
+
+else<br/>
+
+   </em>code if &#039;expression&#039; is not true<br/>
+
+fi<br/>
+
+Example:<br/>
+
+</p>
+<pre class="code bash"><span class="re2">x</span>=<span class="kw2">tree</span>
+<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$x</span> = <span class="st0">&quot;tree&quot;</span> <span class="br0">&#93;</span>; <span class="kw1">then</span>
+<span class="kw3">echo</span> x is equal <span class="kw2">tree</span> 
+<span class="kw1">else</span>
+<span class="kw3">echo</span> x is not equal to <span class="kw2">tree</span>
+<span class="kw1">fi</span></pre>
+
+</div>
+<!-- EDIT7 SECTION "The if...then...else condition" [2479-2814] -->
+<h2 class="sectionedit8" id="the_ifthen_condition_inside_a_for_loop">The if...then... condition inside a for loop</h2>
+<div class="level2">
+
+<p>
+A very common example is an if condition inside a for loop.<br/>
+
+Example:
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">i</span>=<span class="nu0">1</span>; i<span class="sy0">&lt;</span><span class="nu0">10</span>; i++ <span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">do</span> 
+<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$i</span> <span class="sy0">!</span>= <span class="nu0">3</span>  <span class="br0">&#93;</span>; <span class="kw1">then</span>
+     <span class="kw3">echo</span> the value of i is <span class="re1">$i</span>
+<span class="kw1">fi</span>
+<span class="kw1">done</span></pre>
+
+</div>
+<!-- EDIT8 SECTION "The if...then... condition inside a for loop" [2815-3056] -->
+<h2 class="sectionedit9" id="get_help_in_the_ifthen_condition">Get help in the if...then... condition</h2>
+<div class="level2">
+
+<p>
+To search for the different settings and statements of the if condition:
+</p>
+<pre class="code bash"><span class="kw2">man</span> <span class="kw3">test</span></pre>
+
+</div>
+<!-- EDIT9 SECTION "Get help in the if...then... condition" [3057-] -->

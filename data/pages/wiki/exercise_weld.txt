@@ -1,0 +1,98 @@
+====== WELD overview ======
+The NASA funded  [[http://globalmonitoring.sdstate.edu/projects/weld/ | Web-enabled Landsat Data (WELD)]]  project is systematically generating 30m composited Landsat Enhanced Thematic Mapper Plus (ETM+) weekly, monthly, seasonal and annual mosaics of the conterminous United States and Alaska from 2002 to 2012. The WELD products are free and ready to use. The WELD products enable the development of turnkey approaches for applications, such as land cover characterization, due to the systematic WELD Landsat processing, including conversion of digital numbers to calibrated top of atmosphere reflectance and brightness temperature, cloud masking, reprojection into a continental map projection and temporal compositing. See [[http://globalmonitoring.sdstate.edu/projects/weld/]] for more information on WELD project and product information details.
+\\
+\\
+===== How to get WELD products =====
+\\
+The WELD products can be easily download by a:
+  -[[wiki:exercise_weld#Web_interface_that_allows_interactive_what_you_see_is_what_you_get_selection_of_a_study_area_in_GeoTIFF_format|  Web interface that allows interactive what you see is what you get selection of a study area in GeoTIFF format.]]
+  -[[wiki:exercise_weld&#web_interface_that_allows_selection_of_a_single_30m_pixel_time_series_delivered_via_e-mail_in_ascii_format | Web interface that allows selection of a single 30m pixel time series delivered via e-mail in ASCII format.]]
+  -[[wiki:exercise_weld&#ftp_interface_that_allows_download_of_tiled_5000x5000_30m_pixel_hdf_products | FTP interface that allows download of tiled 5000x5000 30m pixel HDF products.]]
+\\
+===== Web interface that allows interactive what you see is what you get selection of a study area in GeoTIFF format =====
+\\
+Go to the internet site http://weld.cr.usgs.gov/ and select the year and the region (Conterminous United States or Alaska) that you want to download. You can navigate in the temporal and spatial domains by clicking interactively:\\
+\\
+{{:wiki:weld_site.png?800}}\\
+\\
+You can zoom into the selected product by double clicking.\\
+\\
+The following example shows the Anaktuvuk River Fire, Alaska that occurred in September 2007 in a [[ http://www.npr.org/blogs/thetwo-way/2011/07/28/138789103/tundra-fires-and-climate-change-more-bad-news | Tundra region close to the North Slope.]]\\
+\\
+|{{:wiki:alaska.png?800|}}|\\
+\\
+Select the area that you want to download by typing the coordinates in the right part of the browser or by holding the shift button and dragging the mouse.\\
+\\
+The figure below shows a selected area (red lines) and its coordinates.\\
+\\
+|{{:wiki:burnet.png?800}}|\\
+\\
+Once your region of interest has been selected, you can order the data by pressing the "Order Data" button on the right side of your browser. A page will then appear asking you to enter your e-mail address, and if this is the first time you have used the system to enter some other information about your country of origin and data usage, and a password.\\ 
+\\
+You can optionally select different WELD bands and all the weekly, monthly, seasonal and annual WELD products for your selected region and year (more information concerning the products and bands is found on [[http://globalmonitoring.sdstate.edu/projects/weld/]]):\\
+\\
+|{{:wiki:band_data.png?800}}|\\
+\\
+After making your order the appropriate WELD HDF tiles are assembled, subset and spatially mosaiced, and placed on an HTTP site in GeoTIFF format.\\
+\\
+After a few minutes you should receive an e-mail confirming your order and then another e-mail describing how to access the ordered data.
+An example e-mail is below. By clicking on the http link you can download the GeoTIFF in a zipped archive.\\
+\\
+|{{:wiki:mail_weld.png?700}}|\\
+\\
+For practical reasons, for this training a file has been already download and stored in /home/user/ost4sem/exercise/weld_data_processing.\\
+You can use this data for the [[wiki:grass_rs_gui | "Burned area mapping exercise using GRASS"]] or [[wiki:openforis_burned | "Burned area mapping exercise using OFT and PKTOOLS ".]]\\
+\\
+===== Web interface that allows selection of a single 30m pixel time series delivered via e-mail in ASCII format =====
+\\
+A single pixel product time series dump functionality is provided to allow users to extract WELD product time series for any 30m pixel location, selected either interactively (Click the left button) or by entering the North and East pixel coordinates. The time series is provided via e-mail in a simple comma separated text format with the relevant band scale factors and offsets already applied.\\
+\\
+In the examples below pixel locations in a burned and unburned area of the Anaktuvuk River Fire are shown:\\
+\\
+|{{:wiki:pixel_time_series.png?400}}|{{:wiki:pixel_time_series2.png?400}}|\\
+\\
+The pixel time series can be used for time series analysis and for making plots using R or similar software.\\
+\\
+A practical exercise  is provided [[wiki:time_series| "Plotting time series of pixel observations retrieved from WELD product"]], using data already stored in:\\
+/home/user/ost4sem/exercise/weld_data_processing/pixel_time_series.\\
+\\
+\\
+===== FTP interface that allows download of tiled 5000x5000 30m pixel HDF products. =====
+\\
+To enable large product bulk ordering the WELD HDF tiled products are available via anonymous FTP [[ftp://weldftp.cr.usgs.gov/]].\\
+The HDF products are defined in the Albers Equal Area Projection.\\
+\\    
+The figure below shows the top level ftp folders:\\
+\\
+|{{:wiki:ftp_weld.png?800}}|
+\\
+Specifically the:\\
+  * ALASKA folder contains HDF WELD products for Alaska. 
+  * CONUS folder contains HDF WELD products for the conterminous United States (CONUS). 
+  * The CONUS_5Y_LandCover folder contain the derived WELD V1.5 5 year Land Cover Product. 
+  * The GEO folder contains HDF WELD products with geographic latitude and longitude coordinates.    
+\\
+You can navigate into any sub-directory.\\
+\\
+For example, the screenshots below show 3 of the HDF files contained in the ftp://weldftp.cr.usgs.gov/CONUS/2005/monthly/month01/ folder:\\
+\\
+|{{:wiki:ftp_month.png?800}}|\\
+\\
+A single HDF file can be download manually or by using the wget command in your terminal. 
+<code bash>
+wget ftp://weldftp.cr.usgs.gov/CONUS/2005/monthly/month01/CONUS.month01.2005.h00v06.v1.5.hdf
+</code>
+With a simple loop you can download several months belonging to the same tile:
+<code bash>
+for month in 01 02 03 04 ; do 
+   wget ftp://weldftp.cr.usgs.gov/CONUS/2005/monthly/month$month/CONUS.month$month.2005.h00v06.v1.5.hdf
+done
+</code>
+The HDF format is supported by [[http://www.gdal.org/|GDAL]] and can be manipulated using scripting routines.\\
+\\
+Simple examples of how to use GDAL are reported at [[ http://www.spatial-ecology.net/doku.php?id=wiki:gdal | in the www.spatial-ecology.net GDAL and OGR ]] page.\\
+\\
+Moreover, an example exercise is included: [[wiki:weld_hdf | "How to manipulate HDF with open source".]]
+\\
+\\
+

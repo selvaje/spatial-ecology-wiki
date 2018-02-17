@@ -1,0 +1,4 @@
+<span class="kw2">rm</span> point.asc 
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> M<span class="sy0">*</span> ; <span class="kw1">do</span>
+    <span class="kw2">awk</span> <span class="st_h">'{if (NF&lt;=3) print $1 $2,$3 }'</span>  <span class="re1">$file</span>  <span class="sy0">&gt;&gt;</span> point.asc  
+<span class="kw1">done</span>

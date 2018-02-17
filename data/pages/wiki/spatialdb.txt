@@ -1,0 +1,9 @@
+====== Spatial Database or Geodatabase ======
+A spatial database, or geodatabase is a database that is optimized to store and query data that represents objects defined in a geometric space.\\
+
+
+{{:wiki:spatialite-logo-big.png?100|SpatiaLite}}\\
+SpatiaLite is an open source library intended to extend the SQLite core to support fully fledged Spatial SQL capabilities. SQLite is intrinsically simple and lightweight.\\
+[[spatialite|Hands on spatialite]] using the terminal\\
+[[https://www.gaia-gis.it/fossil/spatialite_gui/index|GUI]] to access SpatiaLite\\
+

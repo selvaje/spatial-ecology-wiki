@@ -1,0 +1,39 @@
+====== Batteries ======
+Back to [[uav:toolchain|main menue]].\\
+\\
+Drones use rechargeable lithium polymer battery.\\
+<note warning>Follow few safe tips to avoid crash and fires. \\
+[[https://3dr.com/kb/battery-safety/|more info]]</note>
+\\
+===== Safety tips =====
+  * Start flights using fully charged batteries.
+  * Charge battery inside a lipo safe gard bag and never leave charging battery unattended.
+  * Double check battery level on the field before flying using a portable [[http://www.hobbyking.com/hobbyking/store/__74024__HobbyKing_8482_Lipo_Voltage_Checker_2S_8S_.html|battery voltage indicator]].
+  * Store and transport battery inside a lipo safe gard bag.
+  * Ship battery at half charge.
+  * Protect battery from extreme heat, extreme cold, puncturing and flammable surfaces.
+
+[[ http://thedronegirl.com/2015/02/07/lipo-battery/| 15 things every LiPo battery user should know]]
+
+===== Charging the battery =====
+
+  - Connect charger to power
+  - Connect red **+** and black **-** cables
+  - set LiPo and 3A (for Iris+ battery)
+  - connect wite connector to the 3S port
+  - Connect the 2 Yellow connectors
+  - Secure battery inside the guard bag
+
+===== Travelling with battery =====
+
+  * [[http://www.iata.org/whatwedo/cargo/dgr/Pages/lithium-batteries.aspx | IATA regulations ]]
+  * [[http://www.iata.org/whatwedo/cargo/dgr/Documents/LithiumBattery_PassengerFlyer.jpg | IATA flyers with transport rules table]].
+Lithium ion batteries, UN 3480, PI 965, to be shipped at a state of charge of no more than 30% of their rated capacity.\\
+
+The battery quantity permitted is based on watt-hours (Wh). Wh establishes the lithium content by multiplying voltage with the ampere-hours (Ah). For example, Itris+ battery have 14.50V x 5Ah battery = 62Wh.\\
+There are 3 classes of LiPo battery **transport rules** to follow:
+  - Lower than 100Wh - transport in carry on hand baggage and without a no limit restriction in nbr of items.
+  - Between 100 and 160 Wh - transport in carry on hand baggage, maximum 2 batteries.
+  - Higher than 160 Wh - Not permitted in carry on baggage, follow IATA dangerous cargo restrictions. 
+
+<note warning> Do not ship battery in your checked luggage </note>

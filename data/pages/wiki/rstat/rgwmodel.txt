@@ -1,0 +1,14 @@
+====== GWmodel R package ======
+
+Dr. [[https://www.rothamsted.ac.uk/our-people/paul-harris | Paul Harris]], [[https://www.rothamsted.ac.uk/| Rothamsted research]], presenting **Modelling Spatial Heterogeneity with Geographically Weighted Models**.
+
+In GWmodel, we introduce techniques from a particular branch of spatial statistics,termed geographically-weighted (GW) models.\\ 
+GW models suit situations when data are not described well by some global model, but where there are spatial regions where a suitably localised calibration provides a better description. \\
+GWmodel includes functions to calibrate GW summary statistics, GW principal components analysis, GW discriminant analysis and various forms of GW regression; some of which are provided in basic and robust (outlier resistant) forms.\\
+
+Author : Binbin Lu, Paul Harris, Martin Charlton, Chris Brunsdon, Tomoki Nakaya, Isabella Gollini.]
+
+  * [[http://www.spatial-ecology.net/ost4sem/webinar/PaulHgwmodel/GWmodel_Overview_PH_v1.pdf | Modelling Spatial Heterogeneity with Geographically Weighted Models]] Dr. Paul Harris
+  * [[http://www.spatial-ecology.net/ost4sem/webinar/PaulHgwmodel/GWmodel.pdf | GW model package R documentation]]
+  * [[http://www.spatial-ecology.net/ost4sem/webinar/PaulHgwmodel/2015Gollini_GWmodelJSS.pdf | Gollini et al. 2015 ]] Journal of Statistical Software - bibliographic reference.
+  * [[http://www.spatial-ecology.net/ost4sem/webinar/PaulHgwmodel/2014Lu_GWmodelGSIS.pdf | Lu et al. 2014 ]] Geospatial Information Science - bibliographic reference.

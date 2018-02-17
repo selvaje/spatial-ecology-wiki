@@ -1,0 +1,11 @@
+mod.t = Sys.getenv(c('mod','t','path'))
+mod = as.numeric(mod.t[1])
+t = as.numeric(mod.t[2])
+path = as.character(mod.t[3])
+&nbsp;
+print(mod)
+print(t)
+print(path)
+&nbsp;
+my_output=paste(&quot;We have processed  mod &quot;,mod,&quot; and t &quot;,t,&quot; ---- output path is   &quot;,path,sep=&quot; &quot;)
+write.table(my_output,paste(path,&quot;/my_mod&quot;,mod,&quot;_t&quot;,t,&quot;.txt&quot;,sep=&quot;&quot;))

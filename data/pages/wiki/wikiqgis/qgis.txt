@@ -1,0 +1,32 @@
+====== Quantum Gis ======
+Qgis is a user friendly Open Source Geographic Information System licensed under the GNU General Public License.
+Main features: View and overlay vector and raster data in different formats and projections without conversion to an internal or common format. You can use it as GUI for GRASS Gis.
+
+== Qgis as Grass GUI ==
+For using Qgis as GRASS GUI, Open a Grass section and type in the Bash terminal
+   qgis &
+
+
+===== Grass Lectures =====
+  * Introduction to Quantum Gis: [[http://www.spatial-ecology.net/ost4sem/lecture/qgis_intro.pdf|download]] or VM@: ~/ost4sem/lecture/qgis_intro.pdf
+
+===== Qgis Tutorials =====
+  * [[wiki:wikiqgis:startqgis | Starting with Qgis: GUI, plugins, importing, clipping, merging data]] 
+  * [[wiki:wikiqgis:startqgis_online | Starting with Qgis: GUI, plugins, importing, clipping, merging data using online data]]
+  * [[wiki:wikiqgis:projectionqgis | Reprojection]]
+  * [[wiki:wikiqgis:georefqgis | Georeferencing images]]
+  * [[wiki:wikiqgis:editqgis | Editing and creating a vector in QGIS]]
+  * [[wiki:wikiqgis:basicqgis | Qgis and Grass - wiki]] 
+  * [[wiki:wikiqgis:QGIS-Kenya | Kenya QGIS exercise - wiki]]
+  * [[wiki:wikiqgis:QGIShydro | QGIS hydrological application]]
+  * [[http://docs.qgis.org/2.8/en/docs/gentle_gis_introduction/coordinate_reference_systems.html| Map projections]]
+  * [[http://docs.qgis.org/2.8/en/docs/gentle_gis_introduction/vector_data.html#what-can-we-do-with-vector-data-in-a-gis| Vector data basics]] 
+  * [[http://docs.qgis.org/2.8/en/docs/gentle_gis_introduction/raster_data.html| Raster data]]
+  * [[http://docs.qgis.org/2.8/en/docs/gentle_gis_introduction/spatial_analysis_interpolation.html| Basics of interpolation methods IWD]]
+
+
+===== Qgis links and help =====
+  * [[http://www.qgis.org|Qgis home page]]
+  * [[http://docs.qgis.org/2.8/en/docs/training_manual/index.html| English tutorials]]
+  * [[http://docs.qgis.org/2.8/en/docs/user_manual/index.html|Qgis 2.8 user manual in English]]
+  

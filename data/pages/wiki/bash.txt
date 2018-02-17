@@ -1,0 +1,58 @@
+====== Linux Operation System as a base for Spatial Ecology Computing ======
+
+
+[[http://linux.org/|Linux]] is a generic term refering to Unix-like computer operating systems based on the Linux kernel. Their development is one of the most prominent examples of free and open source software collaboration; typically all the underlying source code can be used, freely modified, and redistributed, both commercially and non-commercially, by anyone under licenses such as the [[http://www.gnu.org/|GNU]]
+
+In this site an introduction will be given to the [[http://en.wikipedia.org/wiki/Unix_shell|Unix/Linux Shell]] using [[http://en.wikipedia.org/wiki/Bash|Bash language]] to manipulate data rather than interacting with/setting the operation system. The final aim is to build a stand-alone implementation / processes that include a combination of bash/R/AWK/gnuplot commands that can be run several times using the features of each software.  
+
+In this part of the wiki-training site we provide various sections: 
+
+===== Unix/Linux Shell - Bash Language Lectures =====
+[[ http://www.spatial-ecology.net/ost4sem/lecture/unixlinux.pdf | ~/ost4sem/lecture/unixlinux.pdf]]\\
+
+A nice a way to start is to use this web command-line simulator.\\
+
+[[http://rik.smith-unna.com/command_line_bootcamp/?id=veobin7g4ec  | command-line bootcamp ]]\\
+===== Bash Tutorials =====
+  * [[startbash|Starting with Bash]] -
+  * [[commandbash| The most important commands]] - [[http://files.fosswire.com/2007/08/fwunixref.pdf|Unix/Linux Command Reference]]\\
+  * [[metacharacters | Special characters and Quoting]]
+  * [[pipe | Pipe]] - 
+  * [[history | History]]
+  * [[tab | Command/filename completion and Keyboard shortcuts ]]
+  * [[bashscript | Bash scripts]] - 
+  * [[InvokingBash | Invoking a Bash Script]]
+
+
+===== Bash exercises =====
+These exercises use the scripts and data stored in ~/ost4sem/exercise/basic_adv_bash\\ 
+
+You can open the script by kate and copy/paste the lines to the terminal.\\ 
+
+You can can also interact with the shell using other commands and inserting comments in the editor.\\
+You can run it directly by:
+<code bash> 
+sh file_name.sh 
+</code> 
+The files that are used in these exercises are also used in the study case.\\
+Try to explore the file and understand very well the data structure in order to follow the study case script in each step.\\
+  * [[basicbash | Basic bash scripts]] - Matera
+  * [[basicbash_hSDM | Basic bash scripts using hSDM data ]] -
+  * [[managedirbash| Manage your files and folders]] - Matera
+  * [[wgetar | Download files and unzipped ]] - Matera
+  * [[createdirbash| Create a working environment]] Set your working environment with input and output subdirectories.
+  * [[advancebash | Advance bash scripts]] - 
+
+===== Usefull Bash tools  =====
+  * [[imagemagikbash | Basic bash to manipulate image files]] - Matera
+  * [[pdftkbash | Basic bash for manipulating PDF files]] - Matera
+
+===== Bash links  =====
+  * [[http://en.wikipedia.org/wiki/Bash|Bash definition by Wikipedia]]
+  * [[http://www.gnu.org/software/bash/bash.html | Bash home page]]
+  * [[http://ss64.com/bash/ | Bash commands ]]
+  * [[http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html |Bash Guide for Beginners]]
+  * [[http://tldp.org/LDP/abs/html/index.html | Advanced Bash Scripting Guide]]
+  * [[http://www.galatech.co.uk/index.php/tutorials/viewpost/100 | Video Tutorial for Creating a Bash Script]]
+  * [[http://tldp.org/LDP/abs/html/string-manipulation.html | Bash Manipulating Strings]]
+  * [[http://www.cyberciti.biz/faq/bash-for-loop | Bash For Loop Examples]]

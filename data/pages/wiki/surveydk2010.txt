@@ -1,0 +1,40 @@
+===== Satisfactory survey =====
+<doodle unidk2010  /  Will you use and progress using OS tools in future ?>
+^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R Yes ^ R No ^  
+</doodle>
+\\
+<doodle unidk2010  /  Do you feel to be able to independently improve and learn more about OS tools ? >
+^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R Yes ^ R No ^
+</doodle>
+\\
+<doodle unidk2010  /  Do you see any interest in using OS spatial analysis tools in your current and future job ? >
+^ Yes ^  No ^ Little ^
+</doodle>
+\\
+<doodle unidk2010 /   Which part of the course did you preferred and would have liked to see in more in detail ? >
+^ Bash ^ Awk ^ Gdal ^ Gnuplot ^ Grass ^ Qgis ^ R ^ Theory ^ exercise ^ Study case ^ Projects ^
+</doodle>
+\\
+<doodle unidk2010  /  Do you think the training was well adapted in respect of your needs, your skills and knowledge ? >
+^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+</doodle>
+\\
+<doodle unidk2010  /  The trainers where clear and prepared during the 1st week of teaching ? >
+^ Very well ^  yes enough prepared  ^ not enough ^
+</doodle>
+\\
+<doodle unidk2010  /  The trainer's supervision during your project was satisfactory ? >
+^ Very much ^  yes satisfactory  ^ not enough ^
+</doodle>
+\\
+<doodle unidk2010  /  The training organization was correctly carried out ? (VM + Virual machines) >
+^ Virtual OK ^ VM no ^ Slides OK ^ Slides no ^ Vikipedia OK ^ Vikipedia no ^ Schedule OK  ^ Schedule NO ^
+</doodle>
+\\
+
+Please if you have any remark or suggestions for improving this training write to us at unidk2010@spatial-ecology.net
+
+
+
+
+

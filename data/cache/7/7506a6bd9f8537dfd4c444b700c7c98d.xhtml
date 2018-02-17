@@ -1,0 +1,126 @@
+
+<h1 class="sectionedit1" id="running_gnuplot">Running gnuplot</h1>
+<div class="level1">
+
+<p>
+Exercise:<br/>
+
+Script: open by kate <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh </a><br/>
+
+Data: <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/input.txt" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/input.txt" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_gnuplot/input.txt </a><br/>
+
+Directory: ~/ost4sem/exercise/basic<em>adv</em>gnuplot/
+<br/>
+
+</p>
+<pre class="code bash">kate ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gnuplot<span class="sy0">/</span>gnuplot.sh <span class="sy0">&amp;</span></pre>
+
+</div>
+<!-- EDIT1 SECTION "Running gnuplot" [1-462] -->
+<h2 class="sectionedit2" id="from_the_bash_command_line">From the bash command line</h2>
+<div class="level2">
+
+<p>
+You can run gnuplot directory from the bash command line typing command by command<br/>
+
+Example:
+</p>
+<pre class="code gnuplot">gnuplot
+<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xrange%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xrange</span></a> <span class="br0">&#91;</span><span class="nu0">2000</span><span class="sy0">:</span><span class="nu0">14000</span><span class="br0">&#93;</span> 
+<span class="kw1">splot</span> <span class="st0">'input.txt'</span>   u <span class="nu0">3</span><span class="sy0">:</span><span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span></pre>
+
+<p>
+This way it is very useful to explore your data.
+</p>
+
+</div>
+<!-- EDIT2 SECTION "From the bash command line" [463-728] -->
+<h2 class="sectionedit3" id="from_a_script">From a script</h2>
+<div class="level2">
+
+<p>
+If you need to automate a process it is better to create a script that can be run by the shell many times. It can be run by:<br/>
+
+<em> gunplot &lt; myscriptplot.plt</em><br/>
+
+Example:<br/>
+
+Create a simple gnuplot script in a text editor using the following commands:<br/>
+
+<br/>
+
+<em>set terminal postscript eps color solid lw 4  “Helvetica” 24 </em><br/>
+
+<em>set view  80,100</em><br/>
+
+<em>set output &#039;country<em>name.ps&#039;<em><br/>
+
+</em>splot &#039;input.txt&#039;   u 3:4:5<em><br/>
+
+<br/>
+
+save it to </em>myscriptplot.plt.<em><br/>
+
+<br/>
+
+Run it by:<br/>
+
+&lt;code bash&gt;
+gunplot &lt; myscriptplot.plt
+evince country<em>name.ps 
+&lt;/code&gt;
+<br/>
+
+If you need to insert a serial of gnuplot commands inside a bash script you can use the following syntax:<br/>
+
+<br/>
+
+<em>gnuplot «<abbr title="End of file">EOF</abbr></em><br/>
+
+….<br/>
+
+….<br/>
+
+<em><abbr title="End of file">EOF</abbr></em><br/>
+
+<br/>
+
+Example:<br/>
+
+Create a simple bash-gnuplot script in a text editor using the following command:<br/>
+
+<br/>
+
+<em>grep IT aver<em>month</em>nuts3.asc &gt; aver<em>month</em>IT.asc </em><br/>
+
+<em>gnuplot « <abbr title="End of file">EOF</abbr></em><br/>
+
+<em>set terminal postscript eps color solid lw 4 “Helvetica” 24</em><br/>
+
+<em>set view  80,100  </em><br/>
+
+<em>set output &#039;country<em>IT.ps&#039;<em><br/>
+
+</em>splot &#039;aver</em>month<em>IT.asc&#039; u 3:4:5<em><br/>
+
+</em>exit<em><br/>
+
+</em><abbr title="End of file">EOF</abbr><em><br/>
+
+</em>rm aver</em>month<em>IT.asc<em><br/>
+
+<br/>
+
+save it to </em>bash</em>gnuplot<em>script.sh<em><br/>
+
+<br/>
+
+Run it by:<br/>
+
+&lt;code bash&gt;
+sh bash<em>gnuplot</em>script.sh
+&lt;/code&gt;
+</p>
+
+</div>
+<!-- EDIT3 SECTION "From a script" [729-] -->

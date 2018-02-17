@@ -1,0 +1,72 @@
+We propose below a few examples of how to start a new grass project.\\
+
+===== Using Grass GUI =====
+
+Open a terminal and type
+
+<code bash>
+grass70 -gui
+</code>
+
+[[http://grasswiki.osgeo.org/wiki/GRASS_Location_Wizard| and follow this guide]].\\
+
+===== Using a bash script  and a map =====
+The bash script: **~/ost4sem/exercise/basic_adv_grass/create_location.sh**  allows to automatically create a new Grass working environment using projection parameters defined in an existing map.\\
+See [[grasscreatelocation|this wiki page]] for details on how to use the script.\\
+
+===== Using Qgis GUI =====
+To easily create a new GRASS working directory (DBASE, LOCATION, MAPSET), we can use Qgis.\\
+See [[basicqgis|Quantum gis]].
+
+\\
+
+===== A new Location within an an existing DB =====
+If you previously have created a grassdb and a location, you can enter in your existing grass mapset and create a new location using a GDAL / OGR import functions.
+   r.in.gdal input=input_raster output=output_GRASS_raster location=new_Location --overwrite 
+   v.in.ogr dsn=input_vector output=output_GRASS_vector location=new_Location  --overwrite 
+   
+\\
+
+===== A new Mapset within an an existing Location =====
+From GRASS 6.4 a -c flag option allow to use g.mapset to create a new mapset
+  g.mapset mapset=NEW_MAPSET_NAME -c
+
+To generate a new Mapset from a pre-existing location you can also copy the PERMANENT folder and rename it.
+   cp -r PERMANENT NEW_Mapset
+
+Then you start grass in the NEW_Mapset directory environment
+  grass62 -text /home/user/ots4sem/studycase/ITA_veg/grassdata/NEW_Mapset
+  
+
+===== Spearfish =====
+Using this procedure allows you to learn grass using template dataset //spearfish// and follow instructions available in grass manual.\\
+ The general procedure consists of the following steps:
+  * Creating a new empty directory to use as GISDBASE. 
+  * Dwnload and move the demo dataset inside the new GISDBASE
+  * Import a vector or raster map using GDAL/OGR functions and create a new location  while importing grass dataset (including a location and a mapset) inside. Several template datasets exists. Very common is the [[http://grass.itc.it/download/data6.php| spearfish DB]]. (~20MB)
+<code bash>
+   
+mkdir ~/ost4sem/tmp
+cd ~/ost4sem/tmp
+wget http://grass.itc.it/sampledata/spearfish_grass60data-0.3.zip 
+mkdir ~/ost4sem/new_grass_DBASE
+mv spearfish_grass60data-0.3.zip ~/ost4sem/new_grass_DBASE/
+cd ~/ost4sem/new_grass_DBASE
+unzip spearfish_grass60data-0.3.zip
+rm -r ~/ost4sem/tmp
+rm -f spearfish_grass60data-0.3.zip
+grass -text ~/ost4sem/new_grass_DBASE/spearfish60/PERMANENT
+r.in.gdal input=~/ost4sem/exercise/basic_adv_grass/inputs/lc_cor2000/hdr.adf  output=landcover location=new_Location --overwrite 
+# or if you use a vector
+# v.in.ogr dsn=~/ost4sem/exercise/EUforest_stats/EU_country_gl_gpwc3/EU_country_gpwv3.shp output=world_country location=new_Location
+rm -r ~/ost4sem/new_grass_DBASE/spearfish60/
+</code>
+\\
+As a result we will have generated:
+  * a new grass GISDBASE: "new_grass_DBASE" 
+  * a new Location setted with the projection and extent of the map we wanted to open: "new_Location"
+  * a new PERMANENT Mapset inclusive of the raster or vector map we opened.
+
+
+
+  

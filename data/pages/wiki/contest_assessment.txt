@@ -1,0 +1,23 @@
+==== Accuracy assessment ====
+
+=== Create reference vector with CASI bands as attributes ===
+<code bash>
+    pkextract -i 2013_IEEE_GRSS_DF_Contest_CASI.tif -s 2013_IEEE_GRSS_DF_Contest_Samples_VA.shp -o validation_casi.shp
+</code>
+
+{{ :wiki:contest:validation.png?nolink |}}
+
+=== Perform accuracy assessment on CASI bands using pkclassify_svm ===
+<code bash>
+    pkclassify_svm -t training_casi.shp -i validation_casi.shp
+</code>
+
+=== Perform accuracy assessment on CASI bands using pkdiff ===
+<code bash>
+    pkdiff -i testmap_casi.tif -ref 2013_IEEE_GRSS_DF_Contest_Samples_VA.shp -cm
+</code>
+
+=== Perform the accuracy assessment ===
+<code bash>
+    pkdiff -i testmap_final_ff.tif -ref 2013_IEEE_GRSS_DF_Contest_Samples_VA.shp -cm
+</code>

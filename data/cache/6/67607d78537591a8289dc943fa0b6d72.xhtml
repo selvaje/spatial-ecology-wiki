@@ -1,0 +1,231 @@
+
+<h2 class="sectionedit1" id="manipulation_and_visualization_of_weld_single_pixel_time_series">Manipulation and visualization of WELD single pixel time series</h2>
+<div class="level2">
+
+<p>
+<br/>
+
+The WELD product <abbr title="What You See Is What You Get">WYSIWYG</abbr> web distribution interface (<a href="http://weld.cr.usgs.gov/" class="urlextern" target="blanc" title="http://weld.cr.usgs.gov/" rel="nofollow noopener">http://weld.cr.usgs.gov/</a>) allows selection and ordering of a single 30m pixel time series.<br/>
+
+The time series is provided via e-mail in a simple comma separated text format with the relevant WELD band scale factors and offsets already applied.<br/>
+
+<br/>
+
+<strong>Set your working directory:</strong>
+</p>
+<pre class="code">DIR=/home/user/ost4sem/exercise/weld_data_processing/pixel_time_series
+cd $DIR</pre>
+
+<p>
+We can check that this Linux variable is correct by typing: echo $DIR
+<br/>
+
+<br/>
+
+</p>
+
+<p>
+In this exercise pixels falling in burned and unburned areas of the <a href="http://www.npr.org/blogs/thetwo-way/2011/07/28/138789103/tundra-fires-and-climate-change-more-bad-news" class="urlextern" target="blanc" title="http://www.npr.org/blogs/thetwo-way/2011/07/28/138789103/tundra-fires-and-climate-change-more-bad-news" rel="nofollow noopener"> Anaktuvuk River Fire</a>, that occurred September 2007 in a Tundra region of the Alaskan North Slope, are selected:
+<br/>
+
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Atime_series&amp;media=wiki:pixel_time_series.png" class="media" title="wiki:pixel_time_series.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=960c18&amp;media=wiki:pixel_time_series.png" class="media" alt="" width="400" /></a></td><td class="col1"><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Atime_series&amp;media=wiki:pixel_time_series2.png" class="media" title="wiki:pixel_time_series2.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=60c504&amp;media=wiki:pixel_time_series2.png" class="media" alt="" width="400" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT2 TABLE [870-946] -->
+<p>
+<br/>
+
+</p>
+
+<p>
+To save time, we have pre-download two email orders for 9 year time series extracted from weekly WELD products from 2003 to 2011. Two orders, one for the burned pixel and one for the unburned pixel (locations illustrated above), are stored at /home/user/ost4sem/exercise/weld<em>data</em>processing/pixel<em>time</em>series/
+<br/>
+
+<br/>
+
+</p>
+
+<p>
+<strong>Examine the times series:</strong><br/>
+
+<br/>
+
+The time series are provided via e-mail in a simple comma separated text (<abbr title="American Standard Code for Information Interchange">ASCII</abbr>) format with the relevant WELD band scale factors and offsets already applied.  Each row defines the 14 WELD band values for the pixel for a given year and date, the WELD FILL values (no data values) in any band are designated with a pixel value of -32768. For example:
+<br/>
+
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Atime_series&amp;media=wiki:time_seriesdata.png" class="media" title="wiki:time_seriesdata.png"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=fb1189&amp;media=wiki:time_seriesdata.png" class="media" alt="" width="1000" /></a><br/>
+
+<br/>
+
+We can examine the first 8 lines of the unburned pixel file as:
+</p>
+<pre class="code">head -8 $DIR/weld.alaska.timeseries.weekly.h06v02.long-150.351113.lat69.179178.v1.5.txt</pre>
+
+<p>
+We can examine the first 12 lines of the burned pixel file as:
+</p>
+<pre class="code">head -12 $DIR/weld.alaska.timeseries.weekly.h06v02.long-150.583834.lat69.124245.v1.5.txt</pre>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+<strong>Extract values to make NDVI time series plots:</strong><br/>
+
+<br/>
+
+The Normalized Difference Vegetation Index (NDVI) is the most commonly used spectral band index and is positively correlated with vegetation greeness. 
+We will make a simple NDVI time series plot for the unburned and burned pixels.<br/>
+To do this we will extract the “Year”, “Day<em>Of</em>Year”, and “NDVI” values from each file using the awk command and we will ensure 
+that we do not extract dates with NDVI FILL values (-32768).  The “Year”, “Day<em>Of</em>Year”, and “NDVI” values are stored in columns 1, 2 and 11 of each file and so this extraction can be done as: 
+<br/>
+
+</p>
+<pre class="code bash"><span class="kw2">awk</span> <span class="st_h">'{gsub(&quot;,&quot;,&quot; &quot;); if($11!=-32768){ print$1,$2,$11}}'</span> <span class="re1">$DIR</span><span class="sy0">/</span>weld.alaska.timeseries.weekly.h06v02.long-<span class="nu0">150.351113</span>.lat69.179178.v1.5.txt <span class="sy0">|</span> <span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">1</span>,<span class="nu0">1</span> <span class="re5">-k</span> <span class="nu0">2</span>,<span class="nu0">2</span> <span class="re5">-g</span> <span class="sy0">&gt;</span> <span class="re1">$DIR</span><span class="sy0">/</span>week_ndvi_unburned.txt
+&nbsp;
+<span class="kw2">awk</span> <span class="st_h">'{gsub(&quot;,&quot;,&quot; &quot;); if($11!=-32768){ print$1,$2,$11}}'</span> <span class="re1">$DIR</span><span class="sy0">/</span>weld.alaska.timeseries.weekly.h06v02.long-<span class="nu0">150.583834</span>.lat69.124245.v1.5.txt <span class="sy0">|</span> <span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">1</span>,<span class="nu0">1</span> <span class="re5">-k</span> <span class="nu0">2</span>,<span class="nu0">2</span> <span class="re5">-g</span> <span class="sy0">&gt;</span> <span class="re1">$DIR</span><span class="sy0">/</span>week_ndvi_burned.txt</pre>
+
+<p>
+To examine the time series you made:
+</p>
+<pre class="code">head -10 week_ndvi_unburned.txt week_ndvi_burned.txt</pre>
+
+<p>
+Note, you could also use the “DT<em>Cloud</em>State” and “ACCA<em>State” and “Saturation</em>Flag” pixel values to remove cloudy and saturated pixel observations with an awk <em>if condition</em> (check out <a href="/dokuwiki/doku.php?id=wiki:awkadvance" class="wikilink1" title="wiki:awkadvance"> AWK language</a>). We cover this in the “Burned Area Mapping using Support Vector Machine and Combined Segmentation Random Forest classifiers” training later on. 
+<br/>
+
+<br/>
+
+<strong>Make NDVI time series plots:</strong><br/>
+
+<br/>
+
+We will make the plots using the R software package.<br/>
+
+<br/>
+
+To enter R type:
+</p>
+<pre class="code">R</pre>
+
+<p>
+If you enter R correctly, you will see several lines that describe the version of R you have and how to search for help in R.<br/>
+
+The symbol “
+</p>
+<blockquote><div class="no">
+</div></blockquote>
+
+<p>
+&gt;&quot; is the R terminal prompt where you can type R commands.\\
+</p>
+</div></blockquote>
+
+<p>
+
+\
+</p>
+
+<p>
+\
+R script for plotting WELD time series:
+<br/>
+
+</p>
+<pre class="code R">############## import the two files #######################
+&nbsp;
+week_ndvi_burned    &lt;- read.delim(&quot;/home/user/ost4sem/exercise/weld_data_processing/pixel_time_series/week_ndvi_burned.txt&quot;, header = TRUE , sep = &quot; &quot; )
+week_ndvi_unburned &lt;- read.delim(&quot;/home/user/ost4sem/exercise/weld_data_processing/pixel_time_series/week_ndvi_unburned.txt&quot;, header = TRUE , sep = &quot; &quot;  )
+&nbsp;
+############## create equal interval for the x axis (time) for the unburned and the burned pixels #####################
+&nbsp;
+week_ndvi_burned$xlab &lt;- as.integer(((week_ndvi_burned$Day_Of_Year/365)+(week_ndvi_burned$Year-2003))*1000)
+week_ndvi_unburned$xlab  &lt;- as.integer(((week_ndvi_unburned$Day_Of_Year/365)+(week_ndvi_unburned$Year-2003))*1000)
+&nbsp;
+############ plot burned pixel NDVI time series #######################
+&nbsp;
+jpeg(&quot;/home/user/ost4sem/exercise/weld_data_processing/pixel_time_series/plot_ndvi_burned.jpg&quot;, width=1500, height=600)
+par(mar=c(2, 4.5, 4, 2), oma=c(3, 3, 2, 2))
+plot(week_ndvi_burned$xlab, week_ndvi_burned$NDVI_TOA, cex.main=2, cex.lab=1.5, cex.axis=1.5, ylab=&quot;TOANDVI&quot;, xlab=&quot;&quot;, xaxt=&quot;n&quot;, pch=19, ylim=c(0, 0.80))
+&nbsp;
+axis(1, at=week_ndvi_burned$xlab, lab=FALSE, lwd.ticks=1)
+axis(1,  at=seq(0,10000,1000) , lab=FALSE, lwd.ticks=3)
+axis(1, at=seq(500,8500,1000) , lab=unique(week_ndvi_burned$Year), tick=FALSE, line=1, cex.axis=1.5)
+&nbsp;
+mtext(&quot;Year&quot;, side=1, at=4000, 3.5, cex=1.5)
+dev.off()
+&nbsp;
+########## plot unburned pixel NDVI time series #######################
+&nbsp;
+jpeg(&quot;/home/user/ost4sem/exercise/weld_data_processing/pixel_time_series/plot_ndvi_unburned.jpg&quot;, width=1500, height=600)
+par(mar=c(2, 4.5, 4, 2), oma=c(3, 3, 2, 2))
+plot(week_ndvi_unburned$xlab, week_ndvi_unburned$NDVI_TOA, cex.main=2, cex.lab=1.5, cex.axis=1.5, ylab=&quot;TOANDVI&quot;, xlab=&quot;&quot;, xaxt=&quot;n&quot;, pch=19, ylim=c(0, 0.80))
+&nbsp;
+axis(1, at=week_ndvi_unburned$xlab, lab=FALSE, lwd.ticks=1)
+axis(1, at=seq(0,10000,1000), lab=FALSE, lwd.ticks=3)
+axis(1, at=seq(500,8500,1000), lab=unique(week_ndvi_unburned$Year), tick=FALSE, line=1, cex.axis=1.5)
+&nbsp;
+mtext(&quot;Year&quot;, side=1, at=4000, 3.5, cex=1.5)
+dev.off()</pre>
+
+<p>
+Now close R (do not save the workspace image when prompted, just type “n”): 
+</p>
+<pre class="code">q()</pre>
+
+<p>
+<br/>
+
+You can simply click on the folder /home/user/ost4sem/exercise/weld<em>data</em>processing/pixel<em>time</em>series and then click on plot<em>ndvi</em>burned.jpg and plot<em>ndvi</em>unburned.jpg to see the stored images.<br/>
+
+<br/>
+
+</p>
+
+</div>
+
+<h5 id="ndvi_time_series_of_the_burned_pixel">NDVI time series of the burned pixel</h5>
+<div class="level5">
+
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Atime_series&amp;media=wiki:plot_ndvi_burned.jpg" class="media" title="wiki:plot_ndvi_burned.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=af2ab2&amp;media=wiki:plot_ndvi_burned.jpg" class="media" title="plot_ndvi_burned.jpg" alt="plot_ndvi_burned.jpg" width="1000" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT3 TABLE [6278-6319] -->
+<p>
+<br/>
+
+In September 2007 the fire occurred and it is possible to see a drop in the NDVI values and then recovery/regeneration of the vegetation in the following years.<br/>
+
+<br/>
+
+</p>
+
+</div>
+
+<h5 id="ndvi_time_series_of_the_unburned_pixel">NDVI time series of the unburned pixel</h5>
+<div class="level5">
+
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit4"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Atime_series&amp;media=wiki:plot_ndvi_no_burned.jpg" class="media" title="wiki:plot_ndvi_no_burned.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=595d8d&amp;media=wiki:plot_ndvi_no_burned.jpg" class="media" title="plot_ndvi_no_burned.jpg" alt="plot_ndvi_no_burned.jpg" width="1000" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT4 TABLE [6538-6578] -->
+</div>

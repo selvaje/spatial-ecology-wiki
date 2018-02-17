@@ -1,0 +1,132 @@
+====== Using GRASS for image analysis. ======
+GRASS can be used to perform remote sensing image analysis in terms of preprocessing classification and validation. 
+The image analysis commands are starting with suffix " i. " ( i.class , i.maxlik ). They can be run in the bash shell and can be applied to any grass raster layer.\\ 
+They are listed and described in the following [[ http://grass.osgeo.org/grass64/manuals/html64_user/imagery.html | page ]].
+==== Image Preprocessing  ====
+=== Georeferencing ===
+
+The easiest way to georeferencing an image is by using the [[ http://gama.fsv.cvut.cz/~landa/grass/swf/georect.html | Georectifier a wxGUI extension ]]\\
+Start wxpython by 
+   g.gui wxpython 
+
+
+==== Image classification ====
+Here a table try to summarize the main important command for Classification methods in GRASS.
+
+
+^ ^radiometric unsupervised^radiometric supervised^radiometric supervised^radiometric & geometric supervised^
+|Image Preprocessing|  r.seg  ||||
+|Preprocessing|i.cluster|i.class (monitor digitizing)|i.gensig (using training maps)|i.gensigset(using training maps)|
+|Classification|i.maxlik|i.maxlik|i.maxlik| i.smap| 
+|Remarks|automated run based on image statistics|requires digitalization of training areas|requires digitalization of training areas|requires digitalization of training areas|
+\\
+  * The preprocessing phase capture spectral signatures for land cover in order to later use the the classifier algorithm.
+  * The classificatio phase perform the rial classification based on the signature collected by the previews steps. 
+
+
+
+
+
+=== Unsupervised classification ===
+
+Setting working directory
+<code bash>
+INDIR=~/ost4sem/exercise/basic_remote_sensing 
+cd $INDIR
+</code>
+In this directory there is a .tar.gz file, the typical file after a download. We need to untar and unzip
+<code bash>
+tar xzf LT51680652009340MLK01.tar.gz
+</code>
+These are the 7 bands of Landsat.\\
+Now we select a study a small study area by cutting large images using gdal_translate, previous a re-projection operation by gdal_warp.  
+<code bash>
+for file in L5168065_06520091206_B[1-9]0.TIF ; do 
+    imagename=`basename $file .TIF`   # select the file name without the extension.
+    rm  $imagename"_prj.tif"
+    gdalwarp  -s_srs EPSG:32636 -t_srs "+proj=utm +zone=36 +south +a=6378249.145 +b=6356514.870 +units=m +towgs84=-160,-6,-302" $file tmp.tif
+    gdal_translate -co "COMPRESS=LZW" -projwin 760000 9260000 860000 9190000 tmp.tif $imagename"_cut.tif"
+    rm $file    # remove imput file 
+done 
+rm tmp.tif *.txt README.GTF
+</code>
+After this operation the directory contain just the needed files.\\
+Now we can start import data in Grass by creating a new grass location based on the prepared data. 
+<code bash>
+~/sh/create_location_gr.sh  L5168065_06520091206_B10_cut.tif  grass_location  ~/ost4sem/exercise/basic_remote_sensing
+</code>
+Enter in grass manually 
+   grass64 -text ~/ost4sem/exercise/basic_remote_sensing/grass_location/PERMANENT 
+\\   
+List the rast. Start the python gui and see the file by loading it. 
+<code bash>
+g.list rast ; g.gui wxpython &
+</code>
+Import the other channels 
+<code bash>
+for file in *_cut.tif ; do 
+    RAST=`basename $file _cut.tif`
+    r.in.gdal in=$file  out=$RAST 
+done
+</code>
+Remove initial data set
+<code bash>
+g.remove rast=L5168065_06520091206_B10_cut ; g.list rast
+</code>
+  * Visualize the bands by the python gui. Search for the appropriate button to load the image.
+  * Visualize  an RGB color layer. Search for the appropriate button to load the a RGB color layer.
+<code bash>
+# create an RGB color layer
+r.composite  r=L5168065_06520091206_B10   g=L5168065_06520091206_B20   b=L5168065_06520091206_B30 out=L5168065_06520091206_B123 --overwrite
+# group the bands 
+i.group group=L5168065_06520091206  subgroup=L5168065_06520091206  input=L5168065_06520091206_B10,L5168065_06520091206_B20,L5168065_06520091206_B30,L5168065_06520091206_B40,L5168065_06520091206_B50,L5168065_06520091206_B60,L5168065_06520091206_B70
+</code>
+Unsupervised classification.\\
+Generate unsupervised statistics for 5 classes.
+<code bash>
+i.cluster  group=L5168065_06520091206  subgroup=L5168065_06520091206 sigfile=L5168065_06520091206_sig classes=5 reportfile=L5168065_06520091206.txt
+</code>
+Assign pixels to classes, create classified image and relative rejected image. 
+<code bash>
+i.maxlik group=L5168065_06520091206 subgroup=L5168065_06520091206 sigfile=L5168065_06520091206_sig class=L5168065_06520091206_class  reject=L5168065_06520091206_reject
+</code>
+Visualize the results by the gui opening L5168065_06520091206_class and L5168065_06520091206_reject
+Compare visually the classified map and the RGB layer. 
+== Exercise ==
+
+  - Exercise: making the same procedure but change the level of separability between the classes. See the command i.cluster option separation.\\
+  - Exercise: make a lop for two level of separability. 
+
+=== Supervised classification ===
+
+Create different band combination.
+
+<code bash>
+r.composite  r=L5168065_06520091206_B10   g=L5168065_06520091206_B20   b=L5168065_06520091206_B30 out=L5168065_06520091206_B123 --overwrite
+r.composite  r=L5168065_06520091206_B20   g=L5168065_06520091206_B30   b=L5168065_06520091206_B40 out=L5168065_06520091206_B234 --overwrite
+r.composite  r=L5168065_06520091206_B30   g=L5168065_06520091206_B40   b=L5168065_06520091206_B50 out=L5168065_06520091206_B345 --overwrite
+</code>
+
+Create a editing polygon classes by qgis or by wxpython. See the procedure in [[wiki:wikiqgis:editqgis |Editing and creating a vector in QGIS ]] 
+\\
+Transform vector training map to raster model:\\
+Import shape vector ~/ost4sem/exercise/basic_remote_sensing/class.shp\\
+I if is not available use ~/ost4sem/exercise/basic_remote_sensing/class_examples.shp\\
+
+<code bash>
+v.in.ogr -o dsn=~/ost4sem/exercise/basic_remote_sensing/class_examples.shp output=class min_area=0.0001 snap=-1 cnames=classid
+v.to.rast in=class   out=class  use=attr col=classid labelcol=name --o
+</code>
+Visualize the class rast by the python gui.\\
+Generate statistics from training areas. This is a long process, so do not run but just use the results that are already stored
+<code bash>
+i.gensigset group=L5168065_06520091206  subgroup=L5168065_06520091206  sig=L5168065_06520091206_sig     training=class
+</code>
+Perform supervised classification with two methods
+<code bash>
+i.smap   group=L5168065_06520091206  subgroup=L5168065_06520091206  sig=L5168065_06520091206_sig out=s_map
+i.maxlik group=L5168065_06520091206  subgroup=L5168065_06520091206  sig=L5168065_06520091206_sig class=m_map
+</code>
+Visualize the python gui results s_map and m_map by the 
+
+

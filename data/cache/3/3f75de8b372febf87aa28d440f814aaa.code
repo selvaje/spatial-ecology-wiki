@@ -1,0 +1,127 @@
+<span class="co1">#!/usr/bin/env python</span>
+&nbsp;
+<span class="co1">################################################################</span>
+&nbsp;
+<span class="co1"># calculate  unique combination between values in 2 tif  </span>
+<span class="co1"># useful fol accuracy matrix or category  maps comparison</span>
+&nbsp;
+<span class="kw1">try</span>:
+    <span class="kw1">from</span> osgeo <span class="kw1">import</span> gdal
+    <span class="kw1">from</span> osgeo.<span class="me1">gdalconst</span> <span class="kw1">import</span> *
+    gdal.<span class="me1">TermProgress</span> <span class="sy0">=</span> gdal.<span class="me1">TermProgress_nocb</span>
+<span class="kw1">except</span> <span class="kw2">ImportError</span>:
+    <span class="kw1">import</span> gdal
+    <span class="kw1">from</span> gdalconst <span class="kw1">import</span> *
+&nbsp;
+<span class="kw1">import</span> numpy  <span class="kw1">as</span>  np
+&nbsp;
+<span class="kw1">import</span> <span class="kw3">sys</span>
+&nbsp;
+<span class="kw1">from</span> <span class="kw3">time</span> <span class="kw1">import</span> clock<span class="sy0">,</span> <span class="kw3">time</span>
+&nbsp;
+&nbsp;
+<span class="co1"># =============================================================================</span>
+<span class="kw1">def</span> Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Usage: count_unique.py [-input1_no_data nodata_value] [-input2_no_data nodata_value]'</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'                       input1.tif input2.tif output.txt'</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">''</span><span class="br0">&#41;</span>
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span> <span class="nu0">1</span> <span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># =============================================================================</span>
+&nbsp;
+<span class="co1"># =============================================================================</span>
+<span class="co1"># 	Mainline</span>
+<span class="co1"># =============================================================================</span>
+&nbsp;
+src_input1 <span class="sy0">=</span> <span class="kw2">None</span>
+src_input2 <span class="sy0">=</span> <span class="kw2">None</span>
+dst_file <span class="sy0">=</span> <span class="kw2">None</span>
+&nbsp;
+input1_no_data <span class="sy0">=</span> <span class="kw2">None</span> 
+input2_no_data <span class="sy0">=</span> <span class="kw2">None</span>
+&nbsp;
+gdal.<span class="me1">AllRegister</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+argv <span class="sy0">=</span> gdal.<span class="me1">GeneralCmdLineProcessor</span><span class="br0">&#40;</span><span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#41;</span>
+<span class="kw1">if</span> argv <span class="kw1">is</span> <span class="kw2">None</span>:
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span> <span class="nu0">0</span> <span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Parse command line arguments.</span>
+i <span class="sy0">=</span> <span class="nu0">1</span>
+<span class="kw1">while</span> i <span class="sy0">&lt;</span> <span class="kw2">len</span><span class="br0">&#40;</span>argv<span class="br0">&#41;</span>:
+    arg <span class="sy0">=</span> argv<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+    <span class="kw1">if</span> arg <span class="sy0">==</span> <span class="st0">'-input1_no_data'</span>:
+        input1_no_data <span class="sy0">=</span> <span class="br0">&#40;</span><span class="kw2">int</span><span class="br0">&#40;</span>argv<span class="br0">&#91;</span>i+<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        i <span class="sy0">=</span> i + <span class="nu0">1</span>
+    <span class="kw1">elif</span> arg <span class="sy0">==</span> <span class="st0">'-input2_no_data'</span>:
+        input2_no_data <span class="sy0">=</span> <span class="br0">&#40;</span><span class="kw2">int</span><span class="br0">&#40;</span>argv<span class="br0">&#91;</span>i+<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        i <span class="sy0">=</span> i + <span class="nu0">1</span>
+    <span class="kw1">elif</span> src_input1 <span class="kw1">is</span> <span class="kw2">None</span>:
+        src_input1 <span class="sy0">=</span> arg
+    <span class="kw1">elif</span> src_input2 <span class="kw1">is</span> <span class="kw2">None</span>:
+        src_input2 <span class="sy0">=</span> arg
+    <span class="kw1">elif</span> dst_file <span class="kw1">is</span> <span class="kw2">None</span>:
+        dst_file <span class="sy0">=</span> arg
+    <span class="kw1">else</span>:
+        Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    i <span class="sy0">=</span> i + <span class="nu0">1</span>
+&nbsp;
+<span class="kw1">if</span>  src_input1 <span class="kw1">is</span> <span class="kw2">None</span>:
+        Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">if</span>  src_input2 <span class="kw1">is</span> <span class="kw2">None</span>:
+        Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">if</span>  dst_file <span class="kw1">is</span> <span class="kw2">None</span>:
+        Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># register all of the GDAL drivers</span>
+gdal.<span class="me1">AllRegister</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Open source files. </span>
+dsInput1 <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span> src_input1  <span class="br0">&#41;</span>
+<span class="kw1">if</span> dsInput1 <span class="kw1">is</span> <span class="kw2">None</span>:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Could not open %s.'</span> % src_input1 <span class="br0">&#41;</span>
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span> <span class="nu0">1</span> <span class="br0">&#41;</span>
+&nbsp;
+dsInput2 <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span> src_input2  <span class="br0">&#41;</span>
+<span class="kw1">if</span>  dsInput2 <span class="kw1">is</span> <span class="kw2">None</span>:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Could not open %s.'</span> % src_input2 <span class="br0">&#41;</span>
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span> <span class="nu0">1</span> <span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># setting the no data if is user defined or geotif defined</span>
+<span class="kw1">if</span> input1_no_data <span class="sy0">==</span> <span class="kw2">None</span>: 
+    no_data_input1 <span class="sy0">=</span> dsInput1.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>.<span class="me1">GetNoDataValue</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">else</span>:
+    no_data_input1 <span class="sy0">=</span> input1_no_data 
+<span class="kw1">if</span> input2_no_data <span class="sy0">==</span> <span class="kw2">None</span>: 
+    no_data_input2 <span class="sy0">=</span> dsInput2.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>.<span class="me1">GetNoDataValue</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">else</span>:
+    no_data_input2 <span class="sy0">=</span> input2_no_data
+&nbsp;
+rows <span class="sy0">=</span> dsInput1.<span class="me1">RasterYSize</span>
+cols <span class="sy0">=</span> dsInput1.<span class="me1">RasterXSize</span>
+&nbsp;
+start <span class="sy0">=</span> <span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+unique_c<span class="sy0">=</span><span class="kw2">dict</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">for</span> irows <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>rows<span class="br0">&#41;</span>:
+    Input1<span class="sy0">=</span>dsInput1.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span>irows<span class="sy0">,</span>cols<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    Input2<span class="sy0">=</span>dsInput2.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span>irows<span class="sy0">,</span>cols<span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> icols <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>cols<span class="br0">&#41;</span>:
+        <span class="kw1">if</span> Input1<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>icols<span class="br0">&#93;</span> <span class="sy0">!=</span> no_data_input1  :
+            <span class="kw1">if</span> Input2<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>icols<span class="br0">&#93;</span><span class="sy0">!=</span> no_data_input2 :
+                row <span class="sy0">=</span> Input1<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>icols<span class="br0">&#93;</span><span class="sy0">,</span>Input2<span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span>icols<span class="br0">&#93;</span>
+                <span class="kw1">if</span> row <span class="kw1">in</span> unique_c:
+                    unique_c<span class="br0">&#91;</span>row<span class="br0">&#93;</span> +<span class="sy0">=</span> <span class="nu0">1</span>
+                <span class="kw1">else</span>:
+                    unique_c<span class="br0">&#91;</span>row<span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">1</span>
+&nbsp;
+output <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>dst_file<span class="sy0">,</span> <span class="st0">&quot;w&quot;</span><span class="br0">&#41;</span>
+<span class="kw1">for</span> <span class="br0">&#40;</span>a<span class="sy0">,</span> b<span class="br0">&#41;</span><span class="sy0">,</span> c <span class="kw1">in</span> unique_c.<span class="me1">items</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    output.<span class="me1">write</span><span class="br0">&#40;</span><span class="st0">&quot;%i %i %i<span class="es0">\n</span>&quot;</span> % <span class="br0">&#40;</span>a<span class="sy0">,</span>b<span class="sy0">,</span>c<span class="br0">&#41;</span><span class="br0">&#41;</span>
+output.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+elapsed <span class="sy0">=</span> <span class="br0">&#40;</span><span class="kw3">time</span><span class="br0">&#40;</span><span class="br0">&#41;</span> - start<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">print</span><span class="br0">&#40;</span>elapsed <span class="sy0">,</span> <span class="st0">&quot;loop in the rows &quot;</span><span class="br0">&#41;</span>

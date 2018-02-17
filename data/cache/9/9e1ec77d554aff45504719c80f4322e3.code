@@ -1,0 +1,33 @@
+&nbsp;
+<span class="co0"># Read data into GRASS </span>
+&nbsp;
+r.in.gdal <span class="re2">input</span>=elevation.tif    <span class="re2">output</span>=elevation
+&nbsp;
+g.extension  <span class="re2">extension</span>=r.vector.ruggedness
+&nbsp;
+<span class="kw3">echo</span> calculate  Vector Ruggedness Measure
+r.vector.ruggedness      <span class="re2">elevation</span>=elevation   <span class="re2">output</span>=vrm   <span class="re5">--o</span> 
+&nbsp;
+<span class="co0"># export the results </span>
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=vrm <span class="re2">output</span>=vrm.tif 
+&nbsp;
+<span class="kw3">echo</span> calculate curvature variables 
+r.slope.aspect <span class="re2">elevation</span>=elevation  <span class="re2">precision</span>=FCELL  <span class="re2">pcurv</span>=pcurv <span class="re2">tcurv</span>=tcurv <span class="re2">dx</span>=dx  <span class="re2">dy</span>=dy  <span class="re2">dxx</span>=dxx <span class="re2">dyy</span>=dyy  <span class="re5">--o</span>
+&nbsp;
+<span class="co0"># export the results </span>
+&nbsp;
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=pcurv <span class="re2">output</span>=pcurv.tif 
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=tcurv <span class="re2">output</span>=tcurv.tif 
+&nbsp;
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=dx <span class="re2">output</span>=dx.tif 
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=dxx <span class="re2">output</span>=dxx.tif 
+&nbsp;
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=dy <span class="re2">output</span>=dy.tif 
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=dyy <span class="re2">output</span>=dyy.tif 
+&nbsp;
+<span class="kw3">echo</span> calculate geomorphological landforms 
+&nbsp;
+g.extension  <span class="re2">extension</span>=r.geomorphon
+r.geomorphon   <span class="re2">elevation</span>=elevation  <span class="re2">forms</span>=geomorphon  <span class="re2">search</span>=<span class="nu0">3</span> <span class="re2">skip</span>=<span class="nu0">0</span> <span class="re2">flat</span>=<span class="nu0">1</span> <span class="re2">dist</span>=<span class="nu0">0</span> <span class="re2">step</span>=<span class="nu0">0</span> <span class="re2">start</span>=<span class="nu0">0</span> <span class="re5">--overwrite</span>
+&nbsp;
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Byte <span class="re2">input</span>=geomorphon <span class="re2">output</span>=geomorphon.tif 

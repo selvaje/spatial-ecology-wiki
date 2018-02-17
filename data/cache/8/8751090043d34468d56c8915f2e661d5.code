@@ -1,0 +1,105 @@
+<span class="st0">&quot;&quot;&quot;
+Creates a shaded relief ASCII grid
+from an ASCII DEM.  Also outputs
+intermediate grids for slope and
+aspect.
+&quot;&quot;&quot;</span>
+<span class="kw1">from</span> <span class="kw3">linecache</span> <span class="kw1">import</span> getline
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+&nbsp;
+<span class="co1"># File name of ASCII digital elevation model</span>
+source <span class="sy0">=</span> <span class="st0">&quot;dem.asc&quot;</span>
+<span class="co1"># File name of the slope grid</span>
+slopegrid <span class="sy0">=</span> <span class="st0">&quot;slope.asc&quot;</span>
+<span class="co1"># File name of the aspect grid</span>
+aspectgrid <span class="sy0">=</span> <span class="st0">&quot;aspect.asc&quot;</span>
+<span class="co1"># Output file name for shaded relief</span>
+shadegrid <span class="sy0">=</span> <span class="st0">&quot;relief.asc&quot;</span>
+<span class="co1">## Shaded elevation parameters</span>
+<span class="co1"># Sun direction</span>
+azimuth<span class="sy0">=</span><span class="nu0">315.0</span>
+<span class="co1"># Sun angle</span>
+altitude<span class="sy0">=</span><span class="nu0">45.0</span>
+<span class="co1"># Elevation exageration</span>
+z<span class="sy0">=</span><span class="nu0">1.0</span>
+<span class="co1"># Resolution</span>
+scale<span class="sy0">=</span><span class="nu0">1.0</span>
+<span class="co1"># No data value for output</span>
+NODATA <span class="sy0">=</span> -<span class="nu0">9999</span>
+&nbsp;
+<span class="co1"># Needed for numpy conversions</span>
+deg2rad <span class="sy0">=</span> <span class="nu0">3.141592653589793</span> / <span class="nu0">180.0</span>
+rad2deg <span class="sy0">=</span> <span class="nu0">180.0</span> / <span class="nu0">3.141592653589793</span>
+&nbsp;
+<span class="co1"># Parse the header using a loop and</span>
+<span class="co1"># the built-in linecache module</span>
+hdr <span class="sy0">=</span> <span class="br0">&#91;</span>getline<span class="br0">&#40;</span>source<span class="sy0">,</span> i<span class="br0">&#41;</span> <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">7</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+values <span class="sy0">=</span> <span class="br0">&#91;</span><span class="kw2">float</span><span class="br0">&#40;</span>h.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="br0">&#41;</span><span class="br0">&#91;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">strip</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">for</span> h <span class="kw1">in</span> hdr<span class="br0">&#93;</span>
+cols<span class="sy0">,</span>rows<span class="sy0">,</span>lx<span class="sy0">,</span>ly<span class="sy0">,</span>cell<span class="sy0">,</span>nd <span class="sy0">=</span> values
+xres <span class="sy0">=</span> cell
+yres <span class="sy0">=</span> cell * -<span class="nu0">1</span>
+&nbsp;
+<span class="co1"># Load the dem into a numpy array</span>
+arr <span class="sy0">=</span> np.<span class="me1">loadtxt</span><span class="br0">&#40;</span>source<span class="sy0">,</span> skiprows<span class="sy0">=</span><span class="nu0">6</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Exclude 2 pixels around the edges which are usually NODATA.</span>
+<span class="co1"># Also set up structure for a 3x3 windows to process the slope</span>
+<span class="co1"># throughout the grid</span>
+window <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">for</span> row <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span>:
+    <span class="kw1">for</span> col <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span>:
+        window.<span class="me1">append</span><span class="br0">&#40;</span>arr<span class="br0">&#91;</span>row:<span class="br0">&#40;</span>row + arr.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> - <span class="nu0">2</span><span class="br0">&#41;</span><span class="sy0">,</span> \
+        col:<span class="br0">&#40;</span>col + arr.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> - <span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Process each cell</span>
+x <span class="sy0">=</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>z * window<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">6</span><span class="br0">&#93;</span><span class="br0">&#41;</span> \
+   - <span class="br0">&#40;</span>z * window<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">5</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">5</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">8</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> \
+  / <span class="br0">&#40;</span><span class="nu0">8.0</span> * xres * scale<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+y <span class="sy0">=</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>z * window<span class="br0">&#91;</span><span class="nu0">6</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">7</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">7</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">8</span><span class="br0">&#93;</span><span class="br0">&#41;</span> \
+   - <span class="br0">&#40;</span>z * window<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> \
+  / <span class="br0">&#40;</span><span class="nu0">8.0</span> * yres * scale<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+<span class="co1"># Calculate slope  </span>
+slope <span class="sy0">=</span> <span class="nu0">90.0</span> - np.<span class="me1">arctan</span><span class="br0">&#40;</span>np.<span class="me1">sqrt</span><span class="br0">&#40;</span>x*x + y*y<span class="br0">&#41;</span><span class="br0">&#41;</span> * rad2deg
+&nbsp;
+<span class="co1"># Calculate aspect</span>
+aspect <span class="sy0">=</span> np.<span class="me1">arctan2</span><span class="br0">&#40;</span>x<span class="sy0">,</span> y<span class="br0">&#41;</span>  
+&nbsp;
+<span class="co1"># Calculate the shaded relief</span>
+shaded <span class="sy0">=</span> np.<span class="me1">sin</span><span class="br0">&#40;</span>altitude * deg2rad<span class="br0">&#41;</span> * np.<span class="me1">sin</span><span class="br0">&#40;</span>slope * deg2rad<span class="br0">&#41;</span> \
+       + np.<span class="me1">cos</span><span class="br0">&#40;</span>altitude * deg2rad<span class="br0">&#41;</span> * np.<span class="me1">cos</span><span class="br0">&#40;</span>slope * deg2rad<span class="br0">&#41;</span> \
+       * np.<span class="me1">cos</span><span class="br0">&#40;</span><span class="br0">&#40;</span>azimuth - <span class="nu0">90.0</span><span class="br0">&#41;</span> * deg2rad - aspect<span class="br0">&#41;</span><span class="sy0">;</span>
+shaded <span class="sy0">=</span> shaded * <span class="nu0">255</span>
+&nbsp;
+<span class="co1"># Rebuild the new header</span>
+header <span class="sy0">=</span> <span class="st0">&quot;ncols        %s<span class="es0">\n</span>&quot;</span> % shaded.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+header +<span class="sy0">=</span> <span class="st0">&quot;nrows        %s<span class="es0">\n</span>&quot;</span> % shaded.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+header +<span class="sy0">=</span> <span class="st0">&quot;xllcorner    %s<span class="es0">\n</span>&quot;</span> % <span class="br0">&#40;</span>lx + <span class="br0">&#40;</span>cell * <span class="br0">&#40;</span>cols - shaded.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+header +<span class="sy0">=</span> <span class="st0">&quot;yllcorner    %s<span class="es0">\n</span>&quot;</span> % <span class="br0">&#40;</span>ly + <span class="br0">&#40;</span>cell * <span class="br0">&#40;</span>rows - shaded.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+header +<span class="sy0">=</span> <span class="st0">&quot;cellsize     %s<span class="es0">\n</span>&quot;</span> % cell
+header +<span class="sy0">=</span> <span class="st0">&quot;NODATA_value      %s<span class="es0">\n</span>&quot;</span> % NODATA
+&nbsp;
+<span class="co1"># Set no-data values</span>
+<span class="kw1">for</span> pane <span class="kw1">in</span> window:
+   slope<span class="br0">&#91;</span>pane <span class="sy0">==</span> nd<span class="br0">&#93;</span> <span class="sy0">=</span> NODATA
+   aspect<span class="br0">&#91;</span>pane <span class="sy0">==</span> nd<span class="br0">&#93;</span> <span class="sy0">=</span> NODATA
+   shaded<span class="br0">&#91;</span>pane <span class="sy0">==</span> nd<span class="br0">&#93;</span> <span class="sy0">=</span> NODATA
+&nbsp;
+<span class="co1"># Open the output file, add the header, save the slope grid</span>
+<span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>slopegrid<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+  f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+  np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> slope<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%4i&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Open the output file, add the header, save the slope grid</span>
+<span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>aspectgrid<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+  f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+  np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> aspect<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%4i&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Open the output file, add the header, save the array</span>
+<span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>shadegrid<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+  f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+  np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> shaded<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%4i&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+&nbsp;

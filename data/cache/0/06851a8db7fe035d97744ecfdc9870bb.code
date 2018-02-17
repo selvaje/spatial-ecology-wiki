@@ -1,0 +1,28 @@
+<span class="co1"># Parse KML and count placemarks</span>
+<span class="kw1">from</span> <span class="kw3">xml</span>.<span class="me1">dom</span> <span class="kw1">import</span> minidom
+kml <span class="sy0">=</span> minidom.<span class="me1">parse</span><span class="br0">&#40;</span><span class="st0">&quot;time-stamp-point.kml&quot;</span><span class="br0">&#41;</span>
+Placemarks <span class="sy0">=</span> kml.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">&quot;Placemark&quot;</span><span class="br0">&#41;</span>
+<span class="co1"># Count placemarks</span>
+<span class="kw1">print</span> <span class="kw2">len</span><span class="br0">&#40;</span>Placemarks<span class="br0">&#41;</span>
+<span class="co1"># Check the first one</span>
+<span class="kw1">print</span> Placemarks<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+<span class="kw1">print</span> Placemarks<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">toxml</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="co1"># Extract the coordinates</span>
+coordinates <span class="sy0">=</span> Placemarks<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">&quot;coordinates&quot;</span><span class="br0">&#41;</span>
+point <span class="sy0">=</span> coordinates<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">firstChild</span>.<span class="me1">data</span>
+<span class="kw1">print</span> point
+<span class="co1"># Extract x,y,z values as floats</span>
+x<span class="sy0">,</span>y<span class="sy0">,</span>z <span class="sy0">=</span> point.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot;,&quot;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> x
+<span class="kw1">print</span> y
+<span class="kw1">print</span> z
+x <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>x<span class="br0">&#41;</span>
+y <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>y<span class="br0">&#41;</span>
+z <span class="sy0">=</span> <span class="kw2">float</span><span class="br0">&#40;</span>z<span class="br0">&#41;</span>
+<span class="kw1">print</span> x<span class="sy0">,</span>y<span class="sy0">,</span>z
+<span class="co1"># Use list comprehensions for efficiency</span>
+x<span class="sy0">,</span>y<span class="sy0">,</span>z <span class="sy0">=</span> <span class="br0">&#91;</span><span class="kw2">float</span><span class="br0">&#40;</span>c<span class="br0">&#41;</span> <span class="kw1">for</span> c <span class="kw1">in</span> point.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot;,&quot;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+<span class="kw1">print</span> x<span class="sy0">,</span>y<span class="sy0">,</span>z
+&nbsp;
+&nbsp;
+&nbsp;

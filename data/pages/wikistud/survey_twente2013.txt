@@ -1,0 +1,54 @@
+====== Satisfactory survey ======
+Since 2008 we have asked our students to give us some feedback.
+<WRAP center round tip 60%>For "**Real name**" you can use an anonymous alias</WRAP>
+
+<doodle twentw2013_1| 1. Why did you attend the training?> 
+^to acquire new expertise^to improve skills^to discuss issues^no similar course found^
+</doodle>
+\\
+\\
+===== Student's interest in in open source =====
+<doodle twentw2013_2|2. Are you interested to progress in the use of Open Source tools in future?>
+^ Yes ^ No ^ 
+</doodle>
+
+<doodle twentw2013_3|3. Do you see any interest and value in using Open Source tools in your current and future job ?  >
+^ Yes ^  No ^ Little ^
+</doodle>
+
+<doodle twentw2013_4|4. Will you continue to learn one or more of these Open Source tools in the future ?>
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  AWK yes ^ AWK no ^
+</doodle>
+\\
+\\
+===== Self learning =====
+<doodle twentw2013_5|5. Do you feel able to independently learn Open Source tools? >
+^ ^ yes ^ no ^
+</doodle>
+
+<doodle twentw2013_6|6. Do you feel able to independently learn one or more of the following Open Source tools ? >
+^ ^ Bash Yes ^ Bash No ^ AWK yes ^ AWK no ^ Gdal yes ^ Gdal no ^  Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R yes ^ R no ^
+</doodle>
+\\
+\\
+===== How do you judge the training ===== 
+<doodle twentw2013_7|7. Overall, how would you rate this workshop?>
+^Extremely Useful^Very Useful^Somewhat Useful^Not Useful^
+</doodle>
+
+<doodle twentw2013_aa|8. Do you think the training was well adapted in respect of your needs, your skills and knowledge ?>
+^Advanced and too difficult^well adapted^basic and boring^
+</doodle>
+
+<doodle twentw2013_9|9. Which part of the course would you have liked to see in more in detail ? >
+^  ^ Bash ^ AWK ^ Gdal ^ Gnuplot ^ Grass ^ Qgis ^ R ^ Theory ^ Exercise ^ Exercise/ Tutorials ^ personal projects ^
+</doodle>
+
+<doodle twentw2013_10|10. The trainers were clear and prepared ?>
+^ ^ Very well ^  Yes enough prepared  ^ Not enough ^
+</doodle>
+
+<doodle twentw2013_11|11. The trainer's supervision during coding exercises was satisfactory ? >
+^ Very much ^  yes satisfactory  ^ not enough ^
+</doodle>
+

@@ -1,0 +1,14 @@
+====== The AWK syntax ======
+The awk syntax is:\\
+//awk '[pattern] {action} [pattern]' input.txt > output.txt//\\
+The awk //line// is always placed between single-quotation (') and not back-quotation (`).\\
+The awk structure is composed of //patterns// and //actions.//\\
+1. The //[pattern]// (optional feature) can be:
+  * BEGIN {action} (actions computed before reading the input).
+  * END  {action} (actions computed at the end of the input).
+2. The main action ({action}) is computed by reading the input line by line.
+The actions include commands and operations.\\
+Therefore the full awk syntax can be represented in this way:\\
+//awk 'BEGIN {action} {action} END {action}' input.txt > output.txt//\\
+in practice\\
+//awk 'BEGIN {action before the input.txt reading } {action during the input.txt reading} END {action after the input.txt reading}' input.txt > output.txt//\\

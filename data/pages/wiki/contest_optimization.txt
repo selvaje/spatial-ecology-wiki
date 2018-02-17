@@ -1,0 +1,16 @@
+==== Parameter optimization ====
+
+=== Optimize SVM parameters for CASI bands ===
+<code bash>
+   pkopt_svm -t training_casi.shp -cc 0.0001 -cc 100000 -g 0.0001 -g 100 -step 10 -v 1
+</code>
+
+=== Refine optimization of SVM parameters for CASI bands ===
+<code bash>
+   pkopt_svm -t training_casi.shp -cc 100 -cc 10000 -cc 1000 -g 0.001 -g 10 -g 0.1 -a COBYLA
+</code>
+
+<note tip>
+--ccost 7657.41 --gamma 0.186167
+</note>
+

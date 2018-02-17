@@ -1,0 +1,25 @@
+====== UAVs - Geodata acquisition and mapping ======
+{{:uav:drone.png?100 |}}
+[[https://en.wikipedia.org/wiki/Unmanned_aerial_vehicle|UAV]] (Unmanned Aerial Vehicle) or drone is an aircraft without a human pilot aboard. The flight of UAVs may operate with various degrees of autonomy: either under remote control by a human operator, or fully or intermittently autonomously, by onboard computers.\\
+
+[[http://www.dronezon.com/learn-about-drones-quadcopters/introduction-to-uav-photogrammetry-and-lidar-mapping-basics/| Quick intro to UAVs photogrammetry and lidar mapping]].
+
+===== UAV mapping for environmental monitoring, ecology and precision farming ===== 
+Prof. Salvatore Manfreda
+
+  * Potential of drone mapping
+  * Some example UAVs applications
+  * Monitoring river basin morphology with UAV
+
+=====  Open Source Drone Mapping Toolchain =====
+Dr. Stefano Casalegno\\
+
+  * An overview of Structure from Motion: [[http://www.spatial-ecology.net/ost4sem/lecture/SfM_intro.pdf|lecure]] on
+UAVs based photogrametry for 3D model reconstructions and orthmosaic.\\
+
+  * Hands-on [[uav:toolchain|tutorial]] on open source drone mapping.\\
+Case study with open hardware quadcopter (3DR robotics IRIS+), RGB and NDVI converted camera sensor and open source data processing toolchain with OpenDroneMap and more softwares.\\
+
+=====  FlyingPi =====
+[[uav:navio2|Hands on]] a new tool-chain for open source hardware and software using Linux autopilot (Navio2) on Raspberry Pi.
+

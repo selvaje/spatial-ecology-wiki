@@ -1,0 +1,73 @@
+
+<h2 class="sectionedit1" id="r_data">R data</h2>
+<div class="level2">
+
+<p>
+You can directly download data from an url and open it within an R session<br/>
+
+</p>
+<pre class="code r"> R 
+ connect.data =file(description = &quot;http://www.spatial-ecology.net/ost4semdata/Rdata/advanceRdata&quot;,open = &quot;rb&quot;)
+ load(connect.data)
+ ls()</pre>
+<ul>
+<li class="level1"><div class="li"><a href="http://www.spatial-ecology.net/ost4semdata/Rdata/try.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4semdata/Rdata/try.sh" rel="nofollow noopener">try.sh</a></div>
+</li>
+<li class="level1"><div class="li"><a href="http://www.spatial-ecology.net/ost4semdata/Rdata/advanceRdata" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4semdata/Rdata/advanceRdata" rel="nofollow noopener">advanceRdata</a>
+An R &#039;data.frame&#039; inclusive of 6506 obs. of  78 variables concerning plants/ bioclimate factors relationships</div>
+</li>
+</ul>
+
+<p>
+on gisvm you find this data : ~/ost4sem/data/Rdata/advanceRdata
+</p>
+
+</div>
+<!-- EDIT1 SECTION "R data" [1-588] -->
+<h1 class="sectionedit2" id="errata_corrige_data">Errata corrige Data</h1>
+<div class="level1">
+
+<p>
+<a href="http://www.spatial-ecology.net/ost4sem/data" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/data" rel="nofollow noopener"> Download data </a>
+</p>
+
+</div>
+<!-- EDIT2 SECTION "Errata corrige Data" [589-690] -->
+<h2 class="sectionedit3" id="error_in_files">Error in files</h2>
+<div class="level2">
+
+<p>
+If you look at  folder ~/ost4sem/exercise/basic<em>adv</em>r
+</p>
+
+<p>
+You can see data format type = FILENAME.R.pdf <br/>
+
+</p>
+<div class="notewarning">.R.pdf is an error ! correct file name is *.R
+</div>
+<p>
+To change from .R.pdf into .R you can run the following commands <br/>
+
+</p>
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_r
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.R.pdf ; <span class="kw1">do</span> <span class="kw3">echo</span> <span class="kw2">cp</span> <span class="re1">$file</span> <span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$file</span> .pdf<span class="sy0">`</span> ; <span class="kw1">done</span>  <span class="co0"># to see what is going to be performed</span>
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.R.pdf ; <span class="kw1">do</span> <span class="kw2">cp</span> <span class="re1">$file</span> $<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .pdf<span class="br0">&#41;</span> ; <span class="kw1">done</span> </pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Error in files" [691-1189] -->
+<h1 class="sectionedit4" id="download_data">Download Data</h1>
+<div class="level1">
+
+<p>
+ <a href="http://www.spatial-ecology.net/sharing/outgoing/geo_reference.tif" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/sharing/outgoing/geo_reference.tif" rel="nofollow noopener">  geo_reference.tif </a>
+</p>
+
+</div>
+<!-- EDIT4 SECTION "Download Data" [1190-] -->

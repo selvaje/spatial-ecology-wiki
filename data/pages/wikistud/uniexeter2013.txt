@@ -1,0 +1,36 @@
+====== Seminar on open source GIS with R and Quantum Gis ======
+Friday June 14 2013, 9:00-12:00
+
+===== Introduction to Quantum Gis =====
+**Dr Stefano Casalegno** \\
+9:00 - 10:00\\
+  - Quick start guide of QGIS
+  - Hands-on : importing rasters and vector files
+  - Hands-on : import, reproject, clipp and exporting a file
+  - Accessing GRASS and GDAL/OGR plugins
+  - Questions and answers 
+\\
+coffee break
+\\
+\\
+===== Introduction to spatial data processing in R =====
+**Dr Jonathan Bennie**\\
+10:00 - 11:00\\
+  - Quick intro to spatial data processing in R 
+  - //raster// and //rgdal// libraries
+  - Hands-on : importing rasters and vector files
+  - Hands-on : example of model/  data processing
+  - Questions and answers 
+
+\\
+===== Questions and answers =====
+11:00 - 12:00\\
+Bring your data we can discuss how to process them.\\
+\\
+
+<note important>
+This is a practical training. To get prepared please please install Qgis and R in your portable computer.\\
+  * [[http://www.qgis.org/| install  Qgis]]
+  * [[http://www.r-project.org/| install R]]
+</note>
+

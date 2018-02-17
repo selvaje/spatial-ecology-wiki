@@ -1,0 +1,52 @@
+====== Exercise 8c: validating classification results ======
+The following tools will be used in this exercise:\\
+pktools: pkeditogr, pkdiff\\
+GDAL/OGR: ogr2ogr
+
+__Create independent SQLite vector for validation of forest (we use Cornwall admin vector)__
+
+<code bash>
+ogr2ogr -f "SQLite" ${OUTPUTDIR}/exercise8/cornwall_validation_forest.sqlite ${OUTPUTDIR}/exercise1/cornwall_forest_3035.shp
+</code>
+
+__Add label for type Integer for forest: 1__
+
+<code bash>
+pkeditogr -i ${OUTPUTDIR}/exercise8/cornwall_validation_forest.sqlite -an label -at Integer -av 1 -f SQLite -o ${OUTPUTDIR}/exercise8/validation_forest_label.sqlite
+</code>
+
+__Create a SQLite vector with single attribute 'landuse' and retain selection of non-forest polygons that we did not use yet for training: 'reservoir', 'retail', 'village_green','farmland', 'farmyard', 'recreation_ground', 'railway', 'allotments', 'cemetery', 'quarry', 'farm', 'military', 'construction', 'field', 'orchard', 'paddock'__
+
+<code bash>
+ogr2ogr -f "SQLite" ${OUTPUTDIR}/exercise8/osm_validation_nonforest.sqlite ${OUTPUTDIR}/exercise7/osm_multipolygons.sqlite -where "landuse in ('reservoir', 'retail', 'village_green','farmland', 'farmyard', 'recreation_ground', 'railway', 'allotments', 'cemetery', 'quarry', 'farm', 'military', 'construction', 'field', 'orchard', 'paddock')" -select 'landuse'
+</code>
+
+__Now add label of type Integer for non-forest: 2__
+
+<code bash>
+pkeditogr -i ${OUTPUTDIR}/exercise8/osm_validation_nonforest.sqlite -an label -at Integer -av 2 -f SQLite -o ${OUTPUTDIR}/exercise8/validation_nonforest_label.sqlite
+</code>
+
+__Merge the validation vectors for forest and non-forest__
+
+<code bash>
+ogr2ogr -f SQLite ${OUTPUTDIR}/exercise8/validation.sqlite ${OUTPUTDIR}/exercise8/validation_forest_label.sqlite
+</code>
+
+<code bash>
+ogr2ogr -f SQLite -update -append ${OUTPUTDIR}/exercise8/validation.sqlite ${OUTPUTDIR}/exercise8/validation_nonforest_label.sqlite
+</code>
+
+__Validate the forest non-forest map:__
+
+<code bash>
+pkdiff -i ${OUTPUTDIR}/exercise8/19990724_L7E_IM_FMAP.tif -ref ${OUTPUTDIR}/exercise8/validation.sqlite -cm -nodata 251 -nodata 254 -nodata 255 -o ${OUTPUTDIR}/exercise8/validation_output.sqlite -f SQLite
+</code>
+
+<note warning>
+Polygons will be validated in their centroid points only
+</note>
+
+<note tip>
+You can use pkextract to create point data from polygons
+</note>

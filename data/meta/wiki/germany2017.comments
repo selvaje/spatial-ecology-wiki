@@ -1,0 +1,23 @@
+a:5:{s:5:"title";s:32:" Questionnaire Discussion Forum ";s:6:"status";i:1;s:6:"number";i:1;s:8:"comments";a:1:{s:32:"330b42a184e3f2b66c7a424c0c12be36";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test152.88.142.147";s:4:"name";s:18:"Mathias Kuemmerlen";s:4:"mail";s:20:"mathias@escazu.co.cr";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1494833178;}s:3:"raw";s:483:"Move away from ArcGIS and start using GRASS GIS, particularly for batch processing larger datasets.
+
+Process larger datasets in raster to preform spatial and statistical analysis efficiently.
+
+Apply R packages (essentially SDM packages) at larger spatial scales and finer spatial resolutions (= lots of data) and run them faster and efficiently.
+
+Use standard hardware to run demaning R scripts involving spatial data, pre-processing, models, their analysis and plotting the results.";s:5:"xhtml";s:521:"
+<p>
+Move away from ArcGIS and start using GRASS GIS, particularly for batch processing larger datasets.
+</p>
+
+<p>
+Process larger datasets in raster to preform spatial and statistical analysis efficiently.
+</p>
+
+<p>
+Apply R packages (essentially SDM packages) at larger spatial scales and finer spatial resolutions (= lots of data) and run them faster and efficiently.
+</p>
+
+<p>
+Use standard hardware to run demaning R scripts involving spatial data, pre-processing, models, their analysis and plotting the results.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"330b42a184e3f2b66c7a424c0c12be36";}}s:11:"subscribers";N;}

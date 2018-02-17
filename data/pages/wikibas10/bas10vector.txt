@@ -1,0 +1,115 @@
+====== TITLE: Vector data manipulation ======
+\\
+===== INTRODUCTION =====
+The methodology is to work with vector data.
+The goal of this work is to create the cross section profile from vector data. This profile is presented as a 3D graph. 
+\\
+===== METADATA =====
+
+==== Vector Data ====
+\\ Name: section
+\\ Geometry type: line
+\\ Description: straight lines that identify the cross sections
+\\ Attribute: Id cross section 
+\\
+\\ Name: isoipse
+\\ Geometry type: line
+\\ Description: lines that identify the contours extracted from a map 
+\\ Attribute: z (elevation) 
+\\
+\\
+{{:wiki:bas10_vect_input.png?600|}}
+===== METHOD =====
+\\ The goal is to create a point vector intersecting two vector lines. The first vector line contains some contours digitized from a map using QGIS and the second one contains some cross sections that are only straight lines. The methodology uses one GRASS script and one AWK script.
+\\ 
+The main steps are:
+\\ 
+1) Combine together two vector lines (contours and cross sections) to create one composite vector map and fix the topology.
+\\ 
+2) Extract vector segments from cross sections vector lines and create points.
+\\ 
+3) Convert points GRASS vector in binary format to a GRASS vector in txt format;
+\\ 
+3) Define distance between the the points for each cross section;
+\\ 
+4) Create tables and graphs for the cross section profiles;
+\\ 
+
+===== DATA IMPORT =====
+<code bash>
+v.in.ogr -o -w dsn=/home/user/sezione/curve_di_livello.shp output=isoipse min_area=0.0001 snap=-1 --overwrite
+v.in.ogr -o -w dsn=/home/user/sezione/sezioni.shp output=section min_area=0.0001 snap=-1 --overwrite
+</code>
+\\
+===== DATA PROCESSING =====
+\\
+
+<code bash>
+# Name: proc_grass.sh
+# Vector data manipulation: vector lines interpolation
+# The goal is to create a point vector intersecting two vector lines. The first vector line contains some contours digitized from a map and the second one contains some cross sections that are only straight lines.
+
+# Combine together two vector lines "isoipse" and "section" to create one composite vector map "iso_sec_patch.
+v.patch -e input=isoipse@cross_section,section@cross_section output=iso_sec_patch --overwrite
+
+# Automatically fix topology of vector lines "iso_sec_patch" and save as "iso_sec_clean"
+v.clean input=iso_sec_patch@cross_section output=iso_sec_clean type=line tool=break --overwrite
+
+# Select vector segments "iso_sec_clean" and create a new vector map containing only the selected objects.
+v.extract input=iso_sec_clean@cross_section output=sec_select type=line layer=1 where=z=0 new=-1 --overwrite
+
+# Create points along input lines "sec_select". 
+v.to.points -v input=sec_select@cross_section output=point_sec_select type=line llayer=1 dmax=-1 --overwrite
+
+# Spatial join between point vector "point_sec_select" and vector lines "isoipse".
+v.distance from=point_sec_select@cross_section to=isoipse@cross_section from_type=point to_type=line from_layer=1 to_layer=1 dmax=0.1 dmin=-1 upload=to_attr column=z to_column=z --overwrite
+
+# Convert the "point_sec_select" GRASS vector in binary format to a GRASS vector in txt format "point_sec_select.txt".
+v.out.ascii input=point_sec_select@cross_section output=/home/user/ost4sem/locations/gauss_boaga_est/cross_section/point_sec_select.txt format=point fs=| dp=8 layer=1
+</code>
+<code bash>
+#   Sort points for section and X
+awk -F "|" '{ print $1, $2, $3, $4}' point_sec_select.txt | sort -g -k 1,1 -k 3,3  > punti.txt
+
+#   Remove duplicated points in the cross section
+awk '{if($1!=sez || $3!=x || $4!=y) print $0; sez=$1; x=$3; y=$4}' punti.txt > punti_singoli.txt
+
+#   Calculate distance between two points
+awk '{if(sez==$1) {print sez, sqrt((x-$3)^2+(y-$4)^2)+p, $2, sez*100} else {print $1, 0, $2, $1*100; p=0}; sez=$1; x=$3; y=$4}' punti_singoli.txt > sezioni.txt
+</code>
+
+
+\\
+===== RESULTS and DISCUSSION =====
+<code bash>
+# display graphic
+cd  ~/ost4sem/cross_section/output
+gnuplot <<EOF
+#!/usr/local/bin/gnuplot
+set title "Tronco fluviale"
+set hidden3d
+set dgrid3d 30,30
+splot "sezioni.txt" u 2:4:3 with lines ti ""
+quit
+EOF
+</code>
+
+{{:wiki:graphic.jpg|}}
+
+<code bash>
+# create pdf
+cd  ~/ost4sem/cross_section/output
+gnuplot <<EOF
+#!/usr/local/bin/gnuplot
+set terminal postscript eps color
+set title "Tronco fluviale"
+set hidden3d
+set dgrid3d 30,30
+set output '~/ost4sem/cross_section/output/Tronco_fluviale.ps'
+splot "sezioni.txt" u 2:4:3 with lines ti ""
+quit
+EOF
+echo create the pdf
+ps2pdf ~/ost4sem/cross_section/output/Tronco_fluviale.ps ~/ost4sem/cross_section/output/Tronco_fluviale.pdf
+echo finish
+</code>

@@ -1,0 +1,166 @@
+====== Advance bash scripts ======
+An advance bash script is a combination of commands which allows you to perform a complicated task.
+
+
+Exercise:\\
+Script: open by kate [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_bash/adv_bash.sh | ~/ost4sem/exercise/basic_adv_bash/adv_bash.sh ]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_bash/aver_month_nuts3_fire.asc | ~/ost4sem/exercise/basic_adv_bash/aver_month_nuts3_fire.asc ]]\\
+Directory: ~/ost4sem/exercise/basic_adv_bash\\
+
+Change directory and create a little file from a large file:
+<code bash>
+kate ~/ost4sem/exercise/basic_adv_bash/adv_bash.sh &
+cd ~/ost4sem/exercise/basic_adv_bash/
+head -1000 aver_month_nuts3_fire.asc > input.txt 
+</code>
+
+===== If condition in a for loop =====
+As for the previews exercise, we want to automatically count how many observations exist from year 2000 to 2008 in input.txt file, but not for the year 2003.
+For this you should use the serial number list loop function with the if condition.
+<code bash>
+rm no2003output.txt
+for ((year=2000 ; year<=2008 ; year++)); do
+if [ $year != 2003 ] ; then
+    grep " $year " aver_month_nuts3_fire.asc  | wc -l  >> no2003output.txt      
+fi
+done
+</code>
+I need to know in each year which was the biggest fire and print it.
+I can use the sort command and get the largest fire in the last position.
+<code bash>
+for ((year=2000 ; year<=2008 ; year++)); do
+if [ $year != 2003 ] ; then
+    grep " $year " aver_month_nuts3_fire.asc  | sort -k 5,5 -g | tail -1       
+fi
+done
+</code>
+
+**Exercise:**\\
+I would like perform the same loop but excluding the year from 2002 to 2004. (try do not use != simbol).\\
+Use the "man test" to see the option for the if condition.\\
+Googled "if statement with multiple condition bash".
+
+
+===== Use of predefined user-variables by invoking a Bash Script (Do it by yourself) =====
+Create a script that needs user interaction during the running process.\\
+Open a new kate and copy/paste the following commands
+
+<code bash>
+echo -n "Starting the process from year  = "
+read yearstart
+
+echo -n "Ending the process in year  = "
+read yearend
+
+for ((year=$yearstart ; year<=$yearend ; year++)); do
+    grep " $year " $1  | wc -l       
+done > $2
+</code>
+Save it  ( year_events.sh ) in the current directory and run it choosing input.txt (aver_month_nuts3_fire.asc) and output.txt, and reply to the questions.
+<code bash>
+sh year_events.sh input.txt output.txt 
+</code>
+Of course year_events.sh can be called from a bigger script and can be used several times.\\
+Open a new kate documents and copy/paste the following commands:
+<code bash>
+bash year_events.sh aver_month_nuts3_fire.asc output1.txt  <<EOF
+1990
+1999
+EOF
+
+bash year_events.sh aver_month_nuts3_fire.asc output2.txt  <<EOF
+2000
+2008
+EOF
+</code>
+
+Save it  ( more_year_events.sh ) in the current directory and run it:
+<code bash>
+sh more_year_events.sh
+</code>
+Be aware that sometimes the use of the command //sh// and //bash// can be different.\\
+\\
+These two examples show the use of a //master// script //(macro script)// that includes a little one//(micro script)//.
+The micro scripts are done to standardise operations that need to be re-run several times to different files (calculate the average).\\
+On the other hand the macro file tells which files and setting need to be used to run the micro one.\\
+In the study cases this is often reported. 
+
+===== Checking the flow statement =====
+How can I check that the results are correct and that i'm using the correct variables?
+By printing the variable during the process and if you need also in the file.
+<code bash>
+rm no2003output.txt
+for ((year=2000 ; year<=2008 ; year++)); do
+if [ $year != 2003 ] ; then
+    echo year $year 
+    grep " $year " aver_month_nuts3_fire.asc  | wc -l     
+fi
+done > no2003output.txt
+</code>
+
+I can also run manually a command and compare the results.
+<code bash>
+grep " 2007 " aver_month_nuts3_fire.asc  | wc -l 
+grep " 2002 " aver_month_nuts3_fire.asc  | wc -l 
+</code>
+
+How many seconds needed to run a process:
+
+<code bash>
+time for ((year=2000 ; year<=2008 ; year++)); do
+if [ $year != 2003 ] ; then
+    echo year $year 
+    grep " $year " aver_month_nuts3_fire.asc  | wc 
+fi
+done
+date
+</code>
+
+===== Debugging =====
+The shell reports message and status symbols in case of error syntax, incorrect commands or inexistent files.\\
+Here are reported the most common errors using the example:
+<code bash>
+for ((year=2000 ; year<=2008 ; year++)); do
+    grep " $year " aver_month_nuts3_fire.asc  | wc -l     
+done
+</code>
+Run the script and see the error results.\\
+\\
+The loop was not close and the prompt ($) is not appearing. The shell is expecting another command (>).\\
+<code bash>
+for ((year=2000 ; year<=2008 ; year++)); do
+    grep " $year " aver_month_nuts3_fire.asc  | wc -l
+</code>
+\\
+Syntax error:  try to find and test it. Search for example on the Internet.\\
+<code bash>
+for ( (year=2000 ; year<=2008 ; year++)); do
+    grep " $year " aver_month_nuts3_fire.asc  | wc -l  
+done   
+</code>
+//bash: syntax error near unexpected token `(' //\\
+The error is near the brackets. Often it is just a space!\\
+\\
+Bash command error: use //apropos// for searching the operation that you need.\\
+<code bash>
+for ((year=2000 ; year<=2008 ; year++)); do
+    grap " $year " aver_month_nuts3_fire.asc  | wc -l     
+done
+</code>
+//bash: grap: command not found.//\\
+\\
+Invalid command option: read carefully the //man command//\\
+<code bash>
+for ((year=2000 ; year<=2008 ; year++)); do
+    grep " $year " aver_month_nuts3_fire.asc  | wc -k
+done
+</code>
+//wc: invalid option -- 'k'//\\
+\\
+The file or directory does not exist: search for the correct file and directory, using //cd// and //pwd//\\ 
+<code bash>
+for ((year=2000 ; year<=2008 ; year++)); do
+    grep " $year " ../aver_month_nuts3_fire.asc  | wc -l     
+done
+</code>
+//grep: ../aver_month_nuts3_fire1.asc: No such file or directory.//\\

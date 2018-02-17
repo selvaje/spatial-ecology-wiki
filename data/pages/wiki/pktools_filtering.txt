@@ -1,0 +1,4 @@
+===== Masking and filtering =====
+  * [[exercise6a | exercise 6a]]: Create the cloud mask with the thresholds found in exercise 5a
+  * [[exercise6b | exercise 6b]]: Morphological filtering
+  * [[exercise6c | exercise 6c]]: Shadow masking using digital surface model

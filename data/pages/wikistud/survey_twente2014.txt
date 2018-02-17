@@ -1,0 +1,76 @@
+====== Satisfactory survey ======
+Since 2008 we have asked our students to give us some feedback.
+<WRAP center round tip 60%>For "**Real name**" you can use an anonymous alias</WRAP>
+
+
+===== Student's interest in in open source =====
+<doodle twentw204j_2|2a. After one month of use Open Source tools are you still interested to use in the future?>
+^ Yes ^ No ^ 
+</doodle>
+
+<doodle twentw204j_3|3a. After one month of use Open Source do you see any interest and value in using Open Source tools in your current and future job ?  >
+^ The same as before ^  Now less than before ^ Now more than before ^
+</doodle>
+
+<doodle twentw2014j_4|4a. After one month of use Open Source tools which one you are going to use in the future?>
+^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ R yes ^ R no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  AWK yes ^ AWK no ^ PKTOOLS yes ^ PKTOOLS no ^
+</doodle>
+\\
+\\
+===== Self learning =====
+<doodle twentw2014j_5|5a. After one month of use Open Source do you feel able to independently learn Open Source tools? >
+^ yes better than before ^ yes like before ^ no ^
+</doodle>
+
+<doodle twentw2014j_6|6a. Have you improved in one or more of the following Open Source tools ? >
+^ Bash Yes ^ Bash No ^ AWK yes ^ AWK no ^ Gdal yes ^ Gdal no ^  Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R yes ^ R no ^ PKTOOLS yes ^ PKTOOLS no ^
+</doodle>
+\\
+\\
+===== PKTOOLS =====
+<doodle twentw2014j_9|PK1. Which part of the PKTOOLS would you have liked to see in more in detail?>
+^ image filtering ^ image subsetting/merging/compositing (pkrop/pkmosaic) ^ image extraction (vector overlay) ^ image classification ^   ....   ^
+</doodle>
+
+<doodle twentw2014j_9|PK2. Did you see potential in the use of PKTOOLS?>
+^ Yes and I will use ^ Yes but i will not use ^ No ^    ....   ^
+</doodle>
+
+<doodle twentw2014j_9|PK3. Is the help info understandable?>
+^ Yes ^ Yes but need to be improved ^ Is not understandable ^    ....   ^
+</doodle>
+
+
+
+===== How do you judge the training ===== 
+<doodle twentw2014j_7|7a. Overall, how would you rate the second week of the workshop?>
+^ Extremely Useful^ Very Useful ^ Somewhat Useful ^ Not Useful ^
+</doodle>
+
+<doodle twentw2014j_aa|8a. Do you think the training in second week was well adapted in respect of your needs, your skills and knowledge?>
+^ Advanced and too difficult ^ well adapted^basic and boring ^
+</doodle>
+
+<doodle twentw2014j_10|10a. In the second week the trainer was clear and prepared?>
+^ ^ Very well ^  Yes enough prepared  ^ Not enough ^
+</doodle>
+
+<doodle twentw2014j_11|11a. The trainer's supervision during coding exercises was satisfactory? >
+^ Very much ^  yes satisfactory  ^ not enough ^
+</doodle>
+
+===== Suggestions for future courses ===== 
+
+<doodle twentw2014j_11|12a. If you were going to re-attend the course you will opt for which one of the time slot? >
+^ Only one week ^ Two consecutive weeks ^ Two weeks with one month of self learning ^
+</doodle>
+
+<doodle twentw2014j_11|12a. If we organize a course in advance programming (parallel process, working in tiles, C++ language) would you like to attend it? >
+^ Yes but only 2 days ^ Yes but only 3 days ^ Yes but only 4 days ^ Yes but only 5 ^ Not at all ^
+</doodle>
+
+<doodle twentw2014j_11|12a. In the course the two sections "listening/doing pre-existing exercises" and "working by your self" was correctly balanced? >
+^ Yes, well balance ^ No, I would like more time for working with my data ^ No, I would like more time for doing pre-existing exercises ^
+</doodle>
+
+

@@ -1,0 +1,51 @@
+====== Registration List ======
+\\
+Consider that the registration is on a first come, first served basis and it will be closed when it reaches 25 participants.
+\\
+If your name is not in the list means that the registration is not completed (e.g. questionnaire missing and/or waiting for pay-pal transfer).\\
+\\
+| ID | Participant | Affiliation | Country | Status of the Registration | Pay-pal Transfer | Questionnaire |
+| 1 | Danica Taber | ucsb.edu | USA | Accepted | Done | Done | 
+| 2 | Sara Baguskas | ucsb.edu | USA | Accepted | Done | Done |
+| 3 | Lacey Hughey | ucsb.edu | USA | Accepted | Pending | Done |
+| 4 | Teresa Bohner | ucr.edu | USA | Accepted | Done | Done |
+| 5 | Nicole Molinari | ucsb.edu | USA | Accepted | Pending - CreditCard | Pending |
+| 6 | Shen Jie | ucsc.edu | USA | Accepted | Done | Done |
+| 7 | Daisuke Watanabe | ucsb.edu | USA | Accepted | Done | Done |
+| 8 | Nahm Lee | Santa Clara Valley Water District | USA | Accepted | Done | Done |
+| 9 | Tatiana Kuplich | ucsb.edu | USA | Accepted | Done | Done |
+| 10 | Christian Eggleton | Forester's Co-Op | USA | Accepted | Done | Done |
+| 11 | Susan Cousineau | Corbeau Ecological Research and Design | Canada | Accepted | Done | Done |
+| 12 | Brandon Doheny | UCSB | USA | Accepted | Done | Done |
+| 13 | Rosa goodman | Yale | USA | Accepted | Done | Done |
+| 14 | Manuel Gonzalez Rivero | University of Queensland | Australia | Accepted | Done | Done |
+| 15 | Bart Kowalski | CSUMB - Chenega Support Services | USA | Accepted | Done | Done |
+| 16 | Thomas Lamy  | UCSB | USA | Accepted | Done | Done |
+| 17 | Remi Bardou | UCLA | USA | Accepted | Done | Done |
+| 18 | Gary Hatfield | SDSU | USA | Accepted | Done | Done |
+| 19 | Delphine Renard | McGill University | Canada  | Accepted | Done | Done |
+| 20 | Karina Yager | NASA Goddard Space Flight Center | USA | Accepted | Done | Done |
+| 21 | Mariano Garcia Alonso | University of Leicester | USA | Accepted | Done | Done |
+| 22 | Nicholas P. Kohler | University of Oregon | USA | Accepted | Done | Done |
+| 23 | Indy Hurt | https://mapzen.com/ | USA | Accepted | Done | Done |
+| 24 | Geoffrey Johnson | University of Oregon | USA | Accepted | Done | Done |
+| 25| Geoffrey Andrew Fricker | UCLA/NASA-JPL | USA | Accepted | Done | Done |
+| 26 | Iván González-Garzón  | Pontificia Universidad Javeriana | Colombia | Accepted | Pending - CreditCard | Done |
+| 27 | Nancy Thomas | UC Berkeley | USA | Accepted | Done | Done | 
+| 28 | Caroline Jablonicky | UCSB | USA | Accepted | Done | Done |
+\\
+~~DISCUSSION | Participant’s background and research field~~
+\\
+====== Registration Waiting List ======
+\\
+Participants under the "Pending Status" will be move to the "Registration Waiting List" if they do not complete the registration procedure. 
+\\
+| ID | Participant | Affiliation | Country | Status of the Registration | Pay-pal Transfer | Questionnaire |
+| 1 | Karis Tenneson | University of Washington | USA | Accepted | Pending | Pending |
+| 3 | Dan Slayback | NASA | USA | Pending | Pending | Pending |
+| 4 | Erik Franklin | Institute of Marine Biology | Hawaii | Accepted | Pending  | Pending |
+| 5 | Shane Fairchild | berkeley | USA | Pending | Pending | Pending | 
+| 6 | Gregg Verutes | stanford | USA | Pending | Done | Pending |
+\\
+[[wiki:SBarbRegist | Registration fees]]\\
+[[wiki:SBarbregist_quest | Questionnaire]]\\

@@ -1,0 +1,102 @@
+====== Questionnaire ======
+Summer School: Spatio-temporal data analyses using free and open source software held at the University of Basilicata in Matera, Italy from the 6-10 June 2016
+
+**The questionnaire below will help us to set a better course syllabus**. 
+\\
+
+Please spend a moment to answer:\\
+  * In the **Real name** column, write your name
+  * Select one answer
+  * Click on submit
+
+===== Programming knowledge level =====
+
+<doodle MATERA1_2016 | 1M161) Do you know any programming or scripting language? >
+^ No  ^ Yes but very basic level ^ Yes  ^ 
+</doodle>
+
+----
+
+<doodle MATERA1_2016 | 2M161) What is your level of Linux Bash programming ? >
+^ Never used ^ I know very basic commands ^ I can write simple scripts ^ I am a very experienced user (1) ^ 
+</doodle>
+
+<sup>1</sup> I can execute bash scripts or combine several languages using bash or use xargs or other methods for multicore processing.
+
+----
+
+<doodle MATERA1_2016 | 3M161) What is your level of Python programming ? >
+^ Never used ^ I can write simple scripts (1) ^ I am a very experienced user (2) ^ I use python for web development applications ^
+</doodle>
+
+<sup>1</sup> I can use //for loop// and //if condition// in python.\\
+<sup>2</sup> I can work with matrix and do complex math operation, or use numpy scipy.\\
+
+----
+
+<doodle MATERA1_2016 | 4M161) What is your knowledge of R language & environment for statistical computing and graphics  >
+^ Never used ^ Only graphical user interface ^ I can write basic scripts (1) ^ I can write complex scripts (2) ^ 
+</doodle>
+<sup>1</sup> I can write basic R scripts using //if condition// and //for loop//. \\
+<sup>2</sup> I am familiar with //rgdal// or //raster// libraries, or write my own functions and use libraries for parallel processing.\\
+
+----
+
+<doodle MATERA1_2016 | 5M161) What is your level of AWK  programming ? >
+^ Never used ^ Basic knowledge (1) ^ I am an experienced user (2) ^ 
+</doodle>
+
+<sup>1</sup> I just use //print $1// and some //if conditions// in AWK.\\
+<sup>2</sup> I use AWK //for loops// , indexing and associative array.\\
+
+----
+
+<doodle MATERA1_2016 | 6M161) What is your knowledge of GRASS GIS >
+^ Never used ^ Only graphical user interface ^ I can write basic scripts (1)^ I can write complex scripts (2)^ 
+</doodle>
+
+<sup>1</sup> I can write basic scripts combining the different GRASS commands.\\
+<sup>2</sup> I write complex scripts, build Location/Mapset on the fly, set GRASS variable for batch processing using python or bash.\\
+
+----
+
+<doodle MATERA1_2016 | 7M161) What is your knowledge of GDAL/OGR >
+^ Never used ^ Only graphical user interface (Qgis)^ I can write basic scripts (1) ^ I am an experienced user (2)^ 
+</doodle>
+
+<sup>1</sup> I can use GDAL/OGR commands.\\
+<sup>2</sup> I combine GDAL/OGR in scripting routines using BASH or Python or R.\\
+
+----
+
+<doodle MATERA1_2016 | 8M161) What is your knowledge of PKTOOLS >
+^ Never used ^ Only graphical user interface (Qgis)^ I can write basic scripts (1) ^ I am an experienced user (2)^ 
+</doodle>
+
+<sup>1</sup> I can use PKTOOLS commands.\\
+<sup>2</sup> I combine PKTOOLS in scripting routines using BASH or Python or R.\\
+
+----
+
+<doodle MATERA1_2016 | 9M161) What is your knowledge in GeoCoding in HPC? >
+^ Never used ^ Used Amazon cloud or Microsoft Azure ^ I use multicore processing (1) ^ I use computer cluster (2) ^ 
+</doodle>
+
+----
+
+<sup>1</sup> Example: I can split R, GRASS or GDAL scripting in multicore or use bash xargs on my laptop or desktop.\\
+<sup>2</sup> I am familiar with the use of //ssh// sessions and batch-queuing system such as SGE or Slurm.
+
+----
+
+<doodle MATERA1_2016 | 10M161) Do you have experience in one or more of the following software (if yes select it)?>
+^ ArcGis ^ ERDAS ^ ENVI ^ ERMapper ^ IDL ^ Matlab ^ AutoCad ^ SPSS ^
+</doodle>
+\\
+Please post comments/suggestions or what you would like to achieve with this course. **Remember to write your name in the "real-name box"** in order to show who wrote the post.
+
+
+~~DISCUSSION | Questionnaire Discussion Forum ~~
+
+
+

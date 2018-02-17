@@ -1,0 +1,14 @@
+====== Pipe ======
+The “|” pipe metacharacter enables you to run a set of chained processes.\\
+
+To understand lets do an example creating a temporal file called tmp.txt and counting how many lines there are in the file.  
+
+<code bash>
+ls /usr/bin > tmp.txt
+wc -l tmp.txt
+</code>
+The same can be written
+<code bash>
+ls /usr/bin | wc -l
+</code>
+without creating an intermediate file.

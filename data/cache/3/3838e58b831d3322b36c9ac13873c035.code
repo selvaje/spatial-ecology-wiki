@@ -1,0 +1,2 @@
+<span class="re2">var</span>=<span class="sy0">`</span><span class="kw2">grep</span> <span class="st0">&quot;2004-&quot;</span> point_data.txt <span class="sy0">|</span> <span class="kw2">wc</span> -l<span class="sy0">`</span>
+<span class="kw3">echo</span> <span class="re1">$var</span>

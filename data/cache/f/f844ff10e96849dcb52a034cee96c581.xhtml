@@ -1,0 +1,90 @@
+
+<h2 class="sectionedit1" id="open_source_toolchain_for_drone_mapping">Open Source Toolchain for Drone Mapping</h2>
+<div class="level2">
+
+<p>
+The steps below provide a case study example on how to use low cost open hardware and open software for collecting aerial photographs and derive a map. Specifically we list and explain:
+</p>
+<ul>
+<li class="level1"><div class="li"> Assembling hardware</div>
+</li>
+<li class="level1"><div class="li"> Installing software</div>
+</li>
+<li class="level1"><div class="li"> Prepare an autopilot survey mission</div>
+</li>
+<li class="level1"><div class="li"> Carry out the mission</div>
+</li>
+<li class="level1"><div class="li"> Process data </div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1 SECTION "Open Source Toolchain for Drone Mapping" [1-372] -->
+<h3 class="sectionedit2" id="hardware_setting_for_flying_mission">Hardware setting for flying mission</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:uav:carriers" class="wikilink1" title="wiki:uav:carriers"> UAVs </a> </div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:uav:sensors" class="wikilink1" title="wiki:uav:sensors"> Sensors </a> for environmental monitoring, conservation, agriculture, site planning, archeology, building site.</div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:uav:tchain_autotrigger" class="wikilink1" title="wiki:uav:tchain_autotrigger"> Connection UAV to sensor</a>. </div>
+</li>
+<li class="level1"><div class="li"> <a href="/dokuwiki/doku.php?id=wiki:uav:tchain_batteries" class="wikilink1" title="wiki:uav:tchain_batteries">Batteries </a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT2 SECTION "Hardware setting for flying mission" [373-697] -->
+<h3 class="sectionedit3" id="software_installation">Software installation</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> CHDK, STICK <a href="/dokuwiki/doku.php?id=wiki:uav:tchain_camerasoft" class="wikilink1" title="wiki:uav:tchain_camerasoft"> hands on camera software</a> and scripting requirements for automatic data capture.</div>
+</li>
+<li class="level1"><div class="li"> Mission planner (ground station software) on the OSGeo-live virtual machine. - <a href="/dokuwiki/doku.php?id=wiki:uav:tchain_missionplanner" class="wikilink1" title="wiki:uav:tchain_missionplanner"> hands on Mission Planner</a>.</div>
+</li>
+<li class="level1"><div class="li"> Parametrization setting to <a href="http://www.tuffwing.com/support/pixhawk_camera_trigger_cable.html" class="urlextern" target="blanc" title="http://www.tuffwing.com/support/pixhawk_camera_trigger_cable.html" rel="nofollow noopener">trigger the camera with the pixhawk autopilot</a>.</div>
+</li>
+<li class="level1"><div class="li"> Survey mission definition - <a href="/dokuwiki/doku.php?id=wiki:uav:tchain_3drtower" class="wikilink1" title="wiki:uav:tchain_3drtower"> hands on 3DR Tower</a> an alternative ground station software.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT3 SECTION "Software installation" [698-1275] -->
+<h3 class="sectionedit4" id="data_acquisition">Data acquisition</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Setting ground georeference points.</div>
+</li>
+<li class="level1"><div class="li"> Setting reflectance reference colour targets for later image parametrisation.</div>
+</li>
+<li class="level1"><div class="li"> Double check hardware functioning.</div>
+</li>
+<li class="level1"><div class="li"> UAV flight mission <a href="/dokuwiki/doku.php?id=wiki:uav:tchain_onthefield" class="wikilink1" title="wiki:uav:tchain_onthefield">on the field</a>.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT4 SECTION "Data acquisition" [1276-1532] -->
+<h3 class="sectionedit5" id="uav_data_processing">UAV Data processing</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Downloading images </div>
+</li>
+<li class="level1"><div class="li"> Downloading log files from pixhawk - <a href="/dokuwiki/doku.php?id=wiki:uav:tchain_logfiles" class="wikilink1" title="wiki:uav:tchain_logfiles"> hands on log files</a></div>
+</li>
+<li class="level1"><div class="li"> Geotagging images with log files - <a href="/dokuwiki/doku.php?id=wiki:uav:tchain_geotaggin" class="wikilink1" title="wiki:uav:tchain_geotaggin"> hands on geotaggin</a></div>
+</li>
+<li class="level1"><div class="li"> Data processing toolchain with <a href="https://github.com/OpenDroneMap/OpenDroneMap" class="urlextern" target="blanc" title="https://github.com/OpenDroneMap/OpenDroneMap" rel="nofollow noopener">OpendroneMap</a> (Lecture - Hands on).</div>
+</li>
+<li class="level1"><div class="li"> Online processing <a href="http://167.114.227.121/Stitching/" class="urlextern" target="blanc" title="http://167.114.227.121/Stitching/" rel="nofollow noopener"> Web Processing Service </a> for OpenDroneMap</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://flyelephant.net/" class="urlextern" target="blanc" title="https://flyelephant.net/" rel="nofollow noopener">FlyElephant </a> cloud platform for OpenDroneMap processing</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.spatial-ecology.net/ost4sem/lecture/prasand_ODM.pdf" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/lecture/prasand_ODM.pdf" rel="nofollow noopener">Plot results</a> in QGIS and MeshLab</div>
+</li>
+<li class="level1"><div class="li"> Store data within open access data repository <a href="https://openaerialmap.org/" class="urlextern" target="blanc" title="https://openaerialmap.org/" rel="nofollow noopener">OpenAerialMap</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT5 SECTION "UAV Data processing" [1533-] -->

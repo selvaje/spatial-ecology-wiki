@@ -1,0 +1,7 @@
+<span class="co1"># Open a raster with gal</span>
+<span class="kw1">from</span> osgeo <span class="kw1">import</span> gdal
+raster <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span><span class="st0">&quot;SatImage.tif&quot;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> raster.<span class="me1">RasterCount</span>
+<span class="kw1">print</span> raster.<span class="me1">RasterXSize</span>
+<span class="kw1">print</span> raster.<span class="me1">RasterYSize</span>
+&nbsp;

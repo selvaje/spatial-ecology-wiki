@@ -1,0 +1,145 @@
+====== Basic GDAL and OGR script======
+===== Read and Manipulate image metadata =====
+
+Exercise:\\
+Script: open by kate [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/basic_gdalogr.sh | ~/ost4sem/exercise/basic_adv_gdalogr/basic_gdalogr.sh ]]\\
+Directory: ~/ost4sem/exercise/basic\_adv\_gdalogr
+\\
+<code bash>
+gedit ~/ost4sem/exercise/basic_adv_gdalogr/basic_gdalogr.sh &
+</code>
+Change the directory, see the image input.tif with openev, run gdalinfo and return to the questions: 
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_gdalogr
+openev input.tif
+gdalinfo input.tif
+</code>
+What is the pixel size?\\
+How do you get min and max pixel values?\\
+The image has no information on a projection. \\
+From the pixel values and from the boundary I can understand that it is in lat-long degree (WGS84).\\
+Let's apply a projection using gdal_warp\\
+
+<code bash>
+gdal_translate -co COMPRESS=DEFLATE -co ZLEVEL=9 -a_srs EPSG:4326  input.tif input_proj.tif
+# or you can also use gdalwarp
+gdalwarp -co COMPRESS=DEFLATE -co ZLEVEL=9  -t_srs EPSG:4326  -s_srs EPSG:4326  input.tif input_proj.tif
+gdalinfo input_proj.tif
+</code>
+
+Calculate minimum and maximum values for all the images: 
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+for file in *.tif ; do 
+gdalinfo  -mm  $file | grep "Computed Min/Max" 
+done
+</code>
+Exercise:\\
+Use one of the gdal commands and try to clip all the images using a square box with lat &lon that you like.\\
+\\
+  - Open gedit and save the the script with the extension .sh
+  - Create a working directory following this [[wiki:createdirbash|procedure]]
+  - Copy the ~/ost4sem/exercise/basic\_adv\_gdalogr/fagus_sylvatica/*.tif in the $INDIR
+  - Identify the gdal command going to the gdal internet site
+  - Identify the option of the command to make the clip.
+  - Identify the square box coordinates using openev.
+  - Do a test with one image. Open it by openev.
+  - Create a loop for all the images.
+Use all the previous examples stored in this wiki. All the commands have already been explained - you just need to combine them.\\
+Use the $OUTDIR $INDIR varibles to define the directories of the files.
+Write comments and explanation of the commands.
+Your script should be able to be run the script by sh namescript.sh
+\\
+\\
+
+===== Understand data type =====
+
+  
+                        Ranges of GDAL data types        Image
+  GDAL data type	       minimum  	maximum        Size 
+  Byte  			     0  	    255        39M
+  UInt16			     0  	 65,535        78M
+  Int16, CInt16 	       -32,768  	 32,767        78M
+  UInt32			     0    4,294,967,295        155M  
+  Int32, CInt32 	-2,147,483,648    2,147,483,647        155M
+  Float32, CFloat32      -3.4E38           3.4E38        155M
+  Float64, CFloat64    -1.79E308         1.79E308        309M
+
+===== From Image to text and from txt to image =====
+
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_gdalogr
+gdal_translate -of  XYZ   input.tif  output.txt
+awk '{if ($3>0.01 && $3<0.9) {print $1,$2,50 } else {print}}' output.txt > output_change.txt
+gdal_translate output_change.txt output_change.tif 
+</code>
+
+===== The use of VRT to stack images and Tiling =====
+
+  gdalbuildvrt -overwrite -separate   stack.vrt   20?0_TSSP_IP-ENS-A2-SP20_43023435.tif
+  gdal_translate  -srcwin 0       0 1670 2015   stack.vrt     stack_UL.tif
+  gdal_translate  -srcwin 0    2015 1670 2015   stack.vrt     stack_UR.tif
+  gdal_translate  -srcwin 1670    0 1670 2015   stack.vrt     stack_LL.tif
+  gdal_translate  -srcwin 1670 2015 1670 2015   stack.vrt     stack_LR.tif
+  
+Use a stack vrt to build up tailed VRT
+
+  gdalbuildvrt -overwrite -te  4302000 3435000 5972000 5450000   stack_LL.vrt  stack.vrt
+
+Recompose the image 
+
+  gdalbuildvrt -overwrite mosaic.vrt stack_UL.tif stack_UR.tif stack_LL.tif stack_LR.tif
+  gdal_translate mosaic.vrt mosaic.tif
+
+===== Merge Images =====
+
+Example:\\
+Merge different ASTER dem and change the projection.
+
+<code bash>
+
+# merge the tiles 
+gdal_merge.py  -o ASTGTM_merge/ASTGTM_dem_wgs84.tif  */ASTGTM_*_dem.tif
+# change the projection
+gdalwarp -co "COMPRESS=LZW" -t_srs "+proj=utm +zone=36 +south +a=6378249.145 +b=6356514.870 +units=m +towgs84=-160,-6,-302" ASTGTM_merge/ASTGTM_dem_wgs84.tif ASTGTM_merge/tmp.tif
+# compress the file 
+gdal_translate -co "COMPRESS=LZW"   ASTGTM_merge/tmp.tif  ASTGTM_merge/ASTGTM_dem_tz36.tif 
+# remove intermediate file
+rm ASTGTM_merge/tmp.tif ASTGTM_merge/ASTGTM_dem_wgs84.tif
+
+</code>
+open it by openev
+   openev ASTGTM_merge/ASTGTM_dem_tz36.tif
+
+===== Vector manipulation with OGR =====
+
+== ogrinfo programme ==
+  ogrinfo -al    poly_fr_10poly.sh
+  ogrinfo -al -geom=NO    poly_fr_10poly.shp
+  
+  # select a field 
+  
+  ogrinfo -al -geom=NO    poly_fr_10poly.shp | grep id
+
+== Look at a different file ==
+
+<code bash>
+cd ~/ost4sem/exercise/KenyaGIS
+
+ogrinfo -al County.shp
+ogrinfo -al County.shp | head -30
+ogrinfo -al County.shp | head -41
+</code>
+
+== Process vector file with ogr2ogr and ogrinfo ==
+
+<code bash>
+INPUT=~/ost4sem/exercise/KenyaGIS
+
+ogr2ogr  -f "GML" -s_srs EPSG:4326  -t_srs EPSG:3857 -select COUNTY  -where "COUNTY = 'Isiolo'"  /tmp/Isiolo.gml  $INPUT/County.shp
+
+# Extract bounding box for different county and overall county in Kenya
+ogrinfo -al County.shp | grep "Extent" | awk '{gsub(/\(/,"");gsub(/\)/,"");gsub(/,/,"");print $2" "$3" "$5" "$6} '
+ogrinfo -al /tmp/Isiolo.gml | grep "Extent" | awk '{gsub(/\(/,"");gsub(/\)/,"");gsub(/,/,"");print $2" "$3" "$5" "$6} '
+
+</code>

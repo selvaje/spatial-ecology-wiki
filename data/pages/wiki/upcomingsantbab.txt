@@ -1,0 +1,51 @@
+{{:wiki:spatialecology.png?290|}} {{:wiki:university_of_california_santa_barbara_logo.jpg?150|}}\\
+**spatial-ecology** in collaboration with [[ https://www.eemb.ucsb.edu/  | Department of Ecology, Evolution, and Marine Biology ]] - [[ http://www.ucsb.edu/ | University of California, Santa Barbara]] is organizing:
+===== Summer School: =====
+===== SPATIO-TEMPORAL ANALYSIS AND BIG DATA PROCESSING USING FREE AND OPEN SOURCE SOFTWARE =====
+**(basic and advanced levels)**\\
+\\
+[[https://docs.google.com/document/d/17VvkPfxZM4-FXtJujmW9ChctwBzLYgE90U7SPBUvxNw/pub | Detailed course program - Public version for the students]]\\
+[[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:regListSBarb | Registration List & Registration Waiting List]]\\
+[[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:partecipantExpecSB | Identifying participant needs/expectations ]]\\
+[[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:surveyUCSB2015 | Satisfactory surveys UCSB 2015 ]]\\
+\\
+\\
+[[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y2DRWC585KM6E |{{::donate_logo_paypal.gif?120|Donation}}]]
+\\
+\\
+//**For a deep understanding of the scientific/technical aspects of the course please deep navigate in www.spatial-ecology.net and see previous projects/courses**//\\
+\\
+\\
+Over the last few decades there has been an explosion in the availability of data for environmental research, and in particular for spatio-temporal analysis. We are now able to address a number of important questions, both new and old, with unprecedented rigor and generality. Leveraging these exciting new data streams requires tools and increasingly complex workflows. This 6-day course introduces a set of free and open source software (BASH, AWK ,GDAL, GRASS, R, Python, PKTOOLS, OFGT) to perform spatio-temporal analysis and modelling of environmental data in a Linux environment. We also introduce multi-core, cloud and cluster computation procedures using High Performance Computing - Amazon Web Services. The course consists of a set of lectures and practical hands-on sessions in which participants perform spatial and temporal analysis using Geographic Information System and Remote Sensing concepts. Although courses focuses on the command line instead of the graphical user interface, **no prior experience with programming or command line interfaces is assumed or required**.  To cater to students with prior programming experience, we will hold parallel sessions that introduce more advanced material (e.g. parallel processing) . Our main focus is on teaching self learning and problem solving more than the use of specific tools (see: our [[ http://www.spatial-ecology.net/giuseppe/publications/Amatulli_et_al_OGRS.pdf | teaching method]] ) so participants will be able to progress and adapt to learn the newest available data science techniques.
+  
+**Dates/Location:**  16-17-20-21-22 of July / [[ https://www.google.com/maps/place/University+of+California,+Santa+Barbara/@34.413963,-119.848947,14z/data=!4m2!3m1!1s0x0:0x4e956b7e5cb6cec2 | Santa Barbara ]] - USA California.
+
+==== Staff ====
+Dr. Giuseppe Amatulli ([[ http://sbsc.yale.edu/giuseppe-amatulli | Yale University, USA ]] ; www.spatial-ecology.net)\\
+Dr. Pieter Kempeneers ([[ https://vito.be/en/land-use | VITO ]] ; [[ http://pktools.nongnu.org/html/index.html | pktools ]] )\\
+
+
+
+==== Objectives ====
+At the end of the course, participants will be able to use open source tools under scripting routines to perform a variety of spatio-temporal analysis and modelling tasks that might be required to execute their own research. The practical sessions emphasize a self-directed learning approach so that participants can continue to develop their analytical skills after the course. Course participants also get basic knowledge on how to carry out “big data” analysis using multicore computation on a local computer as well as using cluster environments via remote servers. 
+==== Tools ====
+The course will be based on [[ http://live.osgeo.org/en/index.html | OSGeo-Live]], which is a self-contained bootable DVD, USB thumb drive or Virtual Machine. OSGeo-Live itself is based on [[ http://lubuntu.net | Lubuntu]], a light weight variant of Ubuntu that provides a solid, well-maintained software base that works well on any hardware. A variety of GIS, remote sensing, and spatial analysis open source software will be utilized, mainly using the command line. Advanced exercises will explore the power of command line processing methods which will be demonstrated with easy examples. The manipulation of geospatial data will be shown using several geospatial tools such as  [[ http://www.gdal.org/ | GDAL/OGR]], [[ http://pktools.nongnu.org/html/index.html | pktools]], [[ http://www.openforis.org/OFwiki/index.php/Tools_%26_Exercises |  OFGT]] and [[ http://www.orfeo-toolbox.org/otb/ | Orfeo Toolbox]]. 
+==== Audience ====
+These training sessions are addressed to a diverse population of students at the masters or doctoral level, as well as researchers and professionals with a common interest in spatio-temporal data analysis and modelling. Participants should have basic computer skills and a strong desire to learn command line tools to process big and multi-dimensional data. According to the number of participants and to their pre-existing knowledge in programming, two or three parallel sessions will be organized according to student’s needs. During the parallel sessions, advanced topics in remote sensing, spatial/temporal and cluster computing will be covered. These session will provide an opportunity to introduce more advanced topics that in previous courses could not be taught due to the complexity of the subject. Novice users will appreciate appropriate exercises that will allow them to build up basic knowledge on how to use tools and methods for handling spatial data. More advanced users will be taught advanced routines/techniques to handling massive data processing. The exercises and examples will be cross disciplinary: forestry, landscape planning, predictive modelling and species distribution, mapping, nature conservation, computational social science and other spatially related fields of study.\\ 
+\\
+The attendees will receive a course certification upon successful completion of the course, although it is up to the participant’s university to recognize this as official course credit.\\
+=== Computer requirements ===
+The course is designed to run on most desktop or laptop computers running any of the common operating systems, including Windows, iOS, and Linux.  Participants will install a provided Linux-based Virtual Machine (VM) at the beginning of the workshop. The VM environment includes all of the software and study materials such as: data, scripts and exercises that participants need to complete the workshop.  After the course, participants can install the virtual machine on other computers to reproduce the full working environment of the course. This will make it easier to continue self-learning and allow participants to share their new knowledge with others. 
+
+Beside Linux VM implementation and use, cluster computation procedures are going to be taught using High Performance Computing - Amazon Web Services sponsored by an [[ http://aws.amazon.com/grants/ | AWS in Education Grant award]].
+
+**Target number of participants - 25 maximum**
+
+[[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:SBarbRegist | Registration fees]]\\
+\ \ \ \ \ \ [[sbarbregist_quest | Questionnaire ]]\\
+[[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:SBarbLogistic | Logistic]]\\
+\\
+[[https://docs.google.com/document/d/17VvkPfxZM4-FXtJujmW9ChctwBzLYgE90U7SPBUvxNw/edit | Detailed course program - Editable version for the trainers (gmail logging required)]]\\ 
+
+All the material from previous courses can be found at www.spatial-ecology.net 
+

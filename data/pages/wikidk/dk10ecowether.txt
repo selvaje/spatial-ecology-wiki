@@ -1,0 +1,357 @@
+====== LINKING WEATHER DATA WITH SOCIO-ECONOMIC DATA: SPATIAL INTERPOLATION  ======
+
+Project proposal can be downloaded at: [[http://www.spatial-ecology.net/ost4sem/project/unidk2010/ECOWETHER/documents/VNProject.pdf | VNProject.pdf ]].
+
+\\
+
+===== INTRODUCTION =====
+The aim of this project is to interpolate the weather data for locations in which socio-economic data are available based on the weather data provided by all 172 weather stations in Vietnam. Socio-economic data are derived from Vietnam Household Living Standard Surveys (VHLSSs) which follows The World Bank's LSMS standards. Since 2002, the VHLSSs have been conducted every second year. The surveys interview 9,000 households in 3000 communes (out of 10,000 communes) in Vietnam.
+Weather data are observed from 172 weather station collected on a daily basis. The data are available for the period 1975-2006.
+\\
+\\
+
+
+==== Project objectives ====
+The Project aims at predicting the daily total rainfall for 3000 VHLSS communes for 365 days in 2006.
+\\ 
+\\ 
+
+===== METADATA =====
+==== Raster data ====
+Raster data include:
+  * ASTER GDEM at the resolution 30m. The data can be downloaded free of charge at: http://www.gdem.aster.ersdac.or.jp/
+\\
+\\
+==== Vector Data ====
+Vector data include:
+  * Locations of 172 weather stations. The information is in the form of ESRI shape-files. 
+  * The boundary of Vietnam in a shape-file.
+  * The boundaries of VHLSS communes in a shape-file
+
+Accessibility: Contact the author to obtain the shape-files via email at: trung@foi.dk
+\\
+\\
+==== Text files ====
+Daily rainfall data for the period January 01 - December 30, 2006 are in Stata format. This file can be imported in R for use with geoR or other gis packages.
+\\
+\\
+
+===== METHOD =====
+First, we start by building a bash script to employ GRASS GIS to process a number of sources of data in the form of raster and shape files. Global Digital Elevation Model (GDEM) at 30m resolution provides us with geographical characteristics. The data are in raster format and can be obtained free of charge (see below). GRASS GIS is called to extract evelevation, aspect, and slope. Grids of cells at 1km resoluation are also created.
+
+The grids of latitude, longitude and the spatial indicators are then overlayed with the vector of the location of the meteorological stations and the vector of VHLSS communes. The final output of this task is two tables with the coordinates of the spatial indicators: small table at meteorological stations and big table at all the VHLSS communes.
+
+These two tables are input of the R script which interpolates rainfall at the locations in the big table by the methods kriging and co-kriging. The output at this stage is 365 text files which contain the predicted rainfall for all the VHLSS communes of each day of the year 2006.
+
+\\
+
+
+===== DATA PROCESSING =====
+\\
+==== GRASS GIS ====
+The first part of the bash file is to set the paths of folders so that later on we can make use of the so-called 'relative' paths. Relative paths allow users to adapt the bash file easily to run on their machine.
+
+<code bash>
+# Title: This script processes the ASTER GDEM
+# Author: Le Dang Trung
+# Email: trung@foi.dk
+# Org: Institute of Food and Resource Economics, University of Copenhagen
+
+##########################################################################################################################################
+#     Folders settings                                                                                                                   #
+##########################################################################################################################################
+# project (mother) folder
+export projfolder='/home/user/Dropbox/OSGIScourse/VNspatial'
+
+# data folder for Gdem
+export data_gdem='/home/user/Dropbox/Data/Meteo/GDEM'
+
+# folder for grass database
+export data_grassvn=$projfolder/grassdb/vietnam
+
+# folder for shapefiles
+export data_shpfiles='/home/user/Dropbox/OSGIScourse/VNproject'
+
+# folder for raster files
+mkdir $projfolder/raster
+export data_raster=$projfolder/raster
+
+# folder for vector files
+mkdir $projfolder/vector
+export data_vector=$projfolder/vector
+
+</code>
+\\
+Next, we call GRASS GIS to process GDEM .tif files which have been downloaded. The command **gdalwarp** is used to combine all the tiles together and produced a 'mosaic'. We call it VNmosaic.tif.
+
+<code bash>
+##########################################################################################################################################
+#     Combine all tiles of GDEM                                                                                                          #
+##########################################################################################################################################
+# identify the meta info of the gdem
+gdalinfo $data_gdem/ASTGTM_N19E106_dem.tif
+
+# combine all the tiles and set resolution at ~ 1km
+if [ -f $data_raster/VNmosaic.tif ] ; then
+  echo 'The file VNmosaic.tif already exist'
+else
+  rm -f $data_raster/VNmosaic.tif
+  gdalwarp -tr 0.01 0.01 -s_srs EPSG:4326 -t_srs EPSG:4326 $data_gdem/AST*_dem.tif $data_raster/VNmosaic.tif
+fi
+</code>
+\\
+We then go to GRASS GIS to process the maps. But we need to 'integrate' GRASS into the operating system first. We do it as follows:
+<code bash>
+##########################################################################################################################################
+#     GRASS to process maps (GDEM and others)                                                                                            #
+##########################################################################################################################################
+# create a grass location for the project
+cd $data_raster
+rm -f $projfolder/grassdb/vietnam
+bash $projfolder/scripts/create_location.sh VNmosaic.tif vietnam $projfolder/grassdb
+
+# integrate GRASS into the OS system
+echo "LOCATION_NAME: vietnam" >  $HOME/.grassrc6
+echo "MAPSET: PERMANENT"            >> $HOME/.grassrc6
+echo "DIGITIZER: none"        >> $HOME/.grassrc6
+echo "GRASS_GUI: text"        >> $HOME/.grassrc6
+echo "GISDBASE: $projfolder/grassdb"     >> $HOME/.grassrc6
+export GISBASE=/usr/lib/grass64
+export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts
+export LD_LIBRARY_PATH="$GISBASE/lib"
+export GISRC=~/.grassrc6
+export GIS_LOCK=$$
+g.version
+g.gisenv
+</code>
+\\
+The next step is to convert the shapefiles of province boudaries, meteo stations, the coast and the VHLSS communes to vector maps so that later on we can do computations. Two commands **ogr2ogr** and **v.in.ogr** are used.
+<code bash>
+# identify the meta info of the VN province boundary shapefile and create a new shapefile, then put it in the vector folder
+ogrinfo $data_shpfiles/VN_tinh_poly.shp
+ogr2ogr -s_srs EPSG:4326 -t_srs EPSG:4326 $data_vector/VN64provWGS84.shp $data_shpfiles/VN_tinh_poly.shp 
+
+# identify the meta info of the Meteo stations shapefile and create a new shapefile, then put it in the vector folder
+ogrinfo $data_shpfiles/VNMeteo.shp
+ogr2ogr -s_srs EPSG:4326 -t_srs EPSG:4326 $data_vector/VNMeteo.shp $data_shpfiles/VNMeteo.shp 
+
+# display layers to check the overlapping
+openev2 $data_raster/VNmosaic.tif $data_vector/VN64provWGS84.shp $data_vector/VNMeteo.shp
+
+# convert the province boundary shapefile to vector
+v.in.ogr dsn=$data_vector layer=VN64provWGS84 output=VN64provWGS84 --overwrite
+
+# convert the meteo stations shapefile to vector
+v.in.ogr dsn=$data_vector layer=VNMeteo output=VNMeteo --overwrite
+
+# convert the VN coast shapefile to vector
+ogrinfo $data_shpfiles/vncoast.shp
+ogr2ogr -s_srs EPSG:4326 -t_srs EPSG:4326 $data_vector/VNcoast.shp $data_shpfiles/vncoast.shp 
+v.in.ogr dsn=$data_vector layer=VNcoast output=VNcoast --overwrite
+
+# convert the VHLSS shapefile to vector
+ogrinfo $data_shpfiles/VHLSS06coms.shp
+ogr2ogr -s_srs EPSG:4326 -t_srs EPSG:4326 $data_vector/VHLSS06coms.shp $data_shpfiles/VHLSS06coms.shp 
+v.in.ogr dsn=$data_vector layer=VHLSS06coms output=VHLSS06coms --overwrite
+</code>
+
+Since the GDEM we downloaded cover a larger region, we want to clip to define a smaller regions which fully cover Vietnam's areas which are defined by the province boundaries shape file. From this point on, we will be efficiently working in Vietnam region.
+<code bash>
+# clip the GDEM raster to keep only Vietnam's region
+g.region -p
+g.region vect=VN64provWGS84,VNMeteo save=Vietnam --overwrite
+#g.region n=23 s=20 w=103 e=107 save=Vietnam --overwrite
+#g.region n=22 s=21 w=105 e=107 save=Vietnam --overwrite
+g.region -p
+
+# refine the GDEM to cover only Vietnam's region
+r.mapcalc Reggdem=VNmosaic.tif
+
+# clip all the project's vector maps to cover only the region
+v.in.region output=VectRegion --overwrite
+v.select ainput=VNMeteo binput=VectRegion output=RegMeteo --overwrite
+v.select ainput=VN64provWGS84 binput=VectRegion output=Reg64provWGS84 --overwrite
+v.select ainput=VNcoast binput=VectRegion output=RegCoast --overwrite
+</code>
+
+Next, we extract elevation, aspect, slope, and the coordinates at the Meteo stations from the GDEM and store them in the database table of the Meteo shape file. Distance from the locations to the coast is also calculated. This is our 'small' table.
+<code bash>
+# extract land surface parameters based on GDEM
+r.slope.aspect elevation=Reggdem slope=Regslope aspect=Regaspect --overwrite
+
+# create the table of atributes for the Meteo points
+#v.db.droptable -f map=VNMeteo
+#v.db.addtable VNMeteo col="VNaspect double,VNslope double"
+v.db.addcol RegMeteo col="Regelev double,Regaspect double,Regslope double"
+v.what.rast rast=Reggdem vect=RegMeteo col=Regelev
+v.what.rast rast=Regaspect vect=RegMeteo col=Regaspect
+v.what.rast rast=Regslope vect=RegMeteo col=Regslope
+
+# add distance from the coast
+v.db.addcol RegMeteo col="DMetCoast double"
+v.distance from=RegMeteo to=RegCoast output=DMeteoCoast upload=dist column=DMetCoast --overwrite
+
+
+# drop unneccessary columns in VNMeteo table
+db.columns table=VNMeteo
+for col in Data_YES Commune District Province F9 F10; do
+  v.db.dropcol map=RegMeteo column=$col
+done
+db.columns table=RegMeteo
+v.db.select RegMeteo | head
+</code>
+Finally, we do the same thing for the 'big' table. One thing different is we add municipality identifiers to this big table so that later on we can compute the mean rainfall for each of the commune by averaging rainfall over all the cell in the commune.
+<code bash>
+##########################################################################################################################################
+#     GRASS to create the table of indicators for the bigger areas to be predicted                                                       #
+##########################################################################################################################################
+# create vector map of region to interpolate
+r.to.vect input=Reggdem output=BiggerAreas feature=point --overwrite
+v.select ainput=BiggerAreas binput=VHLSS06coms output=VHLSSareas --overwrite
+v.db.droptable map=VHLSSareas -f
+v.db.addtable map=VHLSSareas columns="Lon double,Lat double,Regelev double,Regaspect double,Regslope double,DMetCoast double,comID integer"
+v.to.db map=VHLSSareas type=point option=coor column=Lon,Lat
+
+#v.db.addtable VNMeteo col="VNaspect double,VNslope double"
+v.what.rast rast=Reggdem vect=VHLSSareas col=Regelev
+v.what.rast rast=Regaspect vect=VHLSSareas col=Regaspect
+v.what.rast rast=Regslope vect=VHLSSareas col=Regslope
+
+# add distance from the coast
+v.distance from=VHLSSareas to=RegCoast output=DMeteoCoast upload=dist column=DMetCoast --overwrite
+
+# add commune ID to the bigger table
+v.what.vect VHLSSareas col=comID qvector=VHLSS06coms qcol=cat
+</code>
+\\
+\\
+==== R  ====
+The GRASS script has finished its job and now we move onto working in R. In short, we need to load the two tables and conduct the kriging interpolcations using the **automap** package. First, we set the environment for R to work.
+<code R>
+# title         : VNspatial.R
+# purpose       : interpolation of meteorological data in Vietnam using daily observations from weather stations
+# authors       : Le Dang Trung
+# last update   : 
+# inputs        : 
+# outputs       : predicted data for each of VHLSS communes on a daily basis
+# remarks 1     : 
+
+#----------------------------------------------------------------------------------------------------------------------------------------#
+# Initial settings:                                                                                                                      #
+#----------------------------------------------------------------------------------------------------------------------------------------#
+# call R to load into the OS
+R
+
+# install needed packages from the Internet
+#install.packages("maptools", dependencies=TRUE)
+#install.packages("gstat", dependencies=TRUE)
+#install.packages("rgdal", dependencies=TRUE)
+#install.packages("lattice", dependencies=TRUE)
+
+# load needed liabraries
+library(maptools)
+library(gstat)
+library(rgdal)
+library(lattice)
+library(foreign)
+library(automap)
+library(sp)
+library(akima)
+library(RSAGA)
+library(geoR)
+library(spatstat)
+
+# set path to the working directory
+setwd("/home/user/Dropbox/OSGIScourse/VNspatial/data")
+getwd()
+</code>
+\\
+Next, we import the two tables:
+<code R>
+#----------------------------------------------------------------------------------------------------------------------------------------#
+# Data import to R:                                                                                                                      #
+#----------------------------------------------------------------------------------------------------------------------------------------#
+# import the spatial indicators produced by the Grass job
+RegMeteo = read.dbf("/home/user/Dropbox/OSGIScourse/VNspatial/grassdb/vietnam/PERMANENT/dbf/RegMeteo.dbf")
+
+# import rainfall from Stata format
+VNrainfall <- read.dta("Rainfall2006.dta")
+str(VNrainfall) # Total rainfall for 365 days (2006) at 172 locations
+
+# put all indicator together
+VNdata = merge(VNrainfall, RegMeteo, by=c("ID"))
+str(VNdata)
+
+VNdataOK <- VNdata[complete.cases(VNdata$Rainfall,VNdata$Regelev,VNdata$Regaspect,VNdata$Regslope,VNdata$DMetCoast,VNdata$Lat,VNdata$Lon), ]
+
+# import bigger areas to be predicted
+Bigdata = read.dbf("/home/user/Dropbox/OSGIScourse/VNspatial/grassdb/vietnam/PERMANENT/dbf/VHLSSareas.dbf")
+BigdataOK <- Bigdata[complete.cases(Bigdata$Regelev,Bigdata$Regaspect,Bigdata$Regslope,Bigdata$DMetCoast,Bigdata$Lat,Bigdata$Lon), ]
+</code>
+\\
+We need to set spatial coordinates to create spatial data for the package **sp** and **gstat** to work:
+<code R>
+# set cooridnate
+coordinates(VNdataOK) = ~ Lon + Lat
+coordinates(BigdataOK) = ~ Lon + Lat
+# loop over date in 365 days of 2006
+</code>
+
+Now, the data for kriging are ready. We do the interpolation for everyday of the 2006. The output which contains the municipality identifiers, kriged rainfall, co-kriged rainfall and the date is stored in an external text files which are ready to combine with the socio-economic data files.
+<code R>
+i <- 16802
+while(i <= 17166) {
+  i
+  rain1day <- subset(VNdataOK,VNdataOK$date==i)
+
+  # Kriging interpolation
+  krige = autoKrige(Rainfall ~ 1,rain1day,BigdataOK, model = c("Sph", "Exp", "Gau", "Ste"))
+  Rainfall_krige=krige$krige_output$var1.pred
+  rain_krige <-aggregate(Rainfall_krige, by=list(BigdataOK$comID),FUN=mean)
+  names(rain_krige)[c(1,2)] <- c("comID", "rain_krige")
+
+  # Co-kriging interpolation
+  cokrige = autoKrige(Rainfall~Lat+Lon+Regelev+Regaspect+Regslope+DMetCoast,rain1day,BigdataOK, model = c("Sph", "Exp", "Gau", "Ste"))
+  Rainfall_cokrige=cokrige$krige_output$var1.pred
+  rain_cokrige <-aggregate(Rainfall_cokrige, by=list(BigdataOK$comID),FUN=mean)
+  names(rain_cokrige)[c(1,2)] <- c("comID", "rain_cokrige")
+
+  textfile <- merge(rain_krige, rain_cokrige, by=c("comID"))
+  textfile$date <- i
+
+  # write the textfile data frame to a text file
+   write.table(textfile, file=paste("Rain_Krige",i,".txt",sep=""), sep="\t", col.names = NA)
+
+  # export graph
+  graph = paste("Rain_Krige",i,".png",sep="")
+  png(graph); plot(krige); dev.off()
+  graph = paste("Rain_coKrige",i,".png",sep="")
+  png(graph); plot(cokrige); dev.off()
+
+  # work on the next day
+  i <-i+1
+  }
+</code>
+
+===== RESULTS and DISCUSSION =====
+==== Interpolation Results ====
+Maps of interpolation results have been produced for both kriging and co-kriging on a daily basis. Below are some examples\\
+\\
+**July 12th, 2006: Kriging interpolation of Rainfall**\\
+{{:wikidk:rain_krige16994.png|}}
+\\
+\\
+**July 12th, 2006: Co-Kriging interpolation of Rainfall**\\
+{{:wikidk:rain_cokrige16994.png|}}
+\\
+\\
+**Text files of output look like this:**\\
+{{:wikidk:predictedrainfall.png|}}
+
+==== Caveats and Improvements ====
+\\
+The current method of interpolation is subject to several caveats. One of them is that predicted rainfall can be negative which is impossible in reality. 
+The negative predicted values are due to the fact that OLS model has applied while in this case a Tobit model should be employed.
+Therefore, incorporation of Tobit model in the kriging process is a good way to improve the interpolation process.
+\\
+Finally, we also need to conduct model validation.

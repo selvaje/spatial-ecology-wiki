@@ -1,0 +1,21 @@
+
+====== My survey ======
+
+
+{{:http://en.wikipedia.org/wiki/File:Diversity_of_plants_image_version_5.png?direct&200 |}}
+
+<doodle species 1| heve you ever seen this specie ?> 
+^Yes^No^
+</doodle>
+
+
+<doodle species 2| Can you identify this specie ?> 
+^Yes^No^
+</doodle>
+
+====== Can you identify this species ? ======
+<doodle species 3| 3> 
+^Yes^No^
+</doodle>
+
+[[wikiadmin:testpage2|next]]

@@ -1,0 +1,65 @@
+====== Geocoding with GEOPY ======
+\\
+  wget http://www.spatial-ecology.net/ost4sem/exercise/python/Seafood_noheader.csv
+\\
+
+
+<code python| geopy_retrieve_coordinates.py>
+#!/usr/bin/env python
+
+import sys
+import csv
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
+
+# =============================================================================
+def Usage():
+    print('')
+    print('Usage: geopy_retrieve_coordinates.py input.txt  output.txt')
+    print('')
+    sys.exit( 1 )
+ 
+# =============================================================================
+
+src_input  = None
+src_output = None
+argv=(sys.argv)
+# Parse command line arguments.
+i = 1
+while i < len(sys.argv):
+    arg = argv[i]
+    if src_input is None:
+        src_input  = arg
+    elif src_output is None:
+        src_output = arg
+    else:
+        Usage()
+    i = i + 1
+ 
+if  src_input is None:
+        Usage()
+if  src_output is None:
+        Usage()
+
+geolocator = Nominatim()
+new_rows_list = []
+
+output = open(src_output, "w")
+writer = csv.writer(output)
+
+with open(src_input , 'rb') as csvfile:
+    spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    for row in spamreader:
+        try:
+            address, (latitude, longitude)  = geolocator.geocode(row)
+            print address, latitude, longitude
+        except Exception as e:
+            print("Error: geocode failed on input %s with message %s"%(row,e.message))
+
+
+exit ()
+
+</code>
+\\
+  python geopy_retrieve_coordinates.py Seafood_noheader.csv out.csv
+\\

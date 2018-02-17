@@ -1,0 +1,212 @@
+====== Final Report ======
+The workshop “Training in Geospatial Analysis of Disease Vectors” was held from June 1, 2015 to June 5, 2015 at the Biotechnology Research Institute (BRI) in Muguga, Kenya.  This effort was part of an NIH – Fogarty Institute training grant (PI Aksoy, Caccone, Murilla) designed to strengthen capacity in biomedical research, including geospatial analysis of disease vectors.  BRI has a mandate to carry out research and develop technologies for effective control of tsetse and trypanosomiasis in the country and this workshop introduced several technologies that can be applied to these issues.
+
+The goal of the workshop was to introduce participants to Geographic Information Systems (GIS), satellite-based remote sensing, and ecological modeling.   Students used the provided suite of open-source software to manipulate GIS data and satellite images to create basic species habitat models.  There was a special focus on identifying and mapping tsetse fly habitat.  The full workshop schedule can be viewed [[https://docs.google.com/document/d/19sd6VXkdrZ7yPIOJaEMvWqNTlZm3ZQ9OKH54CULps_o/pub| here]].
+
+The [[http://yibs.yale.edu/|Yale Institute of Biospheric Studies]] was instrumental in making this happen, with members of two Centers and one Program participating in this workshop.  Gisella Caccone, Director of the [[http://www.yale.edu/caccone/ecosave/index.html|Molecular Systematics and Conservation Genetics Center]], organized the workshop, gave foundational lectures on trypanosomiasis and tsetse flies, and provided support and encouragement to the other instructors.\\
+{{:wiki:p1020056.jpg?500|}}\\
+
+Larry Bonneau of the [[http://yceo.yale.edu/|Center for Earth Observation]] provided an introduction to geospatial data and software.  This included lectures and exercises on GIS, remote sensing and GPS\\
+{{:wiki:p1020077.jpg?500|}}\\
+
+Giuseppe Amatulli of the [[http://sbsc.yale.edu/|Program in Spatial Biodiversity Science & Conservation]] provided a custom suite of open source geospatial software tools that made the workshop possible.  His lectures and exercises covered the Linux operating system, GDAL and PKTools, the statistical analysis package “R”, and various spatial modeling techniques.\\
+{{:wiki:p1020064.jpg?500|}}\\
+
+Over 70 students and researchers from central and eastern Africa applied for this workshop.  After careful consideration of each applicant we selected 25 candidates that we felt would benefit the most from the workshop.   After working with the attendees for a week and witnessing the effort they made to learn a great deal of complicated information, we all agreed that we had selected a great class!\\
+{{:wiki:kenyawsclasssized.jpg?500|}}
+
+All agree it was a very successful workshop.  The students worked hard and learned a great deal that should help them in their future research.  The collaboration amongst the YIBS Centers and Program provided a skill set and synergy that made this possible.  By Friday afternoon everyone was very happy to receive their certificates!\\
+{{:wiki:img_20150605_155541354.jpg?500|}}\\
+
+At the end of the week 84% of the attendees stated that the workshop exceeded their expectations and 88% believed the workshop was extremely useful.  Everyone agreed that learning these open source tools would help them in their current and future research and jobs.  You can view the complete post-workshop questionnaire below.
+
+ 
+
+
+
+{{:wiki:img_20150601_083411830_hdr.jpg?500|}}\\
+
+
+The training continue also during the nights, indeed several students asked more theoretical/scientific  explanations and command-line tips/tricks.
+{{:wiki:img_20150603_191528350.jpg?500|}}\\
+Beside the teaching activity also RAM boosting was performed in 10 lap-top of the participants. Several Desktop RAM were donated to the KARI institute. 
+{{:wiki:img_20150602_162855361.jpg?500|}}\\
+
+===== Overall satisfaction =====
+1) Why did you attend the training? \\
+(25 students replay to this question)
+^ To acquire new expertise ^ To improve my current skills ^ To meet others using these tools ^ General knowledge ^
+^ 21 ^ 17 ^ 10 ^ 8 ^
+
+2) Did the training meet your expectations? \\
+(25 students replay to this questions)
+^ Exceeded expectations ^ Met my goals ^ This was OK ^ Not very helpful to me ^
+^ 21 ^ 12 ^ 1 ^ 0 ^ 
+
+3) How was the balance between theory and exercise?\\
+(25 students replay to this questions)
+^ The balance was good ^ Want more exercise ^ Want more theory ^
+^ 17 ^ 13 ^ 0 ^ 
+
+4) Was the training well adapted in respect of your needs, your skills and knowledge?\\
+(25 students replay to this questions)
+^ Advanced and too difficult ^  Well adapted ^ Basic and boring ^
+^ 0 ^ 25 ^ 0 ^
+
+5) Is there a part of the course you would have liked to see in more in detail?\\
+(25 students replay to this questions)
+^ Models ^ R ^  QGIS ^ GRASS ^ GDAL ^
+^ 22 ^ 19 ^ 11 ^ 15 ^ 9 ^
+
+6) Overall how would you rate this workshop?\\
+(25 students replay to this questions)
+^ Extremely useful ^ Very useful ^ Somewhat useful ^ Not very useful ^
+^ 22 ^ 4 ^ 0 ^ 0 ^
+
+\\
+===== Student's background =====
+
+7) What is your academic or professional level?\\
+(25 students replay to this questions)
+^ Master Student ^ PhD ^ Post-Doc ^ Professor ^ Technician ^ Other ^
+^ 10 ^ 5 ^ 2 ^ 0 ^ 1 ^ 8 ^
+
+8) Check the box for any of these geospatial tools used before?\\
+(25 students replay to this questions)
+^ R ^ QGIS ^ GRASS ^ GDAL ^ Spatial Modeling ^
+^ 14 ^ 12 ^ 0 ^ 1 ^ 5 ^
+
+9) What field would you most likely apply these to?\\
+(25 students replay to this questions)
+^ Vector Biology ^ Invasion Biology ^ Ecology ^ Environmental Planning ^ Other ^
+^ 19 ^ 3 ^ 12 ^ 7 ^ 6 ^
+
+\\
+===== Student's interest in geospatial analysis after attending the training =====
+10) Are you interested in learning more about Open Source geospatial tools in the future?\\
+(24 students replay to this questions)
+^ Yes ^ No ^ Maybe ^
+^ 24 ^ 0 ^ 0 ^
+
+11) Will these Open Source tools help you in your current and future jobs?
+(25 students replay to this questions)
+^ Yes ^ No ^ A Little ^ Maybe ^
+^ 25 ^ 0 ^ 0 ^
+
+12) Which Open Source geospatial tools do you plan to use?\\
+(25 students replay to this questions)
+^ Models Yes ^ Models No ^ R yes ^ R no ^ Qgis yes ^ Qgis no ^ Grass yes ^ Grass no ^ Gdal yes ^ Gdal no  ^ 
+^ 23 ^ 1 ^ 24 ^ 0 ^ 24 ^ 0 ^ 20 ^ 0 ^ 20 ^ 0 ^ 
+
+\\
+===== Self learning =====
+
+13) Do you feel able to independently improve and learn more about Open Source geospatial tools?\\
+(25 students replay to this questions)
+^ Models Yes ^ Models No ^  R yes ^ R no ^ Qgis yes ^ Qgis no ^ Grass yes ^ Grass no ^ Gdal yes ^ Gdal no  ^
+^ 17 ^ 6 ^ 22 ^ 1 ^ 24 ^ 0 ^ 21 ^ 2 ^ 22 ^ 1 ^
+
+14) Confident in being able to learn more about these tools on your own?\\
+(25 students replay to this questions)
+^  Strong ^ Intermediate ^ Very Little ^ Maybe ^
+^ 10 ^ 15 ^ 0 ^ 0 ^Giuseppe, 2015/06/05 08:19
+
+\\
+===== How do you rate the training ===== 
+
+15) The trainers were clear and prepared?\\
+(25 students replay to this questions)
+^  Very well ^  Yes prepared enough ^ Not enough ^
+^ 25 ^ 0 ^ 0 ^ 
+
+16) Was satisfactory the trainer's assistance during the exercises?\\
+(25 students replay to this questions)
+^  Very helpful ^  They did enough ^ Not enough help ^
+^ 21 ^ 4 ^ 0 ^ 
+
+17) Wanna you recommend this training to others?\\
+(25 students replay to this questions)
+^  Yes ^  Maybe ^ No ^
+^ 25 ^ 0 ^ 0 ^
+
+===== Open section - Personal Statement ====
+Please include in the personal statement these two points:\\
+1) Peoples/institutions that could be benefit from this training workshop\\
+2) Opinions of the course\\
+
+**Damaris Matoke, 2015/06/05 08:19**\\
+Institutions such as ILRI, Kenyatta University, Jomo Kenyatta University, Students pursuing GIS courses, scientists undertaking research on vector borne diseases and ecological factors disease mapping should be considered in future\\
+The course was quite informative, enlightening and quite interactive. More time for practicals and use of personal data should be allocated\\
+\\
+**George Makau, 2015/06/05 08:26**\\
+The knowledge gained from this training will be very helpful to my data analysis in mapping disease incidence against diffrenent geographical locations in Madagascar.\\
+It would be very appreciated if more postgraduate and even undergraduate students would be considered for at least an introductory course to R-programming, GRASS and qGIS.\\
+Thank you for the opportunity you gave me to participate in this training. I wish you well and please organise more courses!\\
+\\
+**Mark Nanyingi, 2015/06/05 08:26**\\
+This is a very useful training that will guide us in analysis of our ongoing projects in Rift Valley fever risk mapping and other vector borne diseases.\\
+\\
+**Faith Akinyi Obange, 2015/06/05 08:28**\\
+This training workshop came at a much needed time and was very well executed.In future, I think it may be helpful to split the course into two: an introductory and an advanced workshop. This might help break down the information and make it easier to assimilate for people at various levels of familiarity with GIS software.\\
+This workshop could highly benefit the MSc. Biotechnology students at the Centre for Biotechnology and Bioinformatics (CEBIB)at the University of Nairobi.\\
+\\
+**Alfred Ochieng, 2015/06/05 08:29**\\
+This was a very important training since it enabled us to get training in species distribution modeling - a course that is not available locally in Kenya. This training should be offered annually and at different levels so that students can keep improving on their skills.\\
+Other than students, this course can be very useful to researchers in Kenyan research institutions.\\
+\\
+**Agapitus Kato Babumba, 2015/06/05 08:31**\\
+The course is a must need for all students interested in research.\\
+All vector control operatives in Uganda need this training.\\
+\\
+**Lukaria Luke Kanyi, 2015/06/05 08:33**\\
+Ecologist, Environmental Scientists, Environmental planners, Environmental impact assessment and Audit experts, Kenya wildlife service, Kenya Forest service, National Environmental Management Authority.\\
+The course is really technical and would require more time for practicals.\\
+\\
+**Sancto Yalwala Jumba, 2015/06/05 08:35**\\
+The course has helped me to understand well the open source Geospatial tools and how to apply them in vector ecology and biology. Its the best course that I have attended and I think is more suited for all people in medical research.\\
+\\
+**Jared Bakuza, 2015/06/05 08:36**\\
+Academic and research instituions in Tanzania such as University of Dar es Salaam, Dar es Salaam University College of Education, Sokoine University of Agriculture, Tanzania National Institute of Medical Research (NIMR).\\
+\\
+**jusronohk@gmail.com, 2015/06/05 08:37**\\
+Exito….clicking….Great instructors!! smiley….please keep http://www.spatial-ecology.net alive all time with as much examples….and updated scripts…..maybe a tab of NEW stuff also\\
+
+**Joanna , 2015/06/05 08:39**\\
+Course was well organised and executed other scientists in KALRO\\
+\\
+**Rosemary Bateta, 2015/06/05 08:42**\\
+This course has been so useful to me, it has helped gain more skills in Geospatial data analysis. I recommend this course to universities, Kenya institute of survey and mapping and research institutions.\\
+\\
+**Beatrice A. Ongadi, 2015/06/05 08:43**\\
+In my opinion the course is essential for all students in any kind of research work. I would recommend it any time for all with keen interest in GIS and RS.\\
+\\
+**David Mburu, 2015/06/05 08:48**\\
+Dear Giuseppe, Larry, Caccone,Grace, Paul all, I hope this mail finds you well. Kindly, i highly appreciate the exposure and the hand-on interactions during the training workshop. I look forward to an advanced version of it. Once again thank you.\\
+The training course very informative, very enlightening and highly interactive. I feel that it would be helpful to allocate more time for the hands-on practical sessions and the use of personal data.\\
+The course is essential for almost all researchers in almost all disciplines\\
+I also like the fact that all the software platforms that are engaged in the course are highly integrative among each other…..and the “booooom”! in the console command line….\\
+\\
+**Freddy Bangelesa, 2015/06/05 08:48**\\
+Nice will it be if this training is provided in DRC because of its biodiversity and the extinction of endemic species without being mapped. The course was largely above my expectation. Really a wonderful workshop. magic!!!\\
+\\
+**Chadrack Kafuti, 2015/06/05 08:50**\\
+Universities, research institutions in DRC such as University of Kinshasa, University of Bandundu, University of Kisangani, National office of forest certification (BNCF)\\
+The course help me to discover additional tools, techniques and methods in order to improve my master project based in desertification hazard.\\
+\\
+**Peter Ogweng, 2015/06/05 08:52**\\
+All Universities, Research Institutions, and Graduate Students should have this training.\\
+\\
+**Annrose Mwangi, 2015/06/05 08:53**\\
+The course was very useful and i gain more than i expected. The knowledge will be very useful in my thesis research and looking forward for more courses in future.\\
+\\
+**Tania BISHOLA, 2015/06/05 08:53**\\
+Such training in R programming, GRASS, qGIS and geospatial models would be very useful for research and academic institutions in D.R.Congo such as the University of Kinshasa.\\
+It was a wonderful and awesome workshop. Magic!!! The knowledge gained will be useful for my field work during my data collection and also for my future work.\\
+Thanks so much for this opportunity. I wish that such training should be more organised for students and researchers.\\
+\\
+**Agnes Ikolot, 2015/06/05 08:53**\\
+The course is essential for all researchers and any individuals interested in working in the field.However,the course duration ought to be extended to two weeks to enable the trainees to properly grasp the concepts especially those who have not had prior exposure to GIS.\\
+\\
+**Winnie Okeyo, 2015/06/05 09:02**\\
+Institutions including all public and private universities. It was an awesome and very informative workshop, and I cannot wait to start utilizing the Geospatial analysis skills learnt in my work and future work.\\
+\\

@@ -1,0 +1,182 @@
+<span class="st0">&quot;&quot;&quot;
+Calculates the least cost path
+over a terrain grid and outputs
+another raster of 1,0 values
+defining the path.
+&quot;&quot;&quot;</span>
+&nbsp;
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> <span class="kw3">math</span>
+<span class="kw1">from</span> <span class="kw3">linecache</span> <span class="kw1">import</span> getline
+&nbsp;
+<span class="kw1">def</span> e_dist<span class="br0">&#40;</span>p1<span class="sy0">,</span>p2<span class="br0">&#41;</span>:
+  <span class="st0">&quot;&quot;&quot;
+  Takes two points and returns
+  the euclidian distance
+  &quot;&quot;&quot;</span>
+  x1<span class="sy0">,</span>y1<span class="sy0">=</span>p1
+  x2<span class="sy0">,</span>y2<span class="sy0">=</span>p2
+  distance <span class="sy0">=</span> <span class="kw3">math</span>.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x1-x2<span class="br0">&#41;</span>**<span class="nu0">2</span>+<span class="br0">&#40;</span>y1-y2<span class="br0">&#41;</span>**<span class="nu0">2</span><span class="br0">&#41;</span>
+  <span class="kw1">return</span> <span class="kw2">int</span><span class="br0">&#40;</span>distance<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">def</span> weighted_score<span class="br0">&#40;</span>cur<span class="sy0">,</span> node<span class="sy0">,</span> h<span class="sy0">,</span> start<span class="sy0">,</span> end<span class="br0">&#41;</span>:
+  <span class="st0">&quot;&quot;&quot;
+  Provides a weighted score by comparing the
+  current node with a neighboring node. Loosely
+  based on on the Nisson score concept: f=g+h
+  In this case, the &quot;h&quot; value, or &quot;heuristic&quot;,
+  is the elevation value of each node.     
+  &quot;&quot;&quot;</span>
+  score <span class="sy0">=</span> <span class="nu0">0</span>
+  <span class="co1"># current node elevation</span>
+  cur_h <span class="sy0">=</span> h<span class="br0">&#91;</span>cur<span class="br0">&#93;</span>
+  <span class="co1"># current node distance from end</span>
+  cur_g <span class="sy0">=</span> e_dist<span class="br0">&#40;</span>cur<span class="sy0">,</span>end<span class="br0">&#41;</span>
+  <span class="co1"># current node distance from </span>
+  cur_d <span class="sy0">=</span> e_dist<span class="br0">&#40;</span>cur<span class="sy0">,</span>start<span class="br0">&#41;</span>
+  <span class="co1"># neighbor node elevation</span>
+  node_h <span class="sy0">=</span> h<span class="br0">&#91;</span>node<span class="br0">&#93;</span>
+  <span class="co1"># neighbor node distance from end</span>
+  node_g <span class="sy0">=</span> e_dist<span class="br0">&#40;</span>node<span class="sy0">,</span>end<span class="br0">&#41;</span>
+  <span class="co1"># neighbor node distance from start</span>
+  node_d <span class="sy0">=</span> e_dist<span class="br0">&#40;</span>node<span class="sy0">,</span> start<span class="br0">&#41;</span>
+  <span class="co1"># Compare values with the heighest</span>
+  <span class="co1"># weight given to terrain followed</span>
+  <span class="co1"># by progress towards the goal.</span>
+  <span class="kw1">if</span> node_h <span class="sy0">&lt;</span> cur_h:
+    score +<span class="sy0">=</span> cur_h-node_h
+  <span class="kw1">if</span> node_g <span class="sy0">&lt;</span> cur_g:
+    score +<span class="sy0">=</span> <span class="nu0">10</span>
+  <span class="kw1">if</span> node_d <span class="sy0">&gt;</span> cur_d:
+    score +<span class="sy0">=</span> <span class="nu0">10</span>
+  <span class="kw1">return</span> score
+&nbsp;
+<span class="kw1">def</span> astar<span class="br0">&#40;</span>start<span class="sy0">,</span> end<span class="sy0">,</span> h<span class="br0">&#41;</span>:
+  <span class="st0">&quot;&quot;&quot;
+  A-Star (or A*) search algorithm.
+  Moves through nodes in a network
+  (or grid), scores each node's 
+  neighbors, and goes to the node
+  with the best score until it finds
+  the end.  A* is an evolved Dijkstra
+  algorithm.
+  &quot;&quot;&quot;</span>
+  <span class="co1"># Closed set of nodes to avoid</span>
+  cset <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="co1"># Open set of nodes to evaluate</span>
+  oset <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="co1"># Output set of path nodes</span>
+  path <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="co1"># Add the starting point to</span>
+  <span class="co1"># to begin processing</span>
+  oset.<span class="me1">add</span><span class="br0">&#40;</span>start<span class="br0">&#41;</span>
+  <span class="kw1">while</span> oset:
+    <span class="co1"># Grab the next node</span>
+    cur <span class="sy0">=</span> oset.<span class="me1">pop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="co1"># Return if we're at the end</span>
+    <span class="kw1">if</span> cur <span class="sy0">==</span> end:
+      <span class="kw1">return</span> path
+    <span class="co1"># Close off this node to future</span>
+    <span class="co1"># processing</span>
+    cset.<span class="me1">add</span><span class="br0">&#40;</span>cur<span class="br0">&#41;</span>
+    <span class="co1"># The current node is always</span>
+    <span class="co1"># a path node by definition</span>
+    path.<span class="me1">add</span><span class="br0">&#40;</span>cur<span class="br0">&#41;</span>
+    <span class="co1"># List to hold neighboring</span>
+    <span class="co1"># nodes for processing</span>
+    options <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+    <span class="co1"># Grab all of the neighbors</span>
+    y1 <span class="sy0">=</span> cur<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    x1 <span class="sy0">=</span> cur<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    <span class="kw1">if</span> y1 <span class="sy0">&gt;</span> <span class="nu0">0</span>: 
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1-<span class="nu0">1</span><span class="sy0">,</span> x1<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> y1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span>: 
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1+<span class="nu0">1</span><span class="sy0">,</span> x1<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> x1 <span class="sy0">&gt;</span> <span class="nu0">0</span>: 
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1<span class="sy0">,</span> x1-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> x1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span>: 
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1<span class="sy0">,</span> x1+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> x1 <span class="sy0">&gt;</span> <span class="nu0">0</span> <span class="kw1">and</span> y1 <span class="sy0">&gt;</span> <span class="nu0">0</span>:
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1-<span class="nu0">1</span><span class="sy0">,</span> x1-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> y1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span> <span class="kw1">and</span> x1 <span class="sy0">&lt;</span>  h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span>:
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1+<span class="nu0">1</span><span class="sy0">,</span> x1+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> y1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span> <span class="kw1">and</span> x1 <span class="sy0">&gt;</span> <span class="nu0">0</span>:
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1+<span class="nu0">1</span><span class="sy0">,</span> x1-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> y1 <span class="sy0">&gt;</span> <span class="nu0">0</span> <span class="kw1">and</span> x1 <span class="sy0">&lt;</span>  h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span>:
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1-<span class="nu0">1</span><span class="sy0">,</span> x1+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>  
+    <span class="co1"># If the end is a neighbor, return</span>
+    <span class="kw1">if</span> end <span class="kw1">in</span> options:
+      <span class="kw1">return</span> path
+    <span class="co1"># Store the best known node</span>
+    best <span class="sy0">=</span> options<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    <span class="co1"># Begin scoring neighbors</span>
+    best_score <span class="sy0">=</span> weighted_score<span class="br0">&#40;</span>cur<span class="sy0">,</span> best<span class="sy0">,</span> h<span class="sy0">,</span> start<span class="sy0">,</span> end<span class="br0">&#41;</span>    
+    <span class="co1"># process the other 7 neighbors</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="kw2">len</span><span class="br0">&#40;</span>options<span class="br0">&#41;</span><span class="br0">&#41;</span>:
+      option <span class="sy0">=</span> options<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+      <span class="co1"># Make sure the node is new</span>
+      <span class="kw1">if</span> option <span class="kw1">in</span> cset:
+        <span class="kw1">continue</span>
+      <span class="kw1">else</span>:
+        <span class="co1"># Score the option and compare it to the best known</span>
+        option_score <span class="sy0">=</span> weighted_score<span class="br0">&#40;</span>cur<span class="sy0">,</span> option<span class="sy0">,</span> h<span class="sy0">,</span> start<span class="sy0">,</span> end<span class="br0">&#41;</span>
+        <span class="kw1">if</span> option_score <span class="sy0">&gt;</span> best_score:
+          best <span class="sy0">=</span> option
+          best_score <span class="sy0">=</span> option_score
+        <span class="kw1">else</span>:
+          <span class="co1"># If the node isn't better seal it off</span>
+          cset.<span class="me1">add</span><span class="br0">&#40;</span>option<span class="br0">&#41;</span>
+    <span class="co1"># Uncomment this print statement to watch</span>
+    <span class="co1"># the path develop in real time:</span>
+    <span class="co1"># print best, e_dist(best,end)</span>
+&nbsp;
+    <span class="co1"># Add the best node to the open set</span>
+    oset.<span class="me1">add</span><span class="br0">&#40;</span>best<span class="br0">&#41;</span>
+  <span class="kw1">return</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="co1"># Our terrain data</span>
+source <span class="sy0">=</span> <span class="st0">&quot;dem.asc&quot;</span>
+&nbsp;
+<span class="co1"># Output file name</span>
+<span class="co1"># for the path raster</span>
+target <span class="sy0">=</span> <span class="st0">&quot;path.asc&quot;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;Opening %s...&quot;</span> % source
+cost <span class="sy0">=</span> np.<span class="me1">loadtxt</span><span class="br0">&#40;</span>source<span class="sy0">,</span> skiprows<span class="sy0">=</span><span class="nu0">6</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> <span class="st0">&quot;Opened %s.&quot;</span> % source
+&nbsp;
+<span class="co1"># Parse the header</span>
+hdr <span class="sy0">=</span> <span class="br0">&#91;</span>getline<span class="br0">&#40;</span>source<span class="sy0">,</span> i<span class="br0">&#41;</span> <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">7</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+values <span class="sy0">=</span> <span class="br0">&#91;</span><span class="kw2">float</span><span class="br0">&#40;</span>ln.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="br0">&#41;</span><span class="br0">&#91;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">strip</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">for</span> ln <span class="kw1">in</span> hdr<span class="br0">&#93;</span>
+cols<span class="sy0">,</span>rows<span class="sy0">,</span>lx<span class="sy0">,</span>ly<span class="sy0">,</span>cell<span class="sy0">,</span>nd <span class="sy0">=</span> values
+&nbsp;
+<span class="co1"># Starting column, row</span>
+sx <span class="sy0">=</span> <span class="nu0">1006</span>
+sy <span class="sy0">=</span> <span class="nu0">954</span>
+&nbsp;
+<span class="co1"># Ending column, row</span>
+dx <span class="sy0">=</span> <span class="nu0">303</span> 
+dy <span class="sy0">=</span> <span class="nu0">109</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;Searching for path...&quot;</span>
+p <span class="sy0">=</span> astar<span class="br0">&#40;</span><span class="br0">&#40;</span>sy<span class="sy0">,</span>sx<span class="br0">&#41;</span><span class="sy0">,</span><span class="br0">&#40;</span>dy<span class="sy0">,</span>dx<span class="br0">&#41;</span><span class="sy0">,</span>cost<span class="br0">&#41;</span>
+<span class="kw1">print</span> <span class="st0">&quot;Path found.&quot;</span>
+<span class="kw1">print</span> <span class="st0">&quot;Creating path grid...&quot;</span>
+path <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span>cost.<span class="me1">shape</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> <span class="st0">&quot;Plotting path...&quot;</span>
+<span class="kw1">for</span> y<span class="sy0">,</span>x <span class="kw1">in</span> p:
+  path<span class="br0">&#91;</span>y<span class="br0">&#93;</span><span class="br0">&#91;</span>x<span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>
+path<span class="br0">&#91;</span>dy<span class="br0">&#93;</span><span class="br0">&#91;</span>dx<span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>
+<span class="kw1">print</span> <span class="st0">&quot;Path plotted.&quot;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;Saving %s...&quot;</span> % target    
+header<span class="sy0">=</span><span class="st0">&quot;&quot;</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">6</span><span class="br0">&#41;</span>:
+  header +<span class="sy0">=</span> hdr<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+&nbsp;
+<span class="co1"># Open the output file, add the hdr, save the array</span>
+<span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>target<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+  f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+  np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> path<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%4i&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;Done!&quot;</span>

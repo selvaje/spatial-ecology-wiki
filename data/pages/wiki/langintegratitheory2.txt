@@ -1,0 +1,99 @@
+====== Languages/Software integration: BASH and R ======
+
+Often there is a need to switch from one language to another one. The different languages need to communicate by passing files and variables, from one to the other one.\\ 
+\\
+This is an example of a //for bash loop// where I use bash to initialize an R script using the  [[http://en.wikipedia.org/wiki/End-of-file|EOF]] function.\\
+\\
+The  //export// bash function and the //Sys.getenv()// R function allows to exchange variables between R and bash. We can use this functionality to embed an R command in bash.  
+
+===== Bash For loop and R =====
+
+<code bash| bash_r.sh>
+
+export INDIR=/data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+export OUTDIR=/data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+
+# To compare processing speed, let's use the command time
+
+time (
+for file in $INDIR/20?0_TSSP_??-ENS-A2-SP20_43023435.tif  ; do 
+
+export  filename=$(basename $file .tif)
+
+R --vanilla --no-readline   -q  <<'EOF'
+
+library(raster)
+
+INDIR = Sys.getenv(c('INDIR'))
+OUTDIR = Sys.getenv(c('OUTDIR'))
+filename = Sys.getenv(c('filename'))
+
+paste("start to process ",INDIR,"/",filename,".tif", sep="" )
+
+data=raster(paste(INDIR,"/",filename,".tif",sep=""))
+r1 = crop(data, extent(3825000,4527900,2565000,3080000))
+writeRaster(r1 , paste(OUTDIR,"/",filename,"_crop.tif",sep="") , overwrite=TRUE )
+
+# if you get a file you can export with write.table
+# if you get a number you can use Sys.setenv() to export the variable in R:
+
+EOF
+
+done 
+)
+</code>
+
+===== Bash multicore for loop and R =====
+
+The previous example can be transformed in multicore using xargs command.\\
+The xargs command allows to pass the an argument to each single processor using the -n and -P options.\\
+In our case the one image will be passed to one processor and the second image will be passed to the other processor. 
+
+<code bash| bash_r_xargs.sh>
+
+export INDIR=/data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+export OUTDIR=/data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+
+time (
+
+ls $INDIR/20?0_TSSP_??-ENS-A2-SP20_43023435.tif  | xargs -n 1 -P 6 bash  -c $'
+
+file=$1
+export  filename=$(basename $file .tif)
+
+# pay attention to single quote that under xargs it need to escape by the \
+
+R --vanilla --no-readline   -q  <<\'EOF\'
+ 
+library(raster)
+ 
+INDIR = Sys.getenv(c(\'INDIR\'))
+OUTDIR = Sys.getenv(c(\'OUTDIR\'))
+filename = Sys.getenv(c(\'filename\'))
+ 
+paste0("start to process ",INDIR,"/",filename,".tif")
+ 
+data=raster(paste(INDIR,"/",filename,".tif",sep=""))
+r1 = crop(data, extent(3825000,4527900,2565000,3080000))
+
+paste0("start to export ",INDIR,"/",filename,"_crop.tif")
+
+writeRaster(r1 , paste(OUTDIR,"/",filename,"_crop.tif",sep="") , overwrite=TRUE)
+ 
+# if you get a file you can export with write.table
+# if you get a number you can use Sys.setenv() to export the variable in BASH:
+
+EOF
+
+' _  
+
+)
+
+</code>
+
+**Exercise**\\
+Search for a raster function in R able to calculate the standard deviation within a 3x3 circular moving window.\\
+Apply the function to the crop image and export as bio_*_crop_stdev.tif.\\
+
+
+

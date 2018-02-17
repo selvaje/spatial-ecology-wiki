@@ -1,0 +1,4 @@
+===== DOWNLOAD =====
+Download python script: [[http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_sum.sh | ost4sem_sum.sh ]]\\
+\\
+it works like ost4sem_average.sh 

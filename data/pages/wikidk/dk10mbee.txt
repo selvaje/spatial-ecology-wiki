@@ -1,0 +1,662 @@
+====== Spatial modelling of bumblebees & butterflies in Southern Norway ======
+**Jens Åström, Department of Ecology, SLU, SWEDEN**
+\\
+  * Download the project proposal [[http://www.spatial-ecology.net/ost4sem/project/unidk2010/MODB&B/documents/Jens.pdf | Jens.pdf ]].
+\\
+===== INTRODUCTION =====
+
+
+
+**I work together with Thijs, see [[dk10marine | MARINE   ]]. We use basically the same workflow and methods, but with different data sets.**
+
+==== General framework of this analysis ====
+Model the abundance and species richness of bumblebees and butterflies as explained by environmental and spatial characteristics. Explanatory variables exists both in GIS layers and Excel sheets filled in by those who conducted the study. The data was kindly made available to me by the project managers at Norwegian Institute for Nature Research, NINA. 
+
+==== Project objectives ====
+It is commonplace in the ecology to try and explain abundances and diversity patterns from a limited number of predictive variables observed in the field. Often, this is done just to understand the importance of these predictive variables, and not primarily to predict flora and fauna communities in new areas and points in time. Some times the predictive variables are the direct result of manipulations by the researcher. The analyses often stop after having tested if the parameters are different from zero, but hopefully they also contain estimations of effect size. How well your models represent the world can be checked by looking at how much variation in the data they explain. However, sometimes these measures are difficult to interpret directly. Secondly, there might exist other explaining factors i GIS layers that might help explain the results of your experiment / inventory. 
+
+  - I will attempt to visualize some of the uncertainty in the models. The idea is this:
+      * If the world works as your model says it does, what will the world look like on average? 
+      * What will the world look like any given day?
+      * What will the world look like if it behaves a little differently every day? IN OTHER WORDS: What will the world look like if you are not a hundred percent certain of your model estimates?
+  - I will practice the art of extracting predictor variables from GIS layers.
+      * This will be done by matching the GIS layers with the inventoried coordinates and extracting the corresponding information.
+
+
+The modelling will be quite coarse since I only have a few explanatory variables. The uncertainty of the predictions will likely be high. This is not an exercise in building a good ecological model, just to practice using the tools.
+
+My aim is to automate the work as much as possible using scripts. 
+
+===== METADATA =====
+==== Raster data ====
+Dowloaded Elevation maps in 30 meter resolution. This comes in EPSG:4326 projection.
+==== Vector Data ====
+Shape files split into different tiles. Contains elevation lines, land cover and a few other possibly usable layers. Together, I have 453 shape file that I want to import. (I use a loop)
+The data has projection EPSG:32632.
+
+==== Text files and tables ====
+Two text files of bumblebee and butterfly data with approx 1000 lines each. One other txt file with transect ID and X Y positions in appropriate UTM scale.
+
+==== Ortophoto ====
+No orthophoto
+\\
+
+===== METHOD =====
+==== WORKFLOW ====
+  * Compile Inventory data in R
+  * Import GIS files in GRASS
+    * Automate this because there are many shape files
+    * Create new vector point map of inventoried sites
+  * Merge regions in GRASS to combined layer
+    * Create new mapset "Combined"
+    * Patch the different regions together
+  * Extract explanatory data from GRASS at sampled locations
+    * Match inventory vector points with values in other layers 
+  * Export the explanatory variables to R
+    * Use the spgrass6 package
+  * Model the species richness and abundance
+    * Do a simple GLM
+    * Mimic the GLM in BUGS language to get (proper?) variation in parameter estimates
+  * Predict to new areas
+    * Predict the best estimates from both models
+    * Predict realized outcome of best estimate (What you can observe any given day)
+    * Predict realized outcomes from a set of models, with parameter estimates varying according to the uncertainty in your knowledge of the parameters.
+  * Plot the predictions
+    * Make output pictures
+    * Make movies of the combination of several possible outcomes.
+\\
+
+===== DATA IMPORT and Processing =====
+==== GRASS ====
+<code bash>
+##########################################################################
+#!/bin/bash
+
+#
+#
+#	This is a bash file to import all of the shape files in the Norge data set.
+#	The files are located in a tree, one branch looks like this:
+#	/home/astrom/Ndata/07_Vestfold/0728_Lardal/UTM32_Euref89/Shape/728_AdminOmrader_lin.shp
+#
+#	This means I have to travel down each branch of the tree before I can import the files one by one.
+#	Grass does not like numbers in the beginning of layer names so that means I cannot just use the input name as output name.
+#
+#	Therefore I use grep to extract certain parts of the file name and build up a new one. The numbers in the file name correspond to the area 
+#	so I have to replace the numbers with the corresponding name. Change the leading "~/Ndata/*/*/" and the "ls */*/*.shp" to suit your needs.
+#
+#	Author: Jens Åström 2010-07-02
+#
+ 
+ 
+for path in `ls -d ~/Ndata/*/*/` 
+  do 
+   base=`basename $path`
+   newname=`echo $base |grep -o '[a-zA-Z]*'`
+   cd $path
+    for file in `ls */*/*.shp` 
+      do 
+      filebase=`basename $file | grep -o '_[a-zA-Z]*_[a-zA-Z]*'`
+      infile=$path$file
+      #echo $newname
+      #echo $filebase
+      outfile=$newname$filebase
+      #echo $outfile
+      #echo $file
+      v.in.ogr dsn=$file out=$outfile
+ 
+    done
+  done
+  
+#########################################################################
+
+#########################################################################
+#!/bin/bash
+
+#
+#	This script merges the layers from different regions into one (for each type of layer) and places the new layers in the mapset "Combined"
+#	In total, there is 455 vector layers that are to be combined into 15
+#	Some of these layers represent region boundaries so they will be deleted later
+#
+#
+#	Author:Jens Åström 2010-07-04
+#
+#	
+
+
+g.mapset -c Combined ##create a new mapset
+#g.mapset PERMANENT ##move back to the permanent mapset where all the different regions are located.
+
+
+
+out=`ls ~/grassdata/Norge/PERMANENT/vector/ |grep -E -o '[a-zA-Z]*_[a-z]{3}$' |sort |uniq |grep -v 'transects_pnt'` 
+for ((i=1;i<=`echo $out |wc -w`;i++)) ;do
+out_now=`echo $out | awk '{print $'$i'}'`
+#echo $out_now
+string="ls ~/grassdata/Norge/PERMANENT/vector/ |grep `echo $out_now`" 
+temp=`eval $string`
+in_temp=`echo $temp |sed "s/ /@PERMANENT,/g"`
+in=$in_temp@PERMANENT
+#echo $in
+v.patch input=$in output=$out_now -e --overwrite
+done
+
+#	This generates following warnings!
+#
+##	Intersections at borders will have to be snapped
+##	Lines common between files will have to be edited
+##	The header information also may have to be edited
+#
+#
+#
+
+
+############################################################################
+
+############################################################################
+#!/bin/bash
+#
+#
+#	This script changes the Projection of the downloaded elevation map from EPSG:4326 to that of the Norway data, EPSG:25832 and combines the into one big tile
+#
+#	Then it imports this big tif in GRASS, and makes a "cut" at the extent of my other data. No point having a larger elevation map than the rest of the data.
+#       
+#	Finally, it copies the new raster to the mapset Combined, where all the combined tiles are
+#
+#
+cd ~/Ndata #this is where I want the output file
+rm ASTGTM_dem.tif
+
+gdalwarp   -tr 25.0 25.0 -t_srs EPSG:32632  -s_srs EPSG:4326  ~/Ndata/ASTGTM/*/AST*dem.tif ASTGTM_dem.tif
+
+g.mapset PERMANENT
+
+r.in.gdal in=ASTGTM_dem.tif out=ASTGTM_dem --overwrite
+
+g.region vect=AdminOmrader_pol@Combined nsres=25 ewres=25 -sp ##change the default region extent and resolution
+
+r.mapcalc Elev_dem=ASTGTM_dem
+
+
+
+g.mapset Combined
+g.copy rast=Elev_dem@PERMANENT,Elev_dem
+
+g.mapset PERMANENT
+g.remove rast=Elev_dem
+###############################################################################
+
+###############################################################################
+
+</code>
+
+\\
+
+
+==== R ====
+<code r>
+
+####################################################################################
+
+###################################################
+# Import the habitat quality data
+# In the habitat data file I received, the different land use types had a separate column. Here I combine them into one column. 
+###################################################
+setwd("~/Till AD!/GIS-Norge/R/")
+habitat<-read.table("../Sandra-data/habitat.txt",header=T)
+habitat$hab[habitat$open.forest==1]<-"open.forest"
+habitat$hab[habitat$open.grass==1]<-"open.grass"
+habitat$hab[habitat$wetlands==1]<-"wetlands"
+habitat<-within(habitat,rm(list=c("open.forest","open.grass","wetlands")))
+
+##################################################################################
+
+
+
+##################################################################################
+
+##################################################
+# Import the transects
+##################################################
+## A bit confusingely, the "label" categories does not mean the same thing in the bumblebee&butterfly data as in the transects. 
+## This is because those were visited three times but I only have transect data for one time (because the places does not move between visit time)
+## Therefore I have to fix this. This code is just to fix the pequliarities of my data set
+## This has to be run in GRASS===>>R
+##################################################
+library(spgrass6)
+load("~/Ndata/transects.rdata")
+
+transects$odd<-rep(c(1,0),nrow(transects)/2)
+##Get rid of the end points of the transects! (both start and end points were recorded, start point will define the location of the transects)
+transects<-subset(transects,transects$odd==1) 
+rownames(transects@data)<-1:nrow(transects) ##Update rownames to avoid future confusion
+##This next bit will split the labels, multiply everything 3 times, add the 3 time codes and finally reassemble tha labels. 
+##Another option would have been to do this at the start, before matching the positions with explanatory data in GRASS
+
+transects$label<-as.character(transects$label)
+splitted<-matrix(unlist(strsplit(transects$label,"-")),nrow=nrow(transects),byrow=T)
+transects$square<-splitted[,1]
+transects$corner<-splitted[,2]
+transects$transect<-splitted[,3]
+transects<-rbind(transects,transects,transects) ##Create 3 copies, now the row numbers match with the inventory data
+transects$period<-rep(1:3,each=nrow(transects)/3)
+transects@data$label<-paste(transects@data[,"square"],transects@data[,"period"],transects@data[,"corner"],transects@data[,"transect"],sep="-")
+transects<-transects[,c("label","Arealdekke","Elev")]
+transects$label<-as.character(transects$label)
+
+##############################################################################################################
+
+
+
+##############################################################################################################
+
+###################################################
+# Import and set up the bumblebee data
+###################################################
+
+setwd("~/Till AD!/GIS-Norge/R/")
+bumble<-read.table("../Sandra-data/humlor.txt",header=T)
+#str(bumble)
+temp<-bumble[,7:58] ##Subsample only the species column for further manipulation
+all.names<-gsub("(^B\\.[a-z]*)(\\..)","\\1",names(temp)) ##Remove trailing letters indicating caste and sex of individuals
+unique.names<-unique(all.names) ##With caste and sex info taken away, we have multiple occurrences of same name. Take only 1 of each
+new<-data.frame(matrix(nrow=nrow(temp),ncol=length(unique.names)))##Make an empty temporary data frame 
+names(new)<-unique.names ##Assign names, and fill it with the summed abundances at species level. This will contain all the correct abundance data
+for(i in 1:length(unique.names)){
+new[,i]<-rowSums(temp[all.names==unique.names[i]])
+}
+bumble<-within(bumble,rm(list=c(names(bumble)[7:58]))) ##Get rid of old data
+bumble<-cbind(bumble,new) ##replace with new data (at species level)
+rm(temp) ##A little housekeeping
+rm(new)
+bumble$spec.rich<-rowSums(bumble[,8:22]>0) ##Create a new column for species richness
+bumble<-merge(habitat,bumble) ##Merge the habitat quality data frame with the inventory results,  and set the appropriate explanatory variables as factors
+for(i in 1:7){
+bumble[,i]<-as.factor(bumble[,i])
+}
+##Add combined transect ID string for future merging with transect location data
+bumble$label<-paste(bumble[,"square"],bumble[,"period"],bumble[,"corner"],bumble[,"transect"],sep="-") 
+bumble<-merge(transects,bumble)
+bumble$flower.cov<-as.numeric(bumble$flower.cov) ##Set the flower cover variable as numeric (Can be questioned, maybe it is a ordinal category?)
+
+
+##################################################################################
+
+#####################################################################################################################
+
+###################################################
+# Reshaping data
+# THIS bit is not necessary when working on all of the data, only when I want to aggregate on some level, e.g. period.
+# I include the code anyhow, since reshape is very useful.The point is to aggregate the data at some level.
+# For example aggregate data censored at the village level to county or region level.
+###################################################
+
+bumble.melt<-melt(bumble,c(1:13))
+bumble<-cast(bumble.melt,formula=square+period+corner+transect+Sandra.JanOve+hab+flower.cov+Arealdekke+Elev~variable,sum)
+
+#####################################################################################################################
+
+
+</code>
+\\
+===== Get new information out of GRASS =====
+
+<code>
+#!/bin/bash
+#
+#
+#	This script queries the Land cover layer and the Elevation layer for their information at the locations of the visited transects.
+#
+#	This information will be used to model the results of the inventory.
+#
+#
+#
+#
+#
+
+g.mapset Combined
+g.region -dp
+
+#g.copy vect=transects_pnt@PERMANENT,transects_pnt
+
+v.db.addcol transects_pnt col="Arealdekke varchar(20)"
+v.what.vect transects_pnt qvector=Arealdekke_pol qcolumn=OBJTYPE col=Arealdekke
+
+#v.db.select transects_pnt columns=Arealdekke
+
+v.db.addcol transects_pnt col="Elev integer"
+
+v.what.rast vector=transects_pnt raster=Elev_dem layer=1 column=Elev
+
+##########################################################################
+#
+#
+#	This script export/imports the vector layer "transects_pnt" (with the added information in it) into R
+#
+#
+#
+#
+#
+#
+#
+
+
+R
+
+library("spgrass6")
+
+transects<-readVECT6("transects_pnt")
+
+## A little housekeeping, fixing the character encoding errors
+
+transects$Arealdekke<-as.character(transects$Arealdekke)
+
+transects@data$Arealdekke[transects@data$Arealdekke=="\xc5pentOmr\xe5de"]<-"OpentOmrade"
+transects@data$Arealdekke[transects@data$Arealdekke=="Industriomr\xe5de"]<-"Industriomr"
+
+## One of the visited places was located ~ 100 metres outside of the region I had GIS layers of.
+## Looking at google maps, I could see that the land type was Forest = Skog
+
+transects$Arealdekke[which(is.na(transects@data$Arealdekke))]<-"Skog" 
+transects$Arealdekke<-as.factor(transects$Arealdekke)
+
+save(file="~/Ndata/transects.rdata",transects)
+
+###############################################################################
+ 
+
+</code>
+
+
+===== Modelling =====
+
+==== IN R (GLM) ====
+<code r>
+
+calib3<-glm(tot.huml~Arealdekke+Elev,data=bumble,family=poisson) ##Simplistic GLM to predict from
+
+</code>
+\\
+==== IN JAGS (Bayesian version of GLM) ====
+
+<code r>
+#################################################
+### Bayesian version of the simple GLM model
+#################################################
+
+##This script will produce a Bayesian version of the simple GLM I did earlier.
+##The result will be that the uncertainty in all the parameter estimations will be taken into account
+## when estimating each parameter. This will result in wider confidence bounds for the parameters (which can
+## be said to better represent our unceartainty about the system)
+##
+##
+## Finally, I will not just use the best estimate of all the parameters in the GLM for the predictions, but instead take random draws
+## from the posterior distribution of these parameters. One set of parameter draws will be used to create one prediction about the system.
+## Then, I will take another draw and repeat the process, resulting in many realized predictions.
+## Most of the parameter random draws will lie close to the best estimate, but I will allow for the fact
+## that I don't have absolute knowledge about the exact value of these parameters (or if you like, that there is no single "true" value)
+##
+## With this set of predictions, I can then visualize the uncertainty, calculate variation of predictions for each pixel or the whole map, sort them and display the 2.5 and 97.5 % quantiles 
+## to create "credable confidence bounds" on the maps
+
+##First load the "rjags" package
+
+library(rjags) ##This will make R and JAGS talk to each other
+load.module("glm") ##This is a JAGS module that is good to use when modelling GLM like models
+
+##Set up the model in JAGS (The actual model is in the text file, shown a bit later below)
+Bayesian.glm<-jags.model("~/scripts/glm1.txt",data=bumble,n.chains=3)
+update(Bayesian.glm,1000) ## Burn in period for the Marcov chains
+
+## Get samples of the MCMC chains. Specify wich parameters to "collect" 10 000 updates and collect only every 50th to combat autocorrelation
+B.out<-coda.samples(Bayesian.glm,c("intercept","dekke","elev.par"),n.iter=10000,thin=50) 
+
+gelman.diag(B.out[,2:8]) # Check convergence of chains
+
+</code>
+
+=== And here is the actual BUGS/JAGS model===
+
+<code>
+model{
+
+for(i in 1:length(tot.huml)){
+
+      tot.huml[i]~dpois(est[i])
+      log(est[i])<-intercept+dekke[Arealdekke[i]]+elev.par*Elev[i]
+      
+      }
+      
+      dekke[1]<-0
+      for(j in 2:6){
+	  dekke[j]~dnorm(0.0,1.0E-6)
+	  }
+      intercept~dnorm(0.0,1.0E-6)
+      elev.par~dnorm(0.0,1.0E-6)
+      
+}
+      
+  
+</code>
+
+
+===== Prediction =====
+
+==== IN R ====
+\\
+<code r>
+#################################################
+
+#!/bin/bash
+#
+#	This script copies all the vectors in the PERMANENT mapset starting with Eidsberg to the new location Eidberg.
+#	This subregion will be the target for prediction since predicting on the whole data set at 25 meters resolution 
+#	turned out to be too much for my computer
+#
+#
+#
+
+g.mapset -c Eidsberg
+
+for file in Eidsberg_AdminOmrader_lin Eidsberg_AdminOmrader_pol Eidsberg_Arealdekke_lin Eidsberg_Arealdekke_pnt Eidsberg_Arealdekke_pol Eidsberg_ByggOgAnlegg_lin Eidsberg_ByggOgAnlegg_pnt Eidsberg_ByggOgAnlegg_pol Eidsberg_Hoyde_lin Eidsberg_Hoyde_pnt Eidsberg_RestriksjonsOmrader_lin Eidsberg_RestriksjonsOmrader_pol Eidsberg_Samferdsel_lin Eidsberg_Samferdsel_pnt    
+do
+
+g.copy vect=$file@PERMANENT,$file
+
+done
+
+##########################################################################
+
+
+
+################################################################################################################
+#
+#
+#   This script first changes the land use types to numeric codes. 
+#   Then it creates a raster of the land use information to get values at every pixel.
+#   Then it fits a simple GLM to the data, using the newly acquired information as explanatory variables.
+#   As an example, I will use the total abundance of Bumblebees.
+#
+#
+#
+
+
+R
+
+library(spgrass6)
+##This is the corresponding codes for the land use types. I have to use numbers in the models later
+
+#1 Alpinbakke
+#2 BymessigBebyggelse
+#3 DyrketMark
+#4 ElvBekk
+#5 FerskvannTorrfall
+#6 Golfbane
+#7 Gravplass
+#8 Havflate
+#9 Industriomrade
+#10 Innsjo
+#11 Lufthavn
+#12 Myr
+#13 Park
+#14 OpentOmrade
+#15 Skog
+#16 SportIdrettPlass
+#17 Steinbrudd
+#18 Steintipp
+#19 TettBebyggelse
+
+##It turned out to be a bit of a chore changing the land use names to numbers in GRASS, so I did it in R in stead
+
+
+areal<-readVECT6("Arealdekke_num") ##Import the vector into R
+areal@data$NR<-as.numeric(areal@data$OBJTYPE) #change it to numeric,easy-peasy
+writeVECT6(areal,"areal_num") ##Export it again to GRASS
+
+##  Then make a raster out of it to get the information on a pixel level
+system("v.to.rast input=areal_num@Combined output=arealdekke_num use=attr type=point,line,area layer=1 column=NR value=1 rows=4096 ") ##Call grass with "system"
+
+
+system("g.mapset Eidsberg") ## Make sure you have the correct mapset
+areal<-readRAST6("Arealdekke_eid") ##This is the land use information
+gc() ##This clean the memory of garbage, makes you computer happy. Useful when handling large files
+elev<-readRAST6("Elev_dem_eid") ## This is the elevation information, already in raster format
+gc()
+
+pred.frame<-data.frame(c(areal@data,elev@data)) ##Make a data frame with both predictors to work on
+names(pred.frame)<-c("Arealdekke","Elev")
+pred.frame$Arealdekke<-factor(pred.frame$Arealdekke) ##Make it into a factor
+gc()
+
+
+pred.frame$Arealdekke<-as.character(pred.frame$Arealdekke)
+pred.frame$Arealdekke[is.na(pred.frame$Arealdekke)]<-0 ##Weird things happen when you have NAs in the treatment categories. Replace them with zeroes
+pred.frame$Arealdekke<-as.factor(pred.frame$Arealdekke)
+
+##The next part is a bit complicated if you don't know the data. 
+##It has to do with the fact that the are more land use categories in the new data set then the ones used for model calibration. 
+##The following code is really ugly at some places
+##First make a subset of the new region that only contains the land use types visited
+temp<-pred.frame[pred.frame$Arealdekke==3 | pred.frame$Arealdekke==9 | pred.frame$Arealdekke==12 | pred.frame$Arealdekke==14 | pred.frame$Arealdekke==15 | pred.frame$Arealdekke==19,]
+bla<-as.factor(as.character(temp$Arealdekke))
+temp$Arealdekke<-bla
+rm(bla)
+#table(temp$Arealdekke) 
+
+## Reclassify the land use types visited when inventoring to numbers
+bumble$Arealdekke<-as.character(bumble$Arealdekke)
+bumble$Arealdekke[bumble$Arealdekke=="DyrketMark"]<-"3"
+bumble$Arealdekke[bumble$Arealdekke=="Gravplass"]<-"7"
+bumble$Arealdekke[bumble$Arealdekke=="Industriomr"]<-"9"
+bumble$Arealdekke[bumble$Arealdekke=="Myr"]<-"12"
+bumble$Arealdekke[bumble$Arealdekke=="OpentOmrade"]<-"14"
+bumble$Arealdekke[bumble$Arealdekke=="Skog"]<-"15"
+bumble$Arealdekke[bumble$Arealdekke=="TettBebyggelse"]<-"19"
+bumble$Arealdekke<-as.factor(bumble$Arealdekke)
+
+##Make a prediction based on a simplistic GLM
+##
+#pred.frame$predict<-rep(0,nrow(pred.frame)) ##Make a new vector in the prediction data frame for the predictions. Areas without information will get value 0. This can be changed later
+pred.frame$predict<-rep(NA,nrow(pred.frame))
+calib3<-glm(tot.huml~Arealdekke+Elev,data=bumble,family=poisson) ##Simplistic GLM to predict from
+predicted<-predict(calib3,temp,type="response") ##New prediction
+#pred.frame$predict<-numeric(nrow(pred.frame))
+##Fill the right slots with predictions
+pred.frame$predict[pred.frame$Arealdekke==3 | pred.frame$Arealdekke==9 | pred.frame$Arealdekke==12 | pred.frame$Arealdekke==14 | pred.frame$Arealdekke==15 | pred.frame$Arealdekke==19]<-predicted
+elev$predicted<-pred.frame$predict
+## Prediction done!
+## The prediction can then be transported to GRASS by: writeRAST6(elev,"New_raster",zcol="predict",overwrite=T)
+
+###########################################################################################################################
+
+</code>
+
+==== Bayesian model ====
+<code r>
+B.res<-summary(B.out[,2:8])$statistics
+B.est<-B.res[,1]
+
+##Rearrange so that Intercept term is in the first slot
+B.est<-c(B.est[7],B.est[1:6])
+
+B.prediction<-exp(model.matrix(glm(1:nrow(temp)~Arealdekke+Elev,data=temp)) %*% B.est) ##This is where the prediction is made. Similar function as predict() function
+
+cor.test(temp$B.pred,temp$predict) ##Correlation between the GLM (frequentist) estimate and the Bayesian estimate == 92%
+
+
+################WRITE THE BAYESIAN PREDICTION###############
+pred.frame$predict<-rep(NA,nrow(pred.frame)) ##Fill it with NAs. This is replaced by predicted values next.
+pred.frame$predict[pred.frame$Arealdekke==3 | pred.frame$Arealdekke==9 | pred.frame$Arealdekke==12 | pred.frame$Arealdekke==14 | pred.frame$Arealdekke==15 | pred.frame$Arealdekke==19]<-B.prediction
+elev$B.pred<-pred.frame$predict
+
+##Done!
+##
+
+##################################################################################
+
+
+#####RANDOM DRAWS FROM POSTERIOR PARAMETER DISTRIBUTIONS##############
+
+
+
+##The function B.new draws random numbers from the output of the Bayesian analysis, by simply sampling the Coda outputs. This way, I can only draw numbers that were actually produced by JAGS.
+## Another way would be to define a distribution from the estimated standard errors from the output. Then I would be able to draw any number from the distribution. 
+
+B.new<-function(){
+temp<-c(sample(size=1,unlist(B.out[,8])),sample(size=1,unlist(B.out[,2])),sample(size=1,unlist(B.out[,3])),sample(size=1,unlist(B.out[,4])),sample(size=1,unlist(B.out[,5])),sample(size=1,unlist(B.out[,6])),sample(size=1,unlist(B.out[,7])))
+return(temp)
+}
+
+################################################################################
+
+</code>
+
+==== Let's make a movie ====
+<code r>
+##################################################
+###make movie, Bayesian random parameter draw version
+##################################################
+setwd("/home/astrom/Till AD!/GIS-Norge/out")
+#system("g.region rows=1080 cols=1280 -p")
+system("g.region rows=1412 cols=1670 -p")
+#system("g.region rast=Elev_dem_eid -p")
+
+
+for(i in 1:50){
+B.prediction<-exp(model.matrix(glm(1:nrow(temp)~Arealdekke+Elev,data=temp)) %*% B.new()) ##Multiply the model matrix with the random drawn parameters
+pred.frame$predict<-numeric(nrow(pred.frame))
+pred.frame$predict[pred.frame$Arealdekke==3 | pred.frame$Arealdekke==9 | pred.frame$Arealdekke==12 | pred.frame$Arealdekke==14 | pred.frame$Arealdekke==15 | pred.frame$Arealdekke==19]<-B.prediction
+elev$B.pred<-pred.frame$predict
+
+elev$B.rand.pois<-rpois(nrow(elev),elev$B.pred) ##Pick one random draw from the estimated mean in each pixel
+
+writeRAST6(elev,paste("pois",i,sep=""),zcol="B.rand.pois",overwrite=T)
+}
+system("for i in `seq 1 50` 
+ do
+  r.out.png input=pois$i output=pois$i
+   g.remove rast=pois$i 
+    done")
+
+system("convert -delay 20 *.png 1670B-rand-pois.mpg")
+
+
+##############################################################
+</code>
+
+==== Validation ====
+I won't make any attempts at validating my models. I already know they are extremely simplistic and will not have much explanatory power. One predictor that seems to be important is Flower cover, but I don't have data for that other than at the visited sites. Interpolating these values might be a possible road but I won't look into that now.
+
+===== RESULTS and DISCUSSION =====
+  - The first picture shows the prediction from the GLM model. White areas are those with land uses the inventory personnel did not visit, so I won't predict to those areas.
+  - The second picture shows the corresponding output for the Bayesian analysis. The parameter values changes slightly which creates a pretty large change in the colormapping.
+  - The third picture shows the best estimate frequentistic GLM (1) prediction but for one random outcome. That is I draw a random number from a Poisson dist with the prediction as mean.
+  - The third picture/movie show 10 possible outcomes when you let the parameter values vary randomly according to the uncertainty in the Bayesian estimation, plus random noise as in (3). You can make a longer movie as well with better resolution but it won't fit in this wiki-page 
+
+  - The fourth plot shows a diagnostic plot of the Bayesian estimation. The MCMC chains seems to have converged well, and the parameter distributions look reasonable.
+\\
+{{:wikidk:f_pred_na.png?400|Frequentist prediction, best estimate}}
+{{:wikidk:b_pred_na.png?400|Bayesian prediction, best estimate}}
+{{:wikidk:f_pred_pois_na_small.png?400|Frequentist prediction, best estimate + poisson random draws}}
+{{:wikidk:b_par_pois_na.gif|10 random outcomes of bumblebees. Random parameter draws + poisson random draws. Bigger movie is problematic on wiki}}
+{{:wikidk:mcmcplot.png?400|Diagnostic plot of the MCMC sampling}}
+\\

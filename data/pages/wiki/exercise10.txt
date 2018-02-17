@@ -1,0 +1,45 @@
+====== Exercise 10: Create yearly MODIS composite ======
+In this exercise the following tools will be used:
+  * pktools: pkmosaic
+  * bash: for loop, echo
+
+__Create a directory for this exercise__
+
+<code bash>
+mkdir ${OUTPUTDIR}/exercise10
+</code>
+
+In this exercise we will learn how to create a maximum value composit image when a number of images are available with overlap.
+
+The MODIS images at 500 m have 7 spectral bands and an additional two bands for the cloud mask and a count value. 
+
+The cloud mask is defined as: 0 (most likely cloudy), 1 (probably cloudy), 2 (probably cloud free) and 3 (most likely cloud free).
+
+The count value represents the number of valid images that were used for the composit. see how to create a yearly MODIS composite at 500 m for 2010.
+
+Select cloud free pixels only (cloud value > 2: -min 2) and use a compositing rule that selects the maximum NDVI value (composit rule: -cr maxndvi).
+
+__look at the help information how to use pkmosaic__
+
+<code bash>
+pkmosaic -h
+</code>
+
+<note tip>
+The MODIS bands at 500 m:\\
+band 1: red\\
+band 2: nir\\
+band 3: blue\\
+band 4: green\\
+band 5: nir\\
+band 6: swir\\
+band 7: mir\\
+band 8: cloud mask (3 is cloud free)\\
+band 9: number of days used for monthly composit\\
+</note>
+
+<note warning>Do not forget that pktools start counting from 0</note>
+
+<code bash>
+pkmosaic $(for file in ${MODIS500DIR}/2010*-MODIS500_CW.tif;do echo " -i " $file;done) -o ${OUTPUTDIR}/exercise10/2010-MODIS500_CW.tif --rband 0 --rband 1 -cr maxndvi --validBand 7 -min 2 -nodata 0
+</code>

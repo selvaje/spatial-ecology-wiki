@@ -1,0 +1,56 @@
+===== Setting user name =====
+  - Open a terminal and type the following lines replacing 3 with your computer number (1-25) :
+
+  cd ~
+  sudo usermod -l  student3  user
+
+  - password: user
+  - Close the terminal
+
+
+
+
+
+==== Keyboard settings by command line====
+Open a terminal: go to Applications ⇒ accessory ⇒ Terminal\\
+type setxkbmap es\\
+return\\
+\\
+
+==== Keyboard settings by GUI ====
+Go to Preferences ⇒ Keyboard ⇒ Tab ⇒ Layouts \\
+\\
+Select **+ Add ..**\\
+Choose Layout **Spanish** ⇒ Variant **Default** ⇒ + Add ..\\
+Select Spain as defaults\\
+Select Keyboard Model ⇒ Model vendor = Dell \\
+Model = Dell USB Multimedia ⇒ Ok ⇒ close \\
+
+
+===== Screen resolution =====
+Try the 1024 x 768  as follows: 
+System ⇒ Preferences ⇒ Screen resolution ⇒ 1024 x 768 ⇒ Apply\\
+If it is not working try to increase or decrease according to your new resolution\\
+\\ 
+
+
+
+There is more info at [[file:///usr/lib/vmware/help/player/wwhelp/wwhimpl/js/html/wwhelp.htm#href=c_transferring_files_and_text_between_host_and_guest.html|WMplayer help shared folder section]]
+
+<note>If your guest OS is linux, to see your shared folder you have to mount it first:
+  * mkdir /home/user/share
+  * sudo mount -t vmhgfs .host:/  /home/user/share
+</note>
+
+===== Keyboard symbols in programing  =====
+^ Character ^ Keyboard ^ Name ^
+|  %%|%%    | Alt Gr + 1 | Pipe |
+|  ~        | Alt Gr + 4 + Alt Gr + 4 | Tilde|
+|  "        | Shift + 2 | Double quotation |
+|   '        | ' (under ? question mark) | Single quotation | 
+|  `        | ` + ` ( Left of P  ) | Back quotation |
+|  %%^%%        | Shift + %%^%% Shift + %%^%% | Hat |
+
+
+
+

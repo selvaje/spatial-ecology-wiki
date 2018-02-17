@@ -1,0 +1,95 @@
+^ ^[[http://www.exeter.ac.uk/esi/|ENVIRONMENT AND SUSTAINABILITY INSTITUTE]]^
+|{{:wikistud:exeter_logo.jpg?300|}}|The University of Exeter’s Environment and Sustainability Institute (ESI) is an interdisciplinary centre leading cutting-edge research into solutions to problems of environmental change; and in so doing is enhancing people’s lives by improving their relationships with the environment|
+
+\\
+====== Welcome to the ESI Summer school on Open Source tools for GIS analyses and data processing ======
+
+<note important> For people unable to attend the installation meeting, a second session of software installation will be carried out **Wed. July 11th  at 14:45**  seminar room 9 in Peter Lanyon after the seminar. Before coming, install a virtualization software at your choice (  [[https://www.virtualbox.org/wiki/Downloads| Virtual Box]] or [[http://www.vmware.com/products/player/overview.html| VM Ware Player ]] ) and bring your laptop. </note>
+
+The hand's on training will be carried out on a virtual machine Linux Ubuntu operating System with pre-installed Open source scientific software. \\
+To participate at the training you'll need a laptop with 20GB of free disk space available.\\
+
+The [[http://www.exeter.ac.uk/esi/events/title_215989_en.html| ESI ]] summer school is carried out at the Cornwall campus, during the following training sessions:\\
+\\
+=====  Kick off meeting (1h)  =====
+  * When : **Fri. July 6th 14:30 - 15:30 **
+  * Where: Seminar room 3 in Peter Lanyon 
+  * What: We will shortly present the training, distribute software and help with [[wiki:installvm|software installations]].
+\\
+\\
+=====  Seminar on The NASA funded  Web-enabled Landsat Data (WELD) project  =====
+**An overview of the NASA Web Enabled Landsat Data (WELD) project and Handling WELD data products using Open Source Software**\\
+[[http://www.spatial-ecology.net/ost4sem/project/uniexeter/WELD_presentation.pdf |  Abstract ]]
+\\
+Our invited speaker [[ http://globalmonitoring.sdstate.edu/people.php?view=6&a=show&id=116|  Dr. Amatulli ]] will present us the [[http://globalmonitoring.sdstate.edu/projects/weld/ | Web-enabled Landsat Data (WELD)]] project.\\
+
+  * When : **Wed. July 11th 14:00 - 15:00** 
+  * Where: Seminar room 9 in Peter Lanyon \\
+After the seminar we will help with software installation if needed.
+\\
+\\
+=====  Introduction to the use of open Source GIS using a graphical user interface. =====
+  * When : **July 12 -13. ** (9:00-12:30 and 14:00-17:30)
+  * Where: IT Exeter Suite number 3.037 in Daphne du Maurier  \\
+  * What:  [[http://www.spatial-ecology.net/ost4sem/project/uniexeter/UK2012_schedule_1.pdf| DOWNLOAD the Preliminary Programme & Schedule ]]\\
+  * Trainers: S. Casalegno; G. Amatulli
+\\
+\\
+
+=====  Introduction open Source GIS and data processing using command line scripting =====
+  * When **July 24-27  ** (9:00-12:30 and 14:00-17:30)
+  * Where:  IT Exeter Suite number 3.037 in Daphne du Maurier Tue-Wed. P.Lanyon Seminar room 2 Thu-Fri\\ 
+  * What :  [[http://www.spatial-ecology.net/ost4sem/project/uniexeter/UK2012_schedule_2.pdf| DOWNLOAD the Preliminary Programme & Schedule ]]\\
+  * Trainers: S. Casalegno; P. Kempeneers
+  
+
+
+=====  Trainers  =====  
+  * [[http://www.exeter.ac.uk/esi/about/people/casalegno/| Dr Stefano Casalegno]] University of Exeter ESI
+  * [[http://globalmonitoring.sdstate.edu/people.php?view=6&a=show&id=116| Dr. Giuseppe Amatulli ]] University of South Dakota
+  * [[http://www.vito.be/VITO/EN/HomepageAdmin/Home/WetenschappelijkOnderzoek/| Dr Pieter Kempeneers]] - VITO Belgium 
+  * [[http://www.exeter.ac.uk/esi/about/people/inger/#d.en.206597| Dr Richard Inger]] University of Exeter ESI ( Support )
+
+\\
+\\
+=====  Participant's list =====  
+
+^ Name ^ email ^
+|Callum Lawson |    <cl348@exeter.ac.uk> |  1 |
+|Kimberley Stokes |    <kls214@exeter.ac.uk> |  2 |
+|Sarah-Jane Phelan |    <sp333@exeter.ac.uk> |  3 |
+|Stratton, Naomi  |   <ngs203@exeter.ac.uk> |  4 |
+|Alan Puttock  |   <ap267@exeter.ac.uk> |  5 |
+|Eric Flores De Gracia |    <eef201@exeter.ac.uk> | 6 | 
+|Paz Durán  |   <paz.duran.moya@gmail.com> | 7 |
+|Wood, Joanne  |   <jlw211@exeter.ac.uk> |  8 |
+|Lucy Hawkes  |     <l.hawkes@bangor.ac.uk> | 9 | 
+|Bodey, Thomas  |   <T.W.Bodey@exeter.ac.uk> | 10 | 
+|Beatrice Downing |   <bd249@exeter.ac.uk> |  11 |
+|Richard Inger |    <richinger@gmail.com> |  12 |
+|Lindsay Walker  |   <lw356@exeter.ac.uk> |  13 |
+|Moussy, Caroline |    <cm323@exeter.ac.uk> |  14 |
+|Chris Beirne  |   <cb441@exeter.ac.uk> |  15 |
+|Wood, Emma |    <ew261@exeter.ac.uk> |  16 |
+|Caitlin Kight |    <C.R.Kight@exeter.ac.uk> |  17 |
+|Matt Perkins  |   <mjp223@exeter.ac.uk> |  18 |
+|Maria Avila-Jimenez |    <M.L.Avila-Jimenez@exeter.ac.uk> |  19 |
+|Martin Grunnill |    <mdg206@exeter.ac.uk> |  20 |
+|Sasha Kosanic  |   <ak352@exeter.ac.uk> |  21 |
+|James Duffy  |   <J.Duffy@exeter.ac.uk> |  22 |
+|Alfredo Attisano |    <aa399@exeter.ac.uk> |  23 |
+|Anderson, Karen  |   <Karen.Anderson@exeter.ac.uk> |  24 |
+|Le-Feuvre, Naomi  |   <nrl203@exeter.ac.uk> |  25 |
+|Luscombe, David  |   <djl212@exeter.ac.uk> |  26 |
+|Grand-Clement, Emilie  |   <E.Grand-Clement@exeter.ac.uk> |  27 |
+|Glendell, Miriam  |   <mg315@exeter.ac.uk> |  28 |
+|Jan Stipala  |   <jas211@exeter.ac.uk> |  29 |
+|Melanie Smee |    <M.R.Smee@exeter.ac.uk> |  30 |
+|Jon Bennie  |   <J.J.Bennie@exeter.ac.uk> |  31 |
+|Pia Benaud  |   <P.Benaud@exeter.ac.uk> |  32 |
+|Tim Van Berkel  |   <tvanberkel@heartofborneo.org> | 33 |
+|Aisling Devine |   <apd210@exeter.ac.uk> |34|
+|Owen Greenwood  |  <og209@exeter.ac.uk>|  35|
+|Maria Correa-Cano |  <mec211@exeter.ac.uk>|  36|
+|Kate Plummer  |  <K.Plummer@exeter.ac.uk>  37| 
+\\

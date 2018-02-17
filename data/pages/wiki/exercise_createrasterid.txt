@@ -1,0 +1,41 @@
+
+==== Create an arc info grid for the inspire grid ====
+Uper Left corner id = 1 Lower Right 800*600 = 480000\\
+\\
+Create an header with the geographic extend and the pixel resolution
+<code bash>
+echo "ncols        800"       >  inspire_ID_UL_ALL.asc 
+echo "nrows        600"       >> inspire_ID_UL_ALL.asc 
+echo "xllcorner    0"         >> inspire_ID_UL_ALL.asc 
+echo "yllcorner    0"         >> inspire_ID_UL_ALL.asc 
+echo "cellsize     1000"      >> inspire_ID_UL_ALL.asc 
+</code>
+
+Attach to the same file a matrix with id increasing number starting from 1 in Upper Left corner. 
+<code awk>
+awk ' BEGIN {  
+for (row=1 ; row<=600 ; row++)  { 
+     for (col=1 ; col<=800 ; col++) { 
+         printf ("%i " ,  col+(row-1)*800  ) } ; printf ("\n")  }}' >> $INDIR/inspire_ID_UL_ALL.asc
+
+# transform the created arcinfo ascii grid in a tif.
+
+gdal_translate   -a_srs EPSG:3035  -co "COMPRESS=LZW"  $INDIR/inspire_ID_UL_ALL.asc   $INDIR/inspire_ID_UL_ALL.tif
+</code>
+
+
+# create lat lont raster 
+
+  gdal_translate  -of XYZ inspire_ID_UL_ALL.tif  inspire_ID_UL_ALL_xyz.asc 
+
+  awk '{ print $3 , int($1*100000)}'  inspire_ID_UL_ALL_xyz.asc >  inspire_ID_UL_ALL_xz.asc
+  awk '{ print $3 , int($2*100000)}'  inspire_ID_UL_ALL_xyz.asc >  inspire_ID_UL_ALL_yz.asc
+
+  pkreclass -code  inspire_ID_UL_ALL_xz.asc     -i  inspire_ID_UL_ALL.tif  -o inspire_ID_UL_ALL_X.tif
+  pkreclass -code  inspire_ID_UL_ALL_yz.asc     -i  inspire_ID_UL_ALL.tif  -o inspire_ID_UL_ALL_Y.tif
+
+  gdal_calc.py  --type Float32 -A  inspire_ID_UL_ALL_X.tif --calc="( A * 0.00001 )"   \ --outfile=inspire_ID_UL_ALL_Xf.tif  --overwrite 
+  gdal_calc.py  --type Float32 -A  inspire_ID_UL_ALL_Y.tif --calc="( A * 0.00001 )"   \ --outfile=inspire_ID_UL_ALL_Yf.tif  --overwrite 
+
+
+

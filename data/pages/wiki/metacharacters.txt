@@ -1,0 +1,40 @@
+====== Special Characters ======
+Special characters, also called metacharacters, are a group of characters that have particular meanings in the bash language.\\
+Listed here are those used in the following scripts. Type the examples and try to get the meaning.\\
+\\
+*    a string with o or more character 
+<code bash>
+   ls /dev/tty*
+</code>
+?    a single character
+<code bash>
+   ls /dev/tty?
+</code>
+[ ]  one of a single character listed
+<code bash>
+   ls /dev/tty[2-4]
+</code>
+{}   one of a single string listed
+<code bash>
+   ls /dev/tty{zd,zc}
+</code>
+\\
+More information on Regular expression metacharacters can be found [[http://tille.garrels.be/training/bash/ch04.html#sect_04_01_02 | here]] 
+
+====== Quoting ======
+You can prevent the shell from interpreting a metacharacter by placing a backslash (\).\\
+In this way the metacharacter become a normal character.\\
+e.g.\\
+
+<code bash>
+cp file1 file\?
+</code>
+file1 will be copied to file?
+You can also insert the metacharacter between quotation marks.
+<code bash>
+   ls /dev/"tt*"
+</code>
+Compare the difference
+<code bash>
+   ls /dev/tt*
+</code>

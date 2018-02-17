@@ -1,0 +1,28 @@
+====== EOF method  ======
+If we have a short R script or a single R function we can emberd this R command into a bash script and process it using one cores using the bash [[http://en.wikipedia.org/wiki/End-of-file|EOF]] function.\\
+The  //export// bash fonticon and the //Sys.getenv()// R function allows to exchange variables between R and bash. We can use this functionality to embed an R command in bash.  
+
+<code bash>
+cd ~/Documents/multi_core
+mod=1
+t=24
+path=~/Documents/multi_core/output
+export mod
+export t
+export path
+
+R --vanilla --no-readline   -q  << EOF
+mod.t = Sys.getenv(c('mod','t','path'))
+mod = as.numeric(mod.t[1])
+t = as.numeric(mod.t[2])
+path = as.character(mod.t[3])
+print(mod)
+print(t)
+print(path)
+my_output=paste("We have processed  mod ",mod," and t ",t," ---- output path is   ",path,sep=" ")
+write.table(my_output,paste(path,"/mytext.txt",sep=""))
+EOF
+
+</code>
+
+We can [[cluster_r_xargs|built an R]] script using Sys.getenv() and launch it in a loop using multi cpu

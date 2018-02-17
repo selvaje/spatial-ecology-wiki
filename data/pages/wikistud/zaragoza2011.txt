@@ -1,0 +1,62 @@
+====== Shedule 2011 ======
+
+{{:wiki:program2011.png| Intensive trainings, April 2011 }}
+
+====== Test ======
+
+===== Exercise number 1 =====
+
+In this exercise we modify a pre-existing script and use new data for spatial data processing with grass bash and awk commands.
+<note important> After clicking on the links below select //save as// in the pop up menu. </note>
+
+
+{{:wiki:spain_admin.zip| Download Spanish Administrative boundary data }}
+
+{{:wiki:spain_forest.zip| Download Spanish Forest Cover map }}
+
+{{:wiki:ex1_eu_sp_forest_stats.pdf | Download exercise description}}
+
+After downloading the files below, rename the .pdf file as .sh extension, open it with kate  and follow the instructions.\\
+
+When you have finished the exercise, save a copy of the script with your name in the project folder " ~/Documents/YOUR_PROJECT/ "
+
+===== Exercise number 2 =====
+[[gdalbasic|follow this link]] 
+
+
+
+===== Satisfactory survey =====
+<doodle unizar2011survey /  Will you use and progress using OS tools in future ?>
+^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R Yes ^ R No ^  
+</doodle>
+\\
+<doodle unizar2011survey /  Do you feel to be able to independently improve and learn more about OS tools ? >
+^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R Yes ^ R No ^
+</doodle>
+\\
+<doodle unizar2011survey  /  Do you see any interest in using OS spatial analysis tools in your current and future job ? >
+^ Yes ^  No ^ Little ^
+</doodle>
+\\
+<doodle unizar2011survey /   Which part of the course did you preferred and would have liked to see in more in detail ? >
+^ Bash ^ Awk ^ Gdal ^ Gnuplot ^ Grass ^ Qgis ^ R ^ Theory ^ exercise ^ Study case ^ Projects ^
+</doodle>
+\\
+<doodle unizar2011survey  /  Do you think the training was well adapted in respect of your needs, your skills and knowledge ? >
+^ Advanced and too difficult ^  well adapted ^ Basic and boring ^
+</doodle>
+\\
+<doodle unizar2011survey  /  The trainers where clear and prepared during the 1st week of teaching ? >
+^ Very well ^  yes enough prepared  ^ not enough ^
+</doodle>
+\\
+<doodle unizar2011survey  /  The trainer's supervision during your project was satisfactory ? >
+^ Very much ^  yes satisfactory  ^ not enough ^
+</doodle>
+\\
+<doodle unizar2011survey  /  The training organization was correctly carried out ? (VM + Virual machines) >
+^ Virtual OK ^ VM no ^ Slides OK ^ Slides no ^ Vikipedia OK ^ Vikipedia no ^ Schedule OK  ^ Schedule NO ^
+</doodle>
+\\
+
+Please if you have any remark or suggestions for improving this training write to us in cc @  stefano@casalegno.net and giuseppe.amatulli@gmail.com

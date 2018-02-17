@@ -1,0 +1,20 @@
+
+==== Dr Stefano Casalegno ====  
+Stefano is an environmental and data scientist with expertise in extracting knowledge from complex data sources.\\ 
+Trained at ecology, agriculture, satellite image analysis and GIS, with broad range of spatio-temporal data processing and predictive modelling skills, both technical and strategic.\\
+Currently Associate research fellow at the [[http://www.exeter.ac.uk/esi/people/casalegno/|University of Exeter's Environmental and Sustainability Institute]] he process LiDAR data for urban greening applications and develops regional-scale models to assess the consequences of future environmental changes for the provision of ecosystem services, using Cornwall as a case study. In the context of mapping ecosystem services, he is looking at new form of data gathering form distributed sensor networks and online sources exploring the emerging computational social science and big data processing.
+  * [[http://www.exeter.ac.uk/esi/people/casalegno/ | Home at the University of Exeter]]
+  * [[https://www.linkedin.com/in/stefano-casalegno-719789 | Linkedin ]]
+  * [[pubste|A list of publications]]\\
+  * [[https://scholar.google.co.uk/citations?user=OErHEsUAAAAJ| Google scholar]]\\
+
+=== Education ===  
+PhD in Applied Ecology (GIS - remote sensing) at “INA P-G”, France (2001).\\
+MSc Ecology //DEA d’Ecologie// Eco-physiology and Ecosystem functioning at INA P-G, Univ. Paris-Sud XI and Univ. Paris VI (1997).\\
+BSc Ecology. //Maîtrise d’Ecologie//, University of Paris-Sud XI (1996). \\
+//Licence ès Sciences Naturelles//, University of Paris-Sud XI (1995). 
+\\
+
+
+----
+

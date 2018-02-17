@@ -1,0 +1,32 @@
+====== Exercise 8b: publishing results on file and the web ======
+The following tools will be used in this exercise:\\
+pktools: pkinfo, pkmosaic, pksetmask, pkextract\\
+GDAL/OGR: gdal_translate, gdal2tiles,py\\
+openev, QGIS\\
+
+__Visualize classification result in openev (or QGIS)__
+
+<code bash>
+openev -h ${OUTPUTDIR}/exercise8/19990724_L7E_IM_FMAP.tif
+</code>
+
+__First generate key (e.g., my key is: AxxxY)__
+__Then we need to convert paletted file (GTiff with colour table) to  RGB(A) file. We can do this with a virtual file:__
+
+<code bash>
+gdal_translate -of vrt -expand rgba ${OUTPUTDIR}/exercise8/19990724_L7E_IM_FMAP.tif temp.vrt
+</code>
+
+__Create tiles__
+
+<code bash>
+gdal2tiles.py -g AxxxY temp.vrt
+</code>
+
+__By default this created levels from 6-11. To increase one zoom level, you can extend by:__
+
+<code bash>
+gdal2tiles.py -g AxxxY -e -z 12 temp.vrt
+</code>
+
+__Directory temp will be created with tiles and PNG images that can be viewed in internet browser__

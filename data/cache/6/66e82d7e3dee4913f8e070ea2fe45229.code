@@ -1,0 +1,24 @@
+#renaming variables in DBH
+DBH$PlotID = DBH$Plot.no.
+DBH$DBHcm  = DBH$DBH..cm.
+DBH$DBH..cm.=NULL
+DBH$Plot.no.=NULL
+&nbsp;
+#merge two tables (DBH, plotcoor)
+&nbsp;
+##creating new columns in DBH for the variables we want to import from plotcoor
+&nbsp;
+DBH$elevation=NA
+DBH$east=NA
+DBH$nort=NA
+&nbsp;
+##loop for importing variables east, nort and elevation
+&nbsp;
+for (pid in c(1:69)){
+DBH$east = ifelse(DBH$PlotID==pid, subset(plotcoor$Easting..m.,plotcoor$Plot.no.==pid), DBH$east)
+DBH$nort = ifelse(DBH$PlotID==pid, subset(plotcoor$Northing..m.,plotcoor$Plot.no.==pid), DBH$nort)
+DBH$elevation = ifelse(DBH$PlotID==pid, subset(plotcoor$Elevation..m.,plotcoor$Plot.no.==pid), DBH$elevation)
+}
+&nbsp;
+##delete NA values in DBH
+DBH = na.omit(DBH)

@@ -1,0 +1,205 @@
+====== 3-D visualization of TIR anomalies ======
+Efthymia Pavlidou, Enschede, The Netherlands
+
+===== INTRODUCTION =====
+
+==== General framework of the analysis ====
+
+Anomaly detection in time series is performed using spatial and temporal filters. In order to evaluate the detected anomalies and link them with potential underlying physical processes, we need to visualize the results in both spatial and temporal dimensions. This should include the location, spatial extent and duration of extreme values as well as the occurence of the events triggering the appearance of the detected anomalies.
+
+**keywords: 3-D visualization, anomaly detection, time series**
+ 
+==== Project objectives ====
+The project intended to visualize in 3D, binary classified geostationary hypertemporal TIR data resulting from time series analysis with R. Visualization options were investigated to include spatiotemporal distribution, clustering and intensity of anomalous values. Potential processes related to the appearance of the extreme values were visualized in the same plot, along with an underlying DEM of the study area, to allow for an evaluation of the relation between the appearance of the anomalies and the proposed underlying process. 
+
+
+===== METADATA =====
+The input data used in the project are a result of processing thermal infra-red images obtained by meteorological satellites operated by EUMETSAT. The processing involved spatial and temporal filtering, anomaly detection and summation of anomalous values withing a moving window. The resulting data were organized as a  dataframe in R, containing information on the coordinates (lat-long and pixel/sample coordinates within the image), time of appearance (as in sequential satellite images) and intensity (as in number of anomalous values summed in a moving temporal window) of the calculated anomalous counts. The original hypertemporal dataset was too large for an exploratory study (82x101x105210) so it was subsetted to (61x87x100). The dataframe entries were ordered by the intensity of anomalous values in order to facilitate the use of color palettes in this project. The values contained in the dataframe were also transfered to a coresponding array to allow for the application of functions visualizing volumetric data. A smaller synthetic dataset (8x10x12 entries) was also created to explore the potential of the packages used for this project. This dataset contained entries "classified" in two levels, 1 and 2. Class 2 values were completely surrounded by class 1 values. In this way, transparency options were explored for the visualization of overlapping levels of anomalous counts. Since original DEMs were not available, background surface information was derived from the //Hypsometry// and //Volcano// datasets available in R.   
+
+
+
+
+
+=====METHODOLOGY=====
+
+Analysis was carried out in R with three packages designed for visualization of 3D data: **rgl**, **misc3d** and **plot3D**, the latter very recently appearing in CRAN. The processing followed the examples and suggestions included in the documentation of the packages (see bibliography). An attempt was made to explore also the potential of OCTAVE for the project, but this was not possible due to technical difficulties.
+
+The workflow was centered on the following axes:
+1. Visualization of the temporal and spatial occurence of anomalous TIR values
+2. Visualization of the levels (intensity) of detected anomalous counts
+3. Visualization of the extent of the anomalies (clustering in space and in time)
+4. Visualization of the above in combination with the study area and spatiotemporal occurence of the potential cause of the anomalies.
+
+The scenario which was examined was the appearance of anomalies in thermal infra-red emissions during the preparatory phase of a volcanic eruption. In order to be able to link the anomalies with the volcanic activity, the anomalous values need to be located at distances close to the volcano and to the time of the eruption. The anomalous counts were visualized as point observations in a 3D scatterplot, and their intensity was represented with different colours. A kernel density estimate was calculated and visualized using contour surfaces to better represent clustering. The above were examined in combined images with 3D visualization of the anomalies, the altitude/terrain of the study area and the occurence of the explosion to investigate the relation between anomalies and their potential cause.
+
+The packages offer numerous possibilities for analyzing the study area, applying functions on the background image, computiong contours and gradients etc. These were tried but, given that real background data were not available for this study to relate with the scenario, they were not included in the results.
+
+To further explore the visualization facilities offered by the packages, a synthetic datacube was designed to contain anomalies classified in two levels, with one of the levels completely surrounded by the other. This scenario allowed for visualization of isosurfaces of anomalies with the same value, with different degrees of fill and transparency (so that both levels would be visible), and with slicing. Different available functions for creating isosurfaces were explored, namely //contour 3D, isosurface, createisosurf// and //slice3D// with their related/supporting functions.  
+
+References:
+  * Dai Feng, Luke Tierney, 2008. Computing and Displaying Isosurfaces in R. Journal of Statistical Software 28(1). <URL: http://www.jstatsoft.org/v28/i01/>. 
+  * Lorensen, W.E. and Cline, H.E., 1987.Marching Cubes: a high resolution 3D surface reconstruction algorithm, Computer Graphics, Vol. 21, No. 4, pp 163-169 (Proc. of SIGGRAPH).
+  * R Development Core Team (2008). R: A Language and Environment for Statistical Computing.
+  * R Foundation for Statistical Computing, Vienna, Austria. ISBN 3-900051-07-0, URL <http://www.R-project.org/>
+  * Soetaert K (2013). plot3D: Plotting multi-dimensional data. R package version 1.0. Available in <http://cran.r-project.org/web/packages/plot3D/vignettes/plot3D.pdf>
+  * Soetaert K (2013).Fifty ways to draw a volcano using package
+plot3D. Available in <http://cran.r-project.org/web/packages/plot3D/vignettes/volcano.pdf>
+  
+===== Computational implementation =====
+
+<code R - visual.R>
+#plot the Hypsometry dataset for the whole world showing 
+#rectangle with location of study area
+
+image2D(Hypsometry, xlab = "longitude", ylab = "latitude", \
+ contour = list(levels = 0, col = "black", lwd = 2), \
+shade = 0.1, main = "Hypsometry data set", clab = "m") \
+rect(55, 25 ,80,45 ,lwd=3)
+
+#subsetting the study area
+
+ii=which(Hypsometry$x > 55 & Hypsometry$x < 80) 
+jj=which(Hypsometry$y > 25 & Hypsometry$y < 45) 
+zlim=c(5000, 0)
+par(mfrow = c(1, 1))
+persp3D(z = Hypsometry$z[ii,jj], xlab = "longitude", main= "Study area", \
+bty ="bl2", ylab = "latitude",  zlab = "height", clab = "height, m", \
+expand = 0.5, d = 2, phi = 20, theta = 30, resfac = 4, \
+contour = list(col = "grey", side = c("zmin", "z")), \
+zlim = zlim, colkey = list(side = 1, length = 0.5))
+
+#3D scatter plot of the dataset
+
+par(mfrow = c(1, 1))
+panelfirst <- function(pmat) {
+zmin=min(ord$time)
+XY=trans3D(ord$lon, ord$lat, z = rep(zmin, nrow(ord)), pmat = pmat)
+scatter2D(XY$x, XY$y, colvar = ord$int, pch = ".", cex = 2, \
+add = TRUE, colkey = FALSE)
+xmin=min(ord$lon)
+XY=trans3D(x = rep(xmin, nrow(ord)), y = ord$lat,
+z = ord$time, pmat = pmat)
+scatter2D(XY$x, XY$y, colvar = ord$int, pch = ".", \
+cex = 2, add = TRUE, colkey = FALSE)
+}
+
+with(ord, scatter3D(x = lon, y = lat, z = time, colvar = int, \
+pch = 16, cex = 1.5, xlab = "longitude", ylab = "latitude", \
+zlab = "time", clab = c("Anomalous","counts"), \
+main = "Distribution of anomalous counts", ticktype = "detailed", \
+panel.first = panel first, theta = 10, d = 2, \
+colkey = list(length = 0.5, width = 0.5, cex.clab = 0.75)))
+
+
+#create combined scatterplot+study area+volcanic eruption
+# surface = volcano 
+
+M = mesh(1:nrow(volcano), 1:ncol(volcano)) 
+scatter3D(xss, ys, zs, ticktype = "detailed", pch = 16, bty = "f", \
+xlab="pixel", ylab="line", zlab="time", \
+xlim = c(1, 87), ylim = c(1,61), zlim = c(94, 315),phi=10, \
+surf = list(x = M$x, y = M$y, z = volcano, \
+col = "grey", shade = 0.3, alpha=0.8)) 
+
+scatter3D(x = 20, y = 40, z = 300, add = TRUE, \
+colkey = FALSE,pch = 18, cex = 3, col = "black")
+
+
+#create matrix with the data
+
+matrix=array(0, c(100,100,100)) 
+> for (i in 1:100){ 
++ matrix[ord$lat[i],ord$lon[i],ord$time[i]]=ord$int[i] 
++ } 
+ 
+
+#plot isosurface of the volumetric data
+
+iso = createisosurf(ord$lat, ord$lon, ord$time, matrix, level = 34)
+triangle3D(iso, col = "lightskyblue", alpha=0.8,  shade = 0.3) 
+
+#plot 3D transparent histogram
+
+hist3D(z=volcano, scale = FALSE, expand = 0.01, col = jet.col(100, alpha = 0.3), \
+border = "black", main="3D histogram of altitude values")
+
+#plot isosurface of anomalies with contour3D
+
+contour3d(matrix, 34, alpha=0.8) 
+box3d(col="gray")
+
+#plot density contour surface (kernel density estimate)
+
+de=kde3d(ord$lon, ord$lat, ord$time, n=40)
+contour3d(de$d, 0.00005, de$x, de$y, de$z, color="magenta") 
+box3d(col="gray")
+
+#create small array
+
+cube=array(0, c(8,10,12))
+cube[3:6,4:6,5:8]=1 
+cube[4:5,5,6:7]=2 
+
+#plot nested transparent isosurfaces with the cube
+
+n=40 
+k=3 
+cmap=heat.colors 
+lev<-c(0,1,2)
+al=c(0,0.4,0.8) 
+contour3d(cube, lev, color=col, alpha=al) 
+box3d(col="gray")
+
+#plot isosurfaces and slices of the cube
+
+mcube=mesh(8,10,12)
+x=c(1:8) 
+y=c(1:10) 
+z=c(1:12)
+isoc=createisosurf(x,y,z, cube, level = 1) 
+triangle3D(isoc, col = "lightskyblue", alpha=0.8,  shade = 0.3)
+slice3D(x,y,z, colvar=cube, xs=4, ys=NULL, zs=c(6,8))
+</code>
+
+===== RESULTS and DISCUSSION =====
+
+===== Study area =====
+1. The Hypsometry dataset with a rectangle showing study area subset
+
+{{:wikistudholland:world.png?200|}}
+
+
+2. The subset of the previous map, with overlaying contours
+{{:wikistudholland:study_area.png?200|}}
+
+3. 3D histogram of altitude values of the study areas
+{{:wikistudholland:histogram.png?400|}}
+
+===== Visualizations of the synthetic data cube =====
+1. Nested transparent isosurfaces, using contour 3D
+{{:wikistudholland:nested_isosurfaces_cube.png?300|}}\\
+
+2. Nested isosurfaces, with no fill, using contour3D
+{{:wikistudholland:nested_isos_nofill.png?300|}}\\
+
+3. Triple-sliced datacube using slice3D
+http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=120&h=116&t=1390096911&tok=ea5056&media=wikistudholland:slice1.png
+4. Isosurface of class 1 anomalies using isosurf3D
+http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=120&h=115&t=1390096732&tok=28c59d&media=wikistudholland:cube_iso1.png
+
+===== TIR dataset =====
+1. Spatiotemporal distribution of anomalous values, with their intensity visualized with the color palette. Using a scatter3D
+http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=120&h=113&t=1390096887&tok=cf94e6&media=wikistudholland:scatter1.png
+2. 3D kernel density estimate of anomalous values using contour3d, to show clustering of anomalies in space and in time.
+http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=57&h=120&t=1390096748&tok=914bad&media=wikistudholland:density_contour_surface.png
+3. Different isosurfaces showing location of anomalous values > 40 (in the first graph, using contour3D) and >34 (in the second graph, using createisosurf). 
+http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=35&h=120&t=1390096720&tok=9873fa&media=wikistudholland:contour.png
+
+http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=120&h=112&t=1390096806&tok=af68ca&media=wikistudholland:isosurface.png
+
+4. Combination of TIR anomaly scatterplot overlaying a surface plot of the study area and including the occurence of the volcanic eruption(with the black square point). The intensity of the anomalies is clearly rising as the time of the eruption approaches. The appearance of anomalies earlier and in lower altitudes may be suggestive of the characteristics of the upper crust and potential movement of fluids or gas release.  
+http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=117&h=120&t=1390096869&tok=0081c0&media=wikistudholland:overlay.png
+
+
+
+The above examples show that the tested R packages provide many 3D visualization options according to the intended analysis. The displays of the clustering of the anomalies, their intensity and their spatiotemporal distribution can provide valuable information on the underlying processes and their development in time, especially if they are combined with images from the study area and the potential causes of the anomalies. More experimentation is needed to establish applicability in larger datasets.     

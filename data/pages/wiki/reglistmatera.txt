@@ -1,0 +1,67 @@
+====== Registration List ======
+\\
+If your name is not in the list means that the registration is not completed (e.g. questionnaire missing and/or waiting for bank transfer confirmation).\\
+\\
+| ID | Participant | Affiliation | Country | Status of the Registration | Bank Transfer | Questionnaire |  
+| 1 | Christos Kalogeropoulos | Aristotle University of Thessaloniki | Greece | Accepted | X | X | 
+| 2 | Thomas Katagis | Aristotle University of Thessaloniki | Greece | Accepted | X | X |
+| 3 | Erin Hodgess | University of Houston | USA | Accepted | X (paypal) | X |
+| 4 | Enrico Simonetti | University of Camerino | Italy |  Accepted| X | X |
+| 5 | Christian Wohlfart | DLR | Germany | Accepted| X | X |
+| 6 | Karan Kakouei | Leibniz-Institute of Freshwater Ecology and Inland Fischeries | Germany | Accepted| X | X |
+| 7 | Achim Haeger | School for Field Studies | Costa Rica | Accepted | X | X |
+| 8 | Cédric Scherer | University of Potsdam | Germany | Accepted | X | X |
+| 9 | Zhendong Wu | Lund University | Sweden | Accepted | X | X  | 
+| 10 | Aidin Niamir | Senckenberg Biodiversity and Climate Research Centre | Germany | Accepted | X | X |
+| 11 | Marco Tavoloni | University of Camerino | Italy | Accepted | X | X |
+| 12 | Helmi Saidi | Istituto per lo Studio degli Ecosistemi | Italy | Accepted | X | X |
+| 13 | Alzira G.Ramos | University of Lisbon | Portugal | Accepted | X | X |
+| 14 | Mauro Viccaro | University of Basilicata | Italy | Accepted | X | X |
+| 15 | Hadewij Sint | Rothamsted Research | United Kingdom | Accepted | X | X |
+| 16 | Juliana Stropp | Joint Research Center | EU |Accepted | X | X |
+| 17 | Martin Weiss | Joint Research Center | EU | Accepted | X | X |	 	 	 
+| 18 | Yelena Finegold	| FAO | USA | Accepted | X(paypal) | X |	 
+| 19 | Xeni Kechagioglou | GFT | Italy | Accepted | X | X |
+| 20 | Alba Nicoletta Mininni | University of Basilicata | Italy |Accepted | X | X |
+| 21 | Angela FIORE | University of Basilicata | Italy |Accepted | X | X |
+| 22 | Simone Vaccari | LTS International | United Kingdom |Accepted | X | X |
+| 23 | Juan Arevalo Torres  | Joint Research Center | EU | Accepted | X | X | 
+| 24 | Marco Trombetti | Joint Research Center | EU | Accepted | X | X |
+| 25 | Philipp Rauneker| Centre for Agricultural Landscape Research (ZALF) | Germany | Accepted | X | X |
+| 26 | Cristina Rosales Sanchez | Joint Research Center | EU | Accepted | X | X |
+| 27 | Stefania Pace | ENEA | Italy | Accepted | X | X | 
+
+ 	 
+====== Registration Waiting List ======
+
+| ID | Participant | Status of the Registration | Bank Transfer | Questionnaire |  
+| 1 | Kamar Khazal |  |  |  |
+
+| 6 | Cristiano Castaldi | Pending | Pending | X |
+
+| 9 | Mehmet Akif Erdogan | Pending | Pending | X |
+| 10 | Fizyon Sönmez | Pending | Pending | X |
+| 12 | Olga Vigiak | Pending | Pending | X |
+| 13 | Elena Roglia | Pending | Pending | X |
+| 14 | Martin Jeanmougin | Pending | Pending | X |
+| 15 | Jose Antonio Vazquez Moris | Pending | Pending | X |
+| 17 | Susanne Tautenhahn | Pending | Pending | Pending |
+| 18 | Stefano Testata | Pending | Pending | Pending |
+| 19 | Jeroen VANDENBORRE | Pending | Pending | Pending |
+| 20 | Ori Frid | Pending | Pending | Pending |
+| 21 | Giuseppe Cillis (Matera) | Pending | Pending | Pending |
+| 22 | Emanuela Maurizi | Pending | Pending | Pending |
+| 23 | Paula Adriana | Pending | Pending | Pending |
+| 24 | Tiziana Gentilesca | Pending | Pending | Pending |
+| 26 | Masood Shaikh | Pending | Pending | Pending |
+| 27 | Louis Valentin | Pending | Pending | Pending |  
+| 28 | Giuseppe Reale | Pending | Pending | Pending |
+
+| 1 | Aneta Florczyk | Pending | Pending | X |
+| 2 | Lacey Hughey | Pending | Pending | X |
+| 3 | Antonio Bubbico | Pending | Pending | X |
+| 4 | Linda Böckenhoff | Accepted | Pending | X |
+| 5 | Michele Colangelo | Pending | Pending | X |
+\\
+
+

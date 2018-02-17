@@ -1,0 +1,18 @@
+====== Exercise 7: morphological filters ======
+In this exercise, the following tools will be used:
+  * pktools: pkfilter
+
+<note tip>Optional: crop the image to test some filters on limited area</note>
+<code bash>
+ULX=3217600
+ULY=3127850
+LRX=3225650
+LRY=3119900
+pkcrop -i ${OUTPUTDIR}/cloudmask.tif -o ${OUTPUTDIR}/cloudmask_crop.tif -ulx $ULX -uly $ULY -lrx $LRX -lry $LRY
+</code>
+
+<note tip>morphological filters: dilation (-f 7), erosion (-f 8), closing (-f 9), opening (-f 10)</note>
+__Perform a dilation filter on the cloud mask__
+<code bash>
+pkfilter -i ${OUTPUTDIR}/cloudmask.tif -o ${OUTPUTDIR}/cloudmask_dil.tif -f 7 -dx 5 -dy 5 -c
+</code>

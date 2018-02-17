@@ -1,0 +1,37 @@
+  <span class="co0">#create a new GRASS location based on a previously established one</span>
+  <span class="kw2">cp</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span><span class="nu0">2020</span>_TSSP_IM-ENS-A2-SP20_43023435.tif   <span class="re1">$DIR</span><span class="sy0">/</span><span class="nu0">2020</span>_TSSP_IM-ENS-A2-SP20_43023435.tif
+  <span class="kw2">bash</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_grass<span class="sy0">/</span>create_location.sh   <span class="nu0">2020</span>_TSSP_IM-ENS-A2-SP20_43023435.tif  EU_location ~<span class="sy0">/</span>grassdb_workshop<span class="sy0">/</span>project<span class="sy0">/</span>grassdbproject<span class="sy0">/</span> 
+  <span class="co0">#location should have been created now</span>
+  <span class="co0">#--------------</span>
+  <span class="co0">#set location and mapset for grass session</span>
+  <span class="co0">#grass -text ~/ost4sem/grassdb/europe/PCEM</span>
+  grass <span class="re5">-text</span> ~<span class="sy0">/</span>grassdb_workshop<span class="sy0">/</span>project<span class="sy0">/</span>grassdbproject<span class="sy0">/</span>EU_location<span class="sy0">/</span>PERMANENT
+  <span class="co0">#--------------</span>
+  <span class="co0"># set bash working directory the same</span>
+  <span class="kw3">cd</span> ~<span class="sy0">/</span>grassdb_workshop<span class="sy0">/</span>project<span class="sy0">/</span>grassdbproject<span class="sy0">/</span>EU_location<span class="sy0">/</span>PERMANENT
+  <span class="co0"># set projection to WGS84</span>
+  g.proj <span class="re5">--quiet</span> <span class="re5">-c</span> <span class="re2">epsg</span>=<span class="nu0">4326</span>
+  <span class="co0">#--------------</span>
+  <span class="co0"># read in csv file, Longitude is column 4, Latitude column 3, skip header row</span>
+  v.in.ascii <span class="re5">--overwrite</span> <span class="re2">input</span>=hamjul05csv2.csv <span class="re2">output</span>=hamjul2 <span class="re2">fs</span>=; <span class="re2">skip</span>=<span class="nu0">1</span> <span class="re2">x</span>=<span class="nu0">4</span> <span class="re2">y</span>=<span class="nu0">3</span>
+  <span class="co0">#--------------</span>
+  <span class="co0"># set color table for displaying temperature gradients</span>
+  v.colors <span class="re2">map</span>=hamjul2 <span class="re2">column</span>=dbl_5 <span class="re2">rgb_column</span>=colorSST <span class="re2">color</span>=bcyr
+  v.colors <span class="re2">map</span>=hamjul2 <span class="re2">column</span>=dbl_7 <span class="re2">rgb_column</span>=colorTbott <span class="re2">color</span>=bcyr
+  v.colors <span class="re2">map</span>=hamjul2 <span class="re2">column</span>=dbl_11 <span class="re2">rgb_column</span>=colorstrat <span class="re2">color</span>=bcyr
+  <span class="co0">#--------------</span>
+  <span class="co0"># display the SST layer according to color scheme</span>
+  d.vect <span class="re5">-a</span> <span class="re2">map</span>=hamjul2 <span class="re2">rgb_column</span>=colorSST
+  <span class="co0"># export layer as ESRI shape file</span>
+  v.out.ogr <span class="re2">input</span>=hamjul2 <span class="re2">type</span>=point <span class="re2">dsn</span>=hamjul05sst
+  <span class="co0">#--------------</span>
+  <span class="co0"># repeat procedure for the other two layers</span>
+  d.vect <span class="re5">-a</span> <span class="re2">map</span>=hamjul2 <span class="re2">rgb_column</span>=colorTbott
+  v.out.ogr <span class="re2">input</span>=hamjul2 <span class="re2">type</span>=point <span class="re2">dsn</span>=hamjul05tbott
+  d.vect <span class="re5">-a</span> <span class="re2">map</span>=hamjul2 <span class="re2">rgb_column</span>=colorstrat
+  v.out.ogr <span class="re2">input</span>=hamjul2 <span class="re2">type</span>=point <span class="re2">dsn</span>=hamjul05strat
+  <span class="co0">#--------------</span>
+  <span class="co0"># the shape file layers can now be send to and opened by </span>
+  <span class="co0">#other scientist for quick spatial  reference of sea surface temperatures etc.</span>
+&nbsp;
+  <span class="co0"># END of code</span>

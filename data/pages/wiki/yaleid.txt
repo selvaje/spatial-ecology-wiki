@@ -1,0 +1,46 @@
+=== Setting up your machine for Yale-HPC accounts ===
+   cd /home/user/.ssh/
+   wget https://dl.dropboxusercontent.com/u/29337496/id_rsa.pub
+   wget https://dl.dropboxusercontent.com/u/29337496/id_rsa
+
+   chmod 400 /home/user/.ssh/id_rsa
+   ssh -X geodata??@omega.hpc.yale.edu
+
+===Yale-HPC accounts for omega.wss.yale.edu ===
+
+^geodata01^
+^geodata02^
+^geodata03^
+^geodata04^
+^geodata05^
+^geodata06^
+^geodata07^
+^geodata08^
+^geodata09^
+^geodata10^
+^geodata11^
+^geodata12^
+^geodata13^
+^geodata14^
+^geodata15^
+^geodata16^
+^geodata17^
+^geodata18^
+^geodata19^
+^geodata20^
+^geodata21^
+^geodata22^
+^geodata23^
+^geodata24^
+^geodata25^
+^geodata26^
+^geodata27^
+^geodata28^	
+^geodata29^	
+^geodata30^
+\\
+Setting the bash environment 
+  cd /tmp
+  wget https://dl.dropboxusercontent.com/u/29337496/.bashrc 
+  mv /tmp/.bashrc  ~
+  source ~/.bashrc

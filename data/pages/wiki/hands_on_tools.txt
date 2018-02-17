@@ -1,0 +1,14 @@
+====== Select one tool and learn how to use it ======
+
+^   [[bash|Linux Bash Scripting]]  ^  [[editors|Text editors]]  ^  [[cluster_processing | Cluster / Grid Computing ]]  ^  [[gnuplot|GNUPLOT]]  ^ 
+| {{:wiki:logo_linux.jpg?100|bash}} | {{:wiki:logo_kate.png?100 |editors}} {{:wiki:logo_emacs.png?100|editors}} | {{:wiki:cluster_porocessing.png?300|wiki:cluster_processing}}  |  {{:wiki:logo_gnuplot.png?120|gnuplot}} |
+\\ 
+^  [[awk|AWK language]]  ^ [[gdal|Geospatial Data Abstraction Library]] ^  [[r|R environment]]  ^ [[grass|GRASS GIS]] ^ [[qgis|Quantum Gis]] ^
+| {{:wiki:logo_whitew_awk.png?100|awk}} **AWK**|  {{:wiki:logo_gdal.png?100|gdal}}  | {{:wiki:rlogo-5.png?100|r}} | {{:wiki:grasslogo_vector_small.png?100|grass}} | {{:wiki:logo_qgis.png?100|qgis}} |
+\\
+^     ^ 
+^   [[geo_tools | Geo tools ]]  ^ ^   [[pk_tools | PKTOOLS ]]  ^ [[geo_tools_table | GDAL/PKTOOLS/OFT ]] ^
+----
+
+
+

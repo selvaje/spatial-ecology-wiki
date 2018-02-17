@@ -1,0 +1,51 @@
+
+<h1 class="sectionedit1" id="pksetmask">pksetmask</h1>
+<div class="level1">
+
+<p>
+NAME
+</p>
+<pre class="code"> pksetmask - apply mask to raster file</pre>
+
+<p>
+SYNOPSIS
+</p>
+<pre class="code bash">   pksetmask <span class="re5">-i</span> input <span class="re5">-o</span> output <span class="br0">&#91;</span>OPTION<span class="br0">&#93;</span></pre>
+
+<p>
+DESCRIPTION
+</p>
+<pre class="code"> Apply mask (flag invalid values) to raster file according to given mask (raster file)
+     </pre>
+
+<p>
+OPTIONS
+</p>
+<pre class="code bash">   <span class="re5">-i</span>     <span class="re5">--input</span>                Input image <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-m</span>     <span class="re5">--mask</span>                 Mask image<span class="br0">&#40;</span>s<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-o</span>     <span class="re5">--output</span>               Output mask <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-ot</span>    <span class="re5">--otype</span>                Data <span class="kw3">type</span> <span class="kw1">for</span> output image <span class="br0">&#40;</span><span class="br0">&#123;</span>Byte<span class="sy0">/</span>Int16<span class="sy0">/</span>UInt16<span class="sy0">/</span>UInt32<span class="sy0">/</span>Int32<span class="sy0">/</span>Float32<span class="sy0">/</span>Float64<span class="sy0">/</span>CInt16<span class="sy0">/</span>CInt32<span class="sy0">/</span>CFloat32<span class="sy0">/</span>CFloat64<span class="br0">&#125;</span><span class="br0">&#41;</span>. Empty string: inherit <span class="kw3">type</span> from input image <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-of</span>    <span class="re5">--oformat</span>              Output image format <span class="br0">&#40;</span>see also gdal_translate<span class="br0">&#41;</span>. Empty string: inherit from input image <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-co</span>    <span class="re5">--co</span>                   options: <span class="re2">NAME</span>=VALUE <span class="br0">&#91;</span>-co <span class="re2">COMPRESS</span>=LZW<span class="br0">&#93;</span> <span class="br0">&#91;</span>-co <span class="re2">INTERLEAVE</span>=BAND<span class="br0">&#93;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-t</span>     <span class="re5">--invalid</span>              Mask value<span class="br0">&#40;</span>s<span class="br0">&#41;</span> where image is invalid. Use one value <span class="kw1">for</span> each mask, or multiple values <span class="kw1">for</span> a single mask. <span class="br0">&#40;</span>default: <span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-p</span>     <span class="re5">--operator</span>             Operator: <span class="sy0">&lt;</span> = <span class="sy0">&gt;</span> <span class="sy0">!</span>. Use operator <span class="kw1">for</span> each invalid option <span class="br0">&#40;</span>default: =<span class="br0">&#41;</span>
+   <span class="re5">-f</span>     <span class="re5">--flag</span>                 Flag value to put <span class="kw1">in</span> image <span class="kw1">if</span> not valid <span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-ct</span>    <span class="re5">--ct</span>                   color table <span class="br0">&#40;</span><span class="kw2">file</span> with <span class="nu0">5</span> columns: <span class="kw2">id</span> R G B ALFA <span class="br0">&#40;</span><span class="nu0">0</span>: transparent, <span class="nu0">255</span>: solid<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-v</span>     <span class="re5">--verbose</span>              verbose <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT1 SECTION "pksetmask" [1-1519] -->
+<h1 class="sectionedit2" id="examples">Examples</h1>
+<div class="level1">
+<pre class="code bash">pksetmask <span class="re5">-i</span> input.tif <span class="re5">-m</span> mask.tif <span class="re5">-o</span> output.tif <span class="re5">-ot</span> Byte <span class="re5">-t</span> <span class="nu0">0</span> <span class="re5">-f</span> <span class="nu0">255</span> <span class="co0"># copy pixel values from input.tif to output.tif, applying mask.tif, setting all values to 255 where mask is 0.</span>
+&nbsp;
+pksetmask <span class="re5">-i</span> input.tif <span class="re5">-m</span> mask.tif <span class="re5">-o</span> output.tif <span class="re5">-ot</span> Byte <span class="re5">-t</span> <span class="nu0">1</span> <span class="re5">-f</span> <span class="nu0">255</span> <span class="re5">--operator</span> <span class="st_h">'!'</span> <span class="co0"># copy values from input.tif to output.tif, but set all values to 255 if mask is not 1</span>
+&nbsp;
+pksetmask <span class="re5">-i</span> input.tif <span class="re5">-m</span> mask1.tif <span class="re5">-m</span> mask2.tif <span class="re5">-o</span> output.tif <span class="re5">-ot</span> Byte <span class="re5">-t</span> <span class="nu0">0</span> <span class="re5">-f</span> <span class="nu0">255</span> <span class="co0"># copy pixel values from input.tif to output.tif, applying two masks, setting all values to 255 where either mask is 0.</span>
+&nbsp;
+pksetmask <span class="re5">-i</span> input.tif <span class="re5">-m</span> mask.tif <span class="re5">-o</span> output.tif <span class="re5">-ot</span> Byte <span class="re5">-t</span> <span class="nu0">0</span> <span class="re5">-t</span> <span class="nu0">1</span> <span class="re5">-f</span> <span class="nu0">255</span> <span class="re5">-f</span> <span class="nu0">255</span> <span class="co0"># copy pixel values from input.tif to output.tif, applying single masks, setting all values to 255 where mask is either 0 or 1.</span>
+&nbsp;
+pksetmask <span class="re5">-i</span> input.tif <span class="re5">-m</span> mask.tif <span class="re5">-o</span> output.tif <span class="re5">-ot</span> Byte <span class="re5">-t</span> <span class="nu0">0</span> <span class="re5">-t</span> <span class="nu0">1</span> <span class="re5">-f</span> <span class="nu0">255</span> <span class="re5">-f</span> <span class="nu0">255</span> <span class="co0"># copy pixel values from input.tif to output.tif, applying single masks, setting all values to 255 where mask is either 0 or 1.</span></pre>
+
+</div>
+<!-- EDIT2 SECTION "Examples" [1520-] -->

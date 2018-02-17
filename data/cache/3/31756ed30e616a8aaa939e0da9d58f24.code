@@ -1,0 +1,12 @@
+  subset(my.data.frame, my.data.frame$new == 20)
+     v ch  n new
+   3 3  c 10  20
+&nbsp;
+sample(my.data.frame$new, 3)
+[1] 10 11 20
+&nbsp;
+sample(my.data.frame$new, 3)
+[1] 40 10 11
+&nbsp;
+sample(my.data.frame$new, 3)
+[1] 11 10 40

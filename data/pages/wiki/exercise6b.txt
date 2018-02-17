@@ -1,0 +1,23 @@
+====== Exercise 6b: Morphological filtering ======
+
+In this exercise, the following tools will be used:
+  * pktools: pkfilter and pkcrop
+  * bash: environment variables
+
+__Dilate cloud mask with circular kernel of size 5x5__
+<code bash>
+pkfilter -i ${OUTPUTDIR}/exercise6/cloudmask.tif -o ${OUTPUTDIR}/exercise6/cloudmask_dil.tif -f dilate -dx 5 -dy 5 -c
+</code>
+
+<note tip>
+If slow computer, perform the morphological filter on subimage using pkcrop
+\\
+ULX=3217600\\
+ULY=3127850\\
+LRX=3225650\\
+LRY=3119900\\
+
+<code bash>
+pkcrop -i ${OUTPUTDIR}/exercise6/cloudmask.tif -o ${OUTPUTDIR}/exercise6/cloudmask_crop.tif -ulx $ULX -uly $ULY -lrx $LRX -lry $LRY
+</code>
+</note>

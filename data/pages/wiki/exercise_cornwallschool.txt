@@ -1,0 +1,47 @@
+====== Mapping the schools of Cornwall from online web pages ======
+
+This is an example of [[http://www.sciencemag.org/content/323/5915/721.summary| computational social science]] applied to spatial analysis. 
+
+[[http://link.springer.com/content/pdf/10.1140%2Fepjst%2Fe2012-01697-8.pdf|Computational social science ]] is the science that investigates social phenomena through the medium of computing and related advanced information processing technologies. \\
+There is an increasing interest of this discipline [[http://www.sciencemag.org/content/323/5915/721.summary| and related applications]] in a broad fields of interests.\\
+Here we show how to use the web to withdrowal a list of schools in a particular area, cratate a list of post codes, link post codes to lat long data to produce a map.\\
+
+
+
+==== Computational implementation ====
+
+  * web query keyword: //cornwall school download//: output web page http://www.education.gov.uk/inyourarea/schools/lea_908_schools.shtml
+
+<code bash>
+mkdir ~/school_sh
+cd ~/school_sh
+wget --output-document=/home/ste/school_sh/school.html  http://www.education.gov.uk/inyourarea/schools/lea_908_schools.shtml
+awk -F"<tr class=\"odd\">" '{if(NF>10)print $0}' school.html > cleaned.txt
+awk   '{gsub (/<td class="txt"><a /,"\n") ; print $0}' cleaned.txt > tmp1.txt
+awk   -F"::" '{gsub (/href="/,"::") ;  gsub (/">/,"::") ; gsub (/<\/a>/,"::") gsub(/<\/td><td/,"::")  ;  if($6!="") print NR",http://www.education.gov.uk/inyourarea/schools/"$2","$3","$6  }' tmp1.txt > tmp2.txt
+
+for x in $(seq 2 $(wc -l tmp2.txt | awk '{print $1}')) ; do 
+mylink=$(awk -v x=$x -F"," '{ if($1==x)  print $2}' tmp2.txt) 
+myschool=$(awk -v x=$x -F"," '{ if($1==x)  print $3}' tmp2.txt)
+mytown=$(awk -v x=$x -F"," '{ if($1==x)  print $4}' tmp2.txt)
+wget --output-document=/home/ste/school_sh/tempfile.txt  $mylink
+postID=$(grep "<br />" tempfile.txt | awk -F, '{gsub(/</,","); gsub(/>/,",") ; if(NR==4) print $3}')
+export POST=$(echo $postID | awk '{print $1 $2}')
+
+/usr/bin/php << 'EOF'
+<?php
+$input = getenv("POST");
+$key = "YOURKEYNUMBER";
+$data = file_get_contents("http://www.nearby.org.uk/api/convert.php?key=$key&p=$input&output=text&want=ll-wgs84");
+$file = 'latlong.txt';
+file_put_contents($file, $data );
+?>
+EOF
+
+latlong=$(awk -F, '{print$3","$4}' latlong.txt)
+echo $latlong,$POST,$myschool,$mytown,$mylink >> school_cornwall.csv
+done
+
+</code>
+
+<note important>to get YOURKEYNUMBER you need to access http://www.nearby.org.uk and request it</note>

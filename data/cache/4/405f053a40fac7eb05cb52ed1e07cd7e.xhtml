@@ -1,0 +1,176 @@
+
+<h1 class="sectionedit1" id="using_gdal_ogr_api_for_gis_analysis">Using GDAL/OGR API for GIS analysis</h1>
+<div class="level1">
+
+<p>
+Material prepared by Stephen Weston 
+</p>
+<pre class="code">cd ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/gdal_example.py
+wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/ogr_example.py
+wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/masked.py
+wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/polygon_means.py</pre>
+
+</div>
+<!-- EDIT1 SECTION "Using GDAL/OGR API for GIS analysis" [3-574] -->
+<h3 class="sectionedit2" id="reading_raster_images_and_return_min_max_mean">Reading raster images and return Min Max Mean</h3>
+<div class="level3">
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/gdal_example.py" class="mediafile mf_py">wiki/python/gdal_example.py</a></dt>
+<dd><pre class="code file python"><span class="co1">#!/us/bin/env python</span>
+<span class="kw1">import</span> <span class="kw3">os</span><span class="sy0">,</span> <span class="kw3">sys</span>
+<span class="kw1">from</span> osgeo <span class="kw1">import</span> gdal
+<span class="kw1">from</span> osgeo.<span class="me1">gdalconst</span> <span class="kw1">import</span> *
+&nbsp;
+driver <span class="sy0">=</span> gdal.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">'GTiff'</span><span class="br0">&#41;</span>
+driver.<span class="me1">Register</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+fn <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw3">os</span>.<span class="me1">environ</span>.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'DATADIR'</span><span class="sy0">,</span> <span class="st0">'.'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+                  <span class="st0">'2020_TSSP_IP-ENS-A2-SP20_43023435.tif'</span><span class="br0">&#41;</span>
+ds <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>fn<span class="sy0">,</span> GA_ReadOnly<span class="br0">&#41;</span>
+<span class="kw1">if</span> ds <span class="kw1">is</span> <span class="kw2">None</span>:
+    <span class="kw1">print</span> <span class="st0">'Error opening'</span><span class="sy0">,</span> fn
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+cols <span class="sy0">=</span> ds.<span class="me1">RasterXSize</span>
+rows <span class="sy0">=</span> ds.<span class="me1">RasterYSize</span>
+bands <span class="sy0">=</span> ds.<span class="me1">RasterCount</span>
+<span class="kw1">print</span> cols<span class="sy0">,</span> rows<span class="sy0">,</span> bands
+&nbsp;
+geotransform <span class="sy0">=</span> ds.<span class="me1">GetGeoTransform</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> geotransform
+&nbsp;
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>bands<span class="br0">&#41;</span>:
+    band <span class="sy0">=</span> ds.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span>i + <span class="nu0">1</span><span class="br0">&#41;</span>
+    d <span class="sy0">=</span> band.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> band.<span class="me1">XSize</span><span class="sy0">,</span> band.<span class="me1">YSize</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> d.<span class="me1">shape</span><span class="sy0">,</span> d.<span class="me1">dtype</span>
+    <span class="kw1">print</span> d.<span class="kw2">min</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> d.<span class="kw2">max</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> d.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+</div>
+<!-- EDIT2 SECTION "Reading raster images and return Min Max Mean" [575-732] -->
+<h3 class="sectionedit3" id="reading_a_vector_file_and_return_a_coordinates_of_the_centroid">Reading a vector file and return a coordinates of the centroid</h3>
+<div class="level3">
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/ogr_example.py" class="mediafile mf_py">wiki/python/ogr_example.py</a></dt>
+<dd><pre class="code file python"><span class="co1">#!/usr/bin/env python</span>
+<span class="kw1">import</span> <span class="kw3">os</span><span class="sy0">,</span> <span class="kw3">sys</span>
+<span class="kw1">from</span> osgeo <span class="kw1">import</span> ogr
+&nbsp;
+driver <span class="sy0">=</span> ogr.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">'ESRI Shapefile'</span><span class="br0">&#41;</span>
+fn <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw3">os</span>.<span class="me1">environ</span>.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'DATADIR'</span><span class="sy0">,</span> <span class="st0">'.'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">'poly_fr.shp'</span><span class="br0">&#41;</span>
+dataSource <span class="sy0">=</span> driver.<span class="me1">Open</span><span class="br0">&#40;</span>fn<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+<span class="kw1">if</span> dataSource <span class="kw1">is</span> <span class="kw2">None</span>:
+  <span class="kw1">print</span> <span class="st0">'Error opening'</span><span class="sy0">,</span> fn
+  <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+layer <span class="sy0">=</span> dataSource.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+numFeatures <span class="sy0">=</span> layer.<span class="me1">GetFeatureCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> <span class="st0">'Feature count:'</span><span class="sy0">,</span> numFeatures
+&nbsp;
+extend <span class="sy0">=</span> layer.<span class="me1">GetExtent</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> <span class="st0">'Extend:'</span><span class="sy0">,</span> extend
+&nbsp;
+feature <span class="sy0">=</span> layer.<span class="me1">GetNextFeature</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">while</span> feature:
+    <span class="kw1">print</span> feature.<span class="me1">GetField</span><span class="br0">&#40;</span><span class="st0">'id'</span><span class="br0">&#41;</span>
+    geometry <span class="sy0">=</span> feature.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> geometry.<span class="me1">Centroid</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> geometry.<span class="me1">ExportToWkt</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    feature.<span class="me1">Destroy</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    feature <span class="sy0">=</span> layer.<span class="me1">GetNextFeature</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+dataSource.<span class="me1">Destroy</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+</div>
+<!-- EDIT3 SECTION "Reading a vector file and return a coordinates of the centroid" [733-908] -->
+<h3 class="sectionedit4" id="demonstrate_how_to_create_a_numpy_mask_array">Demonstrate how to create a NumPy mask array</h3>
+<div class="level3">
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/masked.py" class="mediafile mf_py">wiki/python/masked.py</a></dt>
+<dd><pre class="code file python"><span class="co1">#!/usr/bin/env python</span>
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> numpy.<span class="me1">ma</span> <span class="kw1">as</span> ma
+&nbsp;
+x <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">3</span><span class="sy0">,</span> -<span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> x.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+mask <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+mx <span class="sy0">=</span> ma.<span class="me1">masked_array</span><span class="br0">&#40;</span>x<span class="sy0">,</span> mask<span class="sy0">=</span>mask<span class="br0">&#41;</span>
+<span class="kw1">print</span> mx.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> mx
+&nbsp;
+y <span class="sy0">=</span> np.<span class="kw3">array</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">5</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> y.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">print</span> x<span class="br0">&#91;</span>x <span class="sy0">&gt;=</span> <span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> x<span class="br0">&#91;</span>mask <span class="sy0">==</span> <span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">####</span>
+mx <span class="sy0">=</span> ma.<span class="me1">masked_where</span><span class="br0">&#40;</span>x <span class="sy0">&lt;</span> <span class="nu0">0</span><span class="sy0">,</span> x<span class="br0">&#41;</span>
+<span class="kw1">print</span> mx.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Mask a masked array</span>
+mmx <span class="sy0">=</span> ma.<span class="me1">masked_where</span><span class="br0">&#40;</span>mx <span class="sy0">&gt;</span> <span class="nu0">2</span><span class="sy0">,</span> mx<span class="br0">&#41;</span>
+<span class="kw1">print</span> mmx
+&nbsp;
+<span class="kw1">print</span> mmx.<span class="me1">fill_value</span></pre>
+</dd></dl>
+</div>
+<!-- EDIT4 SECTION "Demonstrate how to create a NumPy mask array" [909-1059] -->
+<h3 class="sectionedit5" id="compute_statistic_inside_polygons">Compute statistic inside polygons</h3>
+<div class="level3">
+<pre class="code">gdal_rasterize -te 2632000.000 1420000.000 5972000.000 5450000.00 -tap -clump -tr 1000 1000 -l poly_fr poly_fr.shp poly_fr.tif</pre>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/python/polygon_means.py" class="mediafile mf_py">wiki/python/polygon_means.py</a></dt>
+<dd><pre class="code file python"><span class="co1">#!/us/bin/env python</span>
+<span class="co1">#</span>
+<span class="co1"># Rasterize shape file using gdal_rasterize:</span>
+<span class="co1">#</span>
+<span class="co1"># $ gdal_rasterize -te 2632000.000 1420000.000 5972000.000 5450000.000 \</span>
+<span class="co1">#    -tap -clump -tr 1000 1000 -l poly_fr poly_fr.shp poly_fr.tif</span>
+<span class="co1">#</span>
+<span class="kw1">import</span> <span class="kw3">os</span><span class="sy0">,</span> <span class="kw3">sys</span>
+<span class="kw1">from</span> osgeo <span class="kw1">import</span> gdal
+<span class="kw1">from</span> osgeo.<span class="me1">gdalconst</span> <span class="kw1">import</span> *
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> numpy.<span class="me1">ma</span> <span class="kw1">as</span> ma
+&nbsp;
+driver <span class="sy0">=</span> gdal.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">'GTiff'</span><span class="br0">&#41;</span>
+driver.<span class="me1">Register</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+rasterized <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw3">os</span>.<span class="me1">environ</span>.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'DATADIR'</span><span class="sy0">,</span> <span class="st0">'.'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">'poly_fr.tif'</span><span class="br0">&#41;</span>
+polyds <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>rasterized<span class="sy0">,</span> GA_ReadOnly<span class="br0">&#41;</span>
+<span class="kw1">if</span> polyds <span class="kw1">is</span> <span class="kw2">None</span>:
+    <span class="kw1">print</span> <span class="st0">'Error opening'</span><span class="sy0">,</span> rasterized
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+raster <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw3">os</span>.<span class="me1">environ</span>.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'DATADIR'</span><span class="sy0">,</span> <span class="st0">'.'</span><span class="br0">&#41;</span><span class="sy0">,</span>
+                      <span class="st0">'2020_TSSP_IP-ENS-A2-SP20_43023435.tif'</span><span class="br0">&#41;</span>
+ds <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>raster<span class="sy0">,</span> GA_ReadOnly<span class="br0">&#41;</span>
+<span class="kw1">if</span> ds <span class="kw1">is</span> <span class="kw2">None</span>:
+    <span class="kw1">print</span> <span class="st0">'Error opening'</span><span class="sy0">,</span> raster
+    <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Get raster data</span>
+band <span class="sy0">=</span> ds.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+rasterD <span class="sy0">=</span> band.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> band.<span class="me1">XSize</span><span class="sy0">,</span> band.<span class="me1">YSize</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Get shape data</span>
+band <span class="sy0">=</span> polyds.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+shapes <span class="sy0">=</span> band.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> band.<span class="me1">XSize</span><span class="sy0">,</span> band.<span class="me1">YSize</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;total value count:&quot;</span><span class="sy0">,</span> band.<span class="me1">XSize</span> * band.<span class="me1">YSize</span>
+<span class="kw1">print</span> <span class="st0">&quot;ignored value count:&quot;</span><span class="sy0">,</span> <span class="br0">&#40;</span>shapes <span class="sy0">==</span> <span class="nu0">0.0</span><span class="br0">&#41;</span>.<span class="kw2">sum</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Iterate over the different polygons</span>
+<span class="kw1">for</span> d <span class="kw1">in</span> np.<span class="me1">unique</span><span class="br0">&#40;</span>shapes<span class="br0">&#41;</span>:
+    <span class="kw1">print</span> <span class="st0">'Polygon:'</span><span class="sy0">,</span> d
+    <span class="co1"># if d == 0.0: continue</span>
+    mask <span class="sy0">=</span> shapes <span class="sy0">!=</span> d
+    mx <span class="sy0">=</span> ma.<span class="me1">masked_array</span><span class="br0">&#40;</span>rasterD<span class="sy0">,</span> mask<span class="sy0">=</span>mask<span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="br0">&#40;</span>shapes <span class="sy0">==</span> d<span class="br0">&#41;</span>.<span class="kw2">sum</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> mx.<span class="me1">count</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> mx.<span class="me1">mean</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+</div>
+<!-- EDIT5 SECTION "Compute statistic inside polygons" [1060-] -->

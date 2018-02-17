@@ -1,0 +1,24 @@
+<span class="st0">&quot;&quot;&quot;Convert an ASCII DEM to an image.&quot;&quot;&quot;</span>
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+<span class="kw1">import</span> Image
+<span class="kw1">import</span> ImageOps
+&nbsp;
+<span class="co1"># Source LIDAR DEM file</span>
+source <span class="sy0">=</span> <span class="st0">&quot;relief.asc&quot;</span>
+&nbsp;
+<span class="co1"># Output image file</span>
+target <span class="sy0">=</span> <span class="st0">&quot;relief.bmp&quot;</span>
+&nbsp;
+<span class="co1"># Load the ASCII DEM into a numpy array</span>
+arr <span class="sy0">=</span> np.<span class="me1">loadtxt</span><span class="br0">&#40;</span>source<span class="sy0">,</span> skiprows<span class="sy0">=</span><span class="nu0">6</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Convert array to numpy image</span>
+im <span class="sy0">=</span> Image.<span class="me1">fromarray</span><span class="br0">&#40;</span>arr<span class="br0">&#41;</span>.<span class="me1">convert</span><span class="br0">&#40;</span><span class="st0">'RGB'</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Enhance the image:</span>
+<span class="co1"># equalize and increase contrast</span>
+im <span class="sy0">=</span> ImageOps.<span class="me1">equalize</span><span class="br0">&#40;</span>im<span class="br0">&#41;</span>
+im <span class="sy0">=</span> ImageOps.<span class="me1">autocontrast</span><span class="br0">&#40;</span>im<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Save the image</span>
+im.<span class="me1">save</span><span class="br0">&#40;</span>target<span class="br0">&#41;</span>

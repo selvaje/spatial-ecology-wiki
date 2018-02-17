@@ -1,0 +1,27 @@
+====== GRASS Batch jobs ======
+Create a simple grass script in a text editor and run it directly on the shell.\\
+
+Open a text editor and write 
+<code bash>
+kate ~/ost4sem/grassdb/europe/PCEM/my_grassjob.sh  &
+</code>
+
+
+
+<code bash>
+g.mapset -l
+</code>
+
+Save it\\
+Run it directly on the shell giving the executable permission to the my_grassjob.sh.
+
+<code bash>
+chmod u+x ~/ost4sem/grassdb/europe/PCEM/my_grassjob.sh
+export GRASS_BATCH_JOB=~/ost4sem/grassdb/europe/PCEM/my_grassjob.sh
+grass -text ~/ost4sem/grassdb/europe/PCEM
+</code>
+
+To deactivate the batch job mode, run:
+<code bash>
+unset GRASS_BATCH_JOB
+</code>

@@ -1,0 +1,4 @@
+<span class="co0"># create an RGB color layer</span>
+r.composite  <span class="re2">r</span>=L5168065_06520091206_B10   <span class="re2">g</span>=L5168065_06520091206_B20   <span class="re2">b</span>=L5168065_06520091206_B30 <span class="re2">out</span>=L5168065_06520091206_B123 <span class="re5">--overwrite</span>
+<span class="co0"># group the bands </span>
+i.group <span class="re2">group</span>=L5168065_06520091206  <span class="re2">subgroup</span>=L5168065_06520091206  <span class="re2">input</span>=L5168065_06520091206_B10,L5168065_06520091206_B20,L5168065_06520091206_B30,L5168065_06520091206_B40,L5168065_06520091206_B50,L5168065_06520091206_B60,L5168065_06520091206_B70

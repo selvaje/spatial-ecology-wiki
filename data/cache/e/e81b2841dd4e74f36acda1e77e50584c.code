@@ -1,0 +1,15 @@
+# How to make a 0.5 x 0.5 raster image of France?
+library(mapdata)
+# Selection of the region of interest:
+map('worldHires', region = 'France', xlim = c(-5,10), ylim = c(41,52)) # Creates a map of France
+Francemapdata &lt;- map('worldHires', region = 'France', xlim = c(-5,10), ylim = c(41,52)) 
+plot(Francemapdata) # Visualises the coordinates 
+&nbsp;
+# Francemapdata cannot be put in the function rasterize()
+# Therefore, we plot the longitude and latitude of the coordinates 
+print(Francemapdata$x)
+print(Francemapdata$y)
+Matrixfrance &lt;- cbind(Francemapdata$x,Francemapdata$y)
+# The coordinates are a bit messy (NA's, coordinates not ranked in subsequent order). 
+# Data have to be corrected manually for France. I saved the data for the French mainland
+# and Corsica as .csv files.

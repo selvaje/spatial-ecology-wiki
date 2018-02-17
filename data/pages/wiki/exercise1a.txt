@@ -1,0 +1,66 @@
+====== Exercise 1a: View Landsat image and overlay vector ======
+In this exercise the following tools will be used:
+  * gdal/ogr tools: ogr2ogr, openev
+
+Create a directory for this exercise:
+
+<code bash>
+mkdir -p ${OUTPUTDIR}/exercise1
+</code>
+
+Open the Landsat image with an image viewer (e.g., openev)
+
+<code bash>
+openev -h ${LANDSATDIR}/${LANDSATIMG}
+</code>
+
+__Select different band settings (false colour images)__
+
+consult web page with landsat bands for different thematic band settings
+
+<note tip>Natural (true) colour for Landsat image: R=band 3(red), G=band 2 (green), B=band1 (blue)</note>
+
+__Zoom in on particular area of interest__
+
+  * method 1: use + button
+  * method 2: control button + drag window
+  * method 3: control button + left mouse button
+
+__Zoom out__
+
+  * method 1: use - button
+  * method 2: control button + right mouse button
+  * method 3: use fit all layers button (square box with arrow in each corners)
+
+__Reproject water vector to epsg:3035 (ETRS89:LAEA)__
+
+<code bash>
+ogr2ogr -t_srs epsg:3035 ${OUTPUTDIR}/exercise1/cornwall_water_3035.shp ${VECTORDIR}/cornwall_water.shp
+</code>
+
+__Create vector with forested areas by selecting forest from natural vector and reprojecting to epsg:3035 (ETRS89:LAEA)__
+
+<code bash>
+ogr2ogr -t_srs epsg:3035 -where "TYPE in ('forest')" ${OUTPUTDIR}/exercise1/cornwall_forest_3035.shp ${VECTORDIR}/cornwall_natural.shp
+</code>
+
+__Open forest vector in openev on top of landsat raster image__
+
+Question: can you distinguish forest from other vegetated areas?
+
+Question: can you easily distinguish forest from inland water?
+
+__Select the standard false colour composite for Landsat imagery__
+
+Consult web pages
+
+  * http://web.pdx.edu/~emch/ip1/bandcombinations.html
+  * http://zulu.ssc.nasa.gov/mrsid/tutorial/Landsat%20Tutorial-V1.html
+
+<note tip>Standard false colour settings for Landsat imagery: R=band 4(NIR), G=band 3(red), B=band2(green)</note>
+
+<note warning>Do not forget to enhance raster after loading new band combination using the button with horizontal line</note>
+
+Question: What does vegetation look like in this false colour image, why?
+
+Questions: What about water and forest now?

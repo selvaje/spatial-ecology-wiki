@@ -1,0 +1,45 @@
+====== pkstat ======
+NAME
+   pkstat - calculate statistics from ASCII file
+
+SYNOPSIS
+<code bash>
+   pkstatogr -i input [OPTION]
+</code>
+       
+DESCRIPTION
+   Calculate basic statistics from (columns in) ASCII file
+       
+OPTIONS
+<code bash>
+   -i     --input                name of the input text file (default: <empty string>)
+   -fs    --fs                   field separator. (default:  )
+   -o     --output               output the selected columns (default: false)
+   -c     --column               column nr, starting from 0 (default: 0)
+   -r     --range                rows to start/end reading. Use -r 1 -r 10 to read first 10 rows where first row is header. Use 0 to read all rows with no header. (default: 0)
+   -size  --size                 sample size (default: false)
+   -m     --mean                 calculate mean value (default: false)
+   -med   --median               calculate median (default: false)
+   -var   --var                  calculate variance (default: false)
+   -stdev --stdev                calculate standard deviation (default: false)
+   -s     --sum                  calculate sum of column (default: false)
+   -mm    --minmax               calculate minimum and maximum value (default: false)
+   -min   --min                  calculate minimum value (default: 0)
+   -max   --max                  calculate maximum value (default: 0)
+   -hist  --hist                 calculate histogram (default: false)
+   -bin   --bin                  number of bins to calculate histogram (default: 10)
+   -rel   --relative             use percentiles for histogram to calculate histogram (default: false)
+   -cor   --correlation          calculate Pearson produc-moment correlation coefficient between two columns (defined by -c <col1> -c <col2> (default: false)
+   -e     --rmse                 calculate root mean square error between two columns (defined by -c <col1> -c <col2> (default: false)
+   -reg   --regression           calculate linear regression error between two columns (defined by -c <col1> -c <col2> (default: false)
+   -v     --verbose              verbose mode when > 0 (default: 0)
+</code>
+
+====== Examples ======
+<code bash>
+pkstat -i input.txt -n # count number of records (same as wc -l input.txt)
+
+pkstat -i input.txt -hist -bin 100 -c 1 -rel # report relative histogram in second column (starting from 0) using 100 bins.
+
+pkstat -i input.txt -m -c 0 -c 1 # report mean value of colums 0 and 1.
+</code>

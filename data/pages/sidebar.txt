@@ -1,0 +1,36 @@
+[[http://www.spatial-ecology.net|spatial-ecology.org]]\\
+\\
+**Trainings**:
+  * [[wiki:introduction|Our format]]\\
+  * [[wiki:editions|Past]] & [[[wiki:upcoming |upcoming events]]\\
+  * [[wiki:resultssurveysynt|Satisfactory surveys]]
+**Learn**:
+  * [[wiki:bash|Linux Bash]]\\
+  * [[wiki:awk|AWK]] & [[wiki:gnuplot|Gnuplot]]\\
+  * [[wiki:R|R language]]\\
+  * [[wiki:python:pythonhome | Python ]]\\
+  * [[wiki:grass|Grass]] & [[wiki:wikiqgis:qgis|Qgis]]\\
+  * [[wiki:gdal|Gdal/ogr]] & [[wiki:pk_tools|Pk tools]]\\
+  * [[wiki:spatialdb|Spatial database]]\\
+  * [[wiki:geo_tools|Geotools]] & [[wiki:cluster_processing|Cluster processing]]
+  * [[wiki:languages_integration|Language integration]]\\
+  * [[wiki:exercises|Exercises]] & [[wiki:lectures|lectures]]\\
+  * [[uav:uav_inro|Drone mapping]] & [[wiki:grappolo|Grappolo]]\\
+**Community:**\\
+[[wiki:teachers]]\\
+[[wiki:students]]\\
+[[wiki:projects]]\\
+[[wikistud:Matera2015 | Matera 2015 ]]\\
+[[wiki:upcomingBC | Vancouver 2015 ]]\\
+[[wiki:upcomingSantBab | Santa Barbara 2015 ]]\\
+[[sitedesign:sitedes_intro|Site design]]\\
+**Hands on:**\\
+[[wiki:install|Installations]]\\
+[[wikiadmin:admin]]\\
+\\
+**Donations**\\
+Spatial Ecology is a non profit organisation based in the UK. [[http://www.spatial-ecology.org|About us]]. Please help us in our activity\\
+**USD** [[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y2DRWC585KM6E |{{::donate_logo_paypal.gif?120|Donation USD }}]]\\
+\\
+\\
+**GBP** [[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=643HDBNP2RBAA|{{::donate_logo_paypal.gif?120|Donation GDP}}]]

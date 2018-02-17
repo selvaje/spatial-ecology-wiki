@@ -1,0 +1,40 @@
+===== Open Source Toolchain for Drone Mapping ===== 
+The steps below provide a case study example on how to use low cost open hardware and open software for collecting aerial photographs and derive a map. Specifically we list and explain:
+  * Assembling hardware
+  * Installing software
+  * Prepare an autopilot survey mission
+  * Carry out the mission
+  * Process data 
+
+==== Hardware setting for flying mission ==== 
+  * [[wiki:uav:carriers| UAVs ]] 
+  * [[wiki:uav:sensors| Sensors ]] for environmental monitoring, conservation, agriculture, site planning, archeology, building site.
+  * [[wiki:uav:tchain_autotrigger| Connection UAV to sensor]]. 
+  * [[wiki:uav:tchain_batteries|Batteries ]]
+
+==== Software installation ==== 
+  * CHDK, STICK [[wiki:uav:tchain_camerasoft | hands on camera software]] and scripting requirements for automatic data capture.
+  * Mission planner (ground station software) on the OSGeo-live virtual machine. - [[wiki:uav:tchain_missionplanner| hands on Mission Planner]].
+  * Parametrization setting to [[http://www.tuffwing.com/support/pixhawk_camera_trigger_cable.html |trigger the camera with the pixhawk autopilot]].
+  * Survey mission definition - [[wiki:uav:tchain_3drtower| hands on 3DR Tower]] an alternative ground station software.
+
+==== Data acquisition ====
+  * Setting ground georeference points.
+  * Setting reflectance reference colour targets for later image parametrisation.
+  * Double check hardware functioning.
+  * UAV flight mission [[wiki:uav:tchain_onthefield|on the field]].
+
+==== UAV Data processing ====
+  * Downloading images 
+  * Downloading log files from pixhawk - [[wiki:uav:tchain_logfiles| hands on log files]]
+  * Geotagging images with log files - [[wiki:uav:tchain_geotaggin| hands on geotaggin]]
+  * Data processing toolchain with [[https://github.com/OpenDroneMap/OpenDroneMap|OpendroneMap]] (Lecture - Hands on).
+  * Online processing [[http://167.114.227.121/Stitching/| Web Processing Service ]] for OpenDroneMap
+  * [[https://flyelephant.net/|FlyElephant ]] cloud platform for OpenDroneMap processing
+  * [[http://www.spatial-ecology.net/ost4sem/lecture/prasand_ODM.pdf|Plot results]] in QGIS and MeshLab
+  * Store data within open access data repository [[https://openaerialmap.org/|OpenAerialMap]]
+
+
+
+
+

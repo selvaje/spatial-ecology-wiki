@@ -1,0 +1,26 @@
+====== UAV ======
+Back to [[uav:toolchain|main menue]].\\
+\\
+UAV's can be reshaped into different forms; mainly **fixed wing** and multi rotors **copters**. Between copters we might differentiate types according to the number of rotors  (from 3 to 8 or more c.f. tricopter, quadcopter, hexacopter, octocopter); their frame type (or the number of arms and their axes disposals); and number of rotors per per arm (one or two) :\\
+\\
+{{ :uav:frametype.png?500 |}}\\
+In green the quadcopter Iris+ frame disposal.\\
+[[http://www.dronezon.com/category/drone-reviews/| A review of widespread commercial drones]]
+
+===== General components =====
+  * Autopilot - the brain of UAV linking all parts and managing the compiled instructions of flying missions. Example products: [[https://3drobotics.zendesk.com/hc/en-us/articles/207358096-3DR-Pixhawk|PixHawk]] an open source linux like programming environment - [[https://emlid.com/ | Emlid's Navio2]] Linux autopilot on Raspberry Pi.\\ 
+  * GPS
+  * Accelerometer
+  * Compass
+  * Motors
+  * Propellers
+  * Power management - [[http://www.hobbyking.co.uk/hobbyking/store/__42715__Q_Brain_4_x_25A_Brushless_Quadcopter_ESC_2_4S_3A_SBEC.html|example]]
+  * Battery
+  * Body [[http://www.tuffwing.com/products/tuffwing_32.html| example Fixwing]] - [[https://3dprint.com/124508/3drobotics-iris-drone-mmf/| Example Iris+ copter 3D printed shell]].
+  * Sensors and communication between sensors and autopilot
+  * Radio communication
+  * Radio Controller 
+  * Ground station
+
+==== Iris+ Drone parts ====
+{{:uav:motor.png?100|Motors}}{{ uav:pixhawk.png?200|}}{{:uav:powermanage.png?100|}}{{:uav:propellers.png?200|}}{{:uav:gps.png?200| GPS }}{{:uav:iris_open.png?800|Iris+ }}

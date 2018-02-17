@@ -1,0 +1,154 @@
+====== Image analysis of plants pathogenic infections ======
+\\
+===== INTRODUCTION =====
+The work in bacteria Lab. needs a lot of manual procedures which consumes inefficiently a time and effort, so this task aims to lessen the 
+time by using special software and bash programming language to do this job automatically to analysis the images.    
+==== General framework of this analysis ====
+
+{{:wiki:image2.png?150x90|Culture of Bacteria}}
+{{:wiki:img4web.png?150x90|Infected leaf by bacteria}}\\
+Infected leaf by bacteria images are currently scanned for estimating the ratio of infected area. Culture of Bacteria as well are scanned to quantify the number of colonies and their types. \\
+\\
+==== Project objectives ====
+We focus on estimate the percentage of infected surface in cherry leaf:\\ 
+  - individuating the area of the interest (leaf) based on the colours using Bash and convert software.
+   -calculating the lesion aria of the infected leaf.
+\\
+The same procedure can be applied to bacteria cultures. In this case we can automatically count the areas of colonies.\\
+
+===== INPUT DATA =====
+Jpg Image 3264 x 2448 pixels, 1.4MB
+
+\\
+===== METHOD =====
+Bash - AWK programming language and image magick conversion tool.\\
+//Details in the script below//
+
+===== IMAGE PROCESSING =====
+<code bash>
+#!/bin/bash
+#
+#
+# Using:
+# - convert utility to do color replacing of interested area and to obtain the histogram
+# - awk to read histo data and calculate the area percentage
+
+m1="echo"
+m2="echo 1  Display image"
+m3="echo 2  Fuzzy color replace"
+m4="echo 3  Edge detect"
+m5="echo 4  Quantify color"
+m6="echo -----------------------"
+m7="echo 0  Quit"
+m8="echo"
+
+
+# clear the screen and display the menu
+
+clear
+$m1; $m2; $m3; $m4; $m5; $m6; $m7; $m8
+
+ v=1
+
+until [ $v = 0 ]
+
+do
+
+# read the input and do the procedures
+read v
+	if [ $v = 1 ]; then
+		display $1		# display the image
+
+	clear
+	$m1; $m2; $m3; $m4; $m5; $m6; $m7; $m8		# show the menu
+	
+	else
+		if [ $v = 3 ]; then
+			clear
+			echo -n "edge parameter "
+			read ep
+			convert $1 -edge $ep $2		# detect edges
+			display $2
+
+			clear
+			$m1; $m2; $m3; $m4; $m5; $m6; $m7; $m8 # show the menu
+
+			
+
+		else
+			if [ $v = 4 ]; then
+			# get image histogram and write it to histo.txt
+			convert $2 -format %c -depth 8 histogram:info: > histo.txt
+			clear
+			echo -n "color to quantify is: "
+			read color			# read the color you want to quantify
+			
+			# replace : with space in and write the result in histo_clean.txt
+			awk '{gsub(":",""); print }' histo.txt > histo_clean.txt
+
+
+			# find the color inside the file and read the number of pixels with that color
+			# calculate the sum of pixels and the percentage of color of interest
+			awk  -v color=$color '{
+						{     if ($NF==color) nr=$1}
+						{sum=sum+$1}} 
+						
+						END {print "number of pixels = " sum, nr, nr/sum*100 " %"}' histo_clean.txt
+
+
+			echo "press ENTER"
+			echo
+			read tt
+
+			clear
+			$m1; $m2; $m3; $m4; $m5; $m6; $m7; $m8			# show the menu
+
+			
+			
+			else
+			
+				if [ $v = 2 ]; then
+				clear
+				echo -n "color to be replaced: "
+				read ctr 					# read the color to replace
+				echo -n "with: "
+				read ctrw 					# read the color to replace with
+				echo -n "fuzzy parameter, (%) "
+				read fp 					# read the fuzzy parameter
+				
+				convert $1 -fuzz $fp% -fill $ctrw -opaque $ctr $2	# replace the color
+				display $2						# show the image
+
+				clear
+				$m1; $m2; $m3; $m4; $m5; $m6; $m7; $m8			# show the menu
+
+		
+					else			
+					echo
+					
+				fi
+			fi
+		fi
+	fi
+
+done
+
+
+</code>
+\\
+===== RESULTS =====
+\\
+Input image and processed image for infected leaf\\
+{{:wiki:bas10_input_leaf.png|}}
+{{:wiki:bas10_output_leaf.png?300|}}
+\\
+Histogram of image as pixels:\\
+      9349 (  0,  0,  0,255) #000000 black
+    393461 (  0,  0,255,255) #0000FF blue
+         1 ( 65, 81,  8,255) #415108 rgba(65,81,8,1)
+         1 ( 68, 93,  3,255) #445D03 rgba(68,93,3,1)
+         1 ( 69, 84,125,255) #45547D rgba(69,84,125,1)
+         1 ( 69, 89,126,255) #45597E rgba(69,89,126,1)
+   .....
+    147815 (255,255,255,255) #FFFFFF white
+

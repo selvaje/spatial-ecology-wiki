@@ -1,0 +1,138 @@
+====== Running AWK ======
+Exercise:\\
+Script: open by kate [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/awk.sh | ~/ost4sem/exercise/basic_adv_awk/awk.sh ]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/input.txt | www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/input.txt ]]\\
+Directory: ~/ost4sem/exercise/basic_adv_awk\\
+\\
+<code bash>
+kate ~/ost4sem/exercise/basic_adv_awk/awk.sh &
+</code>
+\\
+
+===== From the bash command line =====
+You can run an awk directory from the bash command line by:\\
+**// \ \  awk 'BEGIN {action} \ \   \ \  {action}  \ \   \ \  END {action}' input.txt > output.txt//**\\
+Example:
+Create a simple input.txt file using awk with the BEGIN pattern.
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_awk
+awk 'BEGIN { print "03 01"}' > MMDD.txt
+awk 'BEGIN { print "05 11"}' >> MMDD.txt
+awk 'BEGIN { print "11 23"}' >> MMDD.txt
+more MMDD.txt
+</code>
+Insert a header to the MMDD.txt file:
+<code bash>
+awk 'BEGIN { print "Month Day"}    {print }    END { print "end file"}' MMDD.txt > head_MMDD_tail.txt
+more head_MMDD_tail.txt
+</code>
+
+===== From a script =====
+You can also create an awk script and run it in the shell by:\\  
+**//awk -f program.awk input.txt > output.txt//**\\
+\\
+<note tip> 
+**-f** file: Program  text ( //BEGIN {action}  \ \  {action} \ \ END {action}// ) is  read  from  the file instead of from the command line.
+</note>
+Example:\\
+Create a simple simple program.awk script using a text editor, using the previous command:\\
+
+<code awk>
+BEGIN { print "Month Day"} {print $0} END { print "end file"} 
+</code>\\ 
+save it to //date_script.awk// in the same folder as MMDD.txt\\
+
+Run it by:
+<code bash>
+   awk -f date_script.awk MMDD.txt > head_MMDD_tail2.txt
+   more head_MMDD_tail2.txt
+</code>
+
+===== Glueing pipes from the command line =====
+AWK is integrated directly in the bash language therefore you can concatenate bash and awk command by the pipe (|) symbol.
+Example:
+<code bash>
+grep 05 MMDD.txt | awk 'BEGIN { print "Month"} {print }' > head_MM.txt
+more head_MM.txt
+</code>
+====== How AWK reads a file ======
+===== AWK reads line by line =====
+AWK reads and processes a file line by line, each action is performed before passing to the next line.\\
+Each line is a record (a string by default).\\ 
+Fields are delimited through a special character: \\
+  * Whitespace by default
+  * Can be change with: \\
+       “-F” (command line option) or FS (special variable inside the action)‏.\\
+In the study case we will always use whitespace separated values.\\
+These options are very useful for export/import files from/in excel by the .csv format.\\
+
+===== Fields are accessed with the ‘$’ =====
+Each line is separated in fields (or columns).\\
+  * $1 is the first field, $2 is the second…
+  * $0 the entire line
+  * NF the number of  field
+  * NR the number of row
+These are the most used predefined variables. You can search for others on the web.
+
+====== Basic programming in AWK ======
+===== Explore the data =====
+Example:
+migrate to the //~/ost4sem/exercise/basic_adv_awk//\\
+
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_awk
+awk '{ print $5 , $2 }' input.txt  > output.txt 
+awk '{ print NF }'  input.txt 
+awk '{ print NR }' input.txt
+</code>
+How can I print how many lines are in the file?\\
+Which is a similar Bash shell command?
+
+===== Importing bash variables in awk =====
+an external variable, a  bash variable, can be imported in AWK by:\\
+**//awk \ \ -v \ var=value \ \ '{ action }'//**\\
+
+<note tip>
+ **-v**  variable4awk=variable_From_Bash: assigns variable_From_Bash to program variable variable4awk.
+</note>
+Example:
+<code bash>
+for (( ibash=1 ; ibash<=4 ; ibash++  )); do
+awk  -v iawk=$ibash  '{ print $iawk }' input.txt  
+done 
+</code>
+What are the results?\\
+How do I print the all loop results in one file?\\
+
+===== Mathematical function =====
+Log, int, + / * 
+Example:
+<code bash>
+awk    '{ print log($1) }' input.txt  
+</code>
+===== String function =====
+Substr() , length()\\
+Example:
+<code bash>
+awk    '{ print substr($1,1,4) }' input.txt 
+</code>
+  * Which is the corresponding command in R ?\\
+Do an example with the length() command.\\
+Search on the man  or in the web.\\
+Try to get the meaning.\\
+
+====== Advance programming in AWK ======
+===== Control-Flow Statement =====
+If-else statement
+Example:
+<code bash>
+awk    '{ if($3>2) print $3 }'  input.txt
+awk    '{ if($3>=2) print $3 }'  input.txt  
+awk    '{ if($3<2) print $3 }'  input.txt
+</code>
+More complicated: extract the maximum value
+<code bash>
+awk '{ if (NR>1) {if ($4>max) max= $4 }} END {print max }'  input.txt
+</code>
+There are more examples in the exercise section.
+ 

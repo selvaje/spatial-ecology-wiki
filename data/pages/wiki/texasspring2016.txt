@@ -1,0 +1,36 @@
+
+====== Geo-Computation in Linux environment ======
+
+==== Morning ==== 
+
+=== GRASS ===  
+  - Introduction to grass data structure and environment - (Lecture).
+  - [[ http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:basicgrass7 | GRASS and Qgis as learning tools ]]  - (Hands-on )
+  - Command syntax and general commands of data handling - (Hands-on).
+  - Grass working environment and bash working directory - (Hands-on).
+  - Location and mapset - (Hands-on).
+  - Region settings (Hands-on).
+  - Raster and vector data import, export, display and conversion - (Hands-on).
+  - Raster map calculator - (Hands-on).
+  - Vector manipulation and processing - (Hands-on)
+  - [[GRASScreatelocation  |  GRASS70 Create Location using ancillary layer ]]
+
+=== GDAL-PKTOOLS ===
+  - [[http://www.gdal.org/ | GDAL - Geospatial Data Abstraction Library ]]
+  - [[http://spatialreference.org/ | Spatial Projection Reference Database ]]
+  - [[http://pktools.nongnu.org/html/index.html | pktools - Processing Kernel for geospatial data ]]
+  - [[gdalbasic_kenya | Basic GDAL and OGR for Kenya ]]
+==== Afternoon ====
+
+=== pktools and oft-tools for image manipulation ===
+  - [[ langintergartiongr | Calculate average and standard deviation inside the polygons ]]
+  - [[ langintergartionpkr | Calculate the Moran's I index (using R) inside the polygons ]] 
+
+=== Multi-cores and Grid processing ===
+  - Understanding pc performance (lecture) 
+  - [[ vm_parall | Set up your VM for multicore computation ]]
+  - [[cluster_xargs1 | Transform a simple "for loop" in multicore "for loop"]] (basic multicore programming)
+  - [[ langintergartionpkr | Languages/Software integration: BASH and R under a xarg loop]] 
+
+
+ 

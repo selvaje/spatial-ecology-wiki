@@ -1,0 +1,24 @@
+<span class="co0"># see the text data file </span>
+<span class="co0"># cd /home/user/ost4sem/exercise/Solitary_Tinamou/pointdata/</span>
+<span class="co0"># more ebd_soltin1_relAug-2013.txt</span>
+<span class="co0"># select the the column 21 LATITUDE and 22 LONGITUDE </span>
+<span class="co0"># awk -F  &quot;\t&quot; '{  print $21 ,  $22 }'   ebd_soltin1_relAug-2013.txt &gt; lat_long_ebd.txt</span>
+&nbsp;
+<span class="co0"># download WorldCom data </span>
+<span class="co0"># the WorldCom data have been already downloaded and stored in this directory /home/user/ost4sem/exercise/Solitary_Tinamou/worldclim</span>
+&nbsp;
+<span class="co0"># wget http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/tiles/cur/tmean_34_tif.zip </span>
+<span class="co0"># wget http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/tiles/cur/tmax_34_tif.zip </span>
+<span class="co0"># wget http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/tiles/cur/tmin_34_tif.zip </span>
+<span class="co0"># wget http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/tiles/cur/alt_34_tif.zip </span>
+<span class="co0"># wget http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/tiles/cur/prec_34_tif.zip </span>
+&nbsp;
+<span class="co0"># unzipped the dataset</span>
+<span class="co0"># unzip alt_34_tif.zip</span>
+<span class="co0"># unzip prec_34_tif.zip</span>
+<span class="co0"># unzip tmax_34_tif.zip</span>
+<span class="co0"># unzip tmean_34_tif.zip</span>
+<span class="co0"># unzip tmin_34_tif.zip</span>
+&nbsp;
+<span class="co0"># consensus dataset http://www.earthenv.org/landcover </span>
+<span class="co0"># worldclim http://worldclim.org/version2 </span>

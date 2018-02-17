@@ -1,0 +1,26 @@
+====== Unsupervised classification ======
+
+
+  cd ~/ost4sem/exercise/KenyaGIS/Landsat
+  # wget http://www.spatial-ecology.net/ost4sem/exercise/KenyaGIS/Landsat/LT51680612010231MLK00.tar.gz
+  tar -xvzf LT51680612010231MLK00.tar.gz
+
+Select a study area and create a stack layer.
+
+  gdalbuildvrt -te 250000 -200000 300000 -120000  -separate -overwrite  LT51680612010231MLK00.vrt     LT51680612010231MLK00_B?.TIF  
+
+Unsupervised classification using clustering algorithm KMeans 
+
+
+  otbcli_KMeansClassification   -in   LT51680612010231MLK00.vrt -nc 15 -maxit 1500 -ct 0.0001 -out  LT51680612010231MLK00_KMeans.tif 
+  pkcreatect -co=COMPRESS=DEFLATE -co=ZLEVEL=9   -min  1 -max 15    -i   LT51680612010231MLK00_KMeans.tif   -o   LT51680612010231MLK00_KMeans_ct.tif
+   openev LT51680612010231MLK00_KMeans_ct.tif
+
+Perform image segmentation using Exact Large-Scale Mean Shift Segmentation
+
+  otbcli_Segmentation -in LT51680612010231MLK00.vrt -mode vector -mode.vector.out SegmentationVector.shp  -filter meanshift -mode.vector.tilesize 2667
+
+{{:wiki:screenshot_from_2016-11-28_11_58_47.png?500|}}
+
+
+

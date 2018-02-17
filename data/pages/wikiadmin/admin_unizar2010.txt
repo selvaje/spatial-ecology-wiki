@@ -1,0 +1,146 @@
+
+====== Sunday 7 Marzo 2010======
+ore 19:30- 22:30 installation
+30min to create the .rar compressed folder 2.5GB compress, 6GB uncompressed\\
+~10  min = time of transfer via server on 5 machines at time.\\
+\\
+
+{{:wiki:evaluation_sheets_zar2009.doc | evaluation_sheets_zar2009.doc}}
+{{:wiki:notes_selfevaluation_zar2009.odt  | notes_selfevaluation_zar2009.odt }}
+
+====== Monday March 8 : Day1======
+
+==== Introduction ====
+Presentazione dell'Introduction fatta da Giuseppe piu know eachother: 30 min\\
+  * Bisogna **semplificare**, meno info o slides ma + effettive. Ad es Come iniziare :1-download e install vm, 2 download gisvm 3- open vmplayer and select gisvm\\
+
+  * pausa caffe'
+
+==== hands on ost4sem ====
+Slides hands on
+
+  * pausa caffe' (troppo lunga domani le standardizziamo a 5 min)
+
+==== Case study ste ====
+Troppo lunga. Sopratutto nella parte modellistica troppe parole. le slides cion figure van meglio.
+Finito opre 19
+  * Bisogna rendere la pdf piu' leggera. 10Mb son troppi per la VM
+
+  * pausa caffe' (ci han messo 30min!)
+
+==== Bash Linux Giuseppe ====
+Inizio ore 19:30
+  * Bisogna rifare il odp to pdf. La pdf ha un formato che non va bene. 
+  * Meglio immagini che tante parole
+  * Fai vedere con terminal + exploratore GUI che navighi, crei e remove files. Ad esempio csei nella home creha una folder dentro home/ground0 un file text home/ground0/testo0.txt poi un home/ground0/groundmeno1/testmeno1.txt, poi home/testopiuuno.txt poi copia da una folder all'altra. poi fai un ls da hom a groundmeno1 o roba simile
+  * subito esempi come quelli del fire data. Quindi unngrep di info la creazione di un file testo grep prima e ultima linea del file e compia e sposta il file di testo.
+* Finito ore 9:30. Solo 10 min di esempio sul fire text. Quindi bisogna diminuire le spoiegaz e aumentare le spiegazioni delle functions o characters durante l'esecuzione dei programmi 
+
+
+====== Tuesday March 9: day 2 ======
+== Bash ==
+Giuseppe ha risvisto bash.\\
+non ha avuto tempo di fare awk\\
+\\
+== R ==
+stefano in 2h ha presentato 15min di R lecture e poi R hands on.\\
+Abbiamo fatto parte dello script di r basic.\\
+poi ho fatto vedere lo script di altitude.R\\
+
+====== Wednesday March 10 : day 3 ======
+abbiamo settato gli students ID number sui comp\\
+poi Giuseppe ha fatto un summary di cosa si fa con R \\
+== R basic seconda parte ==
+16:45 - 19\\
+R package install\\
+Poi commentato R synecology.R e mostrato in breve source("script.R") per gli stand alone process\\
+  * pausa e dalle 19:30 inizio grass\\
+
+== Basic Grass ==
+19:30 - 21:30\\
+Lecture intro Grass 30 min\\
+lavoro su g.region e mapsets \ locations.\\
+Alla fine facciam vedere lo scriot per creare le mappe con diverso extent e resol.
+Forse ci siam soffermati troppo su bash cd per entrare nel location directory.\\
+Devi aver meglio pronto un esempio di come si utilizza qgis come gui di grass per imparare le funzioni. Ad esempio ho fatto import r.in.gdal ma non trovavo le opzioni -o o altre opzioni. Quando lo fatto conil vecchio GUI grass riuscivo bene.
+
+====== Thursday March 11 : day 4 ======
+Stefano Grass exercise explained the script. The students run the script alone and then we commented the script of RP ratio. \\
+Then I explained what students have to do as homework. Change study area extent and then the resolution.\\
+total 1.5 h \\
+Poi giuseppe ha fatto awk, gnuplot e gdal \\
+Alla fine un esercizio di gdal con loop per fare un clip di image \\
+\\
+
+====== Friday March 12 : day 5 ======
+Giuseppe introduction to install linux\\  
+poi Arguments in bash language\\ 
+poi study case lecture \\
+poi hands on sttudy case\\
+\\
+
+===== Exercise number 1: Grass project setting=====
+Questo esercizio teniamolo ma non e' stato fatto.
+\\
+The object of this exercise is to create a new Grass project including a new grass GISDBASE , new grass LOCATION and grass MAPSET.
+
+  - Open Qgis, load  The EUcountry Grass vector layer found in the GISDBASE : ~/ost4sem/grassdb, LOCATION: /europe , MAPSET: EUforest
+  - Select a limited area in Europe at your choice and note the N, E W and S extent boundatries.
+  - Close Qgis
+  - re-open Qgis and define a new grass Project as follow:\\
+GISDBASE name = "ex1grassdb" , GISDBASE needs to be in your home folder\\
+LOCATION name = "spain" needs to be Projected with: Lambert Azimuthal Equal Area projection - LAEA (ETRS89 / ETRS-LAEA).\\
+MAPSET name = at your choice. The MAPSET extent is equal to the one you selected with Q-gis before.\\
+  - Open grass in a -text mode and within the MAPSET you just created. Be sure your Bash Shell terminal working directory is the same as your grass LOCATION directory. Then type the following commands:
+ 
+<code bash>
+whoami ; echo $$
+g.region -p
+g.gisenv
+</code>
+\\
+
+  - Print your terminal outputs, past it in an email and send it to: unizar2010@spatial-ecology.net. Please specify your name and exercise 1 as email title.\\
+\\
+\\
+
+interesting
+http://www.dokuwiki.org/plugin:archiveupload
+ujzip plugin
+
+
+===== Evaluation =====
+^^ ^ Exercise 1 RP ratio Grass  ^^^^^
+^ st name ^ Stud nb   ^ R ^  P ^ MAP ^ RP ^ Script ^ 
+| |     1     |   |    |     |    |        |    
+| |     2   |   |    |     |    |        | 
+| Nicola Cortesi |     3    |  y |  y  |  y   |  y  |        | 
+| |     4    |   |    |     |    |        | 
+| |     5    |   |    |     |    |        | 
+| |     6    |   |    |     |    |        | 
+| |     7    |   |    |     |    |        | 
+| |     8    |   |    |     |    |        | 
+| |     9    |   |    |     |    |        | 
+| |     10    |   |    |     |    |        | 
+| |     11   |   |    |     |    |        | 
+| |     12    |  y | y   |  y   |  n  |  n      | 
+| |     13    |   |    |     |    |        | 
+| |     14    |   |    |     |    |        | 
+| |     15    |   |    |     |    |        | 
+| |     16    |   |    |     |    |        | 
+| |     17    |   |    |     |    |        | 
+| |     18    |   |    |     |    |        | 
+| |     19    |   |    |     |    |        | 
+| |     20    |   |    |     |    |        | 
+| |     21    |   |    |     |    |        | 
+| |     22    |   |    |     |    |        | 
+| |     23    |   |    |     |    |        | 
+| |     24    |   |    |     |    |        | 
+| |     25    |   |    |     |    |        | 
+
+
+\\
+present piccola R
+{{:wiki:r_intro_short.pdf|}}
+
+

@@ -1,0 +1,7 @@
+====== Part 3 ======
+
+===== Machine learning techniques (image classification) =====
+
+  * [[exercise8a | exercise 8a]]: Image classification
+  * [[exercise8b | exercise 8b]]: Accuracy assessment
+  * [[exercise8c | exercise 8c]]: Visualization in QGIS

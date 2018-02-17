@@ -1,0 +1,17 @@
+====== 3DR Tower ======
+Back to [[uav:toolchain|main menue]].\\
+\\
+Tower is an open source flight control app running on android/linux platforms with a its [[https://github.com/DroidPlanner/Tower/graphs/contributors|github ]] contributor repository. [[ https://3dr.com/kb/tower-features/| Here ]] an overview of its features.\\
+{{:uav:tower.png?100|https://3dr.com/kb/tower-support/}}
+
+[[https://3dr.com/3dr-releases-tower-drone-flight-control-app-3dr-services-app-store-drones/3DR| 3DR Tower]] has all functionality for defining a mapping survey flights:
+  - Perimeter area definition; 
+  - Image overlap requirements; 
+  - Flight speed; 
+  - Altitude and derived image resolution /flight time lenght; 
+  - Flight mission compilation to the IRIS.
+
+This [[https://www.youtube.com/watch?v=u-k8ax2JGC4 | video tutorial]] show how to set up a survey mission on Tower. Tower is handy for using a tablet on field studies.\\
+<note warning>Read [[https://3dr.com/kb/tower-best-practices/| Tower best practices]] before flying UAV missions.</note>
+
+Tower can also be used for other tasks such as [[https://3dr.com/kb/tower-3d-modeling-tutorial/| 3D modelling a site location]].

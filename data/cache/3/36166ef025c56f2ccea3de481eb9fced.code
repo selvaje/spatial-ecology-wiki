@@ -1,0 +1,4 @@
+<span class="kw2">cat</span> <span class="sy0">&gt;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise6<span class="sy0">/</span>cloudmask_ct.txt <span class="co2">&lt;&lt;EOF
+0 0 0 0 255
+1 255 255 255 255
+EOF</span>

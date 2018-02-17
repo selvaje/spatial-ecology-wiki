@@ -1,0 +1,86 @@
+====== Basic AWK scripts======
+Exercise:\\
+Script: open by kate [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/basic_awk.sh | ~/ost4sem/exercise/basic_adv_awk/basic_awk.sh ]]\\
+Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/input.txt | ~/ost4sem/exercise/basic_adv_awk/input.txt ]]\\
+Directory: ~/ost4sem/exercise/basic_adv_awk\\
+\\
+<code bash>
+kate ~/ost4sem/exercise/basic_adv_awk/basic_awk.sh &
+</code>
+
+==== Predefined variables ====
+Change directory, printing and summarise the data by predefined variables:
+<code awk>
+cd ~/ost4sem/exercise/basic_adv_awk
+awk  '{ print $5 , $2 }' input.txt   # print a column 5 and 2  
+awk  '{ print NF }'  input.txt       # print number of column
+awk  '{ print NR }' input.txt        # print number of row
+</code>
+===== Use BEGIN and END =====
+Print a header and tail in a file:
+<code awk>
+awk 'BEGIN { print "CODE"} { print $5 } END {print "TOT"}' input.txt
+</code>
+
+==== Bash and AWK ====
+Sort base on column number 5 and then print column 5: 
+<code awk>
+sort -k 5,5 -g  input.txt  |   awk  '{ print $5 }'  > output.txt 
+</code>
+
+print column 5 and then sort column number 1 (that was previously number 5)
+<code awk>
+awk  '{ print $5 }'  input.txt  |  sort -k 1,1   > output.txt 
+</code>
+
+===== Bash variables in AWK =====
+==== Import a variable in awk and insert the awk-action in a loop ====
+<code awk>
+for (( i=1 ; i<=4 ; i++  )) ; do
+awk  -v i=$i  '{ print $i }' input.txt  
+done 
+</code>
+===== AWK operations =====
+  * Mathematical operation:
+
+<code awk>
+awk  '{ print log($1) }' input.txt  
+</code>
+String operation:
+<code awk>
+awk  '{ print substr($1,1,4) }' input.txt 
+</code>
+
+==== Query operation: ==== 
+ 
+<code awk>
+awk  '{ if($3>2) print $3 }'  input.txt
+awk  '{ if($3>=2) print $3 }' input.txt  
+awk  '{ if($3<2) print $3 }'  input.txt
+</code>
+
+The logical operator (if condition) can be inserted also out side from the "{}". \\
+This is an example.\\
+Add an index to the input file txt file:
+<code awk>
+awk 'NR==1 { print "index "$0 } NR>1 { print NR-1,$0 }' input.txt > output_withID.txt
+</code>
+The same operation can be done also with this syntax
+<code awk>
+awk ' { if (NR==1) { print "index "$0 } else { print NR-1,$0 }}' input.txt > output_withID.txt
+</code>
+
+
+  * Query operation for file management
+If we want to count files in a folder //tmp// of size bigger than 1Mb we can concatenate 3 functions piping each output as input for the next functiont
+
+<code awk>
+ls -l /tmp/ | awk '{s=$5; if(s>1000000){print$0}}'| wc -l
+</code>
+
+
+  * Split a large file into small files of 100 lines each
+
+<code awk>
+awk  'NR%100==1{x="blockfile"++i ; }{print > x}'  input.txt 
+</code>

@@ -1,0 +1,22 @@
+====== Student's projects ======
+
+===== Species Distribution Modelling =====
+
+[[Patrick_Shwager | Patrick Shwager]]\\
+
+
+===== Zonal statistics =====
+[[thomas_kandler|Thomas kandler]]\\
+
+Find the right tool\\
+
+===== BigData DEM Mosaic =====
+[[marco| Marco ]]\\
+
+Aster DEM 300GB : Aggregate and mosaic tiles of global DEM at lower resolution (30 m res).\\
+
+===== Wheat variety =====
+Extract more information from satellite data\\
+Juan Herrera ]]\\
+
+

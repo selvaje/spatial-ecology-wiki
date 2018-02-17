@@ -1,0 +1,13 @@
+==== RAM vs HARD DISK ====
+== Create a text file and understand pc performance ==
+
+in bash in two different locations
+
+<code bash>
+time seq 1  100000000  > /tmp/test.txt 
+</code>
+
+
+<code bash>
+time seq 1  100000000  > /dev/shm/test.txt 
+</code>

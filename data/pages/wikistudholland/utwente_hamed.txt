@@ -1,0 +1,200 @@
+====== Plant phenology modelling using growing degree-days to check the quality of volunteered phenological observations ======
+Hamed Mehdi Poor, Geo-information department, ITC faculty, Twente University [[http://gip.itc.nl/default/node/382]]
+
+==== INTRODUCTION ====
+
+
+==== General framework of the analysis ====
+
+Developing models is one way to explore patterns in phenology (studying life cycle events of plants and animals) while lacking complete period-of-records on specie. These models are called phenological model. In the case of plants, phenological models are designed to predict phenophase time using meteorological data. However such a prediction is less accurate than recording phenophase time in reality, it has potential to be utilized in different applications, instead of phenological observations. As an early statistical phenology modelling, Schwartz & Marotz developed a regression model for Syringa chinensis (a plant species), called spring index Model, as a metric for tracking spring onset variations and trends in mid-latitudes.
+
+Keywords: phenology modelling, Growing degree days, VGI quality
+ 
+==== Project objectives ====
+The project aims at using spatial raster datasets (average daily temperature)to develop growing degree days model and to compare the model outputs with volunteered phenological observation in a semi-automatic way. This has potential to assess the quality of huge volunteered phenological observation.
+
+
+===== METADATA =====
+
+
+==== Vector data ====
+The “Natuurkalender” volunteered observations (spatial point layer) about the first flowering date of wood anemone species in the Netherlands, 2009. The “Natuurkalender” is a Dutch phenological monitoring VGI project that was founded in 2001 as an initiative of Wageningen University and VARA's Early Birds broadcast. However, other organizations are involved in this program today. The dataset mainly contains: 1) unique ID of observations 2) The date of observation; 3) location of observations which are addressed by x and y coordinates in Dutch National Coordinate System (RD-new) 
+==== Raster data ====
+To illustrate this project, Dutch daily temperature data is used. In particular, we use data collected at 28 meteorological stations (freely from the website of the Royal National Meteorological Institute) and interpolated using Inverse Distance Weighted method in 2009(from 1 January to 31 December).
+
+==== Other data sources====
+  * [[http://www.myraster_data_are_here| link to other data if needed]]
+
+===== METHOD =====
+Bash script including GRASS commands to:
+  * Import 365 average daily temperature to the grass database automatically
+  * Import a vector dataset including volunteered phenological observations to the grass database
+  * Assign average daily temperature to volunteered phenological observations regarding their locations
+  * calculate and add GDDs and first flowering time (day of the year)of wood anemone specie to  the attribute table of volunteered phenological observations
+  * calculate differences between GDDs-based and volunteer-based time of wood anemone specie 
+  * visualise volunteered phenological observations according a selected day of the year.
+
+
+===== Computational implementation =====
+Some further explanation of the overall analyses and of each step
+paste your code here
+<code bash - mycode>
+
+#!/bin/bash 
+
+#This is a bash file to import average daily temperature maps in NETCDF format to GRASS database and assign their raster values to the location of volunteered phenological observations and calculating GDD (growing degree days) models to compare model-based and volunteer-based first flowering time of wood anemone in 2009.
+
+#The 365 .nc files are located in a tree, one branch looks like this :~$ /home/project/2009/01/28/INTER_OPER_R___TG1_____L3__20090128T000000_20090129T000000_0001.nc This means I have to travel down each branch of the tree before I can import the files one by one.
+
+#This script changes the file type and Projection of the average daily temperature maps to .tif format and Dutch National Coordinate System (RD-new), EPSG:28992
+
+#Then the script imports .tif average daily temperature maps and volunteered phenological observations to a mapset in GRASS database created by help of GUI  (grass -wxpython)
+
+# 365 daily average temperatures assigned to the attribute table of volunteered phenological observations in 2009 regarding their locations
+
+#finally GDD models were calculated and the day of observation was calculated (predicted) per observation locations nad the differences between model-based and volunteer-based first flowering of wood anemone were calculated.
+
+
+#	Author: Hamed Mehdi Poor 2014-01-17
+
+###############################################################################################
+
+#getting information about the average daily temperature map
+gdalinfo INTER_OPER_R___TG1_____L3__20090101T000000_20090102T000000_0001.nc
+
+#Driver: netCDF/Network Common Data Format
+#Files: INTER_OPER_R___TG1_____L3__20090101T000000_20090102T000000_0001.nc
+#Size is 512, 512
+#Coordinate System is `'
+#Metadata:
+  #NC_GLOBAL#comment=The dataset contains interpolated daily average temperature measured by automatic weather stations from 00:00-00:00 UT. The interpolation method is Inverse Distance Weighted interpolation (IDW) using a 20 km block.
+  #NC_GLOBAL#Conventions=CF-1.4
+  #NC_GLOBAL#history=none
+  #NC_GLOBAL#institution=Royal Netherlands Meteorological Institute (KNMI)
+  #NC_GLOBAL#references=klimaatdesk@knmi.nl
+  #NC_GLOBAL#source=Royal Netherlands Meteorological Institute (KNMI)
+  #NC_GLOBAL#title=Average daily temperature
+#Subdatasets:
+  #SUBDATASET_1_NAME=NETCDF:"INTER_OPER_R___TG1_____L3__20090101T000000_20090102T000000_0001.nc":lon
+  #SUBDATASET_1_DESC=[315x266] lon (32-bit floating-point)
+  #SUBDATASET_2_NAME=NETCDF:"INTER_OPER_R___TG1_____L3__20090101T000000_20090102T000000_0001.nc":lat
+  #SUBDATASET_2_DESC=[315x266] lat (32-bit floating-point)
+  #SUBDATASET_3_NAME=NETCDF:"INTER_OPER_R___TG1_____L3__20090101T000000_20090102T000000_0001.nc":stations
+  #SUBDATASET_3_DESC=[1x315x266] stations (32-bit floating-point)
+  #SUBDATASET_4_NAME=NETCDF:"INTER_OPER_R___TG1_____L3__20090101T000000_20090102T000000_0001.nc":stationvalues
+  #SUBDATASET_4_DESC=[1x315x266] temperature (32-bit floating-point)
+  #SUBDATASET_5_NAME=NETCDF:"INTER_OPER_R___TG1_____L3__20090101T000000_20090102T000000_0001.nc":prediction
+  #SUBDATASET_5_DESC=[1x315x266] temperature (32-bit floating-point)
+#Corner Coordinates:
+#Upper Left  (    0.0,    0.0)
+#Lower Left  (    0.0,  512.0)
+#Upper Right (  512.0,    0.0)
+#Lower Right (  512.0,  512.0)
+#Center      (  256.0,  256.0) 
+
+# creating a grass database and mapset for the avarage daily temperature maps and vector layer of volunteered phenological observations in 2009
+grass -wxpython
+
+#finding, changing spatial raster file types to tiff and assigning Dutch National Coordinate System (RD-new), EPSG:28992, and finally importing them to grass mapset
+grass -text  ~/project/grass_database/Netherlands/ave_daily_tem_2009
+
+cd ~/project/2009/
+months="01 02 03 04 05 06 07 08 09 10 11 12"
+days="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31"
+
+for m in $months ; do 
+  for d in $days ; do 
+    cd ~/project/2009/$m/$d/ 
+    filename=$(ls) 
+    file=`basename $filename .nc`
+    gdal_translate -of GTiff NETCDF:"$file".nc:prediction "$file".tif
+    gdalwarp   -t_srs EPSG:28992  -s_srs EPSG:28992  "$file".tif "$file".tif
+    cp "$file".tif ~/project/grass_database/Netherlands/ave_daily_tem_2009/
+    rm *.tif
+    cd ~/project/grass_database/Netherlands/ave_daily_tem_2009/
+    r.in.gdal -o in="$file".tif  out=$file
+    rm *.tif
+    cd ~/project/2009/
+  done ; 
+done ; 
+
+
+#Importing vector layer of volunteered phenological observations in 2009 to the mapsets 
+cd ~/project/grass_database/Netherlands/ave_daily_tem_2009
+v.in.ogr -o dsn=/home/user/project/pheno_obs_2009/pheno_obs_2009.shp  output=pheno_obs_2009
+v.info pheno_obs_2009
+
+#representing data in Quantum GIS
+qgis & 
+
+#fixing regions
+g.region rast=INTER_OPER_R___TG1_____L3__20090101T000000_20090102T000000_0001 
+
+#exploring and assigning and adding average daily temperatures to attribute table of volunteered phenological observations in 2009
+g.list rast >> raster_map_list.txt
+
+i=1
+for ras in `more raster_map_list.txt` ; do
+  v.db.addcol pheno_obs_2009 columns="DOY_$i INT"
+  v.what.rast vector=pheno_obs_2009 raster=$ras col="DOY_$i"
+  # removing columns if you are wrong about some things: v.db.dropcol pheno_obs_2009 col="DOY_$i"
+  i=$(($i+1))
+done
+
+# calculating GDD per day (average daily temperatures - the base temperature: 2.25) and repealing average daily temperatures with GDD per day
+for k in `seq 1 365` ; do
+  v.db.update pheno_obs_2009 col="DOY_$k" qcol="DOY_$k-2.25"
+done
+
+# Adding two columns for GDDs and DOY_GDD that first flowering of wood anemone  
+v.db.addcol pheno_obs_2009 columns="DOY_GDD INT"
+v.db.addcol pheno_obs_2009 columns="GDDs INT"
+v.db.update pheno_obs_2009 col="DOY_GDD" qcol=0
+v.db.update pheno_obs_2009 col="GDDs" qcol=0
+
+# finding the day of year that first flowering of wood anemone happen (optimized GDDs = 116)
+cat_table=`echo "select cat from pheno_obs_2009" | db.select -c`
+for ca in $cat_table ; do
+  echo $ca
+  for q in `seq 1 365` ; do
+    current_GDD=`echo "select GDDs from pheno_obs_2009 where cat=$ca" | db.select -c`
+    check_var=`echo "select DOY_$q from pheno_obs_2009 where cat=$ca" | db.select -c`
+    if [ $check_var -gt 0 ] && [ $current_GDD -lt 116 ] ; then
+      v.db.update pheno_obs_2009 col="DOY_GDD" value=$q where="cat=$ca"
+      new_GDD=`echo $check_var + $current_GDD | bc`
+      echo $new_GDD
+      v.db.update pheno_obs_2009 col="GDDs" value=$new_GDD where="cat=$ca"
+    fi
+  done
+done
+
+#calculating and adding differences between model-based and volunteer-based first flowering time of wood anemone as a new column
+v.db.addcol pheno_obs_2009 columns="Diff INT"
+v.db.update pheno_obs_2009 col="Diff" qcol="DOY_GDD-DATE_"
+
+################################# END ###################################
+
+</code>
+
+Describe your second code if needed, what it does ...
+
+<code R>
+# my R code here
+
+</code>
+
+If you are modeling you might distinguish between
+==== Model parametrization ====
+==== Model prediction ====
+==== Validation ====
+
+===== RESULTS and DISCUSSION =====
+   * Figure 1. Volunteered phenological observations 2009, the Netherlands \\
+{{:wikistudholland:datsets.png?700|}}
+\\
+\\
+   * Figure 2. Attribute table of Volunteered phenological observations 2009, the Netherlands \\
+{{:wikistudholland:attribute_table.png?700|}}
+
+
+//Later on after the training you could improve the script and upgrade your wiki project page//

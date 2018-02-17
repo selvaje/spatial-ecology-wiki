@@ -1,0 +1,42 @@
+===== R data =====
+You can directly download data from an url and open it within an R session\\
+
+<code r>
+ R 
+ connect.data =file(description = "http://www.spatial-ecology.net/ost4semdata/Rdata/advanceRdata",open = "rb")
+ load(connect.data)
+ ls()
+</code> 
+
+
+  * [[http://www.spatial-ecology.net/ost4semdata/Rdata/try.sh|try.sh]]
+  * [[http://www.spatial-ecology.net/ost4semdata/Rdata/advanceRdata|advanceRdata]]
+An R 'data.frame' inclusive of 6506 obs. of  78 variables concerning plants/ bioclimate factors relationships
+
+on gisvm you find this data : ~/ost4sem/data/Rdata/advanceRdata
+
+======  Errata corrige Data ======
+[[http://www.spatial-ecology.net/ost4sem/data | Download data ]]
+
+
+===== Error in files =====
+If you look at  folder ~/ost4sem/exercise/basic_adv_r
+
+You can see data format type = FILENAME.R.pdf \\
+<note warning>.R.pdf is an error ! correct file name is *.R</note>
+To change from .R.pdf into .R you can run the following commands \\
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_r
+
+for file in *.R.pdf ; do echo cp $file `basename $file .pdf` ; done  # to see what is going to be performed
+for file in *.R.pdf ; do cp $file $(basename $file .pdf) ; done 
+</code> 
+\\
+
+====== Download Data ======
+
+
+
+ [[http://www.spatial-ecology.net/sharing/outgoing/geo_reference.tif   |  geo_reference.tif ]] 
+
+

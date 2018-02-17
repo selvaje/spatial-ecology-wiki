@@ -1,0 +1,3 @@
+   data2map$band1[as.numeric(dimnames(pred.mapRFindex)[[1]])] = as.numeric(pred.mapRF)
+   cat(&quot;class values added to tile[t]\n&quot;)
+&nbsp;

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- generator="FeedCreator 1.7.2-ppt DokuWiki" -->
+<?xml-stylesheet href="http://spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://spatial-ecology.net/dokuwiki/feed.php">
+        <title></title>
+        <description></description>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2018-02-17T17:33:58+00:00</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:r&amp;rev=1518641880&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:spec_distrib2&amp;rev=1518015931&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:reglistmatera17&amp;rev=1517926881&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:spec_distrib&amp;rev=1516812404&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <url>http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:r&amp;rev=1518641880&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-02-14T20:58:00+00:00</dc:date>
+        <dc:creator>ost4sem_giu</dc:creator>
+        <title>wiki:r</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:r&amp;rev=1518641880&amp;do=diff</link>
+        <description>The R Project for Statistical Computing
+
+R is a language and environment for statistical computing and graphics. It is a GNU project and provides a wide variety of statistical (linear and nonlinear modeling, classical statistical tests, time-series analysis, classification, clustering, ___________________</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:spec_distrib2&amp;rev=1518015931&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-02-07T15:05:31+00:00</dc:date>
+        <dc:creator>ost4sem_giu</dc:creator>
+        <title>wiki:spec_distrib2 - [Autoecology of Solitary Tinamou] </title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:spec_distrib2&amp;rev=1518015931&amp;do=diff</link>
+        <description>Understanding Autoecology &amp; Synecology to model species distribution Maxent
+
+The main aim of this page is to show how to retrieve environmental information at point level and build up a table useful to identify  Autoecology and Synecology of a species.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:reglistmatera17&amp;rev=1517926881&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-02-06T14:21:21+00:00</dc:date>
+        <dc:creator>ost4sem_giu</dc:creator>
+        <title>wiki:reglistmatera17</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:reglistmatera17&amp;rev=1517926881&amp;do=diff</link>
+        <description>ID  Name  Surname  Country  mail  Affiliation  1  Sarah  Schob  Germany sarahschob@gmx.net Lund University/ ITC Enschede 2  Marianne  Stoessel Swedenmarianne.stoessel@natgeo.su.seStockholm University 3  Andrew  Mercer Swedenandrew.mercer@hig.seUniversity of Gävle</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:spec_distrib&amp;rev=1516812404&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-01-24T16:46:44+00:00</dc:date>
+        <dc:creator>ost4sem_giu</dc:creator>
+        <title>wiki:spec_distrib - [Autoecology of Solitary Tinamou] </title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:spec_distrib&amp;rev=1516812404&amp;do=diff</link>
+        <description>Understanding Autoecology &amp; Synecology to model species distribution
+
+The main aim of this page is to show how to retrieve environmental information at point level and build up a table useful to identify  Autoecology and Synecology of a species.
+
+	*</description>
+    </item>
+</rdf:RDF>

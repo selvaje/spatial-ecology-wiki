@@ -1,0 +1,41 @@
+====== Hands on GRASS ======
+\\
+[[http://grass.itc.it/| GRASS]] - **Geographic Resources Analysis Support System** - is the world's leading free and open source Geographic Information System software used for geospatial data management and analysis, image processing, graphics/maps production, spatial modeling, and visualization. GRASS is currently used in academic and commercial settings around the world, as well as by many government agencies and environmental consultancies. GRASS is an official project of the [[http://www.osgeo.org/|Open Source Geospatial Foundation]]. 
+
+On this page of the wiki we provide different sections (see in the table of contents): 
+
+===== Grass Lectures =====
+  * Introduction to GRASS: [[http://www.spatial-ecology.net/ost4sem/lecture/grass_intro.pdf|download ]] or  VM@: ~/ost4sem/lecture/GRASS_intro_ste.pdf
+
+===== GRASS Tutorials =====
+  * [[basicgrass2|Starting with GRASS for Yale]]
+  * [[basicgrass|Starting with GRASS]]
+  * [[basicgrass7|Starting with GRASS 7.2]]
+  * [[basicgrassKenya|Starting with GRASS for Kenya]]
+  * [[grassKenyaExtract|Extracting information from images with GRASS for Kenya]]
+  * [[grassrivarvariable| Calculation of contiguous stream-specific variables - r.stream.watersheds & r.stream.variables ]]
+  * [[wiki:grass:grasstopovar| Calculation of topographic variables derived from a DEM]]
+  * [[[grass_newproject|Create a new GRASS project, location or mapset]]
+  * [[grass_rs | Using GRASS for image analysis.]]
+  * [[grass_rs_gui | Using GRASS64 for image analysis with GUI.]]
+  * [[grassvariables|Setting GRASS64 variables for GRASS bash job ]]
+  * [[GRASSBatchjobs  |  GRASS64 Batch jobs ]]
+GRASS70 Batch jobs
+  * [[GRASScreatelocation  |  GRASS70 Create Location using ancillary layer ]]
+  * [[grassvariables7 | Setting GRASS70 variables for GRASS bash job]]
+  * [[grass7exercise | Exercise Create a Location, enter in GRASS and import data ]] 
+  * [[GRASS_HPC   |  GRASS in the YALE-HPC  ]]
+\\
+===== Grass exercises =====
+  * [[exercise_rp_ratio|Limited fulfillment of the potential range in tree species - wiki ]] or [[http://www.ost4sem/exercise/rp_ratio/rp_ratio.sh|download the sh script]] or VM@: ~/ost4sem/exercise/rp_ratio/rp_ratio.sh \\
+  * [[exercise_pcem_stats|General statistics of Pinus cembra forests - wiki ]]; or [[http://www.ost4sem/exercise/pcemstat/pcemstat.sh|download]] or VM@: ~ost4sem/exercise/pcemstat/pcemstat.sh
+  * [[exercise_euforest_stats|European Forest cover statistics by country - wiki ]]; [[http://www.ost4sem/exercise/EUforest_stats/euforest_stats.sh|download]] or VM@: ~ost4sem/exercise/EUforest_stats/euforest_stats.sh 
+
+===== Grass links and help =====
+  * [[http://grass.osgeo.org/wiki/Main_Page|Grass wiki]]\\
+  * [[http://grass.itc.it/grass64/manuals/html64_user/index.html| Grass manual on the web]]\\
+  * [[http://mpa.itc.it/markus/osg05/|Grass in a nutshell]] //English and Spanish//
+  * [[http://cemml.carleton.ca/grass_Misc/Introduccion_a_Grass_v.1.1.pdf|Introducción a Grass]] Department of Ecology, University of Extremadura.
+  * [[http://www.ing.unitn.it/~grass/|Grass Tutorial]] //in english// University of Trento\\
+  * [[http://www.ing.unitn.it/~grass/docs/tutorial_62/index.html| Grass tutorial in Italian]]
+

@@ -1,0 +1,233 @@
+====== Introduction to GRASS and Satellite Imagery ======
+
+
+The object of this first exercise is to introduce the program GRASS using the Graphical User Interface (GUI).  We will explore many features of the program as we examine a satellite image.  Our purpose now is to simply learn how GRASS can be used to manipulate satellite images.  In later exercises you will learn to run GRASS functions from the command line.  This feature of GRASS allows you to create scripts which can be combined to provide powerful, repeatable image processing capabilities.
+
+==== GRASS File Structure ====
+ Every Grass project has a predefined data structure\\
+
+  *  GISDBASE - GRASS data are stored in a directory referred to as a DATABASE or “GISDBASE”. This directory must be created before starting to work with GRASS. Within this DATABASE, the projects are organized by project areas stored in subdirectories called LOCATIONs.
+  *  LOCATION - A Location is defined by its coordinate system, map projection and geographical boundaries. The subdirectories and files defining a LOCATION are created automatically when a new LOCATION is created in GRASS.
+  *  MAPSET - A MAPSET is a unique container of data for a Location.  Locations can have many MAPSETs and each MAPSET is stored as a subdirectory of a LOCATION. A new MAPSET can be added at GRASS startup.
+
+<note>Other remote sensing programs store data in various formats, typically as large binary files.  For example, ERDAS Imagine files have header information embedded in the ".IMG" file while ENVI stores image data in a binary file and places file metadata in an associated ".HDR" file.\\
+With GRASS we import data directly into the database.</note>
+
+==== GRASS Command Structure ====
+ 
+
+^prefix ^ function    ^ class type of command          ^ example                               ^
+|d.*    |  display    | graphical output             | d.rast: views raster map                |
+| :::   |      :::    |      :::                     | d.vect: views vector map                |
+|db.*   |  database   | database management          | db.select: selects value(s) from table  |
+|g.*    |  general    | general file operations      | g.rename: renames map                   |
+|i.*    |  imagery    | image processing             | i.smap: image classifier                |
+|ps.*   |  postscript | map creation format          | ps.map: map creation in Postscript      |
+|r.*    |  raster     | raster data processing       | r.buffer: buffer around raster features |
+|:::    |    :::      |              :::             | r.mapcalc: map algebra                  |
+|r3.*   |  voxel      | raster voxel data processing | r3.mapcalc: volume map algebra          |
+|v.*    |  vector     | vector data processing       | v.overlay: vector map intersections     |
+\\
+<note tip>
+For detailed instructions on grass command syntax and use, go to the [[http://grass.osgeo.org/grass70/manuals/index.html|GRASS online manual]] or in the GRASS terminal type **man** and a function name. As an example 
+  man r.info
+</note>
+
+
+
+
+===== Exploring the Interface =====
+
+Open the **Desktop GIS** folder and double click on {{:wiki:grass-logo.jpg?50|}} to start the program. This opens a GRASS terminal window followed by the //Welcome to GRASS// screen.\\
+
+Navigate to the GRASS GIS database in the folder **/home/user/ost4sem/grassdb** Select the GRASS Project Location **KenyaUTM.**  For the Mapset click New and enter **user** to create the new Mapset.  Then click Start GRASS to open the **Layer Manager** and a separate **Map Display** window.  Notice that the Layer Manager has a menu bar and several toolbars and the Map Display window has a separate toolbar.
+
+
+**Running Commands**
+
+There are several ways to run commands in GRASS.  You can select an icon from the Layer Manager or Display Window, make a menu selection, manually enter a command in the Command Console of the Layer Manager, or enter a command in the GRASS terminal window.  Let's run a few commands to gather information about the data for this project.
+
+Use the Layer Manager menu to list all of the raster layers in the project:
+  * File | Manage Maps | List [g.list]
+  * Check 'raster map(s)' and click **Run**
+  * All raster layers in the Location are listed
+
+Now find out detail information about one of these raster datasets:
+  * Raster | Reports and statistics | Basic raster metadata [r.info]
+  * Use the drop-down arrow to select **1995Jan30_B4@Permanent** and click **Run**
+  * This lists a great deal of file information including; data type, number of rows and columns, projection, and data range.
+  
+In the r.list window click **Copy** to place the command in the clipboard.  You will run this directly from the Command Console of the Layer Manager
+  * Click the //Command console// tab on bottom of the Layer Manager window
+  * Paste the command line just above the tabs, and hit Enter
+  * The results are posted in the Layer Manager window
+  
+Its easy to quickly apply the same command to another dataset.  
+  * With the cursor in the Command console window use the keyboard Up Arrow to retrieve the last command.
+  * Edit the command line to change 'B4' to 'Kelvin' and hit enter.
+  * Data for this layer are displayed
+
+Finally, click in the GRASS terminal window, paste the command line, and hit Enter.  In each case you get the same results as you do using the menu selection.
+
+Close the g.list and r.list windows.
+
+<note tip>
+Once you learn the basic commands, the Command Console and GRASS terminal are faster ways to run many GRASS functions.  You can run both GRASS and Linux shell commands in the GRASS terminal window, giving you the ability to develop very powerful scripts.
+</note>
+===== Working with Images =====
+In this section we will explore a variety of raster data and image analysis tools.  We will use a Landsat TM image dated 30 January 1995.  The image has already been imported into GRASS and subset to the region around Nairobi. Other data include the thermal band converted to degrees Kelvin and the SRTM elevation dataset. 
+
+Begin by loading your first rater file.
+
+  * Use the **Add Map** tool {{:wiki:addmap.jpg?50|}} in the Layer Manager.
+  * Select the file **1995Jan30b1**  This file is the first (Blue) band of the Landsat image and is displayed in a gray scale.
+  * Use the navigation tools in the Map Display window to zoom in and out and pan around the image
+  * Use the Query Raster tool {{:wiki:queryraster.jpg?35|}} to examine cell values at various locations in the map
+  * In the Layer Manager right-click on the filename to view the functions that can be selected here
+  * Select **View Metadata.**  This is another way to run the r.info command we ran earlier
+  * Select **Histogram** to the distribution of data by digital numbers
+  * Select **Set color table** to change the map display from gray to a predefined color scheme.
+  * - This opens the r.colors window with the raster already selected
+  * - Click on the Define tab and in the 'Name of color table' box use the drop-down arrow to select a color scheme
+  * - Click Run to apply the color table.  Not all color tables can be applied to all raster layers.
+  * - Select and Run the **grey** color table before moving on
+  * - Close the r.colors window
+
+Now we want to load a three band image.  We will use the Landsat bands 3,2, and 1 to construct a natural color RGB image.
+
+  * Use the **Add various raster maps** tool {{:wiki:addimage.jpg?35|}} in the Layer Manager and select **Add RGB map layer**.  We will refer to this as the **Add Image** tool for the remainder of the exercise.
+
+  * Select the file **1995Jan30b3** for the Red layer
+  * Select the file **1995Jan30b2** for the Green layer
+  * Select the file **1995Jan30b1** for the Blue layer
+
+Use the Query tool to display the values of the three bands in the map display
+
+Use the **Add Image** tool to add a second image map - using bands 5, 4, and 3 for the R,G, and B layers.  In this false color image vegetation is displayed as bright green, soils as pink, urban areas are dark purple, and water is black.
+
+In the Layer Manager toggle the new image map on and off to see how the landscape appears when viewing different bands.  This ability to "see" beyond the visible spectrum is one of the powerful features of satellite remote sensing.
+
+Use the **Add Map** tool to add the raster map **1995Jan30NDVI** to the Map Display.  Note that a color table has been previously defined for this layer, displaying healthy, dense vegetation as dark green, soils brown, urban areas as white, and water as dark blue to black.\\
+In the Layer Manager right-click on the NDVI layer and select Metadata then Histogram to view the data ranges and distributions.
+
+Use the **Add Map** tool to add the raster map **1995Jan30Kelvin** and **SRTM** maps to the Map Display\\
+Explore the images and view the Metadata and Histograms as you did with the NDVI layer.
+
+==== Workspace ====
+Before we proceed it is a good idea to save the current Workspace.  A Workspace is like a digital image bookmark. This will create a list of all Map Layers in use, their order in the Layer Manage, and their color tables. If you close GRASS you can open the Workspace at alater time to pick up right where you were when the Workspace was saved.
+
+  * From the menu select **FIle | Workspace | Save as**
+  * Navigate to the folder **\home\user\ost4sem\grassdb\KenyaUTM**
+  * Enter a Workspace Name and click Save
+
+
+==== Explore raster map layers ====
+=== Using the Query tool ===
+In the Layer Manager drag the NDVI, Kelvin and SRTM layers below the 543-RGB image map.
+
+Make these three layers active and use the Query tool to display cell values of the three layers at one time.  The SRTM layer shows the elevation in meters where you clicked, the Kelvin layer shows the cell temperature, and the NDVI layer shows the index value representing vegetation health.
+
+Compare values in the Rift Valley in the southwest with the vegetated region in the upper part of the image and the water in the northeast.  Spend a few minutes exploring the scene.
+
+=== Using Map Swipe ===
+The Map Swipe tool is a nice way to examine two layers in a single window.  You select the layers then move a slider back and forth across the display.  You can compare how temperature and NDVI vary across the landscape.  It is also a good way to view changes over time.
+
+  * From the menu select **File | Map Swipe [g.gui.mapswipe]**
+  * Select the NDVI and SRTM layers and click OK
+  * Drag the slider back and forth to examine the layers.
+  * Click on the Swipe mode button and change to Mirror mode.  This links the two displays so when you pan and zoom in one map the other changes as well.
+  * You can use the Select map tool to change the layers in the display
+  * Close the Map Swipe window
+
+
+==== Analysis map Tools ====
+
+The **Analyze map** tool {{:wiki:analyzemap.jpg?35|}} on the Map Display window offers a selection of useful tools.  From here you can measure distances and areas, view a surface profile or map histogram, or create a two-band scatterplot.  We will briefly explore some of these tools now.
+
+=== Raster Profile ===
+The raster Profile tool will display layer values under a transect drawn in the map display.  Data are displayed from left to right in the Profile window so you should create your transects beginning on the west side of the map.
+
+  * From the Analyze map tool select the **Profile surface map** or 
+  * - In the Layer Manager right-click on the **SRTM** layer name and select Profile to open the dialog
+  * The SRTM layer should be selected but you could pick a different data layer to examine
+  * Use the **Draw Transect** tool {{:wiki:drawtransect.jpg?35|}}  to make the transect.  Draw this from the northwest corner to the southeastYou can make a multiple-segment line if you wish
+  * Click in the Draw Transect tool again to clear your transect
+  * Draw another transect from the lower left corner (part of the Rift Valley) to the upper left corner.
+  * Explore different regions of the scene
+  * Use the Add raster map tool in the Profile dialog to add another data layer to Profile
+  * Select the Kelvin layer
+  * When you draw a transect you will see data displayed for both maps.  Because the data ranges are so different, the Kelvin layer looks like a flat line.
+  * Close the Profile tool and re-open it using only the Kelvin layer to display these values
+  * Look at the other tools in this dialog.  You can export the data, calculate statistics, and more
+
+
+=== Scatterplots ===
+  * Select **Create bivariate scatterplots of raster maps** from the Analyze tool.
+  * Pick bands 3 and 4 to show how the Red and Near Infrared data relate to each other
+  * Change bands to explore the data
+
+Examine some of the othertools here such as measuring distance and areas and creating histograms.
+
+==== Make a Map ====
+
+GRASS has a select of map elements that you can use to construct output maps.  While you can place the elements on top of your image, it may be better to zoom out so that the image has white space around it for these elements.  From the Map Display window select the **Add map elements** tool {{:wiki:mapelements.jpg?35|}} to begin.
+
+  * Click on Show/hide legend to add a legend to your display
+  * Drag it to where you would like it to appear
+  * Add a scale bar and north arrow in the same way
+  * Double-click on a map element to access its display properties
+  * Add a text layer to enter a map title.  Use the Set font button to increae the font size to at least 18
+  * Place the title at the top of the map
+  * When you are finished click the **Save display to file** tool {{:wiki:displaytofile.jpg?35|}}
+  * For now accept the default Width and Height
+  * Select a location, file type, and filename and click Save
+
+
+==== Examine multiple band images ====
+The Query tool does a nice job of showing the data values of the displayed bands.  It does not show the spectral signature for all layers in the satellite image.  In GRASS full image is defined as an Image Group.  
+
+Before we can examine the spectral signature we need to create an Image Group.  Then we can use the i.spectral tool to examine the image.
+
+  * From the Layer Manager menu select **Imagery | Develop images and groups | Create/edit group [i.group]**
+  * Enter **1995VIsible** in the Select existing group box
+  * Enter **1995Jan30** in the Pattern box and click the +Add button
+  * This opens the Add selected map layers dialog
+  * Change the Mapset from user to PERMANENT, the Mapset that holds these map layers
+  * We only want the map layers for the visible spectrum so select layers b1 through b5 and b7
+  * Click Apply and OK\\
+\\
+  * From the Layer Manager menu select **Imagery | Spectral response**
+  * - Click on the Optional tab and check Use gnuplot for display
+  * - In the Input tab select the imagery group **1995Visible** from the user Mapset
+  * - Select the arrow tool to the right of the Coordinates box
+  * - Click in a pink soil/rock area and click Run
+<note important>Examine the plot **before** moving your mouse.  Currently the gnuplot will close as soon as the mouse moves over the plot.  We hope this is resolved soon.</note>
+  * Use the Coordinate arrow again to select an area of green vegetation, then an area of water, and finally an area in the dark purple urban area.
+  * Click Run to compare the spectral signatures of the four features in the landscape.
+  * If you have selected the features in the order specified, then Water will be the very low blue curve.  Vegetation will be in green with a large jump in values for band 4 (near infrared)
+
+
+==== Raster Map Calculator - r.mapcalc ====
+The Raster Map Calculator is a very powerful tool in the GRASS suite.  It can be used to apply very sophisticated mathematical operations to one or more map layers.  On example is the Normalized Difference Vegetation Index (NDVI).  This is a ratio created from the Near Infrared and Red map layers.  This tool is also used to subset map layers, create masks, and manipulate cell values sing If statements, etc.
+
+<note>Convert the map layer of degrees Kelvin to Celsius</note>
+
+  * Open the **Kelvin** map layer if it is not already open
+  * From the Layer Manger menu select **Raster | Raster map calculator [r.mapcalc]**
+  * Click on the Operands drop-down arrow to see look at the types of functions vailable
+  * In the **Insert existing raster map** box select the Kelvin layer
+  * To convert Kelvin to Celsius you subtract 273.15
+  * Click on the minus operator **-** then enter the value **273.15**
+  * Enter **1995Jan30Celsius** for the output filename and click Run
+  * Make both the Kelvin and Celsius layers active and use the Query results tool to verify the data
+  * Change the Color Table for the new layer
+  * - Right-click on the layer name and select **Set color table**
+  * - Click on the Define tab, in the //Name of color table// select Celsius then click on Run
+
+===== Exiting from GRASS =====
+  * Form the menu select **File | Exit**
+  * Save the Workspace if you wish
+  * The GRASS teminal window is still open and should be closed
+  * Click in the terminal window, type **exit** and hit the <Enter> key
+
+

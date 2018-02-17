@@ -1,0 +1,43 @@
+====== Python introduction ======
+
+Python is a multi-platform interpreted general purpose language which can be used in both interactive and scripting mode. It is a dynamic language derived from other older expressive languages, such as [[http://www.tckt.tk/|Tcl]] or [[http://www.perl.org/|Perl]], but with a cleaner syntax and a modern concept.
+
+Being mostly platform independent, a complete Python environment can be installed on any recent operating systems (e.g. GNU/Linux, Macos or Windows) and architectures. Those environments includes an editor, debugger and one or more interpreters with support packages and extensions. On any target GNU/Linux system, a base interpreter can be executed as follows:
+
+  $ python
+  Python 2.7.11+ (default, Jun  2 2016, 19:34:15) 
+  [GCC 5.3.1 20160528] on linux2
+  Type "help", "copyright", "credits" or "license" for more information.
+  >>> print('Hello, world!')
+  Hello, world!
+  >>> 
+
+and more than a version of the language could also be typically available. Major versions 2 and 3 have also major differences in standard libraries and advanced syntaxes, so users could experience various porting issues when moving from one version to another one. This must be taken in consideration, as well as the possibility that platform specificities could limit portability of code from one system to another (even if portability is generally much better than that of a conventional low level language such as C or C++).
+
+In this tutorial we will ignore all those aspects to concentrate only into the core of the language and its use for geospatial processing. We will also neglect more andvanced tools (e.g. ipython, jupyter) which can be used to improve productivity of the developer and scientist.
+
+A typical python script can be written with any editor as follows:
+
+  $ cat >myscript.py<<EOF
+  #!/usr/bin/python
+  # The usual greetings
+  print('Hello, world!')
+  EOF
+  $ chmod a+x myscript.py
+  $ ./myscript.py
+  Hello, world!
+  $
+
+Any python script can also be launched by using explicitly the python interpreter command as follows:
+
+  $ python myscript.py
+  Hello, world!
+  $
+  
+and eventually adding options and command line parameters after the script name. See ''man python'' for more information about running the standard Python language interpreter.
+
+We will use in the rest of this tutorial the standard ''idle'' program, a very simple and handy editor (written in Python) which is generally available within any conventional Python evironment (or can be easily installed from the available package system). Dive into it by loading the program and navigating among the menu system and its use of keyboard shortcuts for common operations.
+
+{{wiki:python:idle.png}}
+
+There you can edit, load and run simple scripts and it is suitable for beginners, as an easy and clean way to experiment with the language, thanks to a basic debugger, syntax highlighting and other useful features.

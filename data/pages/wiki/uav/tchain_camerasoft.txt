@@ -1,0 +1,42 @@
+====== Camera Software requirements ======
+Back to [[uav:toolchain|main menue]].\\
+\\
+Different camera have different software installed (banal, trivial but true statement). The problem is not all software in camera are able to transform a simple camera into a drone sensor for mapping purposes.
+Some of these software are ready to use for our purpose of image capture for mapping (AgroCam software). Other cameras need to have hacked software installed to allow reading signals from autopilots, data capturing at different intervals or geolocations and use predefined settings (e.g. iso, focus and focal length).\\
+
+===== Canon cameras for drone mapping =====
+Canon cameras have available the CHDK (Canon Hack Development Kit) set of firmwares able to to this right job for us. Additionally, we can use STICK, a Java application designed to make the process of installing CHDK on  Canon camera as simple as possible.
+
+==== Install CHDK using stick ====
+
+
+  * [[https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get|Install Java]] if not available
+  * Format your SD card as Fat32
+  * Take a picture with your camera, remove t from camera and insert in PC.
+  * Downlaod [[http://www.zenoshrdlu.com/stick/stick.html|Stick]] and follow Stick's instructions to install CHDK on your camera's SD memory card.\\
+{{:uav:step9.png?400|}}{{:uav:step10.png?400|}}
+
+==== Camera parameter control ====
+Camera parameters are controlled by a script loaded to the sd card. 
+  *  [[http://chdk.wikia.com/wiki/KAP_UAV_Exposure_Control_Script|Download KAP UAV]] exposure Control Script. (kap\_uav.lua), Copy kap\_uav.lua into your (SD Card:)/media/user/CANON\_DC3/CHDK/SCRIPTS. \\
+
+This scrip will tell the camera the parameter to use wile taking the picture. We can edit and modify this script according to our needs (e.g.illumination conditions). You can also upload different script for different time of day/ illumination conditions and be prepared on the field.
+
+==== Starting the camera in USB triggering mode ====
+  * Follow the steps [[http://www.tuffwing.com/support/pixhawk_camera_trigger_cable.html|here]] for loading and using CHDK on your camera in auto triggering mode (this means getting ready the camera to listen from an autopilote signal to snap a picture).
+In short, in your camera:
+  - Power on
+  - Press the Play button.
+  - Press the FUNC SET button to select the Script Menu.
+  - Press the FUNC SET button to Load Script from File.
+  - Select KAP_UAV.LUA using the Outer button and FUNC SET button.
+  - Use the Outer button to move down the list until you select USB Shot Control? Use the FUNC SET button to rotate options until OneShot is highlighted. Press the Menu button to exit the KAP_UAV.lua options.
+  - Half Press the shutter to start KAP_UAV.lua.\\
+\\
+Your camera is ready when you see **Waiting on USB. Press MENUE to exit**
+<note tip>
+The default exposure values should work on a sunny day. If necessary, use the KAP UAV Exposure Control Script documentation to modify exposure values.</note>
+
+Info collected from the Tuffwing web site.
+
+

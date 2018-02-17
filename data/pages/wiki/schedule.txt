@@ -1,0 +1,32 @@
+======  Open Source Tools for Spatial Ecological Modeling ======
+
+ESI - University of Exeter
+Cornwall Campus
+
+=====  Kick off meeting (1h)  =====
+  * When : **Fri. July 6th 14:30 - 15:30 **
+  * Where: Seminar room 3 in Peter Lanyon 
+  * What: We will shortly present the training, distribute software and help with software installations.
+
+\\
+=====  Seminar on The NASA funded  Web-enabled Landsat Data (WELD) project  =====
+Our invited speaker [[ http://globalmonitoring.sdstate.edu/people.php?view=6&a=show&id=116|  Dr. Amatulli will]] present us the [[http://globalmonitoring.sdstate.edu/projects/weld/ | Web-enabled Landsat Data (WELD)]] project.\\
+  * When : **Wed. July 11th 14:00 - 15:00** 
+  * Where: Seminar room 9 in Peter Lanyon \\
+After the seminar we will help with software installation if needed.
+\\
+\\
+=====  Introduction to the use of open Source GIS using a graphical user interface. =====
+  * When : **July 12 -13. ** (9:00-12:30 and 14:00-17:30)
+  * Where: Seminar room 2 in Peter Lanyon \\
+  * What:  [[http://www.spatial-ecology.net/ost4sem/project/uniexeter/UK2012_schedule_1.pdf| DOWNLOAD the Preliminary Programme & Schedule ]]\\
+  * Trainers: S. Casalegno; G. Amatulli
+\\
+\\
+
+=====  Introduction open Source GIS and data processing using command line scripting =====
+  * When **July 24-27  ** (9:00-12:30 and 14:00-17:30)
+  * Where:  Peter Lanyon seminar room 8 on Tuesday 24 July and Peter Lanyon seminar room 2 on Wed 25, Thu 26 and Fri 27 July \\
+  * What :  [[http://www.spatial-ecology.net/ost4sem/project/uniexeter/UK2012_schedule_2.pdf| DOWNLOAD the Preliminary Programme & Schedule ]]\\
+  * Trainers: S. Casalegno; P. Kempeneers
+  

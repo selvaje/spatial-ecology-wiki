@@ -1,0 +1,26 @@
+====== pkpolygonize ======
+NAME
+   pkpolygonize - create a vector file
+
+SYNOPSIS
+<code bash>
+   pkpolygonize -i input -o output [OPTION]
+</code>
+       
+DESCRIPTION
+   Create a vector file from a raster file
+       
+OPTIONS
+<code bash>
+   -i     --input                Input image file (WARNING: will be overwritten with output! (default: <empty string>)
+   -m     --mask                 All pixels in the mask band with a value other than zero will be considered suitable for collection as polygons. Use input file as mask to remove background polygon!  (default: <empty string>)
+   -o     --output               Output vector file (default: <empty string>)
+   -b     --band                 the band to be used from input file (default: 0)
+   -n     --name                 the field name of the output layer (default: DN)
+   -v     --verbose              verbose mode if > 0 (default: 0)
+</code>
+
+====== Examples ======
+<code bash>
+pkpolygonize -i input.tif -m input.tif -o ouput.shp # create vector file from raster image (typically a classification image), based on pixel (land cover class) values.
+</code>

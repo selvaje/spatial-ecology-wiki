@@ -1,0 +1,16 @@
+
+
+<form>
+Action mail giuseppe.amatulli@gmail.com
+Thanks "Thanks for your interest in the course. We will store your mail and we will let you know when a new course it is organized"
+Fieldset "If you want to receive news on next scheduled trainings drop your mail"
+Textbox  "Name" "=Your Name"
+email "Your E-Mail Address"
+Fieldset: "Tell me about your background and expectations or write us if you have any specific query"
+textarea: 
+submit "Submit Query"
+</form>
+
+
+
+You can also write us for any additional information @ <giuseppe.amatulli@gmail.com>, <stefano@casalegno.net> \\

@@ -1,0 +1,18 @@
+====== Manipulate images using bash scripts ======
+[[http://www.imagemagick.org/script/index.php|Imagemagick]] is an interesting usefull tools for creating, editing, composing, or converting images. ImageMagick is able to adit more than 100 image formats including DPX, EXR, GIF, JPEG, JPEG-2000, PDF, PhotoCD, PNG, Postscript, SVG, TIF and more.
+
+**Example**
+We have several images in png format and we need to convert them into pdf formats.
+Change directory and look at your images:
+
+<code bash>
+cd ~/ost4sem/exercise/basic_adv_grass
+mkdir tmp_image
+cp *.png tmp_image/ ; cd tmp_image 
+
+for  image in  *.png ; do
+convert $image `basename $image .png`.pdf
+# convert $image $(basename $image .png).pdf
+done
+</code>
+

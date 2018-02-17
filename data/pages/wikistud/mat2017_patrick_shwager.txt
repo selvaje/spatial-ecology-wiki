@@ -1,0 +1,20 @@
+====== Headline ======
+<code bash>
+# preparing raster data for later modelling...
+
+
+# make environmental date equal resolution an extent based on a shapefile
+for file in /home/user/LVM_share/styria/ras/*.asc; do filename=$(basename $file)
+gdalwarp -tr 10 10 -r bilinear -cutline ~/LVM_share/styria/vec/stmk.shp -crop_to_cutline -co COMPRESS=DEFLATE -co ZLEVEL=9 -overwrite $file /home/user/LVM_share/styria/output/crop_$filename.tif 
+done
+
+# write a list of files in the output directory
+ls ~/LVM_share/styria/output > ~/LVM_share/styria/filenames.txt
+
+# creates a vrt to stack rasters
+gdalbuildvrt -separate -input_file_list /home/user/LVM_share/styria/output/filenames.txt /home/user/LVM_share/styria/output/inraster.vrt
+
+# extract raster values to a point shapefile
+pkextract -i ~/LVM_share/styria/output/inraster.vrt -s ~/LVM_share/styria/vec/campull.shp -f "ESRI Shapefile" -o ~/LVM_share/styria/vec/extracted.shp
+
+</code>

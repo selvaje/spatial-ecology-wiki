@@ -1,0 +1,7 @@
+==== Selection of CASI bands ====
+
+<code bash>
+    pkfs_svm -t training_casi.shp --ccost 7657.41 --gamma 0.186167 -cv 2 -n 16 -v 1
+</code>
+
+{{ :wiki:feature_selection.png?nolink |}}

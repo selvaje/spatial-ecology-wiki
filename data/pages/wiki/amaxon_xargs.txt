@@ -1,0 +1,39 @@
+====== Transform a simple "for loop script" in multicore "for loop script"  ======
+\\
+Let's consider that you want run a gdalwarp command to several tif files (*.tif), to perform a re-projection.\\
+We have seen in the {{wiki:cluster_xargs1 | Transform a simple "for loop" in multicore "for loop" }} how to create a simple //for loop// and how to transform a simple //for loop// in a multicore loop using xargs .\\
+Now let's suppose that we have a script called myscript4cluster.sh with inside gdalwarp command and that we want run this script by //xargs//.\\
+
+   cd /data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+   
+
+Therefore, we create a script myscript4cluster.sh (saved to /home/user/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/) within the following code: 
+
+<code bash| myscript4cluster.sh >
+file=$1
+gdalwarp -r cubic -tr 0.008 0.008 -t_srs EPSG:4326 $file  proj_$file -overwrite
+</code> 
+
+You can run myscript4cluster.sh with the following code
+
+   ls 20?0_TSSP_IP-ENS-A2-SP20_43023435.tif  | xargs -n 1 -P 2  bash /home/user/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/myscript4cluster.sh
+
+The //-n// option identifies the argument (in this case $1 renamed $file) used inside the  //myscript4cluster.sh// script.\\
+The //-P// option identifies the processors (in this case 2) used to run //my_script_4cluster.sh// script.\\
+\\
+If you run //myscript4cluster.sh// by the //xargs// command all the standard error are listed in chaotic order and is not easy to track back errors, especially when you process several files. \\
+So, the good way is to create a log file that store all the error in a file, one for each processes.\\
+In order to do this you have to modify the myscript4cluster.sh in the following order. 
+
+
+<code bash| myscript4cluster.sh >
+export file=$1
+time (
+echo processing file $file
+gdalwarp -r cubic -tr 0.008 0.008 -t_srs EPSG:4326 $file  proj_$file -overwrite
+echo end of the sorting action of  file $file
+) 2>&1 | tee  /tmp/log_of_$file".txt"
+</code>
+\\
+You may see the results of the log file:
+   more /tmp/tmp/log_of_2080_TSSP_IP-ENS-A2-SP20_43023435.tif.txt

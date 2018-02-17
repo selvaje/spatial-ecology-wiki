@@ -1,0 +1,41 @@
+====== Registration Fees ======
+
+===== THE REGISTRATION PROCESS IS CLOSED  =====
+The training was sold out few days after the open call. If you like, send us an email and we can add you to our waiting list. You will be contacted if a place will become available or if we organize a new training. 
+
+
+Registration is on a first come, first served basis and it will be closed when it reaches 25 participants. Therefore, we encourage participant to register ASAP. A waiting list will be establish in case of over-passing the 25 participants.\\
+\\
+The course Registration Fee Includes: 42 hours class training, student supervision, course auditing, course material, lectures, sample data and a USB flash drive inclusive of Linux Virtual Machine with all the software installed,  six lunch bag (with [[https://www.google.com/search?q=focaccia+mozzarella+calzone&client=ubuntu&hs=H8T&channel=fs&biw=1472&bih=661&source=lnms&tbm=isch&sa=X&ei=uuzOVMLuK4W_ggS8oYTIBQ&ved=0CAYQ_AUoAQ#channel=fs&tbm=isch&q=focaccia+mozzarella+ | local product]]), and a social dinner (Friday night). [[http://en.wikipedia.org/wiki/European_Credit_Transfer_and_Accumulation_System | ECTA credits ]] and/ or attendance certificate can be requested.\\
+\\
+We establish different registration fees in accordance to the //per capita// [[ http://en.wikipedia.org/wiki/Gross_domestic_product |  gross domestic product ]] of the European Union member states and the nearby countries. This allows to have a more fair registration fee for poorer countries, facilitating their residents to attend the course without too much difficulties.\\
+
+In order to register, all participants have to:
+
+1) //**Pay the registration fee**// in accordance with the location of their institution (see the table below).\\
+**__You will be considered registered__ ONCE the registration fee has been paid through the bank transfer to the following bank account and the questionnaire has been filled in (see below)**\\
+\\
+
+\\
+**No-Euro Zone Paypal is also possible. Please mail to me**.\\
+\\
+By the way, before to make the bank transfer keep in touch with giuseppe.amatulli@gmail.com to be sure that the course is not already sold out.\\
+\\
+2) //** fill-in the  [[wiki:materaregist_quest| following questionnaire]] **// and send an e-mail to giuseppe.amatulli@gmail.com with your name, affiliation, questionnaire-name, and the bank transfer confirmation.\\
+\\
+Overview of Conference fee.\\
+| Fees | Institution/State  (based on [[ http://data.worldbank.org/indicator/NY.GDP.PCAP.CD?order=wbapi_data_value_2013+wbapi_data_value+wbapi_data_value-last&sort=desc | per capita gross domestic product ranking list]]) |
+|350 Euro | EU institution & International Organizations - Luxembourg - Norway - Switzerland - Denmark - Ireland - Austria - The Netherlands - Belgium - France - Sweden - Finland - Germany - Iceland - United Kingdom - Malta - other countries |
+| 300 Euro  | Italy* -  Spain - Greece - Cyprus - Czech Republic -  Slovakia - Estonia - Slovenia - Lithuania - Poland - Hungary - Portugal - Latvia |
+|250 Euro | University of Basilicata* - Croatia -  Bulgaria - Turkey - Romania - Belarus - Serbia - Albania - Bosnia - Republic of Macedonia - Ukraine - Moldova - Kosovo -  Montenegro - other developing countries |
+\\
+* Students from Italian institutions (not considering UNIBAS students) benefit of 4 places reserved.\\
+* Students from the University of Basilicata benefit of lowest fees rate and 6 places reserved as compensation for hosting the event.\\
+
+== Refund policy ==
+Written notification of registration cancellation must be e-mailed to giuseppe.amatulli@gmail.com. If registration cancellation is received by April 1, 2015, registrant will receive a refund of registration fee less a $100 processing fee. We will retain 250€ for cancellation notice submitted after April 1, 2015 unless candidates from waiting list accept to replace withdrawal candidates. \\
+\\
+[[regListMatera | Registration List & Registration Waiting List]]\\
+
+\\
+

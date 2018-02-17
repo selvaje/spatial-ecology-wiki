@@ -1,0 +1,23 @@
+=== Create training.txt ===
+
+== Convert the ENVI proprietary ASCII to simple ASCII text file ===
+<code bash>
+    cat labels.txt | while read class label;do sed -n "/$label/,/^$/p" 2013_IEEE_GRSS_DF_Contest_Samples_TR.txt | sed -e '/;/d' -e '/^$/d'|awk -v C=$class '{print $1,$4,$5,C}'; done > training.txt
+</code>
+
+=== Create ogr vector file ===
+<code bash>
+    pkascii2ogr -i training.txt -o 2013_IEEE_GRSS_DF_Contest_Samples_TR.shp -x 2 -y 1 -p epsg:4326 -n id -ot Integer -n label -ot Integer 
+</code>
+
+=== Re-project vector file ===
+<code bash>
+    ogr2ogr -s_srs epsg:4326 -t_srs epsg:26915 2013_IEEE_GRSS_DF_Contest_Samples_TR_26915.shp 2013_IEEE_GRSS_DF_Contest_Samples_TR.shp
+</code>
+
+=== Create training vector file with CASI bands as attributes ===
+<code bash>
+    pkextract -i 2013_IEEE_GRSS_DF_Contest_CASI.tif -s 2013_IEEE_GRSS_DF_Contest_Samples_TR_26915.shp -o training_casi.shp
+</code>
+
+{{ :wiki:contest:training.png?nolink |}}

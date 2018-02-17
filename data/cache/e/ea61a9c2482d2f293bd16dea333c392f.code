@@ -1,0 +1,3 @@
+pkmosaic -i /home/user/My_project/Bioclim_data/bio12_06.tif -i /home/user/My_project/Bioclim_data/bio12_07.tif -i /home/user/My_project/Bioclim_data/bio12_16.tif -o /home/user/My_project/Raster/bio12_merged.tif
+gdalwarp -q -cutline /home/user/My_project/Vector/Norway.shp -crop_to_cutline -of GTiff /home/user/My_project/Raster/bio12_merged.tif /home/user/My_project/Raster/bio12_masked_Norway.tif
+gdalwarp -q -cutline /home/user/My_project/Vector/Sweden.shp -crop_to_cutline -of GTiff /home/user/My_project/Raster/bio12_merged.tif /home/user/My_project/Raster/bio12_masked_Sweden.tif

@@ -1,0 +1,247 @@
+
+<h3 class="sectionedit1" id="spread_pathways_of_dreissena_polymorpha_in_the_lithuanian_waters">Spread pathways of Dreissena polymorpha in the Lithuanian waters</h3>
+<div class="level3">
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT1 SECTION "Spread pathways of Dreissena polymorpha in the Lithuanian waters" [1-81] -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+<em>Dreissena polymorpha</em> has extended its original distribution range from the Pontocaspian region to Western Europe since the beginning of the 19th. It is now introduced to north-west Russia, central and western Europe, southern Scandinavia, Britain, Ireland and North-America. Zebra mussel was introduced in 37 Lithuanian lakes during 1959-1985.
+</p>
+
+<p>
+Project proposal can be downloaded at:<a href="/dokuwiki/lib/exe/fetch.php?media=wikidk:proposal.pdf" class="media mediafile mf_pdf" title="wikidk:proposal.pdf (1.5 MB)">proposal.pdf</a>
+</p>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10zebramussel&amp;media=wikidk:trys_db_small.jpg" class="media" title="wikidk:trys_db_small.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=3d49c2&amp;media=wikidk:trys_db_small.jpg" class="media" alt="" width="400" /></a>
+</p>
+
+</div>
+<div class="level3">
+
+</div>
+<!-- EDIT2 SECTION "INTRODUCTION" [82-570] -->
+<h3 class="sectionedit3" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+Is to reconstruct the potential waterways of  <em>Dreissena polymorpha</em> expansion in the Lithuanian water bodies and to determine the risk of zebra mussel in rivers and lakes by combining available environmental data and analyzing of these data using GRASS and QGIS.
+</p>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT3 SECTION "Project objectives" [571-870] -->
+<h2 class="sectionedit4" id="metadata">METADATA</h2>
+<div class="level2">
+
+</div>
+<div class="level3">
+
+</div>
+<!-- EDIT4 SECTION "METADATA" [871-904] -->
+<h3 class="sectionedit5" id="vector_data">Vector Data</h3>
+<div class="level3">
+
+<p>
+Vector data include:
+</p>
+<pre class="code">* Introduced lakes by zebra mussel. The information is in the form of ESRI shape-files;
+* The boundary of Lithuania in a shape-file; 
+* The rivers in a shape-file; 
+* The lakes in a shape-file;
+* The isohypse in a shape-file;  
+* The chemical characteristics of the water bodies (Temperature, Ph, O2, Ca, Stream flow) </pre>
+
+<p>
+Accessibility: Contact the author to obtain the shape-files via email at: rasa.bukontaite@gmail.com
+</p>
+
+</div>
+<!-- EDIT5 SECTION "Vector Data" [905-1393] -->
+<h3 class="sectionedit6" id="text_files_and_tables">Text files and tables</h3>
+<div class="level3">
+
+<p>
+ * The chemical characteristics of the water bodies (Temperature, Ph, O2, Ca, Stream flow) 
+</p>
+
+</div>
+<div class="level3">
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT6 SECTION "Text files and tables" [1394-1534] -->
+<h2 class="sectionedit7" id="method">METHOD</h2>
+<div class="level2">
+
+<p>
+* Set up working directories
+</p>
+<ul>
+<li class="level1"><div class="li">Copy all data to working directory
+</div>
+</li>
+<li class="level1"><div class="li">Convert shape-files to vectors using “v.in.ogr”
+</div>
+</li>
+<li class="level1"><div class="li">Reproject files if it&#039;s needed using “ogr2ogr”
+</div>
+</li>
+<li class="level1"><div class="li">Set up a study region n=6194190 s=6171340 w=604070 e=624090 with resolution=10
+</div>
+</li>
+<li class="level1"><div class="li">Visualize vectors with set up region using simple command “d.mon”
+</div>
+</li>
+<li class="level1"><div class="li">Convert vectors to raster format using “v.to.rast”
+</div>
+</li>
+<li class="level1"><div class="li">Visualize data in Qgis. 
+<br/>
+</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT7 SECTION "METHOD" [1535-1959] -->
+<h2 class="sectionedit8" id="data_import_and_processing">DATA IMPORT and PROCESSING</h2>
+<div class="level2">
+
+<p>
+<br/>
+
+</p>
+<pre class="code r">&nbsp;
+# current directory /home/user/summerschool
+# move all files to ~/home/user/summerschool/project/input
+&nbsp;
+# set the working directories
+&nbsp;
+export INDIR=~/summerschool/project/input
+export OUTDIR=~/summerschool/project/output
+&nbsp;
+cd /home/user/summerschool 
+cp rasta.* $INDIR
+cp mot_ezer_darbinis.* $INDIR
+cp idreisinta.* $INDIR
+cp dideles_upes.* $INDIR
+cp ezerai_monitoringas.* $INDIR
+cp ezerai_rasta.* $INDIR
+cp upes.* $INDIR
+cp vandens_telkiniai.* $INDIR
+&nbsp;
+# enter manualy in grass after have been created manualy the location river
+&nbsp;
+grass -text /home/user/summerschool/project/grassdb/river/PERMANENT
+&nbsp;
+#copy the folder which we created
+# ogrinfo  $INDIR/*.shp | head -20
+&nbsp;
+ogrinfo $INDIR/rasta.shp   #polygon
+ogrinfo $INDIR/mot_ezer_darbinis.shp  #polygon
+ogrinfo $INDIR/idreisinta.shp # polygon
+ogrinfo $INDIR/dideles_upes.shp   #polygon
+ogrinfo $INDIR/ezerai_monitoringas.shp   #polygon
+ogrinfo $INDIR/ezerai_rasta.shp      #polygon
+ogrinfo $INDIR/upes.shp             #line
+ogrinfo $INDIR/vandens_telkiniai.shp   #polygon
+&nbsp;
+# man v.in.ogr
+&nbsp;
+v.in.ogr dsn=$INDIR/rasta.shp output=rasta_vector
+v.in.ogr dsn=$INDIR/mot_ezer_darbinis.shp output=mot_darb_vector
+v.in.ogr dsn=$INDIR/dideles_upes.shp output=dideles_upes_vector --overwrite
+v.in.ogr dsn=$INDIR/ezerai_rasta.shp output=ezerai_rasta_vector --overwrite
+v.in.ogr dsn=$INDIR/upes.shp output=upes_vector --overwrite
+v.in.ogr dsn=$INDIR/vandens_telkiniai.shp output=vandens_telkiniai_vector --overwrite
+v.in.ogr dsn=$INDIR/ezerai_monitoringas.shp output=ezerai_monitoringas_vector --overwrite
+&nbsp;
+g.proj -p $INDIR/idreisinta.shp
+g.proj -p $INDIR/rasta.shp
+&nbsp;
+#change units from degree to meters
+ogr2ogr -s_srs EPSG:4126 -t_srs EPSG:3346 $INDIR/idreisinta_prj.shp  $INDIR/idreisinta.shp
+&nbsp;
+v.in.ogr dsn=$INDIR/idreisinta_prj.shp output=idreisinta_vector --overwrite
+&nbsp;
+# g.gisenv
+# g.list vect
+&nbsp;
+# Setting the study area and resolution
+g.region n=6194190 s=6171340 w=604070 e=624090 res=10
+&nbsp;
+d.mon start=x0
+d.vect idreisinta_vector
+&nbsp;
+d.mon start=x0
+d.vect ezerai_rasta_vector
+&nbsp;
+d.mon start=x0
+d.vect dideles_upes_vector
+&nbsp;
+d.mon start=x0
+d.vect upes_vector
+&nbsp;
+d.mon start=x0
+d.vect vandens_telkiniai_vector
+&nbsp;
+d.mon start=x0
+d.vect ezerai_monitoringas_vector
+&nbsp;
+v.to.rast input=idreisinta_vector output=Idreisinta_raster_map10 col=SHAPE_Area --overwrite
+v.to.rast input=rasta_vector output=rasta_raster_map10 col=SHAPE_Area  --overwrite
+v.to.rast input=dideles_upes_vector output=DUraster_map10 col=SHAPE_area  --overwrite
+v.to.rast input=upes_vector output=Uraster_map10 col=shape_leng  --overwrite
+v.to.rast input=vandens_telkiniai_vector output=VTraster_map10 col=SHAPE_area  --overwrite 
+v.to.rast input=ezerai_monitoringas_vector output=EMraster_map10 col=SHAPE_area --overwrite
+&nbsp;
+####################################</pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<div class="level2">
+
+</div>
+<div class="level3">
+
+</div>
+<div class="level3">
+
+</div>
+<div class="level3">
+
+</div>
+<!-- EDIT8 SECTION "DATA IMPORT and PROCESSING" [1960-4821] -->
+<h2 class="sectionedit9" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+
+<p>
+Insert a map and related table or graphics if available<br/>
+
+Discuss the biological or geographical significance of results
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT9 SECTION "RESULTS and DISCUSSION" [4822-] -->

@@ -1,0 +1,26 @@
+| ID | Name | Surname | Country | mail | Affiliation |
+| 1 | Sarah | Schob | Germany| sarahschob@gmx.net| Lund University/ ITC Enschede|
+| 2 | Marianne | Stoessel |Sweden|marianne.stoessel@natgeo.su.se|Stockholm University|
+| 3 | Andrew | Mercer |Sweden|andrew.mercer@hig.se|University of Gävle|
+| 4 | Anna | Hampf |Germany  |anna.hampf@zalf.de |Leibniz Centre for Agricultural Landscape Research |
+| 5 | Andreas | Kiik | Estonia| andreas.kiik@datel.ee| Datel AS|
+| 6 | Dennis | Melzer |Germany | dennis.melzer@zalf.de| Leibniz Centre for Agricultural Landscape Research|
+| 7 | Konstantin | Rosina | Slovakia/Italy | konstantin.rosina@ec.europa.eu | European Commission Joint Research Centre |
+| 8 | Tina | Živec | Slovenia | tina.zivec@gmail.com | |
+| 9 | Marj | Tonini | Switzerland| marj.tonini@unil.ch|University of Lausanne|
+| 10 | Raphaël | Ceré | Switzerland | raphael.cere@unil.ch | IGD, University of Lausanne |
+| 11 | Sara | Vallecillo Rodriguez| Italy| sara.vallecillo@ec.europa.eu | European Commission Joint Research Centre |
+| 12 | Filipe | Batista e Silva | | filipe.batista@ec.europa.eu | European Commission Joint Research Centre |
+| 13 | Thomas | Kandler | Germany | kandler@gc-i.de |  |
+| 14 | Jakob | Hagenauer | Austria| j.hagenauer@kabsi.at|  |
+| 15 | Patrick | Schwager |Austria |patrick.schwager@uni-graz.at |University Graz, Inst. of Plant Science |
+| 16 | Hildrun | Vetter | Germany/Luxembourg | hildrun.vetter@orange.lu | University of Salzburg, UNIGIS |
+| 17 | Elago | Nantana | | | |
+| 18 | Michal | Sevcik |Slovakia |michal.sevcik@ukf.sk |Constantine the Philosopher University in Nitra |
+| 19 | Alonso | Pizarro |Italy/Chile |alonso.pizarro@unibas.it |University of Basilicata |
+| 20 | Erin | Hodgesse | | | |
+| 21 | Antonio | Perrone | Italy|tonyperrone@tiscali.it |University of Basilicata  |
+| 22 |Adhara | Pardo |Spain |adharapv@gmail.com |University of Extremadura |
+| 23 |Marco | Girardello |Portugal |marco.girardello@gmail.com | University of the Azores|
+| 24 |Piero | Campalani | Italy | piero.campa@gmail.com | Ebotlution Systems SL|
+| 25 |Juan | Herrera | | | |

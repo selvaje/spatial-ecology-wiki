@@ -1,0 +1,191 @@
+a:5:{s:5:"title";s:20:" Please answer here ";s:6:"status";i:1;s:6:"number";i:9;s:8:"comments";a:9:{s:32:"fafc33dfd88f806d53257912be661418";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test85.178.72.21";s:4:"name";s:16:"Philipp Rauneker";s:4:"mail";s:24:"philipp.rauneker@zalf.de";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1434957523;}s:3:"raw";s:1129:"From the announcement of the course I would have expected it to cover at least some Python excercises. I liked the splitting of the course into beginner and advanced R sessions and would have liked to see that on Python as well.
+
+Furthermore it would have been nice to work some hours on people's data, to see the application of the OS software on actual problems.
+
+
+
+Apart from that I was enjoying the course every day. Giuseppe, Stefano, Pieter and Daniel, you've done a great job. I will definitely recommend this course to anyone who's working on spatial data. It has helped me a lot and was the best summer school I've attended so far. If you ever plan a course on the advanced application of those software, or a course solely on Grass, QGis or Python, I will be in again.
+
+
+
+Thanks again for a great week!
+
+
+
+Philipp
+
+
+
+P.S. Some little comment on the catering. It would be nice maybe not to use plastic dishes in the future. Maybe at least use paper plates & cups, even better ceramic plates (I know it's more laborious though.)
+
+P.P.S The location (Matera) was superb. I can't imagine a better place for a summer school.";s:5:"xhtml";s:1258:"
+<p>
+From the announcement of the course I would have expected it to cover at least some Python excercises. I liked the splitting of the course into beginner and advanced R sessions and would have liked to see that on Python as well.
+</p>
+
+<p>
+Furthermore it would have been nice to work some hours on people&#039;s data, to see the application of the <abbr title="Operating System">OS</abbr> software on actual problems.
+</p>
+
+<p>
+Apart from that I was enjoying the course every day. Giuseppe, Stefano, Pieter and Daniel, you&#039;ve done a great job. I will definitely recommend this course to anyone who&#039;s working on spatial data. It has helped me a lot and was the best summer school I&#039;ve attended so far. If you ever plan a course on the advanced application of those software, or a course solely on Grass, QGis or Python, I will be in again.
+</p>
+
+<p>
+Thanks again for a great week!
+</p>
+
+<p>
+Philipp
+</p>
+
+<p>
+P.S. Some little comment on the catering. It would be nice maybe not to use plastic dishes in the future. Maybe at least use paper plates &amp; cups, even better ceramic plates (I know it&#039;s more laborious though.)
+</p>
+
+<p>
+P.P.S The location (Matera) was superb. I can&#039;t imagine a better place for a summer school.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"fafc33dfd88f806d53257912be661418";}s:32:"f239a75470b2a6d5be0a9c177bc94476";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test94.161.13.241";s:4:"name";s:5:"Xenia";s:4:"mail";s:18:"xeniakex@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1435165762;}s:3:"raw";s:1324:"I was expecting that the course would have more to do with R, whose knowledge I lack completely, but I was not disappointed that we didn't delve deep into it, as it was only a personal interest and there's a very slight chance I may ever use it at work.
+
+All my other expectations were exceeded, especially regarding bash, gdal, pktools and qgis. I have actually discovered possibilities of using them in my work that I hadn't thought of before the course. 
+
+I would have liked to spend some more time on GRASS, but I understand that we were short of time. And I fully support Philipp's suggestion of Python, I would gladly join a course solely on that!
+
+From work interest (cartography), I'd have also liked some more conversation with the OSM presenter to discuss ontologies, semantics, tags, symbology, quality control, etc, but I was the only cartographer in the class, so the rest might have found that boring :) or out of scope...
+
+Another suggestion that might interest the hosting institute would be a quick acquaintance with the relevant work undertaken by the departments, maybe through an welcoming e-mail before the course started. In the end I discovered completely by luck about the work of a professor there that happened to coinside with my interests.
+
+Matera rocks! ;)
+
+Thank you for a great week!!
+
+Xenia
+
+";s:5:"xhtml";s:1421:"
+<p>
+I was expecting that the course would have more to do with R, whose knowledge I lack completely, but I was not disappointed that we didn&#039;t delve deep into it, as it was only a personal interest and there&#039;s a very slight chance I may ever use it at work.
+</p>
+
+<p>
+All my other expectations were exceeded, especially regarding bash, gdal, pktools and qgis. I have actually discovered possibilities of using them in my work that I hadn&#039;t thought of before the course. 
+</p>
+
+<p>
+I would have liked to spend some more time on GRASS, but I understand that we were short of time. And I fully support Philipp&#039;s suggestion of Python, I would gladly join a course solely on that!
+</p>
+
+<p>
+From work interest (cartography), I&#039;d have also liked some more conversation with the OSM presenter to discuss ontologies, semantics, tags, symbology, quality control, etc, but I was the only cartographer in the class, so the rest might have found that boring :) or out of scope…
+</p>
+
+<p>
+Another suggestion that might interest the hosting institute would be a quick acquaintance with the relevant work undertaken by the departments, maybe through an welcoming e-mail before the course started. In the end I discovered completely by luck about the work of a professor there that happened to coinside with my interests.
+</p>
+
+<p>
+Matera rocks! ;)
+</p>
+
+<p>
+Thank you for a great week!!
+</p>
+
+<p>
+Xenia
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"f239a75470b2a6d5be0a9c177bc94476";}s:32:"0bf35cc4c076338f0d9f24b258b8d598";a:8:{s:4:"user";a:5:{s:2:"id";s:11:"ost4sem_giu";s:4:"name";s:8:"Giuseppe";s:4:"mail";s:27:"giuseppe.amatulli@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:2:{s:7:"created";i:1435165933;s:8:"modified";i:1435165989;}s:3:"raw";s:300:"Hi Philipp, thanks for your suggestions, we will take in to account in a new course. 
+Concerning P.S., yes also in my house the first rule is no plastic-plates! Anyway, to organize the garbage collection recycling was too complicate at that stage. I will think how to deal for the next year.
+Giuseppe";s:5:"xhtml";s:311:"
+<p>
+Hi Philipp, thanks for your suggestions, we will take in to account in a new course. 
+Concerning P.S., yes also in my house the first rule is no plastic-plates! Anyway, to organize the garbage collection recycling was too complicate at that stage. I will think how to deal for the next year.
+Giuseppe
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"0bf35cc4c076338f0d9f24b258b8d598";}s:32:"5cf52e2714d7cb8db602f24bdf1ddec5";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test139.191.177.25";s:4:"name";s:7:"Marco T";s:4:"mail";s:25:"marco_trombetti@libero.it";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1435217336;}s:3:"raw";s:415:"Hi instructors, thanks for organizing and delivering a great course ! I learnt a lot, hoping to make the most out of it.
+I agree with Philipp suggestion, about to have more alternative/optional  sessions. For example, after 3 days of introduction for everybody, 2 days of optional classes (specific topics, basic/advanced levels). Maybe not that easy to implement though...
+Thanks again and tabtab to everyone
+Marco";s:5:"xhtml";s:426:"
+<p>
+Hi instructors, thanks for organizing and delivering a great course ! I learnt a lot, hoping to make the most out of it.
+I agree with Philipp suggestion, about to have more alternative/optional  sessions. For example, after 3 days of introduction for everybody, 2 days of optional classes (specific topics, basic/advanced levels). Maybe not that easy to implement though…
+Thanks again and tabtab to everyone
+Marco
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"5cf52e2714d7cb8db602f24bdf1ddec5";}s:32:"4c168797efbeed01a8c1c4fe93730a80";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test141.89.186.241";s:4:"name";s:6:"Cedric";s:4:"mail";s:23:"pscherer@uni-potsdam.de";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1435222415;}s:3:"raw";s:384:"My feelings are very in line with Philipps feedback (especially for Python, participants data, plastic garbage and Matera). As a beginner in most of the course parts, I missed a little bit of a more general introduction in some lessons. Nevertheless, overall it was really great (but also very tough) to have an overlook and a hands-on using all these techniques. Thank you very much!";s:5:"xhtml";s:395:"
+<p>
+My feelings are very in line with Philipps feedback (especially for Python, participants data, plastic garbage and Matera). As a beginner in most of the course parts, I missed a little bit of a more general introduction in some lessons. Nevertheless, overall it was really great (but also very tough) to have an overlook and a hands-on using all these techniques. Thank you very much!
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"4c168797efbeed01a8c1c4fe93730a80";}s:32:"ad2c4dfff95bd0337be5b7e29d9a26af";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.17.211";s:4:"name";s:12:"Angela Fiore";s:4:"mail";s:24:"dr.angelafiore@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1435225076;}s:3:"raw";s:718:"Hi trainers!
+Thank you very much for all efforts you did to organize and manage this summerschool. I wanted to be introduced to open softwares from a long time and this opportunity gave me the right knowledge and tools to walk with my own foots now...so my expectations have been covered. I would have appreciated some more space on R lectures and some exercise time with our own data...in my opinion the last two days you tried to provide us too much additional info, but our brains were maybe enough full and it would have been better to do some exercise with our own data and to fix concepts. 
+A part from this all was perfect and the group of people joyful!
+Thanks again to share your knowledge around the world :)";s:5:"xhtml";s:729:"
+<p>
+Hi trainers!
+Thank you very much for all efforts you did to organize and manage this summerschool. I wanted to be introduced to open softwares from a long time and this opportunity gave me the right knowledge and tools to walk with my own foots now…so my expectations have been covered. I would have appreciated some more space on R lectures and some exercise time with our own data…in my opinion the last two days you tried to provide us too much additional info, but our brains were maybe enough full and it would have been better to do some exercise with our own data and to fix concepts. 
+A part from this all was perfect and the group of people joyful!
+Thanks again to share your knowledge around the world :)
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"ad2c4dfff95bd0337be5b7e29d9a26af";}s:32:"0ae44fc195ac4030b2939f68318f2c85";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test90.147.140.229";s:4:"name";s:12:"Martin Weiss";s:4:"mail";s:29:"martin.weiss@jrc.ec.europa.eu";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1435308177;}s:3:"raw";s:522:"Hello Stefano, Giuseppe, Daniel, and Pieter,
+
+thanks for hosting this interesting and very educative course. Arriving with virtually zero experience in Linux and open-source programming, the course provided a jump start on statistical and spatial analyses with a range of tools. I would be highly interested in participating in any future courses, specifically on statistical analyses with R. Special thanks to Giuseppe for organizing lunch and the course dinners - we enjoyed a great time in Matera.
+All the best,
+
+Martin";s:5:"xhtml";s:551:"
+<p>
+Hello Stefano, Giuseppe, Daniel, and Pieter,
+</p>
+
+<p>
+thanks for hosting this interesting and very educative course. Arriving with virtually zero experience in Linux and open-source programming, the course provided a jump start on statistical and spatial analyses with a range of tools. I would be highly interested in participating in any future courses, specifically on statistical analyses with R. Special thanks to Giuseppe for organizing lunch and the course dinners - we enjoyed a great time in Matera.
+All the best,
+</p>
+
+<p>
+Martin
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"0ae44fc195ac4030b2939f68318f2c85";}s:32:"ae43fa723e9af5b8f61c665313e884e3";a:8:{s:4:"user";a:5:{s:2:"id";s:17:"test186.15.180.17";s:4:"name";s:12:"Achim Haeger";s:4:"mail";s:24:"ahaeger@fieldstudies.org";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1435329397;}s:3:"raw";s:665:"The course fully met my expectations, it was very intense, which was a good thing. I feel that I'm able to work towards my specific goals independently (well, and I know where to get help if I need it). The interaction and exchange with other course participants from such varied fields of work/research and with the instructors was quite exciting and inspiring.
+I would have liked to get the chance to work on own data for half a day or so, as originally announced. However, I understand the limitations that come with organizing a course with such a broad array of topics and participants' interests.
+Overall this was a fantastic course. Thank you all so much.   ";s:5:"xhtml";s:689:"
+<p>
+The course fully met my expectations, it was very intense, which was a good thing. I feel that I&#039;m able to work towards my specific goals independently (well, and I know where to get help if I need it). The interaction and exchange with other course participants from such varied fields of work/research and with the instructors was quite exciting and inspiring.
+I would have liked to get the chance to work on own data for half a day or so, as originally announced. However, I understand the limitations that come with organizing a course with such a broad array of topics and participants&#039; interests.
+Overall this was a fantastic course. Thank you all so much.<br/>
+
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"ae43fa723e9af5b8f61c665313e884e3";}s:32:"09133167fcb0ec2a1bfd33d3ce9e33cc";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test31.208.42.23";s:4:"name";s:11:"zhendong Wu";s:4:"mail";s:24:"zhendong.wu@nateko.lu.se";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1438460212;}s:3:"raw";s:910:"Hi Stefano, Giuseppe, Daniel, and Pieter,
+
+Thanks very much for organizing and delivering such a great course! I found these open-source software and command line are very handy.  I will definitely recommend this course to my colleague. Besides, I just feel the example shows in the course is kind of simple, I suggest that if it is possible to pick one actual problem for each introduced open-source method, which will give us a good sense or strategy to solve reality problem with these open-source tool.
+
+And I also fully agree Philipp's suggestion of Python, which is widely considered as popular and useful open-source tool. A course on the time series analysis will be also very interesting, if you plan a course regarding Python or time series analysis, I really want to join again.
+
+Thanks very much again for a great week! This is the best summer school I have took so far.
+
+Best wishes,
+
+Zhendong Wu
+";s:5:"xhtml";s:970:"
+<p>
+Hi Stefano, Giuseppe, Daniel, and Pieter,
+</p>
+
+<p>
+Thanks very much for organizing and delivering such a great course! I found these open-source software and command line are very handy.  I will definitely recommend this course to my colleague. Besides, I just feel the example shows in the course is kind of simple, I suggest that if it is possible to pick one actual problem for each introduced open-source method, which will give us a good sense or strategy to solve reality problem with these open-source tool.
+</p>
+
+<p>
+And I also fully agree Philipp&#039;s suggestion of Python, which is widely considered as popular and useful open-source tool. A course on the time series analysis will be also very interesting, if you plan a course regarding Python or time series analysis, I really want to join again.
+</p>
+
+<p>
+Thanks very much again for a great week! This is the best summer school I have took so far.
+</p>
+
+<p>
+Best wishes,
+</p>
+
+<p>
+Zhendong Wu
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"09133167fcb0ec2a1bfd33d3ce9e33cc";}}s:11:"subscribers";a:2:{s:24:"philipp.rauneker@zalf.de";a:3:{s:4:"hash";s:32:"0eddd0545873ab50feded8cff9ca71e4";s:6:"active";b:1;s:11:"confirmsent";b:1;}s:25:"marco_trombetti@libero.it";a:3:{s:4:"hash";s:32:"7dafd763a904f711215eeec333e4c99a";s:6:"active";b:1;s:11:"confirmsent";b:1;}}}

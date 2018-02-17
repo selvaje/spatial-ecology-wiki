@@ -1,0 +1,41 @@
+SoilCarbon=raster(readGDAL(&quot;carS_m9.asc&quot;))
+AeriCarbon=raster(readGDAL(&quot;carA_m9.asc&quot;))
+hist(SoilCarbon)
+hist(AeriCarbon)
+breaks=seq(0,100,20)
+SoilCarbonClass &lt;- cut(SoilCarbon, breaks=breaks)
+AeriCarbonClass &lt;- cut(AeriCarbon, breaks=breaks)
+Confusion.Soil_Aerial &lt;- table(SoilCarbonClass@data@values, AeriCarbonClass@data@values)
+confusionMatrix(Confusion.Soil_Aerial)
+&nbsp;
+&nbsp;
+# Confusion Matrix and Shtatistics
+# 
+#    
+#        1    2    3    4    5
+#   1 1822  235   62   11    4
+#   2  522   87   48   18    3
+#   3  408   48   21    7    4
+#   4   56    5    0    0    0
+#   5  175   12    4    0    0
+# 
+# Overall Statistics
+#                                           
+#                Accuracy : 0.5434          
+#                  95% CI : (0.5268, 0.5598)
+#     No Information Rate : 0.8398          
+#     P-Value [Acc &gt; NIR] : 1               
+#                                           
+#                   Kappa : 0.0265          
+#  Mcnemar's Test P-Value : NA              
+# 
+# Statistics by Class:
+# 
+#                      Class: 1 Class: 2 Class: 3 Class: 4 Class: 5
+# Sensitivity            0.6108  0.22481 0.155556  0.00000 0.000000
+# Specificity            0.4517  0.81327 0.863330  0.98265 0.946060
+# Pos Pred Value         0.8538  0.12832 0.043033  0.00000 0.000000
+# Neg Pred Value         0.1812  0.89562 0.962794  0.98969 0.996727
+# Prevalence             0.8398  0.10895 0.038007  0.01014 0.003097
+# Detection Rate         0.5130  0.02449 0.005912  0.00000 0.000000
+# Detection Prevalence   0.6008  0.19088 0.137387  0.01717 0.053773

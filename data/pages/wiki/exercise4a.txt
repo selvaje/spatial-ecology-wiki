@@ -1,0 +1,38 @@
+====== Exercise 4a: Study phenology for user defined pixels ======
+
+In this exercise, the following tools will be used:
+  * pktools: pkinfo
+  * bash: for loop, redirect.
+
+__Create a directory for this exercise__
+
+<code bash>
+mkdir -p ${OUTPUTDIR}/exercise4
+</code>
+
+__Create text file with a single pixel in different land cover classes__
+
+<code bash>
+cat > ${OUTPUTDIR}/exercise4/points.txt <<EOF
+water 3323125 3162875
+forest 3225625 3123125
+grass 3225625 3123625
+agriculture 3226375 3123125
+EOF
+</code>
+
+__Extract the pixels from the MODIS images using pkinfo__
+
+<code bash>
+cat ${OUTPUTDIR}/exercise4/points.txt |while read LC X Y;do
+    echo "create a MODIS250 NDVI time series over $LC"
+    for MONTH in 01 02 03 04 05 06 07 08 09 10 11 12;do
+	IMGNDVI=${OUTPUTDIR}/exercise3/2006${MONTH}-MODIS250_CW_NDVI.tif
+	pkinfo -i $IMGNDVI -x $X -y $Y -geo -r
+    done > ${OUTPUTDIR}/exercise4/${LC}_modis250_ndvi.txt
+done
+</code>
+
+__Open image with openev, find pixels and check if first pixel is correctly extracted__
+
+__plot the profiles in gnuplot__ (click [[gnuplot4a | here]] for the code)

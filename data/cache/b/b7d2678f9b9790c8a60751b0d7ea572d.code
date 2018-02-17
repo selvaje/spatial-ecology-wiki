@@ -1,0 +1,70 @@
+#1.Import xls data
+library (gdata) #library for import xls
+input.path = (&quot;/home/user/ost4sem/project/r_script/&quot;)
+qualiaria= read.xls (paste (input.path,&quot;SanNicola_dal_01_01_2010_Al_30_04_2010.xls&quot;, sep=&quot;&quot;))
+str (qualiaria)
+&nbsp;
+# 2.subset qualiaria using Parametro =CO 
+qualiaria.co = subset(qualiaria, qualiaria$Parametro==&quot;CO&quot;)
+qualiaria.no = subset(qualiaria, qualiaria$Parametro==&quot;NO&quot;)
+qualiaria.no2 = subset(qualiaria, qualiaria$Parametro==&quot;NO2&quot;)
+qualiaria.noX = subset(qualiaria, qualiaria$Parametro==&quot;NOX&quot;)
+qualiaria.so2 = subset(qualiaria, qualiaria$Parametro==&quot;SO2&quot;)
+qualiaria.pm10 = subset(qualiaria, qualiaria$Parametro==&quot;PM10&quot;)
+qualiaria.o3 = subset(qualiaria, qualiaria$Parametro==&quot;O3&quot;)
+&nbsp;
+NOmean = mean (qualiaria.no$Media)
+NO2mean = mean (qualiaria.no2$Media)
+NOXmean = mean (qualiaria.noX$Media)
+SO2mean = mean (qualiaria.so2$Media)
+PM10mean = mean (qualiaria.pm10$Media)
+O3mean = mean (qualiaria.o3$Media)
+str (qualiaria.co)
+&nbsp;
+#3. COmean
+# mean (qualiaria.co$Media)
+COmean = mean (qualiaria.co$Media) # memory date
+&nbsp;
+&nbsp;
+&nbsp;
+#5. Save graphics
+png(&quot;~/ost4sem/exercise/basic_adv_r/outputs/qualiaria.co.png&quot;, width=800, height=800)
+plot (qualiaria.co$Media) 
+dev.off()
+system(&quot; display ~/ost4sem/exercise/basic_adv_r/outputs/qualiaria.co.png&quot;) #to view the graphic
+&nbsp;
+#6.Save more graphics in one graphic
+png(&quot;/home/user/ost4sem/project/output/qualiaria24h.to.png&quot;, width=1600, height=800)
+# par(mar=c(4,2,4,2))
+par(mar=c(7,8,9,1))
+plot (log(qualiaria.no$Media[1:24],2), 
+  type=&quot;l&quot;, ylim=c(0,5.2), lwd=6, axes=FALSE, main=&quot;Daily Air fluctuations&quot; ,
+  xlab=&quot;hours&quot;, 
+  ylab=&quot;Air components (log)&quot;, 
+  cex.main=3, cex.lab=3)
+points (abs(log(qualiaria.co$Media[1:24],2)), type=&quot;l&quot;,col= &quot;red&quot;,lwd=6) 
+points (abs(log(qualiaria.no2$Media[1:24],2)), type=&quot;l&quot;,col= &quot;brown&quot;,lwd=6)
+points (abs(log(qualiaria.noX$Media[1:24],2)), type=&quot;l&quot;, col= &quot;green&quot;,lwd=6)
+points (abs(log(qualiaria.o3$Media[1:24],2)), type=&quot;l&quot;,col= &quot;blue&quot;,lwd=6)
+points (abs(log(qualiaria.pm10$Media[1:24],2)), type=&quot;l&quot;,col= &quot;orange&quot;,lwd=6)
+points (abs(log(qualiaria.so2$Media[1:24],2)), type=&quot;l&quot;, col= &quot;grey&quot;,lwd=6)
+axis(2, cex.axis=2)
+axis(1, at=seq(1,24,by=4), labels=seq(1,24,by=4), cex.axis=2)
+box()
+&nbsp;
+legend(14,5.3, 
+legend = c(&quot;CO&quot;,&quot;No2&quot;,&quot;No&quot;), 
+col=c(&quot;black&quot;,&quot;red&quot;,&quot;brown&quot;),
+bty=&quot;n&quot;,
+lty=1,
+lwd=4,
+cex=2)
+&nbsp;
+legend(18,5.3, 
+legend = c(&quot;NoX&quot;,&quot;O3&quot;,&quot;Pm10&quot;,&quot;So2&quot;), 
+col=c(&quot;green&quot;,&quot;blue&quot;,&quot;orange&quot;,&quot;grey&quot;),
+bty=&quot;n&quot;,
+lty=1,
+lwd=4,
+cex=2)
+dev.off()

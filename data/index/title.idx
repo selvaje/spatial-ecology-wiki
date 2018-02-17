@@ -1,0 +1,542 @@
+Free & OpenSource BigGeoData Processing Tutorials
+
+Matera 2017 International Summer School
+Limited filling of the potential range in tree species
+COURSE OUTLINE
+COURSE DESCRIPTION
+Open Source Tools for Spatial Ecological Modeling
+Formatting Syntax
+
+Select one tool and learn how to use it
+Basic R
+Introduction to R
+The R Project for Statistical Computing
+Introduction to R
+Installing a new package
+Scripting, if else condition, loops and plotting graphics
+R data
+The AWK language
+
+Linux Operation System as a base for Spatial Ecology Computing
+Introduction to Bash
+A Simple linear regression model and plotting a graphic
+Bash commands
+
+Special Characters
+Quoting
+Pipe
+History
+Command/filename completion
+
+Bash script
+
+The AWK syntax
+Running AWK
+Basic bash scripts
+Advance bash scripts
+Acknowledgments
+Basic AWK scripts
+Advance AWK scripts
+
+GNUPLOT
+The Gnuplot syntax
+Refereed Journal Papers
+Running gnuplot
+Basic Gnuplot script
+Advance gnuplot script
+GDAL and OGR
+
+GDAL and OGR syntax
+Bioclimatic Predictor Variables
+Modeling Italian Natural Forest Vegetation: a shell script for producing an input response / predictor table
+Modeling the current distribution of the Natural Forest Vegetation of Italy using R
+Mapping the Natural Vegetation of Italy Using randomForest distribution model
+Basic GDAL and OGR script
+Generate Bioclimatic predictors surface maps
+Mapping the Future projections of distribution for Natural Forest in Italy
+Merging tiles into common maps
+Advance GDAL and OGR script
+
+Projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios.
+Case studies
+Modelling and mapping the Natural Forest Distribution of Italy and predicting changes for the year 2080 under IPCC SRES A2a scenario
+
+Hands-on GRASS: First steps
+
+Limited filling of the potential Pinus cembra range
+General statistics on the distribution and suitability of Pinus cembra in the alps
+Estimating the Forested area in European Countries
+Short lectures and presentations
+Plotting the Autoecology and Synecology of Pinus Cembra
+Plotting a confusion matrix and calculate kappa statistics
+
+Creating a new Grass project from Qgis
+Create a virtual machine with spatial ecological modelling software
+
+
+path to GRASS binaries and libraries:
+PhD summer school DK2010 Students Team
+Homework
+Bivariate plot of predictor variables correlation for testing multicollinearity
+Student's working page
+
+
+GRASS Batch jobs
+
+Project environment settings
+
+
+
+
+
+
+
+
+
+GRASS70 Create Location using ancillary layer
+Open Source Tools for Spatial Ecological Modeling
+Template for project poposal
+
+DokuWiki
+
+
+
+Satisfactory survey
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Spatial modelling of bumblebees & butterflies in Southern Norway
+
+
+TITLE
+Least cost-path analysis applied to grey-sided vole movement between older stands of pine forest habitat patches
+
+
+Nutrient losses
+Habitat Suitability and uncertainty Modeling of Mollusk Fauna
+LINKING WEATHER DATA WITH SOCIO-ECONOMIC DATA: SPATIAL INTERPOLATION
+FOREST DYNAMICS IN SPACE AND TIME
+Spread pathways of Dreissena polymorpha in the Lithuanian waters
+Exploratory data analysis of forest biomass in Iringa, Tanzania
+Envelope Models
+
+
+
+Detection of vegetation pattern dynamics using multi-temporal MODIS data
+DETECTION AND MONITORING OF FLOODED AREAS
+Use of environmental geostatitical methods for the study of soil heavy-metals concentration
+Spatial analysis of soil parameters
+FOREST BIOMASS PRODUCTION ESTIMATE FOR ENERGETIC USE
+TITLE: Vector data manipulation
+Image analysis of plants pathogenic infections
+Exploratory analysis of air quality database
+
+
+
+Create a dem from point data
+Create an arc info grid for the inspire grid
+
+
+Using GRASS for image analysis.
+Manage your working environment with file commands
+
+
+PlayGround
+Summary of the satisfactory survey
+
+Summary of the satisfactory survey
+Shedule 2011
+Manipulate images using bash scripts
+Manipulate pdf documents using bash scripts
+LANDSCAPE 3D ANALYSIS
+Urban and Peri-Urban Tree Cover in European Cities: Current Distribution and Future Vulnerability Under Climate Change Scenarios.
+University of Alcalà (Madrid) Spain
+\\
+
+Multi-cores and Grid processing
+
+
+Geo Tools Scripts
+NAME
+NAME
+NAME
+WELD overview
+Install Linux Ubuntu with spatial ecological modelling software as main OS
+Access Spatial-Ecology Ubuntu from a Virtual Machine
+Burned area mapping exercise
+Manipulation and visualization of WELD single pixel time series
+How to manipulate HDF with open source.
+Administration, grading, notes self evaluation etc.
+Sunday 7 Marzo 2010
+
+Install www.spatial-ecology.net in the VM (localhost)
+
+
+University of Alcalà (Madrid) Spain
+Homework
+Student's working page
+Template for project poposal
+Quantum Gis
+Getting started with Qgis
+Reprojection of data using Quantum GIS
+Georeferencing images
+Creating and editing a vector layer in QGIS
+Creating a new Grass project from Qgis
+Open Source Tools for Spatial Ecological Modeling
+Setting user name
+
+Welcome to the ESI Summer school on Open Source tools for GIS analyses and data processing
+PKTOOLS
+Peer reviewed papers
+pkinfo
+pkcrop
+pkmosaic
+pkreclass
+pkgetmask
+pksetmask
+pkndvi
+pkfilter
+pkcreatect
+pkpolygonize
+pksieve
+pkstatogr
+pkdumpogr
+pkextract
+pkstat
+
+Exercise 1b: Create a KML layer
+Exercise 1a: View Landsat image and overlay vector
+Exercise 2a: Extract Landsat profiles from vector
+Exercise 3a: Study phenology from MODIS NDVI time series (forest vector)
+
+
+Exercise 3b: Study phenology from MODIS NDVI time series (forest vector)
+
+
+Exercise 4a: Study phenology for user defined pixels
+
+Exercise 4b: Long time series for user defined pixels
+
+Exercise 5a: Find thresholds for cloud mask
+
+Exercise 5b: Extract shadow and water pixels
+
+Exercise 6: Create the cloud mask
+Exercise 7: morphological filters
+
+Satisfactory Survey for the 2012 Summer School on open source GIS
+Exercise 4c: Study long time series of mean NDVI
+
+Exercise 4d: Create animation of NDVI time series
+Install ubuntu with spatial-ecology tools in your computer
+Exercise 8: Create yearly MODIS composite
+Burned Area Mapping using Support Vector Machine and Combined Segmentation Random Forest classifiers
+Exercise 9: pktools with multi-core processors
+Shedule 2011
+DOWNLOAD
+DESCRIPTION
+Special Characters
+Case studies
+Comparison of Top of Atmosphere Reflectance vs Surface Reflectance
+Data visualization using openev
+Introduction to the Web-enabled Landsat Data (WELD) products using open source software
+Access spatial-ecology ubuntu from a Virtual Machine
+Transform a simple "for loop script" in multicore "for loop script"
+EOF method
+Running R with multiple cores
+Seminar on open source GIS with R and Quantum Gis
+Getting started with Qgis
+Mapping the schools of Cornwall from online web pages
+DESCRIPTION
+
+DESCRIPTION
+DESCRIPTION
+DESCRIPTION
+SPATIO-TEMPORAL ANALYSIS AND BIG DATA PROCESSING USING FREE AND OPEN SOURCE SOFTWARE
+Preliminary Program
+Invoking a Bash Script
+Hands on GRASS - First steps
+Integrate different SW and programming language for extracting relevant knowledge from data
+Languages/Software data integration: GRASS and R
+Languages/Software data integration: GDAL and OFT-TOOLS
+Transform a simple "for loop" in multicore "for loop"
+Understanding Autoecology & Synecology to model species distribution
+Transform a simple "for loop script" in multicore "for loop script" using qsub
+
+
+Satisfactory survey
+University of Twente 2013
+
+
+
+
+
+Matera, Italy
+Spatio-Temporal data Analyses and BigData Processing Using Free and Open Source Technology
+draft advanced R raster package
+
+
+
+Species Distribution Modeling with Swedish Wetland Vegetation
+Evaluation of Bias correction method for satellite based precipitation (CMORPH) product
+TITLE
+Visualizing agricultural dynamics in INDIA
+3-D visualization of TIR anomalies
+An Assessment of temporal and spatial variability of metal bioavailability
+Harmonizing altitudinal and climatic data for Tibetan plateau
+Spatio-temporal solar irradiation map
+Application of MOD13Q1 data to detect phonological Variability and Trends of NDVI Time Series in Africa
+Effects of landscape and climate on reptiles
+Using Grass GUI
+Geovisual Analysis of Synchronization in Weather Data-- temperature in the Netherlands as case study
+TITLE
+Data Acquisition and integration with google map
+Plant phenology modelling using growing degree-days to check the quality of volunteered phenological observations
+Reprojection and extraction of MODIS VCF data
+Upscaling of soil sample data to landscape scale
+Stratification during summer in the North Sea
+Linking Elephant Movement and NDVI in Ugalla ecosystem, Western Tanzania
+Bird Abundance and Diversity in Sweden's Agricultural Landscapes
+Modelling Wheat Harvest Dates in France
+TITLE
+TITLE
+Comparing frequency distributions of bioclimatic environmental variables in Norway and Sweden
+Satisfactory survey
+Exercise 2a: Extract Landsat profiles from vector
+Exercise 2b: Landsat spectra of golf courses
+Exercise 6a: Create the cloud mask
+Exercise 6b: Morphological filtering
+Exercise 6c: Create shadow mask from digital surface model
+Exercise 10: Create yearly MODIS composite
+Exercise 7a: Download vectors from Openstreetmap
+Exercise 7b: Working with SQLite vectors
+Exercise 7c: Using sql commands
+Exercise 8a: Image classification: create training sample and masks
+Exercise 8b: publishing results on file and the web
+Exercise 8c: validating classification results
+
+
+Welcome to your new DokuWiki
+TITLE
+
+
+Vector overlays and extraction
+Masking and filtering
+Openstreetmap, SQLite and sql commands
+Image classification
+Solution to the IEEE data fusion contest 2013 using pktools
+Create a quicklook
+Create training.txt
+Image classification
+Parameter optimization
+Selection of CASI bands
+Create additional features for data fusion
+Stack bands in feature fusion approach
+Post classification optimization
+Accuracy assessment
+Part 1
+Part 2
+Part 3
+Part 4
+spatial-ecology data repository
+My survey
+3-D visualization of TIR anomalies
+Satisfactory survey
+Satisfactory survey overall course evaluation
+University of Twente - Enschede - The Netherlands
+Download and unzip files
+
+Workshops participants' presence
+Languages/Software data integration: GDAL, PKTOOLS and R
+Language integration: import/export variables and integrate different languages in one script
+Setting up your machine for Yale-HPC accounts
+Use of qsub and xargs in for running R sections simultaneously
+Satisfactory survey
+A new series of workshops on data-intensive geo-spatial and environmental analysis on an open-source platform
+
+Registration Fees
+Yale University - Fall Semester
+Questionnaire
+Logistic
+Registration Fees
+Questionnaire
+Basic bash scripts for hSDM
+Registration List
+GRASS in the YALE-HPC
+Basic GDAL/OGR/PKTOOLS Commands
+Languages/Software integration: BASH and R
+
+Questionnaire
+Travel Forum
+
+Introduction to GRASS and Satellite Imagery
+Using Geographic Information Systems and Remote Sensing to study disease vector habitat
+Summer School:
+Registration Fees
+Questionnaire
+Logistic
+Registration List
+An Introduction to Geographic Information Systems using QGIS
+
+GRAPPOLO a supercomputer in a superbox
+Using Geographic Information Systems and Remote Sensing to study disease vector habitat
+Spatio-Temporal data Analyses and BigData Processing Using Free and Open Source Software
+Geo-Computation in Linux environment
+Spatio-Temporal analysis and BigData processing using free and open source software
+Basic GDAL/OGR/PKTOOLS Commands
+Extracting Information from Images
+A Landscape and Climate Data Logistic Model of Tsetse Distribution in Kenya
+Satisfaction Survey
+Final Report
+Identifying participant expectations
+
+Hands-on GRASS: First steps
+Setting GRASS70 variables for GRASS bash job
+Spatial Database or Geodatabase
+Hands on SpatiaLite
+Unsupervised classification
+
+Satisfactory survey
+Start and shut-down
+Transform a simple "for loop script" in multicore "for loop script"
+Transform a simple "for loop" in multicore "for loop"
+HPC geographical data using GRASS
+Open Source Mapping and Site Design Workshop
+EXERCISE
+Hydrological modelling for site design and permaculture
+Geo-Computation in Linux environment
+Questionnaire
+
+GNUPLOT introduction
+Geography of Landscape for site design and permaculture
+Example of Data repository
+Terrain modelling for site design
+GIS toolbox for site design and Permaculture
+Satisfactory survey
+Local Climate
+Day 1
+From field samples to Maps
+Satisfactory survey
+Mount an external volume to a instance
+Geo-spatial and environmental analysis using open-source software
+Calculation of stream-specific variables
+Questionnaire
+Remotely Sensed Vegetation Productivity: Normalized Difference Vegetation Index (NDVI)
+Species Distribution Modeling I
+Species Distribution Modeling II
+GRAPPOLO a supercomputer in a superbox
+
+Customize master node
+Geo-Computation in Linux environment
+Questionnaire
+Hands-on in Geo-spatial open-source software
+Derive topographic variable from a DEM
+Questionnaire
+Questionnaire
+Questionnaire
+QGIS and GRASS for hydrological application
+Dr Alba N. Mininni
+Dr. Giuseppe Amatulli
+Dr Stefano Casalegno
+Peer review and book chapters
+Refereed Journal Papers
+Dr Pieter Kempeneers
+Vlad Merticariu
+Questionnaire
+Questionnaire
+Hands on Rasdaman TEMPLATE
+Vlad Merticariu
+Alex Dumitru
+Geo-Computation in Linux environment
+Python
+spatial-ecology's best GIS software
+Introducing rasdaman
+Calling grass functions within R
+
+UAVs - Geodata acquisition and mapping
+Download log files from UAV
+Geotaggin images using log files
+Mission Planner and ArduPilot
+3DR Tower
+UAV
+Sensors
+Camera Software requirements
+Adding users accounts
+
+
+A suite of global, cross-scale topographic variables for environmental and biodiversity modeling
+Species Distribution Modelling
+Load geographical data and visualize it on R
+Geographical analyses with R
+Raster data processing in R - load and plot maps
+Load, plot vector layers & do spatial joins in R
+Create maps using open layers
+Spatial Covariance
+Cohen's Kappa statistics for comparing categorical maps
+Python introduction
+Geospatial Python crash course, part 1
+Geospatial Python crash course, part 2
+Satisfactory survey
+Satisfactory survey
+Download MODIS Land Surface Temperature (*.hdf) from Nasa ftp.
+Open Source Toolchain for Drone Mapping
+Batteries
+Auto triggering the sensor
+Flight
+Some advanced modules
+Flying Pi
+Geo-Computation in Linux environment
+Satisfactory survey
+Geo-Computation and Environmental Analysis Workshop
+Questionnaire
+Use Python for pattern searching
+Using GDAL/OGR API for GIS analysis
+Call bash command (so gdal/pktools) from python
+Parallel R using foreach
+Geocoding with GEOPY
+Questionnaire
+Geo-Computation Workshop
+Satisfactory survey
+GeoComputation using free and open source software
+Satisfactory survey
+Identifying participant expectations
+
+
+Vector manipulation with OGR
+Student's projects
+
+GWmodel R package
+Species Distribution Modelling
+Headline
+Modify a dem in specific point locations
+Zonal Statistics Benchmark
+BigGeoData DEM Mosaic
+Wheat variety mapping from UAV data
+Plant disease detection
+Biotope Mapping from Orthophoto
+Telemetry data Segmentation and Classification
+Muti Chore Image Tiling with GDAL
+Burned area mapping
+Multi Core Python scripting for Network Segmentation
+Qgis Plugin Development
+Point cloud data interpolation
+Use GDAL/OGR and PKTOOLS for raster/vector operations
+Virtual Machine installation instruction
+
+R vs BASH
+RAM vs HARD DISK
+AWS setup
+Understanding Autoecology & Synecology to model species distribution Maxent

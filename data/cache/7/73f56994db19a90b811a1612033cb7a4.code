@@ -1,0 +1,7 @@
+<span class="st0">'''
+    Fibonacci as an external module call
+'''</span>
+<span class="kw1">import</span> fibonacci <span class="kw1">as</span> fib
+&nbsp;
+s <span class="sy0">=</span> fib.<span class="me1">fibonacci</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> s

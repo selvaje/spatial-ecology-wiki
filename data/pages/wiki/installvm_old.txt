@@ -1,0 +1,100 @@
+====== Access spatial-ecology ubuntu from a Virtual Machine ======
+
+===== Procedure for the course July 2012 =====
+  * Download the  compressed file Ubuntu12.04_CORNWALL_2012.7z  following one of the two options:  
+    * Click on the [[http://www.spatial-ecology.net/sharing/incoming/Ubuntu12.04_CORNWALL_2012.7z.zip | Ubuntu12.04_uk_2012_v1.7z compressed file]] (not reccomended).
+\ \ \ \ \ \ Save it, and rename it from Ubuntu12.04_CORNWALL_2012.7z.zip ot  Ubuntu12.04_CORNWALL_2012.7z **Do not upen the zip, just rename it!**
+
+    * Using the ftp server at ftp://spatial-ecology.net/ (reccomended)
+\ \ \ \ \ \ \ \ \ \ username \ \  4sharing\\
+\ \ \ \ \ \ \ \ \ \ pw \ \ \ \ \ \ \ \ \ \ \ \ 4sharing_pw\\
+\ \ \ \ \ \ \ \ \ \ migrate to the incoming folder and download the file.\\
+
+  * Create a new folder on your c:\ disk and rename it as an example //"virtualOS"//
+  * Extract ( by http://www.7-zip.org/)  the //Ubuntu12.04_uk_2012_v1.7z // file in your //C:\virtualOS\// folder. 
+The virtualOS folder will contain ~14 GB of unpacked data. The extracting procedure is quite long less the 1 hour. 
+
+===== Common Procedure =====
+  * Download and install the [[https://www.virtualbox.org/wiki/Downloads|VirtualBox player]] suitable for your OS (raccomended). 
+or
+  * Download and install the [[http://www.vmware.com/products/player/|wmware player]] suitable for your OS.  
+ 
+[[https://www.virtualbox.org/ | VirtualBox]] is open source and free sw\\
+[[http://www.vmware.com/ |VMware]] is propetary and free sw
+
+VMware has an easy setting to increase the number of processor. It can be usefull for simulating [[ cluster_processing | clastering processing ]] by means the use of xargs 
+
+
+
+
+
+===== Install Virtual Machine player (VMware or Virtualbox) =====
+==== VMware ====
+  * After registration download and install the [[http://www.vmware.com/products/player/|wmware player]] suitable for your OS. 
+  * Open the vmware player, click on //open a Virtual Machine//; select //C:\virtualOS\Ubuntu_20122011\Ubuntu.vmx// and click on //play virtual machine// and select //I copied// option if requested by vmware player
+  * If some update are request during the vmware installation please select yes or ok.
+
+==== Virtualbox ====
+  * Download and install the [[ https://www.virtualbox.org/wiki/Downloads | VirtuaBox player]] suitable for your OS. 
+  * Click on New icon and follow the wizard: \\
+\ \ \ \ Name Ubuntu; OS Linux; Version Ubuntu\\
+\ \ \ \ Memory select the minimum 512\\
+\ \ \ \ Virutal Hard Disk:\\
+\ \ \ \ Use existing hard disk: //C:\virtualOS\Ubuntu_20122011\Ubuntu.vmx//
+  * Create
+
+===== Folder sharing option VMware =====
+  * Install VMware tools in vmware player. It will download automatically the repository for your windows operating system. Migrate in the directory were you save it, uncompress the installer, and then execute by sudo  ./vmware-install.pl (pw user) to install VMware Tools.
+  * Create a folder in windows C:\vm_data enable the sharing option. This it will be the folder that the students can use to communicate between MW and LinuxVM.
+  * On vmware player select VM\settings\options\shared folders and select //always enabled// and under the path select the  C:\vm_data folder.
+  * On the desktop of the Ubuntu VM there is a folder called shared_on_ws4vmw. Confirm that the folder is linked with the C:\vm_data
+  * The root password for the VMUbuntu is "user"
+  * Update Ubuntu by system/preferences/softwareUpdates. This procedure need to repeat several time before to have the full Ubuntu ready to use.
+\\
+
+
+There is more info at [[file:///usr/lib/vmware/help/player/wwhelp/wwhimpl/js/html/wwhelp.htm#href=c_transferring_files_and_text_between_host_and_guest.html|WMplayer help shared folder section]]
+
+<note>If your guest OS is linux, to see your shared folder you have to mount it first:
+  * mkdir /home/user/share
+  * sudo mount -t vmhgfs .host:/  /home/user/share
+</note>
+
+
+===== Folder sharing option VirtualBox =====
+  * VirtualBox player select Device\Install Guest Additions tools in VirtualBox player. It will download automatically the repository for your windows operating system.
+  * Run sudo ./VBoxLinuxAdditions
+  * Create a folder in windows C:\vm_data enable the sharing option. This it will be the folder that the students can use to communicate between MW and LinuxVM.
+  * On VirtualBox player select Device\shared_folders, right click on Machine Folders select the  C:\vm_data folder.
+  * On the desktop of the Ubuntu VM there is a folder called shared_on_ws4vb. Confirm that the folder is linked with the C:\vm_data
+  * The root password for the VMUbuntu is "user"
+  * Update Ubuntu by system/preferences/softwareUpdates. This procedure need to repeat several time before to have the full Ubuntu ready to use.
+\\
+
+There is more info at [[http://www.virtualbox.org/manual/ch04.html  | VirtualBox help shared folder section]]
+
+<note>If your guest OS is linux, to see your shared folder you have to mount it first:
+  * sudo mount -a  -t vboxsf vm_data  /media/sf_vm_data/
+  * sudo ln -s /media/sf_vm_data/ ~/Desktop/shared_on_ws4vb
+  * to auto startpu the mount add this line 
+\ \ \ \ sudo ln -s /media/sf_vm_data/ ~/Desktop/shared_on_ws4vb to /etc/init.d/rc.local
+</note>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

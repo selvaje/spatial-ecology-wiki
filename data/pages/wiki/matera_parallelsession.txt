@@ -1,0 +1,6 @@
+Please let us know if you intent to follow the **Grass BASIC** or **Grass ADVANCED** parallel session.
+To attend the advanced session we expect you to be familiar with GRASS software and having a basic understanding of accessing GRASS using command line.\\
+
+<doodle matera2015parallelsession | What is your knowledge of GDAL/OGR >
+^ Grass BASIC ^ Grass ADVANCED ^ 
+</doodle>

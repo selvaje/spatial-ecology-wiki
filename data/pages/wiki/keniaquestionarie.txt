@@ -1,0 +1,126 @@
+====== Questionnaire ======
+
+This workshop is intended to introduce participants to geospatial analysis techniques and ecological modeling.  No prior knowledge of geographic information systems (GIS), satellite-based remote sensing, or modeling are required to attend this training.  This questionnaire will help us to structure the workshop to best meet the needs of the participants. While no programming or specific computer skills are required, we expect the participants to have strong motivation to learn the applications and techniques presented in the workshop. 
+\\
+\\
+Please spend a moment to answer: \\
+
+  * In the **Real name** column, write your name
+  * Select one answer
+  * Click on submit
+\\
+
+===== Theoretical GIS and Remote Sensing Knowledge Level =====
+**Geospatial Data**\\
+Never used = I have not worked with geospatial data\\
+Yes vector - I have worked with feature datasets\\
+Yes raster - I have worked with surface data\\
+Yes both - I have worked with vector and raster data\\
+<doodle kenia2015geodata | 1) Have you worked with geospatial data?  >
+^ Never used ^ Yes - vector ^ Yes - raster ^ Yes - both ^ 
+</doodle>
+\\
+**Coordinate Systems**\\
+Never used = I do not know what coordinate systems are\\
+Yes - basic = I understand what projections and datums are\\
+Yes - good = I can work with different projections as appropriate\\
+<doodle kenia2015coord | 2) What is your knowledge of Coordinate Systems?  >
+^ Never used ^ Yes - basic ^ Yes - good ^ 
+</doodle>
+\\
+**Geographic Information Systems**\\
+Never used = I have not worked with a Geographic Information System\\
+Yes - very basic level = I can display simple data and maps\\
+Yes - intermediate level = I can perform basic analysis\\
+Yes - advanced level = I can perform complex geospatial functions\\
+<doodle kenia2015gis | 3) What is your knowledge of Geographic Information Systems (GIS)?  >
+^ Never used ^ Yes - very basic level ^ Yes - intermediate level ^ Yes - advanced level ^ 
+</doodle>
+\\
+**Satellite Images**\\
+Never used = I have not worked with satellite images\\
+Yes - very basic level = I view images in Google Earth\\
+Yes - intermediate level = I use images as background displays\\
+Yes - advanced level = I use software to manipulate images\\
+<doodle kenia2015images | 4) Have you worked with satellite images? >
+^ Never used ^ Yes - very basic level ^ Yes - intermediate level ^ Yes - advanced level ^ 
+</doodle>
+**Remote Sensing Software**\\
+Never used = I have not used remote sensing software with satellite images\\
+Yes - very basic level = I can view and enhance images\\
+Yes - intermediate level = I explore data and land surfaces\\
+Yes - advanced level = I can create new information layers from images\\
+<doodle kenia2015rs | 5) What is your knowledge of Remote Sensing? >
+^ Never used ^ Yes - very basic level ^ Yes - intermediate level ^ Yes - advanced level ^ 
+</doodle>
+
+===== Species Distribution Modeling Knowledge Level =====
+
+Never used = I have not done any distribution model.\\
+Yes - very basic level = Yes but only on theoretical part.\\
+Yes - intermediate level = Yes in the theoretical part and also on the implementation part.\\
+Yes - advance level = Yes I implement them with scripting procedure.\\
+<doodle kenia2015any | 1) Do you know what is species distribution model?  >
+^ No ^ Yes - very basic level ^ Yes - intermediate level ^ Yes - advance level ^ 
+</doodle>
+
+
+===== Software & Programming Knowledge Level =====
+Never used = I have not used any programming language\\
+Yes - very basic level = I started to use few months ago but I still write simple scripts\\
+Yes - intermediate level = I use from several years.\\
+Yes - advance level = I use from several years and I'm able to combine few languages.\\
+<doodle kenia2015any | 1) Do you know any programming or scripting language?  >
+^ No ^ Yes but very basic level ^ Yes intermediate level ^ Yes advance level ^ 
+</doodle>
+\\
+Never used = I never used in my life\\
+I know very basic commands = I use simple commands but only in the terminal\\
+I can write simple scripts = I can use //for loop// and //if condition//\\
+I am a very experienced user = I can combine several languages using bash and i can use xargs & qsub for multicore\\
+<doodle kenia2015bash | 2) What is your level of Linux Bash programming ? >
+^ Never used ^ I know very basic commands ^ I can write simple scripts ^ I am a very experienced user ^ 
+</doodle>
+\\
+Never used = I never used in my life\\
+I know very basic commands = I use simple commands but only in the python terminal\\
+I can write simple scripts = I can use //for loop// and //if condition//\\
+I am a very experienced user = I can work with matrix and do complex math operations\\
+I am a very web experienced user = I use python mainly for web developing\\
+<doodle kenia2015python | 3) What is your level of Python programming ? >
+^ Never used ^ I know very basic commands ^ I can write simple scripts ^ I can write complex scripts ^ I am a very experienced user ^ I am a very web experienced user ^
+</doodle>
+\\
+Never used = I never used in my life\\
+Only graphical user interface = I use graphical user interface but i started to use command lines\\
+I can write basic scripts = I can write basic scripts using //if condition// and //for loop// \\
+I am an experienced user = I write my own functions and use libraries  for parallel processing.\\
+<doodle kenia2015r | 4) What is your knowledge of R language & environment for statistical computing and graphics  >
+^ Never used ^ Only graphical user interface ^ I can write basic scripts ^ I can write complex scripts ^ 
+</doodle>
+\\
+
+**GRASS GIS**\\
+Never used = I never used in my life\\
+Only graphical user interface = I use the graphical user interface\\
+I can write basic scripts = I can write basic scripts to combine different GRASS commands\\
+I am an experienced user = I write complex scripts that build Locations\Mapsets and set GRASS variables for batch processing\\
+<doodle kenia2015grass | 6) What is your knowledge of GRASS GIS >
+^ Never used ^ Only graphical user interface ^ I can write basic scripts ^ I can write complex scripts ^ 
+</doodle>
+\\
+
+
+**Hardware**\\
+Select which Operating System as your PC and check the available RAM\\
+To find out how much RAM your computer has follow [[ http://windows.microsoft.com/en-us/windows/how-much-computer-ram#1TC=windows-7 | windows instruction ]] or [[ http://www.macinstruct.com/node/422 | MAC ]]
+<doodle kenia2015os | 6) Info concerning your laptop >
+^ WINDOWS OS ^ MAC OS ^ LINUX OS ^ RAM 2G ^ RAM 4G ^ RAM>4 ^
+</doodle>
+\\
+
+
+
+In the below section you can add some comments or write what you would like to achieve with this course. 
+
+~~DISCUSSION | Discussion Forum~~

@@ -1,0 +1,48 @@
+===== NAME =====
+**ost4sem_zonal_stats.py**
+
+===== DESCRIPTION =====
+This command line zonal statistic calculator is built for gdal supported files.\\
+It calculates mean min max and stdev values of a continuos raster (e.g. dem) based on a different categorized raster.\\
+The output is a txt file with the statistical value of each category.\\
+
+===== SYNOPSIS =====
+
+ost4sem_zonal_stats.py  [-category_no_data nodata_value]  [-raster_no_data nodata_value]\\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-mean] [-mode] [-median] [-stddev] [-min] [-max] [-sum]\\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ src_category   src_raster   dst_file\\
+
+-category_no_data nodata_value : no data value in the category raster. \\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ No data value can be identify by the user or directly take in tif\\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ but the "NoData Value=?" must be present in the tif.
+\\
+-raster_no_data nodata_value : no data value in the continuos raster. \\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ No data value can be identify by the user or directly take in tif\\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ but the "NoData Value=?" must be present in the tif.\\
+src_category : category raster ; layer used to group values for computing statisctics \\
+src_raster :   continues raster ; layer used to perform statisctics \\
+dst_file : destination file in txt format.
+\\
+\\
+[OPTIONS]\\
+\\
+If no option are reported the category value and counted pixel for each category will be reported in the destination file.\\
+\\
+-max : calculate maximum value of the continues raster in each grouped category \\
+-min : calculate min value of the continues raster in each grouped category \\
+-stddev : calculate [[http://en.wikipedia.org/wiki/Standard_deviation | standard deviation  ]]  value of the continues raster in each grouped category \\
+-mean  : calculate mean value of the continues raster in each grouped category \\
+
+
+===== DOWNLOAD =====
+Download python script: [[http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_zonal_stats.py.zip | ost4sem_zonal_stats.py.zip  ]]\\
+Download python script: [[http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_zonal_stats.py  | ost4sem_zonal_stats.py  ]]\\
+Download python script: [[http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_zonal_stats.pdf | ost4sem_zonal_stats.pdf  ]]\\
+
+===== EXAMPLE =====
+
+<code bash>
+mv ./ost4sem_zonal_stats.py ./ost4sem_zonal_stats.py.zip
+chmod 777 ./ost4sem_zonal_stats.py
+./ost4sem_zonal_stats.py -max -min -stddev -mean   category.tif dem.tif stat.txt
+</code>

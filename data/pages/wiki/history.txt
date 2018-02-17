@@ -1,0 +1,13 @@
+====== History ======
+All the commands that you type are saved in a file called history.\\
+You can access this file by typing: 
+<code bash>
+history
+</code>
+scrolling the history line up/down 
+<code bash>
+history  |  tail -10 
+</code>
+To search for a command that you used in previews lines you can press\\
+Control + r + typetheword\\
+If you want to scroll up in the list using the same word press again, press Control + r.

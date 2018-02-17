@@ -1,0 +1,23 @@
+
+<h1 class="sectionedit1" id="manipulate_images_using_bash_scripts">Manipulate images using bash scripts</h1>
+<div class="level1">
+
+<p>
+<a href="http://www.imagemagick.org/script/index.php" class="urlextern" target="blanc" title="http://www.imagemagick.org/script/index.php" rel="nofollow noopener">Imagemagick</a> is an interesting usefull tools for creating, editing, composing, or converting images. ImageMagick is able to adit more than 100 image formats including DPX, EXR, GIF, JPEG, JPEG-2000, PDF, PhotoCD, PNG, Postscript, SVG, TIF and more.
+</p>
+
+<p>
+<strong>Example</strong>
+We have several images in png format and we need to convert them into pdf formats.
+Change directory and look at your images:
+</p>
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_grass
+<span class="kw2">mkdir</span> tmp_image
+<span class="kw2">cp</span> <span class="sy0">*</span>.png tmp_image<span class="sy0">/</span> ; <span class="kw3">cd</span> tmp_image 
+&nbsp;
+<span class="kw1">for</span>  image <span class="kw1">in</span>  <span class="sy0">*</span>.png ; <span class="kw1">do</span>
+convert <span class="re1">$image</span> <span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$image</span> .png<span class="sy0">`</span>.pdf
+<span class="co0"># convert $image $(basename $image .png).pdf</span>
+<span class="kw1">done</span></pre>
+
+</div>

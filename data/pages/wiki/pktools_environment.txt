@@ -1,0 +1,27 @@
+The following environment variables should be set in the terminal before doing the exercises. 
+
+<code bash>
+export MODIS500DIR=/home/user/week2/MODIS500
+export MODIS250DIR=/home/user/week2/MODIS250
+export LANDSATDIR=/home/user/week2/LANDSAT^C
+export LANDSATDIR=/home/user/week2/LANDSATDIR
+export LANDSATIMG=19990724_L7E_IP_IW.tif
+export FMAPDIR=/home/user/week2/FMAP2006
+export VECTORDIR=/home/user/week2/cornwall_vector
+export OUTPUTDIR=/home/user/week2/output
+</code>
+
+Create a script by writing these lines in a text file named setweek2.sh
+
+Make the script executable and execute the script
+
+<code bash>
+chmod u+x setweek2.sh
+./setweek2.sh
+</code>
+
+In order to make scope of the variables visible to other processes, you have to run source (dot) on it (otherwise it is only visible to child processes)
+
+<code>
+. ./setweek2.sh
+</code>

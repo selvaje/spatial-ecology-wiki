@@ -1,0 +1,32 @@
+**Will you use and progress using OS tools in future?**
+^ Students ^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ R Yes ^ R No ^
+^ 12 ^ 11 ^ ^ 8 ^ 3 ^ 11 ^ 1 ^ 12 ^ ^ 12  ^ ^ 12 ^ ^
+\\
+**Do you feel to be able to independently improve and learn more about OS tools?**
+^ Students ^ Bash Yes ^ Bash No ^ Awk Yes ^ Awk No ^ Gdal Yes ^ Gdal No ^ Grass Yes ^ Grass No ^ Qgis Yes ^ Qgis No ^ R Yes ^ R No ^
+^ 11 ^ 8 ^ 3 ^ 7 ^ 3 ^ 10 ^ ^ 11 ^ ^ 11 ^ ^ 10 ^ 1 ^
+\\
+**Do you see any interest in using OS spatial analysis tools in your current and future job?**
+^ Students ^ Yes ^ No	^ Little ^
+^ 11 ^ 11 ^ ^ ^
+\\
+**Which part of the course did you preferred and would have liked to see in more in detail?**
+^ Students ^ Bash ^ Awk ^ Gdal ^ Gnuplot ^ Grass ^ Qgis ^ R ^ Theory ^ Exercise	^ Study case ^ Projects ^
+^ 13 ^ 2 ^ 2 ^ 6 ^ 1 ^ 9 ^ 7 ^ 9 ^ 5 ^ 5 ^ 1 ^ 3 ^
+\\
+**Do you think the training was well adapted in respect of your needs, your skills and knowledge?**
+^ Students ^ Advanced and too difficult	^ Well adapted ^ Basic and boring ^
+^ 12 ^ 2 ^ 12 ^ 4 ^
+\\
+**The trainer's supervision during your project was satisfactory?**
+^ Students ^ Very much ^ yes satisfactory ^ Not enough ^
+^ 1 ^ ^ 1 ^ ^
+\\
+**The trainers where clear and prepared during the 1st week of teaching?**
+^ Students ^ Very well ^ Yes enough prepared ^ Not enough ^
+^ 12 ^ 5 ^ 7 ^ ^
+\\
+**The training organization was correctly carried out ? (VM + Virual machines)?**
+^ Students ^ Virtual OK ^ VM no ^ Slides OK ^ Slides no ^ Vikipedia OK	^ Vikipedia no ^ Schedule OK ^ Schedule NO ^
+^ 11 ^ 11 ^ ^ 11 ^ ^ 11 ^ ^ 11 ^ ^
+

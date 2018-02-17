@@ -1,0 +1,11 @@
+====== Exercise 1b: Create a KML layer ======
+In this exercise the following tools will be used:
+  * gdal/ogr tools: ogr2ogr
+
+__Use ogr tool ogr2ogr to create a KML layer for Google Earth__
+
+<code bash>
+ogr2ogr -f KML  -where "TYPE='forest'" ${OUTPUTDIR}/cornwall_forest.kml cornwall_natural.shp
+</code>
+
+<note warning>Make sure the projection of the source vector is set to EPSG:4326 (LON/LAT), otherwise use extra parameter -t_srs epsg:4326</note>

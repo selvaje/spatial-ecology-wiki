@@ -1,0 +1,96 @@
+
+<h1 class="sectionedit1" id="manage_your_working_environment_with_file_commands">Manage your working environment with file commands</h1>
+<div class="level1">
+
+<p>
+Use this wiki to get familiar with file commands useful for managing directories and files.
+</p>
+
+</div>
+
+<h4 id="pwd_ls_cd_mkdir_commands">pwd ls cd mkdir commands</h4>
+<div class="level4">
+
+<p>
+First we need to create a new folder in the  <br/>
+
+~/ost4sem/exercise/basic<em>adv</em>bash directory and call it example_manage
+</p>
+<pre class="code bash"><span class="kw3">pwd</span> <span class="co0"># Which is our working directory ?</span>
+<span class="kw2">ls</span> <span class="co0"># Which files exists in our working directory?</span>
+<span class="kw2">ls</span> <span class="re5">-l</span> <span class="co0"># list with detailed info</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_bash <span class="co0"># change working directory</span>
+<span class="kw2">ls</span> 
+<span class="kw2">ls</span> <span class="re5">-l</span>
+<span class="kw2">mkdir</span> example_manage
+<span class="kw2">ls</span>
+<span class="kw2">ls</span> <span class="re5">-l</span>
+<span class="kw2">rm</span> <span class="re5">-r</span> example_manage <span class="co0"># We remove the directory we just created</span></pre>
+
+<p>
+We can also create a folder or copy a file in a target directory from a different working directory
+</p>
+<pre class="code bash"><span class="kw3">cd</span>
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_bash<span class="sy0">/</span>example_manage
+<span class="kw2">ls</span>
+<span class="kw2">ls</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_bash<span class="sy0">/</span></pre>
+
+</div>
+
+<h4 id="loops_for_multiple_folder_and_files_management">Loops for multiple folder and files management</h4>
+<div class="level4">
+
+<p>
+Now we need to create a set of working directories for different years (2000 to 2010) each one with 12 subdirectories corresponding to months (Jan to Dec).
+</p>
+<pre class="code bash"><span class="re2">Year</span>=<span class="st0">&quot;Yr2000 Yr2001 Yr2002 Yr2003 Yr2004 Yr2005 Yr2006 Yr2007 Yr2008 Yr2009 Yr2010&quot;</span>
+<span class="re2">month</span>=<span class="st0">&quot;Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec&quot;</span>
+<span class="kw1">for</span> y <span class="kw1">in</span> <span class="re1">$Year</span> ; <span class="kw1">do</span>  <span class="kw2">mkdir</span> <span class="re1">$y</span>
+<span class="kw1">for</span> m <span class="kw1">in</span> <span class="re1">$month</span> ; <span class="kw1">do</span> <span class="kw2">mkdir</span> <span class="re1">$y</span><span class="sy0">/</span><span class="re1">$m</span> ; 
+<span class="kw1">done</span> ; 
+<span class="kw1">done</span>
+<span class="kw2">ls</span> <span class="sy0">*/*/</span></pre>
+
+</div>
+
+<h4 id="now_we_create_a_text_file">Now we create a text file</h4>
+<div class="level4">
+<pre class="code bash"><span class="kw3">echo</span> This is my exercise <span class="kw1">for</span> learning <span class="kw2">bash</span> scripting <span class="re1">$Year</span> <span class="re1">$month</span> <span class="sy0">&gt;&gt;</span> example_text.txt </pre>
+
+</div>
+
+<h4 id="and_we_copy_this_text_file_in_every_month_for_the_years_2000_to_2010_folders_we_just_created">And we copy this text file in every month for the years 2000 to 2010 folders we just created</h4>
+<div class="level4">
+<pre class="code bash"><span class="kw1">for</span> y <span class="kw1">in</span> <span class="re1">$Year</span> ; <span class="kw1">do</span> 
+<span class="kw1">for</span> m <span class="kw1">in</span> <span class="re1">$month</span> ; <span class="kw1">do</span>
+<span class="kw2">cp</span> example_text.txt <span class="re1">$y</span><span class="sy0">/</span><span class="re1">$m</span><span class="sy0">/</span>copy_of_text.txt ;
+<span class="kw1">done</span> ;
+<span class="kw1">done</span>
+&nbsp;
+<span class="kw2">ls</span> <span class="sy0">*/</span>
+<span class="kw2">ls</span> <span class="sy0">*/*/</span></pre>
+
+</div>
+
+<h4 id="difference_between_cp_and_mv">Difference between cp and mv</h4>
+<div class="level4">
+
+<p>
+Now en need to rename the example<em>text.txt as Year2001.txt and move it from the ~/ost4sem/exercise/basic</em>adv<em>bash/example</em>manage folder to ../example_manage/Yr2001/ folder
+</p>
+<pre class="code bash"><span class="kw2">mv</span> example_text.txt .<span class="sy0">/</span>Yr2001<span class="sy0">/</span>Year2001.txt
+<span class="kw2">ls</span>
+<span class="kw2">ls</span> Yr2001</pre>
+
+<p>
+Now we copy the Yr2001.txt file to the Yr2000 folder and name it copy<em>of</em>year2001.txt
+</p>
+<pre class="code bash"><span class="kw2">cp</span> .<span class="sy0">/</span>Yr2001<span class="sy0">/</span>Year2001.txt .<span class="sy0">/</span>Yr2000<span class="sy0">/</span>copy_of_year2001.txt</pre>
+
+</div>
+
+<h4 id="now_we_delete_the_folder_example_manage_and_all_its_content">Now we delete the folder example_manage and all its content</h4>
+<div class="level4">
+<pre class="code">rm -r ~/ost4sem/exercise/basic_adv_bash/example_manage</pre>
+
+</div>

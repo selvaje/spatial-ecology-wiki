@@ -1,0 +1,78 @@
+====== GIS toolbox for site design and Permaculture ======
+Besides Hydrological modelling and the Keylines - Lanscape terrain features there are other usefull GIS functionalities we can use in permaculture.
+===== Planting pattern =====
+While dealing with new plantations, we can use GIS to define a regular grid with defied plant distances for then going in the field and plant. 
+
+==== Regular grid on a surface ====
+
+How to create a regular grid of predefined spacing between points within a defined area :
+  * Define the area for the new plantation //**Qgis** → Layer  → Create layer → new shape fiule//
+  * Create a regular grid //**Qgis** → Vector → Regular points function//
+  * Select points within the new plantation area //**Qgis** → Vector → Geoprocessing → Clip//
+
+{{:sitedesign:dedicated_area.png?200|}}{{:sitedesign:regular_grid_6m.png?200|}}{{:sitedesign:selection.png?200|}}{{:sitedesign:final.png?200|}}
+\\
+In the example above, we have selected an area of ~ 0.7 ha, and a planting pattern of 6m distance between plants.
+
+==== Hedges ====
+How to define an equal spacement between points along a hedge line:
+  * Define the hedge line for the new plantation //Qgis → Layer  → Create layer → new shape (file use line)//
+  * Import the line in GRASS using
+  * Use [[http://grass.osgeo.org/grass64/manuals/v.to.points.html|v.to.points]] GRASS function to define points within the hedge line\\
+{{:sitedesign:line1.png?200|}}{{:sitedesign:line2.png?200|}}{{:sitedesign:line3.png?200|}}
+
+
+===== Pond =====
+Different GIS functions could be very useful in desining ponds.
+
+=== Water accumulation estimates ===
+We have already created a water accumulation layer. Browsing this layer we can query pixels values to select an appropriate location to built a pond. For instance within flat areas we can define a high water accumulation zone. There we can define the extents and draw a sub-basin map of a water basin catchment flowing to a determined location within our site. 
+  * Define the point of interest querying geographical coordinates from the accumulation map
+  * Use r.waters.outlet to create a catchment bassin above the point of interest
+  * Overlap the output basin with DEM and river styreams network
+
+
+The **r.water.outlet** GRASS gis function settings. We use as input the bassin drain raster map previously created using r.watershed algorithm and N-E geographical coordinates.  \\
+{{:sitedesign:rwateroutlet.png?400|}}
+\\
+{{:sitedesign:pond1.png?150|}}{{:sitedesign:pond2.png?150|}}{{:sitedesign:pond3.png?150|}}{{:sitedesign:pond4.png?150|}}\\
+From pond site location to water basin definition in GIS. The selected point is connected to a river stream network covering a water basin of 12075 cells of 1mx1m.Knowing the extreme daily rainfall we can project a pond with defined water capacity to store and mitigate flush flooding events.\\
+The following formula give an estimates of the amount of water flowing to a specific location from the upward basin catchment : ** 100 x rainfall (mm) x catchment surface (ha) x Soil runoff coefficient**
+<note important>
+We have quantified the //catchment surface (ha)// using the r.water.outlet function; mm rain and soil coefficient parameters needs to be defined using climatic records and bibliographic references.
+</note>
+
+===== Solar irradiation =====
+=== Sun rise,sunset and sun position ===
+[[http://www.sunearthtools.com/en/solar/sunrise-sunset-calendar.php| Sun rise sunset calendar]] Web Processing Service Calendar of sunrise / sunset noon daylight of the sun at any location on the planet for an entire year. The outcomes shows the time and azimuth in degrees.\\
+Sun position at the Summer solstice\\
+{{:sitedesign:sun_position.png?800|}}\\
+{{:sitedesign:annualsunrisesunset_2015_39.865227_-94.375199_1437307374400.ods|Download}} the Yearly CALENDAR for sunset - sunrise, noon time and sun Azimuth
+
+=== Topographic shadowing ===
+[[https://docs.qgis.org/2.2/en/docs/training_manual/rasters/terrain_analysis.html|Hillshade]] module in Qgis: This calculates the amount of sun or shade for a 3D surface. The dialogue box include options for the sun angle and **Hillshade** uses a fixed location of the sun to accurately simulate the effects of bare hillside and shaded valleys.\\
+
+=== Solar irradiance and irradiation ===
+[[https://en.wikipedia.org/wiki/R.sun|r.sun function]] in GRASS gis for Solar irradiance and irradiation model.\\
+This advanced module computes direct (beam), diffuse and reflected solar irradiation raster maps for given :\\
+  * day 
+  * latitude
+  * surface topography
+  * atmospheric conditions. 
+Solar parameters (e.g. sunrise, sunset times, declination, extraterrestrial irradiance, daylight length) are saved in the map history file. Alternatively, a local time can be specified to compute solar incidence angle and/or irradiance raster maps. The shadowing effect of the topography is optionally incorporated.\\
+[[http://grass.osgeo.org/grass64/manuals/r.sun.html|More info and manual]].\\ 
+Example applications:
+  * [[http://re.jrc.ec.europa.eu/pvgis/|  Photovoltaic - The European solar radiation atlas]]
+  * [[http://www.sciencedirect.com/science/article/pii/S0378112709007257|Potential Evapotranspiration for Tree Species distribution modelling]]
+Calculation of the integrated daily irradiation for the study site, for the summer solstice, at 1m resolution. Here day 172 (i.e., 21 June in non-leap years): 
+      r.sun -s dem.farm lin=2.5 alb=0.2 day=172 \\
+      beam_rad=b172 diff_rad=d172 \\
+      refl_rad=r172 insol_time=it172
+
+Daily irradiation map for the summer solstice:\\
+{{ :sitedesign:daily_irradiation.png |}}
+
+===== Terrain Profile =====
+The Qgis plogin [[https://plugins.qgis.org/plugins/profiletool/|profile]] is able to generate elevation profiles along line features on a Digital Elevation Model. A simple [[http://anitagraser.com/2013/12/27/profile-tool-tutorial/| tutorial]].\\
+Example of a Profile line on the study site:\\
+{{ :sitedesign:profile.png?600|}}

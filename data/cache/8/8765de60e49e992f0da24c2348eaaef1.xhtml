@@ -1,0 +1,99 @@
+
+<h1 class="sectionedit1" id="running_r_with_multiple_cores">Running R with multiple cores</h1>
+<div class="level1">
+
+<p>
+If you need to recursively process an R function or an R script n times, you can extract the <em>for loop</em> in bash and process each R function or script with a different CPU.
+How to do it:
+</p>
+<ol>
+<li class="level1"><div class="li"> built a template R script</div>
+</li>
+<li class="level1"><div class="li"> built a template bash script </div>
+</li>
+<li class="level1"><div class="li"> use <em>xargs</em> bash fonction in a loop for processing each step of the loop with a different CPU </div>
+</li>
+</ol>
+
+<p>
+<br/>
+
+<br/>
+
+</p>
+<!-- EDIT2 PLUGIN_WRAP_START [0-] --><div class="wrap_center wrap_round wrap_important plugin_wrap" style="width: 60%;">
+<p>
+Create a <em>~/ost4sem/exercise/multi<em>core <em> and a </em> …/exercise/multi</em>core/output </em> folders if you do not have them. 
+</p>
+</div><!-- EDIT3 PLUGIN_WRAP_END [0-] -->
+</div>
+<!-- EDIT1 SECTION "Running R with multiple cores" [1-567] -->
+<h2 class="sectionedit4" id="example_of_a_template_r_script">1. Example of a template R script</h2>
+<div class="level2">
+
+<p>
+Save the R script below as <em>~/ost4sem/exercise/multi<em>core/template</em>R.R </em><br/>
+
+</p>
+<pre class="code r">mod.t = Sys.getenv(c('mod','t','path'))
+mod = as.numeric(mod.t[1])
+t = as.numeric(mod.t[2])
+path = as.character(mod.t[3])
+&nbsp;
+print(mod)
+print(t)
+print(path)
+&nbsp;
+my_output=paste(&quot;We have processed  mod &quot;,mod,&quot; and t &quot;,t,&quot; ---- output path is   &quot;,path,sep=&quot; &quot;)
+write.table(my_output,paste(path,&quot;/my_mod&quot;,mod,&quot;_t&quot;,t,&quot;.txt&quot;,sep=&quot;&quot;))</pre>
+
+<p>
+<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT4 SECTION "1. Example of a template R script" [568-1038] -->
+<h2 class="sectionedit5" id="example_of_a_bash_script_to_exchange_variables_with_r">2. Example of a bash script to exchange variables with R</h2>
+<div class="level2">
+
+<p>
+Save the template bash script below as  <em>~/ost4sem/exercise/multi<em>core/template</em>bash.sh </em>
+</p>
+<pre class="code bash"><span class="co0">#!/bin/bash</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>multi_core
+<span class="re2">mod</span>=<span class="re4">$1</span>
+<span class="re2">t</span>=<span class="re4">$2</span>
+<span class="re2">path</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>multi_core<span class="sy0">/</span>output
+&nbsp;
+<span class="kw3">export</span> mod
+<span class="kw3">export</span> t
+<span class="kw3">export</span> path
+R <span class="re5">--vanilla</span> <span class="re5">--no-readline</span>  <span class="re5">-q</span>    <span class="sy0">&lt;</span>    template_R.R</pre>
+<div class="noteclassic"> - - vanilla<br/>
+
+is used to combine   –no-save,    –no-restore,    –no-site-file,     –no-init-file and –no-environ
+</div>
+</div>
+<!-- EDIT5 SECTION "2. Example of a bash script to exchange variables with R" [1039-1536] -->
+<h2 class="sectionedit6" id="process_the_r_script_using_the_template_bash_within_a_xargs_loop">3. Process the R script using the template bash within a xargs loop</h2>
+<div class="level2">
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>multi_core
+<span class="kw1">for</span> mod <span class="kw1">in</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> ; <span class="kw1">do</span> 
+<span class="kw1">for</span> t <span class="kw1">in</span> <span class="sy0">`</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">5</span><span class="sy0">`</span> 
+<span class="kw1">do</span> <span class="kw3">echo</span> <span class="re1">$mod</span> <span class="re1">$t</span> 
+<span class="kw1">done</span> 
+<span class="kw1">done</span><span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">2</span> <span class="re5">-P</span> <span class="nu0">2</span> <span class="kw2">bash</span> template_bash.sh</pre>
+<div class="noteclassic"> in xargs<br/>
+
+<strong>-n 2</strong> refer to the number of variables exchanged between <strong>xargs</strong> in the bash loop and the <em>template<em>bash.sh<em> script <br/>
+
+<strong>-P 2</strong> indicate the number of procssors you want to use.
+The </em>template</em>R.R</em> script need to be in your working environment( ~/ost4sem/exercise/multi_core ).<em>
+&lt;/note&gt;
+
+
+</div>
+<!-- EDIT6 SECTION "3. Process the R script using the template bash within a xargs loop" [1537-] -->

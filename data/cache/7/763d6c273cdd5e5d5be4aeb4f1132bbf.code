@@ -1,0 +1,94 @@
+<span class="co0">#!/bin/bash</span>
+<span class="co0">#</span>
+<span class="co0"># Copenhagen June 2010, ost4sem, unidk2010</span>
+<span class="co0">#</span>
+<span class="co0"># Title: Envelope models</span>
+<span class="co0"># Authors: Alistair Auffret, Dag Endresen, Torben Wittwer, Zhenlin Yang</span>
+<span class="co0"># Description: Species distribution from envelope modeling</span>
+<span class="co0"># Harmonize the projection and grid for the raster data (worldclim and corine)</span>
+<span class="co0"># Use gdalinfo and gdalwarp for projection</span>
+<span class="co0">#</span>
+&nbsp;
+<span class="co0">#######################</span>
+<span class="co0"># Home directory folder</span>
+<span class="re2">home_dir</span>=<span class="st0">&quot;~/ost4sem/project/unidk2010/envmod&quot;</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod
+&nbsp;
+&nbsp;
+<span class="co0">################</span>
+<span class="co0"># GDAL, gdalinfo</span>
+<span class="co0">#gdalinfo $home_dir&quot;/input/worldclim/current/wc_5m_10km/alt.bil&quot;</span>
+gdalinfo <span class="st0">&quot;./input/worldclim/current/wc_5m/alt.bil&quot;</span>
+gdalinfo <span class="st0">&quot;./input/worldclim/current/wc_5m/bio1.bil&quot;</span>
+gdalinfo <span class="re5">-stats</span> <span class="st0">&quot;./input/worldclim/current/wc_5m_10km_esri/alt/alt&quot;</span>
+&nbsp;
+&nbsp;
+<span class="co0">###############################################</span>
+<span class="co0"># Issues of importing the wc bil grids in GRASS</span>
+<span class="co0">#</span>
+<span class="co0"># ESRI software assumes that the data files (.bil) do not have negative values.</span>
+<span class="co0"># These values (x) are replaced by (65535 + x); E.g., -10 becomes 65525</span>
+<span class="co0"># Also the nodata value of -9999 is not recognized. (becomes 65535-999=55537)</span>
+<span class="co0"># gdal, used by GRASS GIS to import the data, seems to make the same assumption</span>
+<span class="co0"># 16-bit (2 byte) integer, unsigned representation, values between 0 and 65535</span>
+<span class="co0"># Signed representation however, possible values range from −32768 to 32767</span>
+<span class="co0"># Worldclim data is signed, but ESRI and gdal assume grid values are unsigned</span>
+<span class="co0"># You need to do is to reclass all values &gt; 23767 as value-(66536)</span>
+<span class="co0"># Eg: &gt; r.mapcalc &quot;tmin_corrected=if(tmin&gt;23767,tmin-66536,tmin)&quot;</span>
+<span class="co0"># http://pvanb.wordpress.com/2010/02/06/importing-worldclim-climate-bil-datalayers-in-grass-gis/</span>
+<span class="co0">#</span>
+<span class="co0"># You can convert from bil to a different format like geotiff</span>
+<span class="co0">#</span>
+<span class="co0"># To import Worldclim data, the following line has to be added to each .hdr file:</span>
+<span class="co0"># PIXELTYPE SIGNEDINT</span>
+<span class="co0">#</span>
+<span class="kw3">echo</span> <span class="re5">-e</span> <span class="st0">&quot;PIXELTYPE     SIGNEDINT<span class="es1">\r</span>&quot;</span> <span class="sy0">&gt;</span> .<span class="sy0">/</span>temp<span class="sy0">/</span>pixeltype.txt
+<span class="kw1">for</span> hdr_file <span class="kw1">in</span> <span class="sy0">`</span><span class="kw2">ls</span> .<span class="sy0">/</span>input<span class="sy0">/</span>worldclim<span class="sy0">/</span>current<span class="sy0">/</span>wc_5m <span class="sy0">|</span> <span class="kw2">grep</span> .hdr<span class="sy0">`</span>; <span class="kw1">do</span>
+ <span class="re2">hdr_pt</span>=<span class="co1">${hdr_file%.*}</span><span class="st0">&quot;_pt.hdr&quot;</span> <span class="co0">## cat two files together as concatenate cannot output to the same file</span>
+ <span class="kw3">echo</span> <span class="st0">&quot;hdr_file :: &quot;</span><span class="re1">$hdr_file</span><span class="st0">&quot; :: hdr_pt :: &quot;</span><span class="re1">$hdr_pt</span>;
+ <span class="kw2">cat</span> .<span class="sy0">/</span>temp<span class="sy0">/</span>pixeltype.txt .<span class="sy0">/</span>input<span class="sy0">/</span>worldclim<span class="sy0">/</span>current<span class="sy0">/</span>wc_5m<span class="sy0">/</span><span class="re1">$hdr_file</span> <span class="sy0">&gt;</span> .<span class="sy0">/</span>input<span class="sy0">/</span>worldclim<span class="sy0">/</span>current<span class="sy0">/</span>wc_5m<span class="sy0">/</span><span class="re1">$hdr_pt</span>;
+ <span class="kw2">mv</span> .<span class="sy0">/</span>input<span class="sy0">/</span>worldclim<span class="sy0">/</span>current<span class="sy0">/</span>wc_5m<span class="sy0">/</span><span class="re1">$hdr_pt</span> .<span class="sy0">/</span>input<span class="sy0">/</span>worldclim<span class="sy0">/</span>current<span class="sy0">/</span>wc_5m<span class="sy0">/</span><span class="re1">$hdr_file</span>
+<span class="co0"># head -3 ./input/worldclim/current/wc_5m/$hdr_file;</span>
+<span class="kw1">done</span>
+&nbsp;
+&nbsp;
+<span class="co0">###########################################</span>
+<span class="co0">#change datum/projection of corine landcover to WGS84</span>
+gdalwarp -t_srs EPSG:<span class="nu0">4326</span> g250_06.tif <span class="re1">$home</span><span class="sy0">/</span>input<span class="sy0">/</span>corine<span class="sy0">/</span>g250_06_WGS84.tif
+<span class="kw2">cat</span> clc_legend_qgis.txt <span class="co0">#legends</span>
+&nbsp;
+<span class="co0">#compress tif-file</span>
+gdal_translate <span class="re5">-co</span> <span class="st0">&quot;COMPRESS=LZW&quot;</span> g250_06_WGS84.tif temp.tif
+<span class="kw2">mv</span> temp.tif g250_06_WGS84.tif
+&nbsp;
+&nbsp;
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod<span class="sy0">/</span>
+<span class="co0">#create Grass GIS DB, Location and Mapset</span>
+<span class="kw2">mkdir</span> Grassdb
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod<span class="sy0">/</span>Grassdb
+<span class="kw2">ln</span> <span class="re5">-s</span>  <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod<span class="sy0">/</span>input<span class="sy0">/</span>corine<span class="sy0">/</span>g250_06_WGS84.tif .
+&nbsp;
+<span class="co0"># use script to create a grass location for the project</span>
+<span class="kw2">bash</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod<span class="sy0">/</span>sh_script<span class="sy0">/</span>create_location.sh g250_06_WGS84.tif europe ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod<span class="sy0">/</span>Grassdb
+&nbsp;
+<span class="co0">#start working in GRASS GIS</span>
+grass <span class="re5">-text</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod<span class="sy0">/</span>Grassdb<span class="sy0">/</span>europe<span class="sy0">/</span>PERMANENT
+g.mapset <span class="re5">-c</span> <span class="re2">mapset</span>=env_mod_mapset
+g.copy <span class="re2">rast</span>=g250_06_WGS84<span class="sy0">@</span>PERMANENT,g250_06_WGS84
+&nbsp;
+<span class="co0">#set region </span>
+g.region <span class="re2">n</span>=<span class="nu0">72.8</span> <span class="re2">s</span>=<span class="nu0">33.55</span> <span class="re2">w</span>=-<span class="nu0">25.1</span> <span class="re2">e</span>=<span class="nu0">45.9</span> <span class="re2">res</span>=<span class="nu0">0</span>:05 <span class="re2">save</span>=eu <span class="re5">--overwrite</span>
+&nbsp;
+<span class="co0">#import map from folder</span>
+r.in.gdal <span class="re5">-o</span> <span class="re2">input</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod<span class="sy0">/</span>input<span class="sy0">/</span>worldclim<span class="sy0">/</span>current<span class="sy0">/</span>wc_5m<span class="sy0">/</span>tmean7.bil <span class="re2">output</span>=tmeanJuly <span class="re5">--o</span>
+<span class="co0">#cut extent of map to europe</span>
+r.mapcalc tmeanJulyEU = tmeanJuly
+&nbsp;
+<span class="co0">#put it in a loop to load all months </span>
+<span class="kw1">for</span> month <span class="kw1">in</span> <span class="sy0">*</span>.bil; <span class="kw1">do</span> <span class="co0">## where the extension is .bil</span>
+r.in.gdal <span class="re5">-o</span> <span class="re2">input</span>=<span class="re1">$month</span> <span class="re2">output</span>=<span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$month</span> .bil<span class="sy0">`</span> <span class="re5">--o</span> <span class="co0">## open the file, using basename to lose the extension for the grass file</span>
+r.mapcalc <span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$month</span> .bil<span class="sy0">`</span><span class="st0">&quot;EU&quot;</span> = <span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$month</span> .bil<span class="sy0">`</span> <span class="co0">## cut the map to europe</span>
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0">## cut corine data (and give it a better name)</span>
+r.mapcalc corineEU = g250_06_WGS84

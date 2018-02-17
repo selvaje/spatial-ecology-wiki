@@ -1,0 +1,75 @@
+====== Administration, grading, notes self evaluation etc.  ======
+  * [[sitedesign:sitedes_intro|Site design workshop]], Maysville, Missouri, USA\\
+  * [[wikiadmin:admin_unizar2010|admin, Master GIS Zaragoza 2010]]\\
+  * [[wikiadmin:admin_unibas2010|admin Doctoral School Potenza 2010]]\\
+  * [[wikiadmin:correction | correction ]]\\
+  * [[wikiadmin:serveroperation | Install www.spatial-ecology.net in the VM (localhost) (wget from ftp)  ]]\\
+  * [[wikiadmin:server_connection | Command line for server connection (ssh) ]]\\
+  * [[wikiadmin:adduser_aws | Add users AWS ]]\\
+
+risize the vmdk  http://www.howtoforge.com/how-to-shrink-vmware-virtual-disk-files-vmdk
+
+
+__dropbox account:__
+\\
+student@spatial-ecology.net\\
+ost4semPW
+\\
+
+itc2013@spatial-ecology.net\\
+studentITC2013
+
+\\
+IP = http://192.168.168.30/spatial-ecology.net/doku.php
+\\
+
+[[testpage]]
+\\
+connection with the ftp\\
+\\
+
+host ftp://spatial-ecology.net/ e and per http://www.fatcow.com/controlpanel/beta/\\
+
+loging speco
+pw   Ost4sem_pw4
+
+
+(vecchio loging non piu attivo 
+
+host ftp://spatial-ecology.net/\\
+login speco\\
+pw 4vivere4\\
+
+====== work in progress pages ======
+[[workprogress]]
+
+
+======  ost4holland ======
+
+
+^nbr^Azure pass^First Name^Surname^E-Mail^Country^
+|1|S31JI0CF6UD8|Helen|Moor|helen.moor@stockholmresilience.su.se|Sweden|
+|2|IHEDYYOH5NX8|Elikana Kalumanga|Ngallaba|ekalumanga@yahoo.com|Sweden|
+|3|CVVKQ3E1Y70X|Dirk Frederik|Van Apeldoorn|dirkva@gmail.com|Netherlands|
+|4|JYJ6Q6AKTMT5|Ping|Fu|ping.fu@natgeo.su.se|Sweden|
+|5|VNQLY5GLSJMM|Luis Eduardo|Ramirez Camargo|luis.ramirez-camargo@th-deg.de|Germany|
+|6|9DW175MMRFE4|Maria|Lathouri|mlathouri@yahoo.gr|Greece|
+|7|GGLM68I6MU9B|Rehmat|Ullah|r.ullah@utwente.nl|Netherlands|
+|8|NJ996BEQGA3I|Tim|Dudeck|tim.dudeck@uni-hamburg.de|Germany|
+|9|09GNEAKRF7V0|Omar Ali Ahmed|Mohamed|ali.negen@gmail.com|Egypt|
+|10|1QLH6H6T45RW|Haris Akram|Bhatti|bhatti23984@itc.nl|Netherlands|
+|11|LJGIEK8FXHEM|Vladimir|Gusarov|vladimir.gusarov@nhm.uio.no|Norway|
+|12|RM45EN5YRW8T|Matthias Benjamin|Siewert|matthias.siewert@natgeo.su.se|Sweden|
+|13|I1HYTMG1QPSS|Norhakim Bin|Yusof|n.yusof@utwente.nl|Netherlands|
+|14|CFY6LQ7JK9UI|Xiaojing|Wu|x.wu-1@utwente.nl|Netherlands|
+|15|JIMRLT33FOOP|Qijun|Jiang|qijun.jiang@wur.nl|Netherlands|
+|16|V7T7TS94EKH7|Ryan Daniel|Clark|ryan.clark@slu.se|Sweden|
+|17|3BHSTV5O80BE|Efthymia|Pavlidou|e.pavlidou@utwente.nl|Netherlands|
+|18|G0O82VBP8W4W|Hamed|Mehdi Poor|h.mehdipoor@utwente.nl|Netherlands|
+|19|AE6FT0182F6L|Nandin-Erdene|Tsendbazar|nandin.tsendbazar@wur.nl|Netherlands|
+|20|0SJ99XDA18QL|Agnieszka Helena|Malinowska|agnieszka.malinowska@wur.nl|Netherlands|
+|21|7V7V929TUOKS|Aart|Van Der Linden|aart.vanderlinden@wur.nl|Netherlands|
+|22|1AO315YDP7MI|Ejiet John|Wasige|wasige17285@itc.nl|Uganda|
+|23|QO2WH4BFO07H|Ahmed |Ibrahim|a.a.m.ibrahim@utwente.nl|Netherlands|
+|24|K3J4981XJJ97|free||||
+|25|XRPIH77YIF1O|free||||

@@ -1,0 +1,11 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:53:"Use GDAL/OGR and PKTOOLS for raster/vector operations";s:11:"description";a:2:{s:15:"tableofcontents";a:4:{i:0;a:4:{s:3:"hid";s:53:"use_gdal_ogr_and_pktools_for_raster_vector_operations";s:5:"title";s:53:"Use GDAL/OGR and PKTOOLS for raster/vector operations";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:13:"gdal_commands";s:5:"title";s:13:"GDAL Commands";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:2;a:4:{s:3:"hid";s:12:"ogr_commands";s:5:"title";s:12:"OGR Commands";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:3;a:4:{s:3:"hid";s:16:"pktools_commands";s:5:"title";s:16:"PKTOOLS Commands";s:4:"type";s:2:"ul";s:5:"level";i:2;}}s:8:"abstract";s:359:"Use GDAL/OGR and PKTOOLS for raster/vector operations
+
+
+
+Data Directory: /home/user/ost4sem/exercise/geodata_SDM/ 
+
+Script: /home/user/ost4sem/exercise/geodata_SDM/gdal_pktools.sh 
+
+cd /home/user/ost4sem/exercise/geodata_SDM
+wget https://www.dropbox.com/s/17pv8ajq4hvh4b6/gdal-ogr-pktools.sh
+gedit /home/user/ost4sem/exercise/geodata_SDM/gdal-ogr-pktools.sh &";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

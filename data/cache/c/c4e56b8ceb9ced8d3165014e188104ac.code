@@ -1,0 +1,1 @@
+<span class="kw2">awk</span> -F,  <span class="st_h">' {  for(i=1;i&lt;6; i++) if(NR==1) printf(&quot;%s&quot;,$i&quot; &quot; ) ; if(NR==1)  printf(&quot;%s&quot;,$25&quot; &quot; ) ; for(i=90;i&lt;95; i++) if(NR==1) printf(&quot;%s&quot;,&quot; &quot;$i  )   }'</span> test.csv <span class="sy0">&gt;</span> list_of_columns.csv

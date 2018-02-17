@@ -1,0 +1,1232 @@
+====== Introducing rasdaman ====== 
+Professor Peter Baumann presenting [[http://www.spatial-ecology.net/ost4sem/lecture/PBAumann20160615_FOSS_summerschool-intro.pdf| Spatio-Temporal Datacubes "one cube says more than a million images"]] Summer school 2016 in Matera, Italy.
+
+====== What is rasdaman? ======
+**Material prepared for Summer School: Hands-on Open Source Drone Mapping and High Performance Computing for Big Geo-Data, Matera, Italy,  13th-17th June 2016\\
+\\
+by:\\
+Vlad Merticariu (v.merticariu@jacobs-university.de)\\
+Alex Mircea Dumitru (m.dumitru@jacobs-university.de)**
+\\
+
+Rasdaman ("raster data manager") allows storing and querying massive multi-dimensional arrays, such as sensor, image, simulation, and statistics data appearing in
+domains like earth, space, and life science. This worldwide leading array analytics engine distinguishes itself by its flexibility, performance, and scalability.
+Rasdaman can process arrays residing in file system directories as well as in databases. From simple geo imagery services up to complex analytics,
+rasdaman provides the whole spectrum of functionality on spatio-temporal raster data - both regular and irregular grids. And it does so with an unprecedented
+performance and scalability, as recent scientific benchmarks show.
+
+![Rasdaman Image](http://rasdaman.flanche.net/img/rasdaman-collage.png "Rasdaman Overview")
+
+# Why rasdaman?
+Often, especially in the fields of remote sensing and geomatics, Big Data
+is synonym of Big Rasters: huge space-borne, air-borne, hyper-spectral images
+are literally creating a deluge of bytes.
+
+![Rasdaman Temporal Grid](http://rasdaman.flanche.net/img/grid.png "Rasdaman Temporal Grid")
+
+A first key feature is being open and standard. Data access and curation services are
+moving towards web GIS platforms, from simple visualization and download, to more advanced
+computations: it is a clear advantage when every service speaks the same language, and this
+language is usually defined by the Open Geospatial Consortium.
+
+rasdaman is the reference implementation of the OGC Web Coverage Service (WCS)
+and its team is actively participating in the evolution of the standards within OGC, especially
+for everything that surrounds the so-called coverages.
+
+![Copernicus Awards](http://rasdaman.flanche.net/img/copernicus.png "Copernicus Award")
+
+Aside of that, rasdaman is the reference (and only available implementation) of the most
+exciting extension of the WCS service: the Processing Extension. This key feature lets you
+exploit the flexibility of a full query language for coverages to request ad-hoc processing to the server,
+so that you can minimize bandwidth usage on data transfer and indeed: move the processing to the data.
+
+Underneath it all, the rasdaman Array DBMS ensures ad-hoc optimizations for the access and
+elaboration of multi-dimensional arrays, being especially prone to the storage of time-series or --- more
+generally --- hypercubes of images and gridded datasets.
+
+In the next subsections we will cover all these concepts in more detail: rasdaman and its
+RasQL query language will be described in Section 1;
+the OGC coverage model (GMLCOV) is explained in Section 2;
+finally Section 3 will talk about the OGC web services for coverages available with rasdaman.
+
+# Rasdaman and Rasql 
+
+## Installation
+
+Rasdaman supports multiple installation methods, from a simple deb / rpm package install to a more flexible installer 
+that allows you to select specific components to install and enable support for more "exotic" formats.
+
+To install from a debian package just add the rasdaman apt repository to your sources.list and then install rasdaman as any other package.
+```bash
+# Adding the repository on a ubuntu host
+echo "deb [arch=amd64] http://download.rasdaman.org/packages/ubuntu trusty nightly" \
+| sudo tee /etc/apt/sources.list.d/rasdaman.list
+
+# Installing rasdaman
+sudo apt-get update
+sudo apt-get install rasdaman
+```
+
+You can also do the same for an RPM based distribution (e.g. CentOS or Fedora) by following the instructions
+on this [page](http://rasdaman.org/wiki/InstallFromRPM).
+
+Finally, if you want to customize your installation, try the rasdaman installer following the instructions
+found on this [page](http://rasdaman.org/wiki/Installer).
+
+Once you have installed rasdaman, make sure it is working properly by issuing a simple query from the command-line.
+```bash
+# Make sure rasql is in your path
+source /etc/profile.d/rasdaman
+# Run the query
+rasql -q 'SELECT m FROM RAS_COLLECTIONNAMES as m" --out string
+```
+
+## Conceptual model 
+
+Now that we have a working rasdaman installation, let's explore the conceptual model behind it through some simple examples.
+
+Internally and invisible to the application, arrays are decomposed into smaller units by
+means of customizable tiling strategies, which are then maintained either directly on disk (for increased performance) 
+or in a conventional DBMS (for datacenter integration).
+
+### What exactly is an array?
+
+![Array concept](http://rasdaman.flanche.net/img/marray.png "Array concept")
+
+A multidimensional array is a set of elements which are ordered in space.
+The space considered here is discretized, i.e., only integer coordinates are admitted.
+
+The number of integers needed to identify a particular position in this
+space is called the *dimension* (sometimes also referred to as
+*dimensionality*. Each array element, which is referred to as cell, is
+positioned in space through its coordinates.
+
+A cell can contain a single value (such as an intensity value in case of
+grayscale images) or a composite value (such as integer triples for the
+red, green, and blue components of a true-color image). All cells share the
+same structure which is referred to as the array cell type array base type.
+
+In rasdaman databases, arrays are grouped into collections. All elements of a collection share the same array type definition. 
+Collections form the basis for array handling, just as tables do in relational database technology. All operations applied to 
+a collection are applied in term to each of the array in the collection.
+
+## Querying the data
+
+rasql provides declarative query functionality on collections (i.e., sets) of MDD stored in a rasdaman database. 
+The query language is based on the SQL-92 standard and the basis for the upcoming SQL/MDA standard. It extends the language with high-level 
+multidimensional operators.
+The general query structure is best explained by means of an example. Consider the following query: in the from clause, 
+mr is specified as the working collection on which all evaluation will take place. 
+This name, which serves as an “iterator variable” over this collection, can be used in other parts of the query for referencing 
+the particular collection element under inspection.
+
+```sql
+-- Basic example
+SELECT mr[100:150,40:80] / 2
+FROM   mr
+WHERE  some_cells( mr[120:160, 55:75] > 250 )
+
+-- Using an alias
+-- Remember operations are applied to each array in the collection
+SELECT (m + 1) * 2 FROM mr AS m
+
+```
+
+Optionally, an alias name can be given to the collection (see syntax below) – however, in most cases this is not necessary.
+In the where clause, a condition is phrased. Each collection element in turn is probed, and upon fulfillment of the condition the 
+item is added to the query result set. In the example query, part of the image is tested against a threshold value.
+Elements in the query result set, finally, can be "post-processed" in the select clause by applying further operations. In the case 
+on hand, a spatial extraction is done combined with an intensity reduction on the extracted image part.
+In summary, a rasql query returns a set fulfilling some search condition just as is the case with conventional SQL and OQL. 
+The difference lies in the operations which are available in the select and where clause: SQL does not support expressions containing 
+multidimensional operators, whereas rasql does.
+```sql
+-- Syntax
+SELECT resultList
+FROM   collName [ AS collAlias ]
+       [, collName [ AS collAlias ] ] ...
+[ WHERE  booleanExp ]
+```
+
+### Possible result types
+
+Type and format of the query result are specified in the select part of the query. The query result type can be multidimensional, 
+a struct, or atomic (i.e., scalar). The select clause can reference the collection iteration variable defined in the from clause; 
+each array in the collection will be assigned to this iteration variable successively.
+
+```sql
+-- Selecting one atomic scalar value
+SELECT m[0] FROM Values1D AS m
+
+-- Selecting one composite scalar value
+SELECT m[0;0] FROM rgb AS m
+
+-- Selecting a mdd value 
+SELECT m[0:10] FROM Values1D AS m
+SELECT m[0:10;0:10] FROM mr AS m
+```
+
+
+### Specifying the input: the From Clause
+
+In the from clause, the list of collections to be inspected is specified, optionally together with a 
+variable name which is associated to each collection. For query evaluation the cross product between 
+all participating collections is built which means that every possible combination of elements from all 
+collections is evaluated. For instance in case of two collections, each MDD of the first collection is 
+combined with each MDD of the second collection. Hence, combining a collection with n elements with a 
+collection containing m elements results in n*m combinations. This is important for estimating query response time.
+The following example subtracts each MDD of collection mr2 from each MDD of collection mr. 
+
+```sql
+SELECT mr – mr2
+FROM   mr, mr2
+```
+
+### Filtering the input: the Where Clause
+In the where clause, conditions are specified which members of the query result set must fulfil. 
+Like in SQL, predicates are built as boolean expressions using comparison, parenthesis, functions, etc. 
+Unlike SQL, however, rasql offers mechanisms to express selection criteria on multidimensional items.
+We can for example restrict the input of the query to those images where at least one difference pixel value is greater than 50
+
+```sql
+SELECT mr – mr2
+FROM  mr, mr2
+WHERE  some_cells( mr – mr2 > 50 )
+```
+
+### Describing the output: the Select Clause
+
+Type and format of the query result are specified in the select part of the query. 
+The query result type can be multidimensional, a struct, or atomic (i.e., scalar). 
+The select clause can reference the collection iteration variable defined in the from clause; 
+each array in the collection will be assigned to this iteration variable successively.
+
+```sql
+-- Selecting the mr image with the pixel intensity reduces by a factor of 2
+select mr / 2
+from   mr
+```
+
+#### Constants
+Atomic constants are written in standard C/C++ style. If necessary constants are augmented with a 
+one or two letter postfix to un­ambiguously determine its data type.
+```sql
+25c
+-1700L
+.4e-5D
+```
+
+#### Composite Constants
+Composite constants resemble records ("structs") over atomic con­stants or other records. Notation is as follows.
+```sql
+-- Syntax
+{ const_0,
+     ...
+  const_n
+}
+-- Example for a composite value with 3 bands
+SELECT {255, 200, 128}
+```
+
+
+#### Complex numbers
+Special built-in structs are complex and complexd for single and double precision complex numbers, resp.
+The resulting complex constant is of type
+complexd if at least one of the constituent expressions is double precision, otherwise the result is of type complex.
+```sql
+-- Syntax
+complex(re, im)
+
+-- Example returning equivalent of math 2 + 3i
+SELECT complex(2, 3)
+```
+
+#### Array Constants
+Small array constants can be indicated literally. 
+An array constant consists of the spatial domain specification followed by the cell values whereby 
+value sequencing is as follow. The array is linearized in a way that the lowest dimension1 is the "outermost" 
+dimension and the highest dimension2 is the "innermost" one. Within each dimension, elements are listed sequentially, 
+starting with the lower bound and proceeding until the upper bound. List elements for the innermost dimension are 
+separated by comma ",", all others by semicolon ";".
+The exact number of values as specified in the leading spatial domain expression must be provided. 
+All constants must have the same type; this will be the result array's base type.
+
+```sql
+-- Syntax
+< mintervalExp
+  scalarList_0 ;
+  ... ;
+  scalarList_n ;
+>
+-- Example of a 3 by 5 matrix
+SELECT < [-1:1,-2:2] 0, 1, 2, 3, 4; 1, 2, 3, 4, 5; 2, 3, 4, 5, 6 >
+```
+
+
+#### Spatial Domain
+The m-interval covered by an array is called the array's spatial domain. Function sdom() allows to 
+retrieve an array's current spatial domain. The current domain of an array is the minimal 
+axis-parallel bounding box containing all currently defined cells.
+
+```sql
+-- Syntax
+sdom(mddExpression)
+
+-- Returning the sdom of mr
+SELECT sdom(mr) FROM mr -- Result: [0:255;0:210]
+SELECT sdom(mr)[0] FROM mr -- Result: [0:255]
+SELECT sdom(mr)[0].lo FROM mr -- Result: [0]
+SELECT sdom(mr)[0].hi FROM mr -- Result: [255]
+```
+
+
+#### Trimming
+Reducing the spatial domain of an array while leaving the cell values unchanged is called trimming. Array dimension remains unchanged.
+The generalized trim operator allows restriction, extension, and a combination of both operations in a shorthand syntax. This operator does not check for proper subsetting or supersetting of the domain modifier.
+
+```sql
+-- Syntax
+mddExpression[mintervalExpression]
+
+-- Returning a cutout on x axis from pixel 120 to  pixel 160 and on y axis from 55 to 75
+SELECT mr[ 120:160, 55:75 ]
+FROM mr
+```
+
+#### Section
+A section allows to extract lower-dimen­sional layers ("slices") from an array.
+A section is accomplished through a trim expression by indicating the slicing position rather than a selection interval.
+A section can be made in any dimension within a trim expression. Each section reduces the dimension by one.
+
+```sql
+-- Syntax
+mddExp [ integerExp_0, ..., integerExp_n ]
+-- Selecting one slice out of a 3D cube
+SELECT m[0:720;0:360,1] FROM AvgLandTemp m
+```
+
+#### Induced Operations
+Induced operations allow to simultaneously apply a function originally working on a single cell value to 
+all cells of an MDD. The result MDD has the same spatial domain, but can change its base type.
+
+Unary induction means that only one array operand is involved in the expression. Two situations can occur:
+Either the operation is unary by nature (such as boolean not); then, this operation is applied to each array cell.
+Or the induce operation combines a single value (scalar) with the array; then, the contents of each cell is 
+combined with the scalar value.
+
+```sql
+--Syntax
+mddExp op mddExp
+
+-- Example adding two arrays and multiplying with a scalar
+SELECT m * m + 2 * m + 1 FROM mr AS m
+
+SELECT not(mr > 0) FROM mr
+
+SELECT mr * (mr > 255) FROM mr
+```
+
+#### Arithmetic, trigonometric, and exponential functions
+The following advanced arithmetic functions are available with the obvious meaning, each of them accepting an MDD object:
+abs() sqrt() exp() log() ln() pow() power() sin() cos() tan() sinh() cosh() tanh() arcsin() arccos() arctan()
+
+```sql
+--Syntax
+op(mddExpr)
+
+-- Example
+SELECT ln(m * m + 2 * m + 1) FROM mr AS m
+```
+
+#### Cast operation
+Sometimes the desired ultimate scalar type or MDD cell type is different from what the
+ MDD expression would suggest. To this end, the result type can be enforced explicitly through the cast operator.
+ 
+```sql
+-- Syntax
+(newType) mddExpression
+
+-- Example casting the result as an integer before summing elements to avoid overflow
+SELECT sum((long) mr) FROM mr
+```
+
+
+
+#### Composite Value Component Selection
+Component selection from a composite value is done with the dot operator well-known from programming languages. 
+The argument can either be a number (starting with 0) or the struct element name. Both statements of the following 
+example would select the green plane of the sample RGB image.
+This is a special case of a unary induced operator.
+
+```sql
+--Syntax
+mddExp.componentName
+
+-- Extracting the red channel from the rgb image
+SELECT rgb.red FROM rgb
+
+-- Component reorganization, red-green-blue image becomes blue-green-image
+SELECT {rgb.blue, rgb.green, rgb.red} FROM rgb
+
+```
+
+#### Case statement
+The rasdaman case statement serves to model n-fold case distinctions based on the SQL92 CASE statement
+ which essentially represents a list of IF-THEN statements evaluated sequentially until either a condition 
+ fires and delivers the corresponding result or the (mandatory) ELSE alternative is returned.
+In the simplest form, the case statement looks at a variable and compares it to different alternatives for 
+finding out what to deliver. The more involved version allows general predicates in the condition.
+This functionality is implemented in rasdaman on both scalars (where it resembles SQL) and on MDD objects 
+(where it establishes an induced operation). Due to the construction of the rasql syntax, the distinction between scalar 
+and induced operations is not reflected explicitly in the syntax, making query writing simpler.
+
+
+
+```sql
+-- Syntax
+CASE
+WHEN booleanExp THEN generalExp
+...
+ELSE generalExp
+END
+
+-- Traffic light classification
+SELECT
+  CASE
+  WHEN mr > 150 THEN { 255c,   0c,   0c }
+  WHEN mr > 100 THEN {   0c, 255c,   0c }
+  ELSE               {   0c,   0c, 255c }
+  END
+FROM mr
+```
+
+
+#### Scale Statement
+Shorthand functions are available to scale multidimensional objects. They receive an array as parameter, 
+plus a scale indicator. In the most common case, the scaling factor is an integer or float number. This factor then is 
+applied to all dimensions homogeneously. For a scaling with individual factors for each dimension, a scaling vector can be 
+supplied which, for each dimension, contains the resp. scale factor. Alternatively, a target domain can be specified to 
+which the object gets scaled.
+
+```sql
+-- Syntax
+scale( mddExp, intExp )
+scale( mddExp, floatExp )
+scale( mddExp, intVector )
+scale( mddExp, mintervalExp )
+
+-- Scaling downwards by a factor of 2
+SELECT scale( mr, 0.5 ) FROM mr
+
+-- Scaling by 4 on the first dimension 3 on the second
+SELECT scale( mr, [ 4, 3 ] FROM mr
+
+-- Scaling to an extent of 100 by 100
+SELECT scale( mr, [ 0:99, 0:99 ] ) FROM mr
+```
+
+
+#### Concat Statement
+Concatenation of two arrays “glues” together arrays by lining them up along an axis.
+This can be achieved with a shorthand function, concat, which for convenience is implemented as an n-ary operator accepting 
+an unlimited number of arrays. The operator takes the input arrays, lines them up along the concatenation dimension specified 
+in the request, and outputs one result array. To this end, each input array is shifted to the appropriate position, with the 
+first array’s position remaining unchanged; therefore, it is irrelevant whether array extents, along the concatenation dimension, 
+are disjoint, overlapping, or containing each other.
+The resulting array’s dimensionality is equal to the input array dimensionality.
+The resulting array extent is the sum of all extents along the con­cat­en­ation dimension, and the extent of the input arrays in all other dimensions.
+The resulting array cell type is the largest type covering all input array cell types (type coercion).
+
+```sql
+-- Syntax
+concat mddExp with mddExp ... with mddExp along integer
+
+-- Concatenating two images along the first dimension
+SELECT CONCAT mr WITH mr ALONG 0 FROM mr
+
+-- Arangement of 2 x 2 mr images
+SELECT CONCAT (CONCAT mr WITH mr ALONG 0)
+       WITH   (CONCAT mr WITH mr ALONG 0)
+       ALONG 1
+FROM mr
+```
+
+#### Condensers
+Frequently summary information of some kind is required about some array, such as sum or average of cell values. 
+To accomplish this, rasql provides the concept of condensers.
+A condense operation (or short: condenser) takes an array and summarizes its values using a summarization function, 
+either to a scalar value (e.g. computing the sum of all its cells), or to another array (e.g. summarizing a 3-D cube
+into a 2-D image by adding all the horizontal slices that the cube is composed of).
+A number of condensers is provided as rasql built-in function. For numeric arrays, add_cells() delivers the 
+sum and avg_cells() the average of all cell values. Operators min_cells() and max_cells() return the minimum 
+and maximum, resp., of all cell values in the argument array. For boolean arrays, the condenser count_cells() 
+counts the cells containing true. Finally, the some_cells() operation returns true if at least one cell of the boolean 
+MDD is true, all_cells() returns true if all of the MDD cells contain true as value. 
+Please keep in mind that, depending on their nature, operations take a boolean, numeric, or arbitrary mddExp as argument.
+
+```sql
+-- Syntax
+count_cells( mddExp )
+add_cells( mddExp )
+avg_cells( mddExp )
+min_cells( mddExp )
+max_cells( mddExp )
+some_cells( mddExp )
+all_cells( mddExp )
+
+-- Returning all the images of collection mr where all pixel values are greater than 20
+SELECT mr FROM mr WHERE all_cells( mr > 20 )
+
+-- Returning the average of a 1d collection
+SELECT avg_cells(m) FROM Values1D AS m
+
+```
+
+
+#### General Array Condenser
+All the condensers introduced above are special cases of a general principle which is represented by the general condenser statement.
+The general condense operation consolidates cell values of a multidimensional array to a scalar value based on the condensing operation indicated. 
+It iterates over a spatial domain while combining the result values of the cellExps through the condenserFunction indicated.
+The general condense operation consolidates cell values of a multidimensional array to a scalar value or an array, based on the condensing operation indicated.
+
+```sql
+-- Syntax
+CONDENSE condenserOp
+OVER     var IN mintervalExp
+WHERE    booleanExp
+USING    cellExp
+
+-- Returning a scalar representing the sum of all array values, multiplied by 2
+CONDENSE +
+OVER     x IN sdom(a)
+USING    2 * a[ x ]
+```
+
+
+#### General Array Constructor
+The marray constructor allows to create n-dimensional arrays with their content defined by a general expression. This is useful: 
+
+ - whenever the array is too large to be described as a constant (see Section 8.3) or 
+ - when the array's cell values are derived from some other source, e.g., for a histogram computation (see examples below).
+ 
+First, the constructor allocates an array in the server with the spatial domain defined by the cross product of all mintervalExp. In the second step, 
+the constructor iterates over the spatial domain defined as described, successively evaluating cellExp for each variable combination; 
+the result value is assigned to the cell with the coordinate currently under evaluation. To this end, cellExp can contain arbitrary occurrences of var.
+The cellExp must evaluate to a scalar (i.e., a single or composite value, as opposed to an array)
+
+```sql
+-- Syntax
+MARRAY var IN mintervalExp [, var IN mintervalExp]
+VALUES cellExp
+
+-- Creating an array of domain [ 1:100, -50:200 ] with values 1
+SELECT MARRAY x IN [ 1:100, -50:200 ] VALUES 1c
+
+-- Creating an array of 256 X 101 with the value in each cell equal to the number of the row
+SELECT MARRAY x IN [ 0:255, 0:100 ] VALUES x[0]
+
+-- Creating a histogram of values ranging 0 to 9 in the mr array
+SELECT MARRAY v IN [ 0 : 9 ]
+       VALUES CONDENSE +
+              OVER  x IN sdom(mr)
+              WHERE mr[x] = v[0]
+              USING 1
+FROM mr
+```
+
+
+#### Data format conversion
+Without further indication, arrays are accepted and delivered in the client's main memory format, regardless of the client and server architecture. 
+Sometimes, however, it is desirable to use some data exchange format - be it because some device provides a data stream to
+be inserted in to the database in a particular format, or be it a Web application where particular output formats
+have to be used to conform with the respective standards.
+To this end, rasql provides two families of operations:
+
+ - encode() for encoding an MDD in a particular data format repre­sent­at­ion; formally, the result will be a 1D byte array.
+ - decode() for decoding a byte stream (such as a query input parameter during insert – see examples below) into an actionable MDD.
+
+Implementation of these functions is based on GDAL and, hence, supports all GDAL formats.
+
+```sql
+-- Syntax
+encode( mddExp, formatidentifier )
+encode( mddExp, formatidentifier, formatParams )
+decode( mddExp )
+decode( mddExp, formatParams )
+
+-- Insert a file in the database and let the decode function figure out the type
+INSERT INTO rgb VALUES decode( $1 )
+-- Get it out as png
+SELECT encode( rgb, “png” ) FROM rgb
+```
+
+
+## Creating data
+
+### Create a collection
+The create collection statement is used to create a new, empty MDD collection by specifying its name and type. 
+The type must exist in the database schema. There must not be another collection in this database bearing the name indicated.
+
+```sql
+-- Syntax
+CREATE COLLECTION collName typeName
+
+-- Creating a collection called mr of type GreySet (i.e. 2 dimensions, char as base type)
+CREATE COLLECTION mr GreySet
+```
+
+### Dropping a collection
+A database collection can be deleted using the drop collection statement.
+```sql
+-- Syntax
+DROP COLLECTION collName 
+-- Example
+DROP COLLECTION mr 
+```
+
+### Inserting an array
+MDD objects can be inserted into database collections using the insert statement. 
+The array to be inserted must conform with the collection's type definition concerning 
+both cell type and spatial domain. One or more variable bounds in the collection's array 
+type definition allow degrees of freedom for the array to be inserted. Hence, the resulting 
+collection in this case can contain arrays with different spatial domain.
+
+```sql
+-- Syntax
+INSERT INTO collName
+VALUES mddExp
+
+-- Inserting a black image to the mr1 collection
+INSERT INTO mr
+VALUES MARRAY x IN [ 0:255, 0:210 ]
+       VALUES 0c
+```
+
+### Updating an array
+The update statement allows to manipulate arrays of a collection. Which elements of the collection 
+are affected can be determined with the where clause; by indicating a particular OID, single arrays can be updated.
+An update can be complete in that the whole array is replaced or partial, i.e., only part of the database array is changed. 
+Only those array cells are affected the spatial domain of the replacement expression on the right-hand side of the set clause.
+Pixel locations are matched pairwise according to the arrays' spatial domains. Therefore, to appropriately position the 
+replacement array, application of the shift() function can be necessary.
+As a rule, the spatial domain of the righthand side expression must be equal to or a subset of the database array's spatial domain.
+
+```sql
+-- Syntax
+UPDATE collName AS collIterator
+SET    updateSpec ASSIGN mddExp
+WHERE  booleanExp
+
+-- Make the mr picture a bit brighter in the 0:50;0:50 area
+UPDATE mr AS a
+SET    a[0:50;0:50] ASSING a[0:50; 0:50] * 2
+```
+
+
+### Delete
+Arrays are deleted from a database collection using the delete statement. The arrays to be 
+removed from a collection can be further characterized in an optional where clause. If the condition
+is omitted, all elements will be deleted so that the collection will be empty afterwards.
+
+```sql
+-- Syntax
+DELETE FROM collName [ as collIterator ]
+[ where  booleanExp ]
+
+-- Deleting the array from collection containing too many black pixels
+DELETE FROM mr AS a
+WHERE all_cells( a < 30 )
+```
+ 
+ 
+## Misc
+
+To check the list of collection that are available in the database you can select
+the special RAS_COLLECTIONNAMES collection.
+
+```sql
+SELECT m FROM RAS_COLLECTIONNAMES AS m
+```
+
+To find out the type, tiling and other metadata information about each collection,
+we can use the dbinfo operation.
+
+```sql
+SELECT dbinfo(m) FROM mr AS m
+```
+
+# OGC Web Services
+
+
+## Coverage Model
+
+The term “coverage” refers to any data representation that assigns values directly to spatial position:
+a coverage is a function from a spatial, temporal or spatiotemporal domain to an attribute range, as
+depicted in Figure 1.3. Coverages can include rasters, triangulated irregular networks, point clouds
+and polygon coverages, and they are the prevailing data structures in a number of application areas,
+such as remote sensing, meteorology and mapping of bathymetry, elevation, soil and vegetation.
+
+![Coverage Idea](http://rasdaman.flanche.net/img/coverage_concept_model.png "Coverage Idea")
+
+A coverage domain consists of a collection of direct positions in a coordinate space that may be
+defined in terms of up to three spatial dimensions as well as one (or more, Baumann et al. 2012)
+temporal dimensions. A coverage range is the set of feature attribute values associated by a function
+with the elements of the domain.
+
+In this document we will consider the so-called GMLCOV coverage model, which
+is an extension to the core GML coverage model and which provides richer coverages by means of
+two additional elements:
+
+ - the rangeType element, which describes the coverage’s range set data structure.
+ - the metadata element, to define concrete metadata structures and their semantics in extensions
+or application profiles.
+
+![Coverage UML](http://rasdaman.flanche.net/img/coverage_uml.png "Coverage UML")
+
+Indeed, a range value often consists of one or more fields (in remote sensing also referred to as
+bands or channels), however, much more general definitions are possible. The rangeType additional
+element thus describes range value structure based on the comprehensive SWE Common DataRecord
+model. A UML model of the GMLCOV coverage structure is reported in the figure below.
+
+So how are rasters represented in the coverage model? There are mainly two kinds of coverage that
+relate to rasdaman more closely:
+
+*RectifiedGridCoverage* Coverage whose geometry is represented by a rectified grid. A grid is
+(geo)rectified when the transformation between grid coordinates and the external CRS is
+affine, like shifts, rotations and shearings; we also call them rectilinear aligned, or rectilinear
+non-aligned grids.
+
+*ReferenceableGridCoverage* Coverage whose geometry is represented by a referenceable grid. A
+grid is (geo)referenceable when there is a non-affine transformation between the grid coordinates
+and the external CRS; this can be the case of rectilinear irreguarly-spaced grids, or
+curvilinear (“warped”) grids.
+
+Indeed, while we traditionally think of a grid as a classical aligned and orthogonal set of rectilinear
+lines (as in the example of Figure 1.5), the formal definition says it is a network of curves
+(grid lines) intersecting in a systematic way, forming grid points — at the intersections —
+and grid cells — at the interstices. This means that grid lines need not be straight and orthogonal.
+In GML, there is a third type of grid which acts as the internal representation of any
+(geo)rectified or referenceable geometric grid, simply called Grid: in this case we have no external 
+CRS coordinates, but integer indexing of the grid points along the orthogonal grid lines.
+Grids are strictly related to the concept of marrays in rasdaman, which indeed are the internal
+representation of the geo-coverages exposed to the WCS service.
+
+rasdaman supports the storage of rectified grids whose grid lines (or in this case grid axes) are aligned
+with the axes of the external cartesian coordinate system. However, when stacking rectified grids
+together in a same marray for building a spatial cube, or time series of images and cubes, irregular
+spacing is permitted so that the overall coverage becomes referenceable (rectilinear, aligned and irregularly spaced).
+
+Time is embedded in the geometry of a coverage by i) encoding time information through a temporal
+CRS which defines the epcoh time and the time step and ii) composing it with the usual geospatial
+projections.
+A last important point of discussion concerns the sample space of grid points (which must not be
+confused with the grid cells between the grid interstices). The feature attribute values associated
+with a grid point represent characteristics of the real world measured within a small space surrounding
+a sample point: the sample space. The representation of a sample space in a CRS is
+called footprint. When dealing with gridded data, it is usually assumed (like we do) that the sample
+cells equally divided among the sample points so that they are represented by a second set of cells
+congruent to the grid cells but offset so that each has a grid point at its center.
+
+
+For more on coverages and grids, you can refer to the cited OGC normatives, 
+for our usage of grids when building spatio-temporal coverages. In the next section we will
+describe the main features of the de-facto OGC standard for web services of coverages: the Web
+Coverage Service.
+
+## Web Coverage Service
+
+The reference OGC standard for publishing multi-dimensional coverages is the Web Coverage Service
+(WCS, http://www.opengeospatial.org/standards/wcs).
+In the recent years, WCS has been completely overhauled to fulfill a more modular structure based
+on a core set of minimum requirements that a WCS-compliant service must adhere to, plus a plethora
+of extensions for additional service features, protocol bindings, format extensions and application
+profiles. This refactoring ended up in version 2.0 of the interface standard, the current version being
+2.0.1.
+
+WCS 2.0 offers several advantages over previous versions, like support for general n-D raster data
+and non-raster coverage types. It is also harmonized with GML and Sensor Web Enablement (SWE)
+models.
+
+
+What are these cornerstone WCS functionalities then? As specifed in the WCS core standard, there
+are three kinds of request that can be sent to a WCS service:
+
+*GetCapabilities* - this operation allows a client to request information about the server’s capabilities
+and as well summary information on the offered coverages.
+```http
+GET http://ows.rasdaman.org/rasdaman/ows?service=WCS&version=2.0.1&request=GetCapabilities
+``` 
+
+*DescribeCoverage* - this operation allows a client to request a much more detailed description on
+the selected coverages, in particular their domain and range characteristics.
+```http
+GET http://ows.rasdaman.org/rasdaman/ows?service=WCS&version=2.0.1&request=DescribeCoverage&coverageId=AvgLandTemp
+```
+
+*GetCoverage* - this operation allows a client to request a coverage data, usually expetided together
+with some of its metadata, depending on the selected output format
+```http
+GET http://ows.rasdaman.org/rasdaman/ows?service=WCS&version=2.0.1&request=GetCoverage&coverageId=AvgLandTemp
+```
+
+As said before, many extensions can be plugged in a WCS service to add more interoperability and
+functionalities. The most interesting (recently accepted) extensions are the following:
+
+ - *Range Subsetting* — this extensions enables the selection of one or more
+attributes defined in the range of a coverage (e.g. extract arbitrary bands from an hyperspectral
+dataset).
+ - *Scaling* — this extension makes it possible to upscale and downscale coverages via WCS requests.
+ - *Interpolation* — the companion of the Scaling extension, it allows to
+declare the interpolation methods used when scaling (or when reprojecting, see CRS extension)
+and of course it allows to select a preferred interpolation in a GetCoverage request
+ - *Processing* - the gate to the WCPS query language: this extension lets the user write arbitrary 
+linear algebra expressions to be applied on coverages served by the WCS service.
+ - *Transaction* - this extension allows users to ingest and update coverages through the normal
+ web service
+ - *CRS Reprojection* — this extension allows reprojection of both input WCS subsets — especially 
+useful to let you subset a projected coverage via latitude/longitude degrees — and output coverage maps.
+In the next chapter you will see many of these extensions in action. 
+
+## Web Coverage Processing Service
+
+As mentioned in the beginning of this chapter, there is an other important standard related
+to coverages: the Web Coverage Processing Service (WCPS, http://www.opengeospatial.org/standards/wcps).
+
+The general structure of a WCPS requests is based on xQuery: the so-called “processing expression”
+is applied on each of the coverages specified in the given list (*coverageList*), given that the
+optional boolean expression returns true when evaluated on the coverage. Each coverage is referred
+to in the query by the correspondent identifier *variableName* in the processing expression.
+A processing expression branches down to a miscellanea of possible sub-expressions that are able to 
+return either scalars (scalar expressions) or encoded marrays (coverage expressions) and operate on both the 
+data and metadata of a coverage.
+
+```wcps
+for myCoverage in ( coverage1, coverage2 )
+where avg(myCoverage) > 10
+return avg(myCoverage)
+```
+
+## Web Map Service
+Web Map Service (WMS) is a standard protocol for serving (over the Internet) georeferenced map images 
+which a map server generates using data from a GIS database.
+
+WMS specifies a number of different request types, two of which are required by any WMS server:
+
+*GetCapabilities* - returns parameters about the WMS (such as map image format and WMS version compatibility) 
+ and the available layers (map bounding box, coordinate reference systems, URI of the data and whether the layer is mostly opaque or not)
+```http
+GET http://ows.rasdaman.org/rasdaman/ows?service=WMS&version=1.3.0&request=GetCapabilities
+``` 
+
+*GetMap* - returns a map image. Parameters include: width and height of the map, coordinate reference system, rendering style, image format
+```http
+GET http://example.org/rasdaman/ows?service=WMS&version=1.3.0&request=GetMap
+    &layers=MyLayer
+    &bbox=618885.0,3228195.0,690885.0,3300195.0
+    &crs=EPSG:32615
+    &width=600
+    &height=600
+    &format=image/png
+```
+
+### Style creation
+Styles can be created for layers using rasql query fragments. This allows users to define several visualization 
+options for the same dataset in a flexible way. Examples of such options would be color classification, NDVI detection etc. 
+The following HTTP request will create a style with the name, abstract and layer provided in the KVP parameters below
+```http
+GET http://example.org/rasdaman/ows?service=WMS&version=1.3.0&request=InsertStyle
+    &name=FireMarkup
+    &layer=dessert_area
+    &abstract=This style marks the areas where fires are in progress with the color red
+    &rasqlTransformFragment=case $Iterator when ($Iterator + 2) > 200 then {255, 0, 0} else $Iterator
+```
+
+
+## WCST Import
+WCSTImport is a utility application in the rasdaman software suite that allows importing of georeferenced datasets 
+into a WCS service supporting the Transaction Extension. 
+
+Its primary functionality is allowing the ingestion of archives of georeferenced files. This utility introduces two concepts:
+
+ - *Recipe* - a recipe is a class implementing the BaseRecipe that based on a set of parameters (ingredients) 
+ can import a set of files into WCS forming a well defined structure (image, regular timeseries, irregular timeseries etc)
+ - *Ingredients* - an ingredients file is a json file containing a set of parameters that define 
+ how the recipe should behave (e.g. the WCS endpoint, the CRS resolver etc are all ingredients)
+
+As of now, three recipes are in the codebase:
+
+ - Mosaic Map
+ - Regular Timeseries
+ - Irregular Timeseries
+For each one of them there is an ingredients file under the ingredients folder, which contain an example of what parameters 
+are available. 
+
+```json
+{
+  "config": {
+//The endpoint of the WCS service with the WCST extension enabled
+    "service_url": "http://localhost:8080/rasdaman/ows",
+//A directory where to store the intermediate results
+    "tmp_directory": "/tmp/",
+//A link to the crs resolver to be used, best to use one that is frequently updated
+    "crs_resolver": "http://opengis.net/def/",
+//A default 2D crs to be used when the given files do not have one
+    "default_crs": "http://opengis.net/def/OGC/0/Index2D",
+//If set to true, it will print the WCST requests and will not execute them. To actually execute them set it to false
+    "mock": true,
+//If set to true, the process will not require any user confirmation, use with care, useful for production environments when deployment is automated
+    "automated": false
+  },
+  "input": {
+//The name of the coverage, if the coverage already exists, we will update it with the new files
+    "coverage_id": "MyCoverage",
+    "paths": [
+//Any normal full (or relative to the ingredients file) path or regex that would work with the ls command. You can add as many as you wish, separated by commas
+      "/var/data/*"
+    ]
+  },
+  "recipe": {
+//The name of the recipe
+    "name": "map_mosaic",
+    "options": {
+//The tiling that you want to be done in rasdaman
+      "tiling": "ALIGNED [0:500, 0:500]"
+    }
+  }
+}
+
+```
+
+
+
+# Exercises
+
+## Exercise 1
+
+In this exercise we will start by storing and querying a single rectified 2D image in rasdaman. After
+describing and analyzing the dataset, we will use WCSTImport to ingest it, then we will show how to use WCS and WCPS to play with it 
+The Landsat program offers the longest continuous global record of the Earth’s surface since 1972.
+It has moderate spatial resolution, can be used to many research area like disaster recovery, flood,
+city growth, etc. As a joint program of NASA and USGS, the Landsat archive is free available to
+everyone on everywhere on the Earth. This sample RGB image — which we will call Multiband —
+has been downloaded from USGS (https://landsat.usgs.gov/) and was taken by the Enhanced
+Thematic Mapper (ETM) sensor onboard Landsat7. It covers part of the North of Germany and
+Nord Sea, and was acquired from 2000 to 2001.
+
+### Ingestion
+Before importing the image, we need to know about its metadata: Listing 6 shows some relevant
+information about the structure and geometry of this dataset.
+We can see that this is a 4657 × 4923 32N-UTM projected (EPSG:32632) RGB image, with
+resolution around 57 meters on both easting and northing directions, and origin in the upper-left
+corner.
+Let’s see now how to achieve a correct insertion of this image into rasdaman.
+
+First let's create a new directory and copy the map mosaic ingredients from the WCSTImport
+
+```bash
+cd /tmp && mkdir landsat && cd landsat;
+cp /opt/rasdaman/share/wcst_import/ingredients/map_mosaic.json landsat.json
+```
+
+Now we should edit this file and name the coverage to our liking and specify the path to our files:
+```json
+...
+    "coverage_id": "LandsatMultiBand",
+    "paths": [
+      "/var/geodata/LandsatMultiBand/*.tif"
+    ]
+...
+```
+
+And now we can import into our WCS service by calling wcst_import:
+
+```bash
+wcst_import.sh landsat.json
+```
+
+### Selection
+
+We can first verify that the image was correctly imported into WCS by issuing a DescribeCoverage
+request. 
+```http
+GET http://ows.rasdaman.org/rasdaman/ows?service=WCS&version=2.0.1&request=DescribeCoverage&coverageId=LansdatMultiBand
+```
+
+Now we can start sending some GetCoverage request to our server.
+As a first basic example, we might just want to retrieve a spatial cutout of the coverage by using
+subset KV-pair. As you see, we were able to specify our region of interest by specifying intervals on separate CRS
+axes. The labels that we used to identify a subset dimension are strictly equal to the labels
+(gml:axisAbbrev) declared in the definition of the CRS.
+When a single direct position is specified in a subset, then the coordinate is usually referred to as
+slicing position, and the subset is called a slice; otherwise the subsetting operation is also called
+trimming: 
+```http
+http://ows.rasdaman.org/rasdaman/ows?
+service=WCS&
+version=2.0.1&
+request=GetCoverage&
+coverageId=LandsatMultiBand&
+subset=E(300000 ,370000)&
+subset=N(5800000 ,5850000)&
+format=image / tiff
+```
+
+
+As a second example, we can now use the Range Subsetting WCS extension to extract a single band
+from the RGB coverage. This can be achieved by adding a rangesubset KV-pair in the request.
+```http
+http://ows.rasdaman.org/rasdaman/ows?
+service =WCS&
+version = 2.0.1&
+request = GetCoverage&
+coverageId = LandsatMultiBand&
+subset =E (300000 ,370000)&
+subset =N (5800000 ,5850000)&
+rangesubset =b1&
+format = "image / tiff"
+```
+
+### Processing
+
+While WCS is much about raw data access, you can go beyond simple read operations with the
+WCPS query language.
+Spectral indexes like NDVI and the like are usually the very first example of things that WCPS can
+do quite easily. Range subsetting is natively available in WCPS by means of a dot ‘.’ notation;
+trimmings and slicings are — of course — available too, but beware that the coordinates separator
+for a trim subset is here the colon ‘:’ (and not the comma ‘,’ as in a WCS subset).
+In the following example we retrieve a simple spectral index given by the average of
+the blue and the red bands.
+```wcps
+for cov in ( LandsatMultiBand )
+return encode (
+(( cov.b3+ cov .b1 )/2)[ E (490000:492000) , N (6000000)] ,
+"csv")
+```
+
+An other useful application of WCPS is to build false-color images from a multi- or hyper-spectral
+image. Although our sample image has only three channels, we can show how to build the proper
+query by, for instance, changing the order of the RGB channels:
+```wcps
+for cov in ( Multiband )
+return encode ({
+red : cov.b3;
+green : cov .b1;
+blue : cov .b2
+}[E (300000:370000) , N (5800000:5850000)] ,
+" tiff ")
+```
+
+By using the proposed RGB WCPS constructor you can also specify a pixel-wise transparency by
+assigning an additional ‘alpha’ channel to some other coverage field or maybe some predefined mask
+coverage you can add in the input coverage list. Try it for yourself!
+
+
+## Exercise 2
+
+In this exercise we will create and query a coverage representing a 3D cube of average monthly temperatures measured durying the day,
+over the entire globe,
+from February 2002 until June 2015. The dataset consists of several tiff images, each containing average temperatures corresponding
+to 1 timestamp. The temperature values are floating point numbers and represent Celsius degrees. The spatial resolution of
+the dataset is 0.1 x 0.1 degrees / value.
+
+### Ingestion
+
+The dataset is available for download [here](http://flanche.net/geodata/AverageTemperatureFloat.tar.gz/). It contains an ingredient
+file called avg-temp.json which can be adjusted to match non-default local configurations. In its current form, the ingredient
+creates a coverage named "AvgLandTemp", of type RefereceableGridCoverage. The CRS and axes information for Latitude and Longitude
+are read from the files, while for the time axis the AnsiDate CRS is used, and the timestamp corresponding to each file is
+read from the file name. The cube will internally be split in tiles of size 1000 x 1000 x 20 values.
+
+We can import the dataset by navigating in the bin directory of our rasdaman installation, and executing:
+```bash
+wcst_import.sh avg-temp.json
+```
+
+### Selection
+
+We can first verify that the image was correctly imported into WCS by issuing a DescribeCoverage
+request.
+```http
+GET http://ows.rasdaman.org/rasdaman/ows?
+service=WCS&
+version=2.0.1&
+request=DescribeCoverage&
+coverageId=AvgLandTemp
+```
+
+Further, we can request a subset of the coverage using a WCS GetCoverage request. For example, we can find out which was the
+average temperature measured during the day around Matera, in June 2015, using the following request:
+```http
+GET http://ows.rasdaman.org/rasdaman/ows?
+service=WCS&
+version=2.0.1&
+request=GetCoverage&
+coverageId=AvgLandTemp&
+subset=Lat(40.6)&
+subset=Long(16.6)&
+subset=ansi("2015-06")
+```
+
+### Processing
+
+We can use WCPS to do to on-the-fly processing on our cube. A list of example questions that the cube can answer via WCPS
+is presented below.
+
+What was the average monthly temperature measured during the day, around Matera, in June 2015? (achievs the same result as the WCS request above)
+
+```wcps
+for c in ( AvgLandTemp )
+return encode(
+c[Lat(40.6), Long(16.6), ansi("2014-07")],
+"csv")
+```
+
+How did the average monthly temperature measured during the day evolve in Matera, from January 2014 until December 2014?
+
+```wcps
+for c in ( AvgLandTemp )
+return encode(c[Lat(40.6), Long(16.6), ansi("2014-01":"2014-12")],
+"csv")
+```
+
+How did the average monthly temperature measured during the day evolve in Matera, from January 2014 until December 2014, in Kelvin?
+
+```wcps
+for c in ( AvgLandTemp )
+return encode(c[Lat(40.6), Long(16.6), ansi("2014-01":"2014-12")] + 273.15,
+"csv")
+```
+
+How did the map of world temperatures look like in July 2014?
+
+```wcps
+for c in ( AvgLandTemp )
+return encode(
+c[ansi("2014-07")],
+"png")
+```
+
+What was the minimum average monthly temperature measured during the day, in Matera, in the interval Januray 2001 - December 2010?
+
+```wcps
+for c in (AvgLandTemp)
+return encode(min(c[Lat(40.6), Long(16.6), ansi("2001-01":"2010-12")]),
+"csv")
+```
+
+What was the maximum average monthly temperature measured during the day, in Matera, in the interval Januray 2001 - December 2010?
+
+```wcps
+for c in (AvgLandTemp)
+return encode(max(c[Lat(40.6), Long(16.6), ansi("2001-01":"2010-12")]),
+"csv")
+```
+
+What was the average temperature measured during the day, in Matera, in the interval Januray 2001 - December 2010?
+
+```wcps
+for c in (AvgLandTemp)
+return encode(avg(c[Lat(40.6), Long(16.6), ansi("2001-01":"2010-12")]),
+"csv")
+```
+
+In how many months in 2014 was the average temperature during the day in Matera more than 20?
+
+```wcps
+for c in (AvgLandTemp)
+return encode(count(c[Lat(40.6), Long(16.6), ansi("2014-01":"2014-12")] > 20),
+"csv")
+```
+
+How did a recolored map of average temperatures look like in Europe in June 2015? Use blue for temperatures less than 18, yellow for
+ temperatures between 18 and 23, orange for temperatures between 23 and 30 and red for temperatures above 30.
+
+```wcps
+for c in ( AvgLandTemp ) return encode(switch
+ case c[ansi("2015-06"), Lat(35:75), Long(-20:40)] = 99999
+ return {red: 255; green: 255; blue: 255}
+ case 18 > c[ansi("2015-06"), Lat(35:75), Long(-20:40)]
+  return {red: 0; green: 0; blue: 255}
+ case 23 > c[ansi("2015-06"), Lat(35:75), Long(-20:40)]
+ return {red: 255; green: 255; blue: 0}
+ case 30 > c[ansi("2015-06"), Lat(35:75), Long(-20:40)]
+ return {red: 255; green: 140; blue: 0}
+ default return {red: 255; green: 0; blue: 0}  , "png")
+```
+
+What did the temperature evolve in Oslo in 2014, on a logarithmic scale?
+
+We can observe that in some months the temperature was negative, so outside of the definition domain of the logarithm function:
+
+```wcps
+for c in ( AvgLandTemp ) return encode(
+c[Lat(59.9), Long(10.7), ansi("2014-01":"2014-12")], "csv")
+```
+
+We can use the sitch statement to filter these values out:
+
+```wcps
+for c in ( AvgLandTemp ) return encode(
+switch case c[Lat(59.9), Long(10.7), ansi("2014-01":"2014-12")] > 0
+  return log(c[Lat(59.9), Long(10.7), ansi("2014-01":"2014-12")])
+  default return 0, "csv")
+```
+
+## Exercise 3
+
+This exercise focuses on the coverage constructor and coverage condenser operations. The datasets used are the ones from
+the previous exercises.
+
+Create a new 1d Coverage, with domain 0:100, with cell value i at index i.
+```wcps
+for c in ( AvgLandTemp ) return encode(
+coverage myCoverage over $p x(0:100) values $p,
+"csv")
+```
+
+How does the July temperature evolve in Matera, from 2001 to 2011?
+
+For answering this question we must first understand that the coverage constructor iterator iterates over grid coordinates, not geo coordinates. So if we have an axis with 10 grid points, but 100 degrees,
+to iterate through all the points we must iterate from 0 to 10, not from 0 to 100.
+Now we want to select the temperature in July in each year and for this we must find the grid points to iterate through. What we want to do, if you mentally visualise the cube with the temperature, is to set the iterator on the month of July in 2001, then jump from 12 slices (corresponding to 12 months), at every step.
+```wcps
+for c in ( AvgLandTemp ) return encode(
+coverage myCoverage over $p year(1:10) values
+c[Lat(40.6), Long(16.6), ansi($p*12 + 5)],
+"csv")
+```
+
+How about June?
+```wcps
+for c in ( AvgLandTemp ) return encode(
+coverage myCoverage over $p year(1:10) values
+c[Lat(40.6), Long(16.6), ansi($p*12 + 4)],
+"csv")
+```
+
+How about 2005 to 2010, January?
+```wcps
+for c in ( AvgLandTemp ) return encode(
+coverage myCoverage over $p year(5:10) values
+c[Lat(40.6), Long(16.6), ansi($p*12 - 1)],
+"csv")
+```
+
+General condenser: How many data points are there between January and Dec 2001?
+
+```wcps
+for c in ( AvgLandTemp ) return encode(
+condense +
+over $t ansi(imageCrsDomain(c[ansi("2001-01":"2001-12")], ansi))
+using 1, "csv")
+```
+Select a 2d image where every pixel is the average temperature at its corresponding Lat,Lon for the entire world in 2001.
+
+```wcps
+for c in ( AvgLandTemp ) return encode(
+condense +
+over $t ansi(imageCrsDomain(c[ansi("2001-01":"2001-12")], ansi))
+using c[ansi($t)], "png")
+```
+
+

@@ -1,0 +1,8 @@
+    <span class="kw2">sudo</span> <span class="kw2">nmap</span> <span class="re5">-sP</span> 144.173.78.1-<span class="nu0">255</span> <span class="sy0">|</span> <span class="kw2">grep</span> <span class="re5">-B2</span> 00:00:00:00:08:<span class="nu0">49</span>
+    <span class="co0"># or</span>
+    <span class="kw2">sudo</span> <span class="kw2">nmap</span> <span class="re5">-sP</span> 144.173.78.1-<span class="nu0">255</span> <span class="sy0">|</span> <span class="kw2">grep</span> <span class="re5">-B2</span> erox
+    <span class="co0"># replace 144.173.78 with the IP adrees of your network</span>
+    <span class="co0"># use the resulting stdout IP address to log grappolo via ssh</span>
+    <span class="kw2">ssh</span> admin<span class="sy0">@</span>144.173.78.xxx <span class="co0"># pass admin</span>
+    <span class="co0"># or</span>
+    <span class="kw2">ssh</span> stu1<span class="sy0">@</span>144.173.78.xxx  <span class="co0"># pass stu1</span>
