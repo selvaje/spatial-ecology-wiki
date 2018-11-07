@@ -1,1 +1,0 @@
-ogrinfo <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_multipolygons.sqlite <span class="re5">-sql</span> <span class="st0">&quot;select COUNT(landuse) from multipolygons where landuse='forest'&quot;</span>

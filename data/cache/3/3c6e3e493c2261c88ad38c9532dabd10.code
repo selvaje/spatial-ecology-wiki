@@ -1,1 +1,0 @@
-punti=read.csv2(&quot;~/ost4sem/project/input/punti.csv&quot;, header=T)

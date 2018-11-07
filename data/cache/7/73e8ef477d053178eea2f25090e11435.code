@@ -1,4 +1,0 @@
-for c in ( AvgLandTemp ) return encode(
-coverage myCoverage over $p year(1:10) values
-c[Lat(40.6), Long(16.6), ansi($p*12 + 5)],
-&quot;csv&quot;)

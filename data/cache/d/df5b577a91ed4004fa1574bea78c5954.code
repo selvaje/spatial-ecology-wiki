@@ -1,9 +1,0 @@
-<span class="co1"># Examine a shapefile with pyshp                                                                                     import shapefile</span>
-<span class="kw1">import</span> shapefile
-&nbsp;
-shp <span class="sy0">=</span> shapefile.<span class="me1">Reader</span><span class="br0">&#40;</span><span class="st0">&quot;point&quot;</span><span class="br0">&#41;</span>
-<span class="kw1">for</span> feature <span class="kw1">in</span> shp.<span class="me1">shapeRecords</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
-  point <span class="sy0">=</span> feature.<span class="me1">shape</span>.<span class="me1">points</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
-  rec <span class="sy0">=</span> feature.<span class="me1">record</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
-  <span class="kw1">print</span> point<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> point<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> rec
-&nbsp;

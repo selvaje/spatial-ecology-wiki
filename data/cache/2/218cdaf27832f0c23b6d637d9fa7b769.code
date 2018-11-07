@@ -1,5 +1,0 @@
-<span class="co1">-- Syntax</span>
-<span class="kw1">SELECT</span> resultList
-<span class="kw1">FROM</span>   collName <span class="br0">&#91;</span> <span class="kw1">AS</span> collAlias <span class="br0">&#93;</span>
-       <span class="br0">&#91;</span><span class="sy0">,</span> collName <span class="br0">&#91;</span> <span class="kw1">AS</span> collAlias <span class="br0">&#93;</span> <span class="br0">&#93;</span> <span class="sy0">...</span>
-<span class="br0">&#91;</span> <span class="kw1">WHERE</span>  booleanExp <span class="br0">&#93;</span>

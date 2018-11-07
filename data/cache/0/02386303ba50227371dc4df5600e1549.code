@@ -1,6 +1,0 @@
-<span class="kw1">import</span> shapely.<span class="me1">wkt</span>
-wktPoly <span class="sy0">=</span> <span class="st0">&quot;POLYGON((0 0,4 0,4 4,0 4,0 0),(1 1, 2 1, 2 2, 1 2,1 1))&quot;</span>
-poly <span class="sy0">=</span> shapely.<span class="me1">wkt</span>.<span class="me1">loads</span><span class="br0">&#40;</span>wktPoly<span class="br0">&#41;</span>
-<span class="kw1">print</span> poly.<span class="me1">area</span>
-<span class="kw1">print</span> poly.<span class="me1">wkt</span>
-&nbsp;

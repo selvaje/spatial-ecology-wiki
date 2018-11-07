@@ -1,3 +1,0 @@
-cstorage &lt;- merge(lcc_areas,datasummary,by.x=&quot;class&quot;,by.y=&quot;class_new&quot;, all=TRUE)
-cstorage$Total_SOC_30cm &lt;- cstorage$area * cstorage$mean_SOC_30cm
-cstorage$Total_SOC_100cm &lt;- cstorage$area * cstorage$mean_SOC_100cm

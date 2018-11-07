@@ -1,6 +1,0 @@
-ogrinfo <span class="re5">-al</span> <span class="re5">-geom</span>=NO   shp<span class="sy0">/</span>TM_WORLD_BORDERS.shp
-<span class="co0"># base on an attribute</span>
-ogr2ogr  <span class="re5">-overwrite</span>  <span class="re5">-f</span> <span class="st0">&quot;ESRI Shapefile&quot;</span>  <span class="re5">-where</span> <span class="st0">&quot;NAME = 'Uganda'&quot;</span> shp<span class="sy0">/</span>TM_UGANDA_BORDERS-<span class="nu0">0.3</span>.shp shp<span class="sy0">/</span>TM_WORLD_BORDERS.shp
-&nbsp;
-<span class="co0"># base on dimension of the polygons</span>
-ogr2ogr  <span class="re5">-overwrite</span>  <span class="re5">-f</span> <span class="st0">&quot;ESRI Shapefile&quot;</span> <span class="re5">-sql</span> <span class="st0">&quot;SELECT * FROM TM_WORLD_BORDERS WHERE OGR_GEOM_AREA &gt; 100 &quot;</span> shp<span class="sy0">/</span>TM_LARGE_BORDERS.shp shp<span class="sy0">/</span>TM_WORLD_BORDERS.shp

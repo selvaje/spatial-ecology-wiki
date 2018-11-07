@@ -1,8 +1,0 @@
-  landuse04=read.csv(&quot;~/ost4sem/studycase/Lab_scripts/inputs/2004_landuse.csv&quot;, header=TRUE, sep=&quot;,&quot;, dec=&quot;.&quot;, na.string=&quot;:&quot;)
-&nbsp;
-  forests04 = subset(landuse04, landuse04$forest.Wooded.area &gt;= 0 )
-  forests04$landuse = NULL
-  forests04.check=na.fail(forests04)
-  forests04$total.Total.area[1] = NA
-  forests04.check=na.fail(forests04)
-  Error in na.fail.default(forests04) : missing values in object

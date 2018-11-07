@@ -1,3 +1,0 @@
-<span class="kw2">umount</span> <span class="sy0">/</span>dev<span class="sy0">/</span>sdb1
-<span class="kw2">umount</span> <span class="sy0">/</span>dev<span class="sy0">/</span>sdb2
-<span class="kw2">sudo</span> <span class="kw2">dd</span> <span class="re2">bs</span>=4M <span class="re2">if</span>=jessie_and_soft.img <span class="re2">of</span>=<span class="sy0">/</span>dev<span class="sy0">/</span>sdb

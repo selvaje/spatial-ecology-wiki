@@ -6,6 +6,9 @@ The object of the exercise is to calculate the Moran's I index (using R) inside 
 \\
 http://www.spatial-ecology.net/ost4sem/lecture/pr.pdf
 \\
+https://cran.r-project.org/web/packages/foreach/vignettes/foreach.pdf
+
+\\
 \\
 {{:wiki:rstat:10poly.png?400|}}
 \\
@@ -19,7 +22,8 @@ and download this scripts
   wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_par4.R
   wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_seq1.R
   wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/R/moran_seq2.R
-  
+\\
+   cd /home/user/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/*10poly.*  /home/user/ost4sem/exercise/basic_adv_gdalogr/
 \\
 Sequential for loop
 {{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_seq1.R}}

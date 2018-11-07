@@ -1,2 +1,0 @@
-<span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">2</span>,<span class="nu0">2</span>  input.txt <span class="sy0">&gt;</span> input_s.txt 
-<span class="kw2">sh</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>studycase<span class="sy0">/</span>fire_risk<span class="sy0">/</span>sh_script<span class="sy0">/</span>average.sh input_s.txt output.txt

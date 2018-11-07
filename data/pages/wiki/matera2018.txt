@@ -1,0 +1,41 @@
+====== Students List  ======
+
+
+| ID | Participant | E-mail | Country | 
+| 1 | Florian 	Ellsäßer | fellsae@gwdg.de | Germany | 
+| 2 | Stephanie	Maier | stephanie.maier@ymail.com | Germany | 
+| 3 | Judith	Nathanail | Judith.nathanail@lqm.co.uk | UK | 
+| 4 | Frederik	Priem | Frederik.Priem@vub.be | Belgium | 
+| 5 | Michele	Zurlo | michele.zurlo@unimi.it | Italy | 
+| 6 | Beatrice	Laurita | beatrice.laurita@unifi.it | Italy | 
+| 7 | Martyna	Wietecha | m.wietecha@ibles.waw.pl | Poland | 
+| 8 | Aneta	Modzelewska  | a.modzelewska@ibles.waw.pl | Poland | 
+| 9 | Omid	Ghorbanzadeh | omid.ghorbanzadeh@stud.sbg.ac.at | Austria | 
+| 10 | Emanuela	Peduzzi | emanuela.peduzzi@gmail.com | Italy | 
+| 11 | Camille	Van Eupen | camille.vaneupen@kuleuven.be | Belgium | 
+| 12 | Alessandro	Sebastiani | alessandro.sebastiani@uniroma1.it | Italy | 
+| 13 | Matteo 	Pecchi | matteo.pecchi@unifi.it	| Italy | 
+| 14 | Jakub	Houška | jakub.houska@vukoz.cz | Czech Rep | 
+| 15 | Valentin	Louis | vmhl1@le.ac.uk | UK | 
+| 16 | Andrea	Baggio | Andrea.Baggio@hutton.ac.uk | UK | 
+| 17 | Daniela	Requena Suarez | daniela.requenasuarez@wur.nl | Netherlands | 
+| 18 | Gaetano	Messina | gaetano.messina@unirc.it | Italy | 
+| 19 | Dylan	Walshe | Dylan.Walshe@ul.ie | Ireland | 
+| 20 | Eduardo	Arlé | eduardo.arle@idiv.de | Germany | 
+| 21 | Aldo	Zoccheddu | aldozoc@hotmail.it | Italy | 
+| 22 | Carla	Pesagalli | carla.pesagalli@gmail.com | Italy | 
+| 23 | Nina	Teng | nina.teng@gmail.com | UK | 
+| 24 | Pietro	Vuono | pietro.vuono@gmail.com | Italy | 
+| 25 | Nicla Maria Notarangelo | nicla.notarangelo@unibas.it | Italy | 
+| 26 | Enrico Notarangelo | enotarangelo@openet.it | Italy | 
+| 27 | Khalil Ben Said | kbensaid@openet.it  | Italy | 
+
+
+====== Teachers List ======
+| 1 | Giuseppe Amatulli | giuseppe.amatulli@gmail.com | USA-Italy | 
+| 2 | Longzhu Shen | lqshen10@gmail.com | UK-China | 
+| 3 | Francesco Lovergine | f.lovergine@gmail.com | Italy | 
+| 4 | Aneta Florczyk  | Aneta.FLORCZYK@ec.europa.eu | EU-Poland | 
+| 5 | Thomas Kandler | hallo@thomaskandler.net | Germany | 
+
+

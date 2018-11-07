@@ -16,16 +16,40 @@ cd ~/ost4sem/grassdbnew/
 gdalwarp   -t_srs EPSG:4326  -s_srs EPSG:4326  input.tif input_proj.tif
 </code>
 
-
 Run the grass70 command  which create the newlocation based on the input_proj.tif 
 
 <code bash>
 rm -rf ~/ost4sem/grassdbnew/newlocation
-grass70 -text -c -c input_proj.tif newlocation ~/ost4sem/grassdbnew 
+grass72 -text -c input_proj.tif newlocation ~/ost4sem/grassdbnew 
 </code>
 
 
 <code bash>
 r.in.gdal input=input_proj.tif  output=input_proj
 </code>
+
+import the date
+
+<code bash>
+for file in *.tif 
+filename=$(basename $file .tif)
+r.in.gdal input=$file.tif  output=$file
+done
+</code>
+
+
+# from csv to shapefile 
+<code bash>
+pkascii2ogr  
+</code>
+
+import the shapefile 
+<code bash>
+v.in.ogr 
+</code>
+
+<code bash>
+r.stream.snap 
+</code>
+
 

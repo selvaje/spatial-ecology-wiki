@@ -30,6 +30,8 @@ You can run it directly by:
 <code bash> 
 sh file_name.sh 
 </code> 
+  * [[gdalpktools_kenya | Use GDAL/OGR and PKTOOLS for raster/vector operations]]
+  * [[gdalpktoolssetting | Use GDAL/OGR and PKTOOLS for raster/vector operations]] (setting)
   * [[gdalbasic | Basic GDAL scripts]]
   * [[ogrbasic | Basic OGR scripts]]
   * [[langintergartiongr | Languages/Software data integration: GDAL and OFT-TOOLS ]]
@@ -38,7 +40,6 @@ sh file_name.sh
   * [[gdalbasic_kenya | Basic GDAL and OGR for Kenya ]]
   * [[gdalpktools_kenya | GDAL/OGR and PKTOOLS]]
   * [[rsapplication yale | RS application for Yale ]]
-  * [[topovar | Derive topographic variable from a DEM  ]]
   * [[MODISwget | Download MODIS Land Surface Temperature (*.hdf) from Nasa ftp]]
 
 ===== GDAL and OGR links  =====

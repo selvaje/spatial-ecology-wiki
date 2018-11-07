@@ -1,8 +1,8 @@
 ====== University of Twente 2013 ======
 [[http://www.sense.nl/?module=courses&func=displayplanned&planningid=1332| course details here]]  - [[wikiholland:schedule2013|course schedule]]\\
-[[survey_twente2013| Satisfactory survey first week]]\\
-[[survey_twente2014| Satisfactory survey second week]]\\
-[[survey_twente2013-14| Satisfactory survey course overall]]\\
+[[survey_twente2013| Satisfaction survey first week]]\\
+[[survey_twente2014| Satisfaction survey second week]]\\
+[[survey_twente2013-14| Satisfaction survey course overall]]\\
 [[data_template| template data]]\\
 \\
 \\

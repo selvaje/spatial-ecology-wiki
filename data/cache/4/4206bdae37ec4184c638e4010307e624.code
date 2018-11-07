@@ -1,5 +1,0 @@
-<span class="co1">-- Syntax</span>
-complex<span class="br0">&#40;</span>re<span class="sy0">,</span> im<span class="br0">&#41;</span>
-&nbsp;
-<span class="co1">-- Example returning equivalent of math 2 + 3i</span>
-<span class="kw1">SELECT</span> complex<span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">3</span><span class="br0">&#41;</span>

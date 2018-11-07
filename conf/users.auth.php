@@ -15,6 +15,12 @@ student:$1$6Jmmq8hC$c0dq/A.l9Zj7USarvjz9H/:student:giuseppe.amatulli@gmail.com:s
 daniel:$1$UHwYgIeo$k/UA6IEMmDf1LgQMSqcUY/:Daniel:giuseppe.amatulli@gmail.com:teacher
 sami:$1$6NnyyJ7E$gHJYtUKfkfCE/yEe.3/vo1:sami:giuseppe.amatulli@gmail.com:teacher
 ost4sem_ste:$1$ncfuo3or$Rs0EmovDTPhxpgUiJoC8Y.:stefano:stefano@casalegno.net:teacher,director
-frankie:$1$3hBHI0Q0$D9sBgZVRIs3C3zuPnyL7p.:Francesco Lovergine:francesco@lovergine.com:teacher
 steve:$1$foRb5JYf$UiMFIG4h13w8qIzBJf5Oo1:Steve Weston:giuseppe.amatulli@gmail.com:teacher
 urbanhiker:$1$UHK1p8mc$QdEBUHrP9OHKXN4.vomjJ.:Ryan:ryan.thomas@yale.edu:user
+jbukoski:$1$uctBu66o$nG5nCiNKWjqcVO7B9UzKQ0:jbukoski:giuseppe.amatulli@gmail.com:teacher
+frankie:$1$u15t7SHG$ZMDPR7MFE957dXC.ad3v51:Francesco Lovergine:francesco@lovergine.com:teacher
+longzhu:$1$2DZn5mNq$1iuS0/t9syFAQWNmaOZdy0:longzhu:lqshen10@gmail.com:teacher
+aneta:$1$qjqEfy4A$4v6m2Z6JEVGPfqDPE7tsC0:aneta:giuseppe.amatulli@gmail.com:teacher
+tushar:$1$GDjR4j8F$o5CVn/sajP.iC2p3KypHC1:tushar:giuseppe.amatulli@gmail.com:teacher
+learner:$1$teyRi48a$JQr8RYGb5F38kCCydl2CN0:Trias Rahardianto:trias.rh@gmail.com:user
+ache:$1$HT4NVkvG$3BhPyja8s6xHnLfQJNGLL1:Acheampong Atta-Boateng:acheboate@gmail.com:user

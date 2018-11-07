@@ -1,1 +1,0 @@
-   r.mapcalc <span class="st0">&quot;mask_ita = if(potveg_ita@Vmodel &gt;= 0, 1, null())&quot;</span>

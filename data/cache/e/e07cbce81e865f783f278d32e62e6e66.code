@@ -1,6 +1,0 @@
-<span class="co1"># Numpy/gdalnumeric - Read an image, extract a band, save a new image</span>
-<span class="kw1">from</span> osgeo <span class="kw1">import</span> gdalnumeric
-srcArray <span class="sy0">=</span> gdalnumeric.<span class="me1">LoadFile</span><span class="br0">&#40;</span><span class="st0">&quot;SatImage.tif&quot;</span><span class="br0">&#41;</span>
-band1 <span class="sy0">=</span> srcArray<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
-gdalnumeric.<span class="me1">SaveArray</span><span class="br0">&#40;</span>band1<span class="sy0">,</span> <span class="st0">&quot;band1.jpg&quot;</span><span class="sy0">,</span> format<span class="sy0">=</span><span class="st0">&quot;JPEG&quot;</span><span class="br0">&#41;</span>
-&nbsp;

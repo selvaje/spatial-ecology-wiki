@@ -1,0 +1,24 @@
+<note tip>
+**FOSS4G 2017 Workshop - Monday, August 14th 2017**\\
+\\
+Prepare your lap-top
+
+ * [[wiki:foss4gInstallation | Virtual Machine installation instruction ]]
+
+Command line
+
+ * [[wiki:gdalpktools_kenya | Use GDAL/OGR and PKTOOLS for raster/vector operations]]
+ * [[wiki:unsupervisedPKT| Unsupervised classification ]]\\
+
+Understand and improve PC performance
+
+ * [[ wiki:RvsBASH | R vs BASH  ]]
+ * [[ wiki:RAMtmpfs| RAM vs HARD DISK ]]
+ * [[ wiki:cluster_xargs1 | Transform a simple "for loop" in multicore "for loop"]]
+
+Use AWS for RS and GIS operation
+
+ * [[wiki:AWSsetup | AWS setup ]]
+ * [[wiki:MODISwget | Download MODIS Land Surface Temperature from Nasa ftp]]
+
+</note>

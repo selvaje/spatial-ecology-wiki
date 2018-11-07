@@ -1,11 +1,11 @@
 ====== Basic AWK scripts======
 Exercise:\\
-Script: open by kate [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/basic_awk.sh | ~/ost4sem/exercise/basic_adv_awk/basic_awk.sh ]]\\
+Script: open by rstudio [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/basic_awk.sh | ~/ost4sem/exercise/basic_adv_awk/basic_awk.sh  ]]\\
 Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/input.txt | ~/ost4sem/exercise/basic_adv_awk/input.txt ]]\\
 Directory: ~/ost4sem/exercise/basic_adv_awk\\
 \\
 <code bash>
-kate ~/ost4sem/exercise/basic_adv_awk/basic_awk.sh &
+rstudio ~/ost4sem/exercise/basic_adv_awk/basic_awk.sh &
 </code>
 
 ==== Predefined variables ====

@@ -1,0 +1,35 @@
+#blognew {
+  /*font-size: 100%;
+  padding: 0.5em;
+  display: block;
+  width: 6.5em;
+  text-align: center;
+  border: 1px solid #8CACBB;
+  background: #DEE7EC; */
+  font-size: 81.25%;
+  padding: 0.2em;
+  display: block;
+  width: 30%;
+  text-align: center;
+  border: 1px dotted __border__;
+  background: __background_alt__;
+}
+
+#blognew a {
+  /*color: #000000;
+  font-weight: bold;*/
+}
+
+#blogolder, #blognewer {
+  /*border: solid 1px #8cacbb;*/
+  border: 1px solid __border__;
+  padding: 0.5em;
+}
+
+#blogolder {
+  float: right;
+}
+
+#blognewer {
+  float: left;
+}

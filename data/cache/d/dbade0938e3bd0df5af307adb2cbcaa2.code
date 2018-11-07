@@ -1,4 +1,0 @@
-<span class="kw1">for</span> COLNAME <span class="kw1">in</span>  <span class="sy0">`</span><span class="kw2">cat</span> list_of_columns.csv<span class="sy0">`</span> ; <span class="kw1">do</span>
-<span class="kw3">echo</span> <span class="re1">$COLNAME</span>
-<span class="kw2">awk</span> -F, <span class="re5">-v</span> <span class="re2">COLNAME</span>=<span class="re1">$COLNAME</span> <span class="st_h">' { if (NR==1)  { for (col=1;col&lt;=NF;col++) { if ($col==COLNAME) {colprint=col}}}  else  {print $1 &quot;,&quot; $colprint }} '</span> test.csv <span class="sy0">&gt;</span> OUTPUT_subset_<span class="re1">$COLNAME</span>.csv 
-<span class="kw1">done</span>

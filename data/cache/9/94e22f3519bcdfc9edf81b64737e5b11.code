@@ -1,6 +1,0 @@
-########################################
-### extraction of SOC_500_OL
-&nbsp;
-SOC_500_OL.t &lt;- ddply(d, .(pedon), summarise, 
-                     SOC_500_OL=sum(SOC_500) / length(unique(ol)))
-dataout &lt;- merge(dataout,SOC_500_OL.t,by.x=&quot;pedon_unique&quot;,by.y=&quot;pedon&quot;, all=TRUE)

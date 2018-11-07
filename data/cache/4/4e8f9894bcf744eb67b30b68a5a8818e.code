@@ -1,2 +1,0 @@
-  rev(sort(my.data.frame$new)) # 
-  [1] 40 20 11 10

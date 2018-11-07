@@ -1,5 +1,0 @@
-<span class="co0">#!/bin/bash</span>
-<span class="co0">#</span>
-<span class="co0"># auto launch ArduCopter</span>
-<span class="co0"># </span>
-ArduCopter-quad <span class="re5">-A</span> udp:172.24.1.119:<span class="nu0">14550</span>

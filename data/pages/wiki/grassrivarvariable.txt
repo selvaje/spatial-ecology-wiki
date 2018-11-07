@@ -6,8 +6,9 @@ Script written by Sami Domisch, October 2015
 
 Grass hydrological commands
 
-[[ https://grass.osgeo.org/grass70/manuals/topic_hydrology.html  ]] \\
-[[ https://grasswiki.osgeo.org/wiki/R.stream.*_modules  ]]
+[[ https://grass.osgeo.org/grass74/manuals/topic_hydrology.html  ]] \\
+[[ https://grasswiki.osgeo.org/wiki/R.stream.*_modules  ]] \\
+[[ http://grasswiki.osgeo.org/wiki/Hydrological_Sciences ]] \\
 
 {{:wiki:r_water_outlet.png?200|}}
 
@@ -106,11 +107,6 @@ Download and install the GRASS add-ons:
 
    wget -O $HOME/.grass7/addons/scripts/r.stream.variables  "https://www.dropbox.com/s/a7e3irt9vngbul0/r.stream.variables"
    chmod 777  $HOME/.grass7/addons/scripts/r.stream.variables
-
-
-
-https://www.dropbox.com/s/0d68r615mvkr9ve/r.stream.watersheds
-
 
 
 Add-on 1: Calculate the sub-watershed and sub-stream sections for each stream grid cell using 2 processors:

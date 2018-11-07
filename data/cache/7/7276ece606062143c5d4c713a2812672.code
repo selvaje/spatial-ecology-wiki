@@ -1,2 +1,0 @@
-r.out.gdal <span class="re2">input</span>=accumul.2ha<span class="sy0">@</span>PERMANENT <span class="re2">format</span>=GTiff <span class="re2">type</span>=Float64 \\
-<span class="re2">output</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>siteplan<span class="sy0">/</span>data<span class="sy0">/</span>raster<span class="sy0">/</span>water_accumul_broad.tif

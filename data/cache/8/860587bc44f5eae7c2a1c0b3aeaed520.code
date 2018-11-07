@@ -1,7 +1,0 @@
-<span class="kw3">echo</span> <span class="st0">&quot;&lt;OGRVRTDataSource&gt;&quot;</span> <span class="sy0">&gt;</span> point.vrt
-<span class="kw3">echo</span> <span class="st0">&quot;    &lt;OGRVRTLayer name=<span class="es1">\&quot;</span>point<span class="es1">\&quot;</span>&gt;&quot;</span> <span class="sy0">&gt;&gt;</span>  point.vrt
-<span class="kw3">echo</span> <span class="st0">&quot;        &lt;SrcDataSource&gt;point.csv&lt;/SrcDataSource&gt;&quot;</span>  <span class="sy0">&gt;&gt;</span>  point.vrt 
-<span class="kw3">echo</span> <span class="st0">&quot;	      &lt;GeometryType&gt;wkbPoint&lt;/GeometryType&gt;&quot;</span>  <span class="sy0">&gt;&gt;</span>  point.vrt  
-<span class="kw3">echo</span> <span class="st0">&quot;	      &lt;GeometryField encoding=<span class="es1">\&quot;</span>PointFromColumns<span class="es1">\&quot;</span> x=<span class="es1">\&quot;</span>X<span class="es1">\&quot;</span> y=<span class="es1">\&quot;</span>Y<span class="es1">\&quot;</span> z=<span class="es1">\&quot;</span>Z<span class="es1">\&quot;</span>/&gt; &quot;</span>  <span class="sy0">&gt;&gt;</span>  point.vrt 
-<span class="kw3">echo</span> <span class="st0">&quot;    &lt;/OGRVRTLayer&gt;&quot;</span>  <span class="sy0">&gt;&gt;</span>   point.vrt  
-<span class="kw3">echo</span> <span class="st0">&quot;&lt;/OGRVRTDataSource&gt;&quot;</span>  <span class="sy0">&gt;&gt;</span>   point.vrt 

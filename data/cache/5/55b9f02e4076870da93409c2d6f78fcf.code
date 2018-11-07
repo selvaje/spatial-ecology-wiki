@@ -1,9 +1,0 @@
-# masking every tile downloaded from WorlClim dataset using the boundaries of Norway (3 tiles) and Sweden (2 tiles) 
-gdalwarp -q -cutline /home/user/My_project/Vector/Norway.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_06.tif /home/user/My_project/Raster/bio12_06_masked_Norway.tif
-gdalwarp -q -cutline /home/user/My_project/Vector/Norway.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_07.tif /home/user/My_project/Raster/bio12_07_masked_Norway.tif
-gdalwarp -q -cutline /home/user/My_project/Vector/Norway.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_16.tif /home/user/My_project/Raster/bio12_16_masked_Norway.tif
-gdalwarp -q -cutline /home/user/My_project/Vector/Sweden.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_06.tif /home/user/My_project/Raster/bio12_06_masked_Sweden.tif
-gdalwarp -q -cutline /home/user/My_project/Vector/Sweden.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_16.tif /home/user/My_project/Raster/bio12_16_masked_Sweden.tif
-# merging all tif files with different parts of Norway (Sweden) in a single tif file for each country
-pkmosaic -i /home/user/My_project/Raster/bio12_06_masked_Sweden.tif -i /home/user/My_project/Raster/bio12_16_masked_Sweden.tif -o /home/user/My_project/Raster/bio12_masked_Sweden_merged.tif
-pkmosaic -i /home/user/My_project/Raster/bio12_06_masked_Norway.tif -i /home/user/My_project/Raster/bio12_07_masked_Norway.tif -i /home/user/My_project/Raster/bio12_16_masked_Norway.tif -o /home/user/My_project/Raster/bio12_masked_Norway_merged.tif

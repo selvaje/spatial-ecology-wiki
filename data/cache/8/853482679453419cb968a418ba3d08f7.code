@@ -1,5 +1,0 @@
-<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_awk
-<span class="kw2">awk</span> <span class="st_h">'BEGIN { print &quot;03 01&quot;}'</span> <span class="sy0">&gt;</span> MMDD.txt
-<span class="kw2">awk</span> <span class="st_h">'BEGIN { print &quot;05 11&quot;}'</span> <span class="sy0">&gt;&gt;</span> MMDD.txt
-<span class="kw2">awk</span> <span class="st_h">'BEGIN { print &quot;11 23&quot;}'</span> <span class="sy0">&gt;&gt;</span> MMDD.txt
-<span class="kw2">more</span> MMDD.txt

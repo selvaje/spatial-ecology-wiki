@@ -1,6 +1,0 @@
-par(mfrow=c(3,1))
-plot(full.est[,1],main=&quot;Manure&quot;,xlab=&quot;Catchment areas&quot;, ylab=&quot;Parameter estimates&quot;)
-plot(full.est[,2],main=&quot;R square&quot;,xlab=&quot;Catchment areas&quot;, ylab=&quot;R square&quot;)
-plot(full.est[,3], main=&quot;Intercept&quot;,xlab=&quot;Catchment areas&quot;, ylab=&quot;Parameter estimates&quot;)
-dev.copy(png,filename=&quot;~/ost4sem/project/unidk2010/nutrients/R/loop_values.png&quot;,width = 1500, height = 1000, bg=&quot;white&quot;)
-dev.off()

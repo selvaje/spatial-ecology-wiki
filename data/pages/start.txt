@@ -23,36 +23,54 @@ The content of the Spatial Ecology wiki is free and open source, [[http://creati
 Software we use have a GNU General Public License [[ http://www.gnu.org/licenses/licenses.html | GPL]] or [[ https://www.python.org/download/releases/2.7/license/ | GPL ]] / [[ https://en.wikipedia.org/wiki/MIT_License | MIT ]] compatible licenses. 
 {{:wiki:logo_gnu_small.png?100|}} [[wiki:acknowledgements |  Acknowledgments]]\\
 \\
-Find more about our [[ http://www.spatial-ecology.net/giuseppe/publications/Amatulli_et_al_OGRS.pdf | method]].
-Contact us  [[ http://www.spatial-ecology.org/ | here]] to organize a training and see more upcoming events.
+Find more about our [[ http://www.spatial-ecology.net/ost4sem/lecture/Amatulli_et_al_OGRS.pdf | method]].
+Contact us  //info at spatial-ecology.net// to organize a training and see more upcoming events.
 
 ==== News ==== 
+
 <note tip>
-**FOSS4G 2017 Workshop - Monday, August 14th 2017**\\
-\\
-Prepare your lap-top
-
- * [[wiki:foss4gInstallation | Virtual Machine installation instruction ]]
-
-Command line
-
- * [[wiki:gdalpktools_kenya | Use GDAL/OGR and PKTOOLS for raster/vector operations]]
- * [[wiki:unsupervisedPKT| Unsupervised classification ]]\\
-
-Understand and improve PC performance
-
- * [[ wiki:RvsBASH | R vs BASH  ]]
- * [[ wiki:RAMtmpfs| RAM vs HARD DISK ]]
- * [[ wiki:cluster_xargs1 | Transform a simple "for loop" in multicore "for loop"]]
-
-Use AWS for RS and GIS operation
-
- * [[wiki:AWSsetup | AWS setup ]]
- * [[wiki:MODISwget | Download MODIS Land Surface Temperature from Nasa ftp]]
-
+** [[ http://spatial-ecology.net/test/ | Geocomputation Summer Schools 2019 ]]**\\
 </note>
 
+<note tip>
+** Summer School Matera 2018 **\\
+** Geocomputation using free and open source software **
 
+[[ https://docs.google.com/document/d/1SNvX6-M4vlY8L9GgC23qiactNHXVxuwgiTwgipvFoFI/pub | Program ]] \\
+[[ http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:Matera2018sotis | Satisfactory survey ]] \\
+[[ http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:Matera2018 | Partecipant List ]] (check your student ID)  \\
+
+** Internet Connection **\\
+Please use the internet connection only for searching material needed for the course. 
+Avoid superfluous navigation such as facebook and youtube \\
+
+**WIFI 1 (ID students 1-6)**\\
+\\
+WifiName: VodafoneMobileWifi-38BD44 \\
+Password: 5427569146 \\
+\\
+**WIFI 2 (ID students 7-12)**\\
+\\
+WifiName: VodafoneMobileWifi-359741 \\
+Password: 3777265110\\
+\\
+**WIFI 3 (ID students 13-18)**\\
+(If you can rather then the wifi use the LAN - see below)\\
+\\
+WifiName: UnibasFree\\
+Password: Matera18\\
+\\
+**LAN (static IP)  (ID students 19-25)**\\
+(if you can not set the LAN login to UnibasFree)\\
+\\
+IP:              10.11.112.11-30  ## select a number from 11 to 30 \\
+Subnet mask:     255.255.240.0\\
+Gateway:         10.11.112.253\\
+\\
+DNS:              10.12.0.10\\
+\\
+
+</note>
 
 <note tip>
 New freshwater dataset:\\

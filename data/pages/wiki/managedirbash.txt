@@ -4,7 +4,7 @@ Use this wiki to get familiar with file commands useful for managing directories
 
 === pwd ls cd mkdir commands ===
 First we need to create a new folder in the  \\
-~/ost4sem/exercise/basic_adv_bash directory and call it example_manage
+~/ost4sem/exercise/basic\_adv\_bash directory and call it example_manage
 
 <code bash>
 pwd # Which is our working directory ?

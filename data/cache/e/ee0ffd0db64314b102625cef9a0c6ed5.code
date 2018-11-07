@@ -1,3 +1,0 @@
-  system(&quot;cd /home/ste/ost4sem/studycase/ITA_veg/outmaps/&quot;)
-  system(&quot;gdalwarp  -srcnodata &quot;-9999&quot;  -dstnodata &quot;-9999&quot; -of GTiff -ot Int16 -wt Int16     *.asc   ITAveg.tif&quot;) 
-  system(&quot;rm *tile_ITAveg.asc&quot;)

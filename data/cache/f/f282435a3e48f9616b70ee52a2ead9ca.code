@@ -1,7 +1,0 @@
-<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> <span class="kw2">gcc</span> <span class="kw2">g++</span> gdal-bin libgdal1-dev \\
-  libgsl0-dev libgsl0ldbl libproj-dev python-gdal \\
-  python-scipy python-tk python-qt4
-<span class="co0"># some of the above are already installed</span>
-<span class="kw2">wget</span> foris.fao.org<span class="sy0">/</span>static<span class="sy0">/</span>geospatialtoolkit<span class="sy0">/</span>releases<span class="sy0">/</span>OpenForisToolkit.run
-<span class="kw2">sudo</span> <span class="kw2">chmod</span> u+x OpenForisToolkit.run
-<span class="kw2">sudo</span> .<span class="sy0">/</span>OpenForisToolkit.run

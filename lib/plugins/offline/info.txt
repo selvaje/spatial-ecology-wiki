@@ -1,0 +1,8 @@
+# General Plugin Info do not edit
+
+author Carsten Graw
+email  dokuwiki@graw.eu
+date   2009-02-09
+name   Offline Version Plugin
+desc   Create a static version that is offline browseable
+url    http://www.graw.eu/dokuwiki/

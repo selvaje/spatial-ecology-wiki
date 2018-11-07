@@ -1,4 +1,0 @@
-<span class="kw2">mkdir</span> <span class="re1">$DIR</span>
-<span class="kw3">cd</span> <span class="re1">$DIR</span>
-<span class="kw2">cp</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span><span class="nu0">20</span><span class="sy0">*</span>_TSSP<span class="sy0">*</span><span class="nu0">43023435</span>.tif  <span class="re1">$DIR</span><span class="sy0">/</span>
-<span class="kw2">cp</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span>poly_fr.<span class="sy0">*</span>    <span class="re1">$DIR</span><span class="sy0">/</span> 

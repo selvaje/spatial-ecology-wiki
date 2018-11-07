@@ -1,4 +1,0 @@
-<span class="co0">#/bin/bash</span>
-<span class="co0">#VCF data for the 2004, 2005 and 2006 are re-projected. </span>
-<span class="kw3">cd</span> <span class="sy0">/</span>media<span class="sy0">/</span>DATA1<span class="sy0">/</span>tsend001<span class="sy0">/</span>vcf_modis_global 
-<span class="kw1">time</span> <span class="br0">&#40;</span><span class="kw2">ls</span> mod44b_world_200?_250.tif <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">12</span> <span class="kw2">bash</span> gdal_warp.sh <span class="br0">&#41;</span>

@@ -1,7 +1,0 @@
-  library(gdata)
-  forests04 = drop.levels(forests04)
-  str(forests04)
-&nbsp;
-  'data.frame':	15 obs. of  12 variables:
-  $ geographic.Unit                     : Factor w/ 15 levels &quot;be1 Région de Bruxelles-Capitale/Brussels Hoofdstedelijk Gewest&quot;,..: 15 1 4 2 5 6 7 8 9 3 ...
-...

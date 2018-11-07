@@ -28,11 +28,11 @@ The wxGUI graphical user interface provides options to rename/remove LOCATIONs a
 
  
 There are several ways to use and open Grass. The simplest way is to open a terminal and type:
-   grass72 -gui
+   grass74 -gui
 
 A second option is to use the Python GUI by typing in the terminal:
 
-  grass72 -wxpython
+  grass74 -wxpython
 
 
 the Graphical User Interface GUI will ask you to define the GISDBASE, LOCATION and MAPSET to use. If you want you can 
@@ -41,7 +41,7 @@ select the //Location wizard// to create a new location with newest projection p
 
 To enter grass in command line:
 
-   grass72 -text ~/ost4sem/grassdb/europe/PERMANENT
+   grass74 -text ~/ost4sem/grassdb/europe/PERMANENT
 
 Using the above command line we have already entered into the Grass environment with the GISDBASE, LOCATION and MAPSET defined by the ~/ost4sem/grassdb/europe/PCEM path
 <note tip>
@@ -84,12 +84,12 @@ If you started grass correctly you should visualize the following lines on your 
   MAPSET=PERMANENT
   MONITOR=x2
   GRASS_GUI=text
-  GRASS 7.0.0 (europe):~ > 
+  GRASS 7.2.1 (europe):~ > 
 
 <note important>
 Running grass through the bash shell terminal allows you to use all command line functionality of both grass and shell. As an example you can type
   ls
-and visualize all files available in your shell current working directory. This means that all your output files produced by bash command lines functionality will be saved in the current working directory (if not specified differently). Many non-geographical grass output features such as text file reports or images will be saved as well in the current working directory. The ** GRASS 7.0.0 (europe):~ > ** inform you are currently working in the home folder. See
+and visualize all files available in your shell current working directory. This means that all your output files produced by bash command lines functionality will be saved in the current working directory (if not specified differently). Many non-geographical grass output features such as text file reports or images will be saved as well in the current working directory. The ** GRASS 7.2.1 (europe):~ > ** inform you are currently working in the home folder. See
   pwd
 for double checking the same information using a bash command instead of the grass ** g.gisenv ** command.
 </note>
@@ -99,9 +99,9 @@ It is a good working habit within Grass to set bash shell working directory the 
   cd ~/ost4sem/grassdb/europe/
 
 On the terminal you will no longer see 
-   GRASS 7.0.0 (europe):~ >
+   GRASS 7.2.1 (europe):~ >
 but  
-   GRASS 7.0.0 (europe):~/ost4sem/grassdb/europe >
+   GRASS 7.2.1 (europe):~/ost4sem/grassdb/europe >
 and you will be aware tif your current bash shell working directory match your grass location directory.
 </note>
 
@@ -115,13 +115,13 @@ The **g.mapset** command allows you to change the Grass working directory and su
   g.gisenv 
 
 Now you should see the following settings:
-  GRASS 7.0.0 (europe):~/ost4sem/grassdb/europe > g.gisenv
+  GRASS 7.2.1 (europe):~/ost4sem/grassdb/europe > g.gisenv
   GISDBASE=/home/user/ost4sem/grassdb
   LOCATION_NAME=europe
   MAPSET=PCEM
   MONITOR=x2
   GRASS_GUI=text
-  GRASS 7.0.0 (europe):~/ost4sem/grassdb/europe >
+  GRASS 7.2.1 (europe):~/ost4sem/grassdb/europe >
 
 <note tip>
 From grass 6.3 only the -c flag creates a new mapset if it doesn't exist.; -l List available mapsets (!)
@@ -134,21 +134,20 @@ To list your available maps:
   g.list rast -p
 
 The user can add, modify, and delete data layers that exist under his current mapset. Although the user can also access (i.e., use) data that are stored under other mapsets in the same GRASS location, the user can only make permanent changes (create or modify data) located in the current mapset. To access maps in a different current mapset we use the addmapset option in the g.mapset function. As an example:
-  g.mapsets mapset=Vmodel operation=add
+  g.mapsets mapset=PCEMstat   operation=add
 
-Now we can access the Vmodel mapset and eventually **copy** a map from the Vmodel mapset to our current mapset directory using the g.copy function:
-  g.copy rast=potveg_ita@Vmodel,pvegita 
+Now we can access the fnfpc\_crop mapset and eventually **copy** a map from the PCEMstat mapset to our current mapset directory using the g.copy function:
+  g.copy rast=fnfpc_crop@PCEMstat,fnfpc_crop
   g.list rast -p
 
 And delete a map with the **g.remove** command 
 
-  g.remove -f type=rast name=pvegita
-  # g.remove rast=pvegita old syntax in grass 6.4
+  g.remove -f type=rast name=fnfpc_crop
   g.list rast
 
 You can access but not delete or modify a map in a different mapset from your current
-    g.remove -f type=rast name=potveg_europe@Vmodel
-    g.remove -f type=rast name=potveg_europe
+    g.remove -f type=rast name=fnfpc_crop@PCEMstat
+
 
 <note important>
 We have to be careful in Grass to understand the possible differences existing in the same MAPSET between the whole extent and resolution of the MAPSET itself, the extent, resolution and geographic location of our working region, and the extent and location of what we are visualising.  
@@ -212,27 +211,8 @@ The g.region are saved in the following folders and named as follow:
   * EUforest/windows/:   europe
   * PCEMstat/windows/:   alpine
   * PCEM/windows/:   alp_car
-  * Vmodel/windows/:   italy
   * PERMANENT/windows/:   scandinavia
 
-The Italian g.region is in Vmodel mapset, the Alpine and Carpathiens g.region is in PCEM mapset, and the Alpine region is in PCEMstat.
-<code bash>  
-  g.region italy@Vmodel -p 
-#projection: 99 (Lambert Azimuthal Equal Area)
-#zone:       0
-#datum:      ** unknown (default: WGS84) **
-#ellipsoid:  grs80
-#north:      2900000
-#south:      1400000
-#west:       3960000
-#east:       5100000
-#nsres:      1000
-#ewres:      1000
-#rows:       1500
-#cols:       1140
-#cells:      1710000
-</code>
-we see that the Italian g.region has 1km res and is 1500 x 1140 pixels
 
 We now resample the g.region at 20km using the **res=new_res** option and will set 75 x 57 pixels of 20k resolution
 <code bash>
@@ -314,72 +294,6 @@ Also grass has a GUI for vitalising maps. Open it and charge the maps just creat
    g.gui tcltk     
 Click on: add raster layer  > Base map (select your maps and refresh the Map display window.
 \\
-
-== GRASS display monitor ==
-
-In grass we can visualize maps in different monitors. To list available monitors, type:
-   d.mon -l
-
-We can open a monitor and display a raster 
-   g.region rast=fnfpc
-   d.mon start=wx0
-   d.rast fnfpc
-
-and do the same thing for the other maps in different monitors
-
-   d.mon start=wx1    
-   d.rast fnfpc_alpine10k 
-
-<note warning>
-wrong vizualisation extent
-</note>
-   g.region rast=fnfpc_alpine10k 
-   d.mon start=wx1    
-   d.rast fnfpc_alpine10k 
-
-   g.region rast=fnfpc_alpine_carpatien5k
-   d.mon start=x3
-   d.rast fnfpc_alpine_carpatien5k
-   
-   g.region rast=fnfpc_italy20k
-   d.mon start=x4
-   d.rast fnfpc_italy20k
-
-And we can also change the resolution of the visualization
-   g.region rast=fnfpc res=50000
-   d.mon start=x5
-   d.rast fnfpc
-
-\\
-
-The following table give some general info on the display functions of GRASS:
-\\
-
-^Command ^ Action ^ 
-|d.mon start=x0	 | Opens the terminal x0 |
-|d.mon stop=x0	 | Closes the terminal x0 |
-|d.mon select=x0 | Selects the terminal x0 |
-|d.mon -l        | Displays the list of available monitors |
-|d.frame -e      | Manages display frames on the user's graphics monitor |
-|d.vect col=red  | Displays and overlays vector map layers in the red color|
-|d.rast          | Displays and overlays raster map layers |
-|d.m             | Display manager for GRASS |
-|d.what.vect     | Allows the user to interactively query a vector map |
-|d.legend        | Displays a legend for a raster map | 
-
-\\
-<note tip>
-here [[http://grass.itc.it/gdp/html_grass64/display.html| is a detailed explanation and full list of d. modules]]
-</note>
-
-\\
-Let's have a look now at the Pinus cembra distribution map, downloaded from the [[whttp://ww.euforgen.org|Euforgen database]]
-   
-   g.region rast=pcem_euforgen
-   d.mon start=wx1
-   d.rast pcem_euforgen
-   d.vect map=EUcountry@EUforest fcolor="none" col=red
-
    
 ===== Generating multiple maps with standardized settings ===== 
 

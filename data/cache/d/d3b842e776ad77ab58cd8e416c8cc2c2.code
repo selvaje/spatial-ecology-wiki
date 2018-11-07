@@ -1,2 +1,0 @@
-<span class="kw2">rm</span> <span class="re5">-rf</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>newlocation
-grass70 <span class="re5">-text</span> <span class="re5">-c</span> <span class="re5">-c</span> input_proj.tif newlocation ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew 

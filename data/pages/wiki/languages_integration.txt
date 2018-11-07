@@ -8,7 +8,7 @@ Tips and tricks to import/export variables, run a program being inside to anothe
    * [[ LangIntegratiTheory2 | Languages/Software integration: BASH and R]]\\
    * [[ LangIntergartionGR | Languages/Software integration: PKTOOLS and OFT-TOOLS]]\\
    * [[ LangIntergartionPTOT | Languages/Software integration: GRASS and R]]\\
-   * [[ LangIntergartionPkR | Languages/Software integration: GDAL, PKTOOLS and R]]\\
+   * [[ LangIntergartionPkR | Languages/Software integration: GDAL, PKTOOLS and R]] Matera 2018\\
    * [[wiki:weld| Landsat]]\\
    * [[wiki:pk_tools | PKTOOLS ]]\\
    * [[wiki:LangIntergartionGRASSBASH |  Compute Modis NDVI using GRASS and Bash ]]\\

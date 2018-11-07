@@ -1,3 +1,0 @@
-for myCoverage in ( coverage1, coverage2 )
-where avg(myCoverage) &gt; 10
-return avg(myCoverage)

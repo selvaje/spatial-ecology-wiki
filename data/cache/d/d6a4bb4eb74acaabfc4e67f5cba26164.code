@@ -1,4 +1,0 @@
-gdal_translate <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> -a_srs EPSG:<span class="nu0">4326</span>  input.tif input_proj.tif
-<span class="co0"># or you can also use gdalwarp</span>
-gdalwarp <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  -t_srs EPSG:<span class="nu0">4326</span>  -s_srs EPSG:<span class="nu0">4326</span>  input.tif input_proj.tif
-gdalinfo input_proj.tif

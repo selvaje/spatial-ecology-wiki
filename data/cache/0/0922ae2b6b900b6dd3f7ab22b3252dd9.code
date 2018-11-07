@@ -1,2 +1,0 @@
-load(&quot;~/ost4sem/studycase/ITA_veg/models/RF23tune_ITAveg&quot;)
-gc()

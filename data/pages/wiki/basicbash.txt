@@ -1,11 +1,10 @@
 ====== Basic bash scripts ======
 Getitor installation 
 
-sudo apt-get install gedit  gedit-plugins
 
 
 Exercise:\\
-Script: open by gedit [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_bash/basic_bash.sh | ~/ost4sem/exercise/basic_adv_bash/basic_bash.sh ]]\\
+Script: open by rstudio [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_bash/basic_bash.sh | ~/ost4sem/exercise/basic_adv_bash/basic_bash.sh ]]\\
 Data: [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_bash/aver_month_nuts3_fire.asc | ~/ost4sem/exercise/basic_adv_bash/aver_month_nuts3_fire.asc ]]\\
 Directory: ~/ost4sem/exercise/basic\_adv\_bash
 
@@ -13,7 +12,7 @@ Directory: ~/ost4sem/exercise/basic\_adv\_bash
 
 Change directory and create a little file from a large file:
 <code bash>
-gedit ~/ost4sem/exercise/basic_adv_bash/basic_bash.sh &
+rstudio ~/ost4sem/exercise/basic_adv_bash/basic_bash.sh &
 cd ~/ost4sem/exercise/basic_adv_bash/
 head -1000 aver_month_nuts3_fire.asc > input.txt 
 </code>

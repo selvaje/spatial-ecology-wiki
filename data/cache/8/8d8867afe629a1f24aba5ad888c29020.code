@@ -1,8 +1,0 @@
-<span class="co1">-- Syntax</span>
-<span class="kw1">UPDATE</span> collName <span class="kw1">AS</span> collIterator
-<span class="kw1">SET</span>    updateSpec ASSIGN mddExp
-<span class="kw1">WHERE</span>  booleanExp
-&nbsp;
-<span class="co1">-- Make the mr picture a bit brighter in the 0:50;0:50 area</span>
-<span class="kw1">UPDATE</span> mr <span class="kw1">AS</span> a
-<span class="kw1">SET</span>    a<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">50</span>;<span class="nu0">0</span>:<span class="nu0">50</span><span class="br0">&#93;</span> ASSING a<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">50</span>; <span class="nu0">0</span>:<span class="nu0">50</span><span class="br0">&#93;</span> <span class="sy0">*</span> <span class="nu0">2</span>

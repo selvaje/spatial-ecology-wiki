@@ -1,9 +1,0 @@
-http://ows.rasdaman.org/rasdaman/ows?
-service =WCS&amp;
-version = 2.0.1&amp;
-request = GetCoverage&amp;
-coverageId = LandsatMultiBand&amp;
-subset =E (300000 ,370000)&amp;
-subset =N (5800000 ,5850000)&amp;
-rangesubset =b1&amp;
-format = &quot;image / tiff&quot;

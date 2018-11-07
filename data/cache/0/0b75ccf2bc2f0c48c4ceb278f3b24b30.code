@@ -1,2 +1,0 @@
-  load(&quot;~/ost4sem/exercise/basic_adv_r/outputs/landuse2004&quot;)
-  str(landuse04)

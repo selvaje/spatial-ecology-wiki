@@ -1,6 +1,0 @@
-<span class="kw2">rm</span> <span class="re5">-f</span> shp<span class="sy0">/</span>polygons_stat.sqlite
-pkextractogr <span class="re5">-srcnodata</span> <span class="re5">-339999995214436424907732413799364296704</span>   <span class="re5">-r</span> mean <span class="re5">-r</span> stdev <span class="re5">-r</span> min    <span class="re5">-i</span> vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif <span class="re5">-s</span>  shp<span class="sy0">/</span>polygons.sqlite    <span class="re5">-o</span>   shp<span class="sy0">/</span>polygons_stat.sqlite
-&nbsp;
-<span class="co0"># we can also create a csv that can be manipulate later on with awk</span>
-<span class="kw2">rm</span>  <span class="re5">-f</span> shp<span class="sy0">/</span>polygons_stat.csv
-pkextractogr <span class="re5">-f</span> CSV <span class="re5">-srcnodata</span> <span class="re5">-339999995214436424907732413799364296704</span>   <span class="re5">-r</span> mean <span class="re5">-r</span> stdev <span class="re5">-r</span> min    <span class="re5">-i</span> vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif <span class="re5">-s</span>  shp<span class="sy0">/</span>polygons.sqlite    <span class="re5">-o</span>   shp<span class="sy0">/</span>polygons_stat.csv

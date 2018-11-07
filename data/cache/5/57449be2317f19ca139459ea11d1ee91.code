@@ -1,3 +1,0 @@
-  ? read.table
-&nbsp;
-  landuse04=read.csv(&quot;~/ost4sem/exercise/basic_adv_r/inputs/2004_landuse.csv&quot;, header=TRUE, sep=&quot;,&quot;, dec=&quot;.&quot;, na.string=&quot;:&quot;)

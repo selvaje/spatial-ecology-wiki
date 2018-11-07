@@ -1,0 +1,194 @@
+#Preparation
+
+**Data** 
+
+Use the following link in Firefox [[https://wetransfer.com/downloads/a7e90b26a8b840801788f7541f7c771920180607185110/ebc04cabb9e22b790f0fd180515086a220180607185110/71ea65|External data]]
+
+Open a terminal to prepare the data folder.
+   ls /home/user/Downloads/ss_se2018_d5.zip
+   
+   cd /home/user/
+   mv /home/user/Downloads/ss_se2018_d5.zip .
+   unzip ss_se2018_d5.zip
+   
+   ls /home/user/ss_se2018_d5/
+   
+   cd /home/user/ss_se2018_d5/
+   pwd
+
+
+**Jupyther Notebook**
+
+In a new terminal, execute
+   jupyter-notebook 
+
+Firefox should open automatically.
+
+====== Geopandas ======
+
+
+Introduction to Geopandas library.
+
+In the Jupyther Notebook (Firefox) open:
+
+   ss_se2018_d5/ex1_intro.ipynb
+
+//Ex1.A1// 
+
+Alternative to Geopandas for quick reprojecting of a SHP. 
+
+====== Urban centres application ======
+
+Land efficiency for selected urban centres of the Northen Italy. 
+
+Most of datasets are already prepared. 
+
+Downloaded from [[http://ghsl.jrc.ec.europa.eu/datasets.php|GHSL page]]:
+  * Built-up area grids 1990 and 2014 (1-km) from GHS BUILT-UP GRID (LDS)
+  * Population grids 1990 and 2014 (1-km) from GHS POPULATION GRID (LDS)
+  * A grid with unique IDs for urban centres from GHS SETTLEMENT GRID (LDS)
+
+and, clipped to the area of the Northen Italy. The BBOX from the previous exercise. 
+
+   gdal_translate -projwin_srs "EPSG:3035" -projwin 4045461.3772923313 2675342.7008133745 4636823.940878151 2286230.217545237 src/GHS_BUILT_LDS1990_GLOBE_R2016A_54009_1k_v1_0.tif input/B1990.tif
+
+   gdal_translate -projwin_srs "EPSG:3035" -projwin 4045461.3772923313 2675342.7008133745 4636823.940878151 2286230.217545237 src/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0.tif input/B2014.tif
+
+   gdal_translate -projwin_srs "EPSG:3035" -projwin 4045461.3772923313 2675342.7008133745 4636823.940878151 2286230.217545237 src/GHS_POP_GPW42015_GLOBE_R2015A_54009_1k_v1_0.tif input/P2015.tif
+
+   gdal_translate -projwin_srs "EPSG:3035" -projwin 4045461.3772923313 2675342.7008133745 4636823.940878151 2286230.217545237 src/GHS_POP_GPW41990_GLOBE_R2015A_54009_1k_v1_0.tif input/P1990.tif
+
+   gdal_translate -projwin_srs "EPSG:3035" -projwin 4045461.3772923313 2675342.7008133745 4636823.940878151 2286230.217545237 src/GHS_SMOD_POP2015HDC_GLOBE_R2016A_54009_1k_v1_0.tif input/HDC2015.tif
+
+In the Jupyther Notebook (Firefox) open:
+
+   ss_se2018_d5/ex2_lue.ipynb
+
+//Ex2.A1// 
+
+Generate a polygon per each urban centre of the Northen Italy.
+
+//Ex2.A2//
+
+We want only values for the area of the selected urban centre. We should exclude the values that are outside the HDC polygon. 
+   
+//Ex2.A3//
+
+Generate a SHP with the LUE stats for this urban centre. 
+
+//Ex2.A4//
+
+Generate a file with LUE stats for all urban centres of the Northen Italy. 
+
+
+
+
+
+====== openCV ======
+
+
+
+[[https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_morphological_ops/py_morphological_ops.html|Quick tutorial]]
+
+
+First, we need to add it. From terminal:
+
+   sudo apt-get install python-opencv
+
+
+Flood areas from [[https://data.jrc.ec.europa.eu/collection/id-0054|GloFAS]] 
+
+The flood hazard map Flood Dataset is prepared already as follows: <note>It is only for demonstration purposes!</note>
+
+   gdal_translate -projwin 4045461.3772923313 2675342.7008133745 4636823.940878151 2286230.217545237 floodMapEU_rp10y.tif floodMapEU_rp10y_nIT.tif
+
+   gdal_calc.py --calc="(A>0)*1+(A<=0)*0" -A floodMapEU_rp10y_nIT.tif --type=Byte --co="COMPRESS=LZW" --NoDataValue=0 --outfile=input/floodMapEU_rp10y_nIT_msk.tif
+   
+   
+//Ex3.A1//
+
+Mollweide, 1-km ? EPSG:54009
+
+   gdalwarp -t_srs '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m' -s_srs EPSG:3035 -tr 1000 1000  input/floodMapEU_rp10y_nIT_msk.tif output/flood_msk.tif
+   
+   
+
+
+
+In the Jupyther Notebook (Firefox) open:
+
+   ss_se2018_d5/ex3_cv2.ipynb
+
+
+
+
+
+   
+   
+
+#Help
+
+
+**Ex1.A1**
+
+__Hint:__ use terminal
+
+   ogr2ogr -clipsrc 6.503202 43.663531 14.046604 47.170673 -t_srs EPSG:3035 -s_srs EPSG:4326 output/WDPA_June2018_ITA-shapefile-polygons_nIT_LAEAL.shp input/WDPA_June2018_ITA-shapefile-polygons.shp
+
+**Ex2.A1**
+
+__Hint:__ use terminal
+
+   gdal_polygonize.py -f "ESRI Shapefile" input/HDC2015.tif output/HDC2015.shp
+
+Visualise in QGIS. Is it correct??
+
+   gdal_calc.py --calc="(A>0)*1+(A<=0)*0" -A input/HDC2015.tif --type=Byte --co="COMPRESS=LZW" --outfile=output/HDC2015_msk.tif
+   
+   gdal_polygonize.py -mask output/HDC2015_msk.tif -f "ESRI Shapefile" input/HDC2015.tif output/HDC2015.shp
+
+
+**Ex2.A2** 
+
+__Hint:__ we need to apply a mask. We could create one using polygon ... but 8-)   
+ 
+
+**Ex2.A3** 
+
+__Hint:__ First create a GeoDataFramework. Then, look into documentation...
+
+
+   hdc_lue = gpd.GeoDataFrame(pd.DataFrame( data={'LUE_GHS_MEAN': [np.mean(lue)],'LCPGR': [lcrpgr], } ), crs={'init': 'epsg:54009'}, geometry=[hdc.geometry.values[0]])
+   hdc_lue.to_file(os.path.join(odir,'hdc_lue.shp'))
+                          
+                          
+
+
+**Ex2.A4**
+
+Generate a file with LUE stats for all urban centres of the Northen Italy.
+
+__Hint:__ Loop
+
+
+#Comments
+
+The recent version:
+  * better integration with //shapely//,
+  * better integration with //matplotlib//
+ 
+Examples:
+
+
+   aoi_geom = shapely.ops.unary_union(north_it.geometry).buffer(10000)
+   
+   aoi_geom = north_it.unary_union.buffer(10000) 
+   
+   # you do not need 
+   %matplotlib inline
+   
+   # colors, labels, etc
+   ax = portsIT.buffer(25000).plot(axes=ax)
+   
+   ax = portsIT.buffer(10000).plot(ax=ax, color='green')
+   

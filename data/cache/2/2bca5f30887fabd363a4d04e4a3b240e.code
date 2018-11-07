@@ -1,3 +1,0 @@
-kate ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_bash<span class="sy0">/</span>adv_bash.sh <span class="sy0">&amp;</span>
-<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_bash<span class="sy0">/</span>
-<span class="kw2">head</span> <span class="re5">-1000</span> aver_month_nuts3_fire.asc <span class="sy0">&gt;</span> input.txt 

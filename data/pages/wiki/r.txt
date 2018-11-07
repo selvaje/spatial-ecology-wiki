@@ -6,20 +6,21 @@ In this part of the wiki-training site we provide various sections:
 [[http://www.spatial-ecology.net/ost4sem/lecture/R_intro_speco.pdf | download]] or open it from your VM @: ~/ost4sem/lecture/r_intro_speco.pdf\\
 
 ===== R Tutorials =====
-
+  * [[ basicrMarkdownTEST | Starting with R - MarkdownTEST ]]
+  * [[ basicrMarkdown | Starting with R - Markdown ]] 
   * [[ basicr | Starting with R - wiki]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/basic_r.R  | download script]] or  ~/ost4sem/exercise/basic\_adv\_r/basic\_r.R
   * [[installpkage |Installing a new package - wiki]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/install_packages.R |download script]] or ~/ost4sem/exercise/basic\_adv\_r/install\_packages.R
   * [[loopsr|Create a script, ifelse condition, loop and graphics - wiki]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/altitude.R |download script]] or  ~/ost4sem/exercise/basic\_adv\_r/altitude.R
   * [[wiki:rstat:r_geography|Geographical analyses in R - wiki]]. R as a GIS, spatial auto correlation, spatial covariance.
   * [[grassandr|Embed grass functions in R - wiki]]
   * [[wiki:rstat:sdmodel| Species Distribution Modeling]] with R
+  * [[wiki:rstat:rgwmodel| Intro to geographically weighted models]] **GWmodel package** by Dr. Paul Harris
   * [[wiki:rstat:Rparale| Parallel Processing in R]] by Steve Weston
   * [[ http://research.computing.yale.edu/training/ycrc-bootcamps/writing-efficient-r-code | Writing Efficient R Code ]] by Steve Weston
-  * [[wiki:rstat:rgwmodel| Intro to geographically weighted models]] **GWmodel package** by Dr. Paul Harris
-
 
 ===== R exercises =====
-
+  * [[autocor_bp|Spatial autocorrelation and aggregation of units]]
+  * [[landuse_bp|Land Use and Land Cover Change ]]
   * [[lm_and_graphicr|A simple linear model and a graphic - wiki]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/linear_reg_model.R |download script]] or  ~/ost4sem/exercise/basic\_adv\_r/linear\_reg\_model.R
   * [[kappar|Example of kappa statistics - wiki ]] on simulated data. [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/kappastat.R|download script]] or  ~/ost4sem/exercise/basic\_adv\_r/kappastat.R
   * [[pcem_syneco_r|The auto ecology and synecology of Swiss Stone Pine in a graphic - wiki ]] [[http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_r/advanced_synecology.R|download script]] or ~/ost4sem/exercise/basic\_adv\_r/advanced\_synecology.R

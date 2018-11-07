@@ -1,2 +1,0 @@
-markdata$residual &lt;- reg8$residual
-str(markdata$residual)

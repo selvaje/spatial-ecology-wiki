@@ -1,2 +1,0 @@
-<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> mlocate
-<span class="kw2">sudo</span> <span class="kw2">updatedb</span>

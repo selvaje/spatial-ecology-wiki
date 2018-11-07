@@ -1,2 +1,0 @@
-   #write.csv(tune.mtry.RF23t, file= &quot;~/ost4sem/studycase/ITA_veg/results/tuneMtry_RF23t.csv&quot;)
-   write.csv(tune.mtry.RF23t, file= &quot;~/ost4sem/studycase/ITA_veg/myresults/tuneMtry_RF23t.csv&quot;)

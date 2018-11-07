@@ -1,9 +1,0 @@
-<span class="co1"># Unzip a shapefile with a for loop</span>
-<span class="kw1">import</span> <span class="kw3">zipfile</span>
-<span class="kw2">zip</span> <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;hancock.zip&quot;</span><span class="sy0">,</span> <span class="st0">&quot;rb&quot;</span><span class="br0">&#41;</span>
-zipShape <span class="sy0">=</span> <span class="kw3">zipfile</span>.<span class="me1">ZipFile</span><span class="br0">&#40;</span><span class="kw2">zip</span><span class="br0">&#41;</span>
-<span class="kw1">for</span> fileName <span class="kw1">in</span> zipShape.<span class="me1">namelist</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
-  out <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>fileName<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span>
-  out.<span class="me1">write</span><span class="br0">&#40;</span>zipShape.<span class="me1">read</span><span class="br0">&#40;</span>fileName<span class="br0">&#41;</span><span class="br0">&#41;</span>
-  out.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
-&nbsp;

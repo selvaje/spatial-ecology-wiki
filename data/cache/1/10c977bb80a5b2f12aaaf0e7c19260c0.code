@@ -1,4 +1,0 @@
-x = 60
-  logical.value =  x &gt;  3
-  logical.value
-  [1] TRUE

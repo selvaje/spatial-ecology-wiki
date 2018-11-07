@@ -1,1 +1,0 @@
-    pkdiff <span class="re5">-i</span> testmap_final_ff.tif <span class="re5">-ref</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_VA.shp <span class="re5">-cm</span>

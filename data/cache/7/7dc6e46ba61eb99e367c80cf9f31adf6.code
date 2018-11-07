@@ -1,7 +1,0 @@
-pkcreatect <span class="re5">-i</span> image.tif <span class="re5">-o</span> image_ct.tif <span class="re5">-m</span> <span class="nu0">0</span> <span class="re5">-M</span> <span class="nu0">50</span> <span class="co0"># attach color table to image with values between 0 and 50</span>
-&nbsp;
-pkcreatect <span class="re5">-i</span> image.tif <span class="re5">-o</span> image_ct.tif <span class="re5">-m</span> <span class="nu0">0</span> <span class="re5">-M</span> <span class="nu0">100</span> <span class="re5">-l</span> legend.tif <span class="co0"># attach grey scale &quot;color&quot; table to image with values between 0 and 100 and create a legend image (annotation needs to be drawn manually)</span>
-&nbsp;
-pkcreatect <span class="re5">-i</span> image.tif <span class="re5">-o</span> image_ct.tif <span class="re5">-ct</span> colourtable.txt <span class="co0"># attach predefined color table to image</span>
-&nbsp;
-pkcreatect <span class="re5">-i</span> image.tif <span class="re5">-o</span> image_noct.tif <span class="re5">-ct</span> none <span class="co0"># remove color table from image</span>

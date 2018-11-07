@@ -1,4 +1,0 @@
-<span class="co1">-- Syntax</span>
-mddExp <span class="br0">&#91;</span> integerExp_0<span class="sy0">,</span> <span class="sy0">...,</span> integerExp_n <span class="br0">&#93;</span>
-<span class="co1">-- Selecting one slice out of a 3D cube</span>
-<span class="kw1">SELECT</span> m<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">720</span>;<span class="nu0">0</span>:<span class="nu0">360</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="kw1">FROM</span> AvgLandTemp m

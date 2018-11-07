@@ -1,2 +1,0 @@
-<span class="kw3">cd</span> <span class="re1">$HOME</span><span class="sy0">/</span>scratch<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>Introduction_to_hSDM<span class="sy0">/</span>input_txt
-<span class="kw2">head</span> <span class="re5">-1000</span> point_data.txt <span class="sy0">&gt;</span> point_data_small.txt

@@ -1,6 +1,0 @@
-<span class="co0"># at point location</span>
-<span class="kw2">rm</span> shp<span class="sy0">/</span>point_stat.csv
-pkextractogr <span class="re5">-f</span> CSV <span class="re5">-srcnodata</span> <span class="re5">-339999995214436424907732413799364296704</span> <span class="re5">-r</span> mean <span class="re5">-r</span> stdev <span class="re5">-r</span> min    <span class="re5">-i</span> vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif <span class="re5">-s</span>  shp<span class="sy0">/</span>presence.shp <span class="re5">-o</span>   shp<span class="sy0">/</span>point_stat.csv
-<span class="co0"># at point location + 1 pixel around </span>
-<span class="kw2">rm</span> shp<span class="sy0">/</span>point-buf_stat.csv
-pkextractogr <span class="re5">-f</span> CSV <span class="re5">-buf</span> <span class="nu0">2</span> <span class="re5">-srcnodata</span> <span class="re5">-339999995214436424907732413799364296704</span> <span class="re5">-r</span> mean <span class="re5">-r</span> stdev <span class="re5">-r</span> min <span class="re5">-i</span> vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif <span class="re5">-s</span> shp<span class="sy0">/</span>presence.shp <span class="re5">-o</span> shp<span class="sy0">/</span>point-buf_stat.csv

@@ -18,17 +18,35 @@ Material prepared by:\\
 
 ===== Python Tutorials =====
   * [[ wiki:python:basicpython |  Starting with Python - wiki]] 
-  * [[ wiki:python:basicpython1 | Python basis - wiki]]
+  * Introduction to Python 1 [[ http://www.spatial-ecology.net/ost4sem/exercise/python_intro/01_Python_Intro.html|  01_Python_Intro  ]]\\
+
+   cd /home/user/ost4sem/exercise/python_intro
+   wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
+   jupyter-notebook  /home/user/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
+   
+
+  * Introduction to Python 2 [[ http://www.spatial-ecology.net/ost4sem/exercise/python_intro/01_Python_Intro.html|  02_Geo_Python ]]\\
+
+   cd /home/user/ost4sem/exercise/python_intro/
+   wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
+   jupyter-notebook  /home/user/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
+   
+
+
+  * [[ wiki:python:basicpython1 | Python Fibonaci ]]
   * [[ wiki:python:basicpython2 | Python for dummies - wiki]]
-  * [[ wiki:python:basicpython3 | Python for not-so-dummies - wiki]]
-  * [[ wiki:python:basicpython4 | Use Python for pattern searching ]]
-  * [[ wiki:python:basicpython5 | Using GDAL/OGR API for GIS analysis ]]
+  * [[ wiki:python:basicpython3 | Python for not-so-dummies - wiki]] (frankie)
+  * [[ wiki:python:basicpython4 | Use Python for pattern searching ]] (frankie)
+  * [[ wiki:python:basicpython5 | Using GDAL/OGR API for GIS analysis ]] (frankie)
   * [[ wiki:python:basicpython6 | Call bash command (so gdal/pktools) from python ]]
-  * [[ wiki:python:geocoding | Geocoding with geopy]]
-
-
+  * [[ wiki:python:geocoding | Geocoding with geopy]] (frankie)
+  * [[ wiki:python:webservice | Hands-on web services]] (frankie)
+  * [[ https://research.computing.yale.edu/training/ycrc-bootcamps/ycrc-bootcamp-python-mpi-parallel-programming | Python MPI for Parallel Programming ]] (Stephen Weston)
+  * [[ https://research.computing.yale.edu/training/ycrc-bootcamps/scripting-python | Scripting with Python ]] (Stephen Weston)
+  * [[ wiki:python:anetaurban | python urban ]]
  
 
+\\
 ===== Python exercises =====
 
 [[ wiki:python:segmentwatershed | Image segmentation using watershed algorithm]]
@@ -40,6 +58,9 @@ Material prepared by:\\
   * [[https://www.scipy.org/| Scipy ]]Scientific python
   * [[http://pandas.pydata.org/| Pandas ]] Python Data Analysis Library
   * [[https://grasswiki.osgeo.org/wiki/GRASS_and_Python| grass.script]] writing python scripts in GRASS
-  * [[http://rpy2.bitbucket.org/| Rpy2]] an interface to R from Python - [[http://www.slideshare.net/bytemining/rpy2| nice lecture]] explaining what rpy2 does.
+  * [[http://rpy2.bitbucket.org/| Rpy2]] an interface to R from Python
+  * [[http://www.slideshare.net/bytemining/rpy2| nice lecture]] explaining what rpy2 does.
+
+
  
 

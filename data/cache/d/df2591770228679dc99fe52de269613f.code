@@ -1,5 +1,0 @@
-gdalwarp -q -cutline /home/user/My_project/Vector/Norway.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_06.tif /home/user/My_project/Raster/bio12_06_masked_Norway.tif
-gdalwarp -q -cutline /home/user/My_project/Vector/Norway.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_07.tif /home/user/My_project/Raster/bio12_07_masked_Norway.tif
-gdalwarp -q -cutline /home/user/My_project/Vector/Norway.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_16.tif /home/user/My_project/Raster/bio12_16_masked_Norway.tif
-gdalwarp -q -cutline /home/user/My_project/Vector/Sweden.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_06.tif /home/user/My_project/Raster/bio12_06_masked_Sweden.tif
-gdalwarp -q -cutline /home/user/My_project/Vector/Sweden.shp -crop_to_cutline -of GTiff /home/user/My_project/Bioclim_data/bio12_16.tif /home/user/My_project/Raster/bio12_16_masked_Sweden.tif

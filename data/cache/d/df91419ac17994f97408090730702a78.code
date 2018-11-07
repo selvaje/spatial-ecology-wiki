@@ -1,7 +1,0 @@
-<span class="re2">INPUT</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>KenyaGIS
-&nbsp;
-ogr2ogr  <span class="re5">-f</span> <span class="st0">&quot;GML&quot;</span> -s_srs EPSG:<span class="nu0">4326</span>  -t_srs EPSG:<span class="nu0">3857</span> <span class="re5">-select</span> COUNTY  <span class="re5">-where</span> <span class="st0">&quot;COUNTY = 'Isiolo'&quot;</span>  <span class="sy0">/</span>tmp<span class="sy0">/</span>Isiolo.gml  <span class="re1">$INPUT</span><span class="sy0">/</span>County.shp
-&nbsp;
-<span class="co0"># Extract bounding box for different county and overall county in Kenya</span>
-ogrinfo <span class="re5">-al</span> County.shp <span class="sy0">|</span> <span class="kw2">grep</span> <span class="st0">&quot;Extent&quot;</span> <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">'{gsub(/\(/,&quot;&quot;);gsub(/\)/,&quot;&quot;);gsub(/,/,&quot;&quot;);print $2&quot; &quot;$3&quot; &quot;$5&quot; &quot;$6} '</span>
-ogrinfo <span class="re5">-al</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>Isiolo.gml <span class="sy0">|</span> <span class="kw2">grep</span> <span class="st0">&quot;Extent&quot;</span> <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">'{gsub(/\(/,&quot;&quot;);gsub(/\)/,&quot;&quot;);gsub(/,/,&quot;&quot;);print $2&quot; &quot;$3&quot; &quot;$5&quot; &quot;$6} '</span>

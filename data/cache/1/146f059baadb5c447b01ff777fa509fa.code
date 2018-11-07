@@ -1,4 +1,0 @@
- R 
- connect.data =file(description = &quot;http://www.spatial-ecology.net/ost4semdata/Rdata/advanceRdata&quot;,open = &quot;rb&quot;)
- load(connect.data)
- ls()

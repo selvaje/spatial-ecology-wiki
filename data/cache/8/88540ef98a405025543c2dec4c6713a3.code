@@ -1,6 +1,0 @@
-<span class="kw2">cat</span> <span class="sy0">&gt;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise5<span class="sy0">/</span>shadows.txt <span class="co2">&lt;&lt;EOF
-shadow 3220825 3124100
-shadow 3221025 3124150
-shadow 3222325 3123950
-shadow 3223750 3124650
-EOF</span>

@@ -1,2 +1,0 @@
-<span class="kw2">sudo</span> <span class="kw2">nano</span>  <span class="sy0">/</span>etc<span class="sy0">/</span>hosts
-<span class="co0"># append this &quot;10.141.0.1      node1&quot; at the end of file </span>

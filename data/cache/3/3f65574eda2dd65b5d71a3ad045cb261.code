@@ -1,1 +1,0 @@
-ogr2ogr <span class="re5">-f</span> KML  <span class="re5">-where</span> <span class="st0">&quot;TYPE='forest'&quot;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>cornwall_forest.kml cornwall_natural.shp

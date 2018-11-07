@@ -6,6 +6,48 @@ This is an example of a //for bash loop// where I use bash to initialize an R sc
 \\
 The  //export// bash function and the //Sys.getenv()// R function allows to exchange variables between R and bash. We can use this functionality to embed an R command in bash.  
 
+===== Simple Bash and R =====
+
+<code bash| basic_bash_and_r.sh>
+
+## Basic script to show input/output dir and integration with R
+
+# Specify environment variables
+INDIR=~/ost4sem/project/input/
+OUTDIR=~/ost4sem/project/output/
+
+mkdir -p $INDIR
+mkdir -p $OUTDIR
+
+# Note: If ./project/ directory does not exist, can create with -p flag
+# mkdir -p $INDIR
+
+# Change directory to INDIR and pull "iris" dataset
+wget -P $INDIR https://vincentarelbundock.github.io/Rdatasets/csv/datasets/iris.csv
+ls $INDIR
+
+export INDIR
+export OUTDIR
+export  filename=$(basename iris.csv .csv)
+ 
+R --vanilla --no-readline -q  << 'EOF'
+ 
+INDIR <- Sys.getenv(c('INDIR'))
+OUTDIR <- Sys.getenv(c('OUTDIR'))
+filename <- Sys.getenv(c('filename'))
+ 
+iris_dat <- read.csv(paste0(INDIR, filename, ".csv"))
+iris_dat$Petal.Area <- iris_dat$Petal.Length * iris_dat$Petal.Width
+
+write.csv(iris_dat, paste0(OUTDIR, filename, "_edited.csv"))
+
+EOF
+
+head $OUTDIR/iris_edited.csv
+
+
+</code>
+
 ===== Bash For loop and R =====
 
 <code bash| bash_r.sh>

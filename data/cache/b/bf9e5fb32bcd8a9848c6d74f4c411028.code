@@ -1,5 +1,0 @@
-MapFromGdal=readGDAL(&quot;ZONES_m9.asc&quot;)
-MapFromRasterLib=raster(MapFromGdal)
-plot(MapFromRasterLib) # Visualize the map and legend
-plot(MapFromRasterLib, col=c(&quot;blue&quot;,&quot;red&quot;,&quot;green3&quot;,&quot;orangeplot function of r basic package&quot;), legend=F, axes=F, main=&quot;Map of zones&quot;,cex.main=3, cex=2, cex.legend=3, box=F)
-legend(131000,110000,c(&quot;Coastal&quot;,&quot;West&quot;,&quot;Centre&quot;,&quot;East&quot;), bty = &quot;n&quot;,  pch=c(15,15,15,15), pt.cex=c(2.5,2.5,2.5),  cex=3,  col=c(&quot;blue&quot;,&quot;red&quot;,&quot;green3&quot;,&quot;orange&quot;))

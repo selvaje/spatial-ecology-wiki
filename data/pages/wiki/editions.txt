@@ -20,14 +20,14 @@
 
 ===== Leipzig, Germany  ===== 
 
-   * June 2016: 3-days Workshop: [[ wiki:germany2016  | Geo-Computation in Linux environment ]] at [[ https://www.idiv.de/ |  German Centre for Integrative Biodiversity Research (iDiv) ]]. [[wiki:sottisgermany | Satisfactory surveys Leipzig 2016  ]]
+   * June 2016: 3-days Workshop: [[ wiki:germany2016  | Geo-Computation in Linux environment ]] at [[ https://www.idiv.de/ |  German Centre for Integrative Biodiversity Research (iDiv) ]]. [[wiki:sottisgermany | Satisfaction surveys Leipzig 2016  ]]
 
 
 ===== Matera, Italy ===== 
 
-   * June 2016: Summer School: [[ http://www.spatial-ecology.net/matera2016_1 | Spatio-temporal data analyses using free and open source software ]] at [[ http://portale.unibas.it/site/home.html | University of Basilicata ]]. [[wiki:SurveyMatera16w1 | Satisfactory surveys Matera 2016  ]]
+   * June 2016: Summer School: [[ http://www.spatial-ecology.net/matera2016_1 | Spatio-temporal data analyses using free and open source software ]] at [[ http://portale.unibas.it/site/home.html | University of Basilicata ]]. [[wiki:SurveyMatera16w1 | Satisfaction surveys Matera 2016  ]]
 
-   * June 2016: Summer School: [[ http://www.spatial-ecology.net/matera2016_2 | Hands-on Open Source Drone Mapping and High Performance Computing for Big Geo-Data ]] at [[ http://portale.unibas.it/site/home.html | University of Basilicata ]]. [[wiki:SurveyMatera16w2 | Satisfactory surveys Matera 2016  ]]
+   * June 2016: Summer School: [[ http://www.spatial-ecology.net/matera2016_2 | Hands-on Open Source Drone Mapping and High Performance Computing for Big Geo-Data ]] at [[ http://portale.unibas.it/site/home.html | University of Basilicata ]]. [[wiki:SurveyMatera16w2 | Satisfaction surveys Matera 2016  ]]
 
 
 ===== Austin, USA =====
@@ -48,19 +48,19 @@
 
 ===== California, USA ===== 
 
-   * July 2015: Summer School: [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:upcomingSantBab | Spatio-Temporal analysis and BigData processing using free and open source software ]] at [[http://www.ucsb.edu/ | University of California, Santa Barbara]]. [[wiki:surveyUCSB2015 | Satisfactory surveys UCSB 2015 ]]
+   * July 2015: Summer School: [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:upcomingSantBab | Spatio-Temporal analysis and BigData processing using free and open source software ]] at [[http://www.ucsb.edu/ | University of California, Santa Barbara]]. [[wiki:surveyUCSB2015 | Satisfaction surveys UCSB 2015 ]]
 
 ===== Vancouver, Canada ===== 
 
-   * July 2015: Intensive training:[[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:upcomingBC | Geo-Computation in Linux environment]] at [[ http://portale.unibas.it/site/home.html | University of British Columbia ]]. [[ sottisVancuver | Satisfactory surveys Vancouver 2015  ]]\\
+   * July 2015: Intensive training:[[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:upcomingBC | Geo-Computation in Linux environment]] at [[ http://portale.unibas.it/site/home.html | University of British Columbia ]]. [[ sottisVancuver | Satisfaction surveys Vancouver 2015  ]]\\
 
 ===== Matera, Italy ===== 
 
-   * June 2015: Summer School: [[http://spatial-ecology.net/dokuwiki/doku.php?id=wikistud:matera2015 | Spatio-Temporal analysis and BigData processing using free and open source software ]] at [[ http://portale.unibas.it/site/home.html | University of Basilicata ]]. [[wiki:SurveyMatera15 | Satisfactory surveys Matera 2015  ]]
+   * June 2015: Summer School: [[http://spatial-ecology.net/dokuwiki/doku.php?id=wikistud:matera2015 | Spatio-Temporal analysis and BigData processing using free and open source software ]] at [[ http://portale.unibas.it/site/home.html | University of Basilicata ]]. [[wiki:SurveyMatera15 | Satisfaction surveys Matera 2015  ]]
 
 ===== Nairobi, Kenya ===== 
 
-   * June 2015: Training: [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:keniacourse | Using Geographic Information Systems and Remote Sensing to study disease vector habitat ]] at [[ http://www.kalro.org/Biotechnology_Research_Institute | Biotechonology Research Institute (BRI)]]. [[ wiki:SatisfactoryKenya  | Satisfactory survey  ]]. [[ wiki:kenyareport | Final Report ]]
+   * June 2015: Training: [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:keniacourse | Using Geographic Information Systems and Remote Sensing to study disease vector habitat ]] at [[ http://www.kalro.org/Biotechnology_Research_Institute | Biotechonology Research Institute (BRI)]]. [[ wiki:SatisfactoryKenya  | Satisfaction survey  ]]. [[ wiki:kenyareport | Final Report ]]
 
 ===== Yale, USA =====
 
@@ -71,29 +71,29 @@
 ===== Twente - The Netherlands =====
 
    * December 2013 - January 2014: [[ http://spatial-ecology.net/dokuwiki/doku.php?id=wikistud:holland2013pres  | SPATIO-TEMPORAL ANALYSIS AND BIG DATA PROCESSING USING FREE AND OPEN SOURCE SOFTWARE ]] University of  Twente , Enschede.\\
-[[wikistud:survey_twente2013| Satisfactory survey first week]]\\ 
-[[wikistud:survey_twente2014| Satisfactory survey second week]]\\
+[[wikistud:survey_twente2013| Satisfaction survey first week]]\\ 
+[[wikistud:survey_twente2014| Satisfaction survey second week]]\\
 
 ===== Yale, U.S.A. =====
 
    * Fall semester 2013: [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wikistud:yale2013 | EEB 713, Fall 2013: Methods in spatial and environmental biodiversity analysis]] Yale University, USA
 
 ===== Cornwall, UK =====
-   * 11-13 and 24-27 July 2012: [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wikistud:uniexeter2012| Environment and Sustainability Institute]] University of Exeter, Cornwall Campus - UK. [[wiki:resultssurveyuniEXETER2010|Satisfactory survey results]]\\
+   * 11-13 and 24-27 July 2012: [[http://www.spatial-ecology.net/dokuwiki/doku.php?id=wikistud:uniexeter2012| Environment and Sustainability Institute]] University of Exeter, Cornwall Campus - UK. [[wiki:resultssurveyuniEXETER2010|Satisfaction survey results]]\\
 
 ===== Zaragoza, Spain =====
-   * 23-27 January 2012 (4th edition: 2008, 2009, 2010, 2011): [[http://ebro3.unizar.es:8080/acad_i/FMPro?-DB=w_titulaciones.fp5&-lay=cgi&-format=grado.htm&-error=error2.htm&id_titulacion=201,5&-Max=25&-SortField=Orden&-Find|Master GIS Remote sensing.]] University of Zaragoza (Spain). [[wiki:resultssurveyunizar2010|Satisfactory survey results]]\\
+   * 23-27 January 2012 (4th edition: 2008, 2009, 2010, 2011): [[http://ebro3.unizar.es:8080/acad_i/FMPro?-DB=w_titulaciones.fp5&-lay=cgi&-format=grado.htm&-error=error2.htm&id_titulacion=201,5&-Max=25&-SortField=Orden&-Find|Master GIS Remote sensing.]] University of Zaragoza (Spain). [[wiki:resultssurveyunizar2010|Satisfaction survey results]]\\
 
 ===== Madrid, Spain =====
-   * 9-13 January 2012 : [[http://www.geogra.uah.es/inicio/|University of Alcalà (Madrid) Spain, Geography Department]]. A desk pc simulating a [[ http://en.wikipedia.org/wiki/Parallel_computing | Parallel Computing ]], has been tested and explained with positive results. [[wiki:resultssurveyunialcala2012|Satisfactory survey results]] \\
+   * 9-13 January 2012 : [[http://www.geogra.uah.es/inicio/|University of Alcalà (Madrid) Spain, Geography Department]]. A desk pc simulating a [[ http://en.wikipedia.org/wiki/Parallel_computing | Parallel Computing ]], has been tested and explained with positive results. [[wiki:resultssurveyunialcala2012|Satisfaction survey results]] \\
 
 ===== Copenhagen, Denmark =====
-  * July 2010: REFOLANA Forest and landscape Summer School. University of Copenhagen (Denmark), [[ http://en.sl.life.ku.dk/ |Faculty of Life Science]]. [[wiki:resultssurveyunidk2010|Satisfactory survey]]\\
+  * July 2010: REFOLANA Forest and landscape Summer School. University of Copenhagen (Denmark), [[ http://en.sl.life.ku.dk/ |Faculty of Life Science]]. [[wiki:resultssurveyunidk2010|Satisfaction survey]]\\
 
 
 ===== Potenza, Italy =====
-  * May 2010 : [[http://www.csyfes.it/index.php?option=content&task=view&id=43&Itemid=71| International Doctoral School: Crop Systems, Forestry and Environmental Sciences]] - University of Basilicata, Potenza (Italy). [[wiki:resultssurveyunibas2010|Satisfactory survey results]]\\
+  * May 2010 : [[http://www.csyfes.it/index.php?option=content&task=view&id=43&Itemid=71| International Doctoral School: Crop Systems, Forestry and Environmental Sciences]] - University of Basilicata, Potenza (Italy). [[wiki:resultssurveyunibas2010|Satisfaction survey results]]\\
 
 ===== Dar es Salaam, Tanzania =====
-  * Sept. 2010 : [[ http://www.fao.org/ | Food and Agriculture Organization of the United Nations (FAO) ]] intensive training in Dar es Salaam supporting the [[ http://www.fao.org/forestry/17847/en/tza/ | National Forestry Resources Monitoring and Assessment (NAFORMA) ]] in Tanzania. [[wiki:resultssurveytz2010|Satisfactory survey results]]
+  * Sept. 2010 : [[ http://www.fao.org/ | Food and Agriculture Organization of the United Nations (FAO) ]] intensive training in Dar es Salaam supporting the [[ http://www.fao.org/forestry/17847/en/tza/ | National Forestry Resources Monitoring and Assessment (NAFORMA) ]] in Tanzania. [[wiki:resultssurveytz2010|Satisfaction survey results]]
 \\

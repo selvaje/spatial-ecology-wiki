@@ -1,5 +1,0 @@
-gdaltransform -s_srs epsg:<span class="nu0">3035</span> -t_srs epsg:<span class="nu0">4326</span>
-<span class="nu0">3200000</span> <span class="nu0">3223750</span>
--<span class="nu0">6.12149425235321</span> <span class="nu0">51.005834806829</span> <span class="nu0">0</span>
-<span class="nu0">3394000</span> <span class="nu0">3091500</span>
--<span class="nu0">3.05910611391153</span> <span class="nu0">50.189810829506</span> <span class="nu0">0</span>

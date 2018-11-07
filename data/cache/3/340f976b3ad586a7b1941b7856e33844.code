@@ -1,6 +1,0 @@
-   RF47 = randomForest (pred47$FType ~ pr101 + pr102 + pr103 + pr104 + pr105 + pr106 + pr107 + pr108 + pr109 + pr110 + pr111 + pr112 + pr113 + pr114 + pr115 + pr116 + pr117 + pr118 + pr119 + pr120 + pr121 + pr122 + pr123 + pr124 + pr125 + pr126 + pr127 + pr128 + pr129 + pr131 + pr133 + pr134 + pr135 + pr136 + pr137 + pr138 + pr139 + pr198 + pr199 + pr200 + pr201 + pr202 + pr203 + pr204 + pr205 + pr259 + pr262, data = pred47, ntree=1500 ) 
-&nbsp;
-   #save(RF47,file=&quot;~/ost4sem/studycase/ITA_veg/results/RF47&quot;)
-   save(RF47,file=&quot;~/ost4sem/studycase/ITA_veg/myresults/RF47&quot;)
-   load(&quot;~/ost4sem/studycase/ITA_veg/R_script/results/RF47&quot;)
-&nbsp;

@@ -1,3 +1,0 @@
-# save following code as gdal_warp.sh
-file=$1
-gdalwarp -r bilinear -t_srs EPSG:4326 $file  proj_$file -overwrite

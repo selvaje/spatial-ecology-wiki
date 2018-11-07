@@ -5,7 +5,7 @@ The main aim of this page is to show how to integrate GDAL and OFT-TOOLS command
 A simple example is presented    /ost4sem/exercise/basic\_adv\_gdalogr  [[ http://www.spatial-ecology.net//ost4sem/exercise/basic_adv_gdalogr/integrationPK-OFT-TOOLS.sh |  here ]]
    cd /home/user/ost4sem/exercise/basic_adv_gdalogr/
    wget http://www.spatial-ecology.net//ost4sem/exercise/basic_adv_gdalogr/integrationGDAL-OFT-TOOLS.sh
-   gedit /home/user/ost4sem/exercise/basic_adv_gdalogr/integrationGDAL-OFT-TOOLS.sh &
+   rstudio /home/user/ost4sem/exercise/basic_adv_gdalogr/integrationGDAL-OFT-TOOLS.sh &
 
 \\
 Giving a vector file (.shp) with two polygons and and several images (.tif) we want calculate the average and the standard deviation of all pixels which belong to each polygon. \\

@@ -1,5 +1,0 @@
-<span class="co1">-- Syntax</span>
-<span class="kw1">CREATE</span> COLLECTION collName typeName
-&nbsp;
-<span class="co1">-- Creating a collection called mr of type GreySet (i.e. 2 dimensions, char as base type)</span>
-<span class="kw1">CREATE</span> COLLECTION mr GreySet

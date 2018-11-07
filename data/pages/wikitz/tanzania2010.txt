@@ -1,5 +1,5 @@
 
-====== Summary of the satisfactory survey ======
+====== Summary of the satisfaction survey ======
 
 === Will you use and progress using Open Sources tools in future ?  ===
 ^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^ 
@@ -42,7 +42,7 @@ This page is available for students participating at the Dar es Salaam 2010 trai
 \\\
 \\\
 \\\
-====== Satisfactory survey ======
+====== Satisfaction survey ======
 
 <doodle Tanzania  /  Will you use and progress using Open Sources tools in future ?>
 ^ Bash Yes ^ Bash No ^ Gdal yes ^ Gdal no ^ Grass yes ^ Grass no ^ Qgis yes ^ Qgis no ^  

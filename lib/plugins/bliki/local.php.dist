@@ -1,0 +1,11 @@
+<?php
+// * 2011-10-31  modified by Taggic to get is work with current dokuwiki (Rincewind)
+$conf['plugin']['bliki']['structure'] = 'flat'; // Structure to use when storing posts; [flat | deep]
+$conf['plugin']['bliki']['offset'] = 0; // Number of hours to offset new post times from your server (eg -3 if you post from a timezone 3 hours behind your server)
+$conf['plugin']['bliki']['numposts'] = 15; // Number of posts to show on each page of a blog
+$conf['plugin']['bliki']['dateheader'] = '===== l, F j ====='; // Format for date header/separator (passed to date(), escape special flags!)
+$conf['plugin']['bliki']['datefooter'] = 'n/j/Y g:ia'; // Format for the footer datestamp (includes hours/minutes) (passed to date(), escape special flags!)
+$conf['plugin']['bliki']['footer'] = ' \\\\ <sub>Posted @ {timestamp} -- [[{permalink}|Permalink]] -- [[{edit}|Edit]]</sub> \\\\ \\\\ '; // use {timestamp}, {permalink} and {edit} to link to special variables.
+$conf['plugin']['bliki']['newlabel'] = '&raquo; New Post'; // Label for the new post button/link
+$conf['plugin']['bliki']['olderlabel'] = 'Older Posts &raquo;'; // Link to older posts
+$conf['plugin']['bliki']['newerlabel'] = '&laquo; Newer Posts'; // Link to newer posts

@@ -1,4 +1,0 @@
-<span class="kw2">nano</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop<span class="sy0">/</span>conf<span class="sy0">/</span>hadoop-env.sh
-<span class="co0">#edited at end:</span>
-<span class="kw3">export</span> <span class="re2">JAVA_HOME</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>jvm<span class="sy0">/</span>java-<span class="nu0">7</span>-openjdk-armhf
-<span class="kw3">export</span> <span class="re2">HADOOP_HEAPSIZE</span>=<span class="nu0">272</span>

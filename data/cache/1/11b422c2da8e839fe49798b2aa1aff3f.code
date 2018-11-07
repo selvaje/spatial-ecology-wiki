@@ -1,1 +1,0 @@
-<span class="kw2">awk</span> <span class="st_h">'{ if (NR&gt;1) {if ($4&gt;max) max= $4 }} END {print max }'</span>  input.txt

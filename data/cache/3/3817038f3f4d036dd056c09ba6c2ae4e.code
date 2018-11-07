@@ -1,1 +1,0 @@
-gdal_translate HDF4_EOS:EOS_GRID:<span class="st0">&quot;CONUS.month07.2011.h08v08.v1.5.hdf&quot;</span>:WELD_GRID:Band1_TOA_REF Band1_TOA_REF.tif 

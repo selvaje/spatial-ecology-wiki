@@ -6,48 +6,337 @@ Most of the materials used for the daily presentation will be maintained here:
     
 Snippets of codes and file will be downloadable from there by cloning and pulling stuff during the ongoing talk. The teacher will orchestrate the downloads and work. Trust him 8-). 
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/01_hello-world.py }}
-  
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/02_fibonacci.py }}
+<code python | 00/01_hello-world.py>
+#!/usr/bin/python
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/03_fibonacci.py }}
+print('Hello, world!')
+</code>
+ 
+<code python | 00/02_fibonacci.py>
+# This is the well-known Fibonacci series
+a, b = 0, 1
+while b<2000:
+    print a
+    a, b = b, a+b
+</code>
+ 
+<code python | 00/03_fibonacci.py>
+    '''
+      Use of a function
+    '''
+    def fibonacci(n):
+        a, b = 0, 1
+        while b<n:
+            print a
+            a, b = b, a+b
+     
+    fibonacci(2000)
+</code>
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/04_fibonacci.py }}
+<code python | 00/04_fibonacci.py>
+'''
+    A true function with a return value and
+    a list variable
+'''
+def fibonacci(n):
+    a, b = 0, 1
+    f = []
+    while b<n:
+        f.append(a)
+        a, b = b, a+b
+    return f
+ 
+s = fibonacci(2000)
+print s
+</code>
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/05_fibonacci.py }}
+<code python | 00/05_fibonacci.py>
+'''
+    Default arguments in functions
+'''
+def fibonacci(n=2000):
+    a, b = 0, 1
+    f = []
+    while b<n:
+        f.append(a)
+        a, b = b, a+b
+    return f
+ 
+s = fibonacci()
+print s
+</code>
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/06_fibonacci.py }}
+<code python | 00/06_fibonacci.py>
+'''
+    Keyword arguments in calling functions
+'''
+def fibonacci(n=2000):
+    a, b = 0, 1
+    f = []
+    while b<n:
+        f.append(a)
+        a, b = b, a+b
+    return f
+ 
+s = fibonacci(n=10000)
+print s
+</code>
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/07_fibonacci.py }}
+<code python | 00/07_fibonacci.py>
+'''
+    Preparing for modules...
+'''
+def fibonacci(n=2000):
+    a, b = 0, 1
+    f = []
+    while b<n:
+        f.append(a)
+        a, b = b, a+b
+    return f
+ 
+if __name__ == "__main__":
+    s = fibonacci()
+    print len(s)
+ 
+print s
+</code>
 
 Now renames the last file as fibonacci.py and use it as a simple external module:
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/08_fibonacci.py }}
+<code python | 00/08_fibonacci.py>
+'''
+    Fibonacci as an external module call
+'''
+import fibonacci as fib
+ 
+s = fib.fibonacci()
+print s
+</code>
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/09_fibonacci.py }}
+<code python | 00/09_fibonacci.py>
+'''
+    A matter of namespace and symbols
+'''
+from fibonacci import fibonacci
+ 
+s = fibonacci()
+print s
+</code>
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/10_fibonacci.py }}
+<code python | 00/10_fibonacci.py>
+'''
+    Command line parameters
+'''
+import sys
+from fibonacci import fibonacci
+ 
+s = fibonacci(int(sys.argv[1]))
+print s
+</code>
 
 in bash terminal run   
     
     chmod +x 10_fibonacci.py 
     ./10_fibonacci.py  23
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/11_fibonacci.py }}
+<code python | 00/11_fibonacci.py>
+'''
+    What if you call this script without the required
+    parameter?
+'''
+import sys
+from fibonacci import fibonacci
+ 
+def usage():
+    print '''\
+usage: %s int \
+''' % sys.argv[0]
+    sys.exit(1)
+ 
+if len(sys.argv) < 2:
+    usage()
+ 
+s = fibonacci(int(sys.argv[1]))
+print s
+</code>
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/12_fibonacci.py }}
+<code python | 00/12_fibonacci.py>
+    '''
+        What if you call this script with a wrong type
+        parameter?
+    '''
+    import sys
+    from fibonacci import fibonacci
+     
+    def usage():
+        print '''\
+    usage: %s int \
+    ''' % sys.argv[0]
+        sys.exit(1)
+     
+    if len(sys.argv) < 2:
+        usage()
+     
+    try:
+        n = int(sys.argv[1])
+    except:
+        usage()
+     
+    s = fibonacci(n)
+    print s
+</code>
 
 And now something completely different: the //object-oriented// version of the Fibonacci module:
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/FibonacciBasic.py }}
+<code python | 00/FibonacciBasic.py>
+    '''
+        FibonacciBasic, the OOP approach
+    '''
+    class Fibonacci:
+        _f = []
+     
+        def __init__(self, n=2000):
+            a, b = 0, 1
+            while b<n:
+                self._f.append(a)
+                a, b = b, a+b
+     
+        def list(self):
+            print self._f
+     
+    if __name__ == "__main__":
+        s = Fibonacci(10000)
+        s.list()
+</code>
 
 ... and how you can use it in a calling script:
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/13_fibonacci.py }}
+<code python | 00/13_fibonacci.py>
+    '''
+    Now use a class instead of a procedural module
+    '''
+    import sys
+    from FibonacciBasic import Fibonacci as f
+     
+    def usage():
+        print '''\
+    usage: %s int \
+    ''' % sys.argv[0]
+        sys.exit(1)
+     
+    if len(sys.argv) < 2:
+        usage()
+     
+    try:
+        n = int(sys.argv[1])
+    except:
+        usage()
+     
+    s = f(n)
+    s.list()
+</code>
 
 Finally, a more complicated version of Fibonacci class, with inheritance, static stuff and other OO concepts can be introduced:
 
-{{gh> https://github.com/fpl/geotutorial_basic/blob/master/00/FibonacciAdvanced.py }}
+<code python | 00/FibonacciAdvanced.py>
+    '''
+        FibonacciAdvanced, the OOP approach
+    '''
+    class FibonacciAdvanced:
+        ''' 
+        This is a class with a static member and 
+        a static method
+        '''
+     
+        # static member
+        _name = 'Fibonacci series advanced class' 
+     
+        def __init__(self, n=2000):
+            self._f = []
+            a, b = 0, 1
+            while b<n:
+                self._f.append(a)
+                a, b = b, a+b
+     
+        def list(self):
+            print self._f
+     
+        def get(self,index=0):
+            print self._f[index]
+     
+        def slice(self,start=0,end=-1):
+            print self._f[start:end]
+     
+        # static method with mandatory decorator
+        @staticmethod 
+        def name():
+            return FibonacciAdvanced._name
+     
+    '''
+        This is a base class with inherited classes
+    '''
+     
+    class Sequence(object):
+     
+        def __init__(self, a, b, n=2000):
+            self._f = []
+            while b<n:
+                self._f.append(a)
+                a, b = b, a+b
+     
+        def list(self):
+            print self._f
+     
+        def get(self,index=0):
+            print self._f[index]
+     
+        def slice(self,start=0,end=-1):
+            print self._f[start:end]
+     
+    class Fibonacci(Sequence):
+     
+        def __init__(self, n=2000):
+            Sequence.__init__(self,0,1,n)
+     
+    class Lucas(Sequence):
+     
+        def __init__(self, n=2000):
+            Sequence.__init__(self,2,1,n)
+     
+    class FibonacciSuper(Sequence):
+        def __init__(self, n=2000):
+            super(FibonacciSuper,self).__init__(2,1,n)
+            '''
+            super(self.__class__,self).__init__(2,1,n)      # An alternative way in 2.7
+            Sequence.__init__(self,2,1,n)                   # Another alternative
+            super().__init__(2,1,n)     # The 3.0 way...
+            '''
+     
+    #
+    # ... and all together
+    #
+     
+    if __name__ == "__main__":
+        u = FibonacciAdvanced(10000)
+        s = Fibonacci(10000)
+        t = Lucas(100000)
+        v = FibonacciSuper(1000000000000000000)
+     
+        u.list()
+        print 'This is a static method call: ' + FibonacciAdvanced.name()
+     
+        s.list()
+        s.get()
+        s.get(11)
+        s.slice(11,15)
+     
+        t.list()
+        t.get()
+        t.get(11)
+        t.slice(11,15)
+     
+        v.list()
+</code>
 
 
 ----

@@ -1,1 +1,0 @@
-<span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">1</span>,<span class="nu0">1</span>   point.asc  <span class="sy0">&gt;</span> point_s.asc 

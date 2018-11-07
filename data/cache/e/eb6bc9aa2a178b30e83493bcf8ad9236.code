@@ -1,7 +1,0 @@
-  my.data.frame[[&quot;character&quot;]]
-  [1] a b c d
-  Levels: a b c d
-&nbsp;
-  my.data.frame[[2]]
-  [1] a b c d
-  Levels: a b c d

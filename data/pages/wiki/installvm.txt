@@ -40,23 +40,30 @@ You can integrate the previews sections with the following pages.
 
 There is more info at [[http://www.virtualbox.org/manual/ch04.html  | VirtualBox help shared folder section]]
 
-<note> If after a reboot the shared folder is not access under /media/  you have to mount manually:
+If after a reboot the shared folder is not access under /media/  you have to mount manually:
 
-  * sudo sudo adduser user  vboxsf
+  * sudo adduser user  vboxsf
   * reboot 
-  * ln -s /media/sf_LVM_share/    LVM_share
+  * ln -s /media/sf\_LVM_share/    LVM\_share
 
 the rest is not useful any more
 
-  * sudo mount -a -t vboxsf shared_folder   /media/sf_shared_folder
+  * sudo mount -a -t vboxsf shared\_folder   /media/sf\_shared\_folder \\
+
 in same case to allow write/read permission to the folder 
-  * sudo mount -t vboxsf -o uid=1000,gid=1000 shared_folder   /media/sf_shared_folder
-  * to auto startpu the mount add the line   "mount -a  -t vboxsf   shared_folder    /media/sf_shared_folder/"  to /etc/init.d/rc.local\\
+
+  * sudo mount -t vboxsf -o uid=1000,gid=1000 shared_folder   /media/sf\_shared\_folder
+
+to auto startpu the mount add the line   
+  
+  * mount -a  -t vboxsf   shared\_folder    /media/sf\_shared\_folder/  
+
+to /etc/init.d/rc.local\\
 
 \\
 Moreover sometime is useful install 
 sudo apt-get install virtualbox-guest-dkms
-</note>
+
 
 \\
 Duplicate UUID\\

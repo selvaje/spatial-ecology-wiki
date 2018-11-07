@@ -1,1 +1,0 @@
-calib3&lt;-glm(tot.huml~Arealdekke+Elev,data=bumble,family=poisson) ##Simplistic GLM to predict from

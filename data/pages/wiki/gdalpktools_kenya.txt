@@ -5,8 +5,8 @@ Data Directory: /home/user/ost4sem/exercise/geodata\_SDM/ \\
 Script: /home/user/ost4sem/exercise/geodata_SDM/gdal\_pktools.sh \\
 
   cd /home/user/ost4sem/exercise/geodata_SDM
-  wget https://www.dropbox.com/s/17pv8ajq4hvh4b6/gdal-ogr-pktools.sh
-  gedit /home/user/ost4sem/exercise/geodata_SDM/gdal-ogr-pktools.sh & 
+  wget -N http://spatial-ecology.net/ost4sem/exercise/geodata_SDM/gdal-ogr-pktools.sh
+  rstudio /home/user/ost4sem/exercise/geodata_SDM/gdal-ogr-pktools.sh & 
 
 ===== GDAL Commands =====
 
@@ -82,7 +82,7 @@ gdal_calc.py --type=Float32 --overwrite  -A vegetation/GPPstdev08-11.tif -B  veg
 # looping trough the images
 for file in LST/LST_MOYDmax_month?.tif LST/LST_MOYDmax_month??.tif; do 
   filename=$(basename $file .tif )
-  gdalwarp -te 29 -1 35.0000000048 4.000000004 -tr 0.008333333340000 0.008333333340000 -co COMPRESS=DEFLATE -co ZLEVEL=9 $file LST/${filename}_crop.tif 
+  gdalwarp -overwrite -te 29 -1 35.0000000048 4.000000004 -tr 0.008333333340000 0.008333333340000 -co COMPRESS=DEFLATE -co ZLEVEL=9 $file LST/${filename}_crop.tif 
 done
 </code>
 
@@ -203,12 +203,9 @@ gdal_translate -ot Byte vegetation/ETmean08-11_crop_trh.txt vegetation/ETmean08-
 can be done more efficient using pkgetmask. We can create 3 masks using different thresholds values. 
 
 <code bash>
-pkgetmask  -co COMPRESS=DEFLATE -co ZLEVEL=9 -min  1  -max  2 -data 1 -nodata 0 
--ot Byte  -i  vegetation/ETmean08-11.tif  -o vegetation/ETmean08-11_01_trhA.tif
-pkgetmask  -co COMPRESS=DEFLATE -co ZLEVEL=9 -min  5  -max  8 -data 1 -nodata 0 
--ot Byte  -i  vegetation/ETmean08-11.tif  -o vegetation/ETmean08-11_01_trhB.tif
-pkgetmask  -co COMPRESS=DEFLATE -co ZLEVEL=9 -min  0  -max  10 -data 0 -nodata 1 
--ot Byte  -i  vegetation/ETmean08-11.tif  -o vegetation/ETmean08-11_01_trhC.tif
+pkgetmask  -co COMPRESS=DEFLATE -co ZLEVEL=9 -min  1  -max  2 -data 1 -nodata 0 -ot Byte  -i  vegetation/ETmean08-11.tif  -o vegetation/ETmean08-11_01_trhA.tif
+pkgetmask  -co COMPRESS=DEFLATE -co ZLEVEL=9 -min  5  -max  8 -data 1 -nodata 0 -ot Byte  -i  vegetation/ETmean08-11.tif  -o vegetation/ETmean08-11_01_trhB.tif
+pkgetmask  -co COMPRESS=DEFLATE -co ZLEVEL=9 -min  0  -max  10 -data 0 -nodata 1 -ot Byte  -i  vegetation/ETmean08-11.tif  -o vegetation/ETmean08-11_01_trhC.tif
 </code>
 
 === Set a mask to other image ===

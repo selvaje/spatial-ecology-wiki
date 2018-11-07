@@ -10,5 +10,7 @@ $plugins['authad'] = 0;
 $plugins['authldap'] = 0;
 $plugins['authmysql'] = 0;
 $plugins['authpdo'] = 0;
+$plugins['doodle'] = 0;
 $plugins['googlecal'] = 0;
 $plugins['authpgsql'] = 0;
+$plugins['noiewarning'] = 0;

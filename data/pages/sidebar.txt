@@ -3,7 +3,7 @@
 **Trainings**:
   * [[wiki:introduction|Our format]]\\
   * [[wiki:editions|Past]] & [[[wiki:upcoming |upcoming events]]\\
-  * [[wiki:resultssurveysynt|Satisfactory surveys]]
+  * [[wiki:resultssurveysynt|Satisfaction surveys]]
 **Learn**:
   * [[wiki:bash|Linux Bash]]\\
   * [[wiki:awk|AWK]] & [[wiki:gnuplot|Gnuplot]]\\
@@ -16,6 +16,9 @@
   * [[wiki:languages_integration|Language integration]]\\
   * [[wiki:exercises|Exercises]] & [[wiki:lectures|lectures]]\\
   * [[uav:uav_inro|Drone mapping]] & [[wiki:grappolo|Grappolo]]\\
+  * [[wiki:machlearn|Machine learning ]]\\
+**Data**:
+  * [[topovar90m|TopoVar90m]]\\
 **Community:**\\
 [[wiki:teachers]]\\
 [[wiki:students]]\\

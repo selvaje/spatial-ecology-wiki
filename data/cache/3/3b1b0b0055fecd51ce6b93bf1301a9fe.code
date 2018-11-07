@@ -1,9 +1,0 @@
-result &lt;- do.call(rbind, by(datanew_inc_nool, datanew_inc_nool$pedon, function(x) {
-  Samp &lt;- as.character(x$pedon[1])
-  idx &lt;- Samp == as.character(dataout$pedon_unique)
-  sequ &lt;- seq(dataout$fake_0[idx], (dataout$adj_depth_30[idx]-0.1),by=0.1)
-  sequ_trans &lt;- transform(as.character(sequ))  #this line is due to a problem with %in% not working with two numerics in the next line
-  idx2 &lt;- x$sam_top_inc %in% sequ_trans[,]
-  data.frame(d_int = paste(dataout$fake_0[idx],&quot;-&quot;,dataout$adj_depth_30[idx]),
-             SOC_OL_bot_to_30 = sum(x$SOC_500_inc[idx2]))
-}))

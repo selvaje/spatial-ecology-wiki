@@ -1,3 +1,0 @@
-gdal_translate <span class="re5">-of</span>  XYZ   vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.tif vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.txt
-<span class="kw2">awk</span> <span class="st_h">'{if ($3&gt;2 &amp;&amp; $3&lt;4) {print $1,$2,50 } else {print}}'</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.txt <span class="sy0">&gt;</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.txt
-gdal_translate <span class="re5">-ot</span> Byte vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.txt vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.tif 

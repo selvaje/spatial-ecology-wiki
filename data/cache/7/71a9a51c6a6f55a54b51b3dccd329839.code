@@ -1,1 +1,0 @@
-ogr2ogr <span class="re5">-f</span> SQLite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_merged.sqlite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_forest.sqlite

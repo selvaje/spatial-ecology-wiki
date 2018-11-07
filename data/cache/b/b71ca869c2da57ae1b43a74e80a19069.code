@@ -1,8 +1,0 @@
-g.region <span class="re2">n</span>= <span class="nu0">4413863.000</span> <span class="re2">s</span>=<span class="nu0">4413301.000</span> <span class="re2">e</span>=<span class="nu0">382469.000</span> \\
-<span class="re2">w</span>=<span class="nu0">382236.000</span> <span class="re2">save</span>=farm.region
-r.watershed <span class="re2">elevation</span>=merge.lidar<span class="sy0">@</span>PERMANENT <span class="re2">threshold</span>=<span class="nu0">20</span> \\
-<span class="re2">accumulation</span>=farm.accumul.20m <span class="re2">drainage</span>=farm.drainage.20m \\
-<span class="re2">stream</span>=farm.streams.20m <span class="re2">basin</span>=farm.basins.20m
-r.thin <span class="re2">input</span>=farm.streams.20m<span class="sy0">@</span>PERMANENT <span class="re2">output</span>=farm.streams.20m.thin
-r.to.vect <span class="re2">input</span>=farm.streams.20m.thin <span class="re2">output</span>=farmstreams
-r.watershed <span class="re2">elevation</span>=merge.lidar<span class="sy0">@</span>PERMANENT <span class="re2">threshold</span>=<span class="nu0">500</span> <span class="re2">basin</span>=farm.basins.500m

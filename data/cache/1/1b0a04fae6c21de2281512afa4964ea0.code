@@ -1,1 +1,0 @@
-markdata &lt;- read.dbf(&quot;~/ost4sem/project/unidk2010/nutrients/grassdb/odense/PERMANENT/dbf/join_basedata_markblokc_c.dbf&quot;, as.is=TRUE)

@@ -1,0 +1,86 @@
+a:5:{s:5:"title";s:35:" Please answer here - Matera 2018  ";s:6:"status";i:1;s:6:"number";i:8;s:8:"comments";a:8:{s:32:"beff1180ecb0ab00f481afda3f627d72";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.203";s:4:"name";s:14:"Valentin Louis";s:4:"mail";s:14:"vmhl1@le.ac.uk";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1528466691;}s:3:"raw";s:226:"I really enjoyed the course. Particularly learning more advance bash, awk, gdal, python and grass programming and how to integrate the different languages. The course was well organised and small errors were quickly resolved. ";s:5:"xhtml";s:237:"
+<p>
+I really enjoyed the course. Particularly learning more advance bash, awk, gdal, python and grass programming and how to integrate the different languages. The course was well organised and small errors were quickly resolved. 
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"beff1180ecb0ab00f481afda3f627d72";}s:32:"70edd1bb9632273b3f55cc0665b07b14";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test5.91.141.156";s:4:"name";s:7:"Daniela";s:4:"mail";s:28:"daniela.requenasuarez@wur.nl";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1528466940;}s:3:"raw";s:296:"I found the course very useful since it provided us with a jump start in basic coding for spatial analysis as well as complex examples which showed the potential of these tools. As feedback, I would have a session that goes deeper into advanced R for spatial analysis. Many thanks for everything!";s:5:"xhtml";s:307:"
+<p>
+I found the course very useful since it provided us with a jump start in basic coding for spatial analysis as well as complex examples which showed the potential of these tools. As feedback, I would have a session that goes deeper into advanced R for spatial analysis. Many thanks for everything!
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"70edd1bb9632273b3f55cc0665b07b14";}s:32:"257173e293ff64568b1ae741f3c54604";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.195";s:4:"name";s:16:"Beatrice Laurita";s:4:"mail";s:25:"beatrice.laurita@unifi.it";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1528467599;}s:3:"raw";s:366:"I found this course very useful and I really enjoyed it. I appreciate the effort made to start from very basic knowledge about geodata programming, enabling also beginners to get in touch with this world.
+
+My only suggestion is that you should maybe improve the satisfactory survey (some points are not so clear and you can not choose more options at the same time)!";s:5:"xhtml";s:386:"
+<p>
+I found this course very useful and I really enjoyed it. I appreciate the effort made to start from very basic knowledge about geodata programming, enabling also beginners to get in touch with this world.
+</p>
+
+<p>
+My only suggestion is that you should maybe improve the satisfactory survey (some points are not so clear and you can not choose more options at the same time)!
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"257173e293ff64568b1ae741f3c54604";}s:32:"6d7ce8cf32873b79f90e0bc7ffc2fff5";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.199";s:4:"name";s:17:"Omid Ghorbanzadeh";s:4:"mail";s:32:"omid.ghorbanzadeh@stud.sbg.ac.at";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1528467868;}s:3:"raw";s:279:"The workshop was very useful and more than my expectation. Because it was really comprehensive and covered a wide range of issues in codding for spatial analysis. 
+My suggestion is to work more with R, as it is more common in spatial analysis. Every thing was perfect. Thank you.";s:5:"xhtml";s:290:"
+<p>
+The workshop was very useful and more than my expectation. Because it was really comprehensive and covered a wide range of issues in codding for spatial analysis. 
+My suggestion is to work more with R, as it is more common in spatial analysis. Every thing was perfect. Thank you.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"6d7ce8cf32873b79f90e0bc7ffc2fff5";}s:32:"3ca8adad4ed1120ce5765f2854d71599";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.215";s:4:"name";s:14:"Frederik Priem";s:4:"mail";s:18:"fpriem@outlook.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1528468267;}s:3:"raw";s:1349:"The spatial ecology summer school was very interesting and helpful. It gently introduced me to bash and showed how to use various GIS software from the command line. Combined use of bash, GDAL and Python was particularly relevant for my research and seems to have a lot of potential, even more so if applied in a multi-processing context. Because of this workshop I feel much more confident to finally make the transition from Windows to Linux and become a real GIS software developer :). I also very much appreciated having discussions with like-minded people.
+
+Using parallel tracks for python (beginners/advanced) was a good decision. If possible, it would be good to apply this system to the other topics as well. For instance, I really liked to general intro to grass since I had no previous experience with this software, but the advanced applications were difficult to follow for beginners. Even though I was happy with the focus on Python applications, it would have been nice to see more about R (because I know very little about this language). The wiki-page of Spatial Ecology was particularly useful and richly documented. I will keep on consulting it after the school.
+
+On a final note I would like to say that Matera is a beautiful location for this workshop. I'm very happy that I could discover this hidden treasure. 
+
+Many thanks,
+F";s:5:"xhtml";s:1392:"
+<p>
+The spatial ecology summer school was very interesting and helpful. It gently introduced me to bash and showed how to use various GIS software from the command line. Combined use of bash, GDAL and Python was particularly relevant for my research and seems to have a lot of potential, even more so if applied in a multi-processing context. Because of this workshop I feel much more confident to finally make the transition from Windows to Linux and become a real GIS software developer :). I also very much appreciated having discussions with like-minded people.
+</p>
+
+<p>
+Using parallel tracks for python (beginners/advanced) was a good decision. If possible, it would be good to apply this system to the other topics as well. For instance, I really liked to general intro to grass since I had no previous experience with this software, but the advanced applications were difficult to follow for beginners. Even though I was happy with the focus on Python applications, it would have been nice to see more about R (because I know very little about this language). The wiki-page of Spatial Ecology was particularly useful and richly documented. I will keep on consulting it after the school.
+</p>
+
+<p>
+On a final note I would like to say that Matera is a beautiful location for this workshop. I&#039;m very happy that I could discover this hidden treasure. 
+</p>
+
+<p>
+Many thanks,
+F
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"3ca8adad4ed1120ce5765f2854d71599";}s:32:"24f7e14341433e380dfe6412f4afc9a4";a:8:{s:4:"user";a:5:{s:2:"id";s:16:"test2.46.241.134";s:4:"name";s:10:"Stephanie ";s:4:"mail";s:25:"stephanie.maier@ymail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1528470119;}s:3:"raw";s:366:"The course was not only very useful and I felt that I could learn a lot just in the short time of 5 days, it was also great to spend the days with a lot of fun people interested in spatial ecology. I got to know many useful tools and languages and I will definitely use some of them for my current research. Thanks for everything and hopefully we'll keep in touch!  ";s:5:"xhtml";s:386:"
+<p>
+The course was not only very useful and I felt that I could learn a lot just in the short time of 5 days, it was also great to spend the days with a lot of fun people interested in spatial ecology. I got to know many useful tools and languages and I will definitely use some of them for my current research. Thanks for everything and hopefully we&#039;ll keep in touch!<br/>
+
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"24f7e14341433e380dfe6412f4afc9a4";}s:32:"a75aeacc191abd807537aa2c17712802";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.194";s:4:"name";s:12:"Dylan Walshe";s:4:"mail";s:18:"dylan.walshe@ul.ie";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1528470321;}s:3:"raw";s:385:"1: Yes it was very good at explaining how to use various open source tools but also gave a good overview of what was available to a user. This balance is key for a user to improve their skills on their own such as how to read manuals/help
+
+2: The location of the school is excellent, easy to get to, loads of accommodation and food options, and a beautiful place to visit for the week.";s:5:"xhtml";s:405:"
+<p>
+1: Yes it was very good at explaining how to use various open source tools but also gave a good overview of what was available to a user. This balance is key for a user to improve their skills on their own such as how to read manuals/help
+</p>
+
+<p>
+2: The location of the school is excellent, easy to get to, loads of accommodation and food options, and a beautiful place to visit for the week.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"a75aeacc191abd807537aa2c17712802";}s:32:"11b653237ee3976f8b4c3f12363bf2f6";a:8:{s:4:"user";a:5:{s:2:"id";s:15:"test5.170.17.31";s:4:"name";s:13:"Michele Zurlo";s:4:"mail";s:22:"michele.zurlo@unimi.it";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1529304900;}s:3:"raw";s:1255:"The Spatial Ecology Summer School was a particularly useful experience to cover in a comprehensive way a wide range of FOSS tools to implement reproducible workflows.
+
+In just 5 days we were introduced to use of command line from begining level to more advanced one, combining different programming language. During the lessons topics and exercises were in depth explained and we found a valuable help in the use of Spatial ecology wiki-page, or we were encouraged to retrieve information from specific manuals/help page.
+
+The organization of Python lessons in parallel sessions was a good idea to save time and to deepen the proposed topics. If it were possible it would be great to use the same approach also for GRASS GIS and R lessons. It would useful to have basic level sessions for the beginners to fix basic concepts as locations, mapset, computational regions and working directories and advanced level sessions to explore difficult arguments as batch processing or the multi-core scripting.
+
+Personally the summer school was a good experience to improve my knowledge and learn how to simply integrate different programming languages, furthermore it was enriched by nice people, the time spent together and of course the beautiful town of Matera.";s:5:"xhtml";s:1346:"
+<p>
+The Spatial Ecology Summer School was a particularly useful experience to cover in a comprehensive way a wide range of <abbr title="Free &amp; Open-Source Software">FOSS</abbr> tools to implement reproducible workflows.
+</p>
+
+<p>
+In just 5 days we were introduced to use of command line from begining level to more advanced one, combining different programming language. During the lessons topics and exercises were in depth explained and we found a valuable help in the use of Spatial ecology wiki-page, or we were encouraged to retrieve information from specific manuals/help page.
+</p>
+
+<p>
+The organization of Python lessons in parallel sessions was a good idea to save time and to deepen the proposed topics. If it were possible it would be great to use the same approach also for GRASS GIS and R lessons. It would useful to have basic level sessions for the beginners to fix basic concepts as locations, mapset, computational regions and working directories and advanced level sessions to explore difficult arguments as batch processing or the multi-core scripting.
+</p>
+
+<p>
+Personally the summer school was a good experience to improve my knowledge and learn how to simply integrate different programming languages, furthermore it was enriched by nice people, the time spent together and of course the beautiful town of Matera.
+</p>
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"11b653237ee3976f8b4c3f12363bf2f6";}}s:11:"subscribers";a:2:{s:28:"daniela.requenasuarez@wur.nl";a:3:{s:4:"hash";s:32:"dda135e58102115d8c97db40592ef06a";s:6:"active";b:0;s:11:"confirmsent";b:1;}s:25:"stephanie.maier@ymail.com";a:3:{s:4:"hash";s:32:"e2ccb621ab1f3044ebc79815b7acdb82";s:6:"active";b:0;s:11:"confirmsent";b:1;}}}

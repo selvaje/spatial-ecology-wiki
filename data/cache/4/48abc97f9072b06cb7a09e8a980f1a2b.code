@@ -1,5 +1,0 @@
-  which.max(my.data.frame$new) 
-  [1] 4
-&nbsp;
-  which(my.data.frame$new==20) 
-  [1] 3
