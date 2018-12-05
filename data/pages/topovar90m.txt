@@ -1,64 +1,60 @@
-===== TopoVar90m: GLOBAL HIGH RESOLUTION TOPOGRAPHIC VARIABLES FOR ENVIRONMENTAL MODELING =====
+===== Geomorpho90m - Global high-resolution geomorphometry layers: empirical evaluation and accuracy assessment =====
 
-"Giuseppe Amatulli (1), Sami Domisch (2), Tushar Sethi (3), Peter Strobl (4)"\\
+"Giuseppe Amatulli (1), Daniel Mc-Inerney (2), Tushar Sethi (3), Peter Strobl (4), Sami Domisch(5)"\\
 
 (1) Yale University, School of Forestry & Environmental Studies - Center for Research Computing, New Haven, USA;\\
-(2) Leibniz-Institute of Freshwater Ecology and Inland Fisheries, Berlin, Germany;\\
+(2) Coillte, Irish State Forestry Board, Plassey Road, Castletroy, Limerick, Ireland.\\
 (3) Spatial-Ecology, Meaderville House, Wheal Buller, Redruth, Cornwall, TR16 6ST, UK;\\
 (4) European Commission, Joint Research Centre, Directorate for Sustainable Resources, Ispra, Italy;\\
+(5) Leibniz-Institute of Freshwater Ecology and Inland Fisheries, Berlin, Germany;\\
 
-=== A tile sample in Washington-Montana State can be download in the following links===
+
+=== Download Procedure ===
+
+https://rclone.org/install/
+
+https://rclone.org/drive/
+
+=== Elevation ===
+
+[[ http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/ | MERIT-DEM ]] 
+
 {{ :altitude_10kmmedian_merit.png |}}
+
 ==== Slope and aspect ====
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/slope_MERIT_n45w120.tif | Slope ]]
+
 {{ :slope_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/aspect_MERIT_n45w120.tif  | Aspect ]]
 {{ :aspect_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/aspectcosine_MERIT_n45w120.tif | Aspect cosine ]]
 {{ :aspectcosine_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/aspectsine_MERIT_n45w120.tif  | Aspect sine ]]
 {{ :aspectsine_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/eastness_MERIT_n45w120.tif | Eastness ]]
 {{ :eastness_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/northness_MERIT_n45w120.tif | Northness ]]
 {{ :northness_10kmmedian_merit.png |}}
 
 ==== Roughness ====
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/roughness_MERIT_n45w120.tif | Roughness  ]]
+
 {{ :roughness_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/tri_MERIT_n45w120.tif | Terrain roughness index ]]
 {{ :tri_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/vrm_MERIT_n45w120.tif | Vector ruggedness measure ]]
 {{ :vrm_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/tpi_MERIT_n45w120.tif | Topographic position index ]]
 {{ :tpi_10kmmedian_merit.png |}}
 
-
 ==== Curvature ====
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/dx_MERIT_n45w120.tif | First order partial derivative (E-W slope) ]]
 {{ :dx_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/dxx_MERIT_n45w120.tif | Second order partial derivative (E-W slope) ]]
 {{ :dxx_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/dy_MERIT_n45w120.tif | First order partial derivative (N-S slope) ]]
 {{ :dy_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/dyy_MERIT_n45w120.tif | Second order partial derivative (N-S slope) ]]
 {{ :dyy_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/dxy_MERIT_n45w120.tif | Second order partial derivative ]]
 {{ :dxy_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/pcurv_MERIT_n45w120.tif | Profile curvature ]]
 {{ :pcurv_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/tcurv_MERIT_n45w120.tif | Tangential curvature ]]
 {{ :tcurv_10kmmedian_merit.png |}}
 
 ==== Compound index ====
 
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/spi_MERIT_n45w120.tif | Stream power index ]]
 {{ :spi_10kmmedian_merit.png |}}
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/tci_MERIT_n45w120.tif | Topographic compound index (topographic wetness index) ]]
 {{ :tci_10kmmedian_merit.png |}}
 
-==== Geomorphology classes ====
 
-[[ http://www.spatial-ecology.net/ost4sem/geodata/TopoVar90m/forms_MERIT_n45w120.tif | Geomorphological landform classes ]]
+==== Tiling System under WGS84 Geographic Coordinate System ====
 
+{{ :merit_tile.jpg?800 |}}
+
+==== Tiling System under Equi7 Projection ====
 

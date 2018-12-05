@@ -18,7 +18,7 @@
   * [[uav:uav_inro|Drone mapping]] & [[wiki:grappolo|Grappolo]]\\
   * [[wiki:machlearn|Machine learning ]]\\
 **Data**:
-  * [[topovar90m|TopoVar90m]]\\
+  * [[topovar90m|Geomorpho90m]]\\
 **Community:**\\
 [[wiki:teachers]]\\
 [[wiki:students]]\\

@@ -3,6 +3,8 @@
 ===== GRASS GIS add-ons r.stream.watersheds & r.stream.variables =====
 
 Script written by Sami Domisch, October 2015
+Script updates by Giuseppe Amatulli, November 2018
+
 
 Grass hydrological commands
 
@@ -27,6 +29,11 @@ Microsoft Windows users: consider installing the [[http://live.osgeo.org/en/inde
 
 Update April 2016: the add-ons are currently being tested under Windows, please check back later for more details </note>
 
+Download the script
+
+  cd ~
+  wget "http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_grass/stream_variables.sh"
+  rstudio stream_variables.sh &
 
 Create and enter the folder where the data will be stored:
 
@@ -42,8 +49,7 @@ Download and unzip a DEM from WorldClim (http://www.worldclim.org/tiles.php):
 
 Create the GRASS GIS data base and enter GRASS:
 
-   grass72  -text -c -e  $INDIR/dem/alt_16.tif  $INDIR/grass_location
-   grass72 -text $INDIR/grass_location/PERMANENT  # enter GRASS
+   grass74  -text -c $INDIR/dem/alt_16.tif  $INDIR/grass_location
 
 Read data into GRASS:
 
@@ -86,26 +92,15 @@ Write files to disk:
 Create stream-specific variables, and limit the calculation only to a single basin.
 
 Download and install the GRASS add-ons: 
-   g.extension  extension=r.stream.watersheds  # use work-around below
-   g.extension  extension=r.stream.variables   # use work-around below
+   g.extension  extension=r.stream.watersheds  # for grass72
+   g.extension  extension=r.stream.variables   # for grass72
 
-**GRASS70; Work-around (October 2015):**
-   mkdir -p $HOME/.grass7/addons/scripts
-   wget -O $HOME/.grass7/addons/scripts/r.stream.watersheds   "http://trac.osgeo.org/grass/export/66488/grass-addons/grass7/raster/r.stream.watersheds/r.stream.watersheds"
-   chmod 777  $HOME/.grass7/addons/scripts/r.stream.watersheds
-
-
-
-   wget -O $HOME/.grass7/addons/scripts/r.stream.variables  "https://www.dropbox.com/s/kdn71mxdnumfqm7/r.stream.variables"
-   chmod 777  $HOME/.grass7/addons/scripts/r.stream.variables
-
-
-*GRASS72; Work-around (June 2017):**
+**GRASS72; Work-around (November 2018) for grass74:**
    mkdir $HOME/.grass7/addons/scripts
-   wget -O $HOME/.grass7/addons/scripts/r.stream.watersheds   "https://www.dropbox.com/s/0d68r615mvkr9ve/r.stream.watersheds"
-   chmod 777  $HOME/.grass7/addons/scripts/r.stream.watersheds
+   wget -O $HOME/.grass7/addons/scripts/r.stream.watersheds "http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_grass/r.stream.watersheds"
+      chmod 777  $HOME/.grass7/addons/scripts/r.stream.watersheds
 
-   wget -O $HOME/.grass7/addons/scripts/r.stream.variables  "https://www.dropbox.com/s/a7e3irt9vngbul0/r.stream.variables"
+   wget -O $HOME/.grass7/addons/scripts/r.stream.variables "http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_grass/r.stream.watersheds"
    chmod 777  $HOME/.grass7/addons/scripts/r.stream.variables
 
 
