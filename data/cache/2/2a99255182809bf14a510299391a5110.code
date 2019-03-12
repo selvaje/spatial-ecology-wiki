@@ -1,0 +1,100 @@
+<span class="st0">&quot;&quot;&quot;Graph a histogram of a remotely sensed image&quot;&quot;&quot;</span>
+<span class="kw1">import</span> gdalnumeric
+<span class="kw1">import</span> <span class="kw3">turtle</span> <span class="kw1">as</span> t
+&nbsp;
+<span class="kw1">def</span> histogram<span class="br0">&#40;</span>a<span class="sy0">,</span> bins<span class="sy0">=</span><span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">256</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+  <span class="st0">&quot;&quot;&quot;
+  Histogram function for multi-dimensional array.
+  a = array
+  bins = range of numbers to match 
+  &quot;&quot;&quot;</span>
+  fa <span class="sy0">=</span> a.<span class="me1">flat</span>
+  n <span class="sy0">=</span> gdalnumeric.<span class="me1">numpy</span>.<span class="me1">searchsorted</span><span class="br0">&#40;</span>gdalnumeric.<span class="me1">numpy</span>.<span class="me1">sort</span><span class="br0">&#40;</span>fa<span class="br0">&#41;</span><span class="sy0">,</span> bins<span class="br0">&#41;</span>
+  n <span class="sy0">=</span> gdalnumeric.<span class="me1">numpy</span>.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#91;</span>n<span class="sy0">,</span> <span class="br0">&#91;</span><span class="kw2">len</span><span class="br0">&#40;</span>fa<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+  hist <span class="sy0">=</span> n<span class="br0">&#91;</span><span class="nu0">1</span>:<span class="br0">&#93;</span>-n<span class="br0">&#91;</span>:-<span class="nu0">1</span><span class="br0">&#93;</span> 
+  <span class="kw1">return</span> hist
+&nbsp;
+<span class="kw1">def</span> draw_histogram<span class="br0">&#40;</span>hist<span class="sy0">,</span> scale<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>:
+    t.<span class="me1">color</span><span class="br0">&#40;</span><span class="st0">&quot;black&quot;</span><span class="br0">&#41;</span>
+    <span class="co1"># Draw the axes</span>
+    axes <span class="sy0">=</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>-<span class="nu0">355</span><span class="sy0">,</span> -<span class="nu0">200</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="br0">&#40;</span><span class="nu0">355</span><span class="sy0">,</span> -<span class="nu0">200</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="br0">&#40;</span>-<span class="nu0">355</span><span class="sy0">,</span> -<span class="nu0">200</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="br0">&#40;</span>-<span class="nu0">355</span><span class="sy0">,</span> <span class="nu0">250</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    t.<span class="me1">up</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> p <span class="kw1">in</span> axes:
+      t.<span class="me1">goto</span><span class="br0">&#40;</span>p<span class="br0">&#41;</span>
+      t.<span class="me1">down</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="co1"># Labels</span>
+    t.<span class="me1">up</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    t.<span class="me1">goto</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> -<span class="nu0">250</span><span class="br0">&#41;</span>
+    t.<span class="me1">write</span><span class="br0">&#40;</span><span class="st0">&quot;VALUE&quot;</span><span class="sy0">,</span>font<span class="sy0">=</span><span class="br0">&#40;</span><span class="st0">&quot;Arial,&quot;</span><span class="sy0">,</span><span class="nu0">12</span><span class="sy0">,</span><span class="st0">&quot;bold&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    t.<span class="me1">up</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    t.<span class="me1">goto</span><span class="br0">&#40;</span>-<span class="nu0">400</span><span class="sy0">,</span> <span class="nu0">280</span><span class="br0">&#41;</span>
+    t.<span class="me1">write</span><span class="br0">&#40;</span><span class="st0">&quot;FREQUENCY&quot;</span><span class="sy0">,</span>font<span class="sy0">=</span><span class="br0">&#40;</span><span class="st0">&quot;Arial,&quot;</span><span class="sy0">,</span><span class="nu0">12</span><span class="sy0">,</span><span class="st0">&quot;bold&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="co1"># Tick marks</span>
+    <span class="co1"># x axis</span>
+    x <span class="sy0">=</span> -<span class="nu0">355</span>
+    y <span class="sy0">=</span> -<span class="nu0">200</span>
+    t.<span class="me1">up</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">11</span><span class="br0">&#41;</span>:
+      x <span class="sy0">=</span> x+<span class="nu0">65</span>
+      t.<span class="me1">goto</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>
+      t.<span class="me1">down</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      t.<span class="me1">goto</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y-<span class="nu0">10</span><span class="br0">&#41;</span>
+      t.<span class="me1">up</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      t.<span class="me1">goto</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y-<span class="nu0">25</span><span class="br0">&#41;</span>
+      t.<span class="me1">write</span><span class="br0">&#40;</span><span class="st0">&quot;%s&quot;</span> % <span class="br0">&#40;</span>i*<span class="nu0">25</span><span class="br0">&#41;</span><span class="sy0">,</span> align<span class="sy0">=</span><span class="st0">&quot;center&quot;</span><span class="br0">&#41;</span>
+    <span class="co1"># y axis</span>
+    x <span class="sy0">=</span> -<span class="nu0">355</span>
+    y <span class="sy0">=</span> -<span class="nu0">200</span>
+    t.<span class="me1">up</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    pixels <span class="sy0">=</span> <span class="kw2">sum</span><span class="br0">&#40;</span>hist<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> scale:
+      <span class="kw2">max</span> <span class="sy0">=</span> <span class="nu0">0</span>
+      <span class="kw1">for</span> h <span class="kw1">in</span> hist:
+        hmax <span class="sy0">=</span> h.<span class="kw2">max</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> hmax <span class="sy0">&gt;</span> <span class="kw2">max</span>:
+          <span class="kw2">max</span> <span class="sy0">=</span> hmax
+      pixels <span class="sy0">=</span> <span class="kw2">max</span>
+    label <span class="sy0">=</span> pixels/<span class="nu0">10</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">11</span><span class="br0">&#41;</span>:
+      y <span class="sy0">=</span> y+<span class="nu0">45</span>
+      t.<span class="me1">goto</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>
+      t.<span class="me1">down</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      t.<span class="me1">goto</span><span class="br0">&#40;</span>x-<span class="nu0">10</span><span class="sy0">,</span>y<span class="br0">&#41;</span>
+      t.<span class="me1">up</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      t.<span class="me1">goto</span><span class="br0">&#40;</span>x-<span class="nu0">15</span><span class="sy0">,</span>y-<span class="nu0">6</span><span class="br0">&#41;</span>
+      t.<span class="me1">write</span><span class="br0">&#40;</span><span class="st0">&quot;%s&quot;</span> % <span class="br0">&#40;</span>i*label<span class="br0">&#41;</span><span class="sy0">,</span> align<span class="sy0">=</span><span class="st0">&quot;right&quot;</span><span class="br0">&#41;</span>
+    <span class="co1"># Plot each histogram as a colored line</span>
+    x_ratio <span class="sy0">=</span> <span class="nu0">709.0</span> / <span class="nu0">256</span>
+    y_ratio <span class="sy0">=</span> <span class="nu0">450.0</span> / pixels
+    <span class="co1"># Add more colors to this list if comparing</span>
+    <span class="co1"># more than 3 bands or 1 image</span>
+    colors <span class="sy0">=</span> <span class="br0">&#91;</span><span class="st0">&quot;red&quot;</span><span class="sy0">,</span> <span class="st0">&quot;green&quot;</span><span class="sy0">,</span> <span class="st0">&quot;blue&quot;</span><span class="br0">&#93;</span>
+    <span class="kw1">for</span> j <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>hist<span class="br0">&#41;</span><span class="br0">&#41;</span>:
+      h <span class="sy0">=</span> hist<span class="br0">&#91;</span>j<span class="br0">&#93;</span>
+      x <span class="sy0">=</span> -<span class="nu0">354</span>
+      y <span class="sy0">=</span> -<span class="nu0">199</span>
+      t.<span class="me1">up</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      t.<span class="me1">goto</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>
+      t.<span class="me1">down</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      t.<span class="me1">color</span><span class="br0">&#40;</span>colors<span class="br0">&#91;</span>j<span class="br0">&#93;</span><span class="br0">&#41;</span>
+      <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">256</span><span class="br0">&#41;</span>:
+        x <span class="sy0">=</span> i * x_ratio
+        y <span class="sy0">=</span> h<span class="br0">&#91;</span>i<span class="br0">&#93;</span> * y_ratio
+        x <span class="sy0">=</span> x - <span class="br0">&#40;</span><span class="nu0">709</span>/<span class="nu0">2</span><span class="br0">&#41;</span>
+        y <span class="sy0">=</span> y + -<span class="nu0">199</span>
+        t.<span class="me1">goto</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+im <span class="sy0">=</span> <span class="st0">&quot;swap.tif&quot;</span>
+histograms <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+arr <span class="sy0">=</span> gdalnumeric.<span class="me1">LoadFile</span><span class="br0">&#40;</span>im<span class="br0">&#41;</span>
+<span class="kw1">for</span> b <span class="kw1">in</span> arr:
+  histograms.<span class="me1">append</span><span class="br0">&#40;</span>histogram<span class="br0">&#40;</span>b<span class="br0">&#41;</span><span class="br0">&#41;</span>
+draw_histogram<span class="br0">&#40;</span>histograms<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Hide our pen</span>
+t.<span class="me1">pen</span><span class="br0">&#40;</span>shown<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span>
+t.<span class="me1">done</span><span class="br0">&#40;</span><span class="br0">&#41;</span>  
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;

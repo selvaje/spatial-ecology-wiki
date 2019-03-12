@@ -1,0 +1,8 @@
+GET http://ows.rasdaman.org/rasdaman/ows?
+service=WCS&amp;
+version=2.0.1&amp;
+request=GetCoverage&amp;
+coverageId=AvgLandTemp&amp;
+subset=Lat(40.6)&amp;
+subset=Long(16.6)&amp;
+subset=ansi(&quot;2015-06&quot;)

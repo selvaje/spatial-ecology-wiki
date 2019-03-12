@@ -1,0 +1,1 @@
+ogr2ogr -t_srs epsg:<span class="nu0">3035</span> <span class="re5">-where</span> <span class="st_h">'NAME like &quot;Golf course:%&quot;'</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise2<span class="sy0">/</span>cornwall_golf_3035.shp <span class="co1">${VECTORDIR}</span><span class="sy0">/</span>cornwall_poi.shp

@@ -1,0 +1,2 @@
+v.extract <span class="re2">input</span>=Markblokc <span class="re2">output</span>=Markblok9 <span class="re2">where</span>=<span class="st0">&quot;BNI_nr=9&quot;</span>
+v.extract <span class="re2">input</span>=oplc25 <span class="re2">output</span>=opl15 <span class="re2">where</span>=<span class="st0">&quot;BNI_nr=15&quot;</span>

@@ -1,0 +1,3 @@
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> <span class="kw2">csh</span>  <span class="co0"># csh shell</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> libpam0g-dev
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> lesstif2-dev

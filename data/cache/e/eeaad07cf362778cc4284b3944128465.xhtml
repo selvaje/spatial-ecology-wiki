@@ -1,0 +1,328 @@
+
+<h1 class="sectionedit1" id="use_gdal_ogr_and_pktools_for_raster_vector_operations">Use GDAL/OGR and PKTOOLS for raster/vector operations</h1>
+<div class="level1">
+
+<p>
+<br/>
+
+Data Directory: /home/user/ost4sem/exercise/geodata_SDM/ <br/>
+
+Script: /home/user/ost4sem/exercise/geodata_SDM/gdal_pktools.sh <br/>
+
+</p>
+<pre class="code">cd /home/user/ost4sem/exercise/geodata_SDM
+wget -N http://spatial-ecology.net/ost4sem/exercise/geodata_SDM/gdal-ogr-pktools.sh
+rstudio /home/user/ost4sem/exercise/geodata_SDM/gdal-ogr-pktools.sh &amp; </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Use GDAL\/OGR and PKTOOLS for raster\/vector operations&quot;,&quot;hid&quot;:&quot;use_gdal_ogr_and_pktools_for_raster_vector_operations&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-407&quot;} -->
+<h2 class="sectionedit2" id="gdal_commands">GDAL Commands</h2>
+<div class="level2">
+
+</div>
+
+<h4 id="change_the_directory_and_explore_the_files">Change the directory, and explore the files</h4>
+<div class="level4">
+<pre class="code bash"><span class="kw3">cd</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>geodata_SDM
+<span class="kw2">ls</span> <span class="sy0">*/*</span>.tif  <span class="co0"># list all the files with the extension .tif</span>
+gdalinfo vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+&nbsp;
+<span class="co0"># Visualize the image</span>
+&nbsp;
+qgis vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+openev vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif</pre>
+
+<p>
+Reply to the following questions:<br/>
+
+What is the pixel size?<br/>
+
+How do you get min and max pixel values?<br/>
+
+</p>
+
+</div>
+
+<h4 id="understand_data_type">Understand data type</h4>
+<div class="level4">
+<pre class="code">                      Ranges of GDAL data types        Image
+GDAL data type	       minimum  	maximum        Size 
+Byte  			     0  	    255        39M
+UInt16			     0  	 65,535        78M
+Int16, CInt16 	       -32,768  	 32,767        78M
+UInt32			     0    4,294,967,295        155M  
+Int32, CInt32 	-2,147,483,648    2,147,483,647        155M
+Float32, CFloat32      -3.4E38           3.4E38        155M
+Float64, CFloat64    -1.79E308         1.79E308        309M</pre>
+
+</div>
+
+<h4 id="understand_nodata_value">Understand NoData Value</h4>
+<div class="level4">
+<pre class="code bash">gdalinfo <span class="re5">-mm</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+gdal_edit.py -a_nodata <span class="re5">-9999</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+gdalinfo <span class="re5">-mm</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+gdal_edit.py -a_nodata -<span class="nu0">339999995214436424907732413799364296704.000</span>    vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif</pre>
+
+</div>
+
+<h4 id="calculate_minimum_and_maximum_values_for_all_the_images">Calculate minimum and maximum values for all the images</h4>
+<div class="level4">
+<pre class="code bash"><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> vegetation<span class="sy0">/*</span>.tif ; <span class="kw1">do</span> 
+gdalinfo  <span class="re5">-mm</span>  <span class="re1">$file</span>  <span class="sy0">|</span> <span class="kw2">grep</span> Computed
+<span class="kw1">done</span></pre>
+
+</div>
+
+<h4 id="exercise">Exercise:</h4>
+<div class="level4">
+
+<p>
+Use one of the gdal commands and try to clip the vegetation/ETmean08-11.tif image using a square box (numbers are in degree):<br/>
+
+xmin : 32<br/>
+
+xmax : 34<br/>
+
+ymin : 1<br/>
+
+ymax : 3<br/>
+
+<br/>
+
+</p>
+<pre class="code"> gdal............................  vegetation/ETmean08-11.tif vegetation/ETmean08-11_crop.tif</pre>
+
+</div>
+
+<h4 id="create_a_coefficient_of_variation">Create a Coefficient of variation</h4>
+<div class="level4">
+
+<p>
+GPPmean08-11.tif temporal mean of Gross Primary Productivity <br/>
+
+GPPstdev08-11.tif temporal standard deviation of Gross Primary Productivity <br/>
+
+</p>
+<pre class="code bash">gdal_calc.py <span class="re5">--type</span>=Float32 <span class="re5">--overwrite</span>  <span class="re5">-A</span> vegetation<span class="sy0">/</span>GPPstdev08-<span class="nu0">11</span>.tif <span class="re5">-B</span>  vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif \
+   <span class="re5">--calc</span>=<span class="st0">&quot;( A.astype(float) / ( B.astype(float) + 0.000000001 ) )&quot;</span> <span class="re5">--outfile</span>=vegetation<span class="sy0">/</span>GPPcv08-<span class="nu0">11</span>.tif</pre>
+
+</div>
+
+<h4 id="change_pixel_resolution">Change pixel resolution</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># looping trough the images</span>
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> LST<span class="sy0">/</span>LST_MOYDmax_month?.tif LST<span class="sy0">/</span>LST_MOYDmax_month??.tif; <span class="kw1">do</span> 
+  <span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif <span class="br0">&#41;</span>
+  gdalwarp <span class="re5">-overwrite</span> <span class="re5">-te</span> <span class="nu0">29</span> <span class="re5">-1</span> <span class="nu0">35.0000000048</span> <span class="nu0">4.000000004</span> <span class="re5">-tr</span> <span class="nu0">0.008333333340000</span> <span class="nu0">0.008333333340000</span> <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re1">$file</span> LST<span class="sy0">/</span><span class="co1">${filename}</span>_crop.tif 
+<span class="kw1">done</span></pre>
+
+</div>
+
+<h4 id="get_value_at_one_pixel_line_image-location">Get value at one pixel/line image-location</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># looping trough the images</span>
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> LST<span class="sy0">/</span>LST_MOYDmax_month?.tif LST<span class="sy0">/</span>LST_MOYDmax_month??.tif; <span class="kw1">do</span> 
+   gdallocationinfo <span class="re5">-valonly</span> <span class="re1">$file</span>  <span class="nu0">20</span> <span class="nu0">20</span>  
+<span class="kw1">done</span></pre>
+
+</div>
+
+<h4 id="get_value_at_lat_long_image-location">Get value at lat/long  image-location</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># looping trough the images</span>
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> LST<span class="sy0">/</span>LST_MOYDmax_month?.tif LST<span class="sy0">/</span>LST_MOYDmax_month??.tif; <span class="kw1">do</span> 
+   gdallocationinfo <span class="re5">-valonly</span> <span class="re5">-geoloc</span> <span class="re1">$file</span>  <span class="nu0">33</span> <span class="nu0">2</span>  
+<span class="kw1">done</span></pre>
+
+</div>
+
+<h4 id="get_value_at_multiple_lat_long_image-location">Get value at multiple lat/long  image-location</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># create the lat long file </span>
+<span class="kw3">echo</span> <span class="nu0">32.5</span> <span class="nu0">2.5</span> <span class="sy0">&gt;</span> LST<span class="sy0">/</span>x_y.txt
+<span class="kw3">echo</span> <span class="nu0">31.1</span> <span class="nu0">2.1</span> <span class="sy0">&gt;&gt;</span> LST<span class="sy0">/</span>x_y.txt
+<span class="co0"># looping trough the images</span>
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> LST<span class="sy0">/</span>LST_MOYDmax_month?.tif LST<span class="sy0">/</span>LST_MOYDmax_month??.tif; <span class="kw1">do</span> 
+   gdallocationinfo <span class="re5">-valonly</span> <span class="re5">-geoloc</span> <span class="re1">$file</span> <span class="sy0">&lt;</span> LST<span class="sy0">/</span>x_y.txt  
+   <span class="kw3">echo</span> <span class="st0">&quot;&quot;</span>
+<span class="kw1">done</span></pre>
+
+</div>
+
+<h4 id="from_image_to_text_and_from_txt_to_image">From Image to text and from txt to image</h4>
+<div class="level4">
+<pre class="code bash">gdal_translate <span class="re5">-of</span>  XYZ   vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.tif vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.txt
+<span class="kw2">awk</span> <span class="st_h">'{if ($3&gt;2 &amp;&amp; $3&lt;4) {print $1,$2,50 } else {print}}'</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.txt <span class="sy0">&gt;</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.txt
+gdal_translate <span class="re5">-ot</span> Byte vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.txt vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.tif </pre>
+
+</div>
+
+<h4 id="the_use_of_vrt_to_stack_images_and_tiling">The use of VRT to stack images and tiling</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># stack the tif</span>
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span>   vegetation<span class="sy0">/</span>stack.vrt   vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif vegetation<span class="sy0">/</span>ETstdev08-<span class="nu0">11</span>.tif
+gdalinfo vegetation<span class="sy0">/</span>stack.vrt
+&nbsp;
+<span class="co0"># split in tiles </span>
+gdal_translate <span class="re5">-srcwin</span> <span class="nu0">0</span>     <span class="nu0">0</span> <span class="nu0">360</span> <span class="nu0">300</span> vegetation<span class="sy0">/</span>stack.vrt vegetation<span class="sy0">/</span>stack_UL.tif
+gdal_translate <span class="re5">-srcwin</span> <span class="nu0">0</span>   <span class="nu0">300</span> <span class="nu0">360</span> <span class="nu0">300</span> vegetation<span class="sy0">/</span>stack.vrt vegetation<span class="sy0">/</span>stack_UR.tif
+gdal_translate <span class="re5">-srcwin</span> <span class="nu0">360</span>   <span class="nu0">0</span> <span class="nu0">360</span> <span class="nu0">300</span> vegetation<span class="sy0">/</span>stack.vrt vegetation<span class="sy0">/</span>stack_LL.tif
+gdal_translate <span class="re5">-srcwin</span> <span class="nu0">360</span> <span class="nu0">300</span> <span class="nu0">360</span> <span class="nu0">300</span> vegetation<span class="sy0">/</span>stack.vrt vegetation<span class="sy0">/</span>stack_LR.tif
+&nbsp;
+<span class="co0"># recompose the image </span>
+gdalbuildvrt <span class="re5">-overwrite</span> vegetation<span class="sy0">/</span>ETmosaic.vrt vegetation<span class="sy0">/</span>stack_UL.tif vegetation<span class="sy0">/</span>stack_UR.tif vegetation<span class="sy0">/</span>stack_LL.tif vegetation<span class="sy0">/</span>stack_LR.tif
+gdal_translate <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> vegetation<span class="sy0">/</span>ETmosaic.vrt vegetation<span class="sy0">/</span>ETmosaic.tif</pre>
+
+</div>
+
+<h4 id="surface_distance_buffer">Surface distance/buffer</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># Continues distance surface</span>
+gdal_proximity.py <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-values</span> <span class="nu0">0</span> <span class="re5">-distunits</span> PIXEL  <span class="re5">-ot</span> UInt32   vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.tif vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_proximity.tif
+&nbsp;
+<span class="co0"># Fix buffer surface</span>
+gdal_proximity.py <span class="re5">-fixed-buf-val</span> <span class="nu0">4</span> <span class="re5">-maxdist</span> <span class="nu0">4</span> <span class="re5">-nodata</span> <span class="nu0">10</span> <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-values</span> <span class="nu0">0</span> <span class="re5">-distunits</span> PIXEL <span class="re5">-ot</span> Byte vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.tif vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_buffer.tif</pre>
+
+</div>
+
+<h4 id="topography_variables">Topography variables</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># calculate  slope </span>
+gdaldem slope <span class="re5">-s</span> <span class="nu0">111120</span> <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>slope.tif 
+&nbsp;
+<span class="co0"># calculate  apect</span>
+gdaldem aspect -zero_for_flat <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>aspect.tif 
+&nbsp;
+<span class="co0"># calculate  Terrain Ruggedness Index TRI  </span>
+gdaldem TRI <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>tri.tif 
+&nbsp;
+<span class="co0"># calculate  Topographic Position Index TPI</span>
+gdaldem TPI <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>tpi.tif 
+&nbsp;
+<span class="co0"># calculate  Roughness   </span>
+gdaldem roughness <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> dem<span class="sy0">/</span>GMTED2010.tif dem<span class="sy0">/</span>roughness.tif </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;GDAL Commands&quot;,&quot;hid&quot;:&quot;gdal_commands&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;408-6025&quot;} -->
+<h2 class="sectionedit3" id="ogr_commands">OGR Commands</h2>
+<div class="level2">
+
+</div>
+
+<h4 id="select_a_polygon_and_create_a_new_shape_file">Select a polygon and create a new shape file</h4>
+<div class="level4">
+<pre class="code bash">ogrinfo <span class="re5">-al</span> <span class="re5">-geom</span>=NO   shp<span class="sy0">/</span>TM_WORLD_BORDERS.shp
+<span class="co0"># base on an attribute</span>
+ogr2ogr  <span class="re5">-overwrite</span>  <span class="re5">-f</span> <span class="st0">&quot;ESRI Shapefile&quot;</span>  <span class="re5">-where</span> <span class="st0">&quot;NAME = 'Uganda'&quot;</span> shp<span class="sy0">/</span>TM_UGANDA_BORDERS-<span class="nu0">0.3</span>.shp shp<span class="sy0">/</span>TM_WORLD_BORDERS.shp
+&nbsp;
+<span class="co0"># base on dimension of the polygons</span>
+ogr2ogr  <span class="re5">-overwrite</span>  <span class="re5">-f</span> <span class="st0">&quot;ESRI Shapefile&quot;</span> <span class="re5">-sql</span> <span class="st0">&quot;SELECT * FROM TM_WORLD_BORDERS WHERE OGR_GEOM_AREA &gt; 100 &quot;</span> shp<span class="sy0">/</span>TM_LARGE_BORDERS.shp shp<span class="sy0">/</span>TM_WORLD_BORDERS.shp</pre>
+
+<p>
+more example at <a href="http://www.gdal.org/ogr_sql.html" class="urlextern" target="blanc" title="http://www.gdal.org/ogr_sql.html" rel="nofollow noopener">http://www.gdal.org/ogr_sql.html</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;OGR Commands&quot;,&quot;hid&quot;:&quot;ogr_commands&quot;,&quot;codeblockOffset&quot;:12,&quot;secid&quot;:3,&quot;range&quot;:&quot;6026-6565&quot;} -->
+<h2 class="sectionedit4" id="pktools_commands">PKTOOLS Commands</h2>
+<div class="level2">
+
+</div>
+
+<h4 id="create_a_mask">Create a mask</h4>
+<div class="level4">
+
+<p>
+The same operation that we have done before 
+</p>
+<pre class="code bash">gdal_translate <span class="re5">-of</span>  XYZ   vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.tif vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.txt
+<span class="kw2">awk</span> <span class="st_h">'{if ($3&gt;2 &amp;&amp; $3&lt;4) {print $1,$2,50 } else {print}}'</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop.txt <span class="sy0">&gt;</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.txt
+gdal_translate <span class="re5">-ot</span> Byte vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.txt vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_crop_trh.tif </pre>
+
+<p>
+can be done more efficient using pkgetmask. We can create 3 masks using different thresholds values. 
+</p>
+<pre class="code bash">pkgetmask  <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-min</span>  <span class="nu0">1</span>  <span class="re5">-max</span>  <span class="nu0">2</span> <span class="re5">-data</span> <span class="nu0">1</span> <span class="re5">-nodata</span> <span class="nu0">0</span> <span class="re5">-ot</span> Byte  <span class="re5">-i</span>  vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif  <span class="re5">-o</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_01_trhA.tif
+pkgetmask  <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-min</span>  <span class="nu0">5</span>  <span class="re5">-max</span>  <span class="nu0">8</span> <span class="re5">-data</span> <span class="nu0">1</span> <span class="re5">-nodata</span> <span class="nu0">0</span> <span class="re5">-ot</span> Byte  <span class="re5">-i</span>  vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif  <span class="re5">-o</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_01_trhB.tif
+pkgetmask  <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-min</span>  <span class="nu0">0</span>  <span class="re5">-max</span>  <span class="nu0">10</span> <span class="re5">-data</span> <span class="nu0">0</span> <span class="re5">-nodata</span> <span class="nu0">1</span> <span class="re5">-ot</span> Byte  <span class="re5">-i</span>  vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif  <span class="re5">-o</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_01_trhC.tif</pre>
+
+</div>
+
+<h4 id="set_a_mask_to_other_image">Set a mask to other image</h4>
+<div class="level4">
+
+<p>
+Use the prepared mask and apply to the image.
+</p>
+<pre class="code bash">pksetmask <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> \
+<span class="re5">-m</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_01_trhA.tif  <span class="re5">-msknodata</span> <span class="nu0">1</span> <span class="re5">-nodata</span>  <span class="re5">-9</span> \
+<span class="re5">-m</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_01_trhB.tif  <span class="re5">-msknodata</span> <span class="nu0">1</span> <span class="re5">-nodata</span>  <span class="re5">-5</span> \
+<span class="re5">-m</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_01_trhC.tif  <span class="re5">-msknodata</span> <span class="nu0">1</span> <span class="re5">-nodata</span> <span class="re5">-10</span> \
+<span class="re5">-i</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif <span class="re5">-o</span> vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>_01_msk.tif</pre>
+
+</div>
+
+<h4 id="composite_images">Composite images</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># create a mask to apply during the composite</span>
+pkgetmask  <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-min</span> <span class="nu0">0</span> <span class="re5">-max</span> <span class="nu0">25</span> <span class="re5">-data</span> <span class="nu0">0</span> <span class="re5">-nodata</span> <span class="nu0">1</span> <span class="re5">-ot</span> Byte <span class="re5">-i</span> LST<span class="sy0">/</span>LST_MOYDmax_month1.tif <span class="re5">-o</span> LST<span class="sy0">/</span>LST_MOYDmax_month1-msk.tif</pre>
+<pre class="code bash"><span class="co0"># Calculate mean and standard deviation with several images</span>
+pkcomposite $<span class="br0">&#40;</span><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> LST<span class="sy0">/</span>LST_MOYDmax_month??.tif LST<span class="sy0">/</span>LST_MOYDmax_month?.tif  ; <span class="kw1">do</span> <span class="kw3">echo</span> <span class="re5">-i</span> <span class="re1">$file</span> ;  <span class="kw1">done</span> <span class="br0">&#41;</span> <span class="re5">-m</span> LST<span class="sy0">/</span>LST_MOYDmax_month1-msk.tif <span class="re5">-msknodata</span> <span class="nu0">0</span> <span class="re5">-cr</span> mean   <span class="re5">-dstnodata</span> <span class="nu0">0</span> <span class="re5">-co</span>  <span class="re2">COMPRESS</span>=LZW <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-o</span> LST<span class="sy0">/</span>LST_MOYDmax_monthMean.tif
+pkcomposite $<span class="br0">&#40;</span><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> LST<span class="sy0">/</span>LST_MOYDmax_month??.tif LST<span class="sy0">/</span>LST_MOYDmax_month?.tif  ; <span class="kw1">do</span> <span class="kw3">echo</span> <span class="re5">-i</span> <span class="re1">$file</span> ;  <span class="kw1">done</span> <span class="br0">&#41;</span> <span class="re5">-m</span> LST<span class="sy0">/</span>LST_MOYDmax_month1-msk.tif <span class="re5">-msknodata</span> <span class="nu0">0</span> <span class="re5">-cr</span> stdev   <span class="re5">-dstnodata</span> <span class="re5">-1</span> <span class="re5">-co</span>  <span class="re2">COMPRESS</span>=LZW <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-o</span> LST<span class="sy0">/</span>LST_MOYDmax_monthStdev.tif</pre>
+
+<p>
+an alternative way is to use pkstatprofile
+</p>
+<pre class="code bash"><span class="co0"># Create a multiband vrt </span>
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> LST<span class="sy0">/</span>LST_MOYDmax_month.vrt LST<span class="sy0">/</span>LST_MOYDmax_month?.tif LST<span class="sy0">/</span>LST_MOYDmax_month??.tif 
+<span class="co0"># Calculate mean and standard deviation</span>
+pkstatprofile <span class="re5">-co</span>  <span class="re2">COMPRESS</span>=LZW <span class="re5">-nodata</span> <span class="nu0">0</span> <span class="re5">-f</span> mean <span class="re5">-f</span> stdev  <span class="re5">-i</span> LST<span class="sy0">/</span>LST_MOYDmax_month.vrt <span class="re5">-o</span> LST<span class="sy0">/</span>LST_MOYDmax_month_mean_stdev.tif</pre>
+
+</div>
+
+<h4 id="filter_aggregate_images">Filter/Aggregate images</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># mean aggregation </span>
+pkfilter <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-nodata</span> <span class="nu0">0</span> <span class="re5">-ot</span> Float32 <span class="re5">-dx</span> <span class="nu0">10</span> <span class="re5">-dy</span> <span class="nu0">10</span> <span class="re5">-f</span> mean <span class="re5">-d</span> <span class="nu0">10</span> <span class="re5">-i</span> LST<span class="sy0">/</span>LST_MOYDmax_monthMean.tif <span class="re5">-o</span> LST<span class="sy0">/</span>LST_MOYDmax_monthMean_aggreate10mean.tif
+<span class="co0"># mean circular moving window</span>
+pkfilter <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-nodata</span> <span class="nu0">0</span> <span class="re5">-ot</span> Float32 <span class="re5">-dx</span> <span class="nu0">11</span> <span class="re5">-dy</span> <span class="nu0">11</span> <span class="re5">-f</span> mean <span class="re5">-c</span>  <span class="re5">-i</span> LST<span class="sy0">/</span>LST_MOYDmax_monthMean.tif <span class="re5">-o</span> LST<span class="sy0">/</span>LST_MOYDmax_monthMean_circular11mean.tif</pre>
+
+</div>
+
+<h4 id="images_statistic_and_histogram">Images statistic and histogram</h4>
+<div class="level4">
+<pre class="code bash">pkstat <span class="re5">-hist</span>  <span class="re5">-nbin</span>  <span class="nu0">100</span> -src_min <span class="nu0">0</span>  <span class="re5">-i</span>   vegetation<span class="sy0">/</span>GPPstdev08-<span class="nu0">11</span>.tif
+pkstat <span class="re5">-hist</span>  -src_min <span class="nu0">0</span>             <span class="re5">-i</span>   temperature<span class="sy0">/</span>ug_bio_3.tif</pre>
+
+</div>
+
+<h4 id="images_reclassification">Images reclassification</h4>
+<div class="level4">
+<pre class="code bash">pkstat  <span class="re5">-hist</span> <span class="re5">-i</span> temperature<span class="sy0">/</span>ug_bio_3.tif  <span class="sy0">|</span> <span class="kw2">grep</span> <span class="re5">-v</span> <span class="st0">&quot; 0&quot;</span>  <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">'{ if ($1&lt;75) { print $1 , 0 } else { print $1 , 1 }  }'</span> <span class="sy0">&gt;</span> temperature<span class="sy0">/</span>reclass_ug_bio_3.txt
+pkreclass <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-code</span> temperature<span class="sy0">/</span>reclass_ug_bio_3.txt <span class="re5">-i</span> temperature<span class="sy0">/</span>ug_bio_3.tif  <span class="re5">-o</span> temperature<span class="sy0">/</span>reclass_ug_bio_3.tif</pre>
+
+</div>
+
+<h4 id="zonal_statistic_polygon_extraction">Zonal statistic (polygon extraction)</h4>
+<div class="level4">
+<pre class="code bash"><span class="kw2">rm</span> <span class="re5">-f</span> shp<span class="sy0">/</span>polygons_stat.sqlite
+pkextractogr <span class="re5">-srcnodata</span> <span class="re5">-339999995214436424907732413799364296704</span>   <span class="re5">-r</span> mean <span class="re5">-r</span> stdev <span class="re5">-r</span> min    <span class="re5">-i</span> vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif <span class="re5">-s</span>  shp<span class="sy0">/</span>polygons.sqlite    <span class="re5">-o</span>   shp<span class="sy0">/</span>polygons_stat.sqlite
+&nbsp;
+<span class="co0"># we can also create a csv that can be manipulate later on with awk</span>
+<span class="kw2">rm</span>  <span class="re5">-f</span> shp<span class="sy0">/</span>polygons_stat.csv
+pkextractogr <span class="re5">-f</span> CSV <span class="re5">-srcnodata</span> <span class="re5">-339999995214436424907732413799364296704</span>   <span class="re5">-r</span> mean <span class="re5">-r</span> stdev <span class="re5">-r</span> min    <span class="re5">-i</span> vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif <span class="re5">-s</span>  shp<span class="sy0">/</span>polygons.sqlite    <span class="re5">-o</span>   shp<span class="sy0">/</span>polygons_stat.csv</pre>
+
+</div>
+
+<h4 id="zonal_statistic_point_extraction">Zonal statistic (point extraction)</h4>
+<div class="level4">
+<pre class="code bash"><span class="co0"># at point location</span>
+<span class="kw2">rm</span> shp<span class="sy0">/</span>point_stat.csv
+pkextractogr <span class="re5">-f</span> CSV <span class="re5">-srcnodata</span> <span class="re5">-339999995214436424907732413799364296704</span> <span class="re5">-r</span> mean <span class="re5">-r</span> stdev <span class="re5">-r</span> min    <span class="re5">-i</span> vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif <span class="re5">-s</span>  shp<span class="sy0">/</span>presence.shp <span class="re5">-o</span>   shp<span class="sy0">/</span>point_stat.csv
+<span class="co0"># at point location + 1 pixel around </span>
+<span class="kw2">rm</span> shp<span class="sy0">/</span>point-buf_stat.csv
+pkextractogr <span class="re5">-f</span> CSV <span class="re5">-buf</span> <span class="nu0">2</span> <span class="re5">-srcnodata</span> <span class="re5">-339999995214436424907732413799364296704</span> <span class="re5">-r</span> mean <span class="re5">-r</span> stdev <span class="re5">-r</span> min <span class="re5">-i</span> vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif <span class="re5">-s</span> shp<span class="sy0">/</span>presence.shp <span class="re5">-o</span> shp<span class="sy0">/</span>point-buf_stat.csv</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;PKTOOLS Commands&quot;,&quot;hid&quot;:&quot;pktools_commands&quot;,&quot;codeblockOffset&quot;:13,&quot;secid&quot;:4,&quot;range&quot;:&quot;6566-&quot;} -->

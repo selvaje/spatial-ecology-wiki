@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://www.spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://www.spatial-ecology.net/dokuwiki/feed.php">
+        <title></title>
+        <description></description>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2019-03-04T03:40:26+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sidebar&amp;rev=1543704232&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=start&amp;rev=1540576503&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1543704151&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <url>http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sidebar&amp;rev=1543704232&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-12-01T22:43:52+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sidebar</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sidebar&amp;rev=1543704232&amp;do=diff</link>
+        <description>spatial-ecology.org
+
+
+
+Trainings:
+
+	*  Our format
+
+	*  Past &amp; upcoming events
+
+	*  Satisfaction surveys
+
+Learn:
+
+	*  Linux Bash
+
+	*  AWK &amp; Gnuplot
+
+	*  R language
+
+	*   Python 
+
+	*  Grass &amp; Qgis
+
+	*  Gdal/ogr &amp; Pk tools
+
+	*  Spatial database
+
+	*  Geotools &amp; Cluster processing
+	*  Language integration
+
+	*  Exercises &amp; lectures
+
+	*  Drone mapping &amp; Grappolo
+
+	*  Machine learning 
+
+
+Data:
+
+	*  Geomorpho90m
+
+
+Community:
+
+teachers
+
+students
+
+projects
+
+ Matera 2015 
+
+ Vancouver 2015 
+
+ Santa Barbara 2…</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=start&amp;rev=1540576503&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-10-26T17:55:03+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>start</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=start&amp;rev=1540576503&amp;do=diff</link>
+        <description>Free &amp; OpenSource BigGeoData Processing Tutorials
+
+[Linux bash tutorials][Linux bash tutorials]
+[R tutorials]
+[Grass tutorials]
+[Qgis tutorials]
+[Gdal - Ogr tutorials]
+[Awk tutorials]
+[Gnuplot tutorials]
+[Open foris geospatial toolkit]
+[PKtools tutorials]
+[Our SpatiaLite tutorials]
+
+[Rasdaman tutorial]
+[Our cluster computing tutorials]
+[We like to use GNU-emacs scripting editor]
+[We teach to use OSGeo-live OS]
+
+
+
+----------
+
+The content of the Spatial Ecology wiki is free and open source,  (CC-B…</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1543704151&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-12-01T22:42:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>topovar90m</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1543704151&amp;do=diff</link>
+        <description>Geomorpho90m - Global high-resolution geomorphometry layers: empirical evaluation and accuracy assessment
+
+“Giuseppe Amatulli (1), Daniel Mc-Inerney (2), Tushar Sethi (3), Peter Strobl (4), Sami Domisch(5)“
+
+
+(1) Yale University, School of Forestry &amp; Environmental Studies - Center for Research Computing, New Haven, USA;</description>
+    </item>
+</rdf:RDF>

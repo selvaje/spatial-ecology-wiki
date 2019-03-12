@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://spatial-ecology.net/dokuwiki/feed.php">
+        <title> wikidk</title>
+        <description></description>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2019-03-01T20:13:43+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10agrinut&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10animal&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10ecowether&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10envelop&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10forestgrow&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10genepool&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10marine&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10mbee&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10tanzania&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10zebramussel&amp;rev=1512514411&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <url>http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10agrinut&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10agrinut</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10agrinut&amp;rev=1512514411&amp;do=diff</link>
+        <description>Nutrient losses
+
+
+
+Script done by Toke Panduro, KU, tepp@life.ku.dk, Maria Konrad, AU, mthk@dmu.dk, Line Block Hansen, AU, lbc@dmu.dk
+
+
+
+INTRODUCTION
+
+Nutrient losses to the water environment is a major problem in many European and non-European countries. Excessive losses from agricultural areas enhance eutrophication processes with loss of biodiversity and groundwater contamination as a consequence. This again mean decreased economic values of fishery and recreational value.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10animal&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10animal</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10animal&amp;rev=1512514411&amp;do=diff</link>
+        <description>Least cost-path analysis applied to grey-sided vole movement between older stands of pine forest habitat patches
+
+INTRODUCTION
+
+The structure of the modern day landscape is highly influenced by human activities. Many species of animals and plants have a hard time finding suitable habitats since these are getting more and more fragmented as a result of human preference of large-scale similar aged monocultural type of agriculture or forestry. Therefore there is a need for closer investigations of …</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10ecowether&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10ecowether</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10ecowether&amp;rev=1512514411&amp;do=diff</link>
+        <description>LINKING WEATHER DATA WITH SOCIO-ECONOMIC DATA: SPATIAL INTERPOLATION
+
+Project proposal can be downloaded at:  VNProject.pdf .
+
+
+
+
+INTRODUCTION
+
+The aim of this project is to interpolate the weather data for locations in which socio-economic data are available based on the weather data provided by all 172 weather stations in Vietnam. Socio-economic data are derived from Vietnam Household Living Standard Surveys (VHLSSs) which follows The World Bank's LSMS standards. Since 2002, the VHLSSs have be…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10envelop&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10envelop</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10envelop&amp;rev=1512514411&amp;do=diff</link>
+        <description>Envelope Models
+Open Source Tools for Spatial Ecological Modelling (ost4sem)
+Copenhagen June-July 2010
+Alistair Auffret, Dag Endresen, Torben Wittwer, Zhenlin Yang
+
+
+
+
+
+INTRODUCTION
+
+Project objectives
+
+We wanted to download freely available spatial data on climate, land-use and observations of study species, and process them for modeling current and future distributions. We chose to model two butterfly and three plant species.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10forestgrow&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10forestgrow</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10forestgrow&amp;rev=1512514411&amp;do=diff</link>
+        <description>FOREST DYNAMICS IN SPACE AND TIME
+
+Renats Trubins. Southern Swedish Forest Research Centre, SLU.
+
+INTRODUCTION
+
+Future state of forest landscape is strongly affected by applied forest management. In Sweden the dominant practice is even-aged management. It implies harvesting forest stands in blocks, usually in the range of a few hectars, and consequent establishing of a new generation of trees on the area. Such management results in a landscape consisting of a mosaic of forest stands with all tre…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10genepool&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10genepool</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10genepool&amp;rev=1512514411&amp;do=diff</link>
+        <description>TITLE
+
+Gap analysis in genebank collections to assist the planning of collecting expeditions
+
+
+
+
+	*  Download the project proposal  20100628_Trait_Mining_KU-LIFE_GIS.pdf .
+
+
+
+
+INTRODUCTION
+
+General framework of this analysis
+
+Genebank collections
+
+Genebank collections aim to represent the genetic diversity in cultivated plants and their crop wild relatives. The many different populations and cultivars from the crop species are represented often by a significant number of separate samples in the …</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10marine&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10marine</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10marine&amp;rev=1512514411&amp;do=diff</link>
+        <description>Habitat Suitability and uncertainty Modeling of Mollusk Fauna
+
+
+
+
+	*  Download the project proposal   Copenhagen2010.pdf .
+
+
+
+
+INTRODUCTION
+
+ I work together with Jens, see  MODB&amp;B. We use basically the same workflow and methods, but with different data sets.
+
+General framework of this analysis</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10mbee&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10mbee</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10mbee&amp;rev=1512514411&amp;do=diff</link>
+        <description>Spatial modelling of bumblebees &amp; butterflies in Southern Norway
+
+Jens Åström, Department of Ecology, SLU, SWEDEN
+
+
+
+	*  Download the project proposal  Jens.pdf .
+
+
+
+
+INTRODUCTION
+
+I work together with Thijs, see  MARINE   . We use basically the same workflow and methods, but with different data sets.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10tanzania&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10tanzania</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10tanzania&amp;rev=1512514411&amp;do=diff</link>
+        <description>Group members:Mwakalukwa Ezekiel Edward eem@life.ku.dk, Heimes Christine christineheimes@life.ku.dk,Ipsen Susan Nasirumbi suntonn@diku.dk
+
+Group members:Mwakalukwa Ezekiel Edward eem@life.ku.dk, Heimes Christine christineheimes@life.ku.dk, Ipsen Susan Nasirumbi suntonn@diku.dk</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10zebramussel&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikidk:dk10zebramussel</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wikidk:dk10zebramussel&amp;rev=1512514411&amp;do=diff</link>
+        <description>Spread pathways of Dreissena polymorpha in the Lithuanian waters
+
+
+
+
+INTRODUCTION
+
+Dreissena polymorpha has extended its original distribution range from the Pontocaspian region to Western Europe since the beginning of the 19th. It is now introduced to north-west Russia, central and western Europe, southern Scandinavia, Britain, Ireland and North-America. Zebra mussel was introduced in 37 Lithuanian lakes during 1959-1985.</description>
+    </item>
+</rdf:RDF>

@@ -1,0 +1,13 @@
+<span class="st0">&quot;&quot;&quot;Merge multiple shapefiles&quot;&quot;&quot;</span>
+<span class="kw1">import</span> <span class="kw3">glob</span>
+<span class="kw1">import</span> shapefile
+files <span class="sy0">=</span> <span class="kw3">glob</span>.<span class="kw3">glob</span><span class="br0">&#40;</span><span class="st0">&quot;footprints_*shp&quot;</span><span class="br0">&#41;</span>
+w <span class="sy0">=</span> shapefile.<span class="me1">Writer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+r <span class="sy0">=</span> <span class="kw2">None</span>
+<span class="kw1">for</span> f <span class="kw1">in</span> files:
+  r <span class="sy0">=</span> shapefile.<span class="me1">Reader</span><span class="br0">&#40;</span>f<span class="br0">&#41;</span>
+  w._shapes.<span class="me1">extend</span><span class="br0">&#40;</span>r.<span class="me1">shapes</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  w.<span class="me1">records</span>.<span class="me1">extend</span><span class="br0">&#40;</span>r.<span class="me1">records</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+w.<span class="me1">fields</span> <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>r.<span class="me1">fields</span><span class="br0">&#41;</span>
+w.<span class="me1">save</span><span class="br0">&#40;</span><span class="st0">&quot;Merged&quot;</span><span class="br0">&#41;</span>
+&nbsp;

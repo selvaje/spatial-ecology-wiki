@@ -1,0 +1,162 @@
+
+<h1 class="sectionedit1" id="title">TITLE</h1>
+<div class="level1">
+
+<p>
+Linking Movement data and contextual data
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;TITLE&quot;,&quot;hid&quot;:&quot;title&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-63&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">Background: Recent data acquisition tools — such as Global Positioning System (GPS) and mobile phones — have resulted in huge amounts of movement data. Most applications abstract the trajectories to a finite set of ordered observations. Each of these consists of object location (in one, two, or three dimensions), a timestamp, and a set of attributes.<ol>
+<li class="level1"><div class="li"> The objects move in an environment that has a significant effect on their behaviour. This environment defines the context in which the object moves. Examples of these objects for which the context influences the movement include hurricanes and birds where climatic phenomena, such as temperature, wind, and rain, are important examples of the context affecting them. </div>
+</li>
+<li class="level1"><div class="li"> Unfortunately, these contextual data are usually field-based data, represented by rasters, different granularities, and have vast size datasets. Consequently, the integration needs combining both vector format (movement data) and raster format (contextual data). In addition, the vast amount of contextual data increases the complexity of the analysis. For example, analysing the hurricane behaviour needs processing of the vast amount of Sea Surface Temperature (SST) data because SST measurements are usually collected at daily or even hourly rates. Moreover, analysing the movement behaviour may require processing data at multiple granularities and computing the spatiotemporal lags. For example, analysing relations between hurricane and SST needs to get the monthly, yearly, or (maybe) five-year averages for SST as well as the status within specific temporal window before or after hurricane passage.</div>
+</li>
+</ol>
+</div>
+</li>
+<li class="level1"><div class="li">keywords: moving object, context, spatiotemporal raster, integration
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;64-1811&quot;} -->
+<h3 class="sectionedit3" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+This project aims at analysing the relations between Sea surface temperature and the travelled distance of the hurricanes. Therefore, we will implement 4 main functions: the first one concerns temporal aggregation for spatiotemporal raster and moving objects. The other concern the integration of Spatiotemporal raster with moving object. These operations have two steps: spatiotemporal overlay and aggregation. The spatiotemporal overlay finds the cells in a spatiotemporal raster that spatially and temporally intersect the observations in a moving object. If no snapshots in the spatiotemporal raster temporally matches the moving object observation, two snapshots are used to interpolate the value at time of the observation. Following the overlay step, the values of these cells are aggregated. 
+</p>
+</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1812-2645&quot;} -->
+<h2 class="sectionedit4" id="metadata">METADATA</h2>
+<div class="level2">
+
+<p>
+In this project, we have two datasets. The hurricane dataset contains 30-year tracks from the period 1980– 2009. Hurricane data are maintained by World Data Center (WDC) for Meteorology. This dataset contains 2759 storm tracks. It consists of six-hourly centre locations in longitude and latitude, minimum central pressure, and maximum surface wind speeds for hurricanes. The 30-year Sea Surface Temperature dataset has been downloaded from the European Centre for Medium-Range Weather Forecasts (ECMWF). Its temporal granularity is 6 hours and the spatial resolution is 1.0-degree latitude by 1.0-degree longitude. The temporal extent of this data set is 01-01-1980 00:00:00 to 01-01-2009 18:00:00 with 43832 snapshots.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2646-3391&quot;} -->
+<h3 class="sectionedit5" id="vector_data">Vector data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> link to vector data if available <a href="http://www.myvector_data_are_here" class="urlextern" target="blanc" title="http://www.myvector_data_are_here" rel="nofollow noopener">http://www.myvector_data_are_here</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector data&quot;,&quot;hid&quot;:&quot;vector_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;3392-3489&quot;} -->
+<h3 class="sectionedit6" id="raster_data">Raster data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.myraster_data_are_here" class="urlextern" target="blanc" title="http://www.myraster_data_are_here" rel="nofollow noopener"> link to raster data if available</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Raster data&quot;,&quot;hid&quot;:&quot;raster_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;3490-3588&quot;} -->
+<h3 class="sectionedit7" id="other_data_sources">Other data sources</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.myraster_data_are_here" class="urlextern" target="blanc" title="http://www.myraster_data_are_here" rel="nofollow noopener"> link to other data if needed</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Other data sources&quot;,&quot;hid&quot;:&quot;other_data_sources&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;3589-3689&quot;} -->
+<h2 class="sectionedit8" id="method">METHOD</h2>
+<div class="level2">
+
+<p>
+the following steps describe the work flow for the integration functions:
+</p>
+<pre class="code"> read the moving objects data (read as text)
+ for each moving object do
+      for each observation in moving object do
+            extract its time
+            get the required snapshot 
+            extract the pixel value &quot;single pixel, using buffer, or history&quot;
+            loop
+      compute the aggregation result 
+ loop
+ print the result</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;3690-4148&quot;} -->
+<h2 class="sectionedit9" id="computational_implementation">Computational implementation</h2>
+<div class="level2">
+
+<p>
+Some further explanation of the overall analyses and of each step
+paste your code here
+</p>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_ahmed&amp;codeblock=0" title="Download Snippet" class="mediafile mf_">- mycode</a></dt>
+<dd><pre class="code bash"><span class="co0">#/bin/bash</span>
+<span class="co0"># Comment your code to make it more easy to understand. </span>
+<span class="kw2">wget</span> ftp:<span class="sy0">//</span>something.rar 
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.tif ; <span class="kw1">do</span> 
+  <span class="kw3">echo</span> <span class="re1">$file</span> ; gdalinfo <span class="re5">-mm</span> <span class="re1">$file</span>  <span class="sy0">|</span> <span class="kw2">grep</span> <span class="st0">&quot;Min/Max&quot;</span> 
+<span class="kw1">done</span></pre>
+</dd></dl>
+
+<p>
+Describe your second code if needed, what it does …
+</p>
+<pre class="code R"># my R code here</pre>
+
+<p>
+If you are modeling you might distinguish between
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Computational implementation&quot;,&quot;hid&quot;:&quot;computational_implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;4149-4626&quot;} -->
+<h3 class="sectionedit10" id="model_parametrization">Model parametrization</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Model parametrization&quot;,&quot;hid&quot;:&quot;model_parametrization&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:10,&quot;range&quot;:&quot;4627-4658&quot;} -->
+<h3 class="sectionedit11" id="model_prediction">Model prediction</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Model prediction&quot;,&quot;hid&quot;:&quot;model_prediction&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:11,&quot;range&quot;:&quot;4659-4685&quot;} -->
+<h3 class="sectionedit12" id="validation">Validation</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Validation&quot;,&quot;hid&quot;:&quot;validation&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:12,&quot;range&quot;:&quot;4686-4707&quot;} -->
+<h2 class="sectionedit13" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+
+<p>
+Show us the output of the analyses upload images if needed with “add images” link in the upper bar of this window while editing
+</p>
+<ul>
+<li class="level1"><div class="li">Map 1. bla bla bla bla … <br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_ahmed&amp;media=wiki:unibas108biomas.png" class="media" title="wiki:unibas108biomas.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=2438e5&amp;media=wiki:unibas108biomas.png" class="media" alt="" width="400" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_ahmed&amp;media=wiki:unibas108biomas_legend.png" class="media" title="wiki:unibas108biomas_legend.png"><img src="/dokuwiki/lib/exe/fetch.php?w=200&amp;tok=66d726&amp;media=wiki:unibas108biomas_legend.png" class="media" alt="" width="200" /></a>
+<br/>
+
+<br/>
+</div>
+</li>
+<li class="level1"><div class="li">Graphic 1. bla bla ok ok yes yes fantastic<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_ahmed&amp;media=wiki:qualiaria24h.to.png" class="media" title="wiki:qualiaria24h.to.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=e7b98f&amp;media=wiki:qualiaria24h.to.png" class="media" title="My graphic caption" alt="My graphic caption" width="600" /></a></div>
+</li>
+</ul>
+
+<p>
+<em>Later on after the training you could improve the script and upgrade your wiki project page</em>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS and DISCUSSION&quot;,&quot;hid&quot;:&quot;results_and_discussion&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:13,&quot;range&quot;:&quot;4708-&quot;} -->

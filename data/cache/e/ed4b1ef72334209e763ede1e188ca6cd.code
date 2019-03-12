@@ -1,0 +1,154 @@
+<span class="co0">#!/usr/bin/bash</span>
+<span class="co0">######################################################################################### </span>
+<span class="co0"># Author Helen Moor</span>
+<span class="co0"># Purpose: download and reformat worldclim climate data and other spatial data, </span>
+<span class="co0"># to compile a GRASS GIS database for Europe (Worldclim) and Sweden (all data)</span>
+<span class="co0"># adapted to MacOSX 9, MacBook</span>
+<span class="co0">#########################################################################################</span>
+&nbsp;
+&nbsp;
+<span class="co0">#### 1. Create GRASS database</span>
+<span class="co0">## prepare GRASS:</span>
+<span class="co0"># MacOS 9: to be able to open grass in commandline, first:</span>
+<span class="co0"># - add to .bash-profile: </span>
+<span class="co0">#	export PATH=&quot;/usr/X11R6/bin:$PATH&quot;</span>
+<span class="co0">#	alias grass=&quot;open -a GRASS-6.4.app&quot;</span>
+<span class="co0"># - open GRASS in existing GISDATABASE, and type the following to set -text to default: </span>
+<span class="co0">#	g.gui -un gui=text</span>
+&nbsp;
+&nbsp;
+<span class="co0">##################################################################################</span>
+&nbsp;
+<span class="co0">#### 2. Get data and import data into Grassdb:</span>
+&nbsp;
+<span class="co0">######### Location EUROPE (for Worldclim data only)</span>
+<span class="co0"># enter grass in GISDATABASE: GRASSDB, Location: europeWGS84, MAPSET:PERMANENT</span>
+grass ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>GRASSDB<span class="sy0">/</span>europeWGS84<span class="sy0">/</span>PERMANENT
+<span class="co0"># check:</span>
+g.gisenv
+g.region <span class="re5">-p</span> <span class="co0"># extent is europe (set up in qgis)</span>
+<span class="co0"># change resolution to 30 arcsecs:</span>
+g.region <span class="re2">nsres</span>=<span class="nu0">0</span>:00:<span class="nu0">30</span> <span class="re2">ewres</span>=<span class="nu0">0</span>:00:<span class="nu0">30</span>  
+&nbsp;
+<span class="co0">#############################################</span>
+<span class="co0">######### WORLDCLIM DATA </span>
+<span class="co0"># download, unzip and save raster data from worldclim </span>
+<span class="co0"># (.bil, 30 arc sec resolution, epsg 4326):</span>
+&nbsp;
+<span class="co0"># cd to input working directory:</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Worldclim
+&nbsp;
+<span class="co0"># create folders to hold downloaded data:</span>
+<span class="kw2">mkdir</span> worldclim_current_tmp  worldclim_future_tmp
+&nbsp;
+<span class="co0">######### CURRENT CONDITIONS:</span>
+<span class="co0">#####  1. download 5 zip files for current climate: tmin, tmax, prec, bio1-9, bio10-19</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Worldclim<span class="sy0">/</span>worldclim_current_tmp
+&nbsp;
+<span class="co0">## download, unzip, fix header, remove .zip:</span>
+&nbsp;
+<span class="kw1">for</span> layer <span class="kw1">in</span> tmin tmax prec bio1-<span class="nu0">9</span> bio10-<span class="nu0">19</span>; <span class="kw1">do</span>	
+	curl <span class="re5">-L</span> <span class="re5">-O</span> <span class="st0">&quot;http://biogeo.ucdavis.edu/data/climate/worldclim/1_4/grid/cur/&quot;</span><span class="re1">$layer</span><span class="st0">&quot;_30s_bil.zip&quot;</span>  
+	<span class="kw2">unzip</span> <span class="re1">$layer</span><span class="st0">&quot;_30s_bil&quot;</span> 
+&nbsp;
+	<span class="co0"># if else statement for different filenaming with respect to zipfilename</span>
+	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="st0">&quot;<span class="es2">$layer</span>&quot;</span> == tmin <span class="br0">&#93;</span> <span class="sy0">||</span> <span class="br0">&#91;</span> <span class="st0">&quot;<span class="es2">$layer</span>&quot;</span> == tmax <span class="br0">&#93;</span> <span class="sy0">||</span> <span class="br0">&#91;</span> <span class="st0">&quot;<span class="es2">$layer</span>&quot;</span> == prec <span class="br0">&#93;</span> ; <span class="kw1">then</span> 
+&nbsp;
+	<span class="co0"># fix the problem with the missing header: </span>
+        <span class="co0"># (http://duncanjg.wordpress.com/2010/08/09/import-worldclim-data-into-grass/):</span>
+		<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">12</span><span class="br0">&#41;</span>; <span class="kw1">do</span> 
+			<span class="kw3">echo</span> <span class="re5">-e</span> <span class="st0">&quot;PIXELTYPE     SIGNEDINT<span class="es1">\r</span>&quot;</span> <span class="sy0">&gt;&gt;</span><span class="re1">$layer</span><span class="st0">&quot;_&quot;</span><span class="re1">$i</span>.hdr; <span class="co0"># append &quot;PIXELTYPE SIGNEDINT&quot; to each hdr file</span>
+		<span class="kw1">done</span> 
+&nbsp;
+	<span class="kw1">elif</span> <span class="br0">&#91;</span> <span class="st0">&quot;<span class="es2">$layer</span>&quot;</span> == bio1-<span class="nu0">9</span> <span class="br0">&#93;</span>; <span class="kw1">then</span>
+		<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">9</span><span class="br0">&#41;</span>; <span class="kw1">do</span> 
+			<span class="kw3">echo</span> <span class="re5">-e</span> <span class="st0">&quot;PIXELTYPE     SIGNEDINT<span class="es1">\r</span>&quot;</span> <span class="sy0">&gt;&gt;</span><span class="st0">&quot;bio_&quot;</span><span class="re1">$i</span>.hdr;
+		<span class="kw1">done</span> 
+	<span class="kw1">else</span>
+		<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">10</span> <span class="nu0">19</span><span class="br0">&#41;</span>; <span class="kw1">do</span> 
+			<span class="kw3">echo</span> <span class="re5">-e</span> <span class="st0">&quot;PIXELTYPE     SIGNEDINT<span class="es1">\r</span>&quot;</span> <span class="sy0">&gt;&gt;</span><span class="st0">&quot;bio_&quot;</span><span class="re1">$i</span>.hdr;
+		<span class="kw1">done</span> 
+&nbsp;
+	<span class="kw1">fi</span>	
+	<span class="kw2">rm</span> <span class="re1">$layer</span><span class="st0">&quot;_30s_bil.zip&quot;</span>
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0"># check what is there:</span>
+gdalinfo <span class="re1">$layer</span><span class="st0">&quot;_1.bil&quot;</span>
+&nbsp;
+<span class="co0">##### 2. cut all .bil files to europe extent (same as in location europeWGS84); output as Gtiff </span>
+&nbsp;
+<span class="kw1">for</span> layer <span class="kw1">in</span> tmin tmax prec bio; <span class="kw1">do</span>	
+	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="st0">&quot;<span class="es2">$layer</span>&quot;</span> == bio <span class="br0">&#93;</span>; <span class="kw1">then</span>
+		<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">19</span><span class="br0">&#41;</span>; <span class="kw1">do</span>
+			gdalwarp <span class="re5">-te</span> -<span class="nu0">25.1</span> <span class="nu0">34.9</span> <span class="nu0">35</span> <span class="nu0">71.3</span> <span class="re1">$layer</span><span class="st0">&quot;_&quot;</span><span class="re1">$i</span>.bil eu_<span class="re1">$layer</span><span class="st0">&quot;_&quot;</span><span class="re1">$i</span>.tif
+		<span class="kw1">done</span>
+	<span class="kw1">else</span> 
+		<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">12</span><span class="br0">&#41;</span>; <span class="kw1">do</span>
+			gdalwarp <span class="re5">-te</span> -<span class="nu0">25.1</span> <span class="nu0">34.9</span> <span class="nu0">35</span> <span class="nu0">71.3</span> <span class="re1">$layer</span><span class="st0">&quot;_&quot;</span><span class="re1">$i</span>.bil eu_<span class="re1">$layer</span><span class="st0">&quot;_&quot;</span><span class="re1">$i</span>.tif
+		<span class="kw1">done</span>
+	<span class="kw1">fi</span>
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0"># check:</span>
+gdalinfo <span class="st0">&quot;eu_&quot;</span><span class="re1">$layer</span><span class="st0">&quot;_1.tif&quot;</span>  
+&nbsp;
+<span class="co0">## remove original bil/hdr files:</span>
+<span class="kw2">rm</span> <span class="sy0">*</span>.hdr; <span class="kw2">rm</span> <span class="sy0">*</span>.bil
+&nbsp;
+<span class="co0">##### 3. import the tifs into GRASS</span>
+&nbsp;
+<span class="co0"># tmin, tmax, prec: 12 files for 12 months</span>
+<span class="kw1">for</span> layer <span class="kw1">in</span> tmin tmax prec bio; <span class="kw1">do</span>	
+	<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">12</span><span class="br0">&#41;</span>; <span class="kw1">do</span> r.in.gdal <span class="re5">-o</span> <span class="re2">input</span>=eu_<span class="re1">$layer</span><span class="st0">&quot;_&quot;</span><span class="re1">$i</span>.tif <span class="re2">output</span>=<span class="re1">$layer</span><span class="re1">$i</span>; <span class="kw1">done</span>
+<span class="kw1">done</span>
+<span class="co0"># biovars: 19 files</span>
+<span class="re2">layer</span>=bio
+<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">19</span><span class="br0">&#41;</span>; <span class="kw1">do</span> r.in.gdal <span class="re5">-o</span> <span class="re2">input</span>=eu_<span class="re1">$layer</span><span class="st0">&quot;_&quot;</span><span class="re1">$i</span>.tif <span class="re2">output</span>=<span class="re1">$layer</span><span class="re1">$i</span>; <span class="kw1">done</span>
+&nbsp;
+<span class="co0"># check:</span>
+g.list <span class="re2">type</span>=rast
+r.info <span class="re2">map</span>=tmin1
+&nbsp;
+&nbsp;
+<span class="co0">######### FUTURE CONDITIONS:</span>
+<span class="co0"># Climate scenario: 2070 (70), GCM: HadGEM2-AO (HD), RCP: rcp60 (60)</span>
+<span class="co0"># cd to folder for future:</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Worldclim<span class="sy0">/</span>worldclim_future_tmp<span class="sy0">/</span>
+<span class="kw2">mkdir</span> <span class="re5">-p</span> europetmp 
+&nbsp;
+<span class="co0">##### 1. download and unzip (these files are in .tif already; type=float32)</span>
+&nbsp;
+<span class="kw1">for</span> layer <span class="kw1">in</span> tn tx <span class="kw2">pr</span> bi; <span class="kw1">do</span>	
+	curl <span class="re5">-L</span> <span class="re5">-O</span> <span class="st0">&quot;http://biogeo.ucdavis.edu/data/climate/cmip5/30s/hd60&quot;</span><span class="re1">$layer</span><span class="st0">&quot;70.zip&quot;</span>
+	<span class="kw2">unzip</span> <span class="st0">&quot;hd60&quot;</span><span class="re1">$layer</span><span class="st0">&quot;70.zip&quot;</span>
+	<span class="kw2">rm</span> <span class="st0">&quot;hd60&quot;</span><span class="re1">$layer</span><span class="st0">&quot;70.zip&quot;</span>
+	<span class="co0"># clip to Europe extent</span>
+	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="st0">&quot;<span class="es2">$layer</span>&quot;</span> == bi <span class="br0">&#93;</span> ; <span class="kw1">then</span>  
+		<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">19</span><span class="br0">&#41;</span>; <span class="kw1">do</span>
+			gdalwarp <span class="re5">-te</span> -<span class="nu0">25.1</span> <span class="nu0">34.9</span> <span class="nu0">35</span> <span class="nu0">71.3</span> <span class="st0">&quot;hd60&quot;</span><span class="re1">$layer</span><span class="st0">&quot;70&quot;</span><span class="re1">$i</span><span class="st0">&quot;.tif&quot;</span> europetmp<span class="sy0">/</span><span class="st0">&quot;eu_hd60&quot;</span><span class="re1">$layer</span><span class="st0">&quot;70&quot;</span><span class="re1">$i</span><span class="st0">&quot;.tif&quot;</span>
+		<span class="kw1">done</span>
+	<span class="kw1">else</span>
+		<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">12</span><span class="br0">&#41;</span>; <span class="kw1">do</span>
+			gdalwarp <span class="re5">-te</span> -<span class="nu0">25.1</span> <span class="nu0">34.9</span> <span class="nu0">35</span> <span class="nu0">71.3</span> <span class="st0">&quot;hd60&quot;</span><span class="re1">$layer</span><span class="st0">&quot;70&quot;</span><span class="re1">$i</span><span class="st0">&quot;.tif&quot;</span> europetmp<span class="sy0">/</span><span class="st0">&quot;eu_hd60&quot;</span><span class="re1">$layer</span><span class="st0">&quot;70&quot;</span><span class="re1">$i</span><span class="st0">&quot;.tif&quot;</span>
+		<span class="kw1">done</span>
+	<span class="kw1">fi</span>
+	<span class="kw2">rm</span> <span class="st0">&quot;hd60&quot;</span><span class="re1">$layer</span><span class="st0">&quot;70&quot;</span><span class="sy0">*</span>.tif  <span class="co0"># clean up on the go</span>
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0">## remove original bil/hdr files:</span>
+<span class="kw2">rm</span> <span class="sy0">*</span>.hdr; <span class="kw2">rm</span> <span class="sy0">*</span>.bil
+&nbsp;
+<span class="co0">##### 2. import the tifs into GRASS</span>
+&nbsp;
+<span class="co0"># tmin, tmax, prec: 12 files for 12 months </span>
+<span class="kw1">for</span> layer <span class="kw1">in</span> tn tx <span class="kw2">pr</span>; <span class="kw1">do</span>	
+	<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">12</span><span class="br0">&#41;</span>; <span class="kw1">do</span> r.in.gdal <span class="re5">-o</span> <span class="re2">input</span>=europetmp<span class="sy0">/</span>eu_hd60<span class="re1">$layer</span><span class="st0">&quot;70&quot;</span><span class="re1">$i</span>.tif <span class="re2">output</span>=70hd60<span class="re1">$layer</span><span class="re1">$i</span>; <span class="kw1">done</span>
+<span class="kw1">done</span>
+<span class="co0"># biovars: 19 files</span>
+<span class="re2">layer</span>=bi
+<span class="kw1">for</span> i <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">19</span><span class="br0">&#41;</span>; <span class="kw1">do</span> r.in.gdal <span class="re5">-o</span> <span class="re2">input</span>=europetmp<span class="sy0">/</span>eu_hd60<span class="re1">$layer</span><span class="st0">&quot;70&quot;</span><span class="re1">$i</span>.tif <span class="re2">output</span>=70hd60<span class="re1">$layer</span><span class="re1">$i</span>; <span class="kw1">done</span>
+&nbsp;
+<span class="co0"># check:</span>
+g.list <span class="re2">type</span>=rast
+r.info <span class="re2">map</span>=tmin1

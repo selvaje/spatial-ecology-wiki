@@ -1,0 +1,14 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:25:"Getting started with Qgis";s:11:"description";a:2:{s:15:"tableofcontents";a:11:{i:0;a:4:{s:3:"hid";s:25:"getting_started_with_qgis";s:5:"title";s:25:"Getting started with Qgis";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:12:"qgis_plugins";s:5:"title";s:12:"Qgis plugins";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:2;a:4:{s:3:"hid";s:11:"import_data";s:5:"title";s:11:"Import data";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:3;a:4:{s:3:"hid";s:18:"import_raster_data";s:5:"title";s:18:"Import raster data";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:4;a:4:{s:3:"hid";s:14:"import_vectors";s:5:"title";s:14:"Import vectors";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:5;a:4:{s:3:"hid";s:20:"working_with_vectors";s:5:"title";s:20:"Working with vectors";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:6;a:4:{s:3:"hid";s:26:"query_and_clipping_vectors";s:5:"title";s:27:"Query and clipping  vectors";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:7;a:4:{s:3:"hid";s:32:"join_attributes_tables_and_query";s:5:"title";s:32:"Join attributes tables and query";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:8;a:4:{s:3:"hid";s:59:"load_x_y_coordinate_point_data_from_txt_file_to_vector_file";s:5:"title";s:59:"Load X Y coordinate point data from txt file to vector file";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:9;a:4:{s:3:"hid";s:20:"working_with_rasters";s:5:"title";s:20:"Working with rasters";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:10;a:4:{s:3:"hid";s:16:"clipping_rasters";s:5:"title";s:17:"Clipping  rasters";s:4:"type";s:2:"ul";s:5:"level";i:3;}}s:8:"abstract";s:316:"Getting started with Qgis
+
+Start Qgis from the Upper Ubuntu Bar selecting : Application > Science > Qgis
+
+The Qgis GUI is basically composed by:
+
+	*  main menu  [Main qgis menue]; 
+	*  a map visualization window to navigate and visualize maps
+
+
+[Visualization window]
+
+
+	*  toolbars to access different gis functions";}s:8:"relation";a:2:{s:5:"media";a:15:{s:32:"wiki:wikiqgis:main_menu_qgis.png";b:1;s:31:"wiki:wikiqgis:vizualiz_qgis.png";b:1;s:26:"wiki:wikiqgis:toolbars.png";b:1;s:35:"wiki:wikiqgis:map_navig_toolbar.png";b:1;s:30:"wiki:wikiqgis:layers_panel.png";b:1;s:42:"wiki:wikiqgis:coordinate_caputre_panel.png";b:1;s:26:"wiki:wikiqgis:crs_logo.png";b:1;s:28:"wiki:wikiqgis:openraster.png";b:1;s:28:"wiki:wikiqgis:openvector.png";b:1;s:31:"wiki:wikiqgis:city_tanzania.png";b:1;s:29:"wiki:wikiqgis:join_window.png";b:1;s:33:"wiki:wikiqgis:selected_cities.png";b:1;s:31:"wiki:wikiqgis:vect_from_txt.png";b:1;s:24:"wiki:wikiqgis:zoomin.png";b:1;s:29:"wiki:wikiqgis:lc_tanzania.png";b:1;}s:10:"firstimage";s:32:"wiki:wikiqgis:main_menu_qgis.png";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

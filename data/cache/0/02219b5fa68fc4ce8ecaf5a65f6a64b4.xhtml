@@ -1,0 +1,375 @@
+
+<h1 class="sectionedit1" id="species_distribution_modeling_ii">Species Distribution Modeling II</h1>
+<div class="level1">
+
+<p>
+Script written by Adam M. Wilson, adapted by Marta A. Jarzyna, November 2015 
+</p>
+
+<p>
+In this session we will:
+1. Read in species occurrence and range data
+2. Pre-process environmental data
+3. Use hSDM package to fit 2 hierarchical Bayesian model while accounting for species imperfect detection
+4. Predict across the landscape and compare predictive abilities of both models.
+</p>
+<pre class="code"> rm(list=ls(all=TRUE))
+ 
+ #define working directory
+ wdir &lt;- &quot;/media/sf_LVM_share&quot; 
+ setwd(wdir)
+ 
+ #define data directory - this is where we store the data, but also where we will save the output to
+ datadir &lt;- &quot;/media/sf_LVM_share/data&quot; 
+ 
+ # if your shared folder is not writable, create a different folder for the output
+ if(!file.exists(&quot;~/sdm_out&quot;)) dir.create(&quot;~/sdm_out&quot;, recursive=T)
+ outdir &lt;- &quot;~/sdm_out&quot;
+ 
+ # Load necessary libraries
+ require(rgdal)
+ require(lattice)
+ require(ggplot2)
+ 
+ packages=c(&quot;hSDM&quot;,&quot;dismo&quot;,&quot;maptools&quot;,&quot;sp&quot;,
+         &quot;maps&quot;,&quot;coda&quot;,&quot;rgdal&quot;,&quot;rgeos&quot;,
+         &quot;doParallel&quot;,&quot;reshape&quot;,
+         &quot;ggplot2&quot;,&quot;knitr&quot;,&quot;rasterVis&quot;,&quot;texreg&quot;)
+         
+ l=lapply(packages, library, character.only=T,quietly=T)</pre>
+
+<p>
+We will use Montane woodcreper (Lepidocolaptes lacrymiger) as example species. This species has a large range, occurring from the coastal cordillera of Venezuela along the Andes south to south-east Peru and central Bolivia.
+</p>
+<pre class="code"> # Read in species occurrence data and species range
+ # Species: Montane woodcreper, Lepidocolaptes lacrymiger
+ # point occurrence data
+ points &lt;- as.data.frame(read.csv(&quot;/media/sf_LVM_share/data/occurrence/Lepidocolaptes_lacrymiger_ebird.csv&quot;, header=TRUE))
+ head(points)
+ presence &lt;- matrix(1,nrow(points),1)
+ points &lt;- cbind(points,presence)
+ 
+ # retrieving spatial coordinates from a Spatial object
+ points &lt;- SpatialPointsDataFrame(points[,c(3,2)], points, coords.nrs = numeric(0), proj4string = CRS(as.character(NA)), match.ID = TRUE)
+ projection(points)=&quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;
+ plot(points)
+ 
+ # Species&#039; range
+ range &lt;- readOGR(&quot;.&quot;, &quot;cartodb-query&quot;)
+ range
+ plot(range, add=TRUE)
+ 
+ # Check out the data structure:
+ head(points[,-1])
+ </pre>
+
+<p>
+Explore observer effort: sampling duration, distance travelled, and area surveyed.
+</p>
+<pre class="code"> points.m &lt;- as.data.frame(points)
+ 
+ ggplot(points.m,aes(
+x=effort_distance_km))+
+xlab(&quot;Sampling Distance (km)&quot;)+
+geom_histogram(binwidth = .1)+scale_x_log10()+
+geom_vline(xintercept=c(1,5),col=&quot;red&quot;)</pre>
+
+<p>
+Also note that there are many records with missing spatial certainty values.
+</p>
+<pre class="code"> table(&quot;Distance/Area&quot;=!is.na(points$effort_distance_km)| !is.na(points$effort_area_ha))</pre>
+
+<p>
+For this exercise, we&#039;ll simply remove points with large or unknown spatial uncertainty.  Incorporating this spatial uncertainty into distribution models is an active area of research.
+</p>
+<pre class="code"> # Filter the data below thresholds specified above using `filter` from the [dplyr library](http://cran.r-project.org/package=dplyr).
+ cdis=5     # Distance in km
+ points=points[(points$effort_distance_km&lt;=cdis&amp; !is.na(points$effort_distance_km)),]</pre>
+
+<p>
+Load eBird sampling dataset
+</p>
+<pre class="code"> # link to global sampling raster
+ gsampling=raster(file.path(datadir,&quot;eBirdSampling_filtered.tif&quot;))
+ names(gsampling)=&quot;trials&quot;
+ 
+ # crop to species range to create modelling domain
+ sampling=crop(gsampling,range,file.path(outdir,&quot;sampling.grd&quot;),overwrite=T)   
+ # assign projection
+ projection(sampling)=&quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;
+ 
+ # convert to points within data region
+ # samplingp=as(sampling,&quot;SpatialPointsDataFrame&quot;)
+ 
+ # Create a combined presence-nondetection point dataset
+ presences=rasterize(as(points,&quot;SpatialPoints&quot;),sampling,fun=&#039;count&#039;,background=0)
+ fitdata=cbind.data.frame(presences=values(presences),trials=values(sampling),coordinates(presences))
+ 
+ ## filter to locations with at least one trial
+ fitdata=fitdata[fitdata$trials&gt;0,]
+ 
+ # Convert to a spatialDataFrame to faciliate linking with georeferenced environmental data.
+ coordinates(fitdata)=c(&quot;x&quot;,&quot;y&quot;)
+ projection(fitdata)=&quot;+proj=longlat +datum=WGS84 +ellps=WGS84&quot;
+ fitdata@data[,c(&quot;lon&quot;,&quot;lat&quot;)]=coordinates(fitdata)</pre>
+
+<p>
+Load coastline from maptools package for plotting.
+</p>
+<pre class="code"> coast &lt;- map_data(&quot;world&quot;,
+                xlim=c(bbox(range)[1,1]-1,bbox(range)[1,2]+1),
+                ylim=c(bbox(range)[2,1]-1,bbox(range)[2,2]+1))</pre>
+<pre class="code"> ggcoast=geom_path(data=coast,aes(x=long,y=lat,group = group),lwd=.1)</pre>
+
+<p>
+Plot Available Species Data
+</p>
+<pre class="code"> ggplot(fitdata@data,aes(y=lat,x=lon))+
+  ggcoast+ 
+  geom_path(data=fortify(range),
+          aes(y=lat,x=long,group=piece),
+          col=&quot;green&quot;)+
+  geom_point(data=fitdata@data[fitdata$presences==0,],
+           aes(x=lon,y=lat),pch=1,
+           col=&quot;black&quot;,cex=.8,lwd=2,alpha=.3)+
+  geom_point(data=fitdata@data[fitdata$presences&gt;=1,],
+           aes(x=lon,y=lat),pch=3,
+           col=&quot;red&quot;,cex=2,lwd=3,alpha=1)+
+  ylab(&quot;Latitude&quot;)+xlab(&quot;Longitude&quot;)+
+  coord_equal()+
+  xlim(c(min(fitdata$lon),max(fitdata$lon)))+
+  ylim(c(min(fitdata$lat),max(fitdata$lat)))</pre>
+
+<p>
+Load Environmental Data
+</p>
+<pre class="code"> # Like last week, we&#039;ll focus on the following variables:
+ fenv &lt;- c(
+  cld=&quot;data/cloud/meanannual.tif&quot;,
+  cld_intra=&quot;data/cloud/intra.tif&quot;,
+  elev=&quot;data/elevation_mn_GMTED2010_mn.tif&quot;,
+  forest=&quot;data/tree_mn_percentage_GFC2013.tif&quot;)</pre>
+
+<p>
+To facilitate modelling, let&#039;s crop the global rasters to a smaller domain.  We can use the extent of the expert range and the <code>crop()</code> function in raster package.
+</p>
+<pre class="code"> # crop to species domain and copy to project folder 
+ env &lt;- foreach(i=1:length(fenv))%do%{
+  fo=file.path(outdir,paste0(names(fenv)[i],&quot;_clipped.grd&quot;))
+  crop(raster(file.path(wdir,fenv[i])),range,file=fo,overwrite=T)   
+ }</pre>
+
+<p>
+Read the environmental data in as a raster stack
+</p>
+<pre class="code"> env &lt;- stack(list.files(path = outdir, pattern=&quot;*_clipped.grd$&quot; , full.names = TRUE ))
+ env
+ #aggregate data to save space
+ ag.env &lt;- aggregate(env,4,fun=mean,na.rm=TRUE)
+ ag.env
+ # rename layers for convenience
+ names(ag.env)=names(fenv)
+ # mask by elevation to set ocean to 0
+ ag.env=mask(ag.env,ag.env[[&quot;elev&quot;]],maskvalue=0)
+ # check out the plot
+ plot(ag.env)</pre>
+
+<p>
+Variable selection is tricky business and we&#039;re not going to dwell on it here… We&#039;ll use the following variables.
+</p>
+<pre class="code"> vars=c(&quot;cld&quot;,&quot;cld_intra&quot;,&quot;elev&quot;,&quot;forest&quot;)</pre>
+
+<p>
+Scaling and centering the environmental variables to zero mean and variance of 1, using the <code>scale</code> function is typically a good idea.  We will do it here so that we can better interpret the regression coefficients. 
+</p>
+<pre class="code"> senv=scale(ag.env[[vars]])</pre>
+
+<p>
+Covariate correlation
+</p>
+<pre class="code"> # Scatterplot matrix of the available environmental data.
+ splom(senv,varname.cex=2)</pre>
+
+<p>
+Annotate points with environmental data
+</p>
+<pre class="code"> fitdata=raster::extract(senv,fitdata,sp=T)</pre>
+
+<p>
+Due to opportunistic observations of the species, a few grid cells have more observations than trials. Let&#039;s remove them:
+</p>
+<pre class="code"> table(fitdata$presences&gt;fitdata$trials)
+ fitdata=fitdata[fitdata$presences&lt;=fitdata$trials,]
+ 
+ ## omit rows with missing data (primarily ocean pixels)
+ fitdata2=na.omit(fitdata@data)
+ 
+ kable(head(fitdata2), format = &quot;markdown&quot;)</pre>
+
+<p>
+Then transform the full gridded dataset into a <code>data.frame</code> with associated environmental data for predicting across space.
+</p>
+<pre class="code"> pdata=cbind.data.frame(
+  coordinates(senv),
+  values(senv))
+ colnames(pdata)[1:2]=c(&quot;lon&quot;,&quot;lat&quot;)
+ 
+ ## omit rows with missing data (primarily ocean pixels)
+ pdata=na.omit(pdata)
+ 
+ kable(head(pdata), format = &quot;markdown&quot;)</pre>
+
+<p>
+Creating and running the models. This table is similar to the data available from the “Annotate” function in MOL, with the exception that it contains the point data aggregated to the resolution of the environmental data. Let&#039;s compare two models, one using interpolated precipitation and the other using satellite-derived cloud data.
+</p>
+<pre class="code"> # Set number of chains to fit.
+ mods=data.frame(
+  model=c(&quot;m1&quot;,&quot;m2&quot;),
+  formula=c(&quot;~cld+elev&quot;,
+          &quot;~cld+cld_intra+elev*I(elev^2)+forest&quot;),
+  name=c( &quot;Cloud + Elevation&quot;,
+        &quot;Full Model&quot;))
+        
+ kable(mods, format = &quot;markdown&quot;)</pre>
+<pre class="code"> # Specify model run-lengths. Real model runs generally require far more iterations  to achieve convergence and aquire a suitable sample.  For now, we&#039;ll do a very short run:
+ burnin=200
+ mcmc=100
+ thin=1</pre>
+
+<p>
+Fit the models. Both site-occupancy or ZIB models (with <code>hSDM.siteocc()</code> or <code>hSDM.ZIB()</code> functions respectively) can be used to model the presence-absence of a species taking into account imperfect detection. 
+The site-occupancy model can be used in all cases but can be less convenient and slower to fit when the repeated visits at each site are made under the same observation conditions. While this is likely not true in this situation (the observations occurred in different years, etc.), we&#039;ll use the simpler model today. For more information about the differences, see the hSDM Vignette Section 4.3.<br/>
+
+Example: <code>hSDM.ZIB</code>
+The model integrates two processes, an ecological process associated to the presence or absence of the species due to habitat suitability and an observation process that takes into account the fact that the probability of detection of the species is less than one. If the species has been observed at least once during multiple visits, we can assert that the habitat at this site is suitable. And the fact that the species can be unobserved at this site is only due to imperfect detection.
+</p>
+
+<p>
+In this example we&#039;ll assume a spatially constant p(observation|presence), but it&#039;s also possible to put in covariates for this parameter.
+</p>
+<pre class="code"> # Run the model
+ results=foreach(m=1:nrow(mods),.packages=&quot;hSDM&quot;) %dopar% { 
+  ## if foreach/doParallel are not installed, you can use this line instead
+  # for(m in 1:nrow(mods)) { 
+  tres=hSDM.ZIB(
+  suitability=as.character(mods$formula[m]),  #Formula for suitability
+  presences=fitdata2$presences,    # Number of Observed Presences
+  observability=&quot;~1&quot;,             # Formula for p(observation|presence)
+  trials=fitdata2$trials,          # Number of Trials
+  data=fitdata2,             # Covariates for fitting model
+  suitability.pred=pdata,        # Covariates for prediction 
+  mugamma=0, Vgamma=1.0E6,      # Priors on Gamma
+  gamma.start=0,                # Gamma initial Value
+  burnin=burnin, mcmc=mcmc, thin=thin,  # MCMC parameters
+  beta.start=0,                 # Initial values for betas
+  mubeta=0, Vbeta=1.0E6,        # Priors on Beta
+  save.p=0,                     # Don&#039;t save full posterior on p
+  verbose=1,                    # Report progress
+  seed=round(runif(1,0,1e6)))   # Random seed
+  tres$model=mods$formula[m]      # Add model formula to result
+  tres$modelname=mods$name[m]     # Add model name to result
+  return(tres)
+  }</pre>
+
+<p>
+Summarize and plot posterior parameters
+</p>
+<pre class="code"> # The model returns full posterior distributions for all model parameters.  To summarize them you need to choose your summary metric (e.g. mean/median/quantiles). 
+ params=foreach(r1=results,.combine=rbind.data.frame,.packages=&quot;coda&quot;)%do% {
+   data.frame(model=r1$model,
+           modelname=r1$modelname,
+           parameter=colnames(r1$mcmc),
+           mean=summary(r1$mcmc)$statistics[,&quot;Mean&quot;],
+           sd=summary(r1$mcmc)$statistics[,&quot;SD&quot;],
+           median=summary(r1$mcmc)$quantiles[,&quot;50%&quot;],
+           HPDinterval(mcmc(as.matrix(r1$mcmc))),
+           RejectionRate=rejectionRate(r1$mcmc))}</pre>
+<pre class="code"> # plot it
+ ggplot(params[!grepl(&quot;Deviance*&quot;,rownames(params)),],
+     aes(x=mean,y=parameter,colour=modelname))+
+  geom_errorbarh(aes(xmin=lower,xmax=upper,height=.1),lwd=1.5)+
+  geom_point(size = 3)+xlab(&quot;Standardized Coefficient&quot;)+
+  ylab(&quot;Parameter&quot;)+
+  theme(legend.position=&quot;bottom&quot;)</pre>
+
+<p>
+Detection probability
+</p>
+<pre class="code"> # The model uses repeat observations within cells to estimate the probability observation given that the species was present.  
+ pDetect &lt;-   params[params$parameter==&quot;gamma.(Intercept)&quot;,c(&quot;modelname&quot;,&quot;mean&quot;)]
+ pDetect$delta.est &lt;- inv.logit(pDetect$mean)
+ colnames(pDetect)[2]=&quot;gamma.hat&quot;
+ kable(pDetect,row.names=F, format = &quot;markdown&quot;)</pre>
+
+<p>
+How does this change if you add environmental covariates to the observability regression?
+</p>
+<pre class="code"> # Predictions for each cell
+ pred=foreach(r1=results,.combine=stack,.packages=&quot;raster&quot;)%dopar% {
+ tr=rasterFromXYZ(cbind(x=pdata$lon,
+                       y=pdata$lat,
+                       pred=r1$prob.p.pred))
+  names(tr)=r1$modelname    
+  return(tr)
+  }</pre>
+
+<p>
+Compare the model predictions
+</p>
+<pre class="code"> predscale=scale_fill_gradientn(values=c(0,.5,1), colours=c(&#039;white&#039;,&#039;darkgreen&#039;,&#039;green&#039;), na.value=&quot;transparent&quot;)</pre>
+<pre class="code"> # set plotting limits using expert range above
+ gx=xlim(extent(env)@xmin,extent(env)@xmax)
+ gy=ylim(extent(env)@ymin,extent(env)@ymax)
+ 
+ gplot(pred,maxpixels=1e5)+geom_raster(aes(fill=value)) +
+  facet_wrap(~ variable) +
+  predscale+
+  coord_equal()+
+  geom_path(data=fortify(range),
+          aes(y=lat,x=long,group=piece),
+          fill=&quot;red&quot;,col=&quot;red&quot;)+
+  geom_point(data=fitdata@data[fitdata$presences==0,],
+           aes(x=lon,y=lat,fill=1),pch=1,col=&quot;black&quot;,cex=.8,lwd=2,alpha=.3)+
+  geom_point(data=fitdata@data[fitdata$presences&gt;=1,],
+           aes(x=lon,y=lat,fill=1),pch=3,col=&quot;red&quot;,cex=2,lwd=3,alpha=1)+
+  ggcoast+gx+gy+ylab(&quot;Latitude&quot;)+xlab(&quot;Longitude&quot;)+
+  labs(col = &quot;p(presence)&quot;)+
+  coord_equal()</pre>
+
+<p>
+Additional Models are available in the hSDM
+</p>
+
+<p>
+The <code>*.icar</code> functions in <code>hSDM</code> add <em>spatial effects</em> to the model as well, accounting for spatial autocorrelation of species occurrence.<br/>
+
+<code>hSDM.binomial</code> &amp; <code>hSDM.binomial.iCAR</code>
+Simple and spatial binomial model (perfect detection).
+</p>
+
+<p>
+<code>hSDM.ZIB</code> &amp; <code>hSDM.ZIB.iCAR</code> &amp; <code>hSDM.ZIB.iCAR.alteration</code>
+Zero-inflated Binomial (example we used today).
+</p>
+
+<p>
+<code>hSDM.ZIP</code> &amp; <code>hSDM.ZIP.iCAR</code> &amp; <code>hSDM.ZIP.iCAR.alteration</code>
+Zero-inflated Poisson (Abundance data with imperfect detection).
+</p>
+
+<p>
+<code>hSDM.siteocc</code> &amp; <code>hSDM.siteocc.iCAR</code>
+Incorporates temporally varying environment to account for changing observation conditions. 
+</p>
+
+<p>
+<code>hSDM.poisson</code> &amp; <code>hSDM.poisson.iCAR</code>
+Simple and spatial poisson model for species abundance (perfect detection).
+</p>
+
+<p>
+<code>hSDM.Nmixture</code> &amp; <code>hSDM.Nmixture.iCAR</code>
+Poisson model for abundance with imperfect detection.
+</p>
+
+</div>

@@ -1,0 +1,8 @@
+<span class="co1">--Syntax</span>
+mddExp<span class="sy0">.</span>componentName
+&nbsp;
+<span class="co1">-- Extracting the red channel from the rgb image</span>
+<span class="kw1">SELECT</span> rgb<span class="sy0">.</span>red <span class="kw1">FROM</span> rgb
+&nbsp;
+<span class="co1">-- Component reorganization, red-green-blue image becomes blue-green-image</span>
+<span class="kw1">SELECT</span> <span class="br0">&#123;</span>rgb<span class="sy0">.</span>blue<span class="sy0">,</span> rgb<span class="sy0">.</span>green<span class="sy0">,</span> rgb<span class="sy0">.</span>red<span class="br0">&#125;</span> <span class="kw1">FROM</span> rgb

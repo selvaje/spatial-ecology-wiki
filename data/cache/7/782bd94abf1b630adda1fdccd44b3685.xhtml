@@ -1,0 +1,80 @@
+
+<h1 class="sectionedit1" id="exercise_9pktools_with_multi-core_processors">Exercise 9: pktools with multi-core processors</h1>
+<div class="level1">
+
+<p>
+In this exercise the following tools will be used:
+</p>
+<ul>
+<li class="level1"><div class="li"> pktools: pkinfo</div>
+</li>
+<li class="level1"><div class="li"> bash: for loop, xargs, time, sleep, redirection to /dev/null</div>
+</li>
+</ul>
+
+<p>
+<em class="u">Create a script /tmp/myscript.sh</em>
+</p>
+<pre class="code bash"><span class="re2">INPUT</span>=<span class="re4">$1</span>
+<span class="re2">NOVALUE</span>=<span class="re4">$2</span>
+pkinfo <span class="re5">-i</span> <span class="re1">$INPUT</span> <span class="re5">--ref</span> <span class="re5">-mask</span> <span class="re1">$NOVALUE</span>
+<span class="co0">#sleep 1</span></pre>
+
+<p>
+<em class="u">Make the script executable</em>
+</p>
+<pre class="code bash"><span class="kw2">chmod</span> <span class="nu0">755</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>myscript.sh</pre>
+
+<p>
+<em class="u">Time the following command using a single processor</em>
+</p>
+<pre class="code bash"><span class="kw1">time</span> <span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">NOVALUE</span>=<span class="nu0">0</span>;NOVALUE<span class="sy0">&lt;</span><span class="nu0">19</span>;++NOVALUE<span class="br0">&#41;</span><span class="br0">&#41;</span>;<span class="kw1">do</span> pkinfo <span class="re5">-i</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span> <span class="re5">--ref</span> <span class="re5">-mask</span> <span class="re1">$NOVALUE</span>;<span class="kw1">done</span><span class="sy0">&gt;/</span>dev<span class="sy0">/</span>null</pre>
+
+<p>
+The output should be something like
+</p>
+<pre class="code bash">real	0m18.691s
+user	0m17.773s
+sys	0m0.776s</pre>
+
+<p>
+<em class="u">Now do the same with a sleep command of 1 second after each iteration</em>
+</p>
+<pre class="code bash"><span class="kw1">time</span> <span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">NOVALUE</span>=<span class="nu0">0</span>;NOVALUE<span class="sy0">&lt;</span><span class="nu0">19</span>;++NOVALUE<span class="br0">&#41;</span><span class="br0">&#41;</span>;<span class="kw1">do</span> pkinfo <span class="re5">-i</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span> <span class="re5">--ref</span> <span class="re5">-mask</span> <span class="re1">$NOVALUE</span>;<span class="kw2">sleep</span> <span class="nu0">1</span>;<span class="kw1">done</span><span class="sy0">&gt;/</span>dev<span class="sy0">/</span>null</pre>
+
+<p>
+The output should be something like
+</p>
+<pre class="code bash">real	0m38.022s
+user	0m17.669s
+sys	0m1.168s</pre>
+
+<p>
+Question: What could be the difference between real and user time?
+</p>
+<pre class="code bash"><span class="kw1">time</span> <span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">NOVALUE</span>=<span class="nu0">0</span>;NOVALUE<span class="sy0">&lt;</span><span class="nu0">19</span>;++NOVALUE<span class="br0">&#41;</span><span class="br0">&#41;</span>;<span class="kw1">do</span> <span class="kw3">echo</span> <span class="nu0">19990724</span>_L7E_IP_CW.tif <span class="re1">$NOVALUE</span>;<span class="kw1">done</span> <span class="sy0">|</span><span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">2</span> <span class="re5">-P</span> <span class="nu0">2</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>myscript.sh <span class="sy0">&gt;/</span>dev<span class="sy0">/</span>null</pre>
+
+<p>
+<em class="u">Perform the same tasks in parallel with two processors using xargs</em>
+</p>
+<pre class="code bash"><span class="kw1">time</span> <span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">NOVALUE</span>=<span class="nu0">0</span>;NOVALUE<span class="sy0">&lt;</span><span class="nu0">19</span>;++NOVALUE<span class="br0">&#41;</span><span class="br0">&#41;</span>;<span class="kw1">do</span> <span class="kw3">echo</span> <span class="nu0">19990724</span>_L7E_IP_CW.tif <span class="re1">$NOVALUE</span>;<span class="kw1">done</span> <span class="sy0">|</span><span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">2</span> <span class="re5">-P</span> <span class="nu0">2</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>myscript.sh <span class="sy0">&gt;/</span>dev<span class="sy0">/</span>null</pre>
+
+<p>
+Notice the real time difference
+</p>
+<pre class="code bash">real	0m10.996s
+user	0m20.029s
+sys	0m0.844s</pre>
+
+<p>
+<em class="u">Uncomment the sleep command in the script and perform the same task</em>
+</p>
+
+<p>
+Question: what has happened with the sleep command now?
+</p>
+<pre class="code bash">real	0m21.392s
+user	0m20.209s
+sys	0m1.284s</pre>
+
+</div>

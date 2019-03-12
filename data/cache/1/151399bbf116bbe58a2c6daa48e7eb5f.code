@@ -1,0 +1,7 @@
+<span class="co0"># Adding the repository on a ubuntu host</span>
+<span class="kw3">echo</span> <span class="st0">&quot;deb [arch=amd64] http://download.rasdaman.org/packages/ubuntu trusty nightly&quot;</span> \
+<span class="sy0">|</span> <span class="kw2">sudo</span> <span class="kw2">tee</span> <span class="sy0">/</span>etc<span class="sy0">/</span>apt<span class="sy0">/</span>sources.list.d<span class="sy0">/</span>rasdaman.list
+&nbsp;
+<span class="co0"># Installing rasdaman</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get update</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> rasdaman

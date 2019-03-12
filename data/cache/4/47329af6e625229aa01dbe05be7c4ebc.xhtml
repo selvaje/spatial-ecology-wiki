@@ -1,0 +1,37 @@
+
+<h3 class="sectionedit1" id="exercise">EXERCISE</h3>
+<div class="level3">
+
+<p>
+Create a script in kate that creates a new location using <br/>
+
+/home/user/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/2020_TSSP_IM-ENS-A2-SP20_43023435.tif<br/>
+
+and import all the 20?0_TSSP_I?-ENS-A2-SP20_43023435.tif from the folder /home/user/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/. 
+</p>
+<ul>
+<li class="level1"><div class="li">Create a new grassdb/location ( see <a href="/dokuwiki/doku.php?id=wiki:grasscreatelocation" class="wikilink1" title="wiki:grasscreatelocation">  GRASS70 Create Location using ancillary layer </a>)</div>
+</li>
+<li class="level1"><div class="li">Set the GRASS70 variables (see <a href="/dokuwiki/doku.php?id=wiki:grassvariables7" class="wikilink1" title="wiki:grassvariables7"> Setting GRASS70 variables for GRASS bash job</a>)</div>
+</li>
+<li class="level1"><div class="li">Search the command that import tif in grass</div>
+</li>
+<li class="level1"><div class="li">Write a loop that import all the *.tif, use <em>basename</em> to remove the extension.</div>
+</li>
+<li class="level1"><div class="li">Use g.list rast to see if you import correctly the data</div>
+</li>
+</ul>
+
+<p>
+If everything is seat correctly you should be able to run the script by <em>bash CreateLocation_enterGRASS7.sh</em>
+</p>
+<pre class="code"># solution 
+wget http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_grass/CreateLocation_enterGRASS7.sh
+bash CreateLocation_enterGRASS7.sh</pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>

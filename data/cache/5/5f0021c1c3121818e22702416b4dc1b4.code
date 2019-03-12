@@ -1,0 +1,12 @@
+#creo gli istogrammi
+a=3
+for (i in c(&quot;As&quot;,&quot;Be&quot;,&quot;Cd&quot;,&quot;Co&quot;,&quot;Cr&quot;,&quot;Cu&quot;,&quot;Ni&quot;,&quot;Pb&quot;,&quot;Sb&quot;,&quot;Se&quot;,&quot;Sn&quot;,&quot;Tl&quot;,&quot;V&quot;,&quot;Zn&quot;)){
+    png(paste(&quot;~/ost4sem/project/output/ist_&quot;,i,&quot;.png&quot;,sep=&quot;&quot;),width = 800, height = 800)
+    a=a+1
+    par(mar=c(6,6,5,1))
+    hist(elementi_wo[[a]], main=i, cex.main=3, axes=F, xlab=&quot;Concentration&quot;,ylab=&quot;Frequency&quot;, cex.lab=2, col=3)
+    axis(2, cex.axis=2)
+    axis(1, cex.axis=2)
+    box()
+    dev.off()
+}

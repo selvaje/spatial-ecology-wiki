@@ -1,0 +1,15 @@
+<span class="st0">&quot;&quot;&quot;Parse NMEA GPS strings&quot;&quot;&quot;</span>
+<span class="kw1">from</span> pynmea.<span class="me1">streamer</span> <span class="kw1">import</span> NMEAStream
+nmeaFile <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;nmea.txt&quot;</span><span class="br0">&#41;</span>
+nmea_stream <span class="sy0">=</span> NMEAStream<span class="br0">&#40;</span>stream_obj<span class="sy0">=</span>nmeaFile<span class="br0">&#41;</span>
+next_data <span class="sy0">=</span> nmea_stream.<span class="me1">get_objects</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+nmea_objects <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+<span class="kw1">while</span> next_data:
+  nmea_objects +<span class="sy0">=</span> next_data
+  next_data <span class="sy0">=</span> nmea_stream.<span class="me1">get_objects</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="co1"># The NMEA stream is parsed!</span>
+<span class="co1"># Let's loop through the </span>
+<span class="co1"># Python object types:</span>
+<span class="kw1">for</span> nmea_ob <span class="kw1">in</span> nmea_objects:
+  <span class="kw1">if</span> <span class="kw2">hasattr</span><span class="br0">&#40;</span>nmea_ob<span class="sy0">,</span> <span class="st0">&quot;lat&quot;</span><span class="br0">&#41;</span>:
+    <span class="kw1">print</span> <span class="st0">&quot;Lat/Lon: (%s, %s)&quot;</span> % <span class="br0">&#40;</span>nmea_ob.<span class="me1">lat</span><span class="sy0">,</span> nmea_ob.<span class="me1">lon</span><span class="br0">&#41;</span>

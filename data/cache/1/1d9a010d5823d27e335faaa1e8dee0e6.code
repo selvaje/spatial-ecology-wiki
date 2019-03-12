@@ -1,0 +1,25 @@
+<span class="co0"># get the list of rasters with names that start with &quot;20&quot;, followed by &quot;IP&quot;, and ending with &quot;_fr1&quot;</span>
+<span class="kw1">for</span> file_fr1 <span class="kw1">in</span> <span class="sy0">`</span>g.mlist <span class="re2">type</span>=rast  <span class="re2">pattern</span>=<span class="nu0">20</span><span class="sy0">*</span>IP<span class="sy0">*</span>_fr1  <span class="sy0">`</span>; <span class="kw1">do</span>  
+<span class="kw3">export</span> <span class="re2">file_fr1</span>=<span class="re1">$file_fr1</span>
+&nbsp;
+&nbsp;
+<span class="co0"># start R and import bash variables (the file name)</span>
+&nbsp;
+R <span class="re5">--vanilla</span> <span class="re5">-q</span> <span class="co2">&lt;&lt;EOF
+&nbsp;
+file_fr1 = Sys.getenv('file_fr1')
+library(raster)
+rasterOptions(tmpdir=&quot;/tmp&quot;)
+&nbsp;
+# load grass raster data 
+&nbsp;
+rastD = raster( paste (&quot;/home/user/ost4sem/grassdbnew/EU_location/PERMANENT/cellhd/&quot;,file_fr1,sep=&quot;&quot;))
+&nbsp;
+# calculate Moran's I
+M_text = Moran(rastD, w=9)
+&nbsp;
+#Write the results to a simple text file
+write.table (M_text[1] ,paste(&quot;moran_&quot;,file_fr1,&quot;.txt&quot;,sep=&quot;&quot; )  ,row.names = F , col.names = F)
+EOF</span>
+&nbsp;
+<span class="kw1">done</span>

@@ -1,0 +1,31 @@
+  g.region alpine<span class="sy0">@</span>PCEMstat <span class="re2">res</span>=<span class="nu0">10000</span> <span class="re5">-p</span>
+<span class="co0">#projection: 99 (Lambert Azimuthal Equal Area)</span>
+<span class="co0">#zone:       0</span>
+<span class="co0">#datum:      ** unknown (default: WGS84) **</span>
+<span class="co0">#ellipsoid:  grs80</span>
+<span class="co0">#north:      2751000</span>
+<span class="co0">#south:      2310000</span>
+<span class="co0">#west:       3960000</span>
+<span class="co0">#east:       4700000</span>
+<span class="co0">#nsres:      10022.72727273</span>
+<span class="co0">#ewres:      10000</span>
+<span class="co0">#rows:       44</span>
+<span class="co0">#cols:       74</span>
+<span class="co0">#cells:      3256</span>
+  r.mapcalc <span class="st0">&quot;fnfpc_alpine10k = fnfpc&quot;</span> 
+&nbsp;
+  g.region alp_car<span class="sy0">@</span>PCEM <span class="re2">res</span>=<span class="nu0">5000</span> <span class="re5">-p</span>
+<span class="co0">#projection: 99 (Lambert Azimuthal Equal Area)</span>
+<span class="co0">#zone:       0</span>
+<span class="co0">#datum:      ** unknown (default: WGS84) **</span>
+<span class="co0">#ellipsoid:  grs80</span>
+<span class="co0">#north:      3070000</span>
+<span class="co0">#south:      2270000</span>
+<span class="co0">#west:       3900000</span>
+<span class="co0">#east:       5660000</span>
+<span class="co0">#nsres:      5000</span>
+<span class="co0">#ewres:      5000</span>
+<span class="co0">#rows:       160</span>
+<span class="co0">#cols:       352</span>
+<span class="co0">#cells:      56320</span>
+  r.mapcalc <span class="st0">&quot;fnfpc_alpine_carpatien5k = fnfpc&quot;</span> 

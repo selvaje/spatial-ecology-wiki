@@ -1,0 +1,38 @@
+breaks=seq(0,100,20)
+Aesthetic=raster(readGDAL(&quot;recA_m9.asc&quot;))
+Turism=raster(readGDAL(&quot;recT_m9.asc&quot;))
+AestheticClass &lt;- cut(Aesthetic, breaks=breaks)
+TurismClass &lt;- cut(Turism, breaks=breaks)
+Confusion.Aesthetic_Turism &lt;- table(AestheticClass@data@values,TurismClass@data@values)
+confusionMatrix(Confusion.Aesthetic_Turism)
+&nbsp;
+# Confusion Matrix and Statistics
+# 
+#    
+#       1   2   3   4   5
+#   1 245   7   0   0   0
+#   2  53   5   1   1   0
+#   3  16   4   1   1   0
+#   4  11   2   0   0   1
+#   5   2   1   0   0   0
+# 
+# Overall Statistics
+#                                           
+#                Accuracy : 0.7151          
+#                  95% CI : (0.6648, 0.7618)
+#     No Information Rate : 0.9316          
+#     P-Value [Acc &gt; NIR] : 1               
+#                                           
+#                   Kappa : 0.1132          
+#  Mcnemar's Test P-Value : NA              
+# 
+# Statistics by Class:
+# 
+#                      Class: 1 Class: 2 Class: 3 Class: 4 Class: 5
+# Sensitivity            0.7492  0.26316 0.500000 0.000000 0.000000
+# Specificity            0.7083  0.83434 0.939828 0.959885 0.991429
+# Pos Pred Value         0.9722  0.08333 0.045455 0.000000 0.000000
+# Neg Pred Value         0.1717  0.95189 0.996960 0.994065 0.997126
+# Prevalence             0.9316  0.05413 0.005698 0.005698 0.002849
+# Detection Rate         0.6980  0.01425 0.002849 0.000000 0.000000
+# Detection Prevalence   0.7179  0.17094 0.062678 0.039886 0.008547

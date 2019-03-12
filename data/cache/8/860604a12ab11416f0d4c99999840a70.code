@@ -1,0 +1,38 @@
+<span class="co0">#$ -S /bin/bash</span>
+<span class="co0">#$ -o /home/pi/ost4sem/experiment/stdout</span>
+<span class="co0">#$ -e /home/pi/ost4sem/experiment/stderr</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">INPUTDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>pi<span class="sy0">/</span>usbstore1<span class="sy0">/</span>input
+<span class="kw3">export</span> <span class="re2">OUTPUTDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>pi<span class="sy0">/</span>usbstore2<span class="sy0">/</span>output
+<span class="kw3">export</span> <span class="re2">FILENAME</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="br0">&#41;</span>
+<span class="kw3">export</span> <span class="re2">GRASSDB</span>=<span class="sy0">/</span>home<span class="sy0">/</span>pi<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdb
+<span class="kw3">export</span> <span class="re2">LOCATION</span>=location3035
+<span class="kw3">export</span> <span class="re2">MAPSET</span>=mapset_<span class="re1">$FILENAME</span>
+&nbsp;
+<span class="co0">################################  Setting GRASS variables for GRASS bash job</span>
+<span class="kw3">echo</span> <span class="st0">&quot;LOCATION_NAME: <span class="es2">$LOCATION</span>&quot;</span>           <span class="sy0">&gt;</span>  <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;MAPSET: PERMANENT&quot;</span>                  <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;DIGITIZER: none&quot;</span>                    <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GRASS_GUI: text&quot;</span>                    <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GISDBASE: <span class="es2">$GRASSDB</span>&quot;</span>                 <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="co0">###############################  path to GRASS binaries and libraries:</span>
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>grass64
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span>bin:<span class="re1">$GISBASE</span><span class="sy0">/</span>scripts
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$LD_LIBRARY_PATH</span>:<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=~<span class="sy0">/</span>.grassrc6_<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span>  <span class="co0">#   use process ID (PID) as lock file number</span>
+<span class="co0">##############################   Start processing using grass</span>
+&nbsp;
+<span class="co0"># gdalinfo $file &gt; $OUTPUTDIR/$(basename $file .tif).txt</span>
+<span class="co0"># gdalwarp -cutline $INPUTDIR/poly_fr.shp -crop_to_cutline $file $OUTPUTDIR/$CROPFILE</span>
+<span class="co0"># gdalinfo $OUTPUTDIR/$CROPFILE &gt; $OUTPUTDIR/$(basename $CROPFILE .tif).txt</span>
+&nbsp;
+g.mapset <span class="re5">-c</span> <span class="re2">mapset</span>=<span class="re1">$MAPSET</span>
+r.external <span class="re2">input</span>=<span class="re1">$file</span> <span class="re2">output</span>=virtual_grass_map <span class="re5">--overwrite</span>
+gdalinfo <span class="re1">$file</span> <span class="sy0">&gt;</span> <span class="re1">$OUTPUTDIR</span><span class="sy0">/</span><span class="re1">$FILENAME</span><span class="st0">&quot;before.txt&quot;</span>
+g.region <span class="re2">res</span>=<span class="nu0">10000</span>
+r.mapcalc <span class="re2">resampled</span>=virtual_grass_map
+r.out.gdal    <span class="re2">input</span>=resampled  <span class="re2">format</span>=GTiff <span class="re2">output</span>=<span class="re1">$OUTPUTDIR</span><span class="sy0">/</span><span class="st0">&quot;test_GRASS_&quot;</span><span class="re1">$FILENAME</span>.tif
+gdalinfo  <span class="re1">$OUTPUTDIR</span><span class="sy0">/</span><span class="st0">&quot;test_GRASS_&quot;</span><span class="re1">$FILENAME</span>.tif <span class="sy0">&gt;</span> <span class="re1">$OUTPUTDIR</span><span class="sy0">/</span><span class="re1">$FILENAME</span><span class="st0">&quot;after.txt&quot;</span>
+g.mapset <span class="re2">mapset</span>=PERMANENT
+<span class="kw2">rm</span> <span class="re5">-r</span> <span class="re1">$GRASSDB</span><span class="sy0">/</span><span class="re1">$LOCATION</span><span class="sy0">/</span><span class="re1">$MAPSET</span>

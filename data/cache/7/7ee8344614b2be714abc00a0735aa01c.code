@@ -1,0 +1,12 @@
+class	label	        area m^2per_ar  meanSOC_100cm	TotalSOC_100cm_Kt
+0	 Unclassified	82108	0.17%	    NA	    NA
+1	 Grass 	        2652684	5.42%	23.925	 63.47
+2	 Shore 	        1473340	3.01%	    NA	    NA
+3	 Water 	        2267424	4.63%	    NA	    NA
+4	 Low shrub      2955504	6.04%	21.201	 62.66
+5	 Dw.shrub tuna  9048672	18.49%	25.047	226.65
+6	 Sphag. domin	8564312	17.50%	31.962	273.73
+7	 Sedge/grass 	1156851223.65%	31.364	362.83
+8	 Nontussoc tund 3135964	6.41%	26.722	 83.80
+9	 Tussock tundra 3941744	8.06%	29.130	114.82
+10	 Masked Pixels	3235560	6.61%	    NA	    NA

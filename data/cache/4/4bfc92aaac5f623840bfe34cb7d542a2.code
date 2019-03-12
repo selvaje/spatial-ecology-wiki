@@ -1,0 +1,36 @@
+### 1. The first step is to read the xls file into R: 
+ ## Enter R or open the R console (e.g. RStudio), install and load the &quot;gdata&quot; package,
+ ## which contains various tools for data manipulation, particularly for reading and converting xls files:
+ R
+ install.packages(&quot;gdata&quot;)
+ library(gdata)
+&nbsp;
+## Read the xls file into R (this creates a temporary csv that is treated as a data frame):
+ FB &lt;- read.xls(&quot;/home/user/RyWork/MyProject/FarmBirds.xlsx&quot;)
+&nbsp;
+### 2. To obtain summed counts of each bird species for each year on each farm:
+ ## Step 1: Define the columns for grouping, and those that contain data to be evaluated in the data frame (FB)
+ ## representing the original xls (or csv) file from part 1 (above):
+ colnames(FB) # to determine the order numbers of columns in the data frame for use in the following steps
+ GroupCols &lt;- colnames(FB[,3:4]) # creates a vector of the column names to be used for grouping in the ddply command (plyr pacakge)
+ BirdNames &lt;- colnames(FB[,19:47]) # creates a vector of the column names containing counts of individual bird species
+&nbsp;
+ ## Step 2: Use ddply command (plyr package) to create a summarised data frame of the original data
+ FB.SUMp1 &lt;- ddply(FB, GroupCols, numcolwise(sum))
+&nbsp;
+ ## Step 3: Using the mutate command (plyr package) - add columns to FB.SUMp1 containing -
+ ## the total number of birds counted, and the number of different species observed at least once 
+  # if needed - use colnames to determine the order numbers of columns in the FB.SUMp1 data frame for use in -
+  # subsequent processes (this can also be determined from info in the Workspace window, or using View(FB.SUMp1))
+  colnames(FB.SUMp1)
+&nbsp;
+  # create a new data frame, maintaining FB.SUMp1, and add two new columns with total sums from two different rowSums functions.
+  FB.SUMp2 &lt;- mutate(FB.SUMp1, TotalIndiv = rowSums(FB.SUMp1[,3:31]), Richness = rowSums(FB.SUMp1[,3:31]&gt;0))
+&nbsp;
+### Create some basic boxplots to view general trends
+ ## Boxplot of bird abundance
+ boxplot(TotalIndiv~YEAR, data=FB.SUM4, varwidth=T, main = &quot;Median Birds Counted per Farm per Year&quot;,
+        ylab = &quot;Abundance (count of individuals)&quot;, xlab = &quot;Year&quot;)
+ ## Boxplot of bird species richness
+ boxplot(Richness~YEAR, data=FB.SUM4, varwidth=T, main = &quot;Median Bird Species Richness per Farm per Year&quot;,
+        ylab = &quot;Number of Species&quot;, xlab = &quot;Year&quot;)

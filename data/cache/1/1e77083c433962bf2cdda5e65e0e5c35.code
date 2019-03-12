@@ -1,0 +1,1 @@
+<span class="kw2">awk</span>    <span class="st_h">'{ print substr($1,1,4) }'</span> input.txt 

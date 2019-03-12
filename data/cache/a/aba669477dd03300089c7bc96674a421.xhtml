@@ -1,0 +1,158 @@
+
+<h1 class="sectionedit1" id="flying_pi">Flying Pi</h1>
+<div class="level1">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:drone.png" class="media" title="uav:drone.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=231577&amp;media=uav:drone.png" class="media" alt="" width="100" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:pi.png" class="media" title="uav:pi.png"><img src="/dokuwiki/lib/exe/fetch.php?w=50&amp;tok=84f401&amp;media=uav:pi.png" class="media" alt="" width="50" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=sitedesign:siteplann.png" class="media" title="sitedesign:siteplann.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=a88b7c&amp;media=sitedesign:siteplann.png" class="media" alt="" width="100" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:odm.png" class="media" title="uav:odm.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=5d3b09&amp;media=uav:odm.png" class="media" alt="" width="100" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:mavlink.png" class="media" title="uav:mavlink.png"><img src="/dokuwiki/lib/exe/fetch.php?w=200&amp;tok=048486&amp;media=uav:mavlink.png" class="media" alt="" width="200" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=wiki:logo.png" class="media" title="wiki:logo.png"><img src="/dokuwiki/lib/exe/fetch.php?w=150&amp;tok=4d65e0&amp;media=wiki:logo.png" class="media" alt="" width="150" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:emlid.png" class="media" title="uav:emlid.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=9af8db&amp;media=uav:emlid.png" class="media" alt="" width="100" /></a><br/>
+
+</p>
+<div class="noteimportant">This is a joint project of passionate open source drone pilots / almost pilots! 
+</div>
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:one.png" class="media" title="uav:one.png"><img src="/dokuwiki/lib/exe/fetch.php?w=70&amp;tok=b5aae3&amp;media=uav:one.png" class="media" alt="" width="70" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:due.png" class="media" title="uav:due.png"><img src="/dokuwiki/lib/exe/fetch.php?w=68&amp;tok=1d4612&amp;media=uav:due.png" class="media" alt="" width="68" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:tre.png" class="media" title="uav:tre.png"><img src="/dokuwiki/lib/exe/fetch.php?w=70&amp;tok=20c6f7&amp;media=uav:tre.png" class="media" alt="" width="70" /></a><a href="/dokuwiki/lib/exe/detail.php?id=uav%3Anavio2&amp;media=uav:qua.png" class="media" title="uav:qua.png"><img src="/dokuwiki/lib/exe/fetch.php?w=70&amp;tok=4cc1d2&amp;media=uav:qua.png" class="media" alt="" width="70" /></a>
+</p>
+
+<p>
+<a href="https://docs.emlid.com/navio2/Navio-APM/installation-and-running/" class="urlextern" target="blanc" title="https://docs.emlid.com/navio2/Navio-APM/installation-and-running/" rel="nofollow noopener"> We are stuck here </a>, because the info about on how to connect via wifi the navio-raspi to a laptop (or tablet) with a ground station installed where not clear to us. So we did followed and modified <a href="https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/" class="urlextern" target="blanc" title="https://frillip.com/using-your-raspberry-pi-3-as-a-wifi-access-point-with-hostapd/" rel="nofollow noopener"> this tutorial </a> to use the pi as wifi access point with static ip address and being able to connect whatever device with a wifi device.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Flying Pi&quot;,&quot;hid&quot;:&quot;flying_pi&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-875&quot;} -->
+<h3 class="sectionedit2" id="summary">Summary</h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> Update operating system and installing new software</div>
+</li>
+<li class="level1"><div class="li"> Set up static IP /etc/network/interfaces</div>
+</li>
+<li class="level1"><div class="li"> Configure hostapd : /etc/hostapd/hostapd.conf and /etc/default/hostapd</div>
+</li>
+<li class="level1"><div class="li"> Start hostapd at reboot</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Summary&quot;,&quot;hid&quot;:&quot;summary&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;876-1098&quot;} -->
+<h3 class="sectionedit3" id="install_software">Install software</h3>
+<div class="level3">
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">apt-get update</span> <span class="sy0">&amp;&amp;</span> <span class="kw2">sudo</span> <span class="kw2">apt-get dist-upgrade</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get update</span> <span class="sy0">&amp;&amp;</span> <span class="kw2">sudo</span> <span class="kw2">apt-get install</span> apm-navio2
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> hostapd</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install software&quot;,&quot;hid&quot;:&quot;install_software&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1099-1281&quot;} -->
+<h3 class="sectionedit4" id="static_ip_address_for_wi_fii">Static Ip address for wi fii</h3>
+<div class="level3">
+<pre class="code">  sudo nano /etc/network/interfaces
+  </pre>
+
+<p>
+The file looks like this:
+</p>
+<pre class="code bash"><span class="co0"># interfaces(5) file used by ifup(8) and ifdown(8)</span>
+<span class="co0"># Please note that this file is written to be used with dhcpcd</span>
+<span class="co0"># For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'</span>
+<span class="co0"># Include files from /etc/network/interfaces.d:</span>
+source-directory <span class="sy0">/</span>etc<span class="sy0">/</span>network<span class="sy0">/</span>interfaces.d
+allow-hotplug lo
+iface lo inet loopback
+&nbsp;
+allow-hotplug wlan0
+iface wlan0 inet static
+    address 172.24.1.1
+    netmask 255.255.255.0
+    network 172.24.1.0
+    broadcast 172.24.1.255
+&nbsp;
+allow-hotplug eth0
+iface eth0 inet dhcp</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Static Ip address for wi fii&quot;,&quot;hid&quot;:&quot;static_ip_address_for_wi_fii&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:4,&quot;range&quot;:&quot;1282-1906&quot;} -->
+<h3 class="sectionedit5" id="configure_hostapd">Configure hostapd</h3>
+<div class="level3">
+
+<p>
+Create a new configuration file with sudo nano /etc/hostapd/hostapd.conf with the following contents: 
+</p>
+<pre class="code bash"><span class="co0"># This is the name of the WiFi interface we configured above</span>
+<span class="re2">interface</span>=wlan0
+&nbsp;
+<span class="co0"># Use the nl80211 driver with the brcmfmac driver</span>
+<span class="re2">driver</span>=nl80211
+&nbsp;
+<span class="co0"># This is the name of the network</span>
+<span class="re2">ssid</span>=Navio-AP
+&nbsp;
+<span class="co0"># Use the 2.4GHz band</span>
+<span class="re2">hw_mode</span>=g
+&nbsp;
+<span class="co0"># Use channel 6</span>
+<span class="re2">channel</span>=<span class="nu0">6</span>
+&nbsp;
+<span class="co0"># Enable 802.11n</span>
+<span class="re2">ieee80211n</span>=<span class="nu0">1</span>
+&nbsp;
+<span class="co0"># Enable WMM</span>
+<span class="re2">wmm_enabled</span>=<span class="nu0">1</span>
+&nbsp;
+<span class="co0"># Enable 40MHz channels with 20ns guard interval</span>
+<span class="co0">#ht_capab=[HT40]#[SHORT-GI-20]#[DSSS_CCK-40]</span>
+&nbsp;
+<span class="co0"># Accept all MAC addresses</span>
+<span class="re2">macaddr_acl</span>=<span class="nu0">0</span>
+&nbsp;
+<span class="co0"># Use WPA authentication</span>
+<span class="re2">auth_algs</span>=<span class="nu0">1</span>
+&nbsp;
+<span class="co0"># Require clients to know the network name</span>
+<span class="re2">ignore_broadcast_ssid</span>=<span class="nu0">0</span>
+&nbsp;
+<span class="co0"># Use WPA2</span>
+<span class="re2">wpa</span>=<span class="nu0">2</span>
+&nbsp;
+<span class="co0"># Use a pre-shared key</span>
+<span class="re2">wpa_key_mgmt</span>=WPA-PSK
+&nbsp;
+<span class="co0"># The network passphrase</span>
+<span class="re2">wpa_passphrase</span>=raspberry
+&nbsp;
+<span class="co0"># Use AES, instead of TKIP</span>
+<span class="re2">rsn_pairwise</span>=CCMP</pre>
+
+<p>
+<strong>Next edit the /etc/default/hostapd file</strong>
+</p>
+<pre class="code">  sudo nano /etc/default/hostapd</pre>
+
+<p>
+be sure you have 
+</p>
+<pre class="code">  DAEMON_CONF=&quot;/etc/hostapd/hostapd.conf&quot;</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Configure hostapd&quot;,&quot;hid&quot;:&quot;configure_hostapd&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:5,&quot;range&quot;:&quot;1907-2916&quot;} -->
+<h3 class="sectionedit6" id="start_hostapd_at_reboot">Start hostapd at reboot</h3>
+<div class="level3">
+
+<p>
+1 create a /etc/launch.navio2 file:
+</p>
+<pre class="code bash"><span class="co0">#!/bin/bash</span>
+<span class="co0">#</span>
+<span class="co0"># auto launch ArduCopter</span>
+<span class="co0"># </span>
+ArduCopter-quad <span class="re5">-A</span> udp:172.24.1.119:<span class="nu0">14550</span></pre>
+
+<p>
+2 Add the command 
+</p>
+<pre class="code"> @reboot bash /etc/launch.navio2 &amp;</pre>
+
+<p>
+to the sudo crontab file using:
+</p>
+<pre class="code"> sudo crontab -e </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Start hostapd at reboot&quot;,&quot;hid&quot;:&quot;start_hostapd_at_reboot&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:6,&quot;range&quot;:&quot;2917-&quot;} -->

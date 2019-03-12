@@ -1,0 +1,48 @@
+
+<h1 class="sectionedit1" id="download_log_files_from_uav">Download log files from UAV</h1>
+<div class="level1">
+
+<p>
+This operation can be done on Mission planner following the following steps:
+</p>
+<ul>
+<li class="level1"><div class="li">Open Mission planner</div>
+</li>
+</ul>
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>software<span class="sy0">/</span>missionplanner
+<span class="kw2">sudo</span> mono MissionPlanner.exe</pre>
+<ul>
+<li class="level1"><div class="li">Connect Iris+ to OSGeo-live on your laptop using a usb cable and no battery attached to the Iris+.<br/>
+
+You&#039;ll find the Iris+ at a port similar to this: /dev/serial/by-id/usb-3D<em>Robotics</em>PX4<em>FMU</em>v2.x_0-if00; use 57600 bps baud rate.
+</div>
+</li>
+<li class="level1"><div class="li">Click on <strong>Data flash Log</strong> tab on the left panel</div>
+</li>
+<li class="level1"><div class="li">Click on <strong>Download Dataflash Log Via MavLink</strong></div>
+</li>
+<li class="level1"><div class="li">Tick box of the mission log file to download according to the date/time of flying mission</div>
+</li>
+<li class="level1"><div class="li">Click on <strong>Download These Logs</strong></div>
+</li>
+</ul>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Auav%3Atchain_logfiles&amp;media=uav:down_log_file.png" class="media" title="uav:down_log_file.png"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=7935a2&amp;media=uav:down_log_file.png" class="mediacenter" alt="" width="1000" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li">Browse missionplanner logs foolder and check the availability of log file in different formats:<br/>
+</div>
+</li>
+</ul>
+<pre class="code bash">~<span class="sy0">/</span>software<span class="sy0">/</span>missionplanner<span class="sy0">/</span>logs<span class="sy0">/</span>QUADROTOR<span class="sy0">/</span><span class="nu0">1</span><span class="sy0">/</span><span class="nu0">2016</span>-05-<span class="nu0">11</span> <span class="nu0">13</span>-<span class="nu0">46</span>-<span class="nu0">20</span>.bin
+~<span class="sy0">/</span>software<span class="sy0">/</span>missionplanner<span class="sy0">/</span>logs<span class="sy0">/</span>QUADROTOR<span class="sy0">/</span><span class="nu0">1</span><span class="sy0">/</span><span class="nu0">2016</span>-05-<span class="nu0">11</span> <span class="nu0">13</span>-<span class="nu0">46</span>-<span class="nu0">20</span>.log
+~<span class="sy0">/</span>software<span class="sy0">/</span>missionplanner<span class="sy0">/</span>logs<span class="sy0">/</span>QUADROTOR<span class="sy0">/</span><span class="nu0">1</span><span class="sy0">/</span><span class="nu0">2016</span>-05-<span class="nu0">11</span> <span class="nu0">13</span>-<span class="nu0">46</span>-<span class="nu0">20</span>.log.gpx
+~<span class="sy0">/</span>software<span class="sy0">/</span>missionplanner<span class="sy0">/</span>logs<span class="sy0">/</span>QUADROTOR<span class="sy0">/</span><span class="nu0">1</span><span class="sy0">/</span><span class="nu0">2016</span>-05-<span class="nu0">11</span> <span class="nu0">13</span>-<span class="nu0">46</span>-<span class="nu0">20</span>.log.kml </pre>
+
+<p>
+You can plot the kml file in Qgis to look at the differences between the planned mission and the actual plight path, in strong wind conditions the two might differ very much and the plnned overlapping of images could be unfitted to perform the data processing of orthophoto.<br/>
+
+</p>
+
+</div>

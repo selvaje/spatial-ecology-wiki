@@ -1,0 +1,5 @@
+par(mfrow=c(2,1))   #De to plots kommer i samme billede
+qqnorm(markdata$residual,main=&quot;QQ plot&quot;) #Two plots in the same picture
+hist(markdata$residual, freq=TRUE, main=&quot;Test for normal distribution&quot;,xlab=&quot;Residuals&quot;) #Plot residuals against the frequency
+dev.copy(png,filename=&quot;~/ost4sem/project/unidk2010/nutrients/R/Residuals.png&quot;,width = 1500, height = 1000, bg=&quot;white&quot;)
+dev.off()

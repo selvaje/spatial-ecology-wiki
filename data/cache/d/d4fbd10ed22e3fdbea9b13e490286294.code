@@ -1,0 +1,4 @@
+<span class="kw2">bash</span> grappolo_start.sh
+<span class="co0"># enter admin password : admin</span>
+<span class="co0"># enter node1 password : node1pw</span>
+<span class="co0"># enter node2 password : node2pw</span>

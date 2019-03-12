@@ -1,0 +1,15 @@
+TITLE=c(&quot;Agriculture value&quot;,&quot;Carbon above ground&quot;,&quot;Carbon in soil&quot;,&quot;Flood mitigation&quot;,&quot;Plant production&quot;,&quot;Solar energy&quot;,&quot;Aesthetic&quot;,&quot;Recreation&quot;,&quot;Tourism&quot;,&quot;Urban development&quot;,&quot;Wind energy&quot;,&quot;Zones of Cornwall&quot;)
+tiff(&quot;Zonal statistics.tif&quot;, width = 800, height = 900)
+nf &lt;- layout(matrix(c(1:12),4,3,byrow=TRUE), c(1,1), c(1,1), TRUE) ; layout.show(nf) ; par(mar=c(5,5,3,1))
+for (band in c(1,2,3,4,5,7,8,9,10,11,6)) {
+COS=subset(na.omit(MAPS@data@values[,band][MAPS@data@values[,12]==1]), na.omit(MAPS@data@values[,band][MAPS@data@values[,12]==1]&gt;0))
+WES=subset(na.omit(MAPS@data@values[,band][MAPS@data@values[,12]==2]), na.omit(MAPS@data@values[,band][MAPS@data@values[,12]==2]&gt;0))
+CEN=subset(na.omit(MAPS@data@values[,band][MAPS@data@values[,12]==3]), na.omit(MAPS@data@values[,band][MAPS@data@values[,12]==3]&gt;0))
+EAS=subset(na.omit(MAPS@data@values[,band][MAPS@data@values[,12]==4]), na.omit(MAPS@data@values[,band][MAPS@data@values[,12]==4]&gt;0))
+ALL=subset(na.omit(MAPS@data@values[,band][MAPS@data@values[,12]!=5]), na.omit(MAPS@data@values[,band][MAPS@data@values[,12]!=5]&gt;0))
+boxplot(COS,WES,CEN,EAS,ALL, col=(c(&quot;blue&quot;,&quot;red&quot;,&quot;green4&quot;,&quot;orange&quot;,&quot;grey&quot;)),main=TITLE[band], cex.main=2,cex.axis=1.5)
+}
+plot(1,1,type=&quot;n&quot;,xlab=&quot;&quot;,ylab=&quot;&quot;,axes=F)
+legend(0.7,1.5,c(&quot;Coastal&quot;,&quot;West&quot;,&quot;Centre&quot;,&quot;East&quot;,&quot;Overall&quot;), bty = &quot;n&quot;,  pch=c(15,15,15,15), pt.cex=c(2.5,2.5,2.5),  cex=2.5,  col=c(&quot;blue&quot;,&quot;red&quot;,&quot;green4&quot;,&quot;orange&quot;,&quot;gray&quot;))
+dev.off()
+&nbsp;

@@ -1,0 +1,445 @@
+
+<h1 class="sectionedit1" id="spatio-temporal_solar_irradiation_map">Spatio-temporal solar irradiation map</h1>
+<div class="level1">
+
+<p>
+<br/>
+
+Luis Ramirez Camargo -<a href="https://www.th-deg.de/en/tc-freyung/research-and-development/angewandte-energieforschung/2914" class="urlextern" target="blanc" title="https://www.th-deg.de/en/tc-freyung/research-and-development/angewandte-energieforschung/2914" rel="nofollow noopener">https://www.th-deg.de/en/tc-freyung/research-and-development/angewandte-energieforschung/2914</a>
+</p>
+
+<p>
+Affiliation: Deggendorf Institute of Technology and University of Natural Resources and Life Sciences Vienna 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Spatio-temporal solar irradiation map&quot;,&quot;hid&quot;:&quot;spatio-temporal_solar_irradiation_map&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-286&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+Having an energy matrix based on renewable energies sources (RES) has become a priority for the European Union(European Commision 2009). Massive efforts have been made to increment the penetration of key technologies such as Photovoltaic (PV).  One of the primary steps for the introduction of these technologies consists on carrying out an assessment of the energy generation potential. An increasing number of methods and software tools are available to calculate such potential(Clarke and Grant 1996; Mendes, Ioakimidis, and Ferrão 2011; Markovic, Cvetkovic, and Masic 2011; Angelis-Dimakis et al. 2011; Connolly et al. 2010). These tools could be radically different the one of the other but all of them pursuit the same goal– to maximize the annual amount of energy that can be harvest by the PV plants that are to be build. 
+</p>
+
+<p>
+This way of thinking works if PV plays only a marginal role in the energy matrix. the temporal variations of the energy generation can be easily compensated if the PV energy plants are connected to a grid. The situation changes, however, if the participation of PV and other variable renewable energy sources increases(Orioli and Di Gangi 2013; Passey et al. 2011; U.S. Department of Energy and SNL 2007; Azadian and Radzi 2013; Paatero and Lund 2007). The objective is no longer to generate as much energy as possible but generate energy when it is required. This modification of the objective also requires changes in the way potentials are calculated. 
+</p>
+
+<p>
+The ESRA algorithm implemented in the module r.sun of the open source software grass GIS has been widely tested and the results are very satisfactory–mostly when comparing with other GIS based tools (Inman, Pedro, and Coimbra 2013; Badescu et al. 2013; Stein, Hansen, and Reno 2012; Jakubiec and Reinhart 2013; Ruiz‐Arias et al. 2009; Šúri et al. 2007; Tabik et al. 2012). Although this software has been essentially used to calculate the &#039;classic&#039; yearly-solar-harvest potential; it is also capable for the generation of instantaneous solar radiation maps. A combination of bash, python and grass scripts should allow the quick generation of solar radiation data sets with a high Spatio-temporal resolution usign r.sun. These data sets are to be used posteriorly as input for optimization algorithms that should decide which plants should be build based on the best fit to a certain potential demand.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;287-2723&quot;} -->
+<h3 class="sectionedit3" id="project_objectives">Project objectives</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> to generate a Digital Surface Model (DSM) from the LIDAR data</div>
+</li>
+<li class="level1"><div class="li"> to generate one hour time-step solar irradiation raster maps for the study region</div>
+</li>
+<li class="level1"><div class="li"> to produce graphics that summarize the temporal course of the solar irradiation for every building roof-top that belong to the study region </div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;2724-3052&quot;} -->
+<h2 class="sectionedit4" id="metadata">METADATA</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;3053-3075&quot;} -->
+<h3 class="sectionedit5" id="vector_data">Vector data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Building contour map</div>
+</li>
+</ul>
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:buildings.png" class="mediacenter" alt="" />
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector data&quot;,&quot;hid&quot;:&quot;vector_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;3076-3171&quot;} -->
+<h3 class="sectionedit6" id="other_data">Other data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">LIDAR data with five returns and one square meter resolution in .fpl file format. Every .fpl file contains data of an area of one square kilometer. The data for the study area is available in two of these .fpl files.<br/>
+</div>
+</li>
+</ul>
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:headfpl.png" class="mediacenter" alt="" />
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Other data&quot;,&quot;hid&quot;:&quot;other_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;3172-3463&quot;} -->
+<h2 class="sectionedit7" id="method">METHOD</h2>
+<div class="level2">
+
+<p>
+1. generate the (input) raster maps required to run r.sun<br/>
+
+1.1. generate a DSM from the .fpl files
+</p>
+
+<p>
+1.1.1. extract the first(terrain) and the third (roofs of buildings)returns from the .fpl files using AWK
+</p>
+
+<p>
+1.1.2. create a new .txt file that contains the first and third returns of all .fpl files
+</p>
+
+<p>
+1.1.3. import the .txt as a vector in grass gis
+</p>
+
+<p>
+1.2.2. get further input parameters for r.sun. the monthly Linke turbidity factor values are taken from the SODA data bank. the daily values are calculated using the script g.linke<em>by</em>day.py of  Hamish Bowman 2009 
+</p>
+<ol>
+<li class="level1"><div class="li">get solar irradiation maps for a certain period of time in a desired time step. a python script that loops the Grass Gis 7 function r.sun is used to perform this task.
+<br/>
+3.plot the solar irradiation trend of every building roof-top in the study region (it is expected to perform this task using PK tools) </div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;3464-4360&quot;} -->
+<h2 class="sectionedit8" id="computational_implementation">Computational implementation</h2>
+<div class="level2">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_luis&amp;codeblock=0" title="Download Snippet" class="mediafile mf_">- mycode</a></dt>
+<dd><pre class="code bash"><span class="co0">############pre-filtering of the LIDAR data####### </span>
+<span class="co0">############(extraction of the necessary returns)##########</span>
+<span class="co0">#use AWK. use a multi core loop for selecting the </span>
+<span class="co0">#first and the third return in the .fpl files and </span>
+<span class="co0">#put all returns in a single .txt file </span>
+&nbsp;
+<span class="co0">#define the directory where the data is located</span>
+<span class="kw3">export</span> <span class="re2">Dir</span>=~<span class="sy0">/</span>myproject<span class="sy0">/</span>FPLSelect<span class="sy0">/</span>
+<span class="co0">#define the directory where the new text file should be stored</span>
+<span class="kw3">export</span> <span class="re2">DirObj</span>=~<span class="sy0">/</span>myproject<span class="sy0">/</span>FPLSelect
+<span class="co0">#set the files that are used for the loop without type of file</span>
+<span class="re2">File</span>=<span class="sy0">*</span>
+<span class="co0">#set the File type. note that it should be a format compatible with awk -&gt; text</span>
+<span class="kw3">export</span> <span class="re2">FileTyp</span>=.fpl
+<span class="co0">#set the amount of cores to be used</span>
+<span class="kw3">export</span> <span class="re2">cores</span>=<span class="nu0">3</span>
+<span class="co0">#extract the desired laser returns from the file that have been set</span>
+  <span class="kw2">ls</span> <span class="re1">$Dir</span><span class="re1">$File</span><span class="re1">$FileTyp</span>  <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="re1">$cores</span>  <span class="kw2">bash</span> <span class="re5">-c</span> $<span class="st_h">' 
+    file=$(basename &quot;$1&quot; .fpl)
+    awk \'</span><span class="br0">&#123;</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="re4">$4</span>=<span class="nu0">3</span><span class="br0">&#41;</span> print <span class="re4">$1</span>, <span class="re4">$2</span>, <span class="re4">$3</span> <span class="br0">&#125;</span><span class="co3">\'</span>  <span class="re1">$Dir</span><span class="re1">$file</span><span class="re1">$FileTyp</span> <span class="sy0">&gt;</span> <span class="re1">$DirObj</span><span class="sy0">/</span><span class="nu0">3</span>_<span class="re1">$file</span>.txt
+    <span class="kw2">awk</span>  <span class="co3">\'</span><span class="br0">&#123;</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="re4">$4</span>=<span class="nu0">1</span><span class="br0">&#41;</span> print <span class="re4">$1</span>, <span class="re4">$2</span>, <span class="re4">$3</span> <span class="br0">&#125;</span><span class="co3">\'</span>  <span class="re1">$Dir</span><span class="re1">$file</span><span class="re1">$FileTyp</span> <span class="sy0">&gt;</span> <span class="re1">$DirObj</span><span class="sy0">/</span><span class="nu0">1</span>_<span class="re1">$file</span>.txt
+    <span class="co0"># in order to retrive further returns erase the &quot;#&quot; at the beginning of the line </span>
+    <span class="co0">#awk  \'{ if($4=2) print $1, $2, $3 }\'  $Dir$file$FileTyp &gt; $DirObj/2_$file.txt</span>
+    <span class="co0">#awk  \'{ if($4=4) print $1, $2, $3 }\'  $Dir$file$FileTyp &gt; $DirObj/4_$file.txt</span>
+    <span class="co0">#awk  \'{ if($4=5) print $1, $2, $3 }\'  $Dir$file$FileTyp &gt; $DirObj/5_$file.txt</span>
+  <span class="st_h">' _
+&nbsp;
+#put all return types of interest in single txt file
+cat $DirObj/?_fpl?.txt &gt; $DirObj/returns.txt
+rm ?_fpl?.txt  
+&nbsp;
+#####USE GRASS GIS 7 without starting it explicitly######
+export GISBASE=/usr/lib/grass70
+export GRASS_VERSION=&quot;7.0.svn&quot; 
+MYGISDBASE=$HOME/myproject/grassdb
+MYLOC=district
+MYMAPSET=Luis
+&nbsp;
+# Set the global grassrc file to individual file name
+MYGISRC=&quot;$HOME/.grassrc.$GRASS_VERSION.$$&quot;
+&nbsp;
+echo &quot;GISDBASE: $MYGISDBASE&quot; &gt; &quot;$MYGISRC&quot;
+echo &quot;LOCATION_NAME: $MYLOC&quot; &gt;&gt; &quot;$MYGISRC&quot;
+echo &quot;MAPSET: $MYMAPSET&quot; &gt;&gt; &quot;$MYGISRC&quot;
+echo &quot;GRASS_GUI: text&quot; &gt;&gt; &quot;$MYGISRC&quot;
+&nbsp;
+# path to GRASS settings file
+export GISRC=$MYGISRC
+export GRASS_PYTHON=python
+export GRASS_MESSAGE_FORMAT=plain
+export GRASS_TRUECOLOR=TRUE
+export GRASS_TRANSPARENT=TRUE
+export GRASS_PNG_AUTO_WRITE=TRUE
+export GRASS_GNUPLOT='</span>gnuplot <span class="re5">-persist</span><span class="st_h">'
+export GRASS_WIDTH=640
+export GRASS_HEIGHT=480
+export GRASS_HTML_BROWSER=firefox
+export GRASS_PAGER=cat
+export GRASS_WISH=wish
+&nbsp;
+export PATH=&quot;$GISBASE/bin:$GISBASE/scripts:$PATH&quot;
+export LD_LIBRARY_PATH=&quot;$GISBASE/lib&quot;
+export GRASS_LD_LIBRARY_PATH=&quot;$LD_LIBRARY_PATH&quot;
+export PYTHONPATH=&quot;$GISBASE/etc/python:$PYTHONPATH&quot;
+export MANPATH=$MANPATH:$GISBASE/man
+&nbsp;
+export GIS_LOCK=$$
+&nbsp;
+#####generate input raster maps for r.sun######
+#import the returns as vector in grass Gis
+v.in.ascii -n --o input=/home/user/myproject/FPLSelect/returns.txt output=rawpoints separator=space z=3  
+#generate the DSM, slope and aspect raster maps needed for r.sun -&gt; this is a very simplistic way for performing this task but the procedure presented in neteler and mitasova 2008 (the Grass GIS 6 Book) leads to errors
+v.surf.rst -z input=rawpoints elev=elev1 slope=slope1 asp=asprast1 npmi=120 seg=25 lay=0 ten=15 smo=1
+&nbsp;
+#####open python in Grass Gis 7#########
+python</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_luis&amp;codeblock=1" title="Download Snippet" class="mediafile mf_sun_">- loop r.sun </a></dt>
+<dd><pre class="code python"><span class="co1">######python function to loop r.sun #####</span>
+&nbsp;
+<span class="kw1">import</span> grass.<span class="me1">script</span> <span class="kw1">as</span> grass	
+<span class="co1">#function defined by the start and stop time and the input raster maps</span>
+<span class="kw1">def</span> my_r_sun<span class="br0">&#40;</span>startday<span class="sy0">,</span>stopday<span class="sy0">,</span>starthour<span class="sy0">,</span>stophour<span class="sy0">,</span>elevmap<span class="sy0">,</span>aspectmap<span class="sy0">,</span>slopemap<span class="br0">&#41;</span>:
+<span class="co1"># day is the day of the year, h is the hour of the day</span>
+	<span class="kw1">for</span> day <span class="kw1">in</span> <span class="kw2">range</span> <span class="br0">&#40;</span>startday<span class="sy0">,</span>stopday+<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>:
+		<span class="kw1">for</span> hour <span class="kw1">in</span> <span class="kw2">range</span> <span class="br0">&#40;</span>starthour<span class="sy0">,</span>stophour+<span class="nu0">1</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span>:
+			<span class="kw1">def</span> linkebyday<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+				<span class="kw1">import</span> numpy
+				<span class="kw1">from</span> scipy.<span class="me1">interpolate</span> <span class="kw1">import</span> interpolate
+				<span class="co1">##### put monthly data here</span>
+				linke_data <span class="sy0">=</span> numpy.<span class="kw3">array</span> <span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">3.6</span><span class="sy0">,</span><span class="nu0">3.9</span><span class="sy0">,</span><span class="nu0">4.0</span><span class="sy0">,</span><span class="nu0">3.9</span><span class="sy0">,</span><span class="nu0">4.4</span><span class="sy0">,</span><span class="nu0">4.4</span><span class="sy0">,</span><span class="nu0">4.5</span><span class="sy0">,</span><span class="nu0">4.5</span><span class="sy0">,</span><span class="nu0">4.1</span><span class="sy0">,</span><span class="nu0">3.6</span><span class="sy0">,</span><span class="nu0">3.4</span><span class="sy0">,</span><span class="nu0">3.2</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+				linke_data_wrap <span class="sy0">=</span> numpy.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#40;</span>linke_data<span class="br0">&#91;</span><span class="nu0">9</span>:<span class="nu0">12</span><span class="br0">&#93;</span><span class="sy0">,</span> linke_data<span class="sy0">,</span> linke_data<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+				monthDays <span class="sy0">=</span> numpy.<span class="kw3">array</span> <span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">31</span><span class="sy0">,</span><span class="nu0">28</span><span class="sy0">,</span><span class="nu0">31</span><span class="sy0">,</span><span class="nu0">30</span><span class="sy0">,</span><span class="nu0">31</span><span class="sy0">,</span><span class="nu0">30</span><span class="sy0">,</span><span class="nu0">31</span><span class="sy0">,</span><span class="nu0">31</span><span class="sy0">,</span><span class="nu0">30</span><span class="sy0">,</span><span class="nu0">31</span><span class="sy0">,</span><span class="nu0">30</span><span class="sy0">,</span><span class="nu0">31</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+				<span class="co1">#init empty</span>
+				midmonth_day <span class="sy0">=</span> numpy.<span class="kw3">array</span> <span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+				<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">12</span>+<span class="nu0">1</span><span class="br0">&#41;</span>:
+					midmonth_day<span class="br0">&#91;</span>i-<span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">=</span> <span class="nu0">15</span> + <span class="kw2">sum</span><span class="br0">&#40;</span>monthDays<span class="br0">&#91;</span><span class="nu0">0</span>:i<span class="br0">&#93;</span><span class="br0">&#41;</span>
+				midmonth_day_wrap <span class="sy0">=</span> numpy.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#40;</span>midmonth_day<span class="br0">&#91;</span><span class="nu0">9</span>:<span class="nu0">12</span><span class="br0">&#93;</span>-<span class="nu0">365</span><span class="sy0">,</span> \
+													   midmonth_day<span class="sy0">,</span>
+													   midmonth_day<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">3</span><span class="br0">&#93;</span>+<span class="nu0">365</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+				interp_type <span class="sy0">=</span> <span class="st0">'cubic'</span>  <span class="co1"># 'linear'</span>
+				linke <span class="sy0">=</span> interpolate.<span class="me1">interp1d</span><span class="br0">&#40;</span>midmonth_day_wrap<span class="sy0">,</span> 
+											 linke_data_wrap<span class="sy0">,</span>
+											 kind<span class="sy0">=</span>interp_type<span class="br0">&#41;</span>
+				<span class="kw1">return</span><span class="br0">&#40;</span><span class="st0">&quot;%.4f&quot;</span> % linke<span class="br0">&#40;</span>day<span class="br0">&#41;</span> <span class="br0">&#41;</span>
+			hour <span class="sy0">=</span> hour-<span class="nu0">0.5</span>
+			<span class="kw1">print</span> hour<span class="sy0">,</span> <span class="st0">&quot;h&quot;</span>
+			<span class="kw1">print</span> day<span class="sy0">,</span> <span class="st0">&quot;day&quot;</span> 
+			<span class="co1"># to get global irradiance</span>
+			irradiance <span class="sy0">=</span> <span class="st0">&quot;globrad_&quot;</span> + <span class="kw2">str</span><span class="br0">&#40;</span>day<span class="br0">&#41;</span> + <span class="st0">&quot;_&quot;</span> + <span class="kw2">str</span><span class="br0">&#40;</span>hour<span class="br0">&#41;</span>
+			linkev<span class="sy0">=</span>linkebyday<span class="br0">&#40;</span><span class="br0">&#41;</span>
+			<span class="co1"># run the solar model</span>
+			grass.<span class="me1">run_command</span><span class="br0">&#40;</span><span class="st0">&quot;r.sun&quot;</span><span class="sy0">,</span> elevin <span class="sy0">=</span> <span class="kw2">str</span><span class="br0">&#40;</span>elevmap<span class="br0">&#41;</span><span class="sy0">,</span> aspin <span class="sy0">=</span> <span class="kw2">str</span><span class="br0">&#40;</span>aspectmap<span class="br0">&#41;</span><span class="sy0">,</span> slopein <span class="sy0">=</span> <span class="kw2">str</span><span class="br0">&#40;</span>slopemap<span class="br0">&#41;</span><span class="sy0">,</span> lin <span class="sy0">=</span> linkev<span class="sy0">,</span> glob_rad <span class="sy0">=</span> <span class="kw2">str</span><span class="br0">&#40;</span>irradiance<span class="br0">&#41;</span><span class="sy0">,</span> day <span class="sy0">=</span> day<span class="sy0">,</span> <span class="kw3">time</span><span class="sy0">=</span>hour<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#generate the irradiation maps for the days 180,181 and 182 of the year for the period between 14:00 and 16:00  </span>
+my_r_sun<span class="br0">&#40;</span><span class="nu0">180</span><span class="sy0">,</span><span class="nu0">182</span><span class="sy0">,</span> <span class="nu0">14</span><span class="sy0">,</span> <span class="nu0">16</span><span class="sy0">,</span> <span class="st0">&quot;elev1&quot;</span><span class="sy0">,</span><span class="st0">&quot;asprast1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;slope&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#second example (see animations) maps for the days 1 to 3 of the year for the period between 07:00 and 17:00</span>
+my_r_sun<span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">3</span><span class="sy0">,</span> <span class="nu0">7</span><span class="sy0">,</span> <span class="nu0">17</span><span class="sy0">,</span> <span class="st0">&quot;elev1&quot;</span><span class="sy0">,</span><span class="st0">&quot;asprast1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;slope1&quot;</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_luis&amp;codeblock=2" title="Download Snippet" class="mediafile mf_">- multi-core</a></dt>
+<dd><pre class="code bash">the following code also loops r.sun but it uses multi-core 
+<span class="co0">#runing the code to &quot;USE GRASS GIS 7 without starting it explicitly&quot; is also required</span>
+<span class="co0">#set startday, stopday,starthour, stophour, step and input raster maps for r.sun </span>
+<span class="kw3">export</span> <span class="re2">startday</span>=<span class="nu0">20</span>
+<span class="kw3">export</span> <span class="re2">stopday</span>=<span class="nu0">20</span>
+<span class="kw3">export</span> <span class="re2">starthour</span>=<span class="nu0">10</span>
+<span class="kw3">export</span> <span class="re2">stophour</span>=<span class="nu0">12</span>
+<span class="kw3">export</span> <span class="re2">step</span>=<span class="nu0">1</span>
+<span class="kw3">export</span> <span class="re2">elevmap</span>=elev1
+<span class="kw3">export</span> <span class="re2">aspectmap</span>=asprast1
+<span class="kw3">export</span> <span class="re2">slopemap</span>=slope1
+<span class="kw3">export</span> <span class="re2">cores</span>=<span class="nu0">3</span>
+&nbsp;
+<span class="co0">#run r.sun using xargs</span>
+<span class="kw1">for</span> DAY <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="re1">$startday</span> <span class="re1">$stopday</span><span class="br0">&#41;</span>; <span class="kw1">do</span> 
+ <span class="kw2">seq</span> <span class="re1">$starthour</span> <span class="re1">$step</span> <span class="re1">$stophour</span> <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="re1">$cores</span> -I<span class="br0">&#123;</span><span class="br0">&#125;</span> r.sun <span class="re5">--o</span> <span class="re2">elevin</span>=<span class="re1">$elevmap</span> <span class="re2">aspin</span>=<span class="re1">$aspectmap</span> <span class="re2">slopein</span>=<span class="re1">$slopemap</span> <span class="re2">lin</span>=$<span class="br0">&#40;</span>python g.linke_by_day.py <span class="re1">$DAY</span><span class="br0">&#41;</span> <span class="re2">glob_rad</span>=multicore_globrad.<span class="co1">${DAY}</span>_<span class="br0">&#123;</span><span class="br0">&#125;</span> <span class="re2">day</span>=<span class="re1">$DAY</span> <span class="re2">time</span>=<span class="br0">&#123;</span><span class="br0">&#125;</span>; 
+ <span class="kw1">done</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Computational implementation&quot;,&quot;hid&quot;:&quot;computational_implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;4361-10174&quot;} -->
+<h3 class="sectionedit9" id="model_parametrization">Model parametrization</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Model parametrization&quot;,&quot;hid&quot;:&quot;model_parametrization&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:9,&quot;range&quot;:&quot;10175-10206&quot;} -->
+<h3 class="sectionedit10" id="model_prediction">Model prediction</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Model prediction&quot;,&quot;hid&quot;:&quot;model_prediction&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:10,&quot;range&quot;:&quot;10207-10233&quot;} -->
+<h3 class="sectionedit11" id="validation">Validation</h3>
+<div class="level3">
+
+<p>
+The aim of the present project is only to generate irradiation data in an efficient way. The quality (accuracy and sensibility to parameters) of the data generated with r.sun has been widely discussed elsewhere and a further validation do not correspond to the scope of this project. The high accuracy of the base algorithm of r.sun has been confirmed at least by Inman, Pedro, and Coimbra 2013; Badescu et al. 2013; Stein, Hansen, and Reno 2012; Jakubiec and Reinhart 2013; Ruiz‐Arias et al. 2009; Šúri et al. 2007
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Validation&quot;,&quot;hid&quot;:&quot;validation&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:11,&quot;range&quot;:&quot;10234-10774&quot;} -->
+<h2 class="sectionedit12" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">DSM of the study region
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:dsm.png" class="mediacenter" alt="" /></div>
+</li>
+<li class="level1"><div class="li">Slope map</div>
+</li>
+</ul>
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:slope.png" class="mediacenter" alt="" />
+</p>
+<ul>
+<li class="level1"><div class="li">Aspect map</div>
+</li>
+</ul>
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:aspect.png" class="mediacenter" alt="" />
+</p>
+
+<p>
+*output code example
+</p>
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:output.png" class="mediacenter" alt="" />
+</p>
+
+<p>
+*irradiation map example in detail
+</p>
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:irradiationindetail.png" class="mediacenter" alt="" />
+</p>
+
+<p>
+*animation days 1 to 3 period 07:00 to 17:00
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS and DISCUSSION&quot;,&quot;hid&quot;:&quot;results_and_discussion&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:12,&quot;range&quot;:&quot;10775-11192&quot;} -->
+<h1 class="sectionedit13" id="all_extensions_for_animations_are_forbidden">all extensions for animations are forbidden-&gt;</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;all extensions for animations are forbidden-&gt;&quot;,&quot;hid&quot;:&quot;all_extensions_for_animations_are_forbidden&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:13,&quot;range&quot;:&quot;11193-11240&quot;} -->
+<h1 class="sectionedit14" id="upload_denied_this_file_extension_is_forbidden">&quot;Upload denied. This file extension is forbidden!&quot;</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;\&quot;Upload denied. This file extension is forbidden!\&quot;&quot;,&quot;hid&quot;:&quot;upload_denied_this_file_extension_is_forbidden&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:14,&quot;range&quot;:&quot;11241-11293&quot;} -->
+<h1 class="sectionedit15" id="instead_raster_maps_for_the_first_day_of_the_year">instead raster maps for the first day of the year</h1>
+<div class="level1">
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation01.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation02.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation03.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation04.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation05.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation06.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation07.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation08.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation09.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation10.png" class="mediacenter" alt="" />
+<img src="/dokuwiki/lib/exe/fetch.php?media=wikistudholland:animation_irradiation11.png" class="mediacenter" alt="" />
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;instead raster maps for the first day of the year&quot;,&quot;hid&quot;:&quot;instead_raster_maps_for_the_first_day_of_the_year&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:15,&quot;range&quot;:&quot;11294-11997&quot;} -->
+<h2 class="sectionedit16" id="references">References</h2>
+<div class="level2">
+
+<p>
+Angelis-Dimakis, Athanasios, Markus Biberacher, Javier Dominguez, Giulia Fiorese, Sabine Gadocha, Edgard Gnansounou, Giorgio Guariso, et al. 2011. “Methods and Tools to Evaluate the Availability of Renewable Energy Sources.” Renewable and Sustainable Energy Reviews 15 (2): 1182–1200. doi:10.1016/j.rser.2010.09.049.
+</p>
+
+<p>
+Azadian, Farshad, and M.A.M. Radzi. 2013. “A General Approach toward Building Integrated Photovoltaic Systems and Its Implementation Barriers: A Review.” Renewable and Sustainable Energy Reviews 22: 527–38. doi:10.1016/j.rser.2013.01.056.
+</p>
+
+<p>
+Badescu, Viorel, Christian A. Gueymard, Sorin Cheval, Cristian Oprea, Madalina Baciu, Alexandru Dumitrescu, Flavius Iacobescu, Ioan Milos, and Costel Rada. 2013. “Accuracy and Sensitivity Analysis for 54 Models of Computing Hourly Diffuse Solar Irradiation on Clear Sky.” Theoretical and Applied Climatology 111 (3-4): 379–99. doi:10.1007/s00704-012-0667-1.
+</p>
+
+<p>
+Clarke, J.A., and A.D. Grant. 1996. “Planning Support Tools for the Integration of Renewable Energy at the Regional Level.” Renewable Energy 9 (1–4): 1090–93. doi:10.1016/0960-1481(96)88468-0.
+</p>
+
+<p>
+Connolly, D., H. Lund, B.V. Mathiesen, and M. Leahy. 2010. “A Review of Computer Tools for Analysing the Integration of Renewable Energy into Various Energy Systems.” Applied Energy 87 (4): 1059–82. doi:10.1016/j.apenergy.2009.09.026.
+</p>
+
+<p>
+European Commision. 2009. “SEC(2009)1295, 2009. Commission Staff Working Document - Accompanying Document to the Communication from the Commission to the European Parliament, the Council, the European Economic and Social Committee and the Committee of the Regions on Investing in the Development of Low Carbon Technologies (SET-Plan) - A Technology Roadmap.” <a href="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=SEC:2009:1295:FIN:EN:PDF" class="urlextern" target="blanc" title="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=SEC:2009:1295:FIN:EN:PDF" rel="nofollow noopener">http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=SEC:2009:1295:FIN:EN:PDF</a>.
+</p>
+
+<p>
+Inman, Rich H., Hugo T.C. Pedro, and Carlos F.M. Coimbra. 2013. “Solar Forecasting Methods for Renewable Energy Integration.” Progress in Energy and Combustion Science 39 (6): 535–76. doi:10.1016/j.pecs.2013.06.002.
+</p>
+
+<p>
+Jakubiec, J. Alstan, and Christoph F. Reinhart. 2013. “A Method for Predicting City-Wide Electricity Gains from Photovoltaic Panels Based on LiDAR and GIS Data Combined with Hourly Daysim Simulations.” Solar Energy 93: 127–43. doi:10.1016/j.solener.2013.03.022.
+</p>
+
+<p>
+Markovic, Dragan, Dragan Cvetkovic, and Branislav Masic. 2011. “Survey of Software Tools for Energy Efficiency in a Community.” Renewable and Sustainable Energy Reviews 15 (9): 4897–4903. doi:10.1016/j.rser.2011.06.014.
+</p>
+
+<p>
+Mendes, Gonçalo, Christos Ioakimidis, and Paulo Ferrão. 2011. “On the Planning and Analysis of Integrated Community Energy Systems: A Review and Survey of Available Tools.” Renewable and Sustainable Energy Reviews 15 (9): 4836–54. doi:10.1016/j.rser.2011.07.067.
+</p>
+
+<p>
+Orioli, Aldo, and Alessandra Di Gangi. 2013. “Load Mismatch of Grid-Connected Photovoltaic Systems: Review of the Effects and Analysis in an Urban Context.” Renewable and Sustainable Energy Reviews 21: 13–28. doi:10.1016/j.rser.2012.12.035.
+</p>
+
+<p>
+Paatero, Jukka V., and Peter D. Lund. 2007. “Effects of Large-Scale Photovoltaic Power Integration on Electricity Distribution Networks.” Renewable Energy 32 (2): 216–34. doi:10.1016/j.renene.2006.01.005.
+</p>
+
+<p>
+Passey, Robert, Ted Spooner, Iain MacGill, Muriel Watt, and Katerina Syngellakis. 2011. “The Potential Impacts of Grid-Connected Distributed Generation and How to Address Them: A Review of Technical and Non-Technical Factors.” Energy Policy 39 (10): 6280–90. doi:10.1016/j.enpol.2011.07.027.
+</p>
+
+<p>
+Ruiz‐Arias, J. A., J. Tovar‐Pescador, D. Pozo‐Vázquez, and H. Alsamamra. 2009. “A Comparative Analysis of DEM‐based Models to Estimate the Solar Radiation in Mountainous Terrain.” International Journal of Geographical Information Science 23 (8): 1049–76. doi:10.1080/13658810802022806.
+</p>
+
+<p>
+Stein, Joshua S., Clifford W. Hansen, and Matthew J. Reno. 2012. “Global Horizontal Irradiance Clear Sky Models: Implementation and Analysis.” SAND2012-2389. Sandia National Laboratories. <a href="http://www.osti.gov/scitech/biblio/1039404" class="urlextern" target="blanc" title="http://www.osti.gov/scitech/biblio/1039404" rel="nofollow noopener">http://www.osti.gov/scitech/biblio/1039404</a>.
+</p>
+
+<p>
+Šúri, Marcel, Thomas A. Huld, Ewan D. Dunlop, and Heinz A. Ossenbrink. 2007. “Potential of Solar Electricity Generation in the European Union Member States and Candidate Countries.” Solar Energy 81 (10): 1295–1305. doi:10.1016/j.solener.2006.12.007.
+</p>
+
+<p>
+Tabik, S., A. Villegas, E.L. Zapata, and L.F. Romero. 2012. “A Fast GIS-Tool to Compute the Maximum Solar Energy on Very Large Terrains.” Procedia Computer Science 9: 364–72. doi:10.1016/j.procs.2012.04.039.
+</p>
+
+<p>
+U.S. Department of Energy, and Sandia National Laboratories SNL. 2007. “Solar Energy Grid Integration Systems‘SEGIS’. Program Concept Paper.” <a href="http://www1.eere.energy.gov/solar/pdfs/segis_concept_paper.pdf" class="urlextern" target="blanc" title="http://www1.eere.energy.gov/solar/pdfs/segis_concept_paper.pdf" rel="nofollow noopener">http://www1.eere.energy.gov/solar/pdfs/segis_concept_paper.pdf</a>.
+</p>
+
+<p>
+For Code development and Input data:
+</p>
+
+<p>
+Neteler, Markus, and Helena Mitasova. 2008. “Working with Raster Data.” In Open Source GIS, edited by Markus Neteler and Helena Mitasova, 83–168. Springer US. 
+</p>
+
+<p>
+Hamish Bowman, Dunedin, New Zealand: module: g.linke<em>by</em>day.py, Interpolate day of year into Linke turbidity value.© 2009 Hamish Bowman, and The GRASS Development Team
+</p>
+
+<p>
+Linke turbidity factor values: <a href="http://www.soda-is.com/eng/services/linke_turbidity_info.html" class="urlextern" target="blanc" title="http://www.soda-is.com/eng/services/linke_turbidity_info.html" rel="nofollow noopener">http://www.soda-is.com/eng/services/linke_turbidity_info.html</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;References&quot;,&quot;hid&quot;:&quot;references&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:16,&quot;range&quot;:&quot;11998-&quot;} -->

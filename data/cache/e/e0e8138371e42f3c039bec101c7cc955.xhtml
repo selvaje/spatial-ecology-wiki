@@ -1,0 +1,51 @@
+
+<h1 class="sectionedit1" id="exercise_8aimage_classificationcreate_training_sample_and_masks">Exercise 8a: Image classification: create training sample and masks</h1>
+<div class="level1">
+
+<p>
+pktools: pkinfo, pkmosaic, pksetmask, pkextract
+</p>
+
+<p>
+<em class="u">Create mosaic from FMAP2006 for same coverage:</em>
+</p>
+<pre class="code bash">pkmosaic $<span class="br0">&#40;</span>pkinfo <span class="re5">-cover</span> $<span class="br0">&#40;</span><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="co1">${FMAPDIR}</span><span class="sy0">/</span>CM-FMAP_2006_<span class="sy0">*</span>-AA.tif;<span class="kw1">do</span> <span class="kw3">echo</span> <span class="st0">&quot; -i <span class="es2">$file</span>&quot;</span>;<span class="kw1">done</span><span class="br0">&#41;</span> $<span class="br0">&#40;</span>pkinfo <span class="re5">-bb</span> <span class="re5">-i</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span><span class="br0">&#41;</span><span class="br0">&#41;</span> $<span class="br0">&#40;</span>pkinfo <span class="re5">-bb</span> <span class="re5">-i</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span> <span class="re5">-dx</span> -dy<span class="br0">&#41;</span> <span class="re5">-o</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>fmap2006.tif</pre>
+
+<p>
+<em class="u">Merge all masks into single mask (start with cloud mask and add other masks). Recode mask values as follows:</em>
+</p>
+<div class="notetip">notice that cloudmask is not only input but also mask!
+
+</div><pre class="code bash">pksetmask <span class="re5">-i</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise6<span class="sy0">/</span>cloudmask_dil.tif <span class="re5">-m</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise6<span class="sy0">/</span>cloudmask_dil.tif <span class="re5">-msknodata</span> <span class="nu0">1</span> <span class="re5">-nodata</span> <span class="nu0">255</span> <span class="re5">-m</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>fmap2006.tif <span class="re5">-msknodata</span> <span class="nu0">251</span> <span class="re5">-nodata</span> <span class="nu0">251</span> <span class="re5">-m</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise6<span class="sy0">/</span>shadowmask.tif <span class="re5">-msknodata</span> <span class="nu0">1</span> <span class="re5">-nodata</span> <span class="nu0">254</span> <span class="re5">-o</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>mask.tif <span class="re5">-ct</span> <span class="co1">${FMAPDIR}</span><span class="sy0">/</span>ct_ftyp.txt</pre>
+<div class="noteclassic">sea: 251<br/>
+
+shadow: 254<br/>
+
+cloud: 255<br/>
+
+
+</div>
+<p>
+<em class="u">Create a self-sufficient training sample for classifier: output vector contains both label and spectral information (can take a wile, approx 20 min)</em>
+</p>
+<pre class="code bash">pkextract <span class="re5">-i</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span> <span class="re5">-s</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_merged.sqlite <span class="re5">-o</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>training.sqlite <span class="re5">-r</span> mean <span class="re5">-f</span> SQLite <span class="re5">-m</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>mask.tif <span class="re5">-msknodata</span> <span class="nu0">251</span> <span class="re5">-msknodata</span> <span class="nu0">254</span> <span class="re5">-msknodata</span> <span class="nu0">255</span></pre>
+
+<p>
+<em class="u">Classify Landsat image using training sample and masks: sea (251), shadow (254), clouds (255)</em>
+</p>
+<div class="notetip">pkclassify supports two modes for training samples:
+<br/>
+
+1. automatic mode: vector file has an Integer attribute representing the classes in a one-to-one relation  (e.g., &#039;1&#039;= class 1, &#039;2&#039;= class 2)<br/>
+
+2. manual mode: vector file has a String attribute representing the classes in a many-to-one relation (e.g., &#039;forest&#039;= class 1, &#039;grass&#039;= class 2, &#039;residential&#039;= class 2)
+
+</div>
+<p>
+<em class="u">Classification in manual mode:</em>
+</p>
+<pre class="code bash">pkclassify_svm <span class="re5">-i</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span> <span class="re5">-t</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>training.sqlite <span class="re5">-m</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>mask.tif <span class="re5">-msknodata</span> <span class="nu0">251</span> <span class="re5">-msknodata</span> <span class="nu0">254</span> <span class="re5">-msknodata</span> <span class="nu0">255</span> <span class="re5">-o</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span><span class="nu0">19990724</span>_L7E_IM_FMAP.tif <span class="re5">-label</span> landuse <span class="re5">-c</span> commercial <span class="re5">-r</span> <span class="nu0">2</span> <span class="re5">-c</span> forest <span class="re5">-r</span> <span class="nu0">1</span> <span class="re5">-c</span> grass <span class="re5">-r</span> <span class="nu0">2</span> <span class="re5">-c</span> industrial <span class="re5">-r</span> <span class="nu0">2</span> <span class="re5">-c</span> meadow <span class="re5">-r</span> <span class="nu0">2</span> <span class="re5">-c</span> residential <span class="re5">-r</span> <span class="nu0">2</span> <span class="re5">-ct</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>ct_ftyp.txt</pre>
+<div class="notetip">-msknodata values will be retained in classification output as “normal values”. You can set a real nodata value using option -nodata (default value = 0).
+
+</div>
+</div>

@@ -1,0 +1,4 @@
+<span class="co0"># install rjava from the bash shell it is a needed dependency for later</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> r-cran-rjava
+<span class="co0"># enter R as super user</span>
+<span class="kw2">sudo</span> R

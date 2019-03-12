@@ -1,0 +1,24 @@
+<span class="co0">#!/bin/bash</span>
+&nbsp;
+v.import <span class="re2">input</span>=<span class="sy0">/</span>media<span class="sy0">/</span>sf_LVM_share<span class="sy0">/</span>plantix<span class="sy0">/</span>solos.shp <span class="re2">layer</span>=solos <span class="re2">output</span>=solos <span class="re5">-o</span> <span class="re5">--overwrite</span>
+v.import <span class="re2">input</span>=<span class="sy0">/</span>media<span class="sy0">/</span>sf_LVM_share<span class="sy0">/</span>plantix<span class="sy0">/</span>plantix_shape.shp <span class="re2">output</span>=plantix_shp <span class="re5">-o</span> <span class="re5">--overwrite</span>
+&nbsp;
+<span class="re2">point_map</span>=<span class="st0">&quot;plantix_shp&quot;</span>
+<span class="re2">maps</span>=<span class="st0">&quot;solos&quot;</span>
+<span class="re2">poly_columns</span>=<span class="st0">&quot;TIPO CLASSE DESC2 ELEVATION&quot;</span>
+&nbsp;
+&nbsp;
+v.db.addcolumn <span class="re1">$point_map</span> <span class="re2">columns</span>=<span class="st0">&quot;TIPO varchar(15), CLASSE varchar(15), DESC2 varchar(15), ELEVATION int&quot;</span>
+&nbsp;
+&nbsp;
+<span class="kw1">time</span> <span class="kw1">for</span> map <span class="kw1">in</span> <span class="re1">$maps</span>
+<span class="kw1">do</span>
+&nbsp;
+	<span class="kw1">for</span> poly_col <span class="kw1">in</span> <span class="re1">$poly_columns</span>
+	<span class="kw1">do</span>
+		v.what.vect <span class="re2">map</span>=<span class="re1">$point_map</span> <span class="re2">column</span>=<span class="re1">$poly_col</span> <span class="re2">query_map</span>=<span class="re1">$map</span> <span class="re2">query_column</span>=<span class="re1">$poly_col</span>
+	<span class="kw1">done</span>
+&nbsp;
+<span class="kw1">done</span>
+&nbsp;
+v.out.ogr <span class="re2">input</span>=plantix_shp <span class="re2">output</span>=~<span class="sy0">/</span>Desktop<span class="sy0">/</span>plantix_attr.csv <span class="re2">format</span>=CSV

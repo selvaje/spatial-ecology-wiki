@@ -1,0 +1,54 @@
+
+<h4 id="stack_bands_in_feature_fusion_approach">Stack bands in feature fusion approach</h4>
+<div class="level4">
+<div class="noteclassic">LiDAR=band 0 <br/>
+
+NDVI=band 1<br/>
+
+LINEAR FEATURES=band 2 and 3<br/>
+
+CASI1-144=band 4 … band 147<br/>
+
+
+</div><pre class="code bash">    pkcrop <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_LiDAR.tif <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_NDVI.tif <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_LINEAR.tif <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_CASI.tif <span class="re5">-o</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_FEATURE_FUSION.tif</pre>
+
+</div>
+
+<h3 class="sectionedit1" id="feature_fusion">Feature fusion</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="create_training_vector_with_stacked_features">Create training vector with stacked features</h4>
+<div class="level4">
+<pre class="code bash">    pkextract <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_FEATURE_FUSION.tif <span class="re5">-s</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_TR_26915.shp <span class="re5">-o</span> training_feature_fusion.shp</pre>
+
+</div>
+
+<h4 id="optimize_svm_parameters_for_these_features">Optimize SVM parameters for these features</h4>
+<div class="level4">
+<pre class="code bash">    pkopt_svm <span class="re5">-t</span> training_feature_fusion.shp <span class="re5">-cc</span> <span class="nu0">0.1</span> <span class="re5">-cc</span> <span class="nu0">10000</span> <span class="re5">-g</span> <span class="nu0">0.001</span> <span class="re5">-g</span> <span class="nu0">10</span> <span class="re5">-step</span> <span class="nu0">10</span></pre>
+<div class="notetip">–ccost 7657.41 –gamma 0.186167
+
+</div>
+</div>
+
+<h4 id="redo_the_feature_selection_based_on_this_new_feature_set_we_can_stop_already_after_10_features">Redo the feature selection based on this new feature set (we can stop already after 10 features)</h4>
+<div class="level4">
+<pre class="code bash">    pkfs_svm <span class="re5">-t</span> training_feature_fusion.shp <span class="re5">-cc</span> <span class="nu0">100</span> <span class="re5">-g</span> <span class="nu0">1</span> <span class="re5">-n</span> <span class="nu0">10</span> <span class="re5">-v</span> <span class="nu0">1</span> <span class="re5">-cv</span> <span class="nu0">2</span></pre>
+<div class="notetip">-b 140 -b 2 -b 48 -b 0 -b 3 -b 23
+
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Feature fusion&quot;,&quot;hid&quot;:&quot;feature_fusion&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:1,&quot;range&quot;:&quot;393-1101&quot;} -->
+<h3 class="sectionedit2" id="image_classification">Image classification</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="based_on_the_optimal_feature_set_we_can_create_a_new_land_cover_map">Based on the optimal feature set, we can create a new land cover map</h4>
+<div class="level4">
+<pre class="code bash">    pkclassify_svm <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_FEATURE_FUSION.tif <span class="re5">-t</span> training_feature_fusion.shp <span class="re5">-o</span> testmap_feature_fusion.tif <span class="re5">-ct</span> ct.txt <span class="re5">--ccost</span> <span class="nu0">100</span> <span class="re5">--gamma</span> <span class="nu0">1</span> <span class="re5">-b</span> <span class="nu0">140</span> <span class="re5">-b</span> <span class="nu0">2</span> <span class="re5">-b</span> <span class="nu0">48</span> <span class="re5">-b</span> <span class="nu0">0</span> <span class="re5">-b</span> <span class="nu0">3</span> <span class="re5">-b</span> <span class="nu0">23</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Image classification&quot;,&quot;hid&quot;:&quot;image_classification&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:2,&quot;range&quot;:&quot;1102-&quot;} -->

@@ -1,0 +1,6 @@
+#rimuovo gli outliers
+library(outliers)
+elementi_wo=punti
+for (i in c(4:17)){
+elementi_wo[[i]]= rm.outlier(punti[[i]], fill=TRUE)
+}

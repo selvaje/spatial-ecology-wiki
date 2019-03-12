@@ -1,0 +1,42 @@
+
+<h1 class="sectionedit1" id="pkdumpogr">pkdumpogr</h1>
+<div class="level1">
+
+<p>
+NAME
+</p>
+<pre class="code"> pkdumpogr - dump vector file</pre>
+
+<p>
+SYNOPSIS
+</p>
+<pre class="code bash">   pkdumpogr <span class="re5">-i</span> input <span class="br0">&#91;</span>OPTION<span class="br0">&#93;</span></pre>
+
+<p>
+DESCRIPTION
+</p>
+<pre class="code"> Dump (columns of) vector file to standard output or ASCII text file
+     </pre>
+
+<p>
+OPTIONS
+</p>
+<pre class="code bash">   <span class="re5">-i</span>     <span class="re5">--input</span>                Input shape <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-o</span>     <span class="re5">--output</span>               Output ASCII <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-n</span>     <span class="re5">--name</span>                 names of the attributes to select. Each attribute is stored <span class="kw1">in</span> a separate band. Default is ALL: <span class="kw2">write</span> all attributes <span class="br0">&#40;</span>default: ALL<span class="br0">&#41;</span>
+   <span class="re5">-pos</span>   <span class="re5">--pos</span>                  include position <span class="br0">&#40;</span>x and y<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-t</span>     <span class="re5">--transpose</span>            transpose output <span class="br0">&#40;</span>does not work <span class="kw1">for</span> <span class="re5">-n</span> ALL  <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-v</span>     <span class="re5">--verbose</span>              verbose <span class="br0">&#40;</span>Default: <span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;pkdumpogr&quot;,&quot;hid&quot;:&quot;pkdumpogr&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-806&quot;} -->
+<h1 class="sectionedit2" id="examples">Examples</h1>
+<div class="level1">
+<pre class="code bash">pkdumpogr <span class="re5">-i</span> input.shp <span class="co0"># dump entire content of vector file to standard output </span>
+&nbsp;
+pkdumpogr <span class="re5">-i</span> input.shp <span class="re5">-o</span> output.txt <span class="re5">-n</span> ATTRIBUTE <span class="re5">-pos</span> <span class="co0"># dump only ATTRIBUTE of vector file including x and y position and output to ASCII file</span>
+&nbsp;
+pkdumpogr <span class="re5">-i</span> input.shp <span class="re5">-o</span> output.txt <span class="re5">-n</span> ATTRIBUTE1 <span class="re5">-n</span> ATTRIBUTE2 <span class="re5">-t</span> <span class="co0"># dump the two attributes ATTRIBUTE1 and ATTRIBUTE2 of vector file and transpose output</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Examples&quot;,&quot;hid&quot;:&quot;examples&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;807-&quot;} -->

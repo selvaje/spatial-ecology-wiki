@@ -1,0 +1,3 @@
+<span class="kw2">sudo</span> <span class="kw2">mkdir</span> <span class="re5">-p</span> <span class="sy0">/</span>fs<span class="sy0">/</span>hadoop<span class="sy0">/</span>tmp
+<span class="kw2">sudo</span> <span class="kw2">chown</span> hduser:hadoop <span class="sy0">/</span>fs<span class="sy0">/</span>hadoop<span class="sy0">/</span>tmp
+<span class="kw2">sudo</span> <span class="kw2">chmod</span> <span class="nu0">750</span> <span class="sy0">/</span>fs<span class="sy0">/</span>hadoop<span class="sy0">/</span>tmp<span class="sy0">/</span>

@@ -1,0 +1,59 @@
+
+<h1 class="sectionedit1" id="georeferencing_images">Georeferencing images</h1>
+<div class="level1">
+
+<p>
+Using GIS we are frequently facing problems of georeferencing images with no projection or adjust the projection of an image with ground control points
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Georeferencing images&quot;,&quot;hid&quot;:&quot;georeferencing_images&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-190&quot;} -->
+<h2 class="sectionedit2" id="georeferencing_an_undefined_projection_image_using_a_pre-existing_projected_map">Georeferencing an undefined projection image using a pre-existing projected map</h2>
+<div class="level2">
+
+<p>
+In this exercise we have available a .tif image of the Mtera reservoir (this image has no projection) and a portion of a Landsat TM satellite image of the Mtera reservoir projected in the UTM36 south system. 
+Input data:<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> ~/ost4sem/exercise/basic<em>qgis/georeferencing</em>images/Mtera<em>noproj.tif  (Tif image with no projection)
+  * ~/ost4sem/exercise/basic</em>qgis/georeferencing<em>images/Mtera</em>utm36s_TM.tif (Landsat Image)</div>
+</li>
+</ul>
+
+<p>
+We use reference points from the TM image to georeference the Mtera reservoir unprojected tif image.<br/>
+
+<strong>Procedure:</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> Open Qgis and load the Mtera<em>utm36s</em>TM.tif raster</div>
+</li>
+<li class="level1"><div class="li"> From the main Qgis menu select  Plugins &gt; Georeferencer &gt; Georeferencer</div>
+</li>
+<li class="level1"><div class="li"> In the Georeferencer window and select File &gt; Open raster and select the Mtera_noproj.tif as input</div>
+</li>
+<li class="level1"><div class="li"> Click on Edit &gt; Add a point </div>
+</li>
+<li class="level1"><div class="li"> Navigate, zoom in and define a location where to add your first point. Add your first point by clicking and then click on the From map canvas icon</div>
+</li>
+<li class="level1"><div class="li"> Navigate and zoom in the Landsat derived map to locate the same area as in the unprojected image. Click on the Landsat image and then select OK in the georeferencer.</div>
+</li>
+<li class="level1"><div class="li"> Add as many points as you can. Points have to be take in N E S W corners of the map to define the outer locations at the edge of your input map.</div>
+</li>
+<li class="level1"><div class="li"> Select Settings &gt; Transformation settings and define the type of georeference transformation; The resampling method; Output file name; Target resolution and if you like an output name to have a pdf report printed.(see image below)<br/>
+</div>
+</li>
+</ul>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Ageorefqgis&amp;media=wiki:wikiqgis:transformation_sett.png" class="media" title="wiki:wikiqgis:transformation_sett.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=fc431d&amp;media=wiki:wikiqgis:transformation_sett.png" class="media" alt="" width="600" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li"> Click on the georeference window icon <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Awikiqgis%3Ageorefqgis&amp;media=wiki:wikiqgis:play_georeference.png" class="media" title="wiki:wikiqgis:play_georeference.png"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:wikiqgis:play_georeference.png" class="media" alt="" /></a>to start the reprojection. Upload the now georeferenced output image and check its consistency.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Georeferencing an undefined projection image using a pre-existing projected map&quot;,&quot;hid&quot;:&quot;georeferencing_an_undefined_projection_image_using_a_pre-existing_projected_map&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;191-&quot;} -->

@@ -1,0 +1,227 @@
+
+<h1 class="sectionedit1" id="hydrological_modelling_for_site_design_and_permaculture">Hydrological modelling for site design and permaculture</h1>
+<div class="level1">
+
+<p>
+GIS provide extended capacity for modelling surface water flows, sediment accumulation, flooding risk areas and other important landscape features related to the landscape hydrology we need to consider while planning site earthworks, ponds and hedges.<br/>
+
+previously we have created a key data layer: the <strong>Digital Elevation Models</strong> which is a 3D representation of the terrain&#039;s surface. We can now use our LiDAR DEM for hydrological modelling.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Hydrological modelling for site design and permaculture&quot;,&quot;hid&quot;:&quot;hydrological_modelling_for_site_design_and_permaculture&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-515&quot;} -->
+<h2 class="sectionedit2" id="broad_extent_analyses">Broad extent analyses</h2>
+<div class="level2">
+
+<p>
+We previously have loaded 16 images covering a much broader area than the farm site. This was done with the objective to understand and map the full range of water catchments flowing trough our site. This large sets of images extend to the extreme upstream area where the ridge of the catchment starts.<br/>
+
+Having a broad overview of the landscape and water flows, allow us to quantify within each cell grid of our farm site how many upstream cells are connected. This is commonly referred in GIS as water accumulation layers.<br/>
+
+To process the water accumulation map we use the GRASS algorithm <strong>r.watershed</strong>.<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Open GRASS Tools <a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:logo_grass_toolbox.png" class="media" title="sitedesign:logo_grass_toolbox.png"><img src="/lib/exe/fetch.php?w=30&amp;tok=fe7025&amp;media=sitedesign:logo_grass_toolbox.png" class="medialeft" alt="" width="30" /></a> &gt; Raster &gt; Spatial models &gt; Hydrologic modelling &gt; r.watershed.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Use the merge.lidar map as input and click on <a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:regionsetting_qgis_grass.png" class="media" title="sitedesign:regionsetting_qgis_grass.png"><img src="/lib/exe/fetch.php?w=30&amp;tok=744621&amp;media=sitedesign:regionsetting_qgis_grass.png" class="media" alt="" width="30" /></a> to match region settings to this image</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Use the following parameters for processing the hydrological model:</div>
+</li>
+</ul>
+<pre class="code bash">r.watershed <span class="re2">elevetion</span>=merge.lidar<span class="sy0">@</span>PERMANENT \\
+<span class="re2">threshold</span>=<span class="nu0">10000</span> <span class="re2">accumulation</span>=accumul.2ha \\
+<span class="re2">drainage</span>=dir.2ha <span class="re2">stream</span>=str.2ha <span class="re2">basin</span>=bassins.2ha</pre>
+
+<p>
+You can now load images and visualize data outputs.<br/>
+
+</p>
+
+<p>
+To better visualize the river stream network we can convert the str.2ha into vector format:
+</p>
+<ul>
+<li class="level1"><div class="li"> Open GRASS Tools <a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:logo_grass_toolbox.png" class="media" title="sitedesign:logo_grass_toolbox.png"><img src="/lib/exe/fetch.php?w=30&amp;tok=fe7025&amp;media=sitedesign:logo_grass_toolbox.png" class="medialeft" alt="" width="30" /></a> &gt; File management &gt; Map type conversion &gt; Convert raster to vector lines</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Load the output vector map.</div>
+</li>
+</ul>
+
+<p>
+It is visible the stream network flowing through the whole area we considered.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Broad extent analyses&quot;,&quot;hid&quot;:&quot;broad_extent_analyses&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;516-2062&quot;} -->
+<h3 class="sectionedit3" id="locate_the_farm_site">Locate the Farm site</h3>
+<div class="level3">
+
+<p>
+To contextualize our study area in the broad map, we can draw a polygon of the farm boundary using QGIS:
+</p>
+<ul>
+<li class="level1"><div class="li"> Click o the <strong>Web</strong> tab &gt; <strong>OpenLayers plugin</strong> &gt; <strong>Bing Maps</strong> &gt; <strong>Bing Aerial</strong></div>
+</li>
+</ul>
+
+<p>
+If the web tab is not available, go to the <strong>Plugins</strong> tab &gt; Menage and Install plugins .. and serch / install the OpenLayers plugin
+</p>
+<ul>
+<li class="level1"><div class="li"> On the <strong>Layer</strong> tab &gt; <strong>Create layer</strong> &gt; <strong>New shapefile layer</strong> </div>
+</li>
+<li class="level1"><div class="li"> Use polygon and projection EPSG:26915 as parameters for creation and draw a rectangle to define the site boundaries.<br/>
+</div>
+</li>
+</ul>
+
+<p>
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:farm_site_drawing.png" class="media" title="sitedesign:farm_site_drawing.png"><img src="/lib/exe/fetch.php?w=100&amp;tok=196130&amp;media=sitedesign:farm_site_drawing.png" class="media" alt="" width="100" /></a><br/>
+
+<br/>
+
+</p>
+
+<p>
+Playing with colours and transparencies we can visualize the farm and the broad extent river network flowing to the farm site.<br/>
+
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:rivers_broadarea.png" class="media" title="sitedesign:rivers_broadarea.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=7940b3&amp;media=sitedesign:rivers_broadarea.png" class="media" alt="" width="300" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Locate the Farm site&quot;,&quot;hid&quot;:&quot;locate_the_farm_site&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;2063-2833&quot;} -->
+<h2 class="sectionedit4" id="site_specific_analyses">Site specific analyses</h2>
+<div class="level2">
+
+<p>
+The key layer we needed to aquire from the broad extent analyses is the water accumulation map. We are in the measure now to focus our mapping exercise on site specific layers. We can now look at the water accumulation from basins catchments flowing to our site specific locations. The next session explain how to limit the study area mapping to site specific extent.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Site specific analyses&quot;,&quot;hid&quot;:&quot;site_specific_analyses&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:4,&quot;range&quot;:&quot;2834-3239&quot;} -->
+<h3 class="sectionedit5" id="clipping_data">Clipping data</h3>
+<div class="level3">
+
+<p>
+Clip or Crop are terms used in GIS to resize a raster (or vector) image to a limited area. We are focusing on site specific planning and we can reduce disk space and computation time by analysing only pertinent data.<br/>
+
+Below we use QGIS to clip the DEM image to the farm extent. We need the geographical coordinate x-y of the minimum and maximum extent corners of the area we need to crop. For this we can use the <strong>Identify features</strong> button.
+</p>
+<ul>
+<li class="level1"><div class="li"> Click on <strong>Processing</strong> &gt; <strong>GDAL</strong> &gt; <strong>Extraction</strong> &gt; <strong>Clip</strong> raster by extent</div>
+</li>
+<li class="level1"><div class="li"> Set extent parameters x-min, x-max, y-min and y-max as shown below:</div>
+</li>
+</ul>
+<pre class="code bash"><span class="nu0">382236.000</span>, <span class="nu0">382469.000</span>, <span class="nu0">4413301.000</span>, <span class="nu0">4413863.000</span></pre>
+<ul>
+<li class="level1"><div class="li">Include the /home/user/ost4sem/siteplan/data/raster/lidar/15_03814413.img as input file
+</div>
+</li>
+<li class="level1"><div class="li">write ~/ost4sem/siteplan/data/farm<em>water</em>accumul.tif as output file.</div>
+</li>
+</ul>
+<div class="notetip">You can also use the QGIS <strong>Raster</strong> tab  → <strong>Extraction</strong> → <strong>Clipper</strong> function and use a mask or a vector file to crop images.
+
+</div>
+<p>
+The clipped DEM shuold look like this. In black to white palette the original DEM, in coloured scale the clipped dem and in yellow the vector file for farm boundaries.
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:clip_dem_tile.png" class="media" title="sitedesign:clip_dem_tile.png"><img src="/lib/exe/fetch.php?w=100&amp;tok=9985ec&amp;media=sitedesign:clip_dem_tile.png" class="mediacenter" alt="" width="100" /></a>
+</p>
+
+<p>
+<strong>Site scale hydrological model</strong><br/>
+
+First we perform the same clipping operation as for DEM for the water accumulation layer. Since the water accumulation layer is in GRASS format, we need to export grass raster to a .tif file and later crop it.
+</p>
+<ul>
+<li class="level1"><div class="li"> Open GRASS Tools <a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:logo_grass_toolbox.png" class="media" title="sitedesign:logo_grass_toolbox.png"><img src="/lib/exe/fetch.php?w=30&amp;tok=fe7025&amp;media=sitedesign:logo_grass_toolbox.png" class="medialeft" alt="" width="30" /></a> &gt; File management &gt; Export from grass &gt; Export rasters from grass &gt; <a href="http://grass.osgeo.org/grass64/manuals/r.out.gdal.html" class="urlextern" target="blanc" title="http://grass.osgeo.org/grass64/manuals/r.out.gdal.html" rel="nofollow noopener"> r.out.gdal</a> (use Float64 as file appropriate format type)</div>
+</li>
+<li class="level1"><div class="li"> save the output as water-accumul-broad.tif. The command line should look like this</div>
+</li>
+</ul>
+<pre class="code bash">r.out.gdal <span class="re2">input</span>=accumul.2ha<span class="sy0">@</span>PERMANENT <span class="re2">format</span>=GTiff <span class="re2">type</span>=Float64 \\
+<span class="re2">output</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>siteplan<span class="sy0">/</span>data<span class="sy0">/</span>raster<span class="sy0">/</span>water_accumul_broad.tif</pre>
+<ul>
+<li class="level1"><div class="li">Crop the water-accumul-broad.tif to a farm-water-accumul.tif file as you did before for the broad extent DEM layer to the farm site extent.<br/>
+</div>
+</li>
+</ul>
+
+<p>
+We can re-run the hydrological model at farm level using 20m resolution minimum basins. First we restrain the grass region of interest. Next we run the hydrological model and then  we convert the stream network to a vector layer to have a better visualization and we can compare it to the broad extent rivers layer. Moreover we can process a water basins layer using a minimum 500m basin extent to help image interpretation. All the above steps can be done in the grass console pasting the commands below:
+</p>
+<pre class="code bash">g.region <span class="re2">n</span>= <span class="nu0">4413863.000</span> <span class="re2">s</span>=<span class="nu0">4413301.000</span> <span class="re2">e</span>=<span class="nu0">382469.000</span> \\
+<span class="re2">w</span>=<span class="nu0">382236.000</span> <span class="re2">save</span>=farm.region
+r.watershed <span class="re2">elevation</span>=merge.lidar<span class="sy0">@</span>PERMANENT <span class="re2">threshold</span>=<span class="nu0">20</span> \\
+<span class="re2">accumulation</span>=farm.accumul.20m <span class="re2">drainage</span>=farm.drainage.20m \\
+<span class="re2">stream</span>=farm.streams.20m <span class="re2">basin</span>=farm.basins.20m
+r.thin <span class="re2">input</span>=farm.streams.20m<span class="sy0">@</span>PERMANENT <span class="re2">output</span>=farm.streams.20m.thin
+r.to.vect <span class="re2">input</span>=farm.streams.20m.thin <span class="re2">output</span>=farmstreams
+r.watershed <span class="re2">elevation</span>=merge.lidar<span class="sy0">@</span>PERMANENT <span class="re2">threshold</span>=<span class="nu0">500</span> <span class="re2">basin</span>=farm.basins.500m</pre>
+
+<p>
+The streams network at different scales look like this below. Note that we have used a minimum water basin extent of 20m vs 1ha (10000m) from the broad extent to the farm site hydrological model.
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:broad_streams.png" class="media" title="sitedesign:broad_streams.png"><img src="/lib/exe/fetch.php?w=100&amp;tok=fadc94&amp;media=sitedesign:broad_streams.png" class="mediacenter" alt="" width="100" /></a><a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:farm_sytreams.png" class="media" title="sitedesign:farm_sytreams.png"><img src="/lib/exe/fetch.php?w=100&amp;tok=ecddf8&amp;media=sitedesign:farm_sytreams.png" class="mediacenter" alt="" width="100" /></a>
+<br/>
+
+</p>
+
+<p>
+We also export grass vector file <strong>rivers</strong> from grass formats to common GIS .shp format using the QGIS plugin:
+</p>
+<ul>
+<li class="level1"><div class="li"> Open GRASS Tools <a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:logo_grass_toolbox.png" class="media" title="sitedesign:logo_grass_toolbox.png"><img src="/lib/exe/fetch.php?w=30&amp;tok=fe7025&amp;media=sitedesign:logo_grass_toolbox.png" class="medialeft" alt="" width="30" /></a> &gt; File management &gt; Export from grass &gt; Export vector from GRASS and add input /output filenames</div>
+</li>
+</ul>
+
+<p>
+In the terminal console you shuold see the following code:
+</p>
+<pre class="code bash">v.out.ogr <span class="re2">input</span>=rivers<span class="sy0">@</span>PERMANENT <span class="re2">type</span>=line <span class="re2">layer</span>=<span class="nu0">1</span> \\\
+<span class="re2">format</span>=ESRI_Shapefile \\
+<span class="re2">dsn</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>siteplan<span class="sy0">/</span>data<span class="sy0">/</span>vector<span class="sy0">/</span>rivers<span class="sy0">/</span>rivers_broad.shp \\
+<span class="re2">olayer</span>=default <span class="re5">-e</span> <span class="re5">-c</span></pre>
+
+<p>
+Next we clip the river network to the farm site using the Qgis processing tool.
+</p>
+<ul>
+<li class="level1"><div class="li"> Click on Processing</div>
+</li>
+<li class="level1"><div class="li"> GDAL/OGR</div>
+</li>
+<li class="level1"><div class="li"> Geoprocessing</div>
+</li>
+<li class="level1"><div class="li"> Clip vector by extent and set up the following input / output</div>
+</li>
+</ul>
+
+<p>
+<a href="/lib/exe/detail.php?id=sitedesign%3Asite_hydromod&amp;media=sitedesign:clip_vector.png" class="media" title="sitedesign:clip_vector.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=56cb44&amp;media=sitedesign:clip_vector.png" class="mediacenter" alt="" width="500" /></a>
+</p>
+
+<p>
+We have now available different key features for our site:
+</p>
+<ol>
+<li class="level1"><div class="li"> Overall water accumulation to the farm site from the broad extent catchment area</div>
+</li>
+<li class="level1"><div class="li"> Stream network within the farm site</div>
+</li>
+</ol>
+
+<p>
+We can now proceed with <a href="/doku.php?id=sitedesign:site_terrainmod" class="wikilink1" title="sitedesign:site_terrainmod"> terrain modelling for site design</a> tutorial.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Clipping data&quot;,&quot;hid&quot;:&quot;clipping_data&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:5,&quot;range&quot;:&quot;3240-&quot;} -->

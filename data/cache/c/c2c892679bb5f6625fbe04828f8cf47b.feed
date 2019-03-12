@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://spatial-ecology.net/dokuwiki/feed.php">
+        <title> wiki:python</title>
+        <description></description>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2019-03-11T10:30:11+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:anetaurban&amp;rev=1528397607&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython1&amp;rev=1527860070&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython2&amp;rev=1527933274&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython3&amp;rev=1527884000&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython4&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython5&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython6&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:geocoding&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:intropython&amp;rev=1527938487&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:pythonhome&amp;rev=1534963800&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:segmentwatershed&amp;rev=1527962723&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:webservice&amp;rev=1527946705&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <url>http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:anetaurban&amp;rev=1528397607&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-06-07T18:53:27+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:anetaurban</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:anetaurban&amp;rev=1528397607&amp;do=diff</link>
+        <description>Preparation
+
+Data
+
+Use the following link in Firefox External data
+
+Open a terminal to prepare the data folder.
+ ls /home/user/Downloads/ss_se2018_d5.zip
+ 
+ cd /home/user/
+ mv /home/user/Downloads/ss_se2018_d5.zip .
+ unzip ss_se2018_d5.zip
+ 
+ ls /home/user/ss_se2018_d5/
+ 
+ cd /home/user/ss_se2018_d5/
+ pwd</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:basicpython</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython&amp;rev=1512514411&amp;do=diff</link>
+        <description>Python introduction
+
+Python is a multi-platform interpreted general purpose language which can be used in both interactive and scripting mode. It is a dynamic language derived from other older expressive languages, such as Tcl or Perl, but with a cleaner syntax and a modern concept.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython1&amp;rev=1527860070&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-06-01T13:34:30+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:basicpython1</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython1&amp;rev=1527860070&amp;do=diff</link>
+        <description>Geospatial Python crash course, part 1
+
+Most of the materials used for the daily presentation will be maintained here:
+https://github.com/fpl/geotutorial_basic
+  
+Snippets of codes and file will be downloadable from there by cloning and pulling stuff during the ongoing talk. The teacher will orchestrate the downloads and work. Trust him</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython2&amp;rev=1527933274&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-06-02T09:54:34+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:basicpython2</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython2&amp;rev=1527933274&amp;do=diff</link>
+        <description>Geospatial Python crash course, part 2
+
+Some examples of code
+
+Some example of reasonable complicated programs:
+
+
+
+import turtle as t
+ 
+# DATA MODEL
+# All layers will have a name, 1+ points, and population count
+NAME = 0
+POINTS = 1
+POP = 2
+ 
+# Create the state layer
+state = [&quot;COLORADO&quot;, [[-109, 37], [-109, 41], [-102, 41], [-102, 37]], 5187582]
+ 
+# Cities layer list
+# city = [name, [point], population]
+cities = []
+ 
+# Add Denver
+cities.append([&quot;DENVER&quot;,[-104.98, 39.74], 634265])
+# Add Boulder
+ci…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython3&amp;rev=1527884000&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-06-01T20:13:20+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:basicpython3</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython3&amp;rev=1527884000&amp;do=diff</link>
+        <description>Some advanced modules
+
+
+    &quot;&quot;&quot;
+    Creates a shaded relief ASCII grid
+    from an ASCII DEM.  Also outputs
+    intermediate grids for slope and
+    aspect.
+    &quot;&quot;&quot;
+    from linecache import getline
+    import numpy as np
+     
+    # File name of ASCII digital elevation model
+    source = &quot;dem.asc&quot;
+    # File name of the slope grid
+    slopegrid = &quot;slope.asc&quot;
+    # File name of the aspect grid
+    aspectgrid = &quot;aspect.asc&quot;
+    # Output file name for shaded relief
+    shadegrid = &quot;relief.asc&quot;
+   …</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython4&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:basicpython4</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython4&amp;rev=1512514411&amp;do=diff</link>
+        <description>Use Python for pattern searching
+
+
+
+Material prepared by Stephen Weston
+
+
+
+Lecture Introduction to Python
+mkdir python
+cd python
+wget http://research.computing.yale.edu/sites/default/files/files/python13JUL2016.pdf
+wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/notebooks/Python_Notebook.ipynb</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython5&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:basicpython5</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython5&amp;rev=1512514411&amp;do=diff</link>
+        <description>Using GDAL/OGR API for GIS analysis
+
+Material prepared by Stephen Weston 
+cd ~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica
+wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/gdal_example.py
+wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/ogr_example.py
+wget  https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/python/masked.py
+wget  https://raw.githubusercontent.com/selvaje/spatial-ecolog…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython6&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:basicpython6</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:basicpython6&amp;rev=1512514411&amp;do=diff</link>
+        <description>Call bash command (so gdal/pktools) from python
+
+
+
+Material prepared by Stephen Weston 
+
+
+import os
+os.system ('gdal_translate ost4sem_all/ost4sem/exercise/basic_adv_gdalogr/input.tif test.tif')</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:geocoding&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:geocoding</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:geocoding&amp;rev=1512514411&amp;do=diff</link>
+        <description>Geocoding with GEOPY
+
+
+
+wget http://www.spatial-ecology.net/ost4sem/exercise/python/Seafood_noheader.csv
+
+
+
+
+#!/usr/bin/env python
+
+import sys
+import csv
+from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
+
+# =============================================================================
+def Usage():
+    print('')
+    print('Usage: geopy_retrieve_coordinates.py input.txt  output.txt')
+    print('')
+    sys.exit( 1 )
+ 
+# =====================================================…</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:intropython&amp;rev=1527938487&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-06-02T11:21:27+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:intropython</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:intropython&amp;rev=1527938487&amp;do=diff</link>
+        <description>adsf</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:pythonhome&amp;rev=1534963800&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-08-22T18:50:00+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:pythonhome</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:pythonhome&amp;rev=1534963800&amp;do=diff</link>
+        <description>Python
+
+
+
+Webinar
+
+Exploitation of High Resolution Satellite Imagery using Open Source Machine Learning Tools
+
+Tom Jones, Earth Observation Specialist, Satellite Applications Catapult
+
+	*  Download presentation
+	*   Webinar  Jupiter Demo on EO data processing with Python 
+
+Material prepared by:</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:segmentwatershed&amp;rev=1527962723&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-06-02T18:05:23+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:segmentwatershed</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:segmentwatershed&amp;rev=1527962723&amp;do=diff</link>
+        <description>Segmenting the Global Human Settlement Layer
+
+[ ]
+
+Download the file and setting up working directory
+
+
+mkdir $HOME/GHSLseg
+cd $HOME/GHSLseg
+wget http://www.spatial-ecology.net/ost4sem/exercise/GHSLseg/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0.tif</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:webservice&amp;rev=1527946705&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-06-02T13:38:25+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:python:webservice</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:webservice&amp;rev=1527946705&amp;do=diff</link>
+        <description>you can start to edit</description>
+    </item>
+</rdf:RDF>

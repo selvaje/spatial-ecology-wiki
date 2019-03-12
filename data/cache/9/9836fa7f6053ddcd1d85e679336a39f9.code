@@ -1,0 +1,26 @@
+table=read.table(&quot;maysville_clim.txt&quot;,na.str=c(&quot;T&quot;,&quot;-&quot;),header=T)
+cumsum(table[table$year==2000,4])
+table$maxTcum=0
+&nbsp;
+for (i in 2000:2015 ) {
+table[table$year==i,9]=cumsum(table[table$year==i,4])
+}
+&nbsp;
+# table[table$year==2000,9]=cumsum(table[table$year==2000,4])
+&nbsp;
+png(&quot;/home/user/accumulate_temp.png&quot;, width = 800, height = 800)
+par(mar=c(5,5,5,1))
+# NA 2001,  2004, 2010, 2011,2014
+plot (table[table$year==2012,9],  xlab=&quot;Days of year&quot;, ylab=&quot;Accumulate Max Temperature (F)&quot;, main=&quot;Growth season&quot;, col=&quot;lightskyblue2&quot;,cex=3,cex.axis=1.5,cex.lab=2, cex.main=2)
+lines(table[table$year==2002,9],col=&quot;red&quot;,lwd=3,cex=3)
+lines(table[table$year==2003,9],col=&quot;blue&quot;,lwd=3,cex=3)
+lines(table[table$year==2005,9],col=&quot;green&quot;,lwd=3,cex=3)
+lines(table[table$year==2006,9],col=&quot;darkgreen&quot;,lwd=3,cex=3)
+lines(table[table$year==2007,9],col=&quot;magenta&quot;,lwd=3,cex=3)
+lines(table[table$year==2008,9],col=&quot;yellow3&quot;,lwd=3,cex=3)
+lines(table[table$year==2009,9],col=&quot;yellow&quot;,lwd=3,cex=3)
+lines(table[table$year==2013,9],col=&quot;deepskyblue&quot;,lwd=3,cex=3)
+lines(table[table$year==2000,9],col=&quot;black&quot;,lwd=3,cex=3)
+&nbsp;
+legend(5, 24000, c(&quot;2000&quot;,&quot;2002&quot;, &quot;2003&quot;,&quot;2005&quot;,&quot;2006&quot;,&quot;2007&quot;,&quot;2008&quot;,&quot;2009&quot;,&quot;2012&quot;,&quot;2013&quot;), col = c(&quot;black&quot;,&quot;red&quot;,&quot;blue&quot;,&quot;green&quot;,&quot;darkgreen&quot;,&quot;magenta&quot;,&quot;yellow3&quot;,&quot;yellow&quot;,&quot;lightskyblue2&quot;,&quot;deepskyblue&quot;), lty = 1, lwd=4,cex=2)
+dev.off()

@@ -1,0 +1,19 @@
+<span class="kw3">cd</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>multi_core
+<span class="re2">mod</span>=<span class="nu0">1</span>
+<span class="re2">t</span>=<span class="nu0">24</span>
+<span class="re2">path</span>=~<span class="sy0">/</span>Documents<span class="sy0">/</span>multi_core<span class="sy0">/</span>output
+<span class="kw3">export</span> mod
+<span class="kw3">export</span> t
+<span class="kw3">export</span> path
+&nbsp;
+R <span class="re5">--vanilla</span> <span class="re5">--no-readline</span>   <span class="re5">-q</span>  <span class="co2">&lt;&lt; EOF
+mod.t = Sys.getenv(c('mod','t','path'))
+mod = as.numeric(mod.t[1])
+t = as.numeric(mod.t[2])
+path = as.character(mod.t[3])
+print(mod)
+print(t)
+print(path)
+my_output=paste(&quot;We have processed  mod &quot;,mod,&quot; and t &quot;,t,&quot; ---- output path is   &quot;,path,sep=&quot; &quot;)
+write.table(my_output,paste(path,&quot;/mytext.txt&quot;,sep=&quot;&quot;))
+EOF</span>

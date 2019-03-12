@@ -1,0 +1,14 @@
+   vec = 1:6851
+   ind.80 = sample(vec,6851*0.8)
+   respredFT8 = pred23[ind.80,]
+   print(&quot;respredFT8 table create using a random subset of 80% of RESPRED &quot;)
+&nbsp;
+   ind.20 = vec[is.na((match(vec,sort(ind.80))))]
+   respredFT2 = pred23[ind.20,]
+   print(&quot;respredFT2 table create using a random subset of 20% of RESPRED &quot;)
+   print(&quot;starting modeling procedure&quot;)
+&nbsp;
+   #save(respredFT2,file=&quot;~/ost4sem/studycase/ITA_veg/results/respredFT2&quot;)
+   #save(respredFT8,file=&quot;~/ost4sem/studycase/ITA_veg/results/respredFT8&quot;)
+   save(respredFT2,file=&quot;~/ost4sem/studycase/ITA_veg/myresults/respredFT2&quot;)
+   save(respredFT8,file=&quot;~/ost4sem/studycase/ITA_veg/myresults/respredFT8&quot;)

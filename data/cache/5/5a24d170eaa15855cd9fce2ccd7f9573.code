@@ -1,0 +1,401 @@
+########################################################################
+########################################################################
+####################### MODEL FITTING IN R #############################
+########################################################################
+########################################################################
+&nbsp;
+################## FIRST ATTEMPT WITH POINT DATA #######################
+EnvMat.df &lt;- read.table(file = paste(indir, &quot;EnvMat.txt&quot;, sep = &quot;&quot;), header = TRUE)
+&nbsp;
+## Checking for collinearity
+# Reading in some pair functions
+panel.hist &lt;- function(x, ...)
+     {
+         usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+         par(usr = c(usr[1:2], 0, 1.5) )
+         h &lt;- hist(x, plot = FALSE)
+         breaks &lt;- h$breaks; nB &lt;- length(breaks)
+         y &lt;- h$counts; y &lt;- y/max(y)
+         rect(breaks[-nB], 0, breaks[-1], y, col=&quot;cyan&quot;, ...)
+     }
+panel.cor &lt;- function(x, y, digits=2, prefix=&quot;&quot;, cex.cor, ...)
+     {
+         usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+         par(usr = c(0, 1, 0, 1))
+         r &lt;- abs(cor(x, y))
+         txt &lt;- format(c(r, 0.123456789), digits=digits)[1]
+         txt &lt;- paste(prefix, txt, sep=&quot;&quot;)
+         if(missing(cex.cor)) cex.cor &lt;- 0.8/strwidth(txt)
+         text(0.5, 0.5, txt, cex = cex.cor * r)
+     }
+&nbsp;
+# Plotting a nice pair plot to check for collinearity
+pairs(EnvMat.df[, 4:11], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# na.action is not working...
+&nbsp;
+str(EnvMat.df)
+str(DiversSt)
+&nbsp;
+## Merging EnvMat.df and DiverSt
+Richness.df &lt;- merge(DiversSt, EnvMat.df)
+&nbsp;
+## Changing the variable name of the richness column
+names(Richness.df)[2] &lt;- &quot;rich&quot;
+&nbsp;
+########################################################################
+########## FITTING A GLM MODEL USING POINT DATA PREDICTORS #############
+########################################################################
+&nbsp;
+## First fit
+fit &lt;- glm(rich ~ toc + pendep + bmd2g + frequency + Sorting,
+	data = Richness.df)
+summary(fit)
+plot(fit)
+# Shapiro test - test for normality
+shapiro.test(resid(fit))
+# Histogram of richness
+hist(Richness.df$rich, breaks=15)
+# updating the model
+# .~. -the first point is to explain the same response, ~ means as a 
+# function of the same respones var, the last point tells to use the
+# same expl vars as before -frequency
+fit2 &lt;- update(fit, .~. -frequency)
+summary(fit2)
+anova(fit, fit2, test = &quot;F&quot;)
+&nbsp;
+# Looking the model matrix
+model.matrix(fit)
+coef(fit)
+model.matrix(fit) %*% coef(fit) # is the same as the fitted values
+fitted(fit)
+&nbsp;
+## Save the image (i.e. all objects)
+save.image(file = paste(indir, &quot;Richness.rdata&quot;, sep = &quot;&quot;))
+&nbsp;
+########################################################################
+########## FITTING A GLM MODEL USING RASTER DATA PREDICTORS #############
+########################################################################
+&nbsp;
+load(file = &quot;/home//ost4sem/project/input/Richness.rdata&quot;)
+EnvMat2.df &lt;- read.csv(file = paste(indir, &quot;EnvMat2.csv&quot;, sep = &quot;&quot;), header = F)
+&nbsp;
+## Removing duplicated x,y, and station columns
+EnvMat2.df &lt;- EnvMat2.df[, 4:12]
+&nbsp;
+## Adding the column names of EnvMat2.df
+colnames(EnvMat2.df) &lt;- c(&quot;utm_x&quot;, &quot;utm_y&quot;, &quot;station&quot;, &quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;, &quot;maxcur25&quot;)
+str(EnvMat2.df)
+&nbsp;
+## ac3 and ac4 are actually factors
+EnvMat2.df$fac3 &lt;- as.factor(EnvMat2.df$ac3)
+EnvMat2.df$fac4 &lt;- as.factor(EnvMat2.df$ac4)
+&nbsp;
+## Checking for collinearity among Predictors
+pairs(EnvMat2.df[, c(4, 7:11)], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# maxic25 and bpi25 are highly correlated. Leaving out maxic25 in further analysis
+&nbsp;
+##
+str(EnvMat2.df)
+str(DiversSt)
+&nbsp;
+# Changing the variable name of the richness
+names(DiversSt)[1] &lt;- &quot;rich&quot;
+&nbsp;
+## Merging EnvMat.df and DiverSt
+Richness2.df &lt;- merge(EnvMat2.df, DiversSt)
+&nbsp;
+## First fit with the new predictors
+fitn &lt;- glm(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitn)
+plot(fitn)
+# Shapiro test - test for normality
+shapiro.test(resid(fitn))
+# Histogram of richness
+hist(Richness2.df$rich, breaks=15)
+&nbsp;
+# Looking at the model matrix
+model.matrix(fitn)
+coef(fitn)
+model.matrix(fitn) %*% coef(fitn) # is the same as the fitted values
+fitted(fitn)
+&nbsp;
+## Save the image (i.e. all objects)
+save.image(file = paste(indir, &quot;Richness.rdata&quot;, sep = &quot;&quot;))
+&nbsp;
+########################################################################
+############### PREDICTING TO NEW DATA/UNSAMPLED AREAS #################
+######### BASED ON GLM MODEL AND RASTER POINT PREDICTOR DATA ###########
+########################################################################
+&nbsp;
+## Starting GRASS 
+grass64 -wxpython /home/user/ost4sem/grassdb/Stuteberget/thijs
+&nbsp;
+## Generating a new mapset to hold new map subsets
+g.mapset -c mapset=ost4sem	# the -c option tells GRASS to create a new mapset if the mapset doesnt exist
+g.mapset -l
+g.gisenv
+&nbsp;
+## Setting/checking the region sttings in GRASS
+g.region -p
+g.list region
+g.region region=QTC_grids -p # 80 x 84 = 6720 cells
+&nbsp;
+## Adding the thijs mapset
+g.mapsets addmapset=thijs
+&nbsp;
+## Generating map subsets so that every map has the same extension and res 
+r.mapcalc &quot;depth=bathy_background&quot;
+r.mapcalc &quot;surmax=speed_sur_max_stut&quot;
+r.mapcalc &quot;bpi25=BPI_25&quot;
+&nbsp;
+## Checking the extension and res of the map subsets
+r.info surmax
+&nbsp;
+## Start R
+R
+load(file = &quot;/home/user/ost4sem/project/input/Richness.rdata&quot;)
+## Load the spgrass6 package
+require(spgrass6)
+system(&quot;g.region region=QTC_grids -p&quot;)
+## Loading Predictor rasters from GRASS to R
+Rasters &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+# p &lt;- length(Rasters)
+Spdf.names &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+Temp.mat &lt;- matrix(data = NA, nrow = 6720, ncol = 5, byrow = T)
+&nbsp;
+# for loop
+for (i in 1:5) {
+	name &lt;- Spdf.names[i]
+	rast &lt;- Rasters[i]
+	print(name); print(rast)
+	name &lt;&lt;- readRAST6(rast) 	# double arrow assigns the object to the global env
+	Temp.mat[, i] &lt;- (name@data[, 1])
+}
+&nbsp;
+## Checking the Temp Matrix
+head(Temp.mat)
+&nbsp;
+## Coerce into a data frame
+Preddata &lt;- as.data.frame(Temp.mat)
+colnames(Preddata) &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+&nbsp;
+## ac3 and ac4 are factors
+Preddata$fac3 &lt;- as.factor(Preddata$ac3)
+Preddata$fac4 &lt;- as.factor(Preddata$ac4)
+str(Preddata)
+head(Preddata)
+&nbsp;
+## Predicting to new area
+prediction &lt;- predict(fitn, newdata = Preddata, type = &quot;response&quot;)
+str(prediction)
+&nbsp;
+## Adding the predicted data to an existing raster holding
+## the geographical information the set region
+name$new &lt;- prediction
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;firstpred&quot;, zcol=&quot;new&quot;, overwrite = T)
+&nbsp;
+#########################################################################
+################### RANDOMISATION OF PREDICTED DATA #####################
+#########################################################################
+&nbsp;
+## &quot;Another&quot; day in the field observing the richness of molluscs
+name$rnorm.pred&lt;-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+&nbsp;
+## Writing raster back to GRASS 
+writeRAST6(name, &quot;rnorm.pred&quot;, zcol=&quot;rnorm.pred&quot;, overwrite=T)
+&nbsp;
+#########################################################################
+###### MAKING AN ANIMATION OF THE UNCERTAINTY OF THE PREDICTIONS ########
+################## Script modified from Jens Åstrøm #####################
+#########################################################################
+setwd(&quot;/home/user/ost4sem/project/output&quot;)
+&nbsp;
+## Setting the region - this also relates to the resolution of the pngs made
+system(&quot;g.region region=QTC_grids -p&quot;)
+&nbsp;
+## Making fifty &quot;trips&quot; to the field collecting each pixel, and write the
+## outcome back to GRASS
+&nbsp;
+for(i in 1:50){
+name$rnorm&lt;-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+&nbsp;
+writeRAST6(name ,paste(&quot;rnorm&quot;,i,sep=&quot;&quot;) ,zcol=&quot;rnorm&quot; ,overwrite=T)
+}
+&nbsp;
+## Making a png pic of every new prediction
+system(&quot;for i in `seq 1 50`
+ do
+  r.out.png input=rnorm$i output=rnorm$i
+   g.remove rast=rnorm$i
+    done&quot;)
+&nbsp;
+## Convert all png pics into a movie
+system(&quot;convert -delay 20 *.png 80r_84c_rnorm.mpg&quot;)
+&nbsp;
+#indir = &quot;/home/user/ost4sem/project/input/&quot;
+#save.image(file = paste(indir, &quot;Richness.rdata&quot;, sep = &quot;&quot;))
+&nbsp;
+########### MAKING A NEW ANIMATION WITH A HIGHER RESOLUTION ###############
+## Creating a new mapset to hold rasters within the QTC_grids region with res=1
+system(&quot;g.mapset -c mapset=stut1m&quot;)
+system(&quot;g.region region=QTC_grids res=1 -p&quot;)
+&nbsp;
+## Resample the raster maps to a finer grid using interpolation
+## Is not giving the wanted result...
+#system(&quot;r.resamp.interp input=depth_12.5 output=depth_1&quot;)
+#system(&quot;r.resamp.interp input=surmax_12.5 output=surmax_1&quot;)
+#system(&quot;r.resamp.interp input=bpi25_12.5 output=bpi_1&quot;)
+#system(&quot;r.resamp.interp input=ac3_12.5 output=ac3_1&quot;)
+#system(&quot;r.resamp.interp input=ac4_12.5 output=ac4_1&quot;)
+&nbsp;
+## using r.mapcalc to make map subsets
+system(&quot;r.mapcalc 'ac3_1=ac3_12.5'&quot;)
+system(&quot;r.mapcalc 'ac4_1=ac4_12.5'&quot;)
+system(&quot;r.mapcalc 'depth_1=depth_12.5'&quot;)
+system(&quot;r.mapcalc 'surmax_1=surmax_12.5'&quot;)
+system(&quot;r.mapcalc 'bpi25_1=bpi25_12.5'&quot;)
+&nbsp;
+### Predicting to the new map subset raster files
+## Loading Predictor rasters from GRASS to R
+Rasters &lt;- c(&quot;depth_1&quot;, &quot;ac3_1&quot;, &quot;ac4_1&quot;, &quot;surmax_1&quot;, &quot;bpi25_1&quot;)
+# p &lt;- length(Rasters)
+Spdf.names &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+Temp.mat &lt;- matrix(data = NA, nrow = 1050000, ncol = 5, byrow = T)
+&nbsp;
+# for loop
+for (i in 1:5) {
+	name &lt;- Spdf.names[i]
+	rast &lt;- Rasters[i]
+	print(name); print(rast)
+	name &lt;&lt;- readRAST6(rast) 	# double arrow assigns the object to the global env
+	Temp.mat[, i] &lt;- (name@data[, 1])
+}
+&nbsp;
+## Checking the Temp Matrix 
+head(Temp.mat)
+&nbsp;
+## Coerce into a data frame
+Preddata &lt;- as.data.frame(Temp.mat)
+colnames(Preddata) &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+&nbsp;
+## ac3 and ac4 are factors
+Preddata$fac3 &lt;- as.factor(Preddata$ac3)
+Preddata$fac4 &lt;- as.factor(Preddata$ac4)
+str(Preddata)
+head(Preddata)
+&nbsp;
+## Predicting to new area
+prediction &lt;- predict(fitn, newdata = Preddata, type = &quot;response&quot;)
+str(prediction)
+&nbsp;
+## Adding the predicted data to an existing raster
+name$new &lt;- prediction
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;firstpred_1&quot;, zcol=&quot;new&quot;, overwrite = T)
+# Starting Qgis
+system(&quot;qgis &amp;&quot;)
+&nbsp;
+## &quot;Another&quot; day in the field observing the richness of molluscs
+name$rnorm.pred&lt;-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+&nbsp;
+## Writing raster back to GRASS 
+writeRAST6(name, &quot;rnorm.pred_1&quot;, zcol=&quot;rnorm.pred&quot;, overwrite=T)
+&nbsp;
+##############################################################################
+############ RANDOMISATION OF PREDICTED DATA OF HIGH RESOLUTION ##############
+##############################################################################
+&nbsp;
+### Now, making another 20 &quot;trips&quot; to the field and write it back to GRASS ###
+## Now the res=1, so nrows=1000 and ncols=1050
+## Only making 20 &quot;trips&quot;
+&nbsp;
+for(i in 1:20){
+name$rnorm&lt;-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+&nbsp;
+writeRAST6(name ,paste(&quot;rnorm&quot;,i,sep=&quot;&quot;) ,zcol=&quot;rnorm&quot; ,overwrite=T)
+}
+&nbsp;
+## Making a png pic of every new prediction
+system(&quot;for i in `seq 1 20`
+ do
+  r.out.png input=rnorm$i output=rnorm$i
+   g.remove rast=rnorm$i
+    done&quot;)
+&nbsp;
+## Convert all png pics into an animation using ImageMagick
+system(&quot;convert -delay 20 *.png 1000r_1050c_rnorm.mpg&quot;)
+&nbsp;
+save.image(file = paste(indir, &quot;Richness.rdata&quot;, sep = &quot;&quot;))
+&nbsp;
+&nbsp;
+########################################################################
+############### PREDICTING TO NEW DATA/UNSAMPLED AREAS #################
+######### BASED ON GAM MODEL AND RASTER POINT PREDICTOR DATA ###########
+########################################################################
+&nbsp;
+load(file = &quot;/home/user/ost4sem/project/input/Richness.rdata&quot;)
+&nbsp;
+## Using the Richness2.df
+str(Richness2.df)
+head(Richness2.df)
+&nbsp;
+## Fitting a gam
+require(mgcv)
+fitgam &lt;- gam(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitgam)
+str(fitgam)
+# Shapiro test - test for normality
+shapiro.test(resid(fitgam))
+&nbsp;
+# Looking at the model matrix
+model.matrix(fitgam)
+coef(fitgam)
+model.matrix(fitgam) %*% coef(fitgam) # is the same as the fitted values
+fitted(fitgam)
+&nbsp;
+## Predicting to new area
+prediction.gam &lt;- predict(fitgam, newdata = Preddata, type = &quot;response&quot;)
+str(prediction.gam)
+&nbsp;
+## Adding the predicted data to an existing raster
+name$newgam &lt;- prediction.gam
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;predgam_1&quot;, zcol=&quot;newgam&quot;, overwrite = T)
+&nbsp;
+&nbsp;
+## Another day in the field observing the richness of molluscs
+name$rnorm.predgam&lt;-rnorm(nrow(name),name$newgam,sd=sd(resid(fitgam)))
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;rnormgam_1&quot;, zcol=&quot;rnorm.predgam&quot;, overwrite = T)
+&nbsp;
+&nbsp;
+### Now, making another fifty &quot;trips&quot; to the field and write it back to GRASS ###
+## Now the res=1, so nrows=1000 and ncols=1050
+## Only making 20 &quot;trips&quot;
+setwd(&quot;/home/user/ost4sem/project/output&quot;)
+&nbsp;
+for(i in 1:15){
+name$rnormgam&lt;-rnorm(nrow(name),name$newgam,sd=sd(resid(fitgam)))
+&nbsp;
+writeRAST6(name ,paste(&quot;rnormgam&quot;,i,sep=&quot;&quot;) ,zcol=&quot;rnormgam&quot; ,overwrite=T)
+}
+&nbsp;
+## Making a png pic of every new prediction
+system(&quot;for i in `seq 1 15`
+ do
+  r.out.png input=rnormgam$i output=rnormgam$i
+   g.remove rast=rnormgam$i
+    done&quot;)
+&nbsp;
+## Convert all png pics into an animation using ImageMagick
+system(&quot;convert -delay 20 *.png 1000r_1050c_rnorm_gam.mpg&quot;)
+cd ~/ost4sem/project

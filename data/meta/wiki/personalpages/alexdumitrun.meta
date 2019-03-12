@@ -1,0 +1,15 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:12:"Alex Dumitru";s:11:"description";a:2:{s:15:"tableofcontents";a:4:{i:0;a:4:{s:3:"hid";s:12:"alex_dumitru";s:5:"title";s:12:"Alex Dumitru";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:1;a:4:{s:3:"hid";s:7:"summary";s:5:"title";s:7:"Summary";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:2;a:4:{s:3:"hid";s:9:"education";s:5:"title";s:9:"Education";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:3;a:4:{s:3:"hid";s:8:"projects";s:5:"title";s:8:"Projects";s:4:"type";s:2:"ul";s:5:"level";i:3;}}s:8:"abstract";s:503:"Alex Dumitru
+
+Jacobs University, Bremen, Germany
+
+Large-Scale Scientific Information Systems Research Group
+
+
+Summary
+
+Alex Dumitru is a computer scientist with a vast expertise in array and
+scientific databases, geospatial standards and web service standards
+compliance. He is a contributor to the OGC WCS standards ecosystem and the
+main implementer of the rasdaman WCS and WCPS services, the reference
+implementation of the aforementioned standards. Alex is passionate about
+exploiting powerful ha…";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

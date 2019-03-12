@@ -1,0 +1,265 @@
+
+<h1 class="sectionedit1" id="species_distribution_modeling_i">Species Distribution Modeling I</h1>
+<div class="level1">
+
+<p>
+In this session we will:
+</p>
+<ol>
+<li class="level1"><div class="li"> Read in species occurrence and range data</div>
+</li>
+<li class="level1"><div class="li"> Pre-process environmental data</div>
+</li>
+<li class="level1"><div class="li"> Fit a generalized linear model to estimate the species distribution</div>
+</li>
+<li class="level1"><div class="li"> Predict across the landscape and write the results to disk (for use in GIS, etc.)</div>
+</li>
+</ol>
+
+<p>
+<br/>
+
+R code courtesy of Adam M. Wilson (<a href="https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro/SDM.md" class="urlextern" target="blanc" title="https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro/SDM.md" rel="nofollow noopener"> original version</a>) and adapted by Marta Jarzyna, October 2015<br/>
+
+</p>
+
+<p>
+<a href="http://www.spatial-ecology.net/ost4sem/exercise/SDM/SDM_I_code_final.R" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/SDM/SDM_I_code_final.R" rel="nofollow noopener"> SDM_I_code_final.R </a>
+</p>
+<pre class="code"> wget http://www.spatial-ecology.net/ost4sem/exercise/SDM/SDM_I_code_final.R</pre>
+<pre class="code"> R</pre>
+<pre class="code"> # Set working directory
+ rm(list=ls(all=TRUE))
+ wdir &lt;- &quot;/media/sf_LVM_share&quot; 
+ setwd(wdir)
+ 
+ # Define data directotry - this is where we store the data, but also where we will save the output to
+ datadir &lt;- &quot;/media/sf_LVM_share/data&quot; 
+ 
+ # if your shared folder is not writable, create a different folder for the output
+ if(!file.exists(&quot;~/sdm_out&quot;)) dir.create(&quot;~/sdm_out&quot;, recursive=T)
+ outdir &lt;- &quot;~/sdm_out&quot;
+ 
+ # Loading libraries
+ require(rgdal)
+ require(lattice)
+ require(ggplot2)
+    
+ packages=c(&quot;hSDM&quot;,&quot;dismo&quot;,&quot;maptools&quot;,&quot;sp&quot;,&quot;maps&quot;,&quot;coda&quot;,&quot;rgdal&quot;,&quot;rgeos&quot;,&quot;doParallel&quot;,&quot;reshape&quot;,
+         &quot;ggplot2&quot;,&quot;knitr&quot;,&quot;rasterVis&quot;,&quot;texreg&quot;)
+         
+ l=lapply(packages, library, character.only=T,quietly=T)
+ 
+ rasterOptions(chunksize=1000,maxmemory=1000)</pre>
+
+<p>
+We will use Montane woodcreper (Lepidocolaptes lacrymiger) as example species. This species has a large range, occurring from the coastal cordillera of Venezuela along the Andes south to south-east Peru and central Bolivia.
+</p>
+<pre class="code"> # Read in species occurrence data and species range
+ # Species: Montane woodcreper, Lepidocolaptes lacrymiger
+ 
+ # Point occurrence data
+ points &lt;- as.data.frame(read.csv(&quot;/media/sf_LVM_share/data/occurrence/Lepidocolaptes_lacrymiger_allpoints.csv&quot;, header=TRUE))
+ head(points)
+ 
+ # indicate that these data are presences
+ presence &lt;- matrix(1,nrow(points),1)
+ points &lt;- cbind(points,presence)
+ 
+ # retrieving spatial coordinates from a Spatial object
+ points &lt;- SpatialPointsDataFrame(points[,c(1,2)], points, coords.nrs = numeric(0), 
+              proj4string = CRS(as.character(NA)), match.ID = TRUE)
+ # assign projection
+ projection(points)=&quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;
+ points
+ plot(points)
+ 
+ # Species&#039; range
+ range &lt;- readOGR(&quot;.&quot;, &quot;cartodb-query&quot;)
+ range
+ plot(range, add=TRUE)</pre>
+
+<p>
+Loading eBird sampling dataset, in order to obtain “absence” data
+</p>
+<pre class="code"> # link to global sampling raster
+ gsampling=raster(file.path(datadir,&quot;eBirdSampling_filtered.tif&quot;))
+ 
+ # crop to species range to create modelling domain
+ sampling=crop(gsampling,range,file.path(outdir,&quot;sampling.grd&quot;),overwrite=T)   
+ 
+ # assign projection
+ projection(sampling)=&quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;
+ 
+ # convert to points within data region
+ samplingp=as(sampling,&quot;SpatialPointsDataFrame&quot;)
+ samplingp=samplingp[samplingp$eBirdSampling_filtered&gt;0,]
+ 
+ # edit column names to allow aligning with presence observations
+ colnames(samplingp@data)=c(&quot;observation&quot;)
+ samplingp$presence=0
+ plot(samplingp, col=&quot;red&quot;)#absences
+ plot(points, add=TRUE)#presences
+ plot(range, col=&quot;blue&quot;,add=TRUE)#species range</pre>
+
+<p>
+Create a combined presence-nondetection point dataset
+</p>
+<pre class="code"> pdata &lt;- rbind(points[,&quot;presence&quot;],samplingp[,&quot;presence&quot;])
+ pdata@data[,c(&quot;lon&quot;,&quot;lat&quot;)]=coordinates(pdata)
+ table(pdata$presence)</pre>
+
+<p>
+Environmental data processing
+</p>
+<pre class="code"> # you can add a lot of other variables, but in the interest of time we&#039;ll focus on these 4
+ fenv &lt;- c(cld=&quot;data/cloud/meanannual.tif&quot;, cld_intra=&quot;data/cloud/intra.tif&quot;, elev=&quot;data/elevation_mn_GMTED2010_mn.tif&quot;, forest=&quot;data/tree_mn_percentage_GFC2013.tif&quot;)</pre>
+
+<p>
+To facilitate modelling, let&#039;s crop the global rasters to a smaller domain.  We can use the extent of the expert range and the <code>crop()</code> function in raster package.
+</p>
+<pre class="code"> # crop to species domain and copy to project folder 
+ 
+ env &lt;- foreach(i=1:length(fenv))%do%{
+ fo=file.path(outdir,paste0(names(fenv)[i],&quot;_clipped.grd&quot;))
+ crop(raster(file.path(wdir,fenv[i])),range,file=fo,overwrite=T)   
+ }</pre>
+
+<p>
+Read the environmental data in as a raster stack and plot layers
+</p>
+<pre class="code"> env &lt;- stack(list.files(path = outdir, pattern=&quot;*_clipped.grd$&quot; , full.names = TRUE ))
+ env
+ 
+ # rename layers for convenience
+ names(env)=names(fenv)
+ 
+ # mask by elevation to set ocean to 0
+ env=mask(env,env[[&quot;elev&quot;]],maskvalue=0)
+ 
+ # check out the plot
+ plot(env)</pre>
+
+<p>
+Variable selection is tricky business and we&#039;re not going to dwell on it here… We&#039;ll use the following variables.
+</p>
+<pre class="code"> vars=c(&quot;cld&quot;,&quot;cld_intra&quot;,&quot;elev&quot;,&quot;forest&quot;)</pre>
+
+<p>
+Scaling and centering the environmental variables to zero mean and variance of 1, using the <code>scale</code> function is typically a good idea.  However, with so many people using this node at the same time, we&#039;ll skip this memory intensive step and use the unstandardized variables.  The downside of this is the regression coefficients are more difficult to interpret.
+</p>
+<pre class="code"> #senv=scale(env[[vars]])
+ senv=env[[vars]]</pre>
+
+<p>
+Annotate the point records with the scaled environmental data; i.e., Add the (scaled) environmental data to each point
+</p>
+<pre class="code"> pointsd=raster::extract(senv,pdata,sp=T) 
+ pointsd=na.exclude(pointsd)
+ 
+ # Look at the data table:
+ kable(head(pointsd))</pre>
+
+<p>
+Explore the data
+</p>
+<pre class="code"> # Plotting the response (presence/absence data) and the predictors:
+ # convert to &#039;long&#039; format for easier plotting
+ pointsdl=reshape::melt(pointsd@data,id.vars=c(&quot;lat&quot;,&quot;lon&quot;,&quot;presence&quot;),variable.name=&quot;variable&quot;
+ 
+ ggplot(pointsdl,aes(x=value,y=presence))+facet_wrap(~variable)+
+ geom_point()+
+ stat_smooth(method = &quot;lm&quot;, formula = y ~ x + I(x^2), col=&quot;red&quot;)+
+ geom_smooth(method=&quot;gam&quot;,formula=y ~ s(x, bs = &quot;cs&quot;))</pre>
+
+<p>
+Model Fitting. Here, we will fit a simple glm to the data. Choosing terms to include in a parametric model can be challenging, especially given the large number of possible interactions, etc.  In this example we&#039;ll keep it fairly simple and include only a quadratic term for elevation (as suggested by the above plot). (Feel free to try various model formulas (adding or removing terms) and see how the model performs.)
+</p>
+<pre class="code"> head(pointsd)
+ 
+ #model 1
+ m1 &lt;- glm(presence~cld+elev,data=pointsd,family=binomial(logit))
+ summary(m1)
+ 
+ #model 2
+ m2 &lt;- glm(presence~cld+cld_intra+elev*I(elev^2)+forest,data=pointsd,family=binomial(logit))
+ summary(m2)</pre>
+
+<p>
+Prediction; i.e., calculating estimates of probability of occurrence of Montane woodcreper for each cell. We can use the <code>predict</code> function in the <code>raster</code> package to make the predictions across the full raster grid and save the output.
+</p>
+<pre class="code">    #predictions based on model 1
+ p1 &lt;- raster::predict(senv,m1,type=&quot;response&quot;, 
+ file=file.path(outdir,&quot;prediction_m1.grd&quot;),overwrite=T)
+ 
+ #predictions based on model 2
+ p2 &lt;- raster::predict(senv,m2,type=&quot;response&quot;,
+ file=file.path(outdir,&quot;prediction_m2.grd&quot;),overwrite=T)
+ 
+ p &lt;- stack(p1,p2); names(p)=c(&quot;Model 1&quot;,&quot;Model 2&quot;)</pre>
+
+<p>
+Plot results of predictions on a map
+</p>
+<pre class="code"> gplot(p,max=1e5)+geom_tile(aes(fill=value))+
+ facet_wrap(~variable)+
+ scale_fill_gradientn(colours=c(&quot;blue&quot;,&quot;green&quot;,&quot;yellow&quot;,&quot;orange&quot;,&quot;red&quot;),
+ na.value = &quot;transparent&quot;)+
+ geom_polygon(aes(x=long,y=lat,group=group),
+ data=fortify(range),fill=&quot;transparent&quot;,col=&quot;darkred&quot;)+
+ geom_point(aes(x = lon, y = lat), data = points@data,col=&quot;black&quot;,size=1)+
+ coord_equal()</pre>
+
+<p>
+Model evaluation. gplot(p,max=1e5)+geom<em>tile(aes(fill=value))+
+  facet</em>wrap(~variable)+
+</p>
+<pre class="code">scale_fill_gradientn(
+  colours=c(&quot;blue&quot;,&quot;green&quot;,&quot;yellow&quot;,&quot;orange&quot;,&quot;red&quot;),
+  na.value = &quot;transparent&quot;)+
+geom_polygon(aes(x=long,y=lat,group=group),
+             data=fortify(range),fill=&quot;transparent&quot;,col=&quot;darkred&quot;)+
+geom_point(aes(x = lon, y = lat), data = points@data,col=&quot;black&quot;,size=1)+
+coord_equal()</pre>
+
+<p>
+Model Evaluation. In general, it is a good idea to use k-fold data partitioning instead of using the data used for fitting. There is a function in the <code>dismo</code> package called <code>kfold</code> that makes this convenient. But for now, we&#039;ll just evaluate on the same data used for fitting.
+</p>
+<pre class="code"> # Summarize model output using `screenreg` to print a more visually pleasing summary.
+ screenreg(list(m1,m2),digits = 7,doctype=FALSE,align.center=TRUE)
+ #htmlreg(list(m1,m2),digits = 7,doctype=FALSE,align.center=TRUE)</pre>
+
+<p>
+Caveats of SDMs using glms:
+</p>
+
+<p>
+(1) In this example we treated eBird <em>non-detections</em> as <em>absences</em> when the probability of detection given presence can be much less than zero. What are the chances that an observer would see a species in a 1km grid cell if it were present there?<br/>
+(2) We ignored the spatial autocorrelation in species presences and treated each observation as an independent sample.  How can we account for this in SDMs?
+</p>
+
+<p>
+Summary:
+</p>
+
+<p>
+In this script we have illustrated a complete workflow, including:
+</p>
+
+<p>
+(1) Reading in species data
+</p>
+
+<p>
+(2) Pre-processing large spatial datasets for analysis
+</p>
+
+<p>
+(3) Running a (simple) logistic GLM Species Distribution Model to make a prediction of p(occurrence|environment)
+</p>
+
+<p>
+(4) Writing results to disk.
+</p>
+
+</div>

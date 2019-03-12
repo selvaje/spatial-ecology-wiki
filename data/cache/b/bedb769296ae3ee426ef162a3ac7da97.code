@@ -1,0 +1,2 @@
+gdal_calc.py <span class="re5">--type</span>=Float32 <span class="re5">--overwrite</span>  <span class="re5">-A</span> vegetation<span class="sy0">/</span>GPPstdev08-<span class="nu0">11</span>.tif <span class="re5">-B</span>  vegetation<span class="sy0">/</span>GPPmean08-<span class="nu0">11</span>.tif \
+   <span class="re5">--calc</span>=<span class="st0">&quot;( A.astype(float) / ( B.astype(float) + 0.000000001 ) )&quot;</span> <span class="re5">--outfile</span>=vegetation<span class="sy0">/</span>GPPcv08-<span class="nu0">11</span>.tif

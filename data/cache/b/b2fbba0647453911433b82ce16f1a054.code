@@ -1,0 +1,388 @@
+<span class="co0">### Habitat Suitability and uncertainty Modeling of Mollusk Fauna</span>
+<span class="co0">### Thijs Chr. van Son (Jens Åstrøm)</span>
+&nbsp;
+<span class="re2">INDIR</span>=~<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>input			<span class="co0"># setting the input file directory </span>
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>output 		<span class="co0"># setting the output file directory </span>
+&nbsp;
+<span class="co0">### Extracting data from Grainsize.csv and put it into EnvMat.txt</span>
+<span class="kw3">cd</span> <span class="re1">$INDIR</span>
+<span class="co0"># awk '{ print NF }' EnvMat.csv		# there are 8 columns </span>
+&nbsp;
+<span class="co0">#######################################################################</span>
+<span class="co0">#######################################################################</span>
+<span class="co0">################ PREPARATION OF PREDICTOR DATA SET ####################</span>
+<span class="co0">#######################################################################</span>
+<span class="co0">#######################################################################</span>
+&nbsp;
+<span class="co0">#######################################################################</span>
+<span class="co0">############## Extracting grainsize parameters in R ###############</span>
+<span class="co0">#######################################################################</span>
+&nbsp;
+<span class="co0">### For each Station:</span>
+<span class="co0">## - linearly interpolate between known grainsize points</span>
+<span class="co0">## - extract percentiles</span>
+<span class="co0">## - calculate grainsize parameters</span>
+<span class="co0">## - load percentiles and parameters in a matrices</span>
+&nbsp;
+<span class="co0"># Importing the grainsize sediment data</span>
+Grainsize <span class="sy0">&lt;</span>- read.csv<span class="br0">&#40;</span><span class="st0">&quot;/home/thijs/a/PhD_data/Fielddata/EnvData/stut_grsz_compl.csv&quot;</span><span class="br0">&#41;</span>
+str<span class="br0">&#40;</span>Grainsize<span class="br0">&#41;</span>
+<span class="kw2">head</span><span class="br0">&#40;</span>Grainsize<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Fixing a typo</span>
+<span class="co4">Grainsize$</span>dry.wt <span class="sy0">&lt;</span>- Grainsize<span class="re1">$dry</span>.weigth
+str<span class="br0">&#40;</span>Grainsize<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Extracting the 0-2 cm layer</span>
+Upper <span class="sy0">&lt;</span>- Grainsize<span class="br0">&#91;</span>Grainsize<span class="re1">$layer</span> == <span class="st0">&quot;0-2&quot;</span>, <span class="br0">&#93;</span> <span class="co0"># Here the subset function can be used also</span>
+str<span class="br0">&#40;</span>Upper<span class="br0">&#41;</span>
+<span class="kw2">head</span><span class="br0">&#40;</span>Upper<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Creating a matrix to hold all parameters for each replicate</span>
+AllReps <span class="sy0">&lt;</span>- unique<span class="br0">&#40;</span>Upper<span class="re1">$sta</span>.rep<span class="br0">&#41;</span>
+a <span class="sy0">&lt;</span>- length<span class="br0">&#40;</span>AllReps<span class="br0">&#41;</span>
+Params <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="st0">&quot;Median&quot;</span>, <span class="st0">&quot;Sorting&quot;</span>, <span class="st0">&quot;Skewness&quot;</span>, <span class="st0">&quot;Kurtosis&quot;</span><span class="br0">&#41;</span>
+Param.mat <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>data = NA, nrow = length<span class="br0">&#40;</span>AllReps<span class="br0">&#41;</span>, ncol = length<span class="br0">&#40;</span>Params<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Defining objects to be used in Function(dt, percV) and</span>
+<span class="co0">## creates a matrix to hold percentiles for each replicateubuntu</span>
+percV <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">5</span>, <span class="nu0">16</span>, <span class="nu0">25</span>, <span class="nu0">50</span>, <span class="nu0">75</span>, <span class="nu0">84</span>, <span class="nu0">95</span><span class="br0">&#41;</span>
+o <span class="sy0">&lt;</span>- length<span class="br0">&#40;</span>percV<span class="br0">&#41;</span>
+dt <span class="sy0">&lt;</span>- Upper
+Perc.mat <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>data = NA, nrow = length<span class="br0">&#40;</span>AllReps<span class="br0">&#41;</span>, ncol = length<span class="br0">&#40;</span>percV<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Sourcing my functions</span>
+<span class="kw3">source</span><span class="br0">&#40;</span><span class="st0">&quot;/home/thijs/a/R/RCode/my_functions.r&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Run the PPsLog-function in a loop over all stations</span>
+<span class="kw1">for</span> <span class="br0">&#40;</span>i <span class="kw1">in</span> <span class="kw2">seq</span><span class="br0">&#40;</span>length = a<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    Rep.i <span class="sy0">&lt;</span>- AllReps<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+    dt.i <span class="sy0">&lt;</span>- dt<span class="br0">&#91;</span>dt<span class="re1">$sta</span>.rep == Rep.i, <span class="br0">&#93;</span>
+    <span class="co0"># output &lt;- PPsGeo(dt.i, percV)</span>
+    output <span class="sy0">&lt;</span>- PPsLog<span class="br0">&#40;</span>dt.i, percV<span class="br0">&#41;</span>
+    Param.mat<span class="br0">&#91;</span>i, <span class="br0">&#93;</span> <span class="sy0">&lt;</span>- output<span class="re1">$a</span>
+    Perc.mat<span class="br0">&#91;</span>i, <span class="br0">&#93;</span> <span class="sy0">&lt;</span>- output<span class="re1">$b</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+<span class="co0">## Setting the colnames and rownames of Param.mat</span>
+colnames<span class="br0">&#40;</span>Param.mat<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- Params
+rownames<span class="br0">&#40;</span>Param.mat<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- <span class="kw2">seq</span><span class="br0">&#40;</span><span class="nu0">1</span>:<span class="nu0">35</span><span class="br0">&#41;</span>
+Param.mat
+&nbsp;
+<span class="co0">## Coerce the matrix into a data frame  </span>
+Param.mat.df <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>Param.mat<span class="br0">&#41;</span>
+str<span class="br0">&#40;</span>Param.mat.df<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Adding the stations to the data frame</span>
+<span class="co4">Param.mat.df$</span>Reps <span class="sy0">&lt;</span>- AllReps
+&nbsp;
+<span class="co0">## Selecting Stations, Median,and Sorting</span>
+Param.mat.df <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span>Param.mat.df, <span class="kw1">select</span> = c<span class="br0">&#40;</span><span class="st0">&quot;Reps&quot;</span>, <span class="st0">&quot;Median&quot;</span>, <span class="st0">&quot;Sorting&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Stringsplit of the Reps column, which contain  both station and replicate in one string (e.g. 1_1)</span>
+<span class="co0"># The following splits the Reps column in two, and splitting at the underscore (&quot;_&quot;)</span>
+Rep_split <span class="sy0">&lt;</span>- strsplit<span class="br0">&#40;</span>as.character<span class="br0">&#40;</span>Param.mat.df<span class="re1">$Reps</span><span class="br0">&#41;</span>, <span class="st0">&quot;_&quot;</span><span class="br0">&#41;</span>	<span class="co0"># Creates a list of splitted values</span>
+&nbsp;
+<span class="co0">## Unlist the list created above and convert it into a matrix </span>
+Rep_split <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>unlist<span class="br0">&#40;</span>Rep_split<span class="br0">&#41;</span>, <span class="re2">ncol</span>=<span class="nu0">2</span>, byrow = TRUE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Adding the Rep_split outcome to Param.mat.df</span>
+<span class="co4">Param.mat.df$</span>Station <span class="sy0">&lt;</span>- Rep_split<span class="br0">&#91;</span>, <span class="nu0">1</span><span class="br0">&#93;</span>
+<span class="co4">Param.mat.df$</span>Replicate <span class="sy0">&lt;</span>- Rep_split<span class="br0">&#91;</span>, <span class="nu0">2</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="co0">## Reshaping the data</span>
+<span class="co0"># Reshape can be used to apply functions within a variable containing subvariables</span>
+<span class="co0"># For example, I had some stations that had 3 replicates, and I wanted the mean of those</span>
+<span class="co0"># replicates per station</span>
+require<span class="br0">&#40;</span>reshape<span class="br0">&#41;</span>
+Param_melt <span class="sy0">&lt;</span>- melt<span class="br0">&#40;</span>Param.mat.df, c<span class="br0">&#40;</span><span class="st0">&quot;Reps&quot;</span>,<span class="st0">&quot;Station&quot;</span>,<span class="st0">&quot;Replicate&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+Param.mat.df <span class="sy0">&lt;</span>- cast<span class="br0">&#40;</span>Param_melt, formula = Station~variable, mean<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Making a vector containg selected stations (i.e. stations of interest)</span>
+Station <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">1</span>:<span class="nu0">24</span>,<span class="nu0">101</span>:<span class="nu0">104</span><span class="br0">&#41;</span>
+Station <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>Station<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Merging Param.mat.df and Station</span>
+<span class="co0"># This selects all the Stations in x, removes the stations in y</span>
+<span class="co0"># that is not present in x, and gives NA values to stations in x</span>
+<span class="co0"># not found in y</span>
+Param.mat.df <span class="sy0">&lt;</span>- merge<span class="br0">&#40;</span>x = Station, y = Param.mat.df, by.x = <span class="st0">&quot;Station&quot;</span>,
+	by.y = <span class="st0">&quot;Station&quot;</span>, all.x = TRUE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Writing the df to a .txt file</span>
+indir = <span class="st0">&quot;/home/ost4sem/project/input/&quot;</span>
+write.table<span class="br0">&#40;</span>Param.mat.df, <span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;Grain.txt&quot;</span>, sep = <span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>, sep = <span class="st0">&quot; &quot;</span>,
+	row.names = FALSE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">############################################################################</span>
+<span class="co0">############# IMPORTING OTHER ENVIRONMENTAL VARIABLES IN R #################</span>
+<span class="co0">############################################################################</span>
+&nbsp;
+<span class="co0"># Importing to set -9999 as NAs</span>
+Vars <span class="sy0">&lt;</span>- read.table<span class="br0">&#40;</span><span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;Variables.txt&quot;</span>, sep = <span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>, header = TRUE, sep = <span class="st0">&quot; &quot;</span>,
+	na.strings = -<span class="nu0">9999</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># Writing back to a txt file. Using white space as fieldseparator (thats what bash likes...)</span>
+write.table<span class="br0">&#40;</span>Vars, <span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;VarsNA.txt&quot;</span>, sep = <span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>, sep = <span class="st0">&quot; &quot;</span>,
+	row.names = FALSE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># Extracting all the columns containing the smallest sediment fraction (phi=10)</span>
+<span class="co0"># Also extract the station and replicate</span>
+less63.df <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span>Upper, Upper<span class="re1">$phi</span> == <span class="nu0">10</span>, <span class="kw1">select</span> = c<span class="br0">&#40;</span><span class="st0">&quot;station&quot;</span>, <span class="st0">&quot;rep&quot;</span>, <span class="st0">&quot;frequency&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Reshaping the data</span>
+require<span class="br0">&#40;</span>reshape<span class="br0">&#41;</span>
+Less_melt <span class="sy0">&lt;</span>- melt<span class="br0">&#40;</span>less63.df, c<span class="br0">&#40;</span><span class="st0">&quot;station&quot;</span>,<span class="st0">&quot;rep&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+less63.df <span class="sy0">&lt;</span>- cast<span class="br0">&#40;</span>Less_melt, formula = station~variable, mean<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Merge less63.df and Station</span>
+less63.df <span class="sy0">&lt;</span>- merge<span class="br0">&#40;</span>x = Station, y = less63.df, by.x = <span class="st0">&quot;Station&quot;</span>,
+	by.y = <span class="st0">&quot;station&quot;</span>, all.x = TRUE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># write as txt</span>
+write.table<span class="br0">&#40;</span>less63.df, <span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;less63.txt&quot;</span>, <span class="re2">sep</span>=<span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>, sep = <span class="st0">&quot; &quot;</span>,
+	row.names = FALSE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Save the image (i.e. all objects)</span>
+save.image<span class="br0">&#40;</span><span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;Predictors.rdata&quot;</span>, sep = <span class="st0">&quot;&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">########################################################################</span>
+<span class="co0">########### COMBINING TEXT FILES INTO ENVMAT.CSV USING BASH ############</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+<span class="co0"># Make sure the files have a space as field separator</span>
+<span class="kw2">head</span> <span class="re5">-1</span> Grain.txt
+<span class="kw2">head</span> <span class="re5">-1</span> VarsNA.txt
+<span class="kw2">head</span> <span class="re5">-1</span> less63.txt
+&nbsp;
+<span class="co0"># Change the fieldseparator of Grainsize.csv</span>
+<span class="co0"># the first gsub argument is the old fs and the second the new fs</span>
+<span class="co0">### NB! Bash always work with space separated files</span>
+<span class="co0"># awk '{ gsub(&quot;,&quot; , &quot; &quot;) ; print }' Grainsize.csv &gt; GrainSize.csv</span>
+<span class="co0"># rm Grainsize.csv </span>
+&nbsp;
+<span class="co0">## sorting the common field of both files</span>
+<span class="co0"># Using the sort function alone moves the header information</span>
+<span class="co0"># and puts it somewhere else</span>
+<span class="co0"># sort -k 1,1 GrainSize.csv &gt; Grainsize_s.csv</span>
+<span class="co0"># sort -k 3,3 EnvVar.csv &gt; EnvVar_s.csv</span>
+&nbsp;
+<span class="co0">## The following using awk and sort keeps the header untouched</span>
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 1,1&quot;}}'</span> Grain.txt <span class="sy0">&gt;</span> GrainS.txt
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 3,3&quot;}}'</span> VarsNA.txt <span class="sy0">&gt;</span> VarsNAS.txt
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 1,1&quot;}}'</span> less63.txt <span class="sy0">&gt;</span> less63S.txt
+&nbsp;
+<span class="co0">## Check if the sort worked correctly</span>
+<span class="kw2">cat</span>  GrainS.txt
+<span class="kw2">cat</span>  VarsNAS.txt
+<span class="kw2">cat</span>  less63S.txt
+&nbsp;
+<span class="co0">## Join first VarsNAS and less63S</span>
+<span class="kw2">join</span> <span class="re5">--header</span> <span class="re5">-1</span> <span class="nu0">3</span> <span class="re5">-2</span> <span class="nu0">1</span> VarsNAS.txt less63S.txt <span class="sy0">&gt;</span> Temp.txt
+<span class="co0">## Then join Temp.txt and GrainS</span>
+<span class="kw2">join</span> <span class="re5">--header</span> <span class="re5">-1</span> <span class="nu0">1</span> <span class="re5">-2</span> <span class="nu0">1</span> Temp.txt GrainS.txt <span class="sy0">&gt;</span> EnvMatUS.txt
+&nbsp;
+<span class="co0">## Sorting EnvMatUS to get the stations in numerical order</span>
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -nk 1,1&quot;}}'</span> EnvMatUS.txt <span class="sy0">&gt;</span> EnvMat.txt
+&nbsp;
+&nbsp;
+<span class="co0">########################################################################</span>
+<span class="co0">############## POPULATING MY PREDICTOR DATASET IN GRASS ################</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+<span class="co0">######## Setting the GRASS variables in Bash is not working... #########</span>
+&nbsp;
+<span class="co0">## Setting GRASS variables in BASH</span>
+<span class="co0">#echo &quot;LOCATION_NAME: Stuteberget&quot; 	&gt; $HOME/.grassrc6</span>
+<span class="co0">#echo &quot;MAPSET: thijs&quot;            	&gt;&gt; $HOME/.grassrc6</span>
+<span class="co0">#echo &quot;DIGITIZER: none&quot;        		&gt;&gt; $HOME/.grassrc6</span>
+<span class="co0">#echo &quot;GRASS_GUI: -text&quot;        			&gt;&gt; $HOME/.grassrc6</span>
+<span class="co0">#echo &quot;GISDBASE: /home/thijs/a/grassdata&quot;      &gt;&gt; $HOME/.grassrc6</span>
+&nbsp;
+<span class="co0"># path to GRASS binaries and libraries:  </span>
+<span class="co0"># export GISBASE=/usr/lib/grass64</span>
+<span class="co0">#export GISBASE=/opt/grass-42555</span>
+<span class="co0">#export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts:/opt/grass/bin</span>
+<span class="co0">#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:&quot;$GISBASE/lib&quot;</span>
+<span class="co0">#export GISRC=/home/thijs/.grassrc6</span>
+<span class="co0">#export GRASS_LD_LIBRARY_PATH=/opt/grass-42555/lib</span>
+<span class="co0"># use process ID (PID) as lock file number: </span>
+<span class="co0">#export GIS_LOCK=$$</span>
+&nbsp;
+&nbsp;
+<span class="co0">## Opening grass</span>
+grass64 <span class="re5">-wxpython</span> <span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>grassdata<span class="sy0">/</span>Stuteberget<span class="sy0">/</span>thijs
+&nbsp;
+<span class="co0">## Checking the region</span>
+g.region <span class="re5">-p</span>
+&nbsp;
+<span class="co0">## Checking available rasters</span>
+g.list rast
+&nbsp;
+&nbsp;
+<span class="co0">########################################################################</span>
+<span class="co0">####### POPULATING THE EnvMat.txt FILE  WITH PREDICTOR VARIABLES #######</span>
+<span class="co0">###################### BASH SCRIPTING OF GRASS #########################</span>
+<span class="co0">########################################################################</span>
+<span class="co0">### 			scriptname: vwhatrast.sh</span>
+<span class="co0">########################################################################</span>
+<span class="co0">###			1. Import Stations to GRASS		     ###</span>
+<span class="co0">###			2. v.what.rast in a loop		     ###</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+<span class="co0">#!/bin/sh</span>
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem
+<span class="re2">INDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>input
+<span class="re2">OUTDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>output
+&nbsp;
+<span class="co0">## After saving the filename, do:</span>
+<span class="co0">#chmod u+x /home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh</span>
+&nbsp;
+<span class="co0">## In the terminal, do:</span>
+<span class="co0"># export GRASS_BATCH_JOB=/home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh ; grass64 -text /home/thijs/a/grassdata/Stuteberget/thijs</span>
+<span class="co0">## To deactivate the batch job mode, run:</span>
+<span class="co0"># unset GRASS_BATCH_JOB</span>
+&nbsp;
+<span class="kw3">cd</span> <span class="re1">$INDIR</span>
+&nbsp;
+<span class="co0">## Checking available vector files</span>
+<span class="co0"># g.list vect</span>
+&nbsp;
+<span class="co0">## Extracting and appending two vectors containg station information</span>
+v.out.ascii SamplingStations<span class="sy0">@</span>thijs <span class="re2">fs</span>=, <span class="sy0">&gt;</span> Stations.csv
+v.out.ascii BigStations_new<span class="sy0">@</span>PERMANENT <span class="re2">fs</span>=, <span class="sy0">&gt;</span> BigStations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;Reading Stations.csv to the terminal&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="kw2">cat</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Reading BigStations.csv to the terminal&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span><span class="re5">-5</span>
+<span class="kw2">cat</span> BigStations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="co0"># Changing the numbering of the stations in BigStations.csv</span>
+<span class="kw2">awk</span> <span class="re5">-F</span> <span class="st0">&quot;,&quot;</span> <span class="st_h">'{ OFS=&quot;,&quot; ; print $1, $2, $3+100 }'</span> BigStations.csv <span class="sy0">&gt;&gt;</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;Reading both files when appended&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;--------------------------------&quot;</span>
+<span class="kw2">cat</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;END ----------------------------&quot;</span>
+&nbsp;
+<span class="co0">## Importing Stations.txt</span>
+v.in.ascii <span class="re2">input</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>Stations.csv <span class="re2">output</span>=EnvMatCop <span class="re2">fs</span>=, <span class="re2">columns</span>=<span class="st0">&quot;utm_x double, utm_y double, station int&quot;</span> <span class="re5">--o</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Printing the attribute table of the enewly created vector&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;---------------------------------------------------------&quot;</span>
+db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END------------------------------------------------------&quot;</span>
+&nbsp;
+<span class="co0">## Populating the EnvMatCop using v.what.rast</span>
+<span class="co0"># First, add columns to the attribute table</span>
+v.db.addcol <span class="re2">map</span>=EnvMatCop <span class="re2">columns</span>=<span class="st0">&quot;depth double, ac3 int, ac4 int, surmax double, bpi25 double, maxcur25 double&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking if the operation was successful&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;----------------------------------------&quot;</span>
+db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END-------------------------------------&quot;</span>
+&nbsp;
+<span class="co0"># Create vectors or arrays to hold the information over which to loop</span>
+<span class="kw3">echo</span> <span class="st0">&quot;depth ac3 ac4 surmax bpi25 maxcur25&quot;</span> <span class="sy0">&gt;</span> colnames.txt
+<span class="re2">rastnames</span>=<span class="st0">&quot;bathy_background 3cl_12.5m 4cl_12.5m speed_sur_max_stut BPI_25 maxic_25&quot;</span>
+&nbsp;
+<span class="co0">## Looping v.what.rast over all rasters and colnames in a one-to-one way</span>
+<span class="re2">col</span>=<span class="nu0">0</span>
+<span class="kw1">for</span> raster <span class="kw1">in</span> <span class="sy0">`</span><span class="kw3">echo</span> <span class="re1">$rastnames</span><span class="sy0">`</span> ; <span class="kw1">do</span>
+	<span class="re2">col</span>=$<span class="br0">&#40;</span><span class="br0">&#40;</span><span class="kw2">col</span>+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+	<span class="re2">colnames</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">col</span>=<span class="re1">$col</span> <span class="st_h">'{ print $col }'</span> colnames.txt<span class="sy0">`</span>
+	<span class="kw3">echo</span> <span class="re1">$raster</span>  <span class="re1">$colnames</span>  
+	v.what.rast <span class="re2">vect</span>=EnvMatCop <span class="re2">rast</span>=<span class="re1">$raster</span> <span class="re2">col</span>=<span class="re1">$colnames</span>
+<span class="kw1">done</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking the output again&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-------------------------&quot;</span>
+v.db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END ---------------------&quot;</span>
+&nbsp;
+<span class="co0">## Write it out as a csv file</span>
+v.out.ascii EnvMatCop <span class="re2">fs</span>=, <span class="re2">columns</span>=utm_x,utm_y,station,depth,ac3,ac4,surmax,bpi25,maxcur25 <span class="sy0">&gt;</span> EnvMat2.csv
+<span class="kw3">echo</span> <span class="st0">&quot;-----------------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking if the file is good&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-----------------------------------&quot;</span>
+<span class="kw2">cat</span> EnvMat2.csv
+<span class="kw3">echo</span> <span class="st0">&quot;END--------------------------------&quot;</span>
+&nbsp;
+<span class="co0">## It seems like the file lost its header through v.out.ascii, this can easily be added in R.</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+&nbsp;
+<span class="co0">########################################################################</span>
+<span class="co0">############## IMPORTING SPECIES ABUNDANCE MATRIX IN R #################</span>
+<span class="co0">########################################################################</span>
+<span class="co0">### MOLLUSCA ###</span>
+<span class="co0">## Created by T. van Son June 14, 2010</span>
+&nbsp;
+<span class="co0">## Load the saved image from above</span>
+load<span class="br0">&#40;</span><span class="kw2">file</span> = <span class="st0">&quot;/home/thijs/a/ost4sem/input/Predictors.rdata&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Importing the Mollusca Matrix</span>
+setwd<span class="br0">&#40;</span><span class="st0">&quot;/home/thijs/a/PhD_data/Fielddata/SpeciesData/Mollusca&quot;</span><span class="br0">&#41;</span>
+Moll <span class="sy0">&lt;</span>- read.csv<span class="br0">&#40;</span><span class="kw2">file</span> = <span class="st0">&quot;Mollusca_matrix.csv&quot;</span>, header = TRUE<span class="br0">&#41;</span>
+names<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>
+<span class="co0"># [1] &quot;Sta&quot;   &quot;Gr&quot;      &quot;StaGr&quot; &quot;Abr.alb&quot; &quot;Abr.nit&quot; &quot;Apo.pes&quot; &quot;Arc.isl&quot;</span>
+<span class="co0"># [8] &quot;Ant.ent&quot; &quot;Ast.ell&quot; &quot;Ast.mon&quot; &quot;Ast.sul&quot; &quot;Ast.sp&quot;  &quot;Buc.und&quot; &quot;Buc.sp&quot; </span>
+<span class="co0"># [15] &quot;Cor.gib&quot; &quot;Cus.cus&quot; &quot;Cyl.alb&quot; &quot;Dia.min&quot; &quot;Eus.mon&quot; &quot;Hia.arc&quot; &quot;Kur.bid&quot;</span>
+<span class="co0"># [22] &quot;Lep.cae&quot; &quot;Mac.cal&quot; &quot;Mya.tru&quot; &quot;Mya.sp&quot;  &quot;Myt.edu&quot; &quot;Nuc.ten&quot; &quot;Nuc.per&quot;</span>
+<span class="co0"># [29] &quot;Per.min&quot; &quot;Per.ova&quot; &quot;Pse.sep&quot; &quot;Ris_fam&quot; &quot;Tel.fer&quot; &quot;Thy.equ&quot; &quot;Thy.fle&quot;</span>
+<span class="co0"># [36] &quot;Thy.gou&quot; &quot;Thy.sar&quot; &quot;Thy.spp&quot; &quot;Thy.sp&quot;  &quot;Biv.ind&quot; &quot;Gas.ind&quot;</span>
+str<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Removing Biv.ind, Gas.ind, Thy.spp, and Thy.sp columns</span>
+Moll <span class="sy0">&lt;</span>- Moll<span class="br0">&#91;</span>, <span class="nu0">1</span>:<span class="nu0">37</span><span class="br0">&#93;</span>
+names<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>
+str<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>
+dim<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>	<span class="co0"># 139 37</span>
+&nbsp;
+<span class="co0">## In the df Moll the data is listed per grab pr station</span>
+<span class="co0">## Summarising the grabs per station and store it in MollSt</span>
+&nbsp;
+<span class="co0">## This works for station one</span>
+sapply<span class="br0">&#40;</span>Moll<span class="br0">&#91;</span>Moll<span class="re1">$Sta</span> == <span class="nu0">1</span>, <span class="nu0">4</span>:<span class="nu0">39</span><span class="br0">&#93;</span>, na.rm = TRUE, FUN = <span class="kw2">sum</span><span class="br0">&#41;</span>
+as.vector<span class="br0">&#40;</span>sapply<span class="br0">&#40;</span>Moll<span class="br0">&#91;</span>Moll<span class="re1">$Sta</span> == <span class="nu0">1</span>, <span class="nu0">4</span>:<span class="nu0">39</span><span class="br0">&#93;</span>, na.rm = TRUE, FUN = <span class="kw2">sum</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Unique stations</span>
+AllStations <span class="sy0">&lt;</span>- unique<span class="br0">&#40;</span>Moll<span class="re1">$Sta</span><span class="br0">&#41;</span>
+AllSpecies <span class="sy0">&lt;</span>- names<span class="br0">&#40;</span>Moll<span class="br0">&#91;</span>, <span class="nu0">4</span>:<span class="nu0">37</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+p <span class="sy0">&lt;</span>- length<span class="br0">&#40;</span>AllStations<span class="br0">&#41;</span>
+MollSt <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>data = NA, nrow = length<span class="br0">&#40;</span>AllStations<span class="br0">&#41;</span>, ncol = length<span class="br0">&#40;</span>AllSpecies<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Looping over all stations</span>
+<span class="co0"># the sapply function needs to be wrapped by as.vector, otherwise it will return</span>
+<span class="co0"># the names of the species along with the sum of the species per station. Compare</span>
+<span class="co0"># the sapply code with and without the as.vector wrapping (See above).</span>
+&nbsp;
+  <span class="kw1">for</span> <span class="br0">&#40;</span>i <span class="kw1">in</span> <span class="kw2">seq</span><span class="br0">&#40;</span>length = p<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    Sta.i <span class="sy0">&lt;</span>- AllStations<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+    temp <span class="sy0">&lt;</span>- as.vector<span class="br0">&#40;</span>sapply<span class="br0">&#40;</span>Moll<span class="br0">&#91;</span>Moll<span class="re1">$Sta</span> == Sta.i, <span class="nu0">4</span>:<span class="nu0">37</span><span class="br0">&#93;</span>, na.rm = TRUE, FUN = <span class="kw2">sum</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    MollSt<span class="br0">&#91;</span>i, <span class="br0">&#93;</span> <span class="sy0">&lt;</span>- temp		<span class="co0"># for each iteration row i is fed into MollSt</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+<span class="co0">## Coercing into a dataframe</span>
+MollSt <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>MollSt, row.names = AllStations<span class="br0">&#41;</span>
+colnames<span class="br0">&#40;</span>MollSt<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- AllSpecies
+str<span class="br0">&#40;</span>MollSt<span class="br0">&#41;</span>
+names<span class="br0">&#40;</span>MollSt<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Adding the Stations to the dataframe MollSt</span>
+<span class="co4">MollSt$</span>Station <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">1</span>:<span class="nu0">24</span>, <span class="nu0">101</span>:<span class="nu0">104</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="co0">## Calculating species abundance and richness per station</span>
+AbundSt <span class="sy0">&lt;</span>- as.vector<span class="br0">&#40;</span>rowSums<span class="br0">&#40;</span>MollSt, na.rm = TRUE<span class="br0">&#41;</span><span class="br0">&#41;</span>
+AbundSt
+<span class="co0"># Coercing into a dataframe and adding stations</span>
+AbundSt <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>AbundSt<span class="br0">&#41;</span>
+<span class="co4">AbundSt$</span>Station <span class="sy0">&lt;</span>- Station
+&nbsp;
+<span class="co0">## Calculating species richness</span>
+DiversSt <span class="sy0">&lt;</span>- as.vector<span class="br0">&#40;</span>rowSums<span class="br0">&#40;</span>MollSt <span class="sy0">&gt;</span> <span class="nu0">0</span>, na.rm = TRUE<span class="br0">&#41;</span><span class="br0">&#41;</span>
+DiversSt
+<span class="co0"># Coercing into a dataframe and adding stations</span>
+DiversSt <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>DiversSt<span class="br0">&#41;</span>
+<span class="co4">DiversSt$</span>station <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">1</span>:<span class="nu0">24</span>, <span class="nu0">101</span>:<span class="nu0">104</span><span class="br0">&#41;</span>

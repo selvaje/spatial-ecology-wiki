@@ -1,0 +1,289 @@
+
+<h1 class="sectionedit1" id="segmenting_the_global_human_settlement_layer">Segmenting the Global Human Settlement Layer</h1>
+<div class="level1">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Apython%3Asegmentwatershed&amp;media=wiki:python:screenshot_2018-06-02_07-03-31.png" class="media" title="wiki:python:screenshot_2018-06-02_07-03-31.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=4bced8&amp;media=wiki:python:screenshot_2018-06-02_07-03-31.png" class="mediacenter" title=" " alt=" " width="400" /></a>
+</p>
+
+</div>
+
+<h5 id="download_the_file_and_setting_up_working_directory">Download the file and setting up working directory</h5>
+<div class="level5">
+<pre class="code bash"><span class="kw2">mkdir</span> <span class="re1">$HOME</span><span class="sy0">/</span>GHSLseg
+<span class="kw3">cd</span> <span class="re1">$HOME</span><span class="sy0">/</span>GHSLseg
+<span class="kw2">wget</span> http:<span class="sy0">//</span>www.spatial-ecology.net<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>GHSLseg<span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0.tif</pre>
+
+</div>
+
+<h5 id="thresholding_the_ghsl_and_clumping_each_bin-unit">Thresholding the GHSL and clumping each bin-unit</h5>
+<div class="level5">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:segmentwatershed&amp;codeblock=1" title="Download Snippet" class="mediafile mf_sh">sc01_bin_clump.sh</a></dt>
+<dd><pre class="code bash">&nbsp;
+<span class="kw3">export</span> <span class="re2">DIR</span>=<span class="re1">$HOME</span><span class="sy0">/</span>GHSLseg
+&nbsp;
+oft-calc <span class="re5">-ot</span> Byte <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0.tif <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin.tif <span class="co2">&lt;&lt;EOF
+1
+#1 0.05 + 10 * 1 -
+EOF</span>
+<span class="kw2">rm</span>  <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin.tif.eq
+&nbsp;
+<span class="co0"># colored  the bin file </span>
+pkcreatect <span class="re5">-min</span> <span class="nu0">0</span> <span class="re5">-max</span> <span class="nu0">9</span> <span class="sy0">&gt;</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>color.txt 
+pkcreatect   <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  <span class="re5">-ct</span>  <span class="sy0">/</span>tmp<span class="sy0">/</span>color.txt  <span class="re5">-i</span>   <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin.tif <span class="re5">-o</span>   <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_ct.tif
+gdal_edit.py -a_nodata <span class="re5">-1</span>   <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_ct.tif
+<span class="kw2">mv</span> <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_ct.tif <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin.tif
+&nbsp;
+<span class="kw3">echo</span> start the clump operation 
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-fr</span> <span class="co1">${DIR}</span><span class="sy0">/</span>grassdb
+<span class="kw2">mkdir</span> <span class="co1">${DIR}</span><span class="sy0">/</span>grassdb
+&nbsp;
+<span class="kw3">echo</span>  <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="nu0">8</span> <span class="nu0">9</span>   <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">2</span> <span class="kw2">bash</span> <span class="re5">-c</span> $<span class="st_h">' 
+&nbsp;
+MIN=$( echo $1 - 0.5 | bc )
+BIN=$1
+&nbsp;
+echo masking the bin 
+&nbsp;
+pkgetmask  -co COMPRESS=DEFLATE -co ZLEVEL=9  -min $MIN  -max 9.5  -data 1 -nodata 0 -ct  /tmp/color.txt  -i ${DIR}/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin.tif -o ${DIR}/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin$BIN.tif 
+gdal_edit.py -a_nodata 0   ${DIR}/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin$BIN.tif  
+&nbsp;
+# create the new location and exit
+&nbsp;
+rm -fr  ${DIR}/grassdb/loc_clump$BIN
+&nbsp;
+grass72 -e -text  -c  ${DIR}/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin$BIN.tif ${DIR}/grassdb/loc_clump$BIN 
+&nbsp;
+# set up grass variables
+&nbsp;
+echo &quot;GISDBASE: ${DIR}/grassdb&quot;                  &gt;  $HOME/.grass7/rc$$
+echo &quot;LOCATION_NAME: loc_clump$BIN&quot;              &gt;&gt; $HOME/.grass7/rc$$
+echo &quot;MAPSET: PERMANENT&quot;                         &gt;&gt; $HOME/.grass7/rc$$
+echo &quot;GUI: text&quot;                                 &gt;&gt; $HOME/.grass7/rc$$
+echo &quot;GRASS_GUI: wxpython&quot;                       &gt;&gt; $HOME/.grass7/rc$$
+&nbsp;
+export GISBASE=/usr/lib/grass72
+export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts
+export LD_LIBRARY_PATH=&quot;$GISBASE/lib&quot;
+export GISRC=$HOME/.grass7/rc$$
+export GRASS_LD_LIBRARY_PATH=&quot;$LD_LIBRARY_PATH&quot;
+export PYTHONPATH=&quot;$GISBASE/etc/python:$PYTHONPATH&quot;
+export MANPATH=$MANPATH:$GISBASE/man
+&nbsp;
+export GIS_LOCK=$$
+&nbsp;
+g.gisenv 
+r.in.gdal input=${DIR}/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin$BIN.tif output=GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin$BIN  --o
+&nbsp;
+r.clump -d  --overwrite    input=GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin$BIN     output=GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${BIN}_clump
+r.colors -r map=GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin$BIN
+&nbsp;
+r.out.gdal -m  nodata=0 --overwrite -f -c createopt=&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot; format=GTiff type=UInt32  input=GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${BIN}_clump  output=${DIR}/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${BIN}_clump.tif 
+rm -rf ${DIR}/grassdb/loc_clump$BIN  ${DIR}/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${BIN}_clump.tif.aux.xml 
+&nbsp;
+'</span> _  
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-fr</span> <span class="co1">${DIR}</span><span class="sy0">/</span>grassdb</pre>
+</dd></dl>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Apython%3Asegmentwatershed&amp;media=wiki:python:bin.png" class="media" title="wiki:python:bin.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=0417ea&amp;media=wiki:python:bin.png" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+</div>
+
+<h5 id="re-class_the_bin-unit_to_have_consecutive_id_values_among_the_all_levels">Re-class the bin-unit to have consecutive ID values among the all levels.</h5>
+<div class="level5">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:segmentwatershed&amp;codeblock=2" title="Download Snippet" class="mediafile mf_sh">sc02_bin_clump_reclass.sh</a></dt>
+<dd><pre class="code bash"><span class="co0"># re-class the bin clump and then overlay </span>
+<span class="kw3">export</span> <span class="re2">DIR</span>=<span class="re1">$HOME</span><span class="sy0">/</span>GHSLseg
+&nbsp;
+<span class="co0"># will add to 1 ... so the overall will start from 1 </span>
+&nbsp;
+<span class="re2">lastmaxb</span>=<span class="nu0">0</span>   
+&nbsp;
+<span class="kw1">for</span> BIN <span class="kw1">in</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="nu0">8</span> <span class="nu0">9</span> ; <span class="kw1">do</span> 
+&nbsp;
+<span class="kw3">echo</span> hist <span class="kw1">for</span> BIN <span class="re1">$BIN</span>
+pkstat <span class="re5">-hist</span> <span class="re5">-i</span> <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${BIN}</span>_clump.tif <span class="sy0">|</span> <span class="kw2">grep</span> <span class="re5">-v</span> <span class="st0">&quot; 0&quot;</span> <span class="sy0">|</span> <span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">lastmaxb</span>=<span class="re1">$lastmaxb</span> <span class="st_h">'{ if ($1==0) { print $1,0} else {lastmaxb=1+lastmaxb; print $1,lastmaxb}}'</span> <span class="sy0">&gt;</span> <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${BIN}</span>_clump.txt
+&nbsp;
+<span class="re2">lastmaxb</span>=$<span class="br0">&#40;</span><span class="kw2">tail</span> <span class="re5">-1</span> <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${BIN}</span>_clump.txt <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">'{ print $2 }'</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw3">echo</span> reclass <span class="kw1">for</span> BIN <span class="re1">$BIN</span>
+pkreclass <span class="re5">-ot</span> UInt32 <span class="re5">-code</span> <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${BIN}</span>_clump.txt  <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-i</span> <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${BIN}</span>_clump.tif <span class="re5">-o</span> <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${BIN}</span>_clump.tif
+&nbsp;
+gdal_edit.py -a_nodata <span class="nu0">0</span> <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${BIN}</span>_clump.tif
+<span class="kw2">rm</span> <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${BIN}</span>_clump.txt
+<span class="kw1">done</span> 
+&nbsp;
+<span class="co0"># combine all the bin clump and get the highst value </span>
+&nbsp;
+gdalbuildvrt <span class="re5">-separate</span> <span class="re5">-overwrite</span> <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_clump.vrt <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin?_clump.tif
+&nbsp;
+oft-calc <span class="re5">-of</span> GTiff <span class="re5">-ot</span> UInt32 <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_clump.vrt <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_clump_tmp.tif <span class="co2">&lt;&lt;EOF
+1
+#1 #2 #3 #4 #5 #6 #7 #8 #9 M M M M M M M M
+EOF</span>
+gdal_translate -a_nodata <span class="nu0">0</span> <span class="re5">-ot</span> UInt32 <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_clump_tmp.tif <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin1-<span class="nu0">9</span>_clump.tif
+&nbsp;
+<span class="kw2">rm</span> <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_clump_tmp.tif <span class="co1">${DIR}</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_clump.vrt <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_clump_tmp.tif.eq</pre>
+</dd></dl>
+
+</div>
+
+<h5 id="identify_the_peaks">Identify the peaks</h5>
+<div class="level5">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:segmentwatershed&amp;codeblock=3" title="Download Snippet" class="mediafile mf_sh">sc03_bin_peak_clump.sh</a></dt>
+<dd><pre class="code bash"><span class="kw3">export</span> <span class="re2">DIR</span>=<span class="re1">$HOME</span><span class="sy0">/</span>GHSLseg
+&nbsp;
+pkcreatect <span class="re5">-min</span> <span class="nu0">0</span> <span class="re5">-max</span> <span class="nu0">1</span> <span class="sy0">&gt;</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>color.txt 
+pkcreatect <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-ot</span> Byte <span class="re5">-nodata</span> <span class="re5">-1</span> <span class="re5">-min</span> <span class="nu0">0</span> <span class="re5">-max</span> <span class="nu0">1</span> <span class="re5">-i</span> <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin9.tif <span class="re5">-o</span>  <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin9_clean.tif
+gdal_edit.py -a_nodata <span class="re5">-1</span>  <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin9_clean.tif
+&nbsp;
+<span class="co0"># change the nodata to -1 to allow the gdacalc to consider </span>
+<span class="kw3">echo</span>  <span class="nu0">0</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="nu0">8</span> <span class="nu0">9</span> <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">8</span> <span class="kw2">bash</span> <span class="re5">-c</span> $<span class="st_h">'
+gdal_edit.py -a_nodata -1  $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin$1.tif
+'</span> _
+&nbsp;
+<span class="kw3">echo</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">4</span> <span class="nu0">5</span> <span class="nu0">6</span> <span class="nu0">7</span> <span class="nu0">8</span> <span class="nu0">9</span> <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">2</span> <span class="kw2">bash</span> <span class="re5">-c</span> $<span class="st_h">'
+&nbsp;
+    bin1=$1
+    bin2=$(bc &lt;&lt;&lt; &quot;$bin1-1&quot;)
+    echo $bin1
+        rm -f $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${bin1}+${bin2}.tif 
+        gdal_calc.py --calc=&quot;A+B&quot; --co=&quot;COMPRESS=LZW&quot; --overwrite --NoDataValue=-1 \
+            -A $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${bin1}.tif \
+            -B $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${bin2}.tif \
+            --outfile=$DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${bin1}+${bin2}.tif
+&nbsp;
+        oft-stat -mm --noavg --nostd \
+            -i  $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${bin1}+${bin2}.tif \
+            -um $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin${bin2}_clump.tif \
+            -o  $DIR/zonal_stats_${bin2}.txt
+&nbsp;
+        awk \'</span><span class="br0">&#123;</span><span class="kw1">if</span><span class="br0">&#40;</span><span class="re4">$4</span>==<span class="nu0">1</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> print <span class="re4">$1</span>,<span class="nu0">1</span> <span class="br0">&#125;</span>  <span class="kw1">else</span> <span class="br0">&#123;</span> print <span class="re4">$1</span>,<span class="nu0">0</span> <span class="br0">&#125;</span><span class="br0">&#125;</span><span class="co3">\'</span> <span class="re1">$DIR</span><span class="sy0">/</span>zonal_stats_<span class="co1">${bin2}</span>.txt <span class="sy0">&gt;</span> <span class="re1">$DIR</span><span class="sy0">/</span>code_<span class="co1">${bin2}</span>.txt
+&nbsp;
+        pkreclass <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  <span class="re5">-ot</span> Byte <span class="re5">-nodata</span> <span class="re5">-1</span> <span class="re5">-ct</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>color.txt \
+            <span class="re5">-i</span> <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${bin2}</span>_clump.tif \
+            <span class="re5">-o</span> <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${bin2}</span>_clean.tif \
+            <span class="re5">--code</span> <span class="re1">$DIR</span><span class="sy0">/</span>code_<span class="co1">${bin2}</span>.txt
+&nbsp;
+        <span class="kw2">rm</span> <span class="re5">-f</span> <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin<span class="co1">${bin1}</span>+<span class="co1">${bin2}</span>.tif
+        <span class="kw2">rm</span> <span class="re5">-f</span> <span class="re1">$DIR</span><span class="sy0">/</span>zonal_stats_<span class="co1">${bin2}</span>.txt
+        <span class="kw2">rm</span> <span class="re5">-f</span> <span class="re1">$DIR</span><span class="sy0">/</span>code_<span class="co1">${bin2}</span>.txt
+&nbsp;
+<span class="st_h">' _
+&nbsp;
+#  only search for peaks with bin values larger or equal to 2 
+&nbsp;
+gdalbuildvrt -overwrite  -separate $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.vrt $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin{2,3,4,5,6,7,8,9}_clean.tif
+&nbsp;
+oft-calc -ot Byte $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.vrt $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak_tmp.tif &lt;&lt; EOF
+1
+#1 #2 #3 #4 #5 #6 #7 #8 + + + + + + +
+EOF
+&nbsp;
+gdal_translate   -co COMPRESS=DEFLATE -co ZLEVEL=9  -ot Byte   $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak_tmp.tif $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif
+# rm  $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak_tmp.tif $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.vrt $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak_tmp.tif.eq 
+&nbsp;
+pksetmask -co COMPRESS=DEFLATE -co ZLEVEL=9 -m $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif  -msknodata 0 -nodata 0 -i $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin.tif  -o $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin_peak.tif
+&nbsp;
+pksetmask -co COMPRESS=DEFLATE -co ZLEVEL=9 -m $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif  -msknodata 0 -nodata 0 -i $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_bin1-9_clump.tif  -o $DIR/GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak_clump.tif</span></pre>
+</dd></dl>
+
+</div>
+
+<h5 id="built_up_cost_function_using_the_ghsl_and_peaks">Built up cost function using the GHSL and peaks</h5>
+<div class="level5">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:segmentwatershed&amp;codeblock=4" title="Download Snippet" class="mediafile mf_sh">sc04_built-up_cost.sh</a></dt>
+<dd><pre class="code bash">&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>selv<span class="sy0">/</span>spatial-ecology-codes<span class="sy0">/</span>wiki<span class="sy0">/</span>watershedsegment
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-f</span> <span class="re1">$DIR</span><span class="sy0">/</span>grassdb ; <span class="kw2">mkdir</span> <span class="re1">$DIR</span><span class="sy0">/</span>grassdb
+&nbsp;
+gdal_edit.py -a_nodata <span class="nu0">0</span>  <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif
+grass72 <span class="re5">-e</span> <span class="re5">-text</span>  <span class="re5">-c</span>  <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif   <span class="re1">$DIR</span><span class="sy0">/</span>grassdb<span class="sy0">/</span>loc_cost
+&nbsp;
+<span class="co0"># set up grass variables</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;GISDBASE: <span class="es3">${DIR}</span>/grassdb&quot;</span>         <span class="sy0">&gt;</span>  <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;LOCATION_NAME: loc_cost&quot;</span>          <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;MAPSET: PERMANENT&quot;</span>                <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GUI: text&quot;</span>                        <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GRASS_GUI: wxpython&quot;</span>              <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>grass72
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span>bin:<span class="re1">$GISBASE</span><span class="sy0">/</span>scripts
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GRASS_LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$LD_LIBRARY_PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">PYTHONPATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/etc/python:<span class="es2">$PYTHONPATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">MANPATH</span>=<span class="re1">$MANPATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span><span class="kw2">man</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span>
+&nbsp;
+g.gisenv 
+&nbsp;
+r.in.gdal <span class="re2">input</span>=<span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif <span class="re2">output</span>=peak  <span class="re5">--o</span>
+r.in.gdal <span class="re2">input</span>=<span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0.tif      <span class="re2">output</span>=builtup    <span class="re5">--overwrite</span>   <span class="re2">memory</span>=<span class="nu0">2047</span> 
+&nbsp;
+<span class="co0"># complementary builtup</span>
+r.mapcalc <span class="st0">&quot; builtup_comp =  ( 1 - builtup )   &quot;</span>  <span class="re5">--overwrite</span>
+&nbsp;
+<span class="kw3">echo</span> start to calculate the cost
+&nbsp;
+r.cost  <span class="re5">-k</span> <span class="re2">input</span>=builtup_comp <span class="re2">output</span>=builtup_cost <span class="re2">start_raster</span>=peak <span class="re2">null_cost</span>=-<span class="nu0">1</span> <span class="re5">--overwrite</span> 
+r.colors  <span class="re5">-r</span> <span class="re2">map</span>=builtup_comp
+&nbsp;
+r.out.gdal <span class="re5">--overwrite</span> <span class="re2">nodata</span>=-<span class="nu0">1</span> <span class="re5">-c</span> <span class="re5">-f</span> <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">type</span>=Float32 <span class="re2">format</span>=GTiff  <span class="re2">input</span>=builtup_cost  <span class="re2">output</span>=<span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_cost.tif
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-rf</span> <span class="re1">$DIR</span><span class="sy0">/</span>grassdb</pre>
+</dd></dl>
+
+</div>
+
+<h5 id="segmentation_analyse">Segmentation analyse</h5>
+<div class="level5">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:segmentwatershed&amp;codeblock=5" title="Download Snippet" class="mediafile mf_sh">sc05_watershed.sh</a></dt>
+<dd><pre class="code bash"><span class="co0"># python -m pip install SimpleITK</span>
+<span class="co0"># itk installation  https://itk.org/Wiki/SimpleITK/GettingStarted/Visual_guide_to_building_on_Linux#Step_4:_Build_SimpleITK </span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">DIR</span>=<span class="re1">$HOME</span><span class="sy0">/</span>GHSLseg
+<span class="kw2">rm</span> <span class="re5">-f</span>  <span class="re1">$DIR</span><span class="sy0">/</span>watershed_line_nogeo.tif  <span class="re1">$DIR</span><span class="sy0">/</span>watershed_poly_nogeo.tif  
+&nbsp;
+<span class="co0"># export PATH=&quot;/home/selv/anaconda3/bin:$PATH&quot;</span>
+&nbsp;
+<span class="kw3">cd</span> <span class="re1">$DIR</span>
+python <span class="co2">&lt;&lt;EOF
+import os
+&nbsp;
+import SimpleITK as sitk
+print(&quot;importing image&quot;)
+img  = sitk.ReadImage(&quot;GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_cost.tif&quot; , sitk.sitkFloat32  )  
+&nbsp;
+# to check img.GetPixelIDTypeAsString() 32-bit unsigned integer  
+peak = sitk.ReadImage(&quot;GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peaka.tif&quot;)
+&nbsp;
+marker_img  = sitk.ConnectedComponent(peak)
+&nbsp;
+print(&quot;start watershed&quot;)
+ws_line  = sitk.MorphologicalWatershedFromMarkers( img, marker_img , markWatershedLine=True,  fullyConnected=True)
+sitk.WriteImage( sitk.Cast( ws_line  ,  sitk.sitkFloat32  ),        &quot;watershed_line_nogeo.tif&quot; )
+del(ws_line)
+&nbsp;
+ws_poly  = sitk.MorphologicalWatershedFromMarkers( img, marker_img , markWatershedLine=False, fullyConnected=True)
+sitk.WriteImage( sitk.Cast( ws_poly  ,  sitk.sitkFloat32  ),        &quot;watershed_poly_nogeo.tif&quot; )
+del(ws_poly)
+EOF</span>
+&nbsp;
+gdal_edit.py  -a_srs EPSG:<span class="nu0">4326</span>  -a_ullr $<span class="br0">&#40;</span>getCorners4Gtranslate GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_cost.tif  <span class="br0">&#41;</span> watershed_line_nogeo.tif 
+gdal_edit.py  -a_srs EPSG:<span class="nu0">4326</span>  -a_ullr $<span class="br0">&#40;</span>getCorners4Gtranslate GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_cost.tif  <span class="br0">&#41;</span> watershed_poly_nogeo.tif</pre>
+</dd></dl>
+
+</div>

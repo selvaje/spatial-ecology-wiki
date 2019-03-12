@@ -1,0 +1,26 @@
+&nbsp;
+<span class="kw1">for</span> file_crop <span class="kw1">in</span>  ..........  ; <span class="kw1">do</span>  
+&nbsp;
+<span class="kw3">export</span> <span class="re2">file_crop</span>=<span class="re1">$file_crop</span>
+&nbsp;
+&nbsp;
+<span class="co0"># start R and import bash variables (the file name)</span>
+&nbsp;
+R <span class="re5">--vanilla</span> <span class="re5">-q</span> <span class="co2">&lt;&lt;EOF
+&nbsp;
+file_crop = Sys.getenv('file_crop')
+library(raster)
+rasterOptions(tmpdir=&quot;/tmp&quot;)
+&nbsp;
+# load grass raster data 
+&nbsp;
+rastD = raster( paste (&quot;/home/user/ost4sem/moran/&quot;,file_crop,sep=&quot;&quot;))
+&nbsp;
+# calculate Moran's I
+M_text = Moran(rastD)
+&nbsp;
+#Write the results to a simple text file
+write.table (M_text[1] ,paste(&quot;moran_&quot;,file_crop,&quot;.txt&quot;,sep=&quot;&quot; )  ,row.names = F , col.names = F)
+EOF</span>
+&nbsp;
+<span class="kw1">done</span>

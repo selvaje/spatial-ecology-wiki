@@ -1,0 +1,194 @@
+#####################################################################################################
+# Course Spatio temporal modelling                                                                  #
+# January 2014                                                                                      #
+# Author: Aart van der Linden                                                                       #
+#                                                                                                   #
+# Aim of the model: Simulate maturation and harvest of wheat based on gridded daily temperature     #
+# data for France                                                                                   #
+#####################################################################################################
+&nbsp;
+# Packages required
+library(ncdf)
+library(raster)
+library(rasterVis)
+library(sp)
+library(colorspace)
+library(maptools)
+library(maps)
+library(mapdata)
+&nbsp;
+# Basic geographical information
+&nbsp;
+longbase &lt;- -5          # left border longitude of map (degrees)
+latbase  &lt;- 41          # bottom border latitude of map (degrees)
+&nbsp;
+nrlonggrids &lt;- 30       # amount of 0.5 grids to the east
+nrlatgrids  &lt;- 24       # amount of 0.5 grids to the north
+nrmaxtime   &lt;- 300      # time series (days)
+&nbsp;
+# Basic crop parameters
+TSUM  &lt;- 1600           # degree days required for maturation of wheat (http://en.wikipedia.org/wiki/Growing_degree-day)
+BASET &lt;- 4.5            # base temperature wheat (http://www.fao.org/docrep/006/y4011e/y4011e06.htm)
+&nbsp;
+#Opening the temperature data file
+&nbsp;
+X &lt;- open.ncdf(&quot;C:/Weather_data/tg_0.50deg_reg_1995-2013_v9.0.nc&quot;)   # Open a weather dataset for France with daily mean temperatures
+# Dataset starts at 40 W longitude and at 25 N latitude
+&nbsp;
+&nbsp;
+&nbsp;
+# Create a raster with grids that belong to France
+Mainland &lt;- read.csv(file=&quot;M:/R/Francemainland.csv&quot;,head=FALSE,sep=&quot;,&quot;)  # Data file mainland from package &quot;mapdata&quot;
+Corsica  &lt;- read.csv(file=&quot;M:/R/Francecorsica.csv&quot;,head=FALSE,sep=&quot;,&quot;)   # Data file mainland from package &quot;mapdata&quot;
+&nbsp;
+Mainlandpolygon &lt;- Polygons(list(Polygon(Mainland)),1)                   # Polygon for the French mainland
+Corsicapolygon  &lt;- Polygons(list(Polygon(Corsica)),2)                    # Polygon for the island Corsica
+&nbsp;
+MapFrance &lt;- SpatialPolygons(list(Mainlandpolygon, Corsicapolygon)  )    # Join the two polygons
+&nbsp;
+plot(MapFrance, xlim=c(longbase,(longbase+nrlonggrids/2)), ylim=c(latbase,(latbase+nrlatgrids/2)))  # Plot the map of France with the mainland and Corsica
+&nbsp;
+# rasterizing polygons: from a detailed polygon to a coarse grid
+&nbsp;
+r1 &lt;- raster(ncol=nrlonggrids, nrow=nrlatgrids)                          # Construct a raster with 30 x 24 grids
+r2 &lt;- raster()
+res(r2)=c(0.5,0.5)
+e &lt;- extent(longbase, (longbase+nrlonggrids/2), latbase, (latbase+nrlatgrids/2))      # Geographical coordinates of France
+rc &lt;- crop(r2, e)                                                                     # Creates a cropped image rc
+&nbsp;
+&nbsp;
+r1 &lt;- rasterize(MapFrance, rc, fun='min', background = 0.0)               # Convert the map of France into a raster
+plot(r1,xlim=c(longbase,(longbase+nrlonggrids/2)), ylim=c(latbase,(latbase+nrlatgrids/2)))  # Plot the raster of France with the mainland and Corsica, Figure 3.
+&nbsp;
+#####################################################################
+#                      Model maturity wheat                         #
+#####################################################################
+&nbsp;
+GDD        = array(dim=c(nrlonggrids,nrlatgrids,nrmaxtime+1))            # array for growing degree days     
+MAT        = array(dim=c(nrlonggrids,nrlatgrids,nrmaxtime))              # array for heading (0=no, 1 =yes)
+MATDATE    = matrix(nrow=nrlonggrids, ncol=nrlatgrids)                   # time after 1 jan for heading in days
+&nbsp;
+&nbsp;
+Tmean      = NULL                                                        # statements that time, longitude and latitude start at 1
+time       = NULL                                                        # relative to the left-bottom corner
+time[1]    = 1
+long       = NULL
+long[1]    = 1
+lat        = NULL
+lat[1]     = 1
+&nbsp;
+for (x in 1:nrlonggrids) {                                               # model run for longitude (x), latitude(y) and time(i)
+  for (y in 1:nrlatgrids) {  
+    for (i in 1:nrmaxtime) {
+&nbsp;
+    long[x+1] = long[x]+1                                                # longitude, latitude and time each increase 1 after a step
+    lat[y+1]  = lat[y]+1
+    time[i+1] = time[i]+1 
+&nbsp;
+    GDD[x,y,1] = 0                                                       # inital value for GDD is zero
+    MAT[x,y,1] = 0                                                       # inital value for FLO is zero
+&nbsp;
+    Tmean[i] &lt;- get.var.ncdf(X, start= c(2*longbase+81+long[x],2*latbase-50+lat[y],time[i]), count=c(long[x],lat[y],time[i]))  # reads Tmean from file
+&nbsp;
+    if(Tmean[i]&gt;BASET) GDD[x,y,i+1] = GDD[x,y,i] + (Tmean[i]-BASET) else GDD[x,y,i+1] = GDD[x,y,i]   # calculation GDD over time, longitude and latitude
+    if(GDD[x,y,i]&gt;TSUM) MAT[x,y,i] = 1 else MAT[x,y,i] = 0                                       # calculation FLO over time, longitude and latitude
+&nbsp;
+    MATDATE[x,y] = time[i]-sum(MAT[x,y,1:i])+1                                                # calculation FLOWERDATE over longitude and latitude
+    if(Tmean[1]&lt;(-90)) MATDATE[x,y] = NaN                                                     # exclude grids without weather data
+&nbsp;
+    }
+  }
+}
+&nbsp;
+MATDATE &lt;- rotate(MATDATE)                           # turn the flowerdate matrix three times 90 degrees to get the correct map
+MATDATE &lt;- rotate(MATDATE)
+MATDATE &lt;- rotate(MATDATE)
+&nbsp;
+&nbsp;
+rharvest = NULL                                             # creates a raster with values for harvest dates
+rharvest &lt;- raster(ncol=nrlonggrids, nrow=nrlatgrids,
+                  xmn = longbase, xmx = (longbase+nrlonggrids/2), ymn = latbase, ymx = (latbase+nrlatgrids/2))
+&nbsp;
+values(rharvest) &lt;- MATDATE
+&nbsp;
+Legend &lt;- seq(152, nrmaxtime, 30.5)                            # legend for map
+&nbsp;
+boundaries &lt;- map('worldHires',  fill=TRUE,                # get country borders
+                  xlim=c(longbase,(longbase+nrlonggrids/2)), ylim=c(latbase,(latbase+nrlatgrids/2)),
+                  plot=FALSE)
+&nbsp;
+## read the map2SpatialPolygons help page for details
+IDs &lt;- sapply(strsplit(boundaries$names, &quot;:&quot;), function(x) x[1])
+Borders &lt;- map2SpatialPolygons(boundaries, IDs=IDs, proj4string=CRS(projection(rharvest)))  # country borders in spatial polygon
+&nbsp;
+# Figure 4 
+&nbsp;
+levelplot(rharvest, 
+     main  =&quot;Wheat harvest date (day of the year)&quot;,
+     margin=FALSE,
+     xlab  =list('Longitude', fontface='bold'),
+     ylab  =list('Latitude', rot=45, fontface='bold'),
+     at    =Legend, 
+     par.settings= rasterTheme(region = c('lawngreen','green3','darkgreen','brown')),
+&nbsp;
+&nbsp;
+) + layer(sp.polygons(Borders))
+&nbsp;
+r1[r1 &lt; 0.5] &lt;- NA
+mask &lt;- mask(rharvest, r1)
+&nbsp;
+boundaries &lt;- map('worldHires',region='France',  fill=TRUE,                                         
+                  xlim=c(longbase,(longbase+nrlonggrids/2)), ylim=c(latbase,(latbase+nrlatgrids/2)),
+                  plot=FALSE)
+&nbsp;
+## read the map2SpatialPolygons help page for details
+IDs &lt;- sapply(strsplit(boundaries$names, &quot;:&quot;), function(x) x[1])
+Borders &lt;- map2SpatialPolygons(boundaries, IDs=IDs, proj4string=CRS(projection(rharvest)))
+&nbsp;
+# Figure 5.
+levelplot(mask, 
+          main  =&quot;Wheat harvest date (day of the year)&quot;,
+          margin=FALSE,
+          xlab  =list('Longitude', fontface='bold'),
+          ylab  =list('Latitude', rot=45, fontface='bold'),
+          at    =Legend, 
+          par.settings= rasterTheme(region = c('lawngreen','green3','darkgreen','brown')),
+&nbsp;
+&nbsp;
+) + layer(sp.polygons(Borders))
+&nbsp;
+Colourhist &lt;- rep(c('lawngreen','green3','darkgreen','brown'),c(30.5,30.5,30.5,30.5))
+&nbsp;
+histogram(mask, main= &quot;Histogram wheat harvest dates&quot;, xlab = &quot;day of the year&quot;, 
+          par.settings= rasterTheme(region = c('lawngreen','green3','darkgreen','brown')),
+          col=&quot;goldenrod1&quot;)
+&nbsp;
+&nbsp;
+#gc() # empty RAM
+&nbsp;
+proc.time()
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+# Plot a time series (example of the data), Figure 1. 
+BBB &lt;- get.var.ncdf(X, start= c(72,33,1), count=c(1,1,6940))         # 72 = longitude -5, 33 = latitude 41 (calibrated on the island Corsica)
+XXX &lt;- c(seq(from = 1, to = 6940, by =1))                            # Make a time series
+plot(BBB~XXX, ylim= c(-10,35), xlab=&quot;time&quot;, ylab=&quot;temperature (degrees Celsius)&quot;, pch=16, cex=0.3, col = &quot;red&quot;)                                       # Plot the time series
+&nbsp;
+&nbsp;
+AAA &lt;- get.var.ncdf(X, start= c(72,33,1), count=c(30,24,1))          # Data for the map of France (turned version)
+&nbsp;
+&nbsp;
+AAA[AAA&lt;(-99.0)]&lt;- NaN 
+&nbsp;
+rotate &lt;- function(AAA) t(apply(AAA, 2, rev))                        # Define the rotation 
+AAA &lt;-rotate(AAA)                                                    # Turn the map three times 90 degrees
+AAA &lt;-rotate(AAA)
+AAA &lt;-rotate(AAA)
+&nbsp;
+r &lt;- raster(ncol=30, nrow=24)                                        # Create raster, equal to the size of France
+values(r) &lt;- AAA                                                     # Put the data for France in the raster
+&nbsp;
+# Figure 2.
+plot(r)                                                              # Plot the raster

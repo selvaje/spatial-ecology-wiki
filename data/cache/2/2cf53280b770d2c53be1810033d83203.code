@@ -1,0 +1,2 @@
+pkstat <span class="re5">-hist</span>  <span class="re5">-nbin</span>  <span class="nu0">100</span> -src_min <span class="nu0">0</span>  <span class="re5">-i</span>   vegetation<span class="sy0">/</span>GPPstdev08-<span class="nu0">11</span>.tif
+pkstat <span class="re5">-hist</span>  -src_min <span class="nu0">0</span>             <span class="re5">-i</span>   temperature<span class="sy0">/</span>ug_bio_3.tif

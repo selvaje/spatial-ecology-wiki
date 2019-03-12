@@ -1,0 +1,4 @@
+<span class="co1">-- Syntax</span>
+<span class="kw1">DROP</span> COLLECTION collName 
+<span class="co1">-- Example</span>
+<span class="kw1">DROP</span> COLLECTION mr 

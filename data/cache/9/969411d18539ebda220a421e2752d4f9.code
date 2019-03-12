@@ -1,0 +1,7 @@
+<span class="co1">-- Syntax</span>
+<span class="br0">&#123;</span> const_0<span class="sy0">,</span>
+     <span class="sy0">...</span>
+  const_n
+<span class="br0">&#125;</span>
+<span class="co1">-- Example for a composite value with 3 bands</span>
+<span class="kw1">SELECT</span> <span class="br0">&#123;</span><span class="nu0">255</span><span class="sy0">,</span> <span class="nu0">200</span><span class="sy0">,</span> <span class="nu0">128</span><span class="br0">&#125;</span>

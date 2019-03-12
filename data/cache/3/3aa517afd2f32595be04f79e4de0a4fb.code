@@ -1,0 +1,1 @@
+v.out.ascii   <span class="re2">input</span>=join_basedata_markblokc_c  <span class="re2">fs</span>=<span class="st0">&quot; &quot;</span>   <span class="re2">columns</span>=BNI_nr,Nudv_kg_,Opl_NS  <span class="sy0">&gt;</span> join_basedata_markblokc_c_table.txt

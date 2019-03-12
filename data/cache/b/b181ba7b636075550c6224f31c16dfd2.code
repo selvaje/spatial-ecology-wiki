@@ -1,0 +1,17 @@
+<span class="co1">-- Syntax</span>
+MARRAY var <span class="kw1">IN</span> mintervalExp <span class="br0">&#91;</span><span class="sy0">,</span> var <span class="kw1">IN</span> mintervalExp<span class="br0">&#93;</span>
+<span class="kw1">VALUES</span> cellExp
+&nbsp;
+<span class="co1">-- Creating an array of domain [ 1:100, -50:200 ] with values 1</span>
+<span class="kw1">SELECT</span> MARRAY x <span class="kw1">IN</span> <span class="br0">&#91;</span> <span class="nu0">1</span>:<span class="nu0">100</span><span class="sy0">,</span> <span class="sy0">-</span><span class="nu0">50</span>:<span class="nu0">200</span> <span class="br0">&#93;</span> <span class="kw1">VALUES</span> 1c
+&nbsp;
+<span class="co1">-- Creating an array of 256 X 101 with the value in each cell equal to the number of the row</span>
+<span class="kw1">SELECT</span> MARRAY x <span class="kw1">IN</span> <span class="br0">&#91;</span> <span class="nu0">0</span>:<span class="nu0">255</span><span class="sy0">,</span> <span class="nu0">0</span>:<span class="nu0">100</span> <span class="br0">&#93;</span> <span class="kw1">VALUES</span> x<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="co1">-- Creating a histogram of values ranging 0 to 9 in the mr array</span>
+<span class="kw1">SELECT</span> MARRAY v <span class="kw1">IN</span> <span class="br0">&#91;</span> <span class="nu0">0</span> : <span class="nu0">9</span> <span class="br0">&#93;</span>
+       <span class="kw1">VALUES</span> CONDENSE <span class="sy0">+</span>
+              <span class="kw1">OVER</span>  x <span class="kw1">IN</span> sdom<span class="br0">&#40;</span>mr<span class="br0">&#41;</span>
+              <span class="kw1">WHERE</span> mr<span class="br0">&#91;</span>x<span class="br0">&#93;</span> <span class="sy0">=</span> v<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+              <span class="kw1">USING</span> <span class="nu0">1</span>
+<span class="kw1">FROM</span> mr

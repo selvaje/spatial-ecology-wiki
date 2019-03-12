@@ -1,0 +1,4 @@
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>moran<span class="sy0">/</span><span class="nu0">20</span><span class="sy0">*</span><span class="nu0">43023435</span>.tif ; <span class="kw1">do</span> 
+   pkcrop <span class="re5">-e</span>  .....using shapefile
+   pkcrop <span class="re5">-e</span>  .....using the other shapefile 
+<span class="kw1">done</span>

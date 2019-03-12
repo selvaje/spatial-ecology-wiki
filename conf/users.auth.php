@@ -24,3 +24,5 @@ aneta:$1$qjqEfy4A$4v6m2Z6JEVGPfqDPE7tsC0:aneta:giuseppe.amatulli@gmail.com:teach
 tushar:$1$GDjR4j8F$o5CVn/sajP.iC2p3KypHC1:tushar:giuseppe.amatulli@gmail.com:teacher
 learner:$1$teyRi48a$JQr8RYGb5F38kCCydl2CN0:Trias Rahardianto:trias.rh@gmail.com:user
 ache:$1$HT4NVkvG$3BhPyja8s6xHnLfQJNGLL1:Acheampong Atta-Boateng:acheboate@gmail.com:user
+promoocodes:$1$xQii1Nlu$deOAOPlfokHwVZrWzC4Cn.:annabel parker:annabel48084@gmail.com:user
+ericdoe1st:$1$hAHEd6nT$aEaIWuPpNVtTFWapbsyUj1:Eric Doe:ericdoe1st@gmail.com:user

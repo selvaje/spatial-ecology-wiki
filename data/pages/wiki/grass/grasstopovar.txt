@@ -1,5 +1,3 @@
-~~NOCACHE~~
-
 ====== A suite of global, cross-scale topographic variables for environmental and biodiversity modeling ======
 Scripting procedure to recreate derived and aggregated topographic variables using [[ http://topotools.cr.usgs.gov/GMTED_viewer/ | Global Multi-resolution Terrain Elevation Data 2010 (GMTED2010)  ]]
 Script written by Giuseppe Amatulli

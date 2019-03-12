@@ -1,0 +1,11 @@
+<span class="kw2">sudo</span> <span class="kw2">nano</span> <span class="sy0">/</span>etc<span class="sy0">/</span>inittab
+<span class="co0"># to set default runlevel = 3</span>
+<span class="co0"># change id:2:initdefault with: id:3.... it should look like this:</span>
+<span class="co0"># The default runlevel.</span>
+<span class="co0"># id:3:initdefault:</span>
+<span class="kw2">sudo</span> update-rc.d nfs-kernel-server defaults
+<span class="kw2">sudo</span> update-rc.d rpcbind defaults
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> nfs-kernel-server portmap nfs-common
+<span class="kw2">sudo</span> <span class="kw2">nano</span> <span class="sy0">/</span>etc<span class="sy0">/</span>exports <span class="co0"># add the export as above</span>
+<span class="kw2">sudo</span> service portmap start
+<span class="kw2">sudo</span> reboot

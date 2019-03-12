@@ -1,0 +1,4 @@
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr
+gdal_translate <span class="re5">-of</span>  XYZ   input.tif  output.txt
+<span class="kw2">awk</span> <span class="st_h">'{if ($3&gt;0.01 &amp;&amp; $3&lt;0.9) {print $1,$2,50 } else {print}}'</span> output.txt <span class="sy0">&gt;</span> output_change.txt
+gdal_translate output_change.txt output_change.tif 

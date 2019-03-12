@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://www.spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://www.spatial-ecology.net/dokuwiki/feed.php">
+        <title> wiki:rstat</title>
+        <description></description>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2019-03-01T17:55:40+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_cohen_kappa&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_geography&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_proj&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_rast&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_vect&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_spat_covar&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_visual&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:rgwmodel&amp;rev=1512514411&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:rparale&amp;rev=1534727498&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:sdmodel&amp;rev=1512514411&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <url>http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_cohen_kappa&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:r_cohen_kappa</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_cohen_kappa&amp;rev=1512514411&amp;do=diff</link>
+        <description>Cohen's Kappa statistics for comparing categorical maps
+
+Back to R geographical analyses  main menue.
+
+
+
+In this tutorial we learn how to compare 2 categorical maps using the kappa statistics.
+
+ Supplementary readings on Cohen's Kappa statistics.
+
+As rule of thumbs these are Kappa values for interpretation:</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_geography&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:r_geography</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_geography&amp;rev=1512514411&amp;do=diff</link>
+        <description>Geographical analyses with R
+
+A wide variety of R packages are available to read, visualize and process vector and raster maps with R. An  overview of R packages  for the analyses of spatial data.
+
+
+	* Load and plot raster maps in R. Download layers from online data repositories, plot maps and save images with legends.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_proj&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:r_load_proj</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_proj&amp;rev=1512514411&amp;do=diff</link>
+        <description>Create maps using open layers
+
+Reproject vector and plot it over google map
+
+We use the ward administration boundary of Cornwall as vector layer and overlay it to google map. The ward layer need to be reprojected into epsg:3856 map projection to harmonize maps.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_rast&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:r_load_rast</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_rast&amp;rev=1512514411&amp;do=diff</link>
+        <description>Raster data processing in R - load and plot maps
+
+Back to spatial analyses in R
+
+We can create a temporary folder to process data frm this tutorial migrate to this folder and enter R from there so owr wR working directory will be this one
+mkdir visualR
+cd visualR
+R
+Raster data visualization</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_vect&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:r_load_vect</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_load_vect&amp;rev=1512514411&amp;do=diff</link>
+        <description>Load, plot vector layers &amp; do spatial joins in R
+
+Back to spatial analyses in R
+
+Vector data visualization
+
+We have followed a  spatial.ly tutorial to replicate and improve our case study. Here we work on vector layers, first download a compressed folder in linux environment and extract it and check what you have using bash functions within R.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_spat_covar&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:r_spat_covar</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_spat_covar&amp;rev=1512514411&amp;do=diff</link>
+        <description>Spatial Covariance
+
+Back to  Spatial analysis in R main menu.
+
+
+
+In probability theory and statistics,  covariance is a measure of how much two variables change together. While dealing with spatial statistics we test the geographical induced changes and analyze the spatial covariance</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_visual&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:r_visual</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_visual&amp;rev=1512514411&amp;do=diff</link>
+        <description>Load geographical data and visualize it on R
+
+Vector data visualization
+
+We have followed a  spatial.ly tutorial to replicate and improve our case study. Here we work on vector layers, first download a compressed folder in linux environment and extract it and check what you have using bash functions within R.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:rgwmodel&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:rgwmodel</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:rgwmodel&amp;rev=1512514411&amp;do=diff</link>
+        <description>GWmodel R package
+
+Dr.  Paul Harris,  Rothamsted research, presenting Modelling Spatial Heterogeneity with Geographically Weighted Models.
+
+In GWmodel, we introduce techniques from a particular branch of spatial statistics,termed geographically-weighted (GW) models.
+
+GW models suit situations when data are not described well by some global model, but where there are spatial regions where a suitably localised calibration provides a better description.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:rparale&amp;rev=1534727498&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-08-20T01:11:38+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:rparale</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:rparale&amp;rev=1534727498&amp;do=diff</link>
+        <description>Parallel R using foreach
+
+
+
+Material prepared by Stephen Weston
+
+
+
+The object of the exercise is to calculate the Moran's I index (using R) inside the polygons of the poly_fr_10poly.shp shape file.
+
+
+
+&lt;http://www.spatial-ecology.net/ost4sem/lecture/pr.pdf&gt;
+
+
+&lt;https://cran.r-project.org/web/packages/foreach/vignettes/foreach.pdf&gt;
+
+
+
+
+
+
+
+
+for this exercise you can enter in this directory</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:sdmodel&amp;rev=1512514411&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2017-12-05T22:53:31+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:rstat:sdmodel</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:sdmodel&amp;rev=1512514411&amp;do=diff</link>
+        <description>Species Distribution Modelling
+
+Species distribution modeling (SDM) ( or envelope-modeling, habitat modeling, environmental /
+ecological niche-modeling) are spatially based models estimate the similarity of the conditions at any site to the conditions at the locations of known occurrence (and perhaps of non-occurrence) of a phenomenon. (reference Hijmans and Helith). They are used to predict species ranges, biomes, vegetation formations or otherfeatures occurrence with climate and environmental …</description>
+    </item>
+</rdf:RDF>

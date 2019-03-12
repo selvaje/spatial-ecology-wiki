@@ -1,0 +1,36 @@
+<span class="co0">### 1. The first step is to read the xls file into R:</span>
+<span class="co0">### Depending on the size of the xls file, and the limited RAM,</span>
+<span class="co0">### it may be better to convert the xls file to a csv on a remote server as follows:</span>
+ <span class="co0">## copy xls file to remote server:</span>
+ <span class="kw2">scp</span> <span class="sy0">/</span>media<span class="sy0">/</span>sf_ProjectShare<span class="sy0">/</span>FarmBirds.xlsx  user<span class="sy0">@</span>remoteserver:~ost4sem<span class="sy0">/</span>MyProject<span class="sy0">/</span>FarmBirds.xlsx
+&nbsp;
+ <span class="co0">## if needed - copy the R directory from local to remote server:</span>
+ <span class="kw2">scp</span> <span class="re5">-r</span> R user<span class="sy0">@</span>remoteserver:~<span class="re1">$R</span>
+&nbsp;
+ <span class="co0">## Log in to the remote server, enter R and install and load the &quot;gdata&quot; package:</span>
+ <span class="kw2">ssh</span> user<span class="sy0">@</span>remoteserver
+ R
+ install.packages<span class="br0">&#40;</span><span class="st0">&quot;gdata&quot;</span><span class="br0">&#41;</span>
+ library<span class="br0">&#40;</span>gdata<span class="br0">&#41;</span>
+&nbsp;
+ <span class="co0">## convert xls to csv file:</span>
+ xls2csv<span class="br0">&#40;</span>xls = <span class="st0">&quot;ost4sem/MyProject/FarmBirds.xlsx&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+ <span class="co0">## quit R and move the resulting csv file to the project directory on the remote server:</span>
+ q<span class="br0">&#40;</span><span class="br0">&#41;</span>
+ <span class="kw2">mv</span> tmp<span class="sy0">/</span>RtmpKI5hk8<span class="sy0">/</span>fileb83e1230546e.csv home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>MyProject
+&nbsp;
+ <span class="co0">## exit the remote server, and copy csv file from the remote server to the local working directory:</span>
+ <span class="kw3">exit</span>
+ <span class="kw2">scp</span> user<span class="sy0">@</span>remoteserver:~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>MyProject<span class="sy0">/</span>fileb83e1230546e.csv RyWork<span class="sy0">/</span>MyProject<span class="sy0">/</span>
+&nbsp;
+ <span class="co0">## rename csv file:</span>
+ <span class="kw2">mv</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>RyWork<span class="sy0">/</span>MyProject<span class="sy0">/</span>fileb83e1230546e.csv <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>RyWork<span class="sy0">/</span>MyProject<span class="sy0">/</span>FarmBirds_Rcsv.csv
+&nbsp;
+ <span class="co0">## Enter R, or open R console (RStudio), and read in the &quot;FarmBirds_Rcsv.csv&quot; as a data.frame:</span>
+ FarmBirds <span class="sy0">&lt;</span>- read.csv<span class="br0">&#40;</span><span class="re2">file</span>=<span class="st0">&quot;/home/user/RyWork/MyProject/FarmBirds_Rcsv.csv&quot;</span>,<span class="re2">sep</span>=<span class="st0">&quot;,&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+ <span class="co0">## for later steps - copy shapefiles to be processed in R to the local working directory:</span>
+ <span class="kw2">cp</span> <span class="sy0">/</span>media<span class="sy0">/</span>sf_ProjectShare<span class="sy0">/</span>Sweden<span class="sy0">*</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>RyWork<span class="sy0">/</span>MyProject<span class="sy0">/</span>
+ <span class="kw2">cp</span> <span class="sy0">/</span>media<span class="sy0">/</span>sf_ProjectShare<span class="sy0">/</span>Inventoried_Fields<span class="sy0">*</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>RyWork<span class="sy0">/</span>MyProject<span class="sy0">/</span>
+&nbsp;

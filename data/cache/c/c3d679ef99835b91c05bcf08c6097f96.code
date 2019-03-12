@@ -1,0 +1,4 @@
+<span class="co0"># Create a multiband vrt </span>
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> LST<span class="sy0">/</span>LST_MOYDmax_month.vrt LST<span class="sy0">/</span>LST_MOYDmax_month?.tif LST<span class="sy0">/</span>LST_MOYDmax_month??.tif 
+<span class="co0"># Calculate mean and standard deviation</span>
+pkstatprofile <span class="re5">-co</span>  <span class="re2">COMPRESS</span>=LZW <span class="re5">-nodata</span> <span class="nu0">0</span> <span class="re5">-f</span> mean <span class="re5">-f</span> stdev  <span class="re5">-i</span> LST<span class="sy0">/</span>LST_MOYDmax_month.vrt <span class="re5">-o</span> LST<span class="sy0">/</span>LST_MOYDmax_month_mean_stdev.tif

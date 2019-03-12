@@ -1,0 +1,1 @@
+convert <span class="re5">-density</span> <span class="nu0">600</span> <span class="re5">-colorspace</span> Gray     INPUT_color_document.pdf      OUTPUT_black_and_white_document.pdf

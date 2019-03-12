@@ -1,0 +1,1236 @@
+
+<h2 class="sectionedit1" id="some_advanced_modules">Some advanced modules</h2>
+<div class="level2">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=0" title="Download Snippet" class="mediafile mf_py">| 07/01-shaded-relief.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Creates a shaded relief ASCII grid
+    from an ASCII DEM.  Also outputs
+    intermediate grids for slope and
+    aspect.
+    &quot;&quot;&quot;</span>
+    <span class="kw1">from</span> <span class="kw3">linecache</span> <span class="kw1">import</span> getline
+    <span class="kw1">import</span> numpy <span class="kw1">as</span> np
+&nbsp;
+    <span class="co1"># File name of ASCII digital elevation model</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;dem.asc&quot;</span>
+    <span class="co1"># File name of the slope grid</span>
+    slopegrid <span class="sy0">=</span> <span class="st0">&quot;slope.asc&quot;</span>
+    <span class="co1"># File name of the aspect grid</span>
+    aspectgrid <span class="sy0">=</span> <span class="st0">&quot;aspect.asc&quot;</span>
+    <span class="co1"># Output file name for shaded relief</span>
+    shadegrid <span class="sy0">=</span> <span class="st0">&quot;relief.asc&quot;</span>
+    <span class="co1">## Shaded elevation parameters</span>
+    <span class="co1"># Sun direction</span>
+    azimuth<span class="sy0">=</span><span class="nu0">315.0</span>
+    <span class="co1"># Sun angle</span>
+    altitude<span class="sy0">=</span><span class="nu0">45.0</span>
+    <span class="co1"># Elevation exageration</span>
+    z<span class="sy0">=</span><span class="nu0">1.0</span>
+    <span class="co1"># Resolution</span>
+    scale<span class="sy0">=</span><span class="nu0">1.0</span>
+    <span class="co1"># No data value for output</span>
+    NODATA <span class="sy0">=</span> -<span class="nu0">9999</span>
+&nbsp;
+    <span class="co1"># Needed for numpy conversions</span>
+    deg2rad <span class="sy0">=</span> <span class="nu0">3.141592653589793</span> / <span class="nu0">180.0</span>
+    rad2deg <span class="sy0">=</span> <span class="nu0">180.0</span> / <span class="nu0">3.141592653589793</span>
+&nbsp;
+    <span class="co1"># Parse the header using a loop and</span>
+    <span class="co1"># the built-in linecache module</span>
+    hdr <span class="sy0">=</span> <span class="br0">&#91;</span>getline<span class="br0">&#40;</span>source<span class="sy0">,</span> i<span class="br0">&#41;</span> <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">7</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+    values <span class="sy0">=</span> <span class="br0">&#91;</span><span class="kw2">float</span><span class="br0">&#40;</span>h.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="br0">&#41;</span><span class="br0">&#91;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">strip</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">for</span> h <span class="kw1">in</span> hdr<span class="br0">&#93;</span>
+    cols<span class="sy0">,</span>rows<span class="sy0">,</span>lx<span class="sy0">,</span>ly<span class="sy0">,</span>cell<span class="sy0">,</span>nd <span class="sy0">=</span> values
+    xres <span class="sy0">=</span> cell
+    yres <span class="sy0">=</span> cell * -<span class="nu0">1</span>
+&nbsp;
+    <span class="co1"># Load the dem into a numpy array</span>
+    arr <span class="sy0">=</span> np.<span class="me1">loadtxt</span><span class="br0">&#40;</span>source<span class="sy0">,</span> skiprows<span class="sy0">=</span><span class="nu0">6</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Exclude 2 pixels around the edges which are usually NODATA.</span>
+    <span class="co1"># Also set up structure for a 3x3 windows to process the slope</span>
+    <span class="co1"># throughout the grid</span>
+    window <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+    <span class="kw1">for</span> row <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span>:
+        <span class="kw1">for</span> col <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="br0">&#41;</span>:
+            window.<span class="me1">append</span><span class="br0">&#40;</span>arr<span class="br0">&#91;</span>row:<span class="br0">&#40;</span>row + arr.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> - <span class="nu0">2</span><span class="br0">&#41;</span><span class="sy0">,</span> \
+            col:<span class="br0">&#40;</span>col + arr.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> - <span class="nu0">2</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Process each cell</span>
+    x <span class="sy0">=</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>z * window<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">6</span><span class="br0">&#93;</span><span class="br0">&#41;</span> \
+       - <span class="br0">&#40;</span>z * window<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">5</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">5</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">8</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> \
+      / <span class="br0">&#40;</span><span class="nu0">8.0</span> * xres * scale<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    y <span class="sy0">=</span> <span class="br0">&#40;</span><span class="br0">&#40;</span>z * window<span class="br0">&#91;</span><span class="nu0">6</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">7</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">7</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">8</span><span class="br0">&#93;</span><span class="br0">&#41;</span> \
+       - <span class="br0">&#40;</span>z * window<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> + z * window<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> \
+      / <span class="br0">&#40;</span><span class="nu0">8.0</span> * yres * scale<span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="co1"># Calculate slope  </span>
+    slope <span class="sy0">=</span> <span class="nu0">90.0</span> - np.<span class="me1">arctan</span><span class="br0">&#40;</span>np.<span class="me1">sqrt</span><span class="br0">&#40;</span>x*x + y*y<span class="br0">&#41;</span><span class="br0">&#41;</span> * rad2deg
+&nbsp;
+    <span class="co1"># Calculate aspect</span>
+    aspect <span class="sy0">=</span> np.<span class="me1">arctan2</span><span class="br0">&#40;</span>x<span class="sy0">,</span> y<span class="br0">&#41;</span>  
+&nbsp;
+    <span class="co1"># Calculate the shaded relief</span>
+    shaded <span class="sy0">=</span> np.<span class="me1">sin</span><span class="br0">&#40;</span>altitude * deg2rad<span class="br0">&#41;</span> * np.<span class="me1">sin</span><span class="br0">&#40;</span>slope * deg2rad<span class="br0">&#41;</span> \
+           + np.<span class="me1">cos</span><span class="br0">&#40;</span>altitude * deg2rad<span class="br0">&#41;</span> * np.<span class="me1">cos</span><span class="br0">&#40;</span>slope * deg2rad<span class="br0">&#41;</span> \
+           * np.<span class="me1">cos</span><span class="br0">&#40;</span><span class="br0">&#40;</span>azimuth - <span class="nu0">90.0</span><span class="br0">&#41;</span> * deg2rad - aspect<span class="br0">&#41;</span><span class="sy0">;</span>
+    shaded <span class="sy0">=</span> shaded * <span class="nu0">255</span>
+&nbsp;
+    <span class="co1"># Rebuild the new header</span>
+    header <span class="sy0">=</span> <span class="st0">&quot;ncols        %s<span class="es0">\n</span>&quot;</span> % shaded.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;nrows        %s<span class="es0">\n</span>&quot;</span> % shaded.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;xllcorner    %s<span class="es0">\n</span>&quot;</span> % <span class="br0">&#40;</span>lx + <span class="br0">&#40;</span>cell * <span class="br0">&#40;</span>cols - shaded.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;yllcorner    %s<span class="es0">\n</span>&quot;</span> % <span class="br0">&#40;</span>ly + <span class="br0">&#40;</span>cell * <span class="br0">&#40;</span>rows - shaded.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;cellsize     %s<span class="es0">\n</span>&quot;</span> % cell
+    header +<span class="sy0">=</span> <span class="st0">&quot;NODATA_value      %s<span class="es0">\n</span>&quot;</span> % NODATA
+&nbsp;
+    <span class="co1"># Set no-data values</span>
+    <span class="kw1">for</span> pane <span class="kw1">in</span> window:
+       slope<span class="br0">&#91;</span>pane <span class="sy0">==</span> nd<span class="br0">&#93;</span> <span class="sy0">=</span> NODATA
+       aspect<span class="br0">&#91;</span>pane <span class="sy0">==</span> nd<span class="br0">&#93;</span> <span class="sy0">=</span> NODATA
+       shaded<span class="br0">&#91;</span>pane <span class="sy0">==</span> nd<span class="br0">&#93;</span> <span class="sy0">=</span> NODATA
+&nbsp;
+    <span class="co1"># Open the output file, add the header, save the slope grid</span>
+    <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>slopegrid<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+      f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+      np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> slope<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%4i&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Open the output file, add the header, save the slope grid</span>
+    <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>aspectgrid<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+      f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+      np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> aspect<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%4i&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Open the output file, add the header, save the array</span>
+    <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>shadegrid<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+      f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+      np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> shaded<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%4i&quot;</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=1" title="Download Snippet" class="mediafile mf_py">| 07/02-contour.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Use GDAL and OGR to create a contour shapefile
+    &quot;&quot;&quot;</span>
+    <span class="kw1">import</span> gdal
+    <span class="kw1">import</span> ogr
+&nbsp;
+    <span class="co1"># Elevation DEM</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;dem.asc&quot;</span>
+    <span class="co1"># Output shapefile</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;contour&quot;</span>
+&nbsp;
+&nbsp;
+    ogr_ds <span class="sy0">=</span> ogr.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">'ESRI Shapefile'</span><span class="br0">&#41;</span>.<span class="me1">CreateDataSource</span><span class="br0">&#40;</span>target + <span class="st0">&quot;.shp&quot;</span><span class="br0">&#41;</span>
+    ogr_lyr <span class="sy0">=</span> ogr_ds.<span class="me1">CreateLayer</span><span class="br0">&#40;</span>target<span class="sy0">,</span> geom_type <span class="sy0">=</span> ogr.<span class="me1">wkbLineString25D</span><span class="br0">&#41;</span>
+    field_defn <span class="sy0">=</span> ogr.<span class="me1">FieldDefn</span><span class="br0">&#40;</span><span class="st0">'ID'</span><span class="sy0">,</span> ogr.<span class="me1">OFTInteger</span><span class="br0">&#41;</span>
+    ogr_lyr.<span class="me1">CreateField</span><span class="br0">&#40;</span>field_defn<span class="br0">&#41;</span>
+    field_defn <span class="sy0">=</span> ogr.<span class="me1">FieldDefn</span><span class="br0">&#40;</span><span class="st0">'ELEV'</span><span class="sy0">,</span> ogr.<span class="me1">OFTReal</span><span class="br0">&#41;</span>
+    ogr_lyr.<span class="me1">CreateField</span><span class="br0">&#40;</span>field_defn<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># gdal.ContourGenerate() arguments</span>
+    <span class="co1"># Band srcBand,</span>
+    <span class="co1"># double contourInterval,</span>
+    <span class="co1"># double contourBase,</span>
+    <span class="co1"># double[] fixedLevelCount,</span>
+    <span class="co1"># int useNoData,</span>
+    <span class="co1"># double noDataValue,</span>
+    <span class="co1"># Layer dstLayer,</span>
+    <span class="co1"># int idField,</span>
+    <span class="co1"># int elevField</span>
+&nbsp;
+    ds <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span><span class="st0">'dem.asc'</span><span class="br0">&#41;</span>
+    gdal.<span class="me1">ContourGenerate</span><span class="br0">&#40;</span>ds.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">400</span><span class="sy0">,</span> <span class="nu0">10</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> ogr_lyr<span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=2" title="Download Snippet" class="mediafile mf_py">| 07/03-drawContours.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Draw an entire contour shapefile
+    to a pngcanvas image.
+    &quot;&quot;&quot;</span>
+    <span class="kw1">import</span> shapefile
+    <span class="kw1">import</span> pngcanvas
+    <span class="co1"># Open the contours</span>
+    r <span class="sy0">=</span> shapefile.<span class="me1">Reader</span><span class="br0">&#40;</span><span class="st0">&quot;contour.shp&quot;</span><span class="br0">&#41;</span>
+    <span class="co1"># Setup the world to pixels conversion</span>
+    xdist <span class="sy0">=</span> r.<span class="me1">bbox</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> - r.<span class="me1">bbox</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    ydist <span class="sy0">=</span> r.<span class="me1">bbox</span><span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> - r.<span class="me1">bbox</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    iwidth <span class="sy0">=</span> <span class="nu0">800</span>
+    iheight <span class="sy0">=</span> <span class="nu0">600</span>
+    xratio <span class="sy0">=</span> iwidth/xdist
+    yratio <span class="sy0">=</span> iheight/ydist
+    contours <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+    <span class="co1"># Loop through all shapes</span>
+    <span class="kw1">for</span> shape <span class="kw1">in</span> r.<span class="me1">shapes</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+      <span class="co1"># Loop through all parts</span>
+      <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>shape.<span class="me1">parts</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+        pixels<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#93;</span>
+        pt <span class="sy0">=</span> <span class="kw2">None</span>
+        <span class="kw1">if</span> i<span class="sy0">&lt;</span><span class="kw2">len</span><span class="br0">&#40;</span>shape.<span class="me1">parts</span><span class="br0">&#41;</span>-<span class="nu0">1</span>:
+          pt <span class="sy0">=</span> shape.<span class="me1">points</span><span class="br0">&#91;</span>shape.<span class="me1">parts</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span>:shape.<span class="me1">parts</span><span class="br0">&#91;</span>i+<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        <span class="kw1">else</span>:
+          pt <span class="sy0">=</span> shape.<span class="me1">points</span><span class="br0">&#91;</span>shape.<span class="me1">parts</span><span class="br0">&#91;</span>i<span class="br0">&#93;</span>:<span class="br0">&#93;</span>
+        <span class="kw1">for</span> x<span class="sy0">,</span>y <span class="kw1">in</span> pt:
+          px <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>iwidth - <span class="br0">&#40;</span><span class="br0">&#40;</span>r.<span class="me1">bbox</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span> - x<span class="br0">&#41;</span> * xratio<span class="br0">&#41;</span><span class="br0">&#41;</span>
+          py <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>r.<span class="me1">bbox</span><span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> - y<span class="br0">&#41;</span> * yratio<span class="br0">&#41;</span>
+          pixels.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#91;</span>px<span class="sy0">,</span>py<span class="br0">&#93;</span><span class="br0">&#41;</span>
+        contours.<span class="me1">append</span><span class="br0">&#40;</span>pixels<span class="br0">&#41;</span>
+    <span class="co1"># Set up the output canvas</span>
+    canvas <span class="sy0">=</span> pngcanvas.<span class="me1">PNGCanvas</span><span class="br0">&#40;</span>iwidth<span class="sy0">,</span>iheight<span class="br0">&#41;</span>
+    <span class="co1"># PNGCanvas accepts rgba byte arrays for colors</span>
+    red <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">0xff</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0xff</span><span class="br0">&#93;</span>
+    canvas.<span class="me1">color</span> <span class="sy0">=</span> red 
+    <span class="co1"># Loop through the polygons and draw them</span>
+    <span class="kw1">for</span> c <span class="kw1">in</span> contours:
+      canvas.<span class="me1">polyline</span><span class="br0">&#40;</span>c<span class="br0">&#41;</span>
+    <span class="co1"># Save the image</span>
+    f <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">&quot;contours.png&quot;</span><span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span>
+    f.<span class="me1">write</span><span class="br0">&#40;</span>canvas.<span class="me1">dump</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    f.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=3" title="Download Snippet" class="mediafile mf_py">| 07/04-grid.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Converts a LIDAR LAS file to an
+    ASCII DEM.  Interpolation is used
+    to account for data loss.  
+    &quot;&quot;&quot;</span>
+    <span class="co1"># We only need 2 modules</span>
+    <span class="co1"># both available on PyPI!</span>
+    <span class="kw1">from</span> laspy.<span class="kw2">file</span> <span class="kw1">import</span> File
+    <span class="kw1">import</span> numpy <span class="kw1">as</span> np
+&nbsp;
+    <span class="co1"># Source LAS file</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;lidar.las&quot;</span>
+&nbsp;
+    <span class="co1"># Output ASCII DEM file</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;lidar.asc&quot;</span>
+&nbsp;
+    <span class="co1"># Grid cell size (data units)</span>
+    cell <span class="sy0">=</span> <span class="nu0">1.0</span>
+&nbsp;
+    <span class="co1"># No data value for output DEM</span>
+    NODATA <span class="sy0">=</span> <span class="nu0">0</span>
+&nbsp;
+    <span class="co1"># Open LIDAR LAS file</span>
+    las <span class="sy0">=</span> File<span class="br0">&#40;</span>source<span class="sy0">,</span> mode<span class="sy0">=</span><span class="st0">&quot;r&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1">#xyz min and max</span>
+    <span class="kw2">min</span> <span class="sy0">=</span> las.<span class="me1">header</span>.<span class="kw2">min</span>
+    <span class="kw2">max</span> <span class="sy0">=</span> las.<span class="me1">header</span>.<span class="kw2">max</span>
+&nbsp;
+    <span class="co1"># Get the x axis distance</span>
+    xdist <span class="sy0">=</span> <span class="kw2">max</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> - <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Get the y axis distance</span>
+    ydist <span class="sy0">=</span> <span class="kw2">max</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> - <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Number of columns for our grid</span>
+    cols <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>xdist<span class="br0">&#41;</span> / cell
+&nbsp;
+    <span class="co1"># Number of rows for our grid</span>
+    rows <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>ydist<span class="br0">&#41;</span> / cell
+&nbsp;
+    cols +<span class="sy0">=</span> <span class="nu0">1</span>
+    rows +<span class="sy0">=</span> <span class="nu0">1</span>
+&nbsp;
+    <span class="co1"># Track how many elevation</span>
+    <span class="co1"># values we aggregate</span>
+    count <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span>rows<span class="sy0">,</span> cols<span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">float32</span><span class="br0">&#41;</span>
+    <span class="co1"># Aggregate elevation values</span>
+    zsum <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span>rows<span class="sy0">,</span> cols<span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">float32</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Y resolution is negative</span>
+    ycell <span class="sy0">=</span> -<span class="nu0">1</span> * cell
+&nbsp;
+    <span class="co1"># Project x,y values to grid</span>
+    projx <span class="sy0">=</span> <span class="br0">&#40;</span>las.<span class="me1">x</span> - <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span> / cell
+    projy <span class="sy0">=</span> <span class="br0">&#40;</span>las.<span class="me1">y</span> - <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span> / ycell
+    <span class="co1"># Cast to integers and clip for use as index</span>
+    ix <span class="sy0">=</span> projx.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">int32</span><span class="br0">&#41;</span>
+    iy <span class="sy0">=</span> projy.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">int32</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Loop through x,y,z arrays, add to grid shape,</span>
+    <span class="co1"># and aggregate values for averaging</span>
+    <span class="kw1">for</span> x<span class="sy0">,</span>y<span class="sy0">,</span>z <span class="kw1">in</span> np.<span class="me1">nditer</span><span class="br0">&#40;</span><span class="br0">&#91;</span>ix<span class="sy0">,</span> iy<span class="sy0">,</span> las.<span class="me1">z</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+      count<span class="br0">&#91;</span>y<span class="sy0">,</span> x<span class="br0">&#93;</span>+<span class="sy0">=</span><span class="nu0">1</span>
+      zsum<span class="br0">&#91;</span>y<span class="sy0">,</span> x<span class="br0">&#93;</span>+<span class="sy0">=</span>z
+&nbsp;
+    <span class="co1"># Change 0 values to 1 to avoid numpy warnings, </span>
+    <span class="co1"># and NaN values in array</span>
+    nonzero <span class="sy0">=</span> np.<span class="me1">where</span><span class="br0">&#40;</span>count<span class="sy0">&gt;</span><span class="nu0">0</span><span class="sy0">,</span> count<span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="co1"># Average our z values</span>
+    zavg <span class="sy0">=</span> zsum/nonzero
+&nbsp;
+    <span class="co1"># Interpolate 0 values in array to avoid any</span>
+    <span class="co1"># holes in the grid</span>
+    mean <span class="sy0">=</span> np.<span class="me1">ones</span><span class="br0">&#40;</span><span class="br0">&#40;</span>rows<span class="sy0">,</span>cols<span class="br0">&#41;</span><span class="br0">&#41;</span> * np.<span class="me1">mean</span><span class="br0">&#40;</span>zavg<span class="br0">&#41;</span>
+    left <span class="sy0">=</span> np.<span class="me1">roll</span><span class="br0">&#40;</span>zavg<span class="sy0">,</span> -<span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+    lavg <span class="sy0">=</span> np.<span class="me1">where</span><span class="br0">&#40;</span>left<span class="sy0">&gt;</span><span class="nu0">0</span><span class="sy0">,</span>left<span class="sy0">,</span>mean<span class="br0">&#41;</span>
+    right <span class="sy0">=</span> np.<span class="me1">roll</span><span class="br0">&#40;</span>zavg<span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+    ravg <span class="sy0">=</span> np.<span class="me1">where</span><span class="br0">&#40;</span>right<span class="sy0">&gt;</span><span class="nu0">0</span><span class="sy0">,</span>right<span class="sy0">,</span>mean<span class="br0">&#41;</span>
+    interpolate <span class="sy0">=</span> <span class="br0">&#40;</span>lavg+ravg<span class="br0">&#41;</span>/<span class="nu0">2</span>
+    fill<span class="sy0">=</span>np.<span class="me1">where</span><span class="br0">&#40;</span>zavg<span class="sy0">&gt;</span><span class="nu0">0</span><span class="sy0">,</span>zavg<span class="sy0">,</span>interpolate<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Create our ASCII DEM header</span>
+    header <span class="sy0">=</span> <span class="st0">&quot;ncols        %s<span class="es0">\n</span>&quot;</span> % fill.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;nrows        %s<span class="es0">\n</span>&quot;</span> % fill.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;xllcorner    %s<span class="es0">\n</span>&quot;</span> % <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;yllcorner    %s<span class="es0">\n</span>&quot;</span> % <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;cellsize     %s<span class="es0">\n</span>&quot;</span> % cell
+    header +<span class="sy0">=</span> <span class="st0">&quot;NODATA_value      %s<span class="es0">\n</span>&quot;</span> % NODATA
+&nbsp;
+    <span class="co1"># Open the output file, add the header, save the array</span>
+    <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>target<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+      f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+      <span class="co1"># The fmt string ensures we output floats </span>
+      <span class="co1"># that have at least one number but only </span>
+      <span class="co1"># two decimal places</span>
+      np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> fill<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%1.2f&quot;</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=4" title="Download Snippet" class="mediafile mf_py">| 07/05-dem2img.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;Convert an ASCII DEM to an image.&quot;&quot;&quot;</span>
+    <span class="kw1">import</span> numpy <span class="kw1">as</span> np
+    <span class="kw1">import</span> Image
+    <span class="kw1">import</span> ImageOps
+&nbsp;
+    <span class="co1"># Source LIDAR DEM file</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;relief.asc&quot;</span>
+&nbsp;
+    <span class="co1"># Output image file</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;relief.bmp&quot;</span>
+&nbsp;
+    <span class="co1"># Load the ASCII DEM into a numpy array</span>
+    arr <span class="sy0">=</span> np.<span class="me1">loadtxt</span><span class="br0">&#40;</span>source<span class="sy0">,</span> skiprows<span class="sy0">=</span><span class="nu0">6</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Convert array to numpy image</span>
+    im <span class="sy0">=</span> Image.<span class="me1">fromarray</span><span class="br0">&#40;</span>arr<span class="br0">&#41;</span>.<span class="me1">convert</span><span class="br0">&#40;</span><span class="st0">'RGB'</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Enhance the image:</span>
+    <span class="co1"># equalize and increase contrast</span>
+    im <span class="sy0">=</span> ImageOps.<span class="me1">equalize</span><span class="br0">&#40;</span>im<span class="br0">&#41;</span>
+    im <span class="sy0">=</span> ImageOps.<span class="me1">autocontrast</span><span class="br0">&#40;</span>im<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Save the image</span>
+    im.<span class="me1">save</span><span class="br0">&#40;</span>target<span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=5" title="Download Snippet" class="mediafile mf_py">| 07/06-colorize.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Convert an ASCII DEM to an image and colorize
+    using a heat-map color ramp
+    &quot;&quot;&quot;</span>
+    <span class="kw1">import</span> numpy <span class="kw1">as</span> np
+    <span class="kw1">import</span> Image
+    <span class="kw1">import</span> ImageOps
+    <span class="kw1">import</span> <span class="kw3">colorsys</span>
+&nbsp;
+    <span class="co1"># Source LIDAR DEM file</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;lidar.asc&quot;</span>
+&nbsp;
+    <span class="co1"># Output image file</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;lidar.bmp&quot;</span>
+&nbsp;
+    <span class="co1"># Load the ASCII DEM into a numpy array</span>
+    arr <span class="sy0">=</span> np.<span class="me1">loadtxt</span><span class="br0">&#40;</span>source<span class="sy0">,</span> skiprows<span class="sy0">=</span><span class="nu0">6</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Convert the numpy array to a PIL image</span>
+    im <span class="sy0">=</span> Image.<span class="me1">fromarray</span><span class="br0">&#40;</span>arr<span class="br0">&#41;</span>.<span class="me1">convert</span><span class="br0">&#40;</span><span class="st0">'L'</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Enhance the image</span>
+    im <span class="sy0">=</span> ImageOps.<span class="me1">equalize</span><span class="br0">&#40;</span>im<span class="br0">&#41;</span>
+    im <span class="sy0">=</span> ImageOps.<span class="me1">autocontrast</span><span class="br0">&#40;</span>im<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Begin building our color ramp</span>
+    palette <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Hue, Saturaction, Value</span>
+    <span class="co1"># color space</span>
+    h <span class="sy0">=</span> <span class="nu0">.67</span>
+    s <span class="sy0">=</span> <span class="nu0">1</span>
+    v <span class="sy0">=</span> <span class="nu0">1</span>
+&nbsp;
+    <span class="co1"># We'll step through colors from:</span>
+    <span class="co1"># blue-green-yellow-orange-red.</span>
+    <span class="co1"># Blue=low elevation, Red=high-elevation</span>
+    step <span class="sy0">=</span> h/<span class="nu0">256.0</span>
+&nbsp;
+    <span class="co1"># Build the palette</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">256</span><span class="br0">&#41;</span>:
+      rp<span class="sy0">,</span>gp<span class="sy0">,</span>bp <span class="sy0">=</span> <span class="kw3">colorsys</span>.<span class="me1">hsv_to_rgb</span><span class="br0">&#40;</span>h<span class="sy0">,</span>s<span class="sy0">,</span>v<span class="br0">&#41;</span>
+      r <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>rp*<span class="nu0">255</span><span class="br0">&#41;</span>
+      g <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>gp*<span class="nu0">255</span><span class="br0">&#41;</span>
+      b <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>bp*<span class="nu0">255</span><span class="br0">&#41;</span>
+      palette.<span class="me1">extend</span><span class="br0">&#40;</span><span class="br0">&#91;</span>r<span class="sy0">,</span>g<span class="sy0">,</span>b<span class="br0">&#93;</span><span class="br0">&#41;</span>
+      h-<span class="sy0">=</span>step
+&nbsp;
+    <span class="co1"># Apply the palette to the image      </span>
+    im.<span class="me1">putpalette</span><span class="br0">&#40;</span>palette<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Save the image</span>
+    im.<span class="me1">save</span><span class="br0">&#40;</span>target<span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=6" title="Download Snippet" class="mediafile mf_py">| 07/07-mesh.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Convert an LAS LIDAR file to a shapefile
+    by creating a 3D triangle mesh using
+    Delaunay Triangulation.
+    &quot;&quot;&quot;</span>
+    <span class="co1"># cPickle is used to store</span>
+    <span class="co1"># tessalated triangles</span>
+    <span class="co1"># to save time writing </span>
+    <span class="co1"># future shapefiles</span>
+    <span class="kw1">import</span> <span class="kw3">cPickle</span>
+    <span class="kw1">import</span> <span class="kw3">os</span>
+    <span class="kw1">import</span> <span class="kw3">time</span>
+    <span class="kw1">import</span> <span class="kw3">math</span>
+    <span class="co1"># Third-party Python modules:</span>
+    <span class="kw1">import</span> numpy <span class="kw1">as</span> np
+    <span class="kw1">import</span> shapefile
+    <span class="kw1">from</span> laspy.<span class="kw2">file</span> <span class="kw1">import</span> File
+    <span class="kw1">import</span> voronoi
+&nbsp;
+    <span class="co1"># Source LAS file</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;clippedLAS.las&quot;</span>
+&nbsp;
+    <span class="co1"># Output shapefile</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;mesh&quot;</span>
+&nbsp;
+    <span class="co1"># Triangles archive</span>
+    archive <span class="sy0">=</span> <span class="st0">&quot;triangles.p&quot;</span>
+&nbsp;
+    <span class="co1"># Pyshp archive</span>
+    pyshp <span class="sy0">=</span> <span class="st0">&quot;mesh_pyshp.p&quot;</span>
+&nbsp;
+    <span class="co1"># Point class required by</span>
+    <span class="co1"># the voronoi module</span>
+    <span class="kw1">class</span> Point:
+      <span class="kw1">def</span> <span class="kw4">__init__</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">,</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span>:
+        <span class="kw2">self</span>.<span class="me1">px</span> <span class="sy0">=</span> x
+        <span class="kw2">self</span>.<span class="me1">py</span> <span class="sy0">=</span> y
+&nbsp;
+      <span class="kw1">def</span> x<span class="br0">&#40;</span><span class="kw2">self</span><span class="br0">&#41;</span>:
+        <span class="kw1">return</span> <span class="kw2">self</span>.<span class="me1">px</span>
+&nbsp;
+      <span class="kw1">def</span> y<span class="br0">&#40;</span><span class="kw2">self</span><span class="br0">&#41;</span>:
+        <span class="kw1">return</span> <span class="kw2">self</span>.<span class="me1">py</span>
+&nbsp;
+    <span class="co1"># This will be the triangle</span>
+    <span class="co1"># array.  Load it from a pickle</span>
+    <span class="co1"># file or use the voronoi module</span>
+    <span class="co1"># to create the triangles.</span>
+    triangles <span class="sy0">=</span> <span class="kw2">None</span>
+&nbsp;
+    <span class="kw1">if</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">exists</span><span class="br0">&#40;</span>archive<span class="br0">&#41;</span>:
+      <span class="kw1">print</span> <span class="st0">&quot;Loading triangle archive...&quot;</span>
+      f <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>archive<span class="sy0">,</span> <span class="st0">&quot;rb&quot;</span><span class="br0">&#41;</span>
+      triangles <span class="sy0">=</span> <span class="kw3">cPickle</span>.<span class="me1">load</span><span class="br0">&#40;</span>f<span class="br0">&#41;</span>
+      f.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      <span class="co1"># Open LIDAR LAS file</span>
+      las <span class="sy0">=</span> File<span class="br0">&#40;</span>source<span class="sy0">,</span> mode<span class="sy0">=</span><span class="st0">&quot;r&quot;</span><span class="br0">&#41;</span>  
+    <span class="kw1">else</span>:
+      <span class="co1"># Open LIDAR LAS file</span>
+      las <span class="sy0">=</span> File<span class="br0">&#40;</span>source<span class="sy0">,</span> mode<span class="sy0">=</span><span class="st0">&quot;r&quot;</span><span class="br0">&#41;</span>  
+      points <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+      <span class="kw1">print</span> <span class="st0">&quot;Assembling points...&quot;</span>  
+      <span class="co1"># Pull points from LAS file</span>
+      <span class="kw1">for</span> x<span class="sy0">,</span>y <span class="kw1">in</span> np.<span class="me1">nditer</span><span class="br0">&#40;</span><span class="br0">&#40;</span>las.<span class="me1">x</span><span class="sy0">,</span>las.<span class="me1">y</span><span class="br0">&#41;</span><span class="br0">&#41;</span>: 
+        points.<span class="me1">append</span><span class="br0">&#40;</span>Point<span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span><span class="br0">&#41;</span>
+      <span class="kw1">print</span> <span class="st0">&quot;Composing triangles...&quot;</span>
+      <span class="co1"># Delaunay Triangulation  </span>
+      triangles <span class="sy0">=</span> voronoi.<span class="me1">computeDelaunayTriangulation</span><span class="br0">&#40;</span>points<span class="br0">&#41;</span> 
+      <span class="co1"># Save the triangles to save time if we write more than</span>
+      <span class="co1"># one shapefile.</span>
+      f <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>archive<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span>
+      <span class="kw3">cPickle</span>.<span class="me1">dump</span><span class="br0">&#40;</span>triangles<span class="sy0">,</span> f<span class="sy0">,</span> protocol<span class="sy0">=</span><span class="nu0">2</span><span class="br0">&#41;</span>
+      f.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">&quot;Creating shapefile...&quot;</span>
+    w <span class="sy0">=</span> <span class="kw2">None</span> 
+    <span class="kw1">if</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">exists</span><span class="br0">&#40;</span>pyshp<span class="br0">&#41;</span>:
+      f <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>pyshp<span class="sy0">,</span> <span class="st0">&quot;rb&quot;</span><span class="br0">&#41;</span>
+      w <span class="sy0">=</span> <span class="kw3">cPickle</span>.<span class="me1">load</span><span class="br0">&#40;</span>f<span class="br0">&#41;</span>
+      f.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">else</span>:
+      <span class="co1"># PolygonZ shapefile (x,y,z,m)</span>
+      w <span class="sy0">=</span> shapefile.<span class="me1">Writer</span><span class="br0">&#40;</span>shapefile.<span class="me1">POLYGONZ</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;X1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;X2&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;X3&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;Y1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;Y2&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;Y3&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;Z1&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;Z2&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      w.<span class="me1">field</span><span class="br0">&#40;</span><span class="st0">&quot;Z3&quot;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="st0">&quot;40&quot;</span><span class="br0">&#41;</span>
+      tris <span class="sy0">=</span> <span class="kw2">len</span><span class="br0">&#40;</span>triangles<span class="br0">&#41;</span>
+      <span class="co1"># Loop through shapes and </span>
+      <span class="co1"># track progress every 10 percent</span>
+      last_percent <span class="sy0">=</span> <span class="nu0">0</span>
+      <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>tris<span class="br0">&#41;</span>:
+        t <span class="sy0">=</span> triangles<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+        percent <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>i/<span class="br0">&#40;</span>tris*<span class="nu0">1.0</span><span class="br0">&#41;</span><span class="br0">&#41;</span>*<span class="nu0">100.0</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> percent % <span class="nu0">10.0</span> <span class="sy0">==</span> <span class="nu0">0</span> <span class="kw1">and</span> percent <span class="sy0">&gt;</span> last_percent:
+          last_percent <span class="sy0">=</span> percent
+          <span class="kw1">print</span> <span class="st0">&quot;%s %% done - Shape %s/%s at %s&quot;</span> % <span class="br0">&#40;</span>percent<span class="sy0">,</span> i<span class="sy0">,</span> tris<span class="sy0">,</span> <span class="kw3">time</span>.<span class="me1">asctime</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> 
+        part<span class="sy0">=</span><span class="br0">&#91;</span><span class="br0">&#93;</span>
+        x1 <span class="sy0">=</span> las.<span class="me1">x</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        y1 <span class="sy0">=</span> las.<span class="me1">y</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        z1 <span class="sy0">=</span> las.<span class="me1">z</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        x2 <span class="sy0">=</span> las.<span class="me1">x</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        y2 <span class="sy0">=</span> las.<span class="me1">y</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        z2 <span class="sy0">=</span> las.<span class="me1">z</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        x3 <span class="sy0">=</span> las.<span class="me1">x</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        y3 <span class="sy0">=</span> las.<span class="me1">y</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        z3 <span class="sy0">=</span> las.<span class="me1">z</span><span class="br0">&#91;</span>t<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+        <span class="co1"># Check segments for large triangles</span>
+        <span class="co1"># along the convex hull which is an common</span>
+        <span class="co1"># artificat in Delaunay triangulation</span>
+        <span class="kw2">max</span> <span class="sy0">=</span> <span class="nu0">3</span>
+        <span class="kw1">if</span> <span class="kw3">math</span>.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x2-x1<span class="br0">&#41;</span>**<span class="nu0">2</span>+<span class="br0">&#40;</span>y2-y1<span class="br0">&#41;</span>**<span class="nu0">2</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="kw2">max</span>: <span class="kw1">continue</span>
+        <span class="kw1">if</span> <span class="kw3">math</span>.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x3-x2<span class="br0">&#41;</span>**<span class="nu0">2</span>+<span class="br0">&#40;</span>y3-y2<span class="br0">&#41;</span>**<span class="nu0">2</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="kw2">max</span>: <span class="kw1">continue</span>
+        <span class="kw1">if</span> <span class="kw3">math</span>.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x3-x1<span class="br0">&#41;</span>**<span class="nu0">2</span>+<span class="br0">&#40;</span>y3-y1<span class="br0">&#41;</span>**<span class="nu0">2</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="kw2">max</span>: <span class="kw1">continue</span>
+        part.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#91;</span>x1<span class="sy0">,</span>y1<span class="sy0">,</span>z1<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+        part.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#91;</span>x2<span class="sy0">,</span>y2<span class="sy0">,</span>z2<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+        part.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#91;</span>x3<span class="sy0">,</span>y3<span class="sy0">,</span>z3<span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+        w.<span class="me1">poly</span><span class="br0">&#40;</span>parts<span class="sy0">=</span><span class="br0">&#91;</span>part<span class="br0">&#93;</span><span class="br0">&#41;</span>
+        w.<span class="me1">record</span><span class="br0">&#40;</span>x1<span class="sy0">,</span>x2<span class="sy0">,</span>x3<span class="sy0">,</span>y1<span class="sy0">,</span>y2<span class="sy0">,</span>y3<span class="sy0">,</span>z1<span class="sy0">,</span>z2<span class="sy0">,</span>z3<span class="br0">&#41;</span>
+      <span class="kw1">print</span> <span class="st0">&quot;Saving shapefile...&quot;</span>
+      <span class="co1"># Pickle the Writer in case something</span>
+      <span class="co1"># goes wrong. Be sure to delete this</span>
+      <span class="co1"># file to recreate teh shapefile.</span>
+      f <span class="sy0">=</span> <span class="kw2">open</span><span class="br0">&#40;</span>pyshp<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span>
+      <span class="kw3">cPickle</span>.<span class="me1">dump</span><span class="br0">&#40;</span>w<span class="sy0">,</span> f<span class="sy0">,</span> protocol<span class="sy0">=</span><span class="nu0">2</span><span class="br0">&#41;</span>
+      f.<span class="me1">close</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    w.<span class="me1">save</span><span class="br0">&#40;</span>target<span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Done.&quot;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Some advanced modules&quot;,&quot;hid&quot;:&quot;some_advanced_modules&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;2-14184&quot;} -->
+<h2 class="sectionedit2" id="more_advanced_modules">More advanced modules</h2>
+<div class="level2">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=7" title="Download Snippet" class="mediafile mf_py">| 08/01-ndvi.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Output a normalized vegetative index
+    &quot;&quot;&quot;</span>
+    <span class="kw1">import</span> gdal<span class="sy0">,</span> gdalnumeric<span class="sy0">,</span> ogr
+    <span class="kw1">import</span> Image<span class="sy0">,</span> ImageDraw
+&nbsp;
+    <span class="kw1">def</span> imageToArray<span class="br0">&#40;</span>i<span class="br0">&#41;</span>:
+      <span class="st0">&quot;&quot;&quot;
+      Converts a Python Imaging Library 
+      array to a gdalnumeric image.
+      &quot;&quot;&quot;</span>
+      a<span class="sy0">=</span>gdalnumeric.<span class="me1">numpy</span>.<span class="me1">fromstring</span><span class="br0">&#40;</span>i.<span class="me1">tostring</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="st0">'b'</span><span class="br0">&#41;</span>
+      a.<span class="me1">shape</span><span class="sy0">=</span>i.<span class="me1">im</span>.<span class="me1">size</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> i.<span class="me1">im</span>.<span class="me1">size</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+      <span class="kw1">return</span> a
+&nbsp;
+    <span class="kw1">def</span> world2Pixel<span class="br0">&#40;</span>geoMatrix<span class="sy0">,</span> x<span class="sy0">,</span> y<span class="br0">&#41;</span>:
+      <span class="st0">&quot;&quot;&quot;
+      Uses a gdal geomatrix (gdal.GetGeoTransform()) 
+      to calculate the pixel location of a 
+      geospatial coordinate 
+      &quot;&quot;&quot;</span>
+      ulX <span class="sy0">=</span> geoMatrix<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+      ulY <span class="sy0">=</span> geoMatrix<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span>
+      xDist <span class="sy0">=</span> geoMatrix<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+      yDist <span class="sy0">=</span> geoMatrix<span class="br0">&#91;</span><span class="nu0">5</span><span class="br0">&#93;</span>
+      rtnX <span class="sy0">=</span> geoMatrix<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span>
+      rtnY <span class="sy0">=</span> geoMatrix<span class="br0">&#91;</span><span class="nu0">4</span><span class="br0">&#93;</span>
+      pixel <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x - ulX<span class="br0">&#41;</span> / xDist<span class="br0">&#41;</span>
+      line <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>ulY - y<span class="br0">&#41;</span> / xDist<span class="br0">&#41;</span>
+      <span class="kw1">return</span> <span class="br0">&#40;</span>pixel<span class="sy0">,</span> line<span class="br0">&#41;</span>    
+&nbsp;
+    <span class="co1"># Multispectral image used </span>
+    <span class="co1"># to create the NDVI. Must</span>
+    <span class="co1"># have red and infrared</span>
+    <span class="co1"># bands</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;farm.tif&quot;</span>
+&nbsp;
+    <span class="co1"># Output geotiff file name</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;ndvi.tif&quot;</span>
+&nbsp;
+    <span class="co1"># Load the source data as a gdalnumeric array</span>
+    srcArray <span class="sy0">=</span> gdalnumeric.<span class="me1">LoadFile</span><span class="br0">&#40;</span>source<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Also load as a gdal image to </span>
+    <span class="co1"># get geotransform (world file) info</span>
+    srcImage <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>source<span class="br0">&#41;</span>
+    geoTrans <span class="sy0">=</span> srcImage.<span class="me1">GetGeoTransform</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Red and infrared (or near infrared) bands</span>
+    r <span class="sy0">=</span> srcArray<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    ir <span class="sy0">=</span> srcArray<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1">## Clip a field out of the bands using a</span>
+    <span class="co1">## field boundary shapefile</span>
+&nbsp;
+    <span class="co1"># Create an OGR layer from a Field boundary shapefile</span>
+    field <span class="sy0">=</span> ogr.<span class="me1">Open</span><span class="br0">&#40;</span><span class="st0">&quot;field.shp&quot;</span><span class="br0">&#41;</span>
+    <span class="co1"># Must define a &quot;layer&quot; to keep OGR happy</span>
+    lyr <span class="sy0">=</span> field.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="st0">&quot;field&quot;</span><span class="br0">&#41;</span>
+    <span class="co1"># Only one polygon in this shapefile</span>
+    poly <span class="sy0">=</span> lyr.<span class="me1">GetNextFeature</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Convert the layer extent to image pixel coordinates</span>
+    minX<span class="sy0">,</span> maxX<span class="sy0">,</span> minY<span class="sy0">,</span> maxY <span class="sy0">=</span> lyr.<span class="me1">GetExtent</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    ulX<span class="sy0">,</span> ulY <span class="sy0">=</span> world2Pixel<span class="br0">&#40;</span>geoTrans<span class="sy0">,</span> minX<span class="sy0">,</span> maxY<span class="br0">&#41;</span>
+    lrX<span class="sy0">,</span> lrY <span class="sy0">=</span> world2Pixel<span class="br0">&#40;</span>geoTrans<span class="sy0">,</span> maxX<span class="sy0">,</span> minY<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Calculate the pixel size of the new image</span>
+    pxWidth <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>lrX - ulX<span class="br0">&#41;</span>
+    pxHeight <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>lrY - ulY<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Create a blank image of the correct size</span>
+    <span class="co1"># that will serve as our mask</span>
+    clipped <span class="sy0">=</span> gdalnumeric.<span class="me1">numpy</span>.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> pxHeight<span class="sy0">,</span> pxWidth<span class="br0">&#41;</span><span class="sy0">,</span> \
+    gdalnumeric.<span class="me1">numpy</span>.<span class="me1">uint8</span><span class="br0">&#41;</span>
+    <span class="co1">#mmask = gdalnumeric.zeros((3, pxHeight, pxWidth), gdalnumeric.UnsignedInt8)</span>
+    <span class="co1">#rgb = rgb.astype(gdalnumeric.UnsignedInt8)</span>
+    rClip <span class="sy0">=</span> r<span class="br0">&#91;</span>ulY:lrY<span class="sy0">,</span> ulX:lrX<span class="br0">&#93;</span>
+    irClip <span class="sy0">=</span> ir<span class="br0">&#91;</span>ulY:lrY<span class="sy0">,</span> ulX:lrX<span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Create a new geomatrix for the image</span>
+    geoTrans <span class="sy0">=</span> <span class="kw2">list</span><span class="br0">&#40;</span>geoTrans<span class="br0">&#41;</span>
+    geoTrans<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="sy0">=</span> minX
+    geoTrans<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span> <span class="sy0">=</span> maxY
+&nbsp;
+    <span class="co1"># Map points to pixels for drawing </span>
+    <span class="co1"># the field boundary on a blank</span>
+    <span class="co1"># 8-bit, black and white, mask image.</span>
+    points <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+    pixels <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+    <span class="co1"># Grab the polygon geometry</span>
+    geom <span class="sy0">=</span> poly.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    pts <span class="sy0">=</span> geom.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+    <span class="co1"># Loop through geometry and turn</span>
+    <span class="co1"># the points into an easy-to-manage </span>
+    <span class="co1"># Python list </span>
+    <span class="kw1">for</span> p <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>pts.<span class="me1">GetPointCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+      points.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>pts.<span class="me1">GetX</span><span class="br0">&#40;</span>p<span class="br0">&#41;</span><span class="sy0">,</span> pts.<span class="me1">GetY</span><span class="br0">&#40;</span>p<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="co1"># Loop through the points and map to pixels.</span>
+    <span class="co1"># Append the pixels to a pixel list</span>
+    <span class="kw1">for</span> p <span class="kw1">in</span> points:
+      pixels.<span class="me1">append</span><span class="br0">&#40;</span>world2Pixel<span class="br0">&#40;</span>geoTrans<span class="sy0">,</span> p<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> p<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="co1"># Create the raster polygon image</span>
+    rasterPoly <span class="sy0">=</span> Image.<span class="kw3">new</span><span class="br0">&#40;</span><span class="st0">&quot;L&quot;</span><span class="sy0">,</span> <span class="br0">&#40;</span>pxWidth<span class="sy0">,</span> pxHeight<span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="co1"># Create a PIL drawing object</span>
+    rasterize <span class="sy0">=</span> ImageDraw.<span class="me1">Draw</span><span class="br0">&#40;</span>rasterPoly<span class="br0">&#41;</span>
+    <span class="co1"># Dump the pixels to the image</span>
+    rasterize.<span class="me1">polygon</span><span class="br0">&#40;</span>pixels<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+    <span class="co1"># Hand the image back to gdal/gdalnumeric</span>
+    <span class="co1"># so we can use it as an array mask</span>
+    mask <span class="sy0">=</span> imageToArray<span class="br0">&#40;</span>rasterPoly<span class="br0">&#41;</span>    
+    <span class="co1"># Clip the red band using the mask   </span>
+    rClip <span class="sy0">=</span> gdalnumeric.<span class="me1">numpy</span>.<span class="me1">choose</span><span class="br0">&#40;</span>mask<span class="sy0">,</span> \
+      <span class="br0">&#40;</span>rClip<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>gdalnumeric.<span class="me1">numpy</span>.<span class="me1">uint8</span><span class="br0">&#41;</span>
+    <span class="co1"># Clip the infrared band using the mask</span>
+    irClip <span class="sy0">=</span> gdalnumeric.<span class="me1">numpy</span>.<span class="me1">choose</span><span class="br0">&#40;</span>mask<span class="sy0">,</span> \
+      <span class="br0">&#40;</span>irClip<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>gdalnumeric.<span class="me1">numpy</span>.<span class="me1">uint8</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># We don't care about numpy warnings</span>
+    <span class="co1"># due to NaN values from clipping</span>
+    gdalnumeric.<span class="me1">numpy</span>.<span class="me1">seterr</span><span class="br0">&#40;</span><span class="kw2">all</span><span class="sy0">=</span><span class="st0">&quot;ignore&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># NDVI equation: (infrared - red) / (infrared + red)</span>
+    <span class="co1"># *1.0 converts values to floats, </span>
+    <span class="co1"># +1.0 prevents ZeroDivisionErrors </span>
+    ndvi <span class="sy0">=</span> <span class="nu0">1.0</span> * <span class="br0">&#40;</span>irClip - rClip<span class="br0">&#41;</span> / irClip + rClip + <span class="nu0">1.0</span>
+&nbsp;
+    <span class="co1"># Remove any NaN values from the final product</span>
+    ndvi <span class="sy0">=</span> gdalnumeric.<span class="me1">numpy</span>.<span class="me1">nan_to_num</span><span class="br0">&#40;</span>ndvi<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Save ndvi as tiff</span>
+    gdalnumeric.<span class="me1">SaveArray</span><span class="br0">&#40;</span>ndvi<span class="sy0">,</span> target<span class="sy0">,</span> \
+      format<span class="sy0">=</span><span class="st0">&quot;GTiff&quot;</span><span class="sy0">,</span> prototype<span class="sy0">=</span>source<span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=8" title="Download Snippet" class="mediafile mf_py">| 08/02-ndvi-classify.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Classify an NDVI tiff using 7 classes 
+    by &quot;pushing&quot; the NDVI through
+    masks defined by the desired 
+    range of values for each class.
+    &quot;&quot;&quot;</span>
+    <span class="kw1">import</span> gdalnumeric <span class="kw1">as</span> gd
+    <span class="kw1">import</span> <span class="kw3">operator</span>
+&nbsp;
+    <span class="kw1">def</span> histogram<span class="br0">&#40;</span>a<span class="sy0">,</span> bins<span class="sy0">=</span><span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">256</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+      <span class="st0">&quot;&quot;&quot;
+      Histogram function for multi-dimensional array.
+      a = array
+      bins = range of numbers to match 
+      &quot;&quot;&quot;</span>
+      fa <span class="sy0">=</span> a.<span class="me1">flat</span>
+      n <span class="sy0">=</span> gd.<span class="me1">numpy</span>.<span class="me1">searchsorted</span><span class="br0">&#40;</span>gd.<span class="me1">numpy</span>.<span class="me1">sort</span><span class="br0">&#40;</span>fa<span class="br0">&#41;</span><span class="sy0">,</span> bins<span class="br0">&#41;</span>
+      n <span class="sy0">=</span> gd.<span class="me1">numpy</span>.<span class="me1">concatenate</span><span class="br0">&#40;</span><span class="br0">&#91;</span>n<span class="sy0">,</span> <span class="br0">&#91;</span><span class="kw2">len</span><span class="br0">&#40;</span>fa<span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+      hist <span class="sy0">=</span> n<span class="br0">&#91;</span><span class="nu0">1</span>:<span class="br0">&#93;</span>-n<span class="br0">&#91;</span>:-<span class="nu0">1</span><span class="br0">&#93;</span> 
+      <span class="kw1">return</span> hist
+&nbsp;
+    <span class="kw1">def</span> stretch<span class="br0">&#40;</span>a<span class="br0">&#41;</span>:
+      <span class="st0">&quot;&quot;&quot;
+      Performs a histogram stretch on a gdalnumeric array image.
+      &quot;&quot;&quot;</span>
+      hist <span class="sy0">=</span> histogram<span class="br0">&#40;</span>a<span class="br0">&#41;</span>
+      lut <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+      <span class="kw1">for</span> b <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="kw2">len</span><span class="br0">&#40;</span>hist<span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">256</span><span class="br0">&#41;</span>:
+        <span class="co1"># step size</span>
+        step <span class="sy0">=</span> <span class="kw2">reduce</span><span class="br0">&#40;</span><span class="kw3">operator</span>.<span class="me1">add</span><span class="sy0">,</span> hist<span class="br0">&#91;</span>b:b+<span class="nu0">256</span><span class="br0">&#93;</span><span class="br0">&#41;</span> / <span class="nu0">255</span>
+        <span class="co1"># create equalization lookup table</span>
+        n <span class="sy0">=</span> <span class="nu0">0</span>
+        <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">256</span><span class="br0">&#41;</span>:
+          lut.<span class="me1">append</span><span class="br0">&#40;</span>n / step<span class="br0">&#41;</span>
+          n <span class="sy0">=</span> n + hist<span class="br0">&#91;</span>i+b<span class="br0">&#93;</span>
+      gd.<span class="me1">numpy</span>.<span class="me1">take</span><span class="br0">&#40;</span>lut<span class="sy0">,</span> a<span class="sy0">,</span> out<span class="sy0">=</span>a<span class="br0">&#41;</span>
+      <span class="kw1">return</span> a
+&nbsp;
+    <span class="co1"># NDVI output from ndvi script</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;ndvi.tif&quot;</span>
+    <span class="co1"># Target file name for classified</span>
+    <span class="co1"># image image</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;ndvi_color.tif&quot;</span>
+&nbsp;
+    <span class="co1"># Load the image into an array</span>
+    ndvi <span class="sy0">=</span> gd.<span class="me1">LoadFile</span><span class="br0">&#40;</span>source<span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>gd.<span class="me1">numpy</span>.<span class="me1">uint8</span><span class="br0">&#41;</span>
+    <span class="co1"># Peform a histogram stretch so we are able to</span>
+    <span class="co1"># use all of the classes</span>
+    ndvi <span class="sy0">=</span> stretch<span class="br0">&#40;</span>ndvi<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Create a blank 3-band image the same size as the ndvi</span>
+    rgb <span class="sy0">=</span> gd.<span class="me1">numpy</span>.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> <span class="kw2">len</span><span class="br0">&#40;</span>ndvi<span class="br0">&#41;</span><span class="sy0">,</span> <span class="kw2">len</span><span class="br0">&#40;</span>ndvi<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span> gd.<span class="me1">numpy</span>.<span class="me1">uint8</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Class list with ndvi upper range values.</span>
+    <span class="co1"># Note the lower and upper values are listed on the ends</span>
+    classes <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">58</span><span class="sy0">,</span><span class="nu0">73</span><span class="sy0">,</span><span class="nu0">110</span><span class="sy0">,</span><span class="nu0">147</span><span class="sy0">,</span><span class="nu0">184</span><span class="sy0">,</span><span class="nu0">220</span><span class="sy0">,</span><span class="nu0">255</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Color look-up table (lut)</span>
+    <span class="co1"># The lut must match the number of classes</span>
+    <span class="co1"># Specified as R,G,B tuples from dark brown to dark green</span>
+    lut <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">120</span><span class="sy0">,</span><span class="nu0">69</span><span class="sy0">,</span><span class="nu0">25</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">255</span><span class="sy0">,</span><span class="nu0">178</span><span class="sy0">,</span><span class="nu0">74</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">255</span><span class="sy0">,</span><span class="nu0">237</span><span class="sy0">,</span><span class="nu0">166</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">173</span><span class="sy0">,</span><span class="nu0">232</span><span class="sy0">,</span><span class="nu0">94</span><span class="br0">&#93;</span><span class="sy0">,</span>
+           <span class="br0">&#91;</span><span class="nu0">135</span><span class="sy0">,</span><span class="nu0">181</span><span class="sy0">,</span><span class="nu0">64</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">3</span><span class="sy0">,</span><span class="nu0">156</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">100</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Starting value of the first class</span>
+    start <span class="sy0">=</span> <span class="nu0">1</span>
+&nbsp;
+    <span class="co1"># Process all classes.</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>classes<span class="br0">&#41;</span><span class="br0">&#41;</span>:
+        mask <span class="sy0">=</span> gd.<span class="me1">numpy</span>.<span class="me1">logical_and</span><span class="br0">&#40;</span>\
+        start <span class="sy0">&lt;=</span> ndvi<span class="sy0">,</span> ndvi <span class="sy0">&lt;=</span> classes<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#41;</span>
+        <span class="kw1">for</span> j <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>lut<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+            rgb<span class="br0">&#91;</span>j<span class="br0">&#93;</span> <span class="sy0">=</span> gd.<span class="me1">numpy</span>.<span class="me1">choose</span><span class="br0">&#40;</span>mask<span class="sy0">,</span> \
+              <span class="br0">&#40;</span>rgb<span class="br0">&#91;</span>j<span class="br0">&#93;</span><span class="sy0">,</span> lut<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#91;</span>j<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        start <span class="sy0">=</span> classes<span class="br0">&#91;</span>i<span class="br0">&#93;</span>+<span class="nu0">1</span>    
+&nbsp;
+    <span class="co1"># Save a geotiff image of the colorized ndvi.</span>
+    gd.<span class="me1">SaveArray</span><span class="br0">&#40;</span>rgb<span class="sy0">,</span> target<span class="sy0">,</span> format<span class="sy0">=</span><span class="st0">&quot;GTiff&quot;</span><span class="sy0">,</span> prototype<span class="sy0">=</span>source<span class="br0">&#41;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=9" title="Download Snippet" class="mediafile mf_py">| 08/03-flood-fill.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Crawls a terrain raster from a starting
+    point and &quot;floods&quot; everything at the same
+    or lower elevation by producing a mask
+    image of 1,0 values.
+    &quot;&quot;&quot;</span>
+&nbsp;
+    <span class="kw1">import</span> numpy <span class="kw1">as</span> np
+    <span class="kw1">from</span> <span class="kw3">linecache</span> <span class="kw1">import</span> getline
+&nbsp;
+    <span class="kw1">def</span> floodFill<span class="br0">&#40;</span>c<span class="sy0">,</span>r<span class="sy0">,</span>mask<span class="br0">&#41;</span>:
+      <span class="st0">&quot;&quot;&quot;
+      Crawls a mask array containing
+      only 1 and 0 values from the
+      starting point (c=column,
+      r=row - a.k.a. x,y) and returns
+      an array with all 1 values
+      connected to the starting cell.
+      This algorithm performs a 4-way
+      check non-recursively.  
+      &quot;&quot;&quot;</span>
+      <span class="co1"># cells already filled</span>
+      filled <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      <span class="co1"># cells to fill</span>
+      fill <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      fill.<span class="me1">add</span><span class="br0">&#40;</span><span class="br0">&#40;</span>c<span class="sy0">,</span>r<span class="br0">&#41;</span><span class="br0">&#41;</span>
+      width <span class="sy0">=</span> mask.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span>
+      height <span class="sy0">=</span> mask.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span>
+      <span class="co1"># Our output inundation array</span>
+      flood <span class="sy0">=</span> np.<span class="me1">zeros_like</span><span class="br0">&#40;</span>mask<span class="sy0">,</span> dtype<span class="sy0">=</span>np.<span class="me1">int8</span><span class="br0">&#41;</span>
+      <span class="co1"># Loop through and modify the cells which</span>
+      <span class="co1"># need to be checked.</span>
+      <span class="kw1">while</span> fill:
+        <span class="co1"># Grab a cell</span>
+        x<span class="sy0">,</span>y <span class="sy0">=</span> fill.<span class="me1">pop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> y <span class="sy0">==</span> height <span class="kw1">or</span> x <span class="sy0">==</span> width <span class="kw1">or</span> x <span class="sy0">&lt;</span> <span class="nu0">0</span> <span class="kw1">or</span> y <span class="sy0">&lt;</span> <span class="nu0">0</span>:
+          <span class="co1"># Don't fill</span>
+          <span class="kw1">continue</span>
+        <span class="kw1">if</span> mask<span class="br0">&#91;</span>y<span class="br0">&#93;</span><span class="br0">&#91;</span>x<span class="br0">&#93;</span> <span class="sy0">==</span> <span class="nu0">1</span>:
+          <span class="co1"># Do fill</span>
+          flood<span class="br0">&#91;</span>y<span class="br0">&#93;</span><span class="br0">&#91;</span>x<span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>
+          filled.<span class="me1">add</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x<span class="sy0">,</span>y<span class="br0">&#41;</span><span class="br0">&#41;</span>
+          <span class="co1"># Check neighbors for 1 values</span>
+          west <span class="sy0">=</span><span class="br0">&#40;</span>x-<span class="nu0">1</span><span class="sy0">,</span>y<span class="br0">&#41;</span>
+          east <span class="sy0">=</span> <span class="br0">&#40;</span>x+<span class="nu0">1</span><span class="sy0">,</span>y<span class="br0">&#41;</span>
+          north <span class="sy0">=</span> <span class="br0">&#40;</span>x<span class="sy0">,</span>y-<span class="nu0">1</span><span class="br0">&#41;</span>
+          south <span class="sy0">=</span> <span class="br0">&#40;</span>x<span class="sy0">,</span>y+<span class="nu0">1</span><span class="br0">&#41;</span>
+          <span class="kw1">if</span> <span class="kw1">not</span> west <span class="kw1">in</span> filled:
+            fill.<span class="me1">add</span><span class="br0">&#40;</span>west<span class="br0">&#41;</span>
+          <span class="kw1">if</span> <span class="kw1">not</span> east <span class="kw1">in</span> filled:      
+            fill.<span class="me1">add</span><span class="br0">&#40;</span>east<span class="br0">&#41;</span>
+          <span class="kw1">if</span> <span class="kw1">not</span> north <span class="kw1">in</span> filled: 
+            fill.<span class="me1">add</span><span class="br0">&#40;</span>north<span class="br0">&#41;</span>
+          <span class="kw1">if</span> <span class="kw1">not</span> south <span class="kw1">in</span> filled: 
+            fill.<span class="me1">add</span><span class="br0">&#40;</span>south<span class="br0">&#41;</span>
+      <span class="kw1">return</span> flood 
+&nbsp;
+    source <span class="sy0">=</span> <span class="st0">&quot;terrain.asc&quot;</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;flood.asc&quot;</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">&quot;Opening image...&quot;</span>
+    img <span class="sy0">=</span> np.<span class="me1">loadtxt</span><span class="br0">&#40;</span>source<span class="sy0">,</span> skiprows<span class="sy0">=</span><span class="nu0">6</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Image opened&quot;</span>
+&nbsp;
+    a <span class="sy0">=</span> np.<span class="me1">where</span><span class="br0">&#40;</span>img<span class="sy0">&lt;</span><span class="nu0">70</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Image masked&quot;</span>
+&nbsp;
+    <span class="co1"># Parse the headr using a loop and</span>
+    <span class="co1"># the built-in linecache module</span>
+    hdr <span class="sy0">=</span> <span class="br0">&#91;</span>getline<span class="br0">&#40;</span>source<span class="sy0">,</span> i<span class="br0">&#41;</span> <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">7</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+    values <span class="sy0">=</span> <span class="br0">&#91;</span><span class="kw2">float</span><span class="br0">&#40;</span>h.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="br0">&#41;</span><span class="br0">&#91;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">strip</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">for</span> h <span class="kw1">in</span> hdr<span class="br0">&#93;</span>
+    cols<span class="sy0">,</span>rows<span class="sy0">,</span>lx<span class="sy0">,</span>ly<span class="sy0">,</span>cell<span class="sy0">,</span>nd <span class="sy0">=</span> values
+    xres <span class="sy0">=</span> cell
+    yres <span class="sy0">=</span> cell * -<span class="nu0">1</span>
+&nbsp;
+    <span class="co1"># Starting point for the </span>
+    <span class="co1"># flood inundation </span>
+    sx <span class="sy0">=</span> <span class="nu0">2582</span>
+    sy <span class="sy0">=</span> <span class="nu0">2057</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">&quot;Beginning flood fill&quot;</span>      
+    fld <span class="sy0">=</span> floodFill<span class="br0">&#40;</span>sx<span class="sy0">,</span>sy<span class="sy0">,</span> a<span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Finished Flood fill&quot;</span>
+&nbsp;
+    header<span class="sy0">=</span><span class="st0">&quot;&quot;</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">6</span><span class="br0">&#41;</span>:
+      header +<span class="sy0">=</span> hdr<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">&quot;Saving grid&quot;</span>
+    <span class="co1"># Open the output file, add the hdr, save the array</span>
+    <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>target<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+      f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+      np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> fld<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%1i&quot;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Done!&quot;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=10" title="Download Snippet" class="mediafile mf_py">| 08/04-least-cost_model.py</a></dt>
+<dd><pre class="code python"><span class="st0">&quot;&quot;&quot;
+Provides a simple command-line-output
+version of the least cost path solution
+using randomly-generated notional arrays.
+&quot;&quot;&quot;</span>
+&nbsp;
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+&nbsp;
+<span class="co1"># Our A* search algorithm  </span>
+<span class="kw1">def</span> astar<span class="br0">&#40;</span>start<span class="sy0">,</span> end<span class="sy0">,</span> h<span class="sy0">,</span> g<span class="br0">&#41;</span>:
+  cset <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  oset <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  path <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  oset.<span class="me1">add</span><span class="br0">&#40;</span>start<span class="br0">&#41;</span>
+  <span class="kw1">while</span> oset:
+    cur <span class="sy0">=</span> oset.<span class="me1">pop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> cur <span class="sy0">==</span> end:
+      <span class="kw1">return</span> path
+    cset.<span class="me1">add</span><span class="br0">&#40;</span>cur<span class="br0">&#41;</span>
+    path.<span class="me1">add</span><span class="br0">&#40;</span>cur<span class="br0">&#41;</span>
+    options <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+    y1 <span class="sy0">=</span> cur<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    x1 <span class="sy0">=</span> cur<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    <span class="kw1">if</span> y1 <span class="sy0">&gt;</span> <span class="nu0">0</span>: 
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1-<span class="nu0">1</span><span class="sy0">,</span> x1<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> y1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span>: 
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1+<span class="nu0">1</span><span class="sy0">,</span> x1<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> x1 <span class="sy0">&gt;</span> <span class="nu0">0</span>: 
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1<span class="sy0">,</span> x1-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> x1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span>: 
+      options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1<span class="sy0">,</span> x1+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> end <span class="kw1">in</span> options:
+      <span class="kw1">return</span> path
+    best <span class="sy0">=</span> options<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    cset.<span class="me1">add</span><span class="br0">&#40;</span>options<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="kw2">len</span><span class="br0">&#40;</span>options<span class="br0">&#41;</span><span class="br0">&#41;</span>:
+      option <span class="sy0">=</span> options<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+      <span class="kw1">if</span> option <span class="kw1">in</span> cset:
+        <span class="kw1">continue</span>
+      <span class="kw1">elif</span> h<span class="br0">&#91;</span>option<span class="br0">&#93;</span> <span class="sy0">&lt;=</span> h<span class="br0">&#91;</span>best<span class="br0">&#93;</span>:
+        best <span class="sy0">=</span> option   
+        cset.<span class="me1">add</span><span class="br0">&#40;</span>option<span class="br0">&#41;</span>
+      <span class="kw1">elif</span> g<span class="br0">&#91;</span>option<span class="br0">&#93;</span> <span class="sy0">&lt;</span> g<span class="br0">&#91;</span>best<span class="br0">&#93;</span>:
+        best <span class="sy0">=</span> option
+        cset.<span class="me1">add</span><span class="br0">&#40;</span>option<span class="br0">&#41;</span>
+      <span class="kw1">else</span>:
+        cset.<span class="me1">add</span><span class="br0">&#40;</span>option<span class="br0">&#41;</span>
+    <span class="kw1">print</span> best<span class="sy0">,</span> <span class="st0">&quot;, &quot;</span><span class="sy0">,</span> h<span class="br0">&#91;</span>best<span class="br0">&#93;</span><span class="sy0">,</span> <span class="st0">&quot;, &quot;</span><span class="sy0">,</span> g<span class="br0">&#91;</span>best<span class="br0">&#93;</span>
+    oset.<span class="me1">add</span><span class="br0">&#40;</span>best<span class="br0">&#41;</span>
+  <span class="kw1">return</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+&nbsp;
+<span class="co1"># Width and height</span>
+<span class="co1"># of grids</span>
+w <span class="sy0">=</span> <span class="nu0">5</span>
+h <span class="sy0">=</span> <span class="nu0">5</span>
+&nbsp;
+<span class="co1"># Start location:</span>
+<span class="co1"># Lower left of grid</span>
+start <span class="sy0">=</span> <span class="br0">&#40;</span>h-<span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># End location:</span>
+<span class="co1"># Top right of grid</span>
+dx <span class="sy0">=</span> w-<span class="nu0">1</span>
+dy <span class="sy0">=</span> <span class="nu0">0</span>
+&nbsp;
+<span class="co1"># Blank grid</span>
+a <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span>w<span class="sy0">,</span>h<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Distance grid</span>
+dist <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span>a.<span class="me1">shape</span><span class="sy0">,</span> dtype<span class="sy0">=</span>np.<span class="me1">int8</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Calculate distance for all cells</span>
+<span class="kw1">for</span> y<span class="sy0">,</span>x <span class="kw1">in</span> np.<span class="me1">ndindex</span><span class="br0">&#40;</span>a.<span class="me1">shape</span><span class="br0">&#41;</span>:
+  dist<span class="br0">&#91;</span>y<span class="br0">&#93;</span><span class="br0">&#91;</span>x<span class="br0">&#93;</span> <span class="sy0">=</span> <span class="kw2">abs</span><span class="br0">&#40;</span><span class="br0">&#40;</span>dx-x<span class="br0">&#41;</span>+<span class="br0">&#40;</span>dy-y<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># &quot;Terrain&quot; is a random value between 1-16.</span>
+<span class="co1"># Add to the distance grid to calculate</span>
+<span class="co1"># The cost of moving to a cell</span>
+cost <span class="sy0">=</span> np.<span class="kw3">random</span>.<span class="me1">randint</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">16</span><span class="sy0">,</span><span class="br0">&#40;</span>w<span class="sy0">,</span>h<span class="br0">&#41;</span><span class="br0">&#41;</span> + dist
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;COST GRID (Value + Distance)&quot;</span>
+<span class="kw1">print</span> cost
+<span class="kw1">print</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;(Y,X), HEURISTIC, DISTANCE&quot;</span>
+<span class="co1"># Find the path</span>
+path <span class="sy0">=</span> astar<span class="br0">&#40;</span>start<span class="sy0">,</span><span class="br0">&#40;</span>dy<span class="sy0">,</span>dx<span class="br0">&#41;</span><span class="sy0">,</span>cost<span class="sy0">,</span> dist<span class="br0">&#41;</span>
+<span class="kw1">print</span>
+&nbsp;
+<span class="co1"># Create and populate the path grid</span>
+path_grid <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span>cost.<span class="me1">shape</span><span class="sy0">,</span> dtype<span class="sy0">=</span>np.<span class="me1">uint8</span><span class="br0">&#41;</span>
+<span class="kw1">for</span> y<span class="sy0">,</span>x <span class="kw1">in</span> path:
+  path_grid<span class="br0">&#91;</span>y<span class="br0">&#93;</span><span class="br0">&#91;</span>x<span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>
+path_grid<span class="br0">&#91;</span>dy<span class="br0">&#93;</span><span class="br0">&#91;</span>dx<span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;PATH GRID: 1=path&quot;</span>
+<span class="kw1">print</span> path_grid</pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=11" title="Download Snippet" class="mediafile mf_py">| 08/05-least-cost-path.py</a></dt>
+<dd><pre class="code python">    <span class="st0">&quot;&quot;&quot;
+    Calculates the least cost path
+    over a terrain grid and outputs
+    another raster of 1,0 values
+    defining the path.
+    &quot;&quot;&quot;</span>
+&nbsp;
+    <span class="kw1">import</span> numpy <span class="kw1">as</span> np
+    <span class="kw1">import</span> <span class="kw3">math</span>
+    <span class="kw1">from</span> <span class="kw3">linecache</span> <span class="kw1">import</span> getline
+&nbsp;
+    <span class="kw1">def</span> e_dist<span class="br0">&#40;</span>p1<span class="sy0">,</span>p2<span class="br0">&#41;</span>:
+      <span class="st0">&quot;&quot;&quot;
+      Takes two points and returns
+      the euclidian distance
+      &quot;&quot;&quot;</span>
+      x1<span class="sy0">,</span>y1<span class="sy0">=</span>p1
+      x2<span class="sy0">,</span>y2<span class="sy0">=</span>p2
+      distance <span class="sy0">=</span> <span class="kw3">math</span>.<span class="me1">sqrt</span><span class="br0">&#40;</span><span class="br0">&#40;</span>x1-x2<span class="br0">&#41;</span>**<span class="nu0">2</span>+<span class="br0">&#40;</span>y1-y2<span class="br0">&#41;</span>**<span class="nu0">2</span><span class="br0">&#41;</span>
+      <span class="kw1">return</span> <span class="kw2">int</span><span class="br0">&#40;</span>distance<span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">def</span> weighted_score<span class="br0">&#40;</span>cur<span class="sy0">,</span> node<span class="sy0">,</span> h<span class="sy0">,</span> start<span class="sy0">,</span> end<span class="br0">&#41;</span>:
+      <span class="st0">&quot;&quot;&quot;
+      Provides a weighted score by comparing the
+      current node with a neighboring node. Loosely
+      based on on the Nisson score concept: f=g+h
+      In this case, the &quot;h&quot; value, or &quot;heuristic&quot;,
+      is the elevation value of each node.     
+      &quot;&quot;&quot;</span>
+      score <span class="sy0">=</span> <span class="nu0">0</span>
+      <span class="co1"># current node elevation</span>
+      cur_h <span class="sy0">=</span> h<span class="br0">&#91;</span>cur<span class="br0">&#93;</span>
+      <span class="co1"># current node distance from end</span>
+      cur_g <span class="sy0">=</span> e_dist<span class="br0">&#40;</span>cur<span class="sy0">,</span>end<span class="br0">&#41;</span>
+      <span class="co1"># current node distance from </span>
+      cur_d <span class="sy0">=</span> e_dist<span class="br0">&#40;</span>cur<span class="sy0">,</span>start<span class="br0">&#41;</span>
+      <span class="co1"># neighbor node elevation</span>
+      node_h <span class="sy0">=</span> h<span class="br0">&#91;</span>node<span class="br0">&#93;</span>
+      <span class="co1"># neighbor node distance from end</span>
+      node_g <span class="sy0">=</span> e_dist<span class="br0">&#40;</span>node<span class="sy0">,</span>end<span class="br0">&#41;</span>
+      <span class="co1"># neighbor node distance from start</span>
+      node_d <span class="sy0">=</span> e_dist<span class="br0">&#40;</span>node<span class="sy0">,</span> start<span class="br0">&#41;</span>
+      <span class="co1"># Compare values with the heighest</span>
+      <span class="co1"># weight given to terrain followed</span>
+      <span class="co1"># by progress towards the goal.</span>
+      <span class="kw1">if</span> node_h <span class="sy0">&lt;</span> cur_h:
+        score +<span class="sy0">=</span> cur_h-node_h
+      <span class="kw1">if</span> node_g <span class="sy0">&lt;</span> cur_g:
+        score +<span class="sy0">=</span> <span class="nu0">10</span>
+      <span class="kw1">if</span> node_d <span class="sy0">&gt;</span> cur_d:
+        score +<span class="sy0">=</span> <span class="nu0">10</span>
+      <span class="kw1">return</span> score
+&nbsp;
+    <span class="kw1">def</span> astar<span class="br0">&#40;</span>start<span class="sy0">,</span> end<span class="sy0">,</span> h<span class="br0">&#41;</span>:
+      <span class="st0">&quot;&quot;&quot;
+      A-Star (or A*) search algorithm.
+      Moves through nodes in a network
+      (or grid), scores each node's 
+      neighbors, and goes to the node
+      with the best score until it finds
+      the end.  A* is an evolved Dijkstra
+      algorithm.
+      &quot;&quot;&quot;</span>
+      <span class="co1"># Closed set of nodes to avoid</span>
+      cset <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      <span class="co1"># Open set of nodes to evaluate</span>
+      oset <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      <span class="co1"># Output set of path nodes</span>
+      path <span class="sy0">=</span> <span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+      <span class="co1"># Add the starting point to</span>
+      <span class="co1"># to begin processing</span>
+      oset.<span class="me1">add</span><span class="br0">&#40;</span>start<span class="br0">&#41;</span>
+      <span class="kw1">while</span> oset:
+        <span class="co1"># Grab the next node</span>
+        cur <span class="sy0">=</span> oset.<span class="me1">pop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="co1"># Return if we're at the end</span>
+        <span class="kw1">if</span> cur <span class="sy0">==</span> end:
+          <span class="kw1">return</span> path
+        <span class="co1"># Close off this node to future</span>
+        <span class="co1"># processing</span>
+        cset.<span class="me1">add</span><span class="br0">&#40;</span>cur<span class="br0">&#41;</span>
+        <span class="co1"># The current node is always</span>
+        <span class="co1"># a path node by definition</span>
+        path.<span class="me1">add</span><span class="br0">&#40;</span>cur<span class="br0">&#41;</span>
+        <span class="co1"># List to hold neighboring</span>
+        <span class="co1"># nodes for processing</span>
+        options <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+        <span class="co1"># Grab all of the neighbors</span>
+        y1 <span class="sy0">=</span> cur<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+        x1 <span class="sy0">=</span> cur<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+        <span class="kw1">if</span> y1 <span class="sy0">&gt;</span> <span class="nu0">0</span>: 
+          options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1-<span class="nu0">1</span><span class="sy0">,</span> x1<span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> y1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span>: 
+          options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1+<span class="nu0">1</span><span class="sy0">,</span> x1<span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> x1 <span class="sy0">&gt;</span> <span class="nu0">0</span>: 
+          options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1<span class="sy0">,</span> x1-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> x1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span>: 
+          options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1<span class="sy0">,</span> x1+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> x1 <span class="sy0">&gt;</span> <span class="nu0">0</span> <span class="kw1">and</span> y1 <span class="sy0">&gt;</span> <span class="nu0">0</span>:
+          options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1-<span class="nu0">1</span><span class="sy0">,</span> x1-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> y1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span> <span class="kw1">and</span> x1 <span class="sy0">&lt;</span>  h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span>:
+          options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1+<span class="nu0">1</span><span class="sy0">,</span> x1+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> y1 <span class="sy0">&lt;</span> h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>-<span class="nu0">1</span> <span class="kw1">and</span> x1 <span class="sy0">&gt;</span> <span class="nu0">0</span>:
+          options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1+<span class="nu0">1</span><span class="sy0">,</span> x1-<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> y1 <span class="sy0">&gt;</span> <span class="nu0">0</span> <span class="kw1">and</span> x1 <span class="sy0">&lt;</span>  h.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>-<span class="nu0">1</span>:
+          options.<span class="me1">append</span><span class="br0">&#40;</span><span class="br0">&#40;</span>y1-<span class="nu0">1</span><span class="sy0">,</span> x1+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>  
+        <span class="co1"># If the end is a neighbor, return</span>
+        <span class="kw1">if</span> end <span class="kw1">in</span> options:
+          <span class="kw1">return</span> path
+        <span class="co1"># Store the best known node</span>
+        best <span class="sy0">=</span> options<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+        <span class="co1"># Begin scoring neighbors</span>
+        best_score <span class="sy0">=</span> weighted_score<span class="br0">&#40;</span>cur<span class="sy0">,</span> best<span class="sy0">,</span> h<span class="sy0">,</span> start<span class="sy0">,</span> end<span class="br0">&#41;</span>    
+        <span class="co1"># process the other 7 neighbors</span>
+        <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="kw2">len</span><span class="br0">&#40;</span>options<span class="br0">&#41;</span><span class="br0">&#41;</span>:
+          option <span class="sy0">=</span> options<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+          <span class="co1"># Make sure the node is new</span>
+          <span class="kw1">if</span> option <span class="kw1">in</span> cset:
+            <span class="kw1">continue</span>
+          <span class="kw1">else</span>:
+            <span class="co1"># Score the option and compare it to the best known</span>
+            option_score <span class="sy0">=</span> weighted_score<span class="br0">&#40;</span>cur<span class="sy0">,</span> option<span class="sy0">,</span> h<span class="sy0">,</span> start<span class="sy0">,</span> end<span class="br0">&#41;</span>
+            <span class="kw1">if</span> option_score <span class="sy0">&gt;</span> best_score:
+              best <span class="sy0">=</span> option
+              best_score <span class="sy0">=</span> option_score
+            <span class="kw1">else</span>:
+              <span class="co1"># If the node isn't better seal it off</span>
+              cset.<span class="me1">add</span><span class="br0">&#40;</span>option<span class="br0">&#41;</span>
+        <span class="co1"># Uncomment this print statement to watch</span>
+        <span class="co1"># the path develop in real time:</span>
+        <span class="co1"># print best, e_dist(best,end)</span>
+&nbsp;
+        <span class="co1"># Add the best node to the open set</span>
+        oset.<span class="me1">add</span><span class="br0">&#40;</span>best<span class="br0">&#41;</span>
+      <span class="kw1">return</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Our terrain data</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;dem.asc&quot;</span>
+&nbsp;
+    <span class="co1"># Output file name</span>
+    <span class="co1"># for the path raster</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;path.asc&quot;</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">&quot;Opening %s...&quot;</span> % source
+    cost <span class="sy0">=</span> np.<span class="me1">loadtxt</span><span class="br0">&#40;</span>source<span class="sy0">,</span> skiprows<span class="sy0">=</span><span class="nu0">6</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Opened %s.&quot;</span> % source
+&nbsp;
+    <span class="co1"># Parse the header</span>
+    hdr <span class="sy0">=</span> <span class="br0">&#91;</span>getline<span class="br0">&#40;</span>source<span class="sy0">,</span> i<span class="br0">&#41;</span> <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">7</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+    values <span class="sy0">=</span> <span class="br0">&#91;</span><span class="kw2">float</span><span class="br0">&#40;</span>ln.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="br0">&#41;</span><span class="br0">&#91;</span>-<span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">strip</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="kw1">for</span> ln <span class="kw1">in</span> hdr<span class="br0">&#93;</span>
+    cols<span class="sy0">,</span>rows<span class="sy0">,</span>lx<span class="sy0">,</span>ly<span class="sy0">,</span>cell<span class="sy0">,</span>nd <span class="sy0">=</span> values
+&nbsp;
+    <span class="co1"># Starting column, row</span>
+    sx <span class="sy0">=</span> <span class="nu0">1006</span>
+    sy <span class="sy0">=</span> <span class="nu0">954</span>
+&nbsp;
+    <span class="co1"># Ending column, row</span>
+    dx <span class="sy0">=</span> <span class="nu0">303</span> 
+    dy <span class="sy0">=</span> <span class="nu0">109</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">&quot;Searching for path...&quot;</span>
+    p <span class="sy0">=</span> astar<span class="br0">&#40;</span><span class="br0">&#40;</span>sy<span class="sy0">,</span>sx<span class="br0">&#41;</span><span class="sy0">,</span><span class="br0">&#40;</span>dy<span class="sy0">,</span>dx<span class="br0">&#41;</span><span class="sy0">,</span>cost<span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Path found.&quot;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Creating path grid...&quot;</span>
+    path <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span>cost.<span class="me1">shape</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Plotting path...&quot;</span>
+    <span class="kw1">for</span> y<span class="sy0">,</span>x <span class="kw1">in</span> p:
+      path<span class="br0">&#91;</span>y<span class="br0">&#93;</span><span class="br0">&#91;</span>x<span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>
+    path<span class="br0">&#91;</span>dy<span class="br0">&#93;</span><span class="br0">&#91;</span>dx<span class="br0">&#93;</span><span class="sy0">=</span><span class="nu0">1</span>
+    <span class="kw1">print</span> <span class="st0">&quot;Path plotted.&quot;</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">&quot;Saving %s...&quot;</span> % target    
+    header<span class="sy0">=</span><span class="st0">&quot;&quot;</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">6</span><span class="br0">&#41;</span>:
+      header +<span class="sy0">=</span> hdr<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Open the output file, add the hdr, save the array</span>
+    <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>target<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+      f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+      np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> path<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%4i&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">&quot;Done!&quot;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=12" title="Download Snippet" class="mediafile mf_py">| 09/01-nextbus.py</a></dt>
+<dd><pre class="code python"><span class="kw1">import</span> <span class="kw3">urllib</span>
+<span class="kw1">from</span> <span class="kw3">xml</span>.<span class="me1">dom</span> <span class="kw1">import</span> minidom
+&nbsp;
+<span class="co1"># Nextbus API command mode</span>
+command <span class="sy0">=</span> <span class="st0">&quot;vehicleLocations&quot;</span>
+&nbsp;
+<span class="co1"># Nextbus customer to query</span>
+agency <span class="sy0">=</span> <span class="st0">&quot;chapel-hill&quot;</span>
+&nbsp;
+<span class="co1"># Bus we want to query</span>
+route <span class="sy0">=</span> <span class="st0">&quot;A&quot;</span>
+&nbsp;
+<span class="co1"># Time in milliseconds since the </span>
+<span class="co1"># 1970 epoch time.  All tracks</span>
+<span class="co1"># after this time will be returned.</span>
+<span class="co1"># 0 only returns data for the last</span>
+<span class="co1"># 15 minutes</span>
+epoch <span class="sy0">=</span> <span class="st0">&quot;0&quot;</span>
+&nbsp;
+<span class="co1">## Build our query url</span>
+<span class="co1">#</span>
+<span class="co1"># webservices base url</span>
+url <span class="sy0">=</span> <span class="st0">&quot;http://webservices.nextbus.com&quot;</span>
+<span class="co1"># web service path</span>
+url +<span class="sy0">=</span> <span class="st0">&quot;/service/publicXMLFeed?&quot;</span>
+<span class="co1"># service command/mode</span>
+url +<span class="sy0">=</span> <span class="st0">&quot;command=&quot;</span> + command
+<span class="co1"># agency </span>
+url +<span class="sy0">=</span> <span class="st0">&quot;&amp;a=&quot;</span> + agency
+url +<span class="sy0">=</span>  <span class="st0">&quot;&amp;r=&quot;</span> + route
+url +<span class="sy0">=</span> <span class="st0">&quot;&amp;t=&quot;</span> + epoch
+&nbsp;
+<span class="co1"># Access the REST URL</span>
+feed <span class="sy0">=</span> <span class="kw3">urllib</span>.<span class="me1">urlopen</span><span class="br0">&#40;</span>url<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="kw1">if</span> feed:
+  <span class="co1"># Parse the xml feed</span>
+  <span class="kw3">xml</span> <span class="sy0">=</span> minidom.<span class="me1">parse</span><span class="br0">&#40;</span>feed<span class="br0">&#41;</span>
+  <span class="co1"># Get the vehicle tags</span>
+  vehicles <span class="sy0">=</span> <span class="kw3">xml</span>.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">&quot;vehicle&quot;</span><span class="br0">&#41;</span>
+  <span class="co1"># Get the most recent one. Normally there will</span>
+  <span class="co1"># be only one.</span>
+  <span class="kw1">if</span> vehicles:
+    bus <span class="sy0">=</span> vehicles.<span class="me1">pop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="co1"># Print the bus latitude and longitude</span>
+    att <span class="sy0">=</span> bus.<span class="me1">attributes</span>
+    <span class="kw1">print</span> att<span class="br0">&#91;</span><span class="st0">&quot;lon&quot;</span><span class="br0">&#93;</span>.<span class="me1">value</span><span class="sy0">,</span> <span class="st0">&quot;,&quot;</span><span class="sy0">,</span> att<span class="br0">&#91;</span><span class="st0">&quot;lat&quot;</span><span class="br0">&#93;</span>.<span class="me1">value</span>
+  <span class="kw1">else</span>:
+    <span class="kw1">print</span> <span class="st0">&quot;No vehicles found.&quot;</span></pre>
+</dd></dl>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:python:basicpython3&amp;codeblock=13" title="Download Snippet" class="mediafile mf_">| 09/02-nextma</a></dt>
+<dd><pre class="code python"><span class="kw1">import</span> <span class="kw3">urllib</span>
+<span class="kw1">from</span> <span class="kw3">xml</span>.<span class="me1">dom</span> <span class="kw1">import</span> minidom
+<span class="kw1">import</span> <span class="kw3">time</span>
+&nbsp;
+<span class="kw1">def</span> nextbus<span class="br0">&#40;</span>a<span class="sy0">,</span> r<span class="sy0">,</span> c<span class="sy0">=</span><span class="st0">&quot;vehicleLocations&quot;</span><span class="sy0">,</span> e<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>:
+  <span class="st0">&quot;&quot;&quot;Returns the most recent latitude and 
+  longitude of the selected bus line using
+  the NextBus API (nbapi)&quot;&quot;&quot;</span>
+  nbapi <span class="sy0">=</span> <span class="st0">&quot;http://webservices.nextbus.com&quot;</span>
+  nbapi +<span class="sy0">=</span> <span class="st0">&quot;/service/publicXMLFeed?&quot;</span>
+  nbapi +<span class="sy0">=</span> <span class="st0">&quot;command=%s&amp;a=%s&amp;r=%s&amp;t=%s&quot;</span> % <span class="br0">&#40;</span>c<span class="sy0">,</span>a<span class="sy0">,</span>r<span class="sy0">,</span>e<span class="br0">&#41;</span>
+  <span class="kw3">xml</span> <span class="sy0">=</span> minidom.<span class="me1">parse</span><span class="br0">&#40;</span><span class="kw3">urllib</span>.<span class="me1">urlopen</span><span class="br0">&#40;</span>nbapi<span class="br0">&#41;</span><span class="br0">&#41;</span>
+  bus<span class="sy0">=</span><span class="kw3">xml</span>.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">&quot;vehicle&quot;</span><span class="br0">&#41;</span>
+  <span class="kw1">if</span> bus:    
+    at <span class="sy0">=</span> bus<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>.<span class="me1">attributes</span>
+    <span class="kw1">return</span><span class="br0">&#40;</span>at<span class="br0">&#91;</span><span class="st0">&quot;lat&quot;</span><span class="br0">&#93;</span>.<span class="me1">value</span><span class="sy0">,</span> at<span class="br0">&#91;</span><span class="st0">&quot;lon&quot;</span><span class="br0">&#93;</span>.<span class="me1">value</span><span class="br0">&#41;</span>
+  <span class="kw1">else</span>: <span class="kw1">return</span> <span class="br0">&#40;</span><span class="kw2">False</span><span class="sy0">,</span> <span class="kw2">False</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">def</span> nextmap<span class="br0">&#40;</span>a<span class="sy0">,</span> r<span class="sy0">,</span> mapimg<span class="sy0">,</span> index<span class="br0">&#41;</span>:
+  <span class="st0">&quot;&quot;&quot;Plots a nextbus location on a map image
+  and saves it to disk using the OpenStreetMap
+  Static Map API (osmapi)&quot;&quot;&quot;</span>
+  <span class="co1"># Fetch the latest bus location</span>
+  lat<span class="sy0">,</span> lon <span class="sy0">=</span> nextbus<span class="br0">&#40;</span>a<span class="sy0">,</span> r<span class="br0">&#41;</span>
+  <span class="kw1">if</span> <span class="kw1">not</span> lat:
+    <span class="kw1">return</span> <span class="kw2">False</span>
+  <span class="co1"># Base url + service path</span>
+  osmapi <span class="sy0">=</span> <span class="st0">&quot;http://staticmap.openstreetmap.de/&quot;</span>
+  osmapi +<span class="sy0">=</span> <span class="st0">&quot;staticmap.php?maptype=mapnik&amp;&quot;</span>
+  <span class="co1"># Map Image width and height in pixels</span>
+  osmapi +<span class="sy0">=</span> <span class="st0">&quot;size=800x600&quot;</span> + <span class="st0">&quot;&amp;&quot;</span>
+  <span class="co1"># Center the map on the bus location</span>
+  osmapi +<span class="sy0">=</span> <span class="st0">&quot;center=%s,%s&quot;</span> % <span class="br0">&#40;</span>lat<span class="sy0">,</span>lon<span class="br0">&#41;</span> + <span class="st0">&quot;&amp;&quot;</span>
+  <span class="co1"># Map zoom level (between 1-18)</span>
+  osmapi +<span class="sy0">=</span> <span class="st0">&quot;zoom=16&quot;</span> + <span class="st0">&quot;&amp;&quot;</span>
+  <span class="co1"># Bus mark location </span>
+  osmapi +<span class="sy0">=</span> <span class="st0">&quot;markers=%s,%s,lightblue%d&quot;</span> % <span class="br0">&#40;</span>lat<span class="sy0">,</span> lon<span class="sy0">,</span> index<span class="br0">&#41;</span> 
+  <span class="kw1">print</span> osmapi
+  img <span class="sy0">=</span> <span class="kw3">urllib</span>.<span class="me1">urlopen</span><span class="br0">&#40;</span>osmapi<span class="br0">&#41;</span>
+  <span class="co1"># Save the map image</span>
+  <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>mapimg + <span class="st0">&quot;%d.png&quot;</span> % index<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+    f.<span class="me1">write</span><span class="br0">&#40;</span>img.<span class="me1">read</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="kw1">return</span> <span class="kw2">True</span>
+&nbsp;
+<span class="co1"># Nextbus API agency and bus line variables</span>
+agency <span class="sy0">=</span> <span class="st0">&quot;chapel-hill&quot;</span>
+route <span class="sy0">=</span> <span class="st0">&quot;A&quot;</span>
+&nbsp;
+<span class="co1"># Name of map image to save as PNG</span>
+nextimg <span class="sy0">=</span> <span class="st0">&quot;nextmap&quot;</span>
+&nbsp;
+<span class="co1"># Number of updates we want to make</span>
+requests <span class="sy0">=</span> <span class="nu0">3</span>
+&nbsp;
+<span class="co1"># How often we want to update (seconds)</span>
+freq <span class="sy0">=</span> <span class="nu0">5</span>
+&nbsp;
+<span class="co1"># Map the bus location every few seconds </span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>requests<span class="br0">&#41;</span>:
+  success <span class="sy0">=</span> nextmap<span class="br0">&#40;</span>agency<span class="sy0">,</span> route<span class="sy0">,</span> nextimg<span class="sy0">,</span> i+<span class="nu0">1</span><span class="br0">&#41;</span>
+  <span class="kw1">if</span> <span class="kw1">not</span> success:
+    <span class="kw1">print</span> <span class="st0">&quot;No data available.&quot;</span>
+    <span class="kw1">continue</span>
+  <span class="kw1">print</span> <span class="st0">&quot;Saved map %s at %s&quot;</span> % <span class="br0">&#40;</span>i<span class="sy0">,</span> <span class="kw3">time</span>.<span class="me1">asctime</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+  <span class="kw3">time</span>.<span class="me1">sleep</span><span class="br0">&#40;</span>freq<span class="br0">&#41;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;More advanced modules&quot;,&quot;hid&quot;:&quot;more_advanced_modules&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:2,&quot;range&quot;:&quot;14185-&quot;} -->

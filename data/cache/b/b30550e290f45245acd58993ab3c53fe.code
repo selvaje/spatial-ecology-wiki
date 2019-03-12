@@ -1,0 +1,34 @@
+<span class="co0">## Basic script to show input/output dir and integration with R</span>
+&nbsp;
+<span class="co0"># Specify environment variables</span>
+<span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>output<span class="sy0">/</span>
+&nbsp;
+<span class="kw2">mkdir</span> <span class="re5">-p</span> <span class="re1">$INDIR</span>
+<span class="kw2">mkdir</span> <span class="re5">-p</span> <span class="re1">$OUTDIR</span>
+&nbsp;
+<span class="co0"># Note: If ./project/ directory does not exist, can create with -p flag</span>
+<span class="co0"># mkdir -p $INDIR</span>
+&nbsp;
+<span class="co0"># Change directory to INDIR and pull &quot;iris&quot; dataset</span>
+<span class="kw2">wget</span> <span class="re5">-P</span> <span class="re1">$INDIR</span> https:<span class="sy0">//</span>vincentarelbundock.github.io<span class="sy0">/</span>Rdatasets<span class="sy0">/</span>csv<span class="sy0">/</span>datasets<span class="sy0">/</span>iris.csv
+<span class="kw2">ls</span> <span class="re1">$INDIR</span>
+&nbsp;
+<span class="kw3">export</span> INDIR
+<span class="kw3">export</span> OUTDIR
+<span class="kw3">export</span>  <span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> iris.csv .csv<span class="br0">&#41;</span>
+&nbsp;
+R <span class="re5">--vanilla</span> <span class="re5">--no-readline</span> <span class="re5">-q</span>  <span class="co2">&lt;&lt; 'EOF'
+&nbsp;
+INDIR &lt;- Sys.getenv(c('INDIR'))
+OUTDIR &lt;- Sys.getenv(c('OUTDIR'))
+filename &lt;- Sys.getenv(c('filename'))
+&nbsp;
+iris_dat &lt;- read.csv(paste0(INDIR, filename, &quot;.csv&quot;))
+iris_dat$Petal.Area &lt;- iris_dat$Petal.Length * iris_dat$Petal.Width
+&nbsp;
+write.csv(iris_dat, paste0(OUTDIR, filename, &quot;_edited.csv&quot;))
+&nbsp;
+EOF</span>
+&nbsp;
+<span class="kw2">head</span> <span class="re1">$OUTDIR</span><span class="sy0">/</span>iris_edited.csv

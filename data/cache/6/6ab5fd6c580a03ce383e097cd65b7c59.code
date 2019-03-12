@@ -1,0 +1,49 @@
+<span class="co0">#/bin/bash</span>
+&nbsp;
+<span class="co0"># grep keywords N.B. to find the data needed.</span>
+<span class="co4">user@ubuntu:~$ </span>curl http:<span class="sy0">//</span>www.knmi.nl<span class="sy0">/</span>klimatologie<span class="sy0">/</span>metadata<span class="sy0">/</span>046_alkmaar.html <span class="sy0">|</span> <span class="kw2">grep</span> N.B.
+  <span class="sy0">%</span> Total    <span class="sy0">%</span> Received <span class="sy0">%</span> Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  <span class="nu0">0</span>     <span class="nu0">0</span>    <span class="nu0">0</span>     <span class="nu0">0</span>    <span class="nu0">0</span>     <span class="nu0">0</span>      <span class="nu0">0</span>      <span class="nu0">0</span> --:--:-- --:--:-- --:--:--     <span class="nu0">0</span>              
+  <span class="sy0">&lt;</span>td <span class="re2">width</span>=<span class="st0">&quot;79%&quot;</span><span class="sy0">&gt;</span>ca. <span class="nu0">52</span>� <span class="nu0">39</span><span class="st_h">' N.B. 04� 45'</span> O.L.<span class="sy0">&lt;/</span>td<span class="sy0">&gt;</span>
+<span class="nu0">100</span> <span class="nu0">12917</span>  <span class="nu0">100</span> <span class="nu0">12917</span>    <span class="nu0">0</span>     <span class="nu0">0</span>   107k      <span class="nu0">0</span> --:--:-- --:--:-- --:--:--  128k
+&nbsp;
+<span class="co4">user@ubuntu:~$ </span>curl http:<span class="sy0">//</span>www.knmi.nl<span class="sy0">/</span>klimatologie<span class="sy0">/</span>metadata<span class="sy0">/</span>045_delft.html <span class="sy0">|</span> <span class="kw2">grep</span> N.B. <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">' {if (NR==1) print $3 $4 $6 $7 } '</span>
+  <span class="sy0">%</span> Total    <span class="sy0">%</span> Received <span class="sy0">%</span> Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+<span class="nu0">100</span> <span class="nu0">13240</span>  <span class="nu0">100</span> <span class="nu0">13240</span>    <span class="nu0">0</span>     <span class="nu0">0</span>   135k      <span class="nu0">0</span> --:--:-- --:--:-- --:--:--  172k
+<span class="nu0">52</span>�00<span class="st_h">'04�22'</span>
+&nbsp;
+<span class="co0">#save data into temp.txt</span>
+<span class="co4">user@ubuntu:~$ </span>curl http:<span class="sy0">//</span>www.knmi.nl<span class="sy0">/</span>klimatologie<span class="sy0">/</span>metadata<span class="sy0">/</span>046_alkmaar.html <span class="sy0">|</span> <span class="kw2">grep</span> N.B. <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">' {if (NR==1) print $3 $4 $6 $7 } '</span> <span class="sy0">&gt;</span>temp.txt
+  <span class="sy0">%</span> Total    <span class="sy0">%</span> Received <span class="sy0">%</span> Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+<span class="nu0">100</span> <span class="nu0">12916</span>  <span class="nu0">100</span> <span class="nu0">12916</span>    <span class="nu0">0</span>     <span class="nu0">0</span>   105k      <span class="nu0">0</span> --:--:-- --:--:-- --:--:--  134k
+&nbsp;
+<span class="co0">#get rid of &quot;°&quot; &amp; &quot;'&quot;</span>
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">egrep</span> <span class="re5">-o</span> <span class="st_h">'[0-9][0-9]'</span> temp.txt
+<span class="nu0">52</span>
+<span class="nu0">39</span>
+04
+<span class="nu0">45</span>
+&nbsp;
+<span class="co0">#save and transfer column to row</span>
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">egrep</span> <span class="re5">-o</span> <span class="st_h">'[0-9][0-9]'</span> temp.txt <span class="sy0">&gt;</span>temp1.txt
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">tr</span> <span class="st_h">'\n'</span> <span class="st_h">' '</span> <span class="sy0">&lt;</span>temp1.txt
+<span class="nu0">52</span> <span class="nu0">39</span> 04 <span class="nu0">45</span> user<span class="sy0">@</span>ubuntu:~$
+&nbsp;
+<span class="co0">#prosess each html file using for loop combined with $() and save the date to LocationDDMM.TXT</span>
+&nbsp;
+<span class="kw1">for</span> d <span class="kw1">in</span> 045_delft.html 046_alkmaar.html 055_middelburg_eo.html 056_057_breda.html 049_delft_eo.html 048_044_haarlem.html 047_bergen.html; <span class="kw1">do</span> <span class="kw3">echo</span> <span class="sy0">&gt;&gt;</span>Location.TXT <span class="sy0">&amp;</span><span class="br0">&#40;</span><span class="kw2">tr</span> <span class="st_h">'\n'</span> <span class="st_h">' '</span> <span class="sy0">&lt;</span>temp1.txt <span class="sy0">&gt;&gt;</span>Location.TXT $<span class="br0">&#40;</span><span class="kw2">egrep</span> <span class="re5">-o</span> <span class="st_h">'[0-9][0-9]'</span> temp.txt <span class="sy0">&gt;</span>temp1.txt $<span class="br0">&#40;</span>curl http:<span class="sy0">//</span>www.knmi.nl<span class="sy0">/</span>klimatologie<span class="sy0">/</span>metadata<span class="sy0">/</span><span class="re1">$d</span> <span class="sy0">|</span> <span class="kw2">grep</span> N.B. <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">' {if (NR==1) print $3 $4 $6 $7 } '</span> <span class="sy0">&gt;</span>temp.txt<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">done</span> 
+&nbsp;
+<span class="co0">#change DDMM format to DD format</span>
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">awk</span>  <span class="st_h">'{ print $1+$2/60,$3+$4/60 }'</span> LocationDDMM.TXT <span class="sy0">&gt;</span>LocationDD.TXT
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">cat</span> LocationDD.TXT
+<span class="nu0">52.65</span> <span class="nu0">4.75</span>
+<span class="nu0">52</span> <span class="nu0">4.36667</span>
+<span class="nu0">51.5</span> <span class="nu0">3.61667</span>
+<span class="nu0">51.5833</span> <span class="nu0">4.78333</span>
+<span class="nu0">52.3833</span> <span class="nu0">4.65</span>
+<span class="nu0">52.6667</span> <span class="nu0">4.71667</span>
+<span class="nu0">52</span> <span class="nu0">4.35</span>
+<span class="nu0">0</span> <span class="nu0">0</span>

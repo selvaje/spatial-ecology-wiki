@@ -1,0 +1,23 @@
+<span class="kw1">import</span> osgeo.<span class="me1">ogr</span>
+<span class="kw1">import</span> <span class="kw3">os</span>.<span class="me1">path</span>
+<span class="kw1">import</span> <span class="kw3">sys</span>
+&nbsp;
+mypath <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">dirname</span><span class="br0">&#40;</span><span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">realpath</span><span class="br0">&#40;</span><span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+shapefile_name <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span>mypath<span class="sy0">,</span><span class="st0">&quot;../files/tl_2012_us_state.shp&quot;</span><span class="br0">&#41;</span>
+shapefile <span class="sy0">=</span> osgeo.<span class="me1">ogr</span>.<span class="me1">Open</span><span class="br0">&#40;</span>shapefile_name<span class="br0">&#41;</span>
+layer <span class="sy0">=</span> shapefile.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+feature <span class="sy0">=</span> layer.<span class="me1">GetFeature</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;Feature 2 has the following attributes:&quot;</span>
+<span class="kw1">print</span>
+&nbsp;
+attributes <span class="sy0">=</span> feature.<span class="me1">items</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">for</span> key<span class="sy0">,</span>value <span class="kw1">in</span> attributes.<span class="me1">items</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    <span class="kw1">print</span> <span class="st0">&quot; %s = %s&quot;</span> % <span class="br0">&#40;</span>key<span class="sy0">,</span> value<span class="br0">&#41;</span>
+&nbsp;
+geometry <span class="sy0">=</span> feature.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+geometryName <span class="sy0">=</span> geometry.<span class="me1">GetGeometryName</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">print</span>
+<span class="kw1">print</span> <span class="st0">&quot;Feature's geometry data consists of a %s&quot;</span> % geometryName

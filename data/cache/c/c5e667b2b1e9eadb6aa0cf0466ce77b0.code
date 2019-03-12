@@ -1,0 +1,7 @@
+<span class="co1">-- Syntax</span>
+<span class="kw1">DELETE</span> <span class="kw1">FROM</span> collName <span class="br0">&#91;</span> <span class="kw1">AS</span> collIterator <span class="br0">&#93;</span>
+<span class="br0">&#91;</span> <span class="kw1">WHERE</span>  booleanExp <span class="br0">&#93;</span>
+&nbsp;
+<span class="co1">-- Deleting the array from collection containing too many black pixels</span>
+<span class="kw1">DELETE</span> <span class="kw1">FROM</span> mr <span class="kw1">AS</span> a
+<span class="kw1">WHERE</span> all_cells<span class="br0">&#40;</span> a <span class="sy0">&lt;</span> <span class="nu0">30</span> <span class="br0">&#41;</span>

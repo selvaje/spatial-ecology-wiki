@@ -1,0 +1,133 @@
+
+<h1 class="sectionedit1" id="cohen_s_kappa_statistics_for_comparing_categorical_maps">Cohen&#039;s Kappa statistics for comparing categorical maps</h1>
+<div class="level1">
+
+<p>
+Back to R geographical analyses <a href="/dokuwiki/doku.php?id=wiki:rstat:r_geography" class="wikilink1" title="wiki:rstat:r_geography"> main menue</a>.<br/>
+
+<br/>
+
+In this tutorial we learn how to compare 2 categorical maps using the kappa statistics.<br/>
+
+<a href="http://virtualhost.cs.columbia.edu/~julia/courses/CS6998/Interrater_agreement.Kappa_statistic.pdf" class="urlextern" target="blanc" title="http://virtualhost.cs.columbia.edu/~julia/courses/CS6998/Interrater_agreement.Kappa_statistic.pdf" rel="nofollow noopener"> Supplementary readings</a> on Cohen&#039;s Kappa statistics.<br/>
+
+As rule of thumbs these are Kappa values for interpretation:
+</p>
+<ul>
+<li class="level1"><div class="li"> &lt; 0 - Less than chance agreement</div>
+</li>
+<li class="level1"><div class="li"> 0.01–0.20 - Slight agreement</div>
+</li>
+<li class="level1"><div class="li"> 0.21– 0.40 - Fair agreement</div>
+</li>
+<li class="level1"><div class="li"> 0.41–0.60 - Moderate agreement</div>
+</li>
+<li class="level1"><div class="li"> 0.61–0.80 - Substantial agreement</div>
+</li>
+<li class="level1"><div class="li"> 0.81–0.99 - Almost perfect agreement</div>
+</li>
+</ul>
+
+<p>
+First create a working directory, migrate there and download raster data. 
+</p>
+<pre class="code"> wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/raster/carS_m9.asc
+ wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/raster/carA_m9.asc
+ wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/raster/recA_m9.asc
+ wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/raster/recT_m9.asc
+ </pre>
+
+<p>
+Then open an R session:
+</p>
+<pre class="code r">SoilCarbon=raster(readGDAL(&quot;carS_m9.asc&quot;))
+AeriCarbon=raster(readGDAL(&quot;carA_m9.asc&quot;))
+hist(SoilCarbon)
+hist(AeriCarbon)
+breaks=seq(0,100,20)
+SoilCarbonClass &lt;- cut(SoilCarbon, breaks=breaks)
+AeriCarbonClass &lt;- cut(AeriCarbon, breaks=breaks)
+Confusion.Soil_Aerial &lt;- table(SoilCarbonClass@data@values, AeriCarbonClass@data@values)
+confusionMatrix(Confusion.Soil_Aerial)
+&nbsp;
+&nbsp;
+# Confusion Matrix and Shtatistics
+# 
+#    
+#        1    2    3    4    5
+#   1 1822  235   62   11    4
+#   2  522   87   48   18    3
+#   3  408   48   21    7    4
+#   4   56    5    0    0    0
+#   5  175   12    4    0    0
+# 
+# Overall Statistics
+#                                           
+#                Accuracy : 0.5434          
+#                  95% CI : (0.5268, 0.5598)
+#     No Information Rate : 0.8398          
+#     P-Value [Acc &gt; NIR] : 1               
+#                                           
+#                   Kappa : 0.0265          
+#  Mcnemar's Test P-Value : NA              
+# 
+# Statistics by Class:
+# 
+#                      Class: 1 Class: 2 Class: 3 Class: 4 Class: 5
+# Sensitivity            0.6108  0.22481 0.155556  0.00000 0.000000
+# Specificity            0.4517  0.81327 0.863330  0.98265 0.946060
+# Pos Pred Value         0.8538  0.12832 0.043033  0.00000 0.000000
+# Neg Pred Value         0.1812  0.89562 0.962794  0.98969 0.996727
+# Prevalence             0.8398  0.10895 0.038007  0.01014 0.003097
+# Detection Rate         0.5130  0.02449 0.005912  0.00000 0.000000
+# Detection Prevalence   0.6008  0.19088 0.137387  0.01717 0.053773</pre>
+
+<p>
+You can do the same for comparing Aesthetic value and turism:
+</p>
+<pre class="code r">breaks=seq(0,100,20)
+Aesthetic=raster(readGDAL(&quot;recA_m9.asc&quot;))
+Turism=raster(readGDAL(&quot;recT_m9.asc&quot;))
+AestheticClass &lt;- cut(Aesthetic, breaks=breaks)
+TurismClass &lt;- cut(Turism, breaks=breaks)
+Confusion.Aesthetic_Turism &lt;- table(AestheticClass@data@values,TurismClass@data@values)
+confusionMatrix(Confusion.Aesthetic_Turism)
+&nbsp;
+# Confusion Matrix and Statistics
+# 
+#    
+#       1   2   3   4   5
+#   1 245   7   0   0   0
+#   2  53   5   1   1   0
+#   3  16   4   1   1   0
+#   4  11   2   0   0   1
+#   5   2   1   0   0   0
+# 
+# Overall Statistics
+#                                           
+#                Accuracy : 0.7151          
+#                  95% CI : (0.6648, 0.7618)
+#     No Information Rate : 0.9316          
+#     P-Value [Acc &gt; NIR] : 1               
+#                                           
+#                   Kappa : 0.1132          
+#  Mcnemar's Test P-Value : NA              
+# 
+# Statistics by Class:
+# 
+#                      Class: 1 Class: 2 Class: 3 Class: 4 Class: 5
+# Sensitivity            0.7492  0.26316 0.500000 0.000000 0.000000
+# Specificity            0.7083  0.83434 0.939828 0.959885 0.991429
+# Pos Pred Value         0.9722  0.08333 0.045455 0.000000 0.000000
+# Neg Pred Value         0.1717  0.95189 0.996960 0.994065 0.997126
+# Prevalence             0.9316  0.05413 0.005698 0.005698 0.002849
+# Detection Rate         0.6980  0.01425 0.002849 0.000000 0.000000
+# Detection Prevalence   0.7179  0.17094 0.062678 0.039886 0.008547</pre>
+
+<p>
+<br/>
+
+</p>
+<div class="notetip"> Aesthetic and Carbon in the soil give a Kappa : -0.0363 - Less than chance agreement
+</div>
+</div>

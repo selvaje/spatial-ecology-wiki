@@ -1,0 +1,2 @@
+<span class="re2">file</span>=<span class="re4">$1</span>
+gdalwarp <span class="re5">-r</span> cubic <span class="re5">-tr</span> <span class="nu0">0.008</span> <span class="nu0">0.008</span> -t_srs EPSG:<span class="nu0">4326</span> <span class="re1">$file</span>  proj_<span class="re1">$file</span> <span class="re5">-overwrite</span>

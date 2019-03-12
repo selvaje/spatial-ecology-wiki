@@ -1,0 +1,268 @@
+
+<h1 class="sectionedit1" id="a_suite_of_global_cross-scale_topographic_variables_for_environmental_and_biodiversity_modeling">A suite of global, cross-scale topographic variables for environmental and biodiversity modeling</h1>
+<div class="level1">
+
+<p>
+Scripting procedure to recreate derived and aggregated topographic variables using <a href="http://topotools.cr.usgs.gov/GMTED_viewer/" class="urlextern" target="blanc" title="http://topotools.cr.usgs.gov/GMTED_viewer/" rel="nofollow noopener"> Global Multi-resolution Terrain Elevation Data 2010 (GMTED2010)  </a>
+Script written by Giuseppe Amatulli
+</p>
+
+<p>
+This example contains the following steps: 
+</p>
+<ul>
+<li class="level1"><div class="li">Download the GMTED2010 digital elevation model (DEM)</div>
+</li>
+<li class="level1"><div class="li">Calculate the topographic variables using gdal commands </div>
+</li>
+<li class="level1"><div class="li">Calculate the topographic variables using grass7 commands</div>
+</li>
+<li class="level1"><div class="li">Aggregate the topographic variables to different resolution using pktools </div>
+</li>
+<li class="level1"><div class="li">Create a plot in R </div>
+</li>
+</ul>
+<div class="notetip">These scripts have been tested in Ubuntu Linux environment. 
+Microsoft Windows users: consider installing the <a href="http://live.osgeo.org/en/index.html" class="urlextern" target="blanc" title="http://live.osgeo.org/en/index.html" rel="nofollow noopener">  OSGEO-Live Virtual machine  </a> that has GRASS GIS 7 already installed and follow the <a href="http://pktools.nongnu.org/html/md_installation_linux.html#installation_linux" class="urlextern" target="blanc" title="http://pktools.nongnu.org/html/md_installation_linux.html#installation_linux" rel="nofollow noopener"> installation instruction </a>  to install <a href="http://pktools.nongnu.org/html/index.html" class="urlextern" target="blanc" title="http://pktools.nongnu.org/html/index.html" rel="nofollow noopener"> pktools </a>.
+
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;A suite of global, cross-scale topographic variables for environmental and biodiversity modeling&quot;,&quot;hid&quot;:&quot;a_suite_of_global_cross-scale_topographic_variables_for_environmental_and_biodiversity_modeling&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-1104&quot;} -->
+<h3 class="sectionedit2" id="use_gdaldem_to_create_topographic_variables">Use gdaldem to create topographic variables</h3>
+<div class="level3">
+<pre class="code"> # download the script 
+ wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/grass/sc1_topography_varGDAL.sh
+ bash sc1_topography_varGDAL.sh</pre>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/grass/sc1_topography_varGDAL.sh" class="mediafile mf_sh">wiki/grass/sc1_topography_varGDAL.sh</a></dt>
+<dd><pre class="code file bash"><span class="co0"># get information of the files in the GMTED repository new </span>
+&nbsp;
+gdalinfo  <span class="sy0">/</span>vsizip<span class="sy0">/</span>vsicurl<span class="sy0">/</span>http:<span class="sy0">//</span>edcintl.cr.usgs.gov<span class="sy0">/</span>downloads<span class="sy0">/</span>sciweb1<span class="sy0">/</span>shared<span class="sy0">/</span>topo<span class="sy0">/</span>downloads<span class="sy0">/</span>GMTED<span class="sy0">/</span>Grid_ZipFiles<span class="sy0">/</span>md75_grd.zip
+&nbsp;
+<span class="kw3">echo</span> create a VRT with the extent of the study region
+&nbsp;
+gdalbuildvrt <span class="re5">-overwrite</span>  <span class="re5">-te</span>  <span class="nu0">5.83333333333333</span>  <span class="nu0">44.833333333333333333333333</span>  <span class="nu0">10.83333333333333333333333</span>   <span class="nu0">48.166666666666666</span> elevation.vrt  <span class="sy0">/</span>vsizip<span class="sy0">/</span>vsicurl<span class="sy0">/</span>http:<span class="sy0">//</span>edcintl.cr.usgs.gov<span class="sy0">/</span>downloads<span class="sy0">/</span>sciweb1<span class="sy0">/</span>shared<span class="sy0">/</span>topo<span class="sy0">/</span>downloads<span class="sy0">/</span>GMTED<span class="sy0">/</span>Grid_ZipFiles<span class="sy0">/</span>md75_grd.zip<span class="sy0">/</span>md75_grd<span class="sy0">/</span>w00<span class="sy0">*</span>x.adf
+&nbsp;
+gdal_translate <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>   elevation.vrt  elevation.tif
+&nbsp;
+<span class="kw3">echo</span> calculate  slope 
+gdaldem slope  <span class="re5">-s</span> <span class="nu0">111120</span> <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  elevation.tif    slope.tif 
+&nbsp;
+<span class="kw3">echo</span> calculate  apect
+gdaldem aspect  -zero_for_flat <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> elevation.tif   aspect.tif 
+&nbsp;
+<span class="kw3">echo</span> calculate  cosine and sine of aspect
+gdal_calc.py  <span class="re5">--NoDataValue</span>=-<span class="nu0">9999</span> <span class="re5">--co</span>=<span class="re2">COMPRESS</span>=DEFLATE <span class="re5">--co</span>=<span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">--overwrite</span> <span class="re5">--type</span>=Float32  <span class="re5">-A</span> aspect.tif  <span class="re5">--calc</span>=<span class="st0">&quot;(sin(A.astype(float)  * 3.141592 / 180 ))&quot;</span> <span class="re5">--outfile</span>  aspectsine.tif 
+gdal_calc.py  <span class="re5">--NoDataValue</span>=-<span class="nu0">9999</span> <span class="re5">--co</span>=<span class="re2">COMPRESS</span>=DEFLATE <span class="re5">--co</span>=<span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">--overwrite</span> <span class="re5">--type</span>=Float32  <span class="re5">-A</span> aspect.tif  <span class="re5">--calc</span>=<span class="st0">&quot;(cos(A.astype(float)* 3.141592 / 180 ))&quot;</span> <span class="re5">--outfile</span>  aspectcosine.tif 
+&nbsp;
+<span class="kw3">echo</span> calculate Eastness  Northness 
+gdal_calc.py <span class="re5">--NoDataValue</span>=-<span class="nu0">9999</span> <span class="re5">--co</span>=<span class="re2">COMPRESS</span>=DEFLATE <span class="re5">--co</span>=<span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">--overwrite</span> <span class="re5">--type</span>=Float32   <span class="re5">-A</span> slope.tif <span class="re5">-B</span>  aspectsine.tif   <span class="re5">--calc</span>=<span class="st0">&quot;((sin(A.astype(float) * 3.141592 / 180 ))*B)&quot;</span> <span class="re5">--outfile</span>   eastness.tif 
+gdal_calc.py <span class="re5">--NoDataValue</span>=-<span class="nu0">9999</span> <span class="re5">--co</span>=<span class="re2">COMPRESS</span>=DEFLATE <span class="re5">--co</span>=<span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">--overwrite</span> <span class="re5">--type</span>=Float32   <span class="re5">-A</span> slope.tif <span class="re5">-B</span> aspectcosine.tif  <span class="re5">--calc</span>=<span class="st0">&quot;((sin(A.astype(float) * 3.141592 / 180 ))*B)&quot;</span> <span class="re5">--outfile</span>   northness.tif
+&nbsp;
+<span class="kw3">echo</span>  calculate  Terrain Ruggedness Index TRI  
+gdaldem TRI <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>   elevation.tif   tri.tif 
+&nbsp;
+<span class="kw3">echo</span>  calculate  Topographic Position Index TPI
+gdaldem TPI  <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  elevation.tif   tpi.tif 
+&nbsp;
+<span class="kw3">echo</span>  calculate  Roughness   
+gdaldem  roughness   <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> elevation.tif  roughness.tif </pre>
+</dd></dl>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Use gdaldem to create topographic variables&quot;,&quot;hid&quot;:&quot;use_gdaldem_to_create_topographic_variables&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1105-1444&quot;} -->
+<h3 class="sectionedit3" id="use_grass_to_create_others_topographic_variables">Use GRASS to create others topographic variables</h3>
+<div class="level3">
+<pre class="code"> wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/grass/sc2_topography_varGRASS.sh</pre>
+
+<p>
+Create the GRASS GIS data base and enter GRASS: 
+</p>
+<pre class="code"> grass70 -text -c elevation.tif  grass_location
+ # run the script
+ bash sc2_topography_varGRASS.sh
+ </pre>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/grass/sc2_topography_varGRASS.sh" class="mediafile mf_sh">wiki/grass/sc2_topography_varGRASS.sh</a></dt>
+<dd><pre class="code file bash">&nbsp;
+<span class="co0"># Read data into GRASS </span>
+&nbsp;
+r.in.gdal <span class="re2">input</span>=elevation.tif    <span class="re2">output</span>=elevation
+&nbsp;
+g.extension  <span class="re2">extension</span>=r.vector.ruggedness
+&nbsp;
+<span class="kw3">echo</span> calculate  Vector Ruggedness Measure
+r.vector.ruggedness      <span class="re2">elevation</span>=elevation   <span class="re2">output</span>=vrm   <span class="re5">--o</span> 
+&nbsp;
+<span class="co0"># export the results </span>
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=vrm <span class="re2">output</span>=vrm.tif 
+&nbsp;
+<span class="kw3">echo</span> calculate curvature variables 
+r.slope.aspect <span class="re2">elevation</span>=elevation  <span class="re2">precision</span>=FCELL  <span class="re2">pcurv</span>=pcurv <span class="re2">tcurv</span>=tcurv <span class="re2">dx</span>=dx  <span class="re2">dy</span>=dy  <span class="re2">dxx</span>=dxx <span class="re2">dyy</span>=dyy  <span class="re5">--o</span>
+&nbsp;
+<span class="co0"># export the results </span>
+&nbsp;
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=pcurv <span class="re2">output</span>=pcurv.tif 
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=tcurv <span class="re2">output</span>=tcurv.tif 
+&nbsp;
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=dx <span class="re2">output</span>=dx.tif 
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=dxx <span class="re2">output</span>=dxx.tif 
+&nbsp;
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=dy <span class="re2">output</span>=dy.tif 
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Float32 <span class="re2">input</span>=dyy <span class="re2">output</span>=dyy.tif 
+&nbsp;
+<span class="kw3">echo</span> calculate geomorphological landforms 
+&nbsp;
+g.extension  <span class="re2">extension</span>=r.geomorphon
+r.geomorphon   <span class="re2">elevation</span>=elevation  <span class="re2">forms</span>=geomorphon  <span class="re2">search</span>=<span class="nu0">3</span> <span class="re2">skip</span>=<span class="nu0">0</span> <span class="re2">flat</span>=<span class="nu0">1</span> <span class="re2">dist</span>=<span class="nu0">0</span> <span class="re2">step</span>=<span class="nu0">0</span> <span class="re2">start</span>=<span class="nu0">0</span> <span class="re5">--overwrite</span>
+&nbsp;
+r.out.gdal <span class="re5">-c</span>  <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">format</span>=GTiff  <span class="re2">type</span>=Byte <span class="re2">input</span>=geomorphon <span class="re2">output</span>=geomorphon.tif </pre>
+</dd></dl>
+<p>
+Additional topographic variables can be create using:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="https://grass.osgeo.org/grass70/manuals/addons/r.diversity.html" class="urlextern" target="blanc" title="https://grass.osgeo.org/grass70/manuals/addons/r.diversity.html" rel="nofollow noopener"> r.diversity </a> which calculate Pielou, Renyi, Shannon and Simpson indices.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="https://grass.osgeo.org/grass70/manuals/r.texture.html" class="urlextern" target="blanc" title="https://grass.osgeo.org/grass70/manuals/r.texture.html" rel="nofollow noopener"> r.texture </a> which generate images with textural features as first order statistic and second order (so-called grey level co-occurrence matrices). </div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Use GRASS to create others topographic variables&quot;,&quot;hid&quot;:&quot;use_grass_to_create_others_topographic_variables&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;1445-2307&quot;} -->
+<h3 class="sectionedit4" id="use_pktools_to_aggregate_categorical_topographic_variables">Use PKtools to aggregate categorical topographic variables</h3>
+<div class="level3">
+
+<p>
+<a href="https://github.com/tuanmu/RS_tools/blob/master/Aggregation_GLCM.py" class="urlextern" target="blanc" title="https://github.com/tuanmu/RS_tools/blob/master/Aggregation_GLCM.py" rel="nofollow noopener">https://github.com/tuanmu/RS_tools/blob/master/Aggregation_GLCM.py</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Use PKtools to aggregate categorical topographic variables&quot;,&quot;hid&quot;:&quot;use_pktools_to_aggregate_categorical_topographic_variables&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:4,&quot;range&quot;:&quot;2308-2446&quot;} -->
+<h3 class="sectionedit5" id="use_pktools_to_aggregate_continues_topographic_variables">Use PKtools to aggregate continues topographic variables</h3>
+<div class="level3">
+<pre class="code"> wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/grass/sc3_aggregation_varPKTOOLS.sh
+ bash sc3_aggregation_varPKTOOLS.sh</pre>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/grass/sc3_aggregation_varPKTOOLS.sh" class="mediafile mf_sh">wiki/grass/sc3_aggregation_varPKTOOLS.sh</a></dt>
+<dd><pre class="code file bash"><span class="co0"># aggregate variables </span>
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.tif ; <span class="kw1">do</span>  
+    <span class="kw1">for</span> km <span class="kw1">in</span> <span class="nu0">1</span> <span class="nu0">5</span> <span class="nu0">10</span> <span class="nu0">50</span> <span class="nu0">100</span> ; <span class="kw1">do</span> 
+	<span class="re2">km</span>=<span class="re1">$km</span>
+	<span class="re2">res</span>=$<span class="br0">&#40;</span><span class="kw2">expr</span> <span class="re1">$km</span> \<span class="sy0">*</span> <span class="nu0">4</span><span class="br0">&#41;</span>
+	<span class="kw1">for</span> aggreg <span class="kw1">in</span> min max mean median stdev ; <span class="kw1">do</span> 	    
+	    <span class="re2">filename</span>=$<span class="br0">&#40;</span> <span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="br0">&#41;</span> 
+	    pkfilter <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-ot</span> Float32 <span class="re5">-of</span> GTiff <span class="re5">-nodata</span> <span class="re5">-9999</span> <span class="re5">-dx</span> <span class="re1">$res</span> <span class="re5">-dy</span> <span class="re1">$res</span> <span class="re5">-f</span> <span class="re1">$aggreg</span>  <span class="re5">-d</span> <span class="re1">$res</span> <span class="re5">-i</span> <span class="re1">$file</span>  <span class="re5">-o</span> <span class="co1">${filename}</span>_<span class="co1">${km}</span>KM<span class="co1">${aggreg}</span>.tif    
+	<span class="kw1">done</span> 
+    <span class="kw1">done</span> 
+<span class="kw1">done</span> 
+&nbsp;
+&nbsp;
+<span class="kw3">echo</span> majority 
+&nbsp;
+<span class="kw1">for</span> km <span class="kw1">in</span> <span class="nu0">1</span> <span class="nu0">5</span> <span class="nu0">10</span> <span class="nu0">50</span> <span class="nu0">100</span> ; <span class="kw1">do</span> 
+    <span class="re2">km</span>=<span class="re1">$km</span>
+    <span class="re2">res</span>=$<span class="br0">&#40;</span><span class="kw2">expr</span> <span class="re1">$km</span> \<span class="sy0">*</span> <span class="nu0">4</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> aggreg <span class="kw1">in</span> mode countid ; <span class="kw1">do</span>
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$aggreg</span> = <span class="st0">&quot;mode&quot;</span> <span class="br0">&#93;</span> ; <span class="kw1">then</span> <span class="re2">naggreg</span>=maj ; <span class="kw1">fi</span> 
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$aggreg</span> = <span class="st0">&quot;countid&quot;</span> <span class="br0">&#93;</span> ; <span class="kw1">then</span> <span class="re2">naggreg</span>=count ; <span class="kw1">fi</span> 
+ 	pkfilter <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE  <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-ot</span> Byte <span class="re5">-nodata</span> <span class="nu0">255</span> <span class="re5">-dx</span> <span class="re1">$res</span> <span class="re5">-dy</span> <span class="re1">$res</span> <span class="re5">-f</span> <span class="re1">$aggreg</span>  <span class="re5">-d</span> <span class="re1">$res</span> <span class="re5">-i</span>   geomorphon.tif   <span class="re5">-o</span> geom_<span class="co1">${km}</span>KM<span class="co1">${naggreg}</span>.tif
+    <span class="kw1">done</span> 
+<span class="kw1">done</span>
+&nbsp;
+&nbsp;
+<span class="kw1">for</span> km <span class="kw1">in</span> <span class="nu0">1</span> <span class="nu0">5</span> <span class="nu0">10</span> <span class="nu0">50</span> <span class="nu0">100</span> ; <span class="kw1">do</span> 
+    <span class="re2">km</span>=<span class="re1">$km</span>
+    <span class="re2">res</span>=$<span class="br0">&#40;</span><span class="kw2">expr</span> <span class="re1">$km</span> \<span class="sy0">*</span> <span class="nu0">4</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> class <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">10</span><span class="br0">&#41;</span> ;  <span class="kw1">do</span>  
+	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;1&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=flat     ;   <span class="kw1">fi</span>                                                                                                                              
+	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;2&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=peak     ;   <span class="kw1">fi</span>                                                                                                                              
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;3&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=ridge    ;   <span class="kw1">fi</span>                                                                                                                              
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;4&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=shoulder ;   <span class="kw1">fi</span>                                                                                                                              
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;5&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=spur     ;   <span class="kw1">fi</span>                                                                                                                              
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;6&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=slope    ;   <span class="kw1">fi</span>                                                                                                                              
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;7&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=hollow   ;   <span class="kw1">fi</span>                                                                                                                              
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;8&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=footslope;   <span class="kw1">fi</span>                                                                                                                              
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;9&quot;</span>  <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=valley   ;   <span class="kw1">fi</span>                                                                                                                              
+ 	<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$class</span>  = <span class="st0">&quot;10&quot;</span> <span class="br0">&#93;</span>    ; <span class="kw1">then</span> <span class="re2">class2</span>=pit      ;   <span class="kw1">fi</span> 
+ 	pkfilter     <span class="re5">-co</span>  <span class="re2">COMPRESS</span>=DEFLATE  <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  <span class="re5">-ot</span>  Float32 <span class="re5">-nodata</span> <span class="nu0">255</span> <span class="re5">-dx</span> <span class="re1">$res</span> <span class="re5">-dy</span> <span class="re1">$res</span> <span class="re5">-f</span> density <span class="re5">-class</span> <span class="re1">$class</span> <span class="re5">-d</span> <span class="re1">$res</span> <span class="re5">-i</span> geomorphon.tif <span class="re5">-o</span> geom_class<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif
+ 	gdal_calc.py <span class="re5">--co</span>=<span class="re2">COMPRESS</span>=DEFLATE <span class="re5">--co</span>=<span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  <span class="re5">--NoDataValue</span>=<span class="nu0">0</span> <span class="re5">--type</span>=UInt16 <span class="re5">-A</span> geom_class<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif   <span class="re5">--calc</span>=<span class="st0">&quot;( A.astype(float) * 100 )&quot;</span>  <span class="re5">--outfile</span>=geom<span class="co1">${class2}</span>_<span class="co1">${km}</span>KMperc.tif
+    <span class="kw1">done</span> 
+<span class="kw1">done</span>  
+&nbsp;
+<span class="kw3">echo</span>  calculate shannon index
+&nbsp;
+<span class="kw1">for</span> km <span class="kw1">in</span> <span class="nu0">1</span> <span class="nu0">5</span> <span class="nu0">10</span> <span class="nu0">50</span> <span class="nu0">100</span> ; <span class="kw1">do</span> 
+    <span class="re2">km</span>=<span class="re1">$km</span>
+    <span class="re2">res</span>=$<span class="br0">&#40;</span><span class="kw2">expr</span> <span class="re1">$km</span> \<span class="sy0">*</span> <span class="nu0">4</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> class <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="nu0">1</span> <span class="nu0">10</span><span class="br0">&#41;</span> ;  <span class="kw1">do</span>  
+	pksetmask <span class="re5">-msknodata</span> <span class="nu0">0</span> <span class="re5">-nodata</span> <span class="nu0">255</span> <span class="re5">-m</span>   geom_class<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif  <span class="re5">-i</span>  geom_class<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif  <span class="re5">-o</span>   geom_class255_<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif 
+	gdal_calc.py  <span class="re5">--co</span>=<span class="re2">COMPRESS</span>=LZW <span class="re5">--co</span>=<span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">--NoDataValue</span>=<span class="nu0">0</span> <span class="re5">--type</span>=Float32 <span class="re5">--overwrite</span> <span class="re5">-A</span>  geom_class<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif <span class="re5">-B</span> geom_class255_<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif   <span class="re5">--calc</span>=<span class="st0">&quot;((log ( B  / 100 )) * ( A / 100 ))&quot;</span>  <span class="re5">--outfile</span>=geom_classH_<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif
+        gdal_edit.py -a_nodata <span class="re5">-1</span>  geom_classH_<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif   	
+        <span class="kw2">rm</span> <span class="re5">-f</span>  geom_class255_<span class="co1">${class}</span>_<span class="co1">${km}</span>KM.tif 
+    <span class="kw1">done</span>     
+    gdal_calc.py  <span class="re5">--co</span>=<span class="re2">COMPRESS</span>=LZW <span class="re5">--co</span>=<span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  <span class="re5">--type</span>=Float32 <span class="re5">--overwrite</span> <span class="re5">-A</span> geom_classH_1_<span class="co1">${km}</span>KM.tif <span class="re5">-B</span> geom_classH_2_<span class="co1">${km}</span>KM.tif <span class="re5">-C</span> geom_classH_3_<span class="co1">${km}</span>KM.tif <span class="re5">-D</span> geom_classH_4_<span class="co1">${km}</span>KM.tif  <span class="re5">-E</span> geom_classH_5_<span class="co1">${km}</span>KM.tif <span class="re5">-F</span> geom_classH_6_<span class="co1">${km}</span>KM.tif <span class="re5">-G</span> geom_classH_7_<span class="co1">${km}</span>KM.tif <span class="re5">-H</span> geom_classH_8_<span class="co1">${km}</span>KM.tif <span class="re5">-I</span> geom_classH_9_<span class="co1">${km}</span>KM.tif <span class="re5">-J</span> geom_classH_10_<span class="co1">${km}</span>KM.tif <span class="re5">--calc</span>=<span class="st0">&quot;((A + B + C + D + E + F + G + H + I + J) * -1  )&quot;</span>  <span class="re5">--outfile</span>=geom_<span class="co1">${km}</span>KMsha.tif   	
+&nbsp;
+<span class="kw1">done</span></pre>
+</dd></dl>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Use PKtools to aggregate continues topographic variables&quot;,&quot;hid&quot;:&quot;use_pktools_to_aggregate_continues_topographic_variables&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:5,&quot;range&quot;:&quot;2447-2785&quot;} -->
+<h3 class="sectionedit6" id="use_r_to_plot_a_variable">Use R to plot a variable</h3>
+<div class="level3">
+<pre class="code"> wget https://raw.githubusercontent.com/selvaje/spatial-ecology-codes/master/wiki/grass/sc4_plot_varR.R   </pre>
+
+<p>
+start R 
+</p>
+<pre class="code"> R
+ source (&quot;sc4_plot_varR.R&quot;)</pre>
+<dl class="file">
+<dt><a href="https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/grass/sc4_plot_varR.R" class="mediafile mf_r">wiki/grass/sc4_plot_varR.R</a></dt>
+<dd><pre class="code file r">library(raster)
+library(rasterVis)
+&nbsp;
+raster=raster(&quot;vrm.tif&quot;)
+&nbsp;
+png(&quot;vrm.png&quot;,   res=100 , width = 800, height = 800  )
+&nbsp;
+max=0.004 ; min=0 ; des=&quot;Vector Ruggedness Measure&quot;
+&nbsp;
+n=100
+at=seq(min,max,length=n)
+colR=colorRampPalette(c(&quot;blue&quot;,&quot;green&quot;,&quot;yellow&quot;, &quot;orange&quot; , &quot;red&quot;, &quot;brown&quot;, &quot;black&quot; ))
+&nbsp;
+cols=colR(n)
+res=1e7 
+par(cex.axis=2, cex.lab=2, cex.main=2, cex.sub=2)
+raster[raster&gt;max] &lt;- max
+raster[raster&lt;min] &lt;- min
+print ( levelplot(raster,col.regions=colR(n),  scales=list(cex=1.5) ,   cuts=99,at=at,colorkey=list(space=&quot;right&quot;,adj=2 , labels=list( cex=1.5)), panel=panel.levelplot.raster,   margin=T,maxpixels=res,ylab=&quot;&quot;, xlab=list(paste(des,sep=&quot;&quot;) , cex=1.5 , space=&quot;left&quot; ) ,useRaster=T )  )
+&nbsp;
+dev.off()
+&nbsp;
+&nbsp;
+raster=raster(&quot;geom_1KMsha.tif&quot;)
+&nbsp;
+png(&quot;geom_1KMsha.png&quot;,   res=100 , width = 800, height = 800  )
+&nbsp;
+min=0.234 ; max=2.220 ; des=&quot;Shanon index of geomorphic landform&quot;
+n=100
+at=seq(min,max,length=n)
+colR=colorRampPalette(c(&quot;blue&quot;,&quot;green&quot;,&quot;yellow&quot;, &quot;orange&quot; , &quot;red&quot;, &quot;brown&quot;, &quot;black&quot; ))
+&nbsp;
+cols=colR(n)
+res=1e7 
+par(cex.axis=2, cex.lab=2, cex.main=2, cex.sub=2)
+raster[raster&gt;max] &lt;- max
+raster[raster&lt;min] &lt;- min
+print ( levelplot(raster,col.regions=colR(n),  scales=list(cex=1.5) ,   cuts=99,at=at,colorkey=list(space=&quot;right&quot;,adj=2 , labels=list( cex=1.5)), panel=panel.levelplot.raster,   margin=T,maxpixels=res,ylab=&quot;&quot;, xlab=list(paste(des,sep=&quot;&quot;) , cex=1.5 , space=&quot;left&quot; ) ,useRaster=T ) )
+&nbsp;
+dev.off()</pre>
+</dd></dl>
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Agrass%3Agrasstopovar&amp;media=wiki:vrm.png" class="media" title="wiki:vrm.png"><img src="/dokuwiki/lib/exe/fetch.php?w=320&amp;tok=ea1078&amp;media=wiki:vrm.png" class="media" alt="" width="320" /></a> <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Agrass%3Agrasstopovar&amp;media=wiki:geom_1kmsha.png" class="media" title="wiki:geom_1kmsha.png"><img src="/dokuwiki/lib/exe/fetch.php?w=320&amp;tok=c66a3f&amp;media=wiki:geom_1kmsha.png" class="media" alt="" width="320" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Use R to plot a variable&quot;,&quot;hid&quot;:&quot;use_r_to_plot_a_variable&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:6,&quot;range&quot;:&quot;2786-&quot;} -->

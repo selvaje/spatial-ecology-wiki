@@ -1,0 +1,183 @@
+
+<h1 class="sectionedit1" id="access_spatial-ecology_ubuntu_from_a_virtual_machine">Access spatial-ecology ubuntu from a Virtual Machine</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Access spatial-ecology ubuntu from a Virtual Machine&quot;,&quot;hid&quot;:&quot;access_spatial-ecology_ubuntu_from_a_virtual_machine&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-68&quot;} -->
+<h2 class="sectionedit2" id="procedure_for_the_course_july_2012">Procedure for the course July 2012</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Download the  compressed file Ubuntu12.04<em>CORNWALL</em>2012.7z  following one of the two options:<br/>
+<pre class="code">* Click on the [[http://www.spatial-ecology.net/sharing/incoming/Ubuntu12.04_CORNWALL_2012.7z.zip | Ubuntu12.04_uk_2012_v1.7z compressed file]] (not reccomended).</pre>
+
+<p>
+      Save it, and rename it from Ubuntu12.04<em>CORNWALL</em>2012.7z.zip ot  Ubuntu12.04<em>CORNWALL</em>2012.7z <strong>Do not upen the zip, just rename it!</strong>
+</p>
+</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Using the ftp server at <a href="ftp://spatial-ecology.net/" class="urlextern" target="blanc" title="ftp://spatial-ecology.net/" rel="nofollow noopener">ftp://spatial-ecology.net/</a> (reccomended)</div>
+</li>
+</ul>
+
+<p>
+          username    4sharing<br/>
+
+          pw             4sharing_pw<br/>
+
+          migrate to the incoming folder and download the file.<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li">Create a new folder on your c: disk and rename it as an example <em>“virtualOS”</em></div>
+</li>
+<li class="level1"><div class="li">Extract ( by <a href="http://www.7-zip.org/" class="urlextern" target="blanc" title="http://www.7-zip.org/" rel="nofollow noopener">http://www.7-zip.org/</a>)  the <em>Ubuntu12.04<em>uk</em>2012_v1.7z </em> file in your <em>C:\virtualOS\</em> folder. 
+The virtualOS folder will contain ~14 <abbr title="Gigabyte">GB</abbr> of unpacked data. The extracting procedure is quite long less the 1 hour. </div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Procedure for the course July 2012&quot;,&quot;hid&quot;:&quot;procedure_for_the_course_july_2012&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;69-1102&quot;} -->
+<h2 class="sectionedit3" id="common_procedure">Common Procedure</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Download and install the <a href="https://www.virtualbox.org/wiki/Downloads" class="urlextern" target="blanc" title="https://www.virtualbox.org/wiki/Downloads" rel="nofollow noopener">VirtualBox player</a> suitable for your <abbr title="Operating System">OS</abbr> (raccomended). </div>
+</li>
+</ul>
+
+<p>
+or
+</p>
+<ul>
+<li class="level1"><div class="li"> Download and install the <a href="http://www.vmware.com/products/player/" class="urlextern" target="blanc" title="http://www.vmware.com/products/player/" rel="nofollow noopener">wmware player</a> suitable for your <abbr title="Operating System">OS</abbr>.<br/>
+ </div>
+</li>
+</ul>
+
+<p>
+<a href="https://www.virtualbox.org/" class="urlextern" target="blanc" title="https://www.virtualbox.org/" rel="nofollow noopener"> VirtualBox</a> is open source and free sw<br/>
+
+<a href="http://www.vmware.com/" class="urlextern" target="blanc" title="http://www.vmware.com/" rel="nofollow noopener">VMware</a> is propetary and free sw
+</p>
+
+<p>
+VMware has an easy setting to increase the number of processor. It can be usefull for simulating <a href="/dokuwiki/doku.php?id=wiki:cluster_processing" class="wikilink1" title="wiki:cluster_processing"> clastering processing </a> by means the use of xargs 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Common Procedure&quot;,&quot;hid&quot;:&quot;common_procedure&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1103-1689&quot;} -->
+<h2 class="sectionedit4" id="install_virtual_machine_player_vmware_or_virtualbox">Install Virtual Machine player (VMware or Virtualbox)</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install Virtual Machine player (VMware or Virtualbox)&quot;,&quot;hid&quot;:&quot;install_virtual_machine_player_vmware_or_virtualbox&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1690-1755&quot;} -->
+<h3 class="sectionedit5" id="vmware">VMware</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> After registration download and install the <a href="http://www.vmware.com/products/player/" class="urlextern" target="blanc" title="http://www.vmware.com/products/player/" rel="nofollow noopener">wmware player</a> suitable for your <abbr title="Operating System">OS</abbr>. </div>
+</li>
+<li class="level1"><div class="li"> Open the vmware player, click on <em>open a Virtual Machine</em>; select <em>C:\virtualOS\Ubuntu_20122011\Ubuntu.vmx</em> and click on <em>play virtual machine</em> and select <em>I copied</em> option if requested by vmware player</div>
+</li>
+<li class="level1"><div class="li"> If some update are request during the vmware installation please select yes or ok.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;VMware&quot;,&quot;hid&quot;:&quot;vmware&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1756-2203&quot;} -->
+<h3 class="sectionedit6" id="virtualbox">Virtualbox</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Download and install the <a href="https://www.virtualbox.org/wiki/Downloads" class="urlextern" target="blanc" title="https://www.virtualbox.org/wiki/Downloads" rel="nofollow noopener"> VirtuaBox player</a> suitable for your <abbr title="Operating System">OS</abbr>. </div>
+</li>
+<li class="level1"><div class="li"> Click on New icon and follow the wizard: <br/>
+</div>
+</li>
+</ul>
+
+<p>
+    Name Ubuntu; <abbr title="Operating System">OS</abbr> Linux; Version Ubuntu<br/>
+
+    Memory select the minimum 512<br/>
+
+    Virutal Hard Disk:<br/>
+
+    Use existing hard disk: <em>C:\virtualOS\Ubuntu_20122011\Ubuntu.vmx</em>
+</p>
+<ul>
+<li class="level1"><div class="li"> Create</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Virtualbox&quot;,&quot;hid&quot;:&quot;virtualbox&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2204-2595&quot;} -->
+<h2 class="sectionedit7" id="folder_sharing_option_vmware">Folder sharing option VMware</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Install VMware tools in vmware player. It will download automatically the repository for your windows operating system. Migrate in the directory were you save it, uncompress the installer, and then execute by sudo  ./vmware-install.pl (pw user) to install VMware Tools.</div>
+</li>
+<li class="level1"><div class="li"> Create a folder in windows C:\vm<em>data enable the sharing option. This it will be the folder that the students can use to communicate between MW and LinuxVM.
+  * On vmware player select VM\settings\options\shared folders and select <em>always enabled</em> and under the path select the  C:\vm</em>data folder.</div>
+</li>
+<li class="level1"><div class="li"> On the desktop of the Ubuntu VM there is a folder called shared<em>on</em>ws4vmw. Confirm that the folder is linked with the C:\vm_data</div>
+</li>
+<li class="level1"><div class="li"> The root password for the VMUbuntu is “user”</div>
+</li>
+<li class="level1"><div class="li"> Update Ubuntu by system/preferences/softwareUpdates. This procedure need to repeat several time before to have the full Ubuntu ready to use.</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+There is more info at WMplayer help shared folder section
+</p>
+<div class="noteclassic">If your guest <abbr title="Operating System">OS</abbr> is linux, to see your shared folder you have to mount it first:<ul>
+<li class="level1"><div class="li"> mkdir /home/user/share</div>
+</li>
+<li class="level1"><div class="li"> sudo mount -t vmhgfs .host:/  /home/user/share</div>
+</li>
+</ul>
+
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Folder sharing option VMware&quot;,&quot;hid&quot;:&quot;folder_sharing_option_vmware&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;2596-3916&quot;} -->
+<h2 class="sectionedit8" id="folder_sharing_option_virtualbox">Folder sharing option VirtualBox</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> VirtualBox player select Device\Install Guest Additions tools in VirtualBox player. It will download automatically the repository for your windows operating system.</div>
+</li>
+<li class="level1"><div class="li"> Run sudo ./VBoxLinuxAdditions</div>
+</li>
+<li class="level1"><div class="li"> Create a folder in windows C:\vm<em>data enable the sharing option. This it will be the folder that the students can use to communicate between MW and LinuxVM.
+  * On VirtualBox player select Device\shared</em>folders, right click on Machine Folders select the  C:\vm<em>data folder.
+  * On the desktop of the Ubuntu VM there is a folder called shared</em>on<em>ws4vb. Confirm that the folder is linked with the C:\vm</em>data</div>
+</li>
+<li class="level1"><div class="li"> The root password for the VMUbuntu is “user”</div>
+</li>
+<li class="level1"><div class="li"> Update Ubuntu by system/preferences/softwareUpdates. This procedure need to repeat several time before to have the full Ubuntu ready to use.</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+There is more info at <a href="http://www.virtualbox.org/manual/ch04.html" class="urlextern" target="blanc" title="http://www.virtualbox.org/manual/ch04.html" rel="nofollow noopener"> VirtualBox help shared folder section</a>
+</p>
+<div class="noteclassic">If your guest <abbr title="Operating System">OS</abbr> is linux, to see your shared folder you have to mount it first:<ul>
+<li class="level1"><div class="li"> sudo mount -a  -t vboxsf vm<em>data  /media/sf</em>vm<em>data/
+  * sudo ln -s /media/sf</em>vm<em>data/ ~/Desktop/shared</em>on<em>ws4vb
+  * to auto startpu the mount add this line 
+    sudo ln -s /media/sf</em>vm<em>data/ ~/Desktop/shared</em>on_ws4vb to /etc/init.d/rc.local</div>
+</li>
+</ul>
+
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Folder sharing option VirtualBox&quot;,&quot;hid&quot;:&quot;folder_sharing_option_virtualbox&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;3917-&quot;} -->

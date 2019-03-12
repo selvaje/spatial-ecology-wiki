@@ -1,0 +1,3 @@
+r.watershed <span class="re2">elevetion</span>=merge.lidar<span class="sy0">@</span>PERMANENT \\
+<span class="re2">threshold</span>=<span class="nu0">10000</span> <span class="re2">accumulation</span>=accumul.2ha \\
+<span class="re2">drainage</span>=dir.2ha <span class="re2">stream</span>=str.2ha <span class="re2">basin</span>=bassins.2ha

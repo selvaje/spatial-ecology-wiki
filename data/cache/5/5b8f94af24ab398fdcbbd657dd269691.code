@@ -1,0 +1,5 @@
+<span class="kw2">sh</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>studycase<span class="sy0">/</span>fire_risk<span class="sy0">/</span>sh_script<span class="sy0">/</span>average.sh input_s.txt output.txt <span class="co2">&lt;&lt;EOF
+n
+2
+2
+EOF</span>

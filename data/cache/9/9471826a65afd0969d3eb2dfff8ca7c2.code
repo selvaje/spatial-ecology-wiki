@@ -1,0 +1,50 @@
+UF = read.table(file=&quot;~/work/GlobalWarming_Intech/mypaper/UFO/UFstat.csv&quot;, header=TRUE, sep=&quot;,&quot;)
+PUF = read.table(file=&quot;~/work/GlobalWarming_Intech/mypaper/UFO/PUFstat.csv&quot;, header=TRUE, sep=&quot;,&quot;)
+UPUF = PUF
+UPUF$UF = UF$UF
+UPUF$U_tot = UF$U_tot
+UPUF$pc_UF = UF$pc_UF
+UPUF$tot_Area = UPUF$U_tot+UPUF$PU_tot+UPUF$PUF+UPUF$PU_tot
+UPUF$tot_FArea = UPUF$PUF+UPUF$UF
+UPUF$tot_pc_green = UPUF$tot_Area/UPUF$tot_FArea
+&nbsp;
+col=rainbow(15)
+# col =terrain.colors(15, alpha = 1)
+# col=topo.colors(n, alpha = 1)
+#  col=heat.colors(15, alpha = 1)
+png(&quot;~/work/GlobalWarming_Intech/mypaper/UFO/UPUF_stat.png&quot;, width = 800, height = 800)
+par(mar=c(5,5,1,1))
+plot(UPUF$pc_UF,UPUF$pc_PUF,  axes=FALSE, xlab=&quot;% Forest in Urban Areas&quot; , ylab=&quot;% Forest in Peri Urban Areas&quot;, cex.lab=2)
+&nbsp;
+axis(side = 1, at=c(0,.1,.2,.3,.4,.5,.6,.7) , labels=c(0,10,20,30,40,50,60,70), cex.axis=2)
+axis(side = 2, at = c(0,.1,.2,.3,.4,.5,.6,.7,.8) , labels = c(0,10,20,30,40,50,60,70,80),cex.axis=2)
+# ,xlabel=c(0,10,20,30,40,50), ylabel=c(0,10,20,30,40,50,60,70) )
+&nbsp;
+symbols(UPUF$pc_UF,UPUF$pc_PUF,circles=UPUF$tot_Area/30000000, inches=FALSE,  bg = col , fg=col, add=TRUE)
+text(UPUF$pc_U, UPUF$pc_PUF, labels =UPUF$city, cex=1.7)
+box()
+dev.off()
+&nbsp;
+# # # 
+&nbsp;
+UF = read.table(file=&quot;~/work/GlobalWarming_Intech/mypaper/UFO/UFstat.csv&quot;, header=TRUE, sep=&quot;,&quot;)
+PUF = read.table(file=&quot;~/work/GlobalWarming_Intech/mypaper/UFO/PUFstat.csv&quot;, header=TRUE, sep=&quot;,&quot;)
+&nbsp;
+syntM= matrix(NA,15,6)
+rownames(syntM)=UPUF$city
+colnames(syntM)=c(&quot;Total ha&quot;,&quot;Urban ha&quot;,&quot;Periurban ha&quot;,&quot;% G&quot;,&quot;% UG&quot;,&quot;% UPUG&quot;)
+syntM[,1]=UPUF$tot_Area
+syntM[,2]=UPUF$U_tot
+syntM[,3]=UPUF$PU_tot
+syntM[,4]=UPUF$tot_pc_green
+syntM[,5]=UPUF$pc_UF*100
+syntM[,6]=UPUF$pc_PUF*100
+&nbsp;
+library(xtable)
+# export.kval = xtable(kval, align=c(&quot;l&quot;,&quot;l&quot;,&quot;l&quot;,&quot;l&quot;,&quot;l&quot;))
+# digits(export.kval)[c(1,2,3,4,5)]=c(0,0,0,3,3)
+# print(export.kval, type=&quot;latex&quot;, file=paste(&quot;/space/casalst/REPORT/tablesReport/TEX_R_table/R_kappa_table/R_kappa_sp_&quot;,i,&quot;.tex&quot;,sep=&quot;&quot;), append=FALSE, floating=FALSE, table.placement = &quot;ht&quot;, caption.placement=&quot;bottom&quot;,  latex.environments=c(&quot;center&quot;))
+&nbsp;
+export.syntM = xtable(syntM, align=c(&quot;l&quot;,&quot;l&quot;,&quot;l&quot;,&quot;l&quot;,&quot;l&quot;,&quot;l&quot;,&quot;l&quot;))
+digits(export.syntM)[c(1,2,3,4,5,6,7)]=c(0,0,0,0,3,3,3)
+print(export.syntM, type=&quot;latex&quot;, file=&quot;/home/ste/work/GlobalWarming_Intech/mypaper/UFO/output_table_R/table1.tex&quot;, append=FALSE, floating=FALSE, table.placement = &quot;ht&quot;, caption.placement=&quot;bottom&quot;,  latex.environments=c(&quot;center&quot;))

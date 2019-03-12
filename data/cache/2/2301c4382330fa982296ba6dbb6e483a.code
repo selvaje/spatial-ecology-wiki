@@ -1,0 +1,3 @@
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">`</span>gdalinfo CONUS.month07.2011.h08v08.v1.5.hdf <span class="sy0">|</span> <span class="kw2">grep</span> NAME <span class="sy0">|</span> <span class="kw2">awk</span> <span class="re5">-F</span> <span class="st0">&quot;=&quot;</span> <span class="st_h">'{print $2}'</span><span class="sy0">`</span> ; <span class="kw1">do</span>
+   gdal_translate <span class="re1">$file</span>   <span class="co1">${file:65}</span>.tif
+<span class="kw1">done</span>

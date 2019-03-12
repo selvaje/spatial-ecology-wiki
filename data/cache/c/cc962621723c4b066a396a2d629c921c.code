@@ -1,0 +1,6 @@
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>cropimage
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span>  <span class="sy0">/</span>lustre<span class="sy0">/</span>scratch<span class="sy0">/</span>client<span class="sy0">/</span>fas<span class="sy0">/</span>geodata<span class="sy0">/</span>aw524<span class="sy0">/</span>data<span class="sy0">/</span>worldclim<span class="sy0">/</span>bio_<span class="sy0">*</span>.bil ; <span class="kw1">do</span>
+<span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span><span class="br0">&#41;</span> 
+gdal_translate   <span class="re5">-projwin</span>  <span class="re5">-81</span> <span class="nu0">12</span> <span class="re5">-63</span> <span class="re5">-19</span> <span class="re1">$file</span>   ~<span class="sy0">/</span>cropimage<span class="sy0">/</span>crop<span class="re1">$filename</span>  
+<span class="kw1">done</span>

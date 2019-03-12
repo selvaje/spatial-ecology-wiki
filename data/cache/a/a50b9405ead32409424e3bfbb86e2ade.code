@@ -1,0 +1,87 @@
+load(&quot;~/ost4sem/exercise/
+ basic_adv_r/inputs/advanceRdata&quot;)
+&nbsp;
+FFD =advanceRdata
+&nbsp;
+# i = 123
+&nbsp;
+mod &lt;- paste(&quot;S&quot;,i,sep=&quot;&quot;)
+presence = subset(FFD,FFD[[mod]]==1)
+absence = subset(FFD,FFD[[mod]]!=1)
+&nbsp;
+presence.larix = subset(FFD,FFD$S116==1)
+presence.picea = subset(FFD,FFD$S118==1)
+&nbsp;
+png(&quot;~/ost4sem/exercise/basic_adv_r/outputs/synecology_cembro.png&quot;,
+ width = 800, height = 800)
+# png(&quot;/home/stefano/ubun/cembro
+# /figures/synecology_cembro1.png&quot;, 
+# width = 8, height = 8, units = cm )
+&nbsp;
+nf &lt;- layout(matrix(c(1,2,3,4),2,2,byrow=TRUE), 
+c(1,1), c(1,1), TRUE) 
+layout.show(nf)
+par(mar=c(5,5,1,1))
+&nbsp;
+## plot Annual Precipitation vs Minimum Temperature
+plot(absence$pr112,absence$pr106, 
+ type = &quot;p&quot;, col = &quot;gray40&quot;, lwd=0.2, pch=19,
+ xlab=&quot;Annual precipitation (mm/yr)&quot;, 
+ ylab=&quot;Mean Min Temp. coldest month&quot;, cex.lab = 2)
+&nbsp;
+points(presence.picea$pr112,presence.picea$pr106,
+ type = &quot;p&quot;, col = &quot;red&quot;, lwd=0.5,pch=20, cex=1)
+&nbsp;
+points(presence.larix$pr112,presence.larix$pr106,
+ type = &quot;p&quot;, col = &quot;blue&quot;, lwd=0.5,pch=20, cex=1)
+&nbsp;
+points(presence$pr112,presence$pr106, 
+ type = &quot;p&quot;, col = &quot;green3&quot;, lwd=1,pch=20, cex=2)
+&nbsp;
+&nbsp;
+## plot Summer Precipitation vs Minimum Temperature
+plot(absence$pr118,absence$pr106, 
+ type = &quot;p&quot;, col = &quot;grey40&quot;, lwd=0.2, pch=19, 
+ xlab=&quot;Summer precipitation (mm/yr)&quot;, 
+ ylab=&quot;&quot;, 
+ cex.lab = 2)
+&nbsp;
+points(presence.picea$pr118,presence.picea$pr106,
+ type = &quot;p&quot;, col = &quot;red&quot;, lwd=0.5,pch=20, cex=1)
+&nbsp;
+points(presence.larix$pr118,presence.larix$pr106,
+ type = &quot;p&quot;, col = &quot;blue&quot;, lwd=0.5,pch=20, cex=1)
+&nbsp;
+points(presence$pr118,presence$pr106,
+ type = &quot;p&quot;, col = &quot;green3&quot;, lwd=1, pch=20, cex=2)
+&nbsp;
+## Compensated summer ombrothermic index vs Sum of T non frozen months 
+plot(absence$pr134,absence$pr198, 
+ type = &quot;p&quot;, col = &quot;grey40&quot;, lwd=0.2, pch=19, 
+ xlab=&quot;Summer Ombrothermic index&quot;, 
+ ylab=&quot;Accumulated ETP (mm/yr)&quot;, 
+ cex.lab = 2)
+&nbsp;
+points(presence.picea$pr134,presence.picea$pr198,
+ type = &quot;p&quot;, col = &quot;red&quot;, lwd=0.5,pch=20, cex=1)
+&nbsp;
+points(presence.larix$pr134,presence.larix$pr198,
+ type = &quot;p&quot;, col = &quot;blue&quot;, lwd=0.5,pch=20, cex=1)
+ points(presence$pr134,presence$pr198,
+ type = &quot;p&quot;, col = &quot;green3&quot;, lwd=1, pch=20, cex=2)
+&nbsp;
+legend (13,900, c(&quot;Pinus c.&quot;,&quot;Picea a.&quot;,&quot;Larix d.&quot;,&quot;other spp.&quot;),
+ bty = &quot;n&quot;, col=c(&quot;green&quot;,&quot;red&quot;,&quot;blue&quot;,&quot;grey40&quot;), 
+ pch=c(19,20,20,20),cex=2)
+&nbsp;
+&nbsp;
+## Max temp warmest month vs ETP
+plot(absence$pr105,absence$pr198, type = &quot;p&quot;, col = &quot;grey40&quot;, lwd=0.2, pch=19, xlab=&quot;Mean Max. Temp. warmest month&quot;, ylab=&quot;&quot;, cex.lab = 2)
+&nbsp;
+points(presence.picea$pr105,presence.picea$pr198,type = &quot;p&quot;, col = &quot;red&quot;, lwd=0.5,pch=20, cex=1)
+&nbsp;
+points(presence.larix$pr105,presence.larix$pr198,type = &quot;p&quot;, col = &quot;blue&quot;, lwd=0.5,pch=20, cex=1)
+&nbsp;
+points(presence$pr105,presence$pr198,type = &quot;p&quot;, col = &quot;green3&quot;, lwd=1, pch=20, cex=2)
+&nbsp;
+dev.off()

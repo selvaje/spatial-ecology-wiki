@@ -1,0 +1,8 @@
+<span class="co1">#!/usr/bin/env python</span>
+<span class="co1">#</span>
+<span class="co1"># Print all lines from &quot;example.txt&quot; that contain the string &quot;line&quot;</span>
+<span class="co1">#</span>
+<span class="kw1">import</span> <span class="kw3">sys</span><span class="sy0">,</span> <span class="kw3">re</span>
+<span class="kw1">for</span> s <span class="kw1">in</span> <span class="kw2">open</span><span class="br0">&#40;</span><span class="st0">'example.txt'</span><span class="sy0">,</span> <span class="st0">'rt'</span><span class="br0">&#41;</span>:
+    <span class="kw1">if</span> <span class="kw3">re</span>.<span class="me1">search</span><span class="br0">&#40;</span><span class="st0">'line'</span><span class="sy0">,</span> s<span class="br0">&#41;</span>:
+        <span class="kw3">sys</span>.<span class="me1">stdout</span>.<span class="me1">write</span><span class="br0">&#40;</span>s<span class="br0">&#41;</span>

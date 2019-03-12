@@ -1,0 +1,5 @@
+<span class="kw3">echo</span> <span class="st0">&quot;ncols        800&quot;</span>       <span class="sy0">&gt;</span>  inspire_ID_UL_ALL.asc 
+<span class="kw3">echo</span> <span class="st0">&quot;nrows        600&quot;</span>       <span class="sy0">&gt;&gt;</span> inspire_ID_UL_ALL.asc 
+<span class="kw3">echo</span> <span class="st0">&quot;xllcorner    0&quot;</span>         <span class="sy0">&gt;&gt;</span> inspire_ID_UL_ALL.asc 
+<span class="kw3">echo</span> <span class="st0">&quot;yllcorner    0&quot;</span>         <span class="sy0">&gt;&gt;</span> inspire_ID_UL_ALL.asc 
+<span class="kw3">echo</span> <span class="st0">&quot;cellsize     1000&quot;</span>      <span class="sy0">&gt;&gt;</span> inspire_ID_UL_ALL.asc 

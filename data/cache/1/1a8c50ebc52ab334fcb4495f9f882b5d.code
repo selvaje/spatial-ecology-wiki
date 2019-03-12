@@ -1,0 +1,1 @@
+<span class="kw2">mv</span> ~<span class="sy0">/</span>Downloads<span class="sy0">/</span>xapi_meta.xml <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>xapi_meta.osm

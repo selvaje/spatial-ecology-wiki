@@ -1,0 +1,207 @@
+
+<h1 class="sectionedit1" id="data_acquisition_and_integration_with_google_map">Data Acquisition and integration with google map</h1>
+<div class="level1">
+
+<p>
+Qijun Jiang, WUR
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Data Acquisition and integration with google map&quot;,&quot;hid&quot;:&quot;data_acquisition_and_integration_with_google_map&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-81&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;82-107&quot;} -->
+<h3 class="sectionedit3" id="general_framework_of_the_analysis">General framework of the analysis</h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> Background: In order to integrate sensor networks with GIS and remote sensing to a big web. we need to know how they communicate and how the data flow works. Here just try to explore it using a small example which get metadata from <a href="http://www.knmi.nl/klimatologie/metadata/" class="urlextern" target="blanc" title="http://www.knmi.nl/klimatologie/metadata/" rel="nofollow noopener">http://www.knmi.nl/klimatologie/metadata/</a> then integrated the stations data with google map to interactively get important information. </div>
+</li>
+<li class="level1"><div class="li"> keywords: Data Acquisition, Integration, Google map </div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;General framework of the analysis&quot;,&quot;hid&quot;:&quot;general_framework_of_the_analysis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;108-587&quot;} -->
+<h3 class="sectionedit4" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+Data Acquisition from website, Data processing and integration with google map.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;588-698&quot;} -->
+<h2 class="sectionedit5" id="metadata">METADATA</h2>
+<div class="level2">
+
+<p>
+<a href="http://www.knmi.nl/klimatologie/metadata/" class="urlextern" target="blanc" title="http://www.knmi.nl/klimatologie/metadata/" rel="nofollow noopener">http://www.knmi.nl/klimatologie/metadata/</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;699-763&quot;} -->
+<h3 class="sectionedit6" id="vector_data">Vector data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> google map api </div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector data&quot;,&quot;hid&quot;:&quot;vector_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;764-806&quot;} -->
+<h3 class="sectionedit7" id="raster_data">Raster data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> google map api</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Raster data&quot;,&quot;hid&quot;:&quot;raster_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;807-848&quot;} -->
+<h2 class="sectionedit8" id="method">METHOD</h2>
+<div class="level2">
+
+<p>
+Extract data from website. 
+Transfer data to needed format.
+Integrated data with google map using google map api.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;849-983&quot;} -->
+<h2 class="sectionedit9" id="computational_implementation">Computational implementation</h2>
+<div class="level2">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_qijun&amp;codeblock=0" title="Download Snippet" class="mediafile mf_">- bash</a></dt>
+<dd><pre class="code bash"><span class="co0">#/bin/bash</span>
+&nbsp;
+<span class="co0"># grep keywords N.B. to find the data needed.</span>
+<span class="co4">user@ubuntu:~$ </span>curl http:<span class="sy0">//</span>www.knmi.nl<span class="sy0">/</span>klimatologie<span class="sy0">/</span>metadata<span class="sy0">/</span>046_alkmaar.html <span class="sy0">|</span> <span class="kw2">grep</span> N.B.
+  <span class="sy0">%</span> Total    <span class="sy0">%</span> Received <span class="sy0">%</span> Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  <span class="nu0">0</span>     <span class="nu0">0</span>    <span class="nu0">0</span>     <span class="nu0">0</span>    <span class="nu0">0</span>     <span class="nu0">0</span>      <span class="nu0">0</span>      <span class="nu0">0</span> --:--:-- --:--:-- --:--:--     <span class="nu0">0</span>              
+  <span class="sy0">&lt;</span>td <span class="re2">width</span>=<span class="st0">&quot;79%&quot;</span><span class="sy0">&gt;</span>ca. <span class="nu0">52</span>� <span class="nu0">39</span><span class="st_h">' N.B. 04� 45'</span> O.L.<span class="sy0">&lt;/</span>td<span class="sy0">&gt;</span>
+<span class="nu0">100</span> <span class="nu0">12917</span>  <span class="nu0">100</span> <span class="nu0">12917</span>    <span class="nu0">0</span>     <span class="nu0">0</span>   107k      <span class="nu0">0</span> --:--:-- --:--:-- --:--:--  128k
+&nbsp;
+<span class="co4">user@ubuntu:~$ </span>curl http:<span class="sy0">//</span>www.knmi.nl<span class="sy0">/</span>klimatologie<span class="sy0">/</span>metadata<span class="sy0">/</span>045_delft.html <span class="sy0">|</span> <span class="kw2">grep</span> N.B. <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">' {if (NR==1) print $3 $4 $6 $7 } '</span>
+  <span class="sy0">%</span> Total    <span class="sy0">%</span> Received <span class="sy0">%</span> Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+<span class="nu0">100</span> <span class="nu0">13240</span>  <span class="nu0">100</span> <span class="nu0">13240</span>    <span class="nu0">0</span>     <span class="nu0">0</span>   135k      <span class="nu0">0</span> --:--:-- --:--:-- --:--:--  172k
+<span class="nu0">52</span>�00<span class="st_h">'04�22'</span>
+&nbsp;
+<span class="co0">#save data into temp.txt</span>
+<span class="co4">user@ubuntu:~$ </span>curl http:<span class="sy0">//</span>www.knmi.nl<span class="sy0">/</span>klimatologie<span class="sy0">/</span>metadata<span class="sy0">/</span>046_alkmaar.html <span class="sy0">|</span> <span class="kw2">grep</span> N.B. <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">' {if (NR==1) print $3 $4 $6 $7 } '</span> <span class="sy0">&gt;</span>temp.txt
+  <span class="sy0">%</span> Total    <span class="sy0">%</span> Received <span class="sy0">%</span> Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+<span class="nu0">100</span> <span class="nu0">12916</span>  <span class="nu0">100</span> <span class="nu0">12916</span>    <span class="nu0">0</span>     <span class="nu0">0</span>   105k      <span class="nu0">0</span> --:--:-- --:--:-- --:--:--  134k
+&nbsp;
+<span class="co0">#get rid of &quot;°&quot; &amp; &quot;'&quot;</span>
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">egrep</span> <span class="re5">-o</span> <span class="st_h">'[0-9][0-9]'</span> temp.txt
+<span class="nu0">52</span>
+<span class="nu0">39</span>
+04
+<span class="nu0">45</span>
+&nbsp;
+<span class="co0">#save and transfer column to row</span>
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">egrep</span> <span class="re5">-o</span> <span class="st_h">'[0-9][0-9]'</span> temp.txt <span class="sy0">&gt;</span>temp1.txt
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">tr</span> <span class="st_h">'\n'</span> <span class="st_h">' '</span> <span class="sy0">&lt;</span>temp1.txt
+<span class="nu0">52</span> <span class="nu0">39</span> 04 <span class="nu0">45</span> user<span class="sy0">@</span>ubuntu:~$
+&nbsp;
+<span class="co0">#prosess each html file using for loop combined with $() and save the date to LocationDDMM.TXT</span>
+&nbsp;
+<span class="kw1">for</span> d <span class="kw1">in</span> 045_delft.html 046_alkmaar.html 055_middelburg_eo.html 056_057_breda.html 049_delft_eo.html 048_044_haarlem.html 047_bergen.html; <span class="kw1">do</span> <span class="kw3">echo</span> <span class="sy0">&gt;&gt;</span>Location.TXT <span class="sy0">&amp;</span><span class="br0">&#40;</span><span class="kw2">tr</span> <span class="st_h">'\n'</span> <span class="st_h">' '</span> <span class="sy0">&lt;</span>temp1.txt <span class="sy0">&gt;&gt;</span>Location.TXT $<span class="br0">&#40;</span><span class="kw2">egrep</span> <span class="re5">-o</span> <span class="st_h">'[0-9][0-9]'</span> temp.txt <span class="sy0">&gt;</span>temp1.txt $<span class="br0">&#40;</span>curl http:<span class="sy0">//</span>www.knmi.nl<span class="sy0">/</span>klimatologie<span class="sy0">/</span>metadata<span class="sy0">/</span><span class="re1">$d</span> <span class="sy0">|</span> <span class="kw2">grep</span> N.B. <span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">' {if (NR==1) print $3 $4 $6 $7 } '</span> <span class="sy0">&gt;</span>temp.txt<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">done</span> 
+&nbsp;
+<span class="co0">#change DDMM format to DD format</span>
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">awk</span>  <span class="st_h">'{ print $1+$2/60,$3+$4/60 }'</span> LocationDDMM.TXT <span class="sy0">&gt;</span>LocationDD.TXT
+<span class="co4">user@ubuntu:~$ </span><span class="kw2">cat</span> LocationDD.TXT
+<span class="nu0">52.65</span> <span class="nu0">4.75</span>
+<span class="nu0">52</span> <span class="nu0">4.36667</span>
+<span class="nu0">51.5</span> <span class="nu0">3.61667</span>
+<span class="nu0">51.5833</span> <span class="nu0">4.78333</span>
+<span class="nu0">52.3833</span> <span class="nu0">4.65</span>
+<span class="nu0">52.6667</span> <span class="nu0">4.71667</span>
+<span class="nu0">52</span> <span class="nu0">4.35</span>
+<span class="nu0">0</span> <span class="nu0">0</span></pre>
+</dd></dl>
+
+</div>
+
+<h4 id="use_location_parameters_in_locationddtxt_gained_from_bash_to_build_web_application">Use location parameters in LocationDD.txt gained from bash to build web application.</h4>
+<div class="level4">
+
+</div>
+
+<h4 id="here_i_use_instead_of">Here I use &quot;//&quot; instead of &quot;#&quot;.</h4>
+<div class="level4">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_qijun&amp;codeblock=1" title="Download Snippet" class="mediafile mf_">- JavaScript + HTML</a></dt>
+<dd><pre class="code JavaScript"># my JavaScript + HTML code here
+&lt;!DOCTYPE html&gt; 
+&lt;html&gt; 
+&lt;head&gt; 
+  &lt;title&gt;Distribution of Meta data stations&lt;/title&gt; 
+  &lt;script src=&quot;http://maps.google.com/maps/api/js?key={API_KEY}sensor=false&quot; 
+          type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+			html { height: 100%; width: 100%; }
+			body { height: 100%; width: 100%; margin: 0; padding: 0; }
+			#map {height: 100%; width: 100%; }
+  &lt;/style&gt;
+&lt;/head&gt; 
+&lt;body&gt;
+  &lt;div id=&quot;map&quot; &gt;&lt;/div&gt;
+  <span class="sy0">&lt;</span>script type<span class="sy0">=</span><span class="st0">&quot;text/javascript&quot;</span><span class="sy0">&gt;</span>
+<span class="co1">//Define locations variable </span>
+    <span class="kw1">var</span> locations <span class="sy0">=</span> <span class="br0">&#91;</span>
+      <span class="br0">&#91;</span><span class="st0">'Delft, (Leiden) en Rijnsburg'</span><span class="sy0">,</span> <span class="nu0">52</span><span class="sy0">,</span> <span class="nu0">4.35</span><span class="sy0">,</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="br0">&#91;</span><span class="st0">'Breda'</span><span class="sy0">,</span> <span class="nu0">51.58</span><span class="sy0">,</span> <span class="nu0">4.78</span><span class="sy0">,</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="br0">&#91;</span><span class="st0">'Haarlem'</span><span class="sy0">,</span> <span class="nu0">52.38</span><span class="sy0">,</span> <span class="nu0">4.65</span><span class="sy0">,</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="br0">&#91;</span><span class="st0">'Bergen'</span><span class="sy0">,</span> <span class="nu0">52.67</span><span class="sy0">,</span> <span class="nu0">4.71</span><span class="sy0">,</span><span class="br0">&#93;</span><span class="sy0">,</span>
+	  <span class="br0">&#91;</span><span class="st0">'Delft'</span><span class="sy0">,</span> <span class="nu0">52.00</span><span class="sy0">,</span> <span class="nu0">4.37</span><span class="sy0">,</span><span class="br0">&#93;</span><span class="sy0">,</span>
+	  <span class="br0">&#91;</span><span class="st0">'Middelburg en Oostkapelle'</span><span class="sy0">,</span> <span class="nu0">51.50</span><span class="sy0">,</span> <span class="nu0">3.62</span><span class="sy0">,</span><span class="br0">&#93;</span><span class="sy0">,</span>
+      <span class="br0">&#91;</span><span class="st0">'Alkmaar'</span><span class="sy0">,</span> <span class="nu0">52.65</span><span class="sy0">,</span> <span class="nu0">4.75</span><span class="sy0">,</span><span class="br0">&#93;</span>
+    <span class="br0">&#93;</span><span class="sy0">;</span>
+<span class="co1">//Define a map, zoom levels, center and default Map type</span>
+    <span class="kw1">var</span> map <span class="sy0">=</span> <span class="kw1">new</span> google.<span class="me1">maps</span>.<span class="me1">Map</span><span class="br0">&#40;</span>document.<span class="me1">getElementById</span><span class="br0">&#40;</span><span class="st0">'map'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="br0">&#123;</span>
+      zoom<span class="sy0">:</span> <span class="nu0">8</span><span class="sy0">,</span>
+      center<span class="sy0">:</span> <span class="kw1">new</span> google.<span class="me1">maps</span>.<span class="me1">LatLng</span><span class="br0">&#40;</span><span class="nu0">52.01</span><span class="sy0">,</span> <span class="nu0">5.01</span><span class="br0">&#41;</span><span class="sy0">,</span>
+      mapTypeId<span class="sy0">:</span> google.<span class="me1">maps</span>.<span class="me1">MapTypeId</span>.<span class="me1">SATELLITE</span>
+    <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">//Define a infowindow to displays content of marker</span>
+    <span class="kw1">var</span> infowindow <span class="sy0">=</span> <span class="kw1">new</span> google.<span class="me1">maps</span>.<span class="me1">InfoWindow</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">var</span> marker<span class="sy0">,</span> i<span class="sy0">;</span>
+<span class="co1">//add markers through a loop</span>
+    <span class="kw1">for</span> <span class="br0">&#40;</span>i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> locations.<span class="me1">length</span><span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>  
+      marker <span class="sy0">=</span> <span class="kw1">new</span> google.<span class="me1">maps</span>.<span class="me1">Marker</span><span class="br0">&#40;</span><span class="br0">&#123;</span>
+        position<span class="sy0">:</span> <span class="kw1">new</span> google.<span class="me1">maps</span>.<span class="me1">LatLng</span><span class="br0">&#40;</span>locations<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> locations<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        map<span class="sy0">:</span> map
+      <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<span class="co1">//through Handling Events to display the name of the markers when click happened</span>
+      google.<span class="me1">maps</span>.<span class="me1">event</span>.<span class="me1">addListener</span><span class="br0">&#40;</span>marker<span class="sy0">,</span> <span class="st0">'click'</span><span class="sy0">,</span> <span class="br0">&#40;</span><span class="kw1">function</span><span class="br0">&#40;</span>marker<span class="sy0">,</span> i<span class="br0">&#41;</span> <span class="br0">&#123;</span>
+        <span class="kw1">return</span> <span class="kw1">function</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+          infowindow.<span class="me1">setContent</span><span class="br0">&#40;</span>locations<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+          infowindow.<span class="me1">open</span><span class="br0">&#40;</span>map<span class="sy0">,</span> marker<span class="br0">&#41;</span><span class="sy0">;</span>
+        <span class="br0">&#125;</span>
+      <span class="br0">&#125;</span><span class="br0">&#41;</span><span class="br0">&#40;</span>marker<span class="sy0">,</span> i<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+    <span class="br0">&#125;</span>
+  <span class="sy0">&lt;/</span>script<span class="sy0">&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Computational implementation&quot;,&quot;hid&quot;:&quot;computational_implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;984-5244&quot;} -->
+<h2 class="sectionedit10" id="results">RESULTS</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">Distribution of Meta data stations <br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_qijun&amp;media=wikistudholland:distribution_of_meta_data_stations.png" class="media" title="wikistudholland:distribution_of_meta_data_stations.png"><img src="/dokuwiki/lib/exe/fetch.php?w=672&amp;tok=f0dd25&amp;media=wikistudholland:distribution_of_meta_data_stations.png" class="media" title="Distribution of Meta data stations" alt="Distribution of Meta data stations" width="672" /></a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS&quot;,&quot;hid&quot;:&quot;results&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:10,&quot;range&quot;:&quot;5245-&quot;} -->

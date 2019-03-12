@@ -1,0 +1,8 @@
+<span class="kw3">cd</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>geodata_SDM
+<span class="kw2">ls</span> <span class="sy0">*/*</span>.tif  <span class="co0"># list all the files with the extension .tif</span>
+gdalinfo vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+&nbsp;
+<span class="co0"># Visualize the image</span>
+&nbsp;
+qgis vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif
+openev vegetation<span class="sy0">/</span>ETmean08-<span class="nu0">11</span>.tif

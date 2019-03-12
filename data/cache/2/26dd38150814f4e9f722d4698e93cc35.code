@@ -1,0 +1,8 @@
+<span class="co0"># merge the tiles </span>
+gdal_merge.py  <span class="re5">-o</span> ASTGTM_merge<span class="sy0">/</span>ASTGTM_dem_wgs84.tif  <span class="sy0">*/</span>ASTGTM_<span class="sy0">*</span>_dem.tif
+<span class="co0"># change the projection</span>
+gdalwarp <span class="re5">-co</span> <span class="st0">&quot;COMPRESS=LZW&quot;</span> -t_srs <span class="st0">&quot;+proj=utm +zone=36 +south +a=6378249.145 +b=6356514.870 +units=m +towgs84=-160,-6,-302&quot;</span> ASTGTM_merge<span class="sy0">/</span>ASTGTM_dem_wgs84.tif ASTGTM_merge<span class="sy0">/</span>tmp.tif
+<span class="co0"># compress the file </span>
+gdal_translate <span class="re5">-co</span> <span class="st0">&quot;COMPRESS=LZW&quot;</span>   ASTGTM_merge<span class="sy0">/</span>tmp.tif  ASTGTM_merge<span class="sy0">/</span>ASTGTM_dem_tz36.tif 
+<span class="co0"># remove intermediate file</span>
+<span class="kw2">rm</span> ASTGTM_merge<span class="sy0">/</span>tmp.tif ASTGTM_merge<span class="sy0">/</span>ASTGTM_dem_wgs84.tif

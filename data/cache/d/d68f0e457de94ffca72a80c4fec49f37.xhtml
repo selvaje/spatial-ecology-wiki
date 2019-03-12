@@ -1,0 +1,32 @@
+
+<h1 class="sectionedit1" id="exercise_6bmorphological_filtering">Exercise 6b: Morphological filtering</h1>
+<div class="level1">
+
+<p>
+In this exercise, the following tools will be used:
+</p>
+<ul>
+<li class="level1"><div class="li"> pktools: pkfilter and pkcrop</div>
+</li>
+<li class="level1"><div class="li"> bash: environment variables</div>
+</li>
+</ul>
+
+<p>
+<em class="u">Dilate cloud mask with circular kernel of size 5x5</em>
+</p>
+<pre class="code bash">pkfilter <span class="re5">-i</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise6<span class="sy0">/</span>cloudmask.tif <span class="re5">-o</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise6<span class="sy0">/</span>cloudmask_dil.tif <span class="re5">-f</span> dilate <span class="re5">-dx</span> <span class="nu0">5</span> <span class="re5">-dy</span> <span class="nu0">5</span> <span class="re5">-c</span></pre>
+<div class="notetip">If slow computer, perform the morphological filter on subimage using pkcrop
+<br/>
+
+ULX=3217600<br/>
+
+ULY=3127850<br/>
+
+LRX=3225650<br/>
+
+LRY=3119900<br/>
+<pre class="code bash">pkcrop <span class="re5">-i</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise6<span class="sy0">/</span>cloudmask.tif <span class="re5">-o</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise6<span class="sy0">/</span>cloudmask_crop.tif <span class="re5">-ulx</span> <span class="re1">$ULX</span> <span class="re5">-uly</span> <span class="re1">$ULY</span> <span class="re5">-lrx</span> <span class="re1">$LRX</span> <span class="re5">-lry</span> <span class="re1">$LRY</span></pre>
+
+</div>
+</div>

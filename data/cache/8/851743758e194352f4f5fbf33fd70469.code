@@ -1,0 +1,44 @@
+<span class="co0">#!/bin/bash</span>
+&nbsp;
+<span class="co0">#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="co0">#% Mosaic tiles from ASTER dataset  %</span>
+<span class="co0">#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+&nbsp;
+<span class="co0">#####################################</span>
+<span class="co0"># set up GRASS enviroment variables</span>
+<span class="co0">#####################################</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>grass70
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span>bin:<span class="re1">$GISBASE</span><span class="sy0">/</span>scripts
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GRASS_LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$LD_LIBRARY_PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">PYTHONPATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/etc/python:<span class="es2">$PYTHONPATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">MANPATH</span>=<span class="re1">$MANPATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span><span class="kw2">man</span>
+<span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span>
+&nbsp;
+&nbsp;
+<span class="co0">##############</span>
+<span class="co0"># unzip files</span>
+<span class="co0">##############</span>
+<span class="kw1">for</span> z <span class="kw1">in</span> <span class="sy0">*</span><span class="kw2">zip</span> ; <span class="kw1">do</span>
+   <span class="co0"># unzip files</span>
+   <span class="kw2">unzip</span> <span class="re5">-oq</span>  <span class="re1">$z</span> 
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0">##########################</span>
+<span class="co0"># import files into GRASS</span>
+<span class="co0">##########################</span>
+&nbsp;
+<span class="co0"># start up grass</span>
+grass <span class="re5">-text</span>
+&nbsp;
+<span class="co0"># list of files</span>
+<span class="re2">demf</span>=$<span class="br0">&#40;</span><span class="kw2">ls</span> <span class="sy0">*</span>.tif<span class="sy0">|</span> <span class="kw2">grep</span> dem<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># read files into GRASS</span>
+<span class="kw1">for</span> y <span class="kw1">in</span> <span class="re1">$demf</span> ;<span class="kw1">do</span>
+   <span class="kw3">echo</span> <span class="st0">&quot;import <span class="es2">$y</span>  file...&quot;</span>
+   <span class="co0"># import file into grass</span>
+   r.in.gdal <span class="re2">in</span>=<span class="re1">$y</span> <span class="re2">out</span>=<span class="re1">$y</span> <span class="re5">--o</span> <span class="re5">-o</span>
+<span class="kw1">done</span>

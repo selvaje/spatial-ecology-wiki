@@ -1,0 +1,5 @@
+pkdumpogr <span class="re5">-i</span> input.shp <span class="co0"># dump entire content of vector file to standard output </span>
+&nbsp;
+pkdumpogr <span class="re5">-i</span> input.shp <span class="re5">-o</span> output.txt <span class="re5">-n</span> ATTRIBUTE <span class="re5">-pos</span> <span class="co0"># dump only ATTRIBUTE of vector file including x and y position and output to ASCII file</span>
+&nbsp;
+pkdumpogr <span class="re5">-i</span> input.shp <span class="re5">-o</span> output.txt <span class="re5">-n</span> ATTRIBUTE1 <span class="re5">-n</span> ATTRIBUTE2 <span class="re5">-t</span> <span class="co0"># dump the two attributes ATTRIBUTE1 and ATTRIBUTE2 of vector file and transpose output</span>

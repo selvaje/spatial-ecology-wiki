@@ -1,0 +1,3 @@
+<span class="kw3">exit</span> 
+<span class="kw2">rm</span> <span class="re5">-r</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>grassdb<span class="sy0">/</span>odense <span class="co0">#Be sure that the directory not already exists!</span>
+<span class="kw2">mv</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdb<span class="sy0">/</span>odense ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>grassdb<span class="sy0">/</span>. <span class="co0">#Move Odense to our GRASS database in the nutrient directory</span>

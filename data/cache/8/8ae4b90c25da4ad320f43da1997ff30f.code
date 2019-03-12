@@ -1,0 +1,1 @@
+   r.mapcalc <span class="st0">&quot;potveg_ita = if(potveg_europe@Vmodel &gt;= 0,potveg_europe@Vmodel, null())&quot;</span>

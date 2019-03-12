@@ -1,0 +1,1 @@
+ogr2ogr -t_srs epsg:<span class="nu0">3035</span> <span class="re5">-where</span> <span class="st0">&quot;TYPE in ('forest')&quot;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise1<span class="sy0">/</span>cornwall_forest_3035.shp <span class="co1">${VECTORDIR}</span><span class="sy0">/</span>cornwall_natural.shp

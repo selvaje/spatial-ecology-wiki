@@ -1,0 +1,8 @@
+a:4:{s:15:"microtime_start";d:1550233532.3731389;s:6:"client";s:10:"ericdoe1st";s:4:"name";s:8:"Eric Doe";s:4:"mail";s:20:"ericdoe1st@gmail.com";}* function handle_usermod_after
+ --- BEFORE --- | --- AFTER ---
+ericdoe1st <= ? => ericdoe1st
+Eric Doe <= ? => Eric Doe
+ericdoe1st@gmail.com <= ? => ericdoe1st@gmail.com
+
+
+NO diff in mail => do nothing

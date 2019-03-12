@@ -1,0 +1,42 @@
+
+<h1 class="sectionedit1" id="pkstatogr">pkstatogr</h1>
+<div class="level1">
+
+<p>
+NAME
+</p>
+<pre class="code"> pkstatogr - calculate basic statistics from vector file</pre>
+
+<p>
+SYNOPSIS
+</p>
+<pre class="code bash">   pkstatogr <span class="re5">-i</span> input <span class="br0">&#91;</span>OPTION<span class="br0">&#93;</span></pre>
+
+<p>
+DESCRIPTION
+</p>
+<pre class="code"> Calculate basic statistics from vector file such as mean, min and max value
+     </pre>
+
+<p>
+OPTIONS
+</p>
+<pre class="code bash">   <span class="re5">-i</span>     <span class="re5">--input</span>                Input shape <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-n</span>     <span class="re5">--fname</span>                fields on <span class="kw2">which</span> to calculate statistics <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-nbin</span>  <span class="re5">--nbin</span>                 number of bins <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-m</span>     <span class="re5">--min</span>                  calculate minimum value <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-M</span>     <span class="re5">--max</span>                  calculate maximum value <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-mean</span>  <span class="re5">--mean</span>                 calculate mean value <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-stdev</span> <span class="re5">--stdev</span>                calculate standard deviation <span class="br0">&#40;</span>default: <span class="kw2">false</span><span class="br0">&#41;</span>
+   <span class="re5">-v</span>     <span class="re5">--verbose</span>              verbose mode <span class="kw1">if</span> <span class="sy0">&gt;</span> <span class="nu0">0</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;pkstatogr&quot;,&quot;hid&quot;:&quot;pkstatogr&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-885&quot;} -->
+<h1 class="sectionedit2" id="examples">Examples</h1>
+<div class="level1">
+<pre class="code bash">pkstatogr <span class="re5">-i</span> input.shp <span class="re5">-f</span> FIELDID <span class="re5">-n</span> <span class="nu0">100</span> <span class="co0"># report histogram of values in FIELDID (to standard output)</span>
+&nbsp;
+pkstatogr <span class="re5">-i</span> input.shp <span class="re5">-f</span> FIELDID <span class="re5">-m</span> <span class="re5">-M</span> <span class="re5">-mean</span> <span class="re5">-stdev</span> <span class="co0"># report min, max, mean and standard deviation of values in FIELDID (to standard output)</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Examples&quot;,&quot;hid&quot;:&quot;examples&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;886-&quot;} -->

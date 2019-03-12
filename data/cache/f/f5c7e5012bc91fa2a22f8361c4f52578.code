@@ -1,0 +1,41 @@
+&nbsp;
+<span class="co0">#############################################</span>
+<span class="co0">######### create new Location: SWEDEN</span>
+&nbsp;
+&nbsp;
+<span class="co0">### 1. create new location:</span>
+<span class="co0"># IMPORTANT: set resolution for region to 50 m from start </span>
+<span class="co0"># (else: on the fly nearest neighbour resampling)</span>
+<span class="co0"># easiest with an input raster: </span>
+<span class="co0"># use gdal to clip and reproject one of my inputs to Sweden:</span>
+&nbsp;
+<span class="co0"># get poly outline of Sweden:</span>
+<span class="co0">#curl -L -O &quot;http://biogeo.ucdavis.edu/data/gadm2/shp/SWE_adm.zip&quot;</span>
+<span class="co0"># or use own:</span>
+ogrinfo <span class="re5">-so</span> <span class="re5">-al</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Sweden_outline<span class="sy0">/</span>Sweden_WGS84.shp
+&nbsp;
+<span class="co0">## clip one of the Europe rasters to this outline:</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Worldclim<span class="sy0">/</span>worldclim_current_tmp
+<span class="kw2">mkdir</span> swedentmp
+<span class="co0"># clip European extent to outline of Sweden only (using polygon outline) </span>
+<span class="co0"># AND reproject to Sweref99TM (epsg3006) AND resample to 50m resolution:</span>
+gdalwarp <span class="re5">-dstnodata</span> <span class="re5">-9999</span> -t_srs EPSG:<span class="nu0">3006</span> <span class="re5">-tr</span> <span class="nu0">50</span> <span class="nu0">50</span> <span class="re5">-cutline</span> \
+~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Sweden_outline<span class="sy0">/</span>Sweden_WGS84.shp -crop_to_cutline \
+eu_tmin_1.tif swedentmp<span class="sy0">/</span>swe_templ.tif
+&nbsp;
+gdalinfo swedentmp<span class="sy0">/</span>swe_templ.tif 
+&nbsp;
+<span class="co0"># create new location from this raster in existing GRASSDB: </span>
+r.in.gdal <span class="re2">input</span>=~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Worldclim<span class="sy0">/</span>worldclim_current_tmp<span class="sy0">/</span>swedentmp<span class="sy0">/</span>swe_templ.tif <span class="re2">output</span>=swe_templ <span class="re2">location</span>=swedenSWEREF <span class="re5">--overwrite</span> 
+&nbsp;
+<span class="co0"># switch to new location:</span>
+g.mapset <span class="re2">mapset</span>=PERMANENT <span class="re2">location</span>=swedenSWEREF <span class="re2">gisdbase</span>=~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>GRASSDB
+&nbsp;
+<span class="co0"># remove the raster used for creating location (in grass and on HD):</span>
+g.remove <span class="re2">rast</span>=swe_templ 
+<span class="kw2">rm</span> swedentmp<span class="sy0">/</span>swe_templ.tif
+&nbsp;
+<span class="co0"># switch to new location: not sure this works</span>
+<span class="co0"># g.gisenv set=&quot;LOCATION_NAME=swedenSWEREF&quot; ### seems to work, but prompt still says euopreWGS84</span>
+<span class="co0"># exit grass: (safer)</span>
+<span class="kw3">exit</span>

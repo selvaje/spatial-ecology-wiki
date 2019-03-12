@@ -1,0 +1,7 @@
+   pred.mapRF = predict (RF23tuned , newdata=datagrids, type=&quot;response&quot;)
+   cat(&quot;class predicted\n&quot;)
+&nbsp;
+   pred.mapRFindex = predict (RF23tuned , newdata=datagrids, type=&quot;vote&quot;)
+   cat(&quot;class index recorded\n&quot;)
+&nbsp;
+   cat(&quot;map values for Forest Type calculated and added to predict map vector\n&quot;)

@@ -1,0 +1,6 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1525966395;s:8:"modified";i:1525966395;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:17:"Introduction to R";s:11:"description";a:2:{s:15:"tableofcontents";a:3:{i:0;a:4:{s:3:"hid";s:17:"introduction_to_r";s:5:"title";s:17:"Introduction to R";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:1;a:4:{s:3:"hid";s:34:"starting_r_getting_help_stopping_r";s:5:"title";s:36:"Starting R, getting help, stopping R";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:2;a:4:{s:3:"hid";s:7:"start_r";s:5:"title";s:7:"Start R";s:4:"type";s:2:"ul";s:5:"level";i:3;}}s:8:"abstract";s:274:"Introduction to R
+
+An introduction to R using R Markdown is provided here. The content is identical to the Intro to R wiki, which employs a basic R script. 
+
+
+The object of this document is to help you starting to use the R environment for statistical analysis and graphics.";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1525966395;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

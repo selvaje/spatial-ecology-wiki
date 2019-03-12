@@ -1,0 +1,11 @@
+<span class="co1"># Read data from a url - in this case recent USGS earthquakes</span>
+<span class="kw1">import</span> <span class="kw3">urllib</span>
+url <span class="sy0">=</span> <span class="st0">&quot;http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.csv&quot;</span>
+earthquakes <span class="sy0">=</span> <span class="kw3">urllib</span>.<span class="me1">urlopen</span><span class="br0">&#40;</span>url<span class="br0">&#41;</span>
+<span class="co1"># Read the first two earthquakes</span>
+<span class="kw1">print</span> earthquakes.<span class="kw3">readline</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> earthquakes.<span class="kw3">readline</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="co1"># Iterate through the rest</span>
+<span class="kw1">for</span> record <span class="kw1">in</span> earthquakes: 
+  <span class="kw1">print</span> record
+&nbsp;

@@ -1,0 +1,1 @@
+<span class="kw2">awk</span> <span class="st_h">'{ if (NR&gt;1) {if ($2&gt;max) max= $2 }} END {print $1, $3, max }'</span>  join_basedata_markblokc_c_sum.txt 

@@ -1,0 +1,12 @@
+&nbsp;
+<span class="co0">#########################################################################################</span>
+<span class="co0">######### VECTOR DATA Sweden and Norrstrom drainage basin:</span>
+grass ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>GRASSDB<span class="sy0">/</span>swedenSWEREF<span class="sy0">/</span>PERMANENT
+&nbsp;
+<span class="co0">##import vector sweden outline into grass</span>
+v.in.ogr <span class="re5">-oe</span> <span class="re2">dsn</span>=~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Sweden_outline<span class="sy0">/</span>Sweden_SWEREF99.shp <span class="re2">output</span>=vect_swe_boundary
+g.list <span class="re2">type</span>=vect  <span class="co0"># worked</span>
+v.info <span class="re2">map</span>=vect_swe_boundary
+&nbsp;
+<span class="co0">## and Norrstrom outline:</span>
+v.in.ogr <span class="re5">-oe</span> <span class="re2">dsn</span>=~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>NDB<span class="sy0">/</span>NDB_border.shp <span class="re2">output</span>=vect_NDB_boundary

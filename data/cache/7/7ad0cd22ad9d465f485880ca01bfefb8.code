@@ -1,0 +1,361 @@
+<span class="co0">####################################    Spatial Analyses: SYRACUSE   #######################################</span>
+<span class="co0">#######################################  Analyse data from Census #######################################</span>
+<span class="co0">#</span>
+<span class="co0"># This script performs analyses for the Exercise 1 of the Geospatial Analysis course.</span>
+<span class="co0"># The goal is to assess land cover change using two land cover maps in the Houston areas.</span>
+<span class="co0"># This script performs basic analyses for the Exercise 1 using Census data for Syracuse.</span>
+<span class="co0"># The overall goal is to explore spatial autocorrelation and aggregation of units of analyses.     </span>
+&nbsp;
+<span class="co0">#AUTHORS: Benoit Parmentier                                             </span>
+<span class="co0">#DATE CREATED: 03/21/2017 </span>
+<span class="co0">#DATE MODIFIED: 05/11/2018</span>
+<span class="co0">#Version: 1</span>
+<span class="co0">#PROJECT: AAG 2018 workshop and Sesync Geopstial Data Analyses course, Geocompuation Yale</span>
+<span class="co0">#TO DO:</span>
+<span class="co0">#</span>
+<span class="co0">#COMMIT: workshop geocomupation Yale</span>
+<span class="co0">#</span>
+<span class="co0">#################################################################################################</span>
+&nbsp;
+<span class="co0">###Loading R library and packages                                                      </span>
+library<span class="br0">&#40;</span>gstat<span class="br0">&#41;</span> <span class="co0">#spatial interpolation and kriging methods</span>
+library<span class="br0">&#40;</span>sp<span class="br0">&#41;</span> <span class="co0"># spatial/geographic objects and functions</span>
+library<span class="br0">&#40;</span>rgdal<span class="br0">&#41;</span> <span class="co0">#GDAL/OGR binding for R with functionalities</span>
+library<span class="br0">&#40;</span>spdep<span class="br0">&#41;</span> <span class="co0">#spatial analyses operations, functions etc.</span>
+library<span class="br0">&#40;</span>gtools<span class="br0">&#41;</span> <span class="co0"># contains mixsort and other useful functions</span>
+library<span class="br0">&#40;</span>maptools<span class="br0">&#41;</span> <span class="co0"># tools to manipulate spatial data</span>
+library<span class="br0">&#40;</span>parallel<span class="br0">&#41;</span> <span class="co0"># parallel computation, part of base package no</span>
+library<span class="br0">&#40;</span>rasterVis<span class="br0">&#41;</span> <span class="co0"># raster visualization operations</span>
+library<span class="br0">&#40;</span>raster<span class="br0">&#41;</span> <span class="co0"># raster functionalities</span>
+library<span class="br0">&#40;</span>forecast<span class="br0">&#41;</span> <span class="co0">#ARIMA forecasting</span>
+library<span class="br0">&#40;</span>xts<span class="br0">&#41;</span> <span class="co0">#extension for time series object and analyses</span>
+library<span class="br0">&#40;</span>zoo<span class="br0">&#41;</span> <span class="co0"># time series object and analysis</span>
+library<span class="br0">&#40;</span>lubridate<span class="br0">&#41;</span> <span class="co0"># dates functionality</span>
+library<span class="br0">&#40;</span>colorRamps<span class="br0">&#41;</span> <span class="co0">#contains matlab.like color palette</span>
+library<span class="br0">&#40;</span>rgeos<span class="br0">&#41;</span> <span class="co0">#contains topological operations</span>
+library<span class="br0">&#40;</span>sphet<span class="br0">&#41;</span> <span class="co0">#contains spreg, spatial regression modeling</span>
+library<span class="br0">&#40;</span>BMS<span class="br0">&#41;</span> <span class="co0">#contains hex2bin and bin2hex, Bayesian methods</span>
+library<span class="br0">&#40;</span>bitops<span class="br0">&#41;</span> <span class="co0"># function for bitwise operations</span>
+library<span class="br0">&#40;</span>foreign<span class="br0">&#41;</span> <span class="co0"># import datasets from SAS, spss, stata and other sources</span>
+library<span class="br0">&#40;</span>gdata<span class="br0">&#41;</span> <span class="co0">#read xls, dbf etc., not recently updated but useful</span>
+library<span class="br0">&#40;</span>classInt<span class="br0">&#41;</span> <span class="co0">#methods to generate class limits</span>
+library<span class="br0">&#40;</span>plyr<span class="br0">&#41;</span> <span class="co0">#data wrangling: various operations for splitting, combining data</span>
+library<span class="br0">&#40;</span>readxl<span class="br0">&#41;</span> <span class="co0">#functionalities to read in excel type data</span>
+&nbsp;
+<span class="co0">###### Functions used in this script</span>
+&nbsp;
+create_dir_fun <span class="sy0">&lt;</span>- <span class="kw1">function</span><span class="br0">&#40;</span>outDir,<span class="re2">out_suffix</span>=NULL<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  <span class="co0">#if out_suffix is not null then append out_suffix string</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span><span class="sy0">!</span>is.null<span class="br0">&#40;</span>out_suffix<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+    out_name <span class="sy0">&lt;</span>- paste<span class="br0">&#40;</span><span class="st0">&quot;output_&quot;</span>,out_suffix,<span class="re2">sep</span>=<span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>
+    outDir <span class="sy0">&lt;</span>- file.path<span class="br0">&#40;</span>outDir,out_name<span class="br0">&#41;</span>
+  <span class="br0">&#125;</span>
+  <span class="co0">#create if does not exists</span>
+  <span class="kw1">if</span><span class="br0">&#40;</span><span class="sy0">!</span>file.exists<span class="br0">&#40;</span>outDir<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+    dir.create<span class="br0">&#40;</span>outDir<span class="br0">&#41;</span>
+  <span class="br0">&#125;</span>
+  <span class="kw3">return</span><span class="br0">&#40;</span>outDir<span class="br0">&#41;</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="co0">#####  Parameters and argument set up ###########</span>
+&nbsp;
+in_dir_var <span class="sy0">&lt;</span>- <span class="st0">&quot;/home/user/ost4sem/exercise/Exercise_1/data&quot;</span>
+out_dir <span class="sy0">&lt;</span>- <span class="st0">&quot;/home/user/ost4sem/exercise/Exercise_1/outputs&quot;</span>
+&nbsp;
+file_format <span class="sy0">&lt;</span>- <span class="st0">&quot;.tif&quot;</span> <span class="co0">#PARAM5</span>
+NA_value <span class="sy0">&lt;</span>- <span class="re5">-9999</span> <span class="co0">#PARAM6</span>
+NA_flag_val <span class="sy0">&lt;</span>- NA_value <span class="co0">#PARAM7</span>
+out_suffix <span class="sy0">&lt;</span>-<span class="st0">&quot;exercise1_05102018&quot;</span> <span class="co0">#output suffix for the files and ouptu folder #PARAM 8</span>
+<span class="re2">create_out_dir_param</span>=TRUE <span class="co0">#PARAM9</span>
+&nbsp;
+<span class="co0">################################   START SCRIPT   ###################################</span>
+&nbsp;
+<span class="co0">## First create an output directory</span>
+&nbsp;
+<span class="kw1">if</span><span class="br0">&#40;</span>is.null<span class="br0">&#40;</span>out_dir<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#123;</span>
+  out_dir <span class="sy0">&lt;</span>- <span class="kw2">dirname</span><span class="br0">&#40;</span>in_dir<span class="br0">&#41;</span> <span class="co0">#output will be created in the input dir</span>
+<span class="br0">&#125;</span>
+&nbsp;
+out_suffix_s <span class="sy0">&lt;</span>- out_suffix <span class="co0">#can modify name of output suffix</span>
+<span class="kw1">if</span><span class="br0">&#40;</span><span class="re2">create_out_dir_param</span>==TRUE<span class="br0">&#41;</span><span class="br0">&#123;</span>
+  out_dir <span class="sy0">&lt;</span>- create_dir_fun<span class="br0">&#40;</span>out_dir,out_suffix_s<span class="br0">&#41;</span>
+  setwd<span class="br0">&#40;</span>out_dir<span class="br0">&#41;</span>
+<span class="br0">&#125;</span><span class="kw1">else</span><span class="br0">&#123;</span>
+  setwd<span class="br0">&#40;</span>out_dir<span class="br0">&#41;</span> <span class="co0">#use previoulsy defined directory</span>
+<span class="br0">&#125;</span>
+&nbsp;
+<span class="co0">### PART I: EXPLORE DATA: READ AND DISPLAY #######</span>
+&nbsp;
+ct_2000_fname <span class="sy0">&lt;</span>- <span class="st0">&quot;ct_00.shp&quot;</span> <span class="co0"># CT_00: Cencus Tracts 2000</span>
+bg_2000_fname <span class="sy0">&lt;</span>- <span class="st0">&quot;bg_00.shp&quot;</span> <span class="co0"># BG_00: Census Blockgroups 2000</span>
+bk_2000_fname <span class="sy0">&lt;</span>- <span class="st0">&quot;bk_00.shp&quot;</span> <span class="co0"># BK_00: Census Blocks 2000</span>
+&nbsp;
+census_table_fname <span class="sy0">&lt;</span>- <span class="st0">&quot;census.csv&quot;</span> <span class="co0">#contains data from census to be linked</span>
+soil_PB_table_fname <span class="sy0">&lt;</span>- <span class="st0">&quot;Soil_PB.csv&quot;</span> <span class="co0">#same as census table</span>
+&nbsp;
+metals_table_fname <span class="sy0">&lt;</span>- <span class="st0">&quot;SYR_metals.xlsx&quot;</span> <span class="co0">#contains metals data to be linked</span>
+&nbsp;
+ct_2000_sp <span class="sy0">&lt;</span>- readOGR<span class="br0">&#40;</span><span class="re2">dsn</span>=in_dir_var,sub<span class="br0">&#40;</span><span class="st0">&quot;.shp&quot;</span>,<span class="st0">&quot;&quot;</span>,<span class="kw2">basename</span><span class="br0">&#40;</span>ct_2000_fname<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co0">#read in shapefile</span>
+bg_2000_sp <span class="sy0">&lt;</span>- readOGR<span class="br0">&#40;</span><span class="re2">dsn</span>=in_dir_var,sub<span class="br0">&#40;</span><span class="st0">&quot;.shp&quot;</span>,<span class="st0">&quot;&quot;</span>,<span class="kw2">basename</span><span class="br0">&#40;</span>bg_2000_fname<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+bk_2000_sp <span class="sy0">&lt;</span>- readOGR<span class="br0">&#40;</span><span class="re2">dsn</span>=in_dir_var,sub<span class="br0">&#40;</span><span class="st0">&quot;.shp&quot;</span>,<span class="st0">&quot;&quot;</span>,<span class="kw2">basename</span><span class="br0">&#40;</span>bk_2000_fname<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+census_syr_df <span class="sy0">&lt;</span>- read.table<span class="br0">&#40;</span>file.path<span class="br0">&#40;</span>in_dir_var,census_table_fname<span class="br0">&#41;</span>,<span class="re2">sep</span>=<span class="st0">&quot;,&quot;</span>,<span class="re2">header</span>=T<span class="br0">&#41;</span> <span class="co0">#read in textfile</span>
+metals_df <span class="sy0">&lt;</span>-read_excel<span class="br0">&#40;</span> file.path<span class="br0">&#40;</span>in_dir_var,metals_table_fname<span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span> <span class="co0">#use function from readxl</span>
+&nbsp;
+<span class="co0">#Soil lead samples: UTM z18 coordinates</span>
+soil_PB_df <span class="sy0">&lt;</span>- read.table<span class="br0">&#40;</span>file.path<span class="br0">&#40;</span>in_dir_var,soil_PB_table_fname<span class="br0">&#41;</span>,<span class="re2">sep</span>=<span class="st0">&quot;,&quot;</span>,<span class="re2">header</span>=T<span class="br0">&#41;</span> <span class="co0">#point locations</span>
+&nbsp;
+dim<span class="br0">&#40;</span>census_syr_df<span class="br0">&#41;</span> <span class="co0">#47 spatial entities</span>
+dim<span class="br0">&#40;</span>ct_2000_sp<span class="br0">&#41;</span> <span class="co0">#47 spatial entities</span>
+dim<span class="br0">&#40;</span>metals_df<span class="br0">&#41;</span> <span class="co0">#47 entities</span>
+dim<span class="br0">&#40;</span>bg_2000_sp<span class="br0">&#41;</span> <span class="co0">#147 spatial entities</span>
+&nbsp;
+<span class="co0">###PRODUCE MAPS OF 2000 Population #########</span>
+&nbsp;
+<span class="co0">#First need to link it.</span>
+&nbsp;
+names<span class="br0">&#40;</span>bg_2000_sp<span class="br0">&#41;</span> <span class="co0">#missing census data</span>
+names<span class="br0">&#40;</span>census_syr_df<span class="br0">&#41;</span>
+<span class="co0">#key is &quot;TRACT&quot; but with a different format.</span>
+<span class="co0">#First fix the format</span>
+<span class="kw2">head</span><span class="br0">&#40;</span>bg_2000_sp<span class="br0">&#41;</span>
+<span class="kw2">head</span><span class="br0">&#40;</span>census_syr_df<span class="re1">$BKG_KEY</span><span class="br0">&#41;</span>
+<span class="co0">#as.numeric(as.character(ct_2000_sp$TRACT))</span>
+<span class="co4">ct_2000_sp$</span>TRACT <span class="sy0">&lt;</span>- as.numeric<span class="br0">&#40;</span>as.character<span class="br0">&#40;</span>ct_2000_sp<span class="re1">$TRACT</span><span class="br0">&#41;</span><span class="br0">&#41;</span> 
+&nbsp;
+<span class="co0">## Join based on common key id</span>
+bg_2000_sp <span class="sy0">&lt;</span>- merge<span class="br0">&#40;</span>bg_2000_sp,census_syr_df,<span class="re2">by</span>=<span class="st0">&quot;BKG_KEY&quot;</span><span class="br0">&#41;</span> <span class="co0">#Join </span>
+<span class="co0">#Plot the spatial object</span>
+spplot<span class="br0">&#40;</span>bg_2000_sp,<span class="st0">&quot;POP2000&quot;</span>,<span class="re2">main</span>=<span class="st0">&quot;POP2000&quot;</span><span class="br0">&#41;</span> <span class="co0">#quick visualization of population </span>
+&nbsp;
+<span class="co0">##Aggregate data from block group to census</span>
+&nbsp;
+<span class="co0">### Summarize by census track</span>
+census_2000_sp <span class="sy0">&lt;</span>- aggregate<span class="br0">&#40;</span>bg_2000_sp , <span class="re2">by</span>=<span class="st0">&quot;TRACT&quot;</span>,<span class="re2">FUN</span>=<span class="kw2">sum</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">### Check if the new geometry of entities is the same as census</span>
+plot<span class="br0">&#40;</span>census_2000_sp<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>ct_2000_sp,<span class="re2">border</span>=<span class="st0">&quot;red&quot;</span>,<span class="re2">add</span>=T<span class="br0">&#41;</span>
+nrow<span class="br0">&#40;</span>census_2000_sp<span class="br0">&#41;</span>==nrow<span class="br0">&#40;</span>ct_2000_sp<span class="br0">&#41;</span>
+&nbsp;
+df_summary_by_census <span class="sy0">&lt;</span>- aggregate<span class="br0">&#40;</span>. ~ TRACT, bg_2000_sp , <span class="re2">FUN</span>=<span class="kw2">sum</span><span class="br0">&#41;</span> <span class="co0">#aggregate all variables from the data.frame</span>
+&nbsp;
+<span class="co0">##Join by key table id:</span>
+dim<span class="br0">&#40;</span>ct_2000_sp<span class="br0">&#41;</span>
+ct_2000_sp <span class="sy0">&lt;</span>- merge<span class="br0">&#40;</span>ct_2000_sp,df_summary_by_census,<span class="re2">by</span>=<span class="st0">&quot;TRACT&quot;</span><span class="br0">&#41;</span>
+dim<span class="br0">&#40;</span>ct_2000_sp<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">#save as sp and text table</span>
+<span class="co0">#write.table(file.path(out_dir,)</span>
+&nbsp;
+<span class="co0">### Do another map with different class intervals: </span>
+&nbsp;
+title_str <span class="sy0">&lt;</span>- <span class="st0">&quot;Population by census tract in 2000&quot;</span>
+range<span class="br0">&#40;</span>ct_2000_sp<span class="re1">$POP2000</span><span class="br0">&#41;</span>
+col_palette <span class="sy0">&lt;</span>- matlab.like<span class="br0">&#40;</span><span class="nu0">256</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## 9 classes with fixed and constant break</span>
+break_seq <span class="sy0">&lt;</span>- <span class="kw2">seq</span><span class="br0">&#40;</span><span class="nu0">0</span>,<span class="nu0">9000</span>,<span class="nu0">1000</span><span class="br0">&#41;</span>
+breaks.qt <span class="sy0">&lt;</span>- classIntervals<span class="br0">&#40;</span>ct_2000_sp<span class="re1">$POP2000</span>, <span class="re2">n</span>=length<span class="br0">&#40;</span>break_seq<span class="br0">&#41;</span>, 
+                            <span class="re2">style</span>=<span class="st0">&quot;fixed&quot;</span>, <span class="re2">fixedBreaks</span>=break_seq, <span class="re2">intervalClosure</span>=<span class="st_h">'right'</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## generate plot using sp function:</span>
+p_plot_pop2000_ct <span class="sy0">&lt;</span>- spplot<span class="br0">&#40;</span>ct_2000_sp,
+                            <span class="st0">&quot;POP2000&quot;</span>,
+                            <span class="re2">col</span>=<span class="st0">&quot;transparent&quot;</span>, <span class="co0">#transprent color boundaries for polygons</span>
+                            col.regions = col_palette ,
+                            <span class="re2">main</span>=title_str,
+                            at = breaks.qt<span class="re1">$brks</span><span class="br0">&#41;</span>
+print<span class="br0">&#40;</span>p_plot_pop2000_ct<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">### Another map with different class intervals</span>
+&nbsp;
+breaks.qt <span class="sy0">&lt;</span>- classIntervals<span class="br0">&#40;</span>ct_2000_sp<span class="re1">$POP2000</span>, n = <span class="nu0">6</span>, style = <span class="st0">&quot;quantile&quot;</span>, intervalClosure = <span class="st0">&quot;right&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+p_plot_pop2000_ct <span class="sy0">&lt;</span>- spplot<span class="br0">&#40;</span>ct_2000_sp,
+                            <span class="st0">&quot;POP2000&quot;</span>,
+                            <span class="re2">col</span>=<span class="st0">&quot;transparent&quot;</span>, <span class="co0">#transprent color boundaries for polygons</span>
+                            col.regions = col_palette,
+                            <span class="re2">main</span>=title_str,
+                            at = breaks.qt<span class="re1">$brks</span><span class="br0">&#41;</span>
+print<span class="br0">&#40;</span>p_plot_pop2000_ct<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">####### PART II: SPATIAL QUERY #############</span>
+&nbsp;
+<span class="co0">## Join metals to census track </span>
+<span class="co0">## Join lead (pb) measurements to census tracks</span>
+&nbsp;
+<span class="co0">#metals_df &lt;- read.xls(file.path(in_dir_var,metals_table_fname),sep=&quot;,&quot;,header=T)</span>
+metals_df <span class="sy0">&lt;</span>-read_excel<span class="br0">&#40;</span> file.path<span class="br0">&#40;</span>in_dir_var,metals_table_fname<span class="br0">&#41;</span>,<span class="nu0">1</span><span class="br0">&#41;</span> <span class="co0">#use function from readxl</span>
+&nbsp;
+<span class="kw2">head</span><span class="br0">&#40;</span>soil_PB_df<span class="br0">&#41;</span>
+<span class="kw2">head</span><span class="br0">&#40;</span>metals_df<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">##This suggests matching to the following spatial entities</span>
+nrow<span class="br0">&#40;</span>metals_df<span class="br0">&#41;</span>==nrow<span class="br0">&#40;</span>ct_2000_sp<span class="br0">&#41;</span>
+<span class="co0">#nrow(soil_PB_df)==nrow(bg_2000_sp)</span>
+&nbsp;
+<span class="co0">#dim(bg_2000_sp)</span>
+<span class="co4">metals_df$</span>TRACT <span class="sy0">&lt;</span>- metals_df<span class="re1">$ID</span>
+census_metals_sp <span class="sy0">&lt;</span>- merge<span class="br0">&#40;</span>ct_2000_sp,metals_df,<span class="re2">by</span>=<span class="st0">&quot;TRACT&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">########processing lead data</span>
+<span class="co0">### Now let's plot lead data </span>
+<span class="co0">#Soil lead samples: UTM z18 coordinates</span>
+soil_PB_df <span class="sy0">&lt;</span>- read.table<span class="br0">&#40;</span>file.path<span class="br0">&#40;</span>in_dir_var,soil_PB_table_fname<span class="br0">&#41;</span>,<span class="re2">sep</span>=<span class="st0">&quot;,&quot;</span>,<span class="re2">header</span>=T<span class="br0">&#41;</span> <span class="co0">#point locations</span>
+&nbsp;
+proj4string<span class="br0">&#40;</span>census_metals_sp<span class="br0">&#41;</span> <span class="co0">#</span>
+names<span class="br0">&#40;</span>soil_PB_df<span class="br0">&#41;</span>
+names<span class="br0">&#40;</span>soil_PB_df<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="st0">&quot;x&quot;</span>,<span class="st0">&quot;y&quot;</span>,<span class="st0">&quot;ID&quot;</span>,<span class="st0">&quot;ppm&quot;</span><span class="br0">&#41;</span> 
+soil_PB_sp <span class="sy0">&lt;</span>- soil_PB_df
+class<span class="br0">&#40;</span>soil_PB_df<span class="br0">&#41;</span>
+coordinates<span class="br0">&#40;</span>soil_PB_sp<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- soil_PB_sp<span class="br0">&#91;</span>,c<span class="br0">&#40;</span><span class="st0">&quot;x&quot;</span>,<span class="st0">&quot;y&quot;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+class<span class="br0">&#40;</span>soil_PB_sp<span class="br0">&#41;</span>
+proj4string<span class="br0">&#40;</span>soil_PB_sp<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- proj4string<span class="br0">&#40;</span>census_metals_sp<span class="br0">&#41;</span>
+dim<span class="br0">&#40;</span>soil_PB_sp<span class="br0">&#41;</span>
+soil_PB_sp <span class="sy0">&lt;</span>- soil_PB_sp<span class="br0">&#91;</span>,c<span class="br0">&#40;</span><span class="st0">&quot;ID&quot;</span>,<span class="st0">&quot;ppm&quot;</span>,<span class="st0">&quot;x&quot;</span>,<span class="st0">&quot;y&quot;</span><span class="br0">&#41;</span><span class="br0">&#93;</span>
+&nbsp;
+plot<span class="br0">&#40;</span>census_metals_sp<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>soil_PB_sp,<span class="re2">add</span>=T<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">###### Spatial query: associate points of pb measurements to each census tract</span>
+<span class="co0">### Get the ID and </span>
+&nbsp;
+soil_tract_id_df <span class="sy0">&lt;</span>- over<span class="br0">&#40;</span>soil_PB_sp,census_2000_sp,<span class="re2">fn</span>=mean<span class="br0">&#41;</span>
+soil_PB_sp <span class="sy0">&lt;</span>- intersect<span class="br0">&#40;</span>soil_PB_sp,census_2000_sp<span class="br0">&#41;</span>
+<span class="kw2">head</span><span class="br0">&#40;</span>soil_PB_sp<span class="re1">$ID</span><span class="br0">&#41;</span>==<span class="kw2">head</span><span class="br0">&#40;</span>soil_PB_sp<span class="re1">$ID</span><span class="br0">&#41;</span>
+names<span class="br0">&#40;</span>soil_PB_sp<span class="br0">&#41;</span>
+soil_PB_sp <span class="sy0">&lt;</span>- rename<span class="br0">&#40;</span>soil_PB_sp, c<span class="br0">&#40;</span><span class="st0">&quot;d&quot;</span>=<span class="st0">&quot;TRACT&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co0">#from package plyr</span>
+&nbsp;
+census_pb_avg <span class="sy0">&lt;</span>- aggregate<span class="br0">&#40;</span>ppm ~ TRACT,<span class="br0">&#40;</span>soil_PB_sp<span class="br0">&#41;</span>,<span class="re2">FUN</span>=mean<span class="br0">&#41;</span>
+census_pb_avg <span class="sy0">&lt;</span>- rename<span class="br0">&#40;</span>census_pb_avg,c<span class="br0">&#40;</span><span class="st0">&quot;ppm&quot;</span>=<span class="st0">&quot;pb_ppm&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">##Now join</span>
+census_metals_pb_sp <span class="sy0">&lt;</span>- merge<span class="br0">&#40;</span>census_metals_sp,census_pb_avg,<span class="re2">by</span>=<span class="st0">&quot;TRACT&quot;</span><span class="br0">&#41;</span>
+<span class="co0">### write out final table and shapefile</span>
+&nbsp;
+outfile<span class="sy0">&lt;</span>-paste<span class="br0">&#40;</span><span class="st0">&quot;census_metals_pb_sp&quot;</span>,<span class="st0">&quot;_&quot;</span>,
+               out_suffix,<span class="re2">sep</span>=<span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>
+writeOGR<span class="br0">&#40;</span>census_metals_pb_sp,<span class="re2">dsn</span>= out_dir,<span class="re2">layer</span>= outfile, <span class="re2">driver</span>=<span class="st0">&quot;ESRI Shapefile&quot;</span>,<span class="re2">overwrite_layer</span>=TRUE<span class="br0">&#41;</span>
+&nbsp;
+outfile_df_name <span class="sy0">&lt;</span>- file.path<span class="br0">&#40;</span>out_dir,paste0<span class="br0">&#40;</span>outfile,<span class="st0">&quot;.txt&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+write.table<span class="br0">&#40;</span>as.data.frame<span class="br0">&#40;</span>census_metals_pb_sp<span class="br0">&#41;</span>,<span class="re2">file</span>=outfile_df_name,<span class="re2">sep</span>=<span class="st0">&quot;,&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">########### PART III: RASTER FROM KRIGING                 ######################</span>
+<span class="co0">#Generating raster lead surface from point and comparing aggregation ###################</span>
+&nbsp;
+<span class="co0">#Now generate a raster image to create grid of cell for kriging</span>
+extent_reg <span class="sy0">&lt;</span>- extent<span class="br0">&#40;</span>census_metals_pb_sp<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>extent_reg<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>census_metals_pb_sp,<span class="re2">add</span>=T<span class="br0">&#41;</span>
+&nbsp;
+extent_matrix <span class="sy0">&lt;</span>- as.matrix<span class="br0">&#40;</span>extent_reg<span class="br0">&#41;</span>
+extent_matrix
+&nbsp;
+x_length_reg <span class="sy0">&lt;</span>- extent_matrix<span class="br0">&#91;</span><span class="nu0">1</span>,<span class="nu0">2</span><span class="br0">&#93;</span> - extent_matrix<span class="br0">&#91;</span><span class="nu0">1</span>,<span class="nu0">1</span><span class="br0">&#93;</span> 
+y_length_reg <span class="sy0">&lt;</span>- extent_matrix<span class="br0">&#91;</span><span class="nu0">2</span>,<span class="nu0">2</span><span class="br0">&#93;</span> - extent_matrix<span class="br0">&#91;</span><span class="nu0">2</span>,<span class="nu0">1</span><span class="br0">&#93;</span> 
+&nbsp;
+print<span class="br0">&#40;</span>c<span class="br0">&#40;</span>x_length_reg,y_length_reg<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Based on the size of the extent, let's set the size for our new raster layer: </span>
+<span class="co0">#we don't want too fine as resolution: let's do 100m, it will keep the grid small</span>
+&nbsp;
+res_val <span class="sy0">&lt;</span>- <span class="nu0">100</span>
+r = raster<span class="br0">&#40;</span><span class="re2">ext</span>=extent_reg, <span class="re2">res</span>=res_val<span class="br0">&#41;</span>
+dim<span class="br0">&#40;</span>r<span class="br0">&#41;</span>
+values<span class="br0">&#40;</span>r<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- <span class="nu0">1</span>:ncell<span class="br0">&#40;</span>r<span class="br0">&#41;</span> <span class="co0"># Assign values to raster, ID for each pixel</span>
+<span class="co0">#assign projection system</span>
+projection<span class="br0">&#40;</span>r<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- proj4string<span class="br0">&#40;</span>census_metals_pb_sp<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">######Visualize the data first</span>
+&nbsp;
+plot<span class="br0">&#40;</span>r<span class="br0">&#41;</span>
+<span class="co0">#generate grid from raster as poly for visualization</span>
+r_poly<span class="sy0">&lt;</span>- rasterToPolygons<span class="br0">&#40;</span>r<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>extent_reg,<span class="re2">add</span>=T,<span class="re2">col</span>=<span class="st0">&quot;red&quot;</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>census_metals_pb_sp,<span class="re2">border</span>=<span class="st0">&quot;blue&quot;</span>,<span class="re2">add</span>=T<span class="br0">&#41;</span>
+<span class="co0">### Let's show the grid first</span>
+plot<span class="br0">&#40;</span>r_poly,<span class="re2">add</span>=T<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Transform the raster layer into a sp Grid object for kriging</span>
+r_sgdf <span class="sy0">&lt;</span>- <span class="kw2">as</span><span class="br0">&#40;</span>r, <span class="st_h">'SpatialGridDataFrame'</span><span class="br0">&#41;</span>
+class<span class="br0">&#40;</span>r_sgdf<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Generate and plot a sample variogram from lead data</span>
+v_ppm <span class="sy0">&lt;</span>- variogram<span class="br0">&#40;</span>ppm ~ <span class="nu0">1</span>,soil_PB_sp<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>v_ppm<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Fit a variogram model from lead data</span>
+&nbsp;
+v_ppm_fit <span class="sy0">&lt;</span>- fit.variogram<span class="br0">&#40;</span>v_ppm,<span class="re2">model</span>=vgm<span class="br0">&#40;</span><span class="nu0">1</span>,<span class="st0">&quot;Sph&quot;</span>,<span class="nu0">900</span>,<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>v_ppm,v_ppm_fit<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">##Generate a kriging surface using data and modeled variogram: this may take more than 3 minutes</span>
+ppm_lead_spg <span class="sy0">&lt;</span>- krige<span class="br0">&#40;</span>ppm ~ <span class="nu0">1</span>, soil_PB_sp, r_sgdf, <span class="re2">model</span>=v_ppm_fit<span class="br0">&#41;</span>
+&nbsp;
+class<span class="br0">&#40;</span>ppm_lead_spg<span class="br0">&#41;</span>
+r_lead <span class="sy0">&lt;</span>- raster<span class="br0">&#40;</span>ppm_lead_spg<span class="br0">&#41;</span>
+<span class="kw2">rm</span><span class="br0">&#40;</span>ppm_lead_spg<span class="br0">&#41;</span> <span class="co0">#remove grid object from memory</span>
+r_lead <span class="co0">#examine new layer</span>
+&nbsp;
+col_palette <span class="sy0">&lt;</span>- matlab.like<span class="br0">&#40;</span><span class="nu0">256</span><span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>r_lead,<span class="re2">col</span>=col_palette<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>census_metals_pb_sp,<span class="re2">border</span>=<span class="st0">&quot;blue&quot;</span>,<span class="re2">add</span>=T<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Save raster layers produced from kriging</span>
+raster_name <span class="sy0">&lt;</span>- file.path<span class="br0">&#40;</span>out_dir,paste0<span class="br0">&#40;</span><span class="st0">&quot;r_lead&quot;</span>,out_suffix,file_format<span class="br0">&#41;</span><span class="br0">&#41;</span>
+writeRaster<span class="br0">&#40;</span>r_lead,filename = raster_name,<span class="re2">overwrite</span>=T<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">#### Comparison of aggregations ###</span>
+<span class="co0">## Compare values from averages from kriging surface and averages from block groups</span>
+&nbsp;
+census_lead_sp <span class="sy0">&lt;</span>- extract<span class="br0">&#40;</span>r_lead,census_metals_pb_sp,<span class="re2">sp</span>=T,<span class="re2">fun</span>=mean<span class="br0">&#41;</span> <span class="co0">#extract average values by census track</span>
+spplot<span class="br0">&#40;</span>census_metals_pb_sp,<span class="st0">&quot;pb_ppm&quot;</span>,col.regions=col_palette,<span class="re2">main</span>=<span class="st0">&quot;Averaged from blockgroups&quot;</span><span class="br0">&#41;</span> <span class="co0">#</span>
+spplot<span class="br0">&#40;</span>census_lead_sp,<span class="st0">&quot;var1.pred&quot;</span>,col.regions=col_palette,<span class="re2">main</span>=<span class="st0">&quot;Averaged from kriging &quot;</span><span class="br0">&#41;</span> 
+&nbsp;
+<span class="co4">census_lead_sp$</span><span class="kw2">diff</span> <span class="sy0">&lt;</span>- census_metals_pb_sp<span class="re1">$pb_ppm</span> - census_lead_sp<span class="re1">$var1</span>.pred <span class="co0">#comparing the averages</span>
+hist<span class="br0">&#40;</span>census_lead_sp<span class="re1">$diff</span><span class="br0">&#41;</span>
+spplot<span class="br0">&#40;</span>census_lead_sp,<span class="st0">&quot;diff&quot;</span>,col.regions=col_palette,<span class="re2">main</span>=<span class="st0">&quot;Difference in averages&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">##### PART IV: Spatial autocrrelation and regression #############</span>
+<span class="co0">## Examine spatial autocorrelation</span>
+<span class="co0">#Examine the relationship between metals, Pb and vulnerable populations in Syracuse</span>
+&nbsp;
+list_nb <span class="sy0">&lt;</span>- poly2nb<span class="br0">&#40;</span>census_lead_sp<span class="br0">&#41;</span> <span class="co0">#generate neighbours based on polygons</span>
+summary<span class="br0">&#40;</span>list_nb<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>census_lead_sp,<span class="re2">border</span>=<span class="st0">&quot;blue&quot;</span><span class="br0">&#41;</span>
+plot.nb<span class="br0">&#40;</span>list_nb,coordinates<span class="br0">&#40;</span>census_lead_sp<span class="br0">&#41;</span>,<span class="re2">add</span>=T<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">#generate weights</span>
+<span class="co0">#nb2listw</span>
+list_w <span class="sy0">&lt;</span>- nb2listw<span class="br0">&#40;</span>list_nb, <span class="re2">glist</span>=NULL, <span class="re2">style</span>=<span class="st0">&quot;W&quot;</span>, zero.policy=NULL<span class="br0">&#41;</span> <span class="co0">#use row standardized</span>
+can.be.simmed<span class="br0">&#40;</span>list_w<span class="br0">&#41;</span>
+summary<span class="br0">&#40;</span>list_w<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Compute Moran's I and display it</span>
+moran<span class="br0">&#40;</span>census_lead_sp<span class="re1">$pb_ppm</span>,list_w,<span class="re2">n</span>=nrow<span class="br0">&#40;</span>census_lead_sp<span class="br0">&#41;</span>, Szero<span class="br0">&#40;</span>list_w<span class="br0">&#41;</span><span class="br0">&#41;</span>
+moran.plot<span class="br0">&#40;</span>census_lead_sp<span class="re1">$pb_ppm</span>, list_w,
+           <span class="re2">labels</span>=as.character<span class="br0">&#40;</span>census_lead_sp<span class="re1">$TRACT</span><span class="br0">&#41;</span>, <span class="re2">pch</span>=<span class="nu0">19</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">##### Now do a spatial regression</span>
+&nbsp;
+<span class="co0">## Is there are relationship between minorities and high level of lead?</span>
+<span class="co0"># As a way to explore use, perc_hispa as explanatory variable</span>
+&nbsp;
+<span class="co0">#linear model without taking into account spatial autocorrelation</span>
+mod_lm <span class="sy0">&lt;</span>- lm<span class="br0">&#40;</span>pb_ppm ~ perc_hispa, <span class="re2">data</span>=census_lead_sp<span class="br0">&#41;</span>
+<span class="co0">#autoregressive model</span>
+mod_lag <span class="sy0">&lt;</span>- lagsarlm<span class="br0">&#40;</span>pb_ppm ~ perc_hispa, <span class="re2">data</span>=census_lead_sp, list_w, tol.solve=1.0e-30<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">### Checking for autocorrelation in residuals</span>
+moran.test<span class="br0">&#40;</span>mod_lm<span class="re1">$residuals</span>,list_w<span class="br0">&#41;</span>
+moran.test<span class="br0">&#40;</span>mod_lag<span class="re1">$residuals</span>,list_w<span class="br0">&#41;</span> <span class="co0">#Note that Moran'sI is close to zero in the lag model</span>
+&nbsp;
+<span class="co0">#### Compare Moran's I from raster to Moran's I from polygon sp</span>
+<span class="co0"># Rook's case</span>
+f <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>c<span class="br0">&#40;</span><span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">0</span>,<span class="nu0">1</span>,<span class="nu0">0</span><span class="br0">&#41;</span>, <span class="re2">nrow</span>=<span class="nu0">3</span><span class="br0">&#41;</span>
+Moran<span class="br0">&#40;</span>r_lead, f<span class="br0">&#41;</span> 
+r_moran <span class="sy0">&lt;</span>- MoranLocal<span class="br0">&#40;</span>r_lead<span class="br0">&#41;</span>
+plot<span class="br0">&#40;</span>r_moran<span class="br0">&#41;</span> <span class="co0"># hotspots?</span>
+&nbsp;
+<span class="co0">###################### END OF SCRIPT #####################</span>

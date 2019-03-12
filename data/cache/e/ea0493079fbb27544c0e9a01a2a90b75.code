@@ -1,0 +1,2 @@
+<span class="kw2">rm</span> point.csv
+<span class="kw3">echo</span> <span class="st0">&quot;<span class="es1">\&quot;</span>X<span class="es1">\&quot;</span>,<span class="es1">\&quot;</span>Y<span class="es1">\&quot;</span>,<span class="es1">\&quot;</span>Z<span class="es1">\&quot;</span>&quot;</span> <span class="sy0">&gt;</span> point.csv 

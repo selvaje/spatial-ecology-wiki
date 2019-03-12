@@ -1,0 +1,42 @@
+
+<h1 class="sectionedit1" id="exercise_7cusing_sql_commands">Exercise 7c: Using sql commands</h1>
+<div class="level1">
+
+<p>
+GDALOGR: ogr2ogr ogrinfo
+</p>
+
+<p>
+<em class="u">Check the different classes (attribute=landuse) in the OSM polygons:</em>
+</p>
+<pre class="code bash">ogrinfo <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_multipolygons.sqlite <span class="re5">-sql</span> <span class="st0">&quot;select DISTINCT landuse from multipolygons&quot;</span></pre>
+
+<p>
+<em class="u">Count number of polygons where landuse is forest:</em>
+</p>
+<pre class="code bash">ogrinfo <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_multipolygons.sqlite <span class="re5">-sql</span> <span class="st0">&quot;select COUNT(landuse) from multipolygons where landuse='forest'&quot;</span></pre>
+
+<p>
+<em class="u">Script to count the polygons for each landuse class: show only those classes with more than 20 polygons</em>
+</p>
+<pre class="code bash"><span class="kw1">for</span> LU <span class="kw1">in</span> $<span class="br0">&#40;</span>ogrinfo <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_multipolygons.sqlite <span class="re5">-sql</span> <span class="st0">&quot;select DISTINCT landuse from multipolygons&quot;</span><span class="sy0">|</span><span class="kw2">grep</span> <span class="st_h">'landuse (String) ='</span> <span class="sy0">|</span><span class="kw2">awk</span> <span class="re5">-F</span>= <span class="st_h">'{print $2}'</span><span class="br0">&#41;</span>;<span class="kw1">do</span> 
+ogrinfo <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_multipolygons.sqlite <span class="re5">-sql</span> <span class="st0">&quot;select COUNT(landuse) from multipolygons where landuse='<span class="es2">$LU</span>'&quot;</span><span class="sy0">|</span><span class="kw2">grep</span> <span class="st0">&quot;COUNT(landuse) (Integer) =&quot;</span><span class="sy0">|</span><span class="kw2">awk</span> <span class="re5">-F</span>= <span class="re5">-v</span> <span class="re2">lu</span>=<span class="re1">$LU</span> <span class="st_h">'{if ($2&gt;20) print lu,$2}'</span>
+<span class="kw1">done</span></pre>
+
+<p>
+<em class="u">Create a SQLite vector with single attribute &#039;landuse&#039; and retain only forest polygons</em>
+</p>
+<pre class="code bash">ogr2ogr <span class="re5">-f</span> <span class="st0">&quot;SQLite&quot;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_forest.sqlite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_multipolygons.sqlite <span class="re5">-where</span> <span class="st0">&quot;landuse='forest'&quot;</span> <span class="re5">-select</span> <span class="st_h">'landuse'</span></pre>
+
+<p>
+<em class="u">Create a SQLite vector with single attribute &#039;landuse&#039; and retain selection of non-forest polygons: &#039;meadow&#039;,&#039;industrial&#039;,&#039;commercial&#039;,&#039;residential&#039;,&#039;grass&#039;</em>
+</p>
+<pre class="code bash">ogr2ogr <span class="re5">-f</span> <span class="st0">&quot;SQLite&quot;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_nonforest.sqlite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_multipolygons.sqlite <span class="re5">-where</span> <span class="st0">&quot;landuse in ('meadow','industrial','commercial','residential','grass')&quot;</span> <span class="re5">-select</span> <span class="st_h">'landuse'</span></pre>
+
+<p>
+<em class="u">Merge the SQLite vectors</em>
+</p>
+<pre class="code bash">ogr2ogr <span class="re5">-f</span> SQLite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_merged.sqlite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_forest.sqlite</pre>
+<pre class="code bash">ogr2ogr <span class="re5">-f</span> SQLite <span class="re5">-update</span> <span class="re5">-append</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_merged.sqlite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_nonforest.sqlite</pre>
+
+</div>

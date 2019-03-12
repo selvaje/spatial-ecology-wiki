@@ -1,0 +1,17 @@
+the following code also loops r.sun but it uses multi-core 
+<span class="co0">#runing the code to &quot;USE GRASS GIS 7 without starting it explicitly&quot; is also required</span>
+<span class="co0">#set startday, stopday,starthour, stophour, step and input raster maps for r.sun </span>
+<span class="kw3">export</span> <span class="re2">startday</span>=<span class="nu0">20</span>
+<span class="kw3">export</span> <span class="re2">stopday</span>=<span class="nu0">20</span>
+<span class="kw3">export</span> <span class="re2">starthour</span>=<span class="nu0">10</span>
+<span class="kw3">export</span> <span class="re2">stophour</span>=<span class="nu0">12</span>
+<span class="kw3">export</span> <span class="re2">step</span>=<span class="nu0">1</span>
+<span class="kw3">export</span> <span class="re2">elevmap</span>=elev1
+<span class="kw3">export</span> <span class="re2">aspectmap</span>=asprast1
+<span class="kw3">export</span> <span class="re2">slopemap</span>=slope1
+<span class="kw3">export</span> <span class="re2">cores</span>=<span class="nu0">3</span>
+&nbsp;
+<span class="co0">#run r.sun using xargs</span>
+<span class="kw1">for</span> DAY <span class="kw1">in</span> $<span class="br0">&#40;</span><span class="kw2">seq</span> <span class="re1">$startday</span> <span class="re1">$stopday</span><span class="br0">&#41;</span>; <span class="kw1">do</span> 
+ <span class="kw2">seq</span> <span class="re1">$starthour</span> <span class="re1">$step</span> <span class="re1">$stophour</span> <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="re1">$cores</span> -I<span class="br0">&#123;</span><span class="br0">&#125;</span> r.sun <span class="re5">--o</span> <span class="re2">elevin</span>=<span class="re1">$elevmap</span> <span class="re2">aspin</span>=<span class="re1">$aspectmap</span> <span class="re2">slopein</span>=<span class="re1">$slopemap</span> <span class="re2">lin</span>=$<span class="br0">&#40;</span>python g.linke_by_day.py <span class="re1">$DAY</span><span class="br0">&#41;</span> <span class="re2">glob_rad</span>=multicore_globrad.<span class="co1">${DAY}</span>_<span class="br0">&#123;</span><span class="br0">&#125;</span> <span class="re2">day</span>=<span class="re1">$DAY</span> <span class="re2">time</span>=<span class="br0">&#123;</span><span class="br0">&#125;</span>; 
+ <span class="kw1">done</span>

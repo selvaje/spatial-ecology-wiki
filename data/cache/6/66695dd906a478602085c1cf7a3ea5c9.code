@@ -1,0 +1,5 @@
+<span class="re2">ULX</span>=<span class="nu0">3217600</span>
+<span class="re2">ULY</span>=<span class="nu0">3127850</span>
+<span class="re2">LRX</span>=<span class="nu0">3225650</span>
+<span class="re2">LRY</span>=<span class="nu0">3119900</span>
+pkcrop <span class="re5">-i</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>cloudmask.tif <span class="re5">-o</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>cloudmask_crop.tif <span class="re5">-ulx</span> <span class="re1">$ULX</span> <span class="re5">-uly</span> <span class="re1">$ULY</span> <span class="re5">-lrx</span> <span class="re1">$LRX</span> <span class="re5">-lry</span> <span class="re1">$LRY</span>

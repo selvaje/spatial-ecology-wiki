@@ -1,0 +1,8 @@
+<span class="co1">-- Syntax</span>
+<span class="kw1">INSERT</span> <span class="kw1">INTO</span> collName
+<span class="kw1">VALUES</span> mddExp
+&nbsp;
+<span class="co1">-- Inserting a black image to the mr1 collection</span>
+<span class="kw1">INSERT</span> <span class="kw1">INTO</span> mr
+<span class="kw1">VALUES</span> MARRAY x <span class="kw1">IN</span> <span class="br0">&#91;</span> <span class="nu0">0</span>:<span class="nu0">255</span><span class="sy0">,</span> <span class="nu0">0</span>:<span class="nu0">210</span> <span class="br0">&#93;</span>
+       <span class="kw1">VALUES</span> 0c

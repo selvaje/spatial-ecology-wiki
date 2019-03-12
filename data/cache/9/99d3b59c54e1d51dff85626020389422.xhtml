@@ -1,0 +1,75 @@
+
+<p>
+<em class="u">Open the Landsat image with the image viewer openev:</em>
+</p>
+<pre class="code bash">openev <span class="re5">-h</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span></pre>
+
+<p>
+<em class="u">Select different band settings (false colour images)</em>
+</p>
+
+<p>
+consult web page with landsat bands for different thematic band settings
+</p>
+<div class="noteimportant">natural (true) colour image for Landsat imagery: R=band 3(red), G=band 2 (green), B=band1 (blue)
+</div>
+<p>
+zoom in on particular area of interest
+</p>
+<ul>
+<li class="level1"><div class="li"> method 1: + button</div>
+</li>
+<li class="level1"><div class="li"> method 2: control button + drag window</div>
+</li>
+<li class="level1"><div class="li"> method 3: control button + left mouse button</div>
+</li>
+</ul>
+
+<p>
+zoom out from particular area of interest
+</p>
+<ul>
+<li class="level1"><div class="li"> method 1: - button</div>
+</li>
+<li class="level1"><div class="li"> method 2: control button + right mouse button</div>
+</li>
+<li class="level1"><div class="li"> method 3: use fit all layers button (square box with arrow in each corners)</div>
+</li>
+</ul>
+
+<p>
+<em class="u">create vector with forested areas by selecting forest from cornwall<em>natural.shp and reprojecting to epsg:3035 (ETRS89:LAEA)</em><em>
+&lt;code bash&gt;
+ogr2ogr -t</em>srs epsg:3035 -where “TYPE in (&#039;forest&#039;)” ${VECTORDIR}/cornwall<em>forest</em>3035.shp ${VECTORDIR}/cornwall_natural.shp
+&lt;/code&gt;
+
+</em>open forest vector in openev on top of landsat raster image<em class="u">
+
+question: can you distinguish forest from other vegetated areas?
+
+question: can you easily distinguish forest from inland water?
+
+</em>select the standard false colour composite__
+</p>
+<div class="notetip">standard false colour image for Landsat: R=band 4(NIR), G=band 3(red), B=band2(green)
+</div>
+<p>
+Interesting web sites for interpreting Landsat images:
+</p>
+
+<p>
+<a href="http://web.pdx.edu/~emch/ip1/bandcombinations.html" class="urlextern" target="blanc" title="http://web.pdx.edu/~emch/ip1/bandcombinations.html" rel="nofollow noopener">http://web.pdx.edu/~emch/ip1/bandcombinations.html</a>
+</p>
+
+<p>
+<a href="http://zulu.ssc.nasa.gov/mrsid/tutorial/Landsat%20Tutorial-V1.html" class="urlextern" target="blanc" title="http://zulu.ssc.nasa.gov/mrsid/tutorial/Landsat%20Tutorial-V1.html" rel="nofollow noopener">http://zulu.ssc.nasa.gov/mrsid/tutorial/Landsat%20Tutorial-V1.html</a>
+</p>
+<div class="notetip">Do not forget to enhance raster when loading new bands using button with horizontal line
+</div>
+<p>
+question: what does vegetation look like in this false colour image, why?
+</p>
+
+<p>
+question: what about water and forest now?
+</p>

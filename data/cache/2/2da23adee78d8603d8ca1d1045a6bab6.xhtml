@@ -1,0 +1,870 @@
+
+<h1 class="sectionedit1" id="grappolo_a_supercomputer_in_a_superbox">GRAPPOLO a supercomputer in a superbox</h1>
+<div class="level1">
+
+<p>
+<strong>Grappolo is a project designed to teach cluster computation.</strong>
+</p>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:grappolo_square.jpg" class="media" title="wiki:grappolo_square.jpg"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:grappolo_square.jpg" class="media" title=" " alt=" " /></a> <a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:imgp9498.jpg" class="media" title="wiki:imgp9498.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=230&amp;tok=d080d5&amp;media=wiki:imgp9498.jpg" class="media" title="imgp9498.jpg" alt="imgp9498.jpg" width="230" /></a>
+We have prototyped and developed a portable micro cluster computer (replicating the functioning of the biggest cluster computer facility in the southwest UK ). This tool is similar to the Raspberry pi cluster developed at Southampton University but is aimed towards teaching Geographic Information Systems methods rather than raw computation, it is very low cost ( ~ £130), portable and a perfect replica of an operating system running on a true high performance cluster computer.
+</p>
+<div class="noteimportant">This is still an an ongoing project! Not finished yet. We are working on the <abbr title="Operating System">OS</abbr>/ software installation and we will update this page as soon as grappolo will work smoothly fine. 
+
+</div>
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:img_20150620_120734512-animation.gif" class="media" title="wiki:img_20150620_120734512-animation.gif"><img src="/dokuwiki/lib/exe/fetch.php?media=wiki:img_20150620_120734512-animation.gif" class="media" alt="" /></a>
+<a href="/dokuwiki/doku.php?id=wiki:grappolo" class="wikilink1" title="wiki:grappolo">grappolo</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;GRAPPOLO a supercomputer in a superbox&quot;,&quot;hid&quot;:&quot;grappolo_a_supercomputer_in_a_superbox&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-930&quot;} -->
+<h2 class="sectionedit2" id="goals">Goals</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Build a micro cluster compurer with the same operating system and software of a real HPC (High Performance Computer) for simulating big data processing.</div>
+</li>
+<li class="level1"><div class="li"> Make it as small as possible so that grappolo can fligh in your hand lugage toghether with your laptop, book, toothbrush and newspaper.</div>
+</li>
+<li class="level1"><div class="li"> Make it awsome so when you test supercomputing in a pub it will attract people&#039;s attention and they might want to learn more about it.</div>
+</li>
+<li class="level1"><div class="li"> Make it low cost and open source so that is potentially replicable in schools or by any V2 open minded citizens willing to learn new amazing stuff.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Goals&quot;,&quot;hid&quot;:&quot;goals&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;931-1541&quot;} -->
+<h1 class="sectionedit3" id="software_and_hardware">Software and hardware</h1>
+<div class="level1">
+
+<p>
+We used 3 Raspberry pi&#039;s running a light distribution of Linux operating system. Below you can find codings for software installation and hardware assembling. <br/>
+
+For the best box ever conceived in the history of boxes….<br/>
+
+We used an awesome reddish perspex and sawed an alluminium squared box section 15&times;15.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Software and hardware&quot;,&quot;hid&quot;:&quot;software_and_hardware&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1542-1888&quot;} -->
+<h1 class="sectionedit4" id="project_team_and_collaborators">Project team and collaborators</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li">Stefano Casalegno (Project leader)</div>
+</li>
+<li class="level1"><div class="li">Andrew Cowly (brainstorming - software / <abbr title="Operating System">OS</abbr> installation)</div>
+</li>
+<li class="level1"><div class="li">Oliver Hatfield (box design and construction)</div>
+</li>
+<li class="level1"><div class="li">Andy Smith (software ideas support / cabling)</div>
+</li>
+<li class="level1"><div class="li">Victoria O&#039;Brien (software <abbr title="Operating System">OS</abbr> / installation)</div>
+</li>
+<li class="level1"><div class="li">Giuseppe Amatulli (software applications for teaching)</div>
+</li>
+</ul>
+
+<p>
+This protect is sponsored by <a href="http://www.spatial-ecology.net" class="urlextern" target="blanc" title="http://www.spatial-ecology.net" rel="nofollow noopener">www.spatial-ecology.net</a> we are a not for profit organization in the UK helping people to learn open source technology for spatio-temporal data analyses, modelling and big data processing.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project team and collaborators&quot;,&quot;hid&quot;:&quot;project_team_and_collaborators&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1889-2465&quot;} -->
+<h2 class="sectionedit5" id="list_of_material">List of material</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> 3 raspberry pi model 2 - 1GB RAM 4CPU : <a href="http://cpc.farnell.com/" class="urlextern" target="blanc" title="http://cpc.farnell.com/" rel="nofollow noopener"> : 89.78 £</a></div>
+</li>
+<li class="level1"><div class="li"> 3 sd card 8GB : <a href="http://www.ebay.co.uk" class="urlextern" target="blanc" title="http://www.ebay.co.uk" rel="nofollow noopener"> : 2.75 £ </a></div>
+</li>
+<li class="level1"><div class="li"> 1 usb wifi dongle <a href="http://www.maplin.co.uk/p/maplin-single-band-n150-nano-usb-network-adapter-a71lb" class="urlextern" target="blanc" title="http://www.maplin.co.uk/p/maplin-single-band-n150-nano-usb-network-adapter-a71lb" rel="nofollow noopener">  : 9.99 £</a></div>
+</li>
+<li class="level1"><div class="li"> Ethernet switch (5 port 10/100M Switch) usb powered <a href="http://www.ebay.co.uk/itm/Fast-Ethernet-Efficient-Network-Switch-5-Ports-10-100Mbps-for-Desktop-New-/271843904311?" class="urlextern" target="blanc" title="http://www.ebay.co.uk/itm/Fast-Ethernet-Efficient-Network-Switch-5-Ports-10-100Mbps-for-Desktop-New-/271843904311?" rel="nofollow noopener"> : 5.63£ </a></div>
+</li>
+<li class="level1"><div class="li"> 3 usb short cables <a href="http://www.ebay.co.uk/itm/Micro-USB-8-20CM-Short-Braided-Data-Sync-Cable-Cord-For-Samsung-Galaxy-S3-S4-/400723720012?pt=LH_DefaultDomain_3&amp;var=670268246685&amp;hash=item5d4cfeb74c" class="urlextern" target="blanc" title="http://www.ebay.co.uk/itm/Micro-USB-8-20CM-Short-Braided-Data-Sync-Cable-Cord-For-Samsung-Galaxy-S3-S4-/400723720012?pt=LH_DefaultDomain_3&amp;var=670268246685&amp;hash=item5d4cfeb74c" rel="nofollow noopener"> 2.97 £</a></div>
+</li>
+<li class="level1"><div class="li"> 3 ethernet cables  : 0 £ recycled </div>
+</li>
+<li class="level1"><div class="li"> Hexagonal spacer female/male RS Stock No. 105-8202 <a href="http://uk.rs-online.com/" class="urlextern" target="blanc" title="http://uk.rs-online.com/" rel="nofollow noopener"> : 5.69 £</a></div>
+</li>
+<li class="level1"><div class="li"> 4 port USB 5V 2.1A / 1A Power supply <a href="http://www.dx.com/p/universal-travel-usb-ac-powered-4-port-hub-with-eu-plug-white-2-round-pin-plug-132107#.VXB-w7w57yx" class="urlextern" target="blanc" title="http://www.dx.com/p/universal-travel-usb-ac-powered-4-port-hub-with-eu-plug-white-2-round-pin-plug-132107#.VXB-w7w57yx" rel="nofollow noopener"> : 6.32 £</a></div>
+</li>
+<li class="level1"><div class="li"> Alluminium box <a href="http://www.ebay.co.uk/itm/Aluminium-Square-Box-Section-x-12-pre-cut-Sizes-x-8-Lengths-/360941104777?pt=LH_DefaultDomain_3&amp;var=&amp;hash=item5409c42e89" class="urlextern" target="blanc" title="http://www.ebay.co.uk/itm/Aluminium-Square-Box-Section-x-12-pre-cut-Sizes-x-8-Lengths-/360941104777?pt=LH_DefaultDomain_3&amp;var=&amp;hash=item5409c42e89" rel="nofollow noopener"> 8.25 £</a></div>
+</li>
+<li class="level1"><div class="li"> Perspex <a href="http://www.penrynplasticsacrylic.co.uk/product_info.php?id=124" class="urlextern" target="blanc" title="http://www.penrynplasticsacrylic.co.uk/product_info.php?id=124" rel="nofollow noopener"> 5.37 £</a></div>
+</li>
+</ul>
+
+<p>
+<strong>TOTAL COSTS : 136.75 </strong> shipping and VAT included
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;List of material&quot;,&quot;hid&quot;:&quot;list_of_material&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;2466-3784&quot;} -->
+<h2 class="sectionedit6" id="installing_os">Installing OS</h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> <a href="http://elinux.org/RPi_SD_cards" class="urlextern" target="blanc" title="http://elinux.org/RPi_SD_cards" rel="nofollow noopener">Check </a> that your SD card is not trash </div>
+</li>
+<li class="level1"><div class="li"> <a href="http://elinux.org/RPi_Easy_SD_Card_Setup#Using_the_Linux_command_line" class="urlextern" target="blanc" title="http://elinux.org/RPi_Easy_SD_Card_Setup#Using_the_Linux_command_line" rel="nofollow noopener"> Download raspiam weezy OS and set up </a> the SD card </div>
+</li>
+<li class="level1"><div class="li">  Plug Ethernet cable from raspi 1 to home router </div>
+</li>
+<li class="level1"><div class="li">  Insert SD in raspberry, </div>
+</li>
+<li class="level1"><div class="li"> power raspi 1 </div>
+</li>
+<li class="level1"><div class="li"> Open a terminal using a computer connected to the home router (via wireless or cable)</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installing OS&quot;,&quot;hid&quot;:&quot;installing_os&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;3785-4211&quot;} -->
+<h3 class="sectionedit7" id="check_your_ip_adress">check your ip adress</h3>
+<div class="level3">
+<pre class="code">  ifconfig | grep &quot;inet addr&quot;
+        inet addr:127.0.0.1  Mask:255.0.0.0
+        inet addr:192.168.1.68  Bcast:192.168.1.255  Mask:255.255.255.0
+        </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;check your ip adress&quot;,&quot;hid&quot;:&quot;check_your_ip_adress&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;4212-4405&quot;} -->
+<h3 class="sectionedit8" id="search_for_the_ip_adress_of_the_raspberry_pi">search for the ip adress of the raspberry pi</h3>
+<div class="level3">
+<pre class="code">  sudo nmap -sP 192.168.1.1-255
+  Starting Nmap 5.21 ( http://nmap.org ) at 2015-05-23 15:24 BST
+     Nmap scan report for Unknown-28-32-c5-ae-4e-19.home (192.168.1.64)
+     Host is up (0.0029s latency).
+     MAC Address: 28:32:C5:AE:4E:19 (Unknown)
+     Nmap scan report for ace.home (192.168.1.68)
+     Host is up.
+     Nmap scan report for Unknown-e8-06-88-9c-0f-66.home (192.168.1.70)
+     Host is up (0.10s latency).
+     MAC Address: E8:06:88:9C:0F:66 (Unknown)
+     Nmap scan report for raspberrypi.home (192.168.1.80)
+     Host is up (0.015s latency).
+     MAC Address: B8:27:EB:65:6C:FF (Unknown)
+     Nmap scan report for BThomehub.home (192.168.1.254)
+     Host is up (0.013s latency).
+     MAC Address: D0:84:B0:D7:AC:30 (Unknown)
+     Nmap done: 255 IP addresses (5 hosts up) scanned in 5.44 seconds</pre>
+
+<p>
+You are now ready to connect to raspi1 via ssh, default login and pass are pi, raspberry. 
+</p>
+<pre class="code">  ssh pi@192.168.1.80
+  yes</pre>
+
+<p>
+you are loged in the raspberry pi. Next steps are easy to do with the raspi-config <abbr title="Graphical User Interface">GUI</abbr>:
+</p>
+<pre class="code">  sudo raspi-config</pre>
+<ol>
+<li class="level1"><div class="li"> Expand file system - Resize the partition</div>
+</li>
+<li class="level1"><div class="li"> Change password to masterpi</div>
+</li>
+<li class="level1"><div class="li"> Set time zone : internationalisation –&gt; london</div>
+</li>
+<li class="level1"><div class="li"> Set the memory split and change the value to 16 (in advanced options)</div>
+</li>
+<li class="level1"><div class="li"> change hostname “ raspberry” to “grappolo” (in advanced options)</div>
+</li>
+</ol>
+<pre class="code">  sudo apt-get update
+  sudo apt-get upgrade
+  sudo reboot
+  ssh pi@192.168.1.80
+  </pre>
+
+<p>
+Add user admin (administartor) and remove user pi.<br/>
+
+Password for user “admin” = “admin” <em>…old pass for pi was masterpi</em>
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> useradd <span class="re5">-m</span> admin
+<span class="kw2">sudo</span> <span class="kw2">passwd</span> admin <span class="co0">#admin</span>
+<span class="kw2">sudo</span> <span class="kw2">nano</span> <span class="sy0">/</span>etc<span class="sy0">/</span>group
+<span class="co0"># Go through the file adding ,ad to the end of all of the groups that pi is in.  eg:   &quot; adm:x:4:pi,admin  &quot;</span>
+<span class="kw3">exit</span>
+<span class="kw2">ssh</span> <span class="re5">-X</span> admin<span class="sy0">@</span>192.168.1.80
+<span class="kw2">chsh</span> <span class="re5">-s</span> <span class="sy0">/</span>bin<span class="sy0">/</span><span class="kw2">bash</span> <span class="co0">#default terminal is bash</span>
+<span class="kw2">sudo</span> userdel pi</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;search for the ip adress of the raspberry pi&quot;,&quot;hid&quot;:&quot;search_for_the_ip_adress_of_the_raspberry_pi&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;4406-6332&quot;} -->
+<h3 class="sectionedit9" id="set_connections_configurations">Set connections configurations</h3>
+<div class="level3">
+
+</div>
+
+<h5 id="connect_the_grappolo_cluster_to_the_outside_world">Connect the grappolo cluster to the outside world</h5>
+<div class="level5">
+
+<p>
+We will generate a dynamic ip address to connect to the head node “grappolo” to the outside world. This will be be physically done ether via wifi dongle or via a usb-ethernet adapter depending on our working environment. <br/>
+
+</p>
+
+</div>
+
+<h5 id="connect_nodes_within_the_grappolo_cluster">Connect nodes within the grappolo cluster</h5>
+<div class="level5">
+
+<p>
+Within the cluster we create a static ip network using the Ethernet ports of each of the 3 raspi.
+The /etc/network/interface configuration file determine the above parameters. We need to insert the name of the wifi network and password wile connecting using the wifi dongle or we need to uncomment the two <em> eth1</em> lines if we are using an ethernet connection from the cluster to the external world. The grappolo configuration using the wifi dongle looks like this:
+</p>
+<pre class="code bash">pi<span class="sy0">@</span>grappolo ~ $ <span class="kw2">cat</span> <span class="sy0">/</span>etc<span class="sy0">/</span>network<span class="sy0">/</span>interfaces
+auto lo
+iface lo inet loopback
+&nbsp;
+auto eth0
+iface eth0 inet static
+address 10.141.255.254
+netmask 255.255.0.0
+network 10.141.0.0
+broadcast 10.141.255.255
+<span class="co0">#gateway 10.141.255.254</span>
+&nbsp;
+<span class="co0"># To connect via usb ethernet adaptor instead of wifi, uncomment the next two lines</span>
+<span class="co0">#auto eth1</span>
+<span class="co0">#iface eth1 inet dhcp</span>
+&nbsp;
+allow-hotplug wlan0
+auto wlan0
+&nbsp;
+iface wlan0 inet dhcp
+<span class="co0">#wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf</span>
+       wpa-ssid <span class="st0">&quot;NETWORK_NAME&quot;</span>
+       wpa-psk <span class="st0">&quot;NETWORK_PASSWORD&quot;</span></pre>
+
+<p>
+Next we need to reboot and log in via the usb dongle or ethernet-usb:
+</p>
+<pre class="code">     sudo reboot
+     ssh -X pi@192.168.1.81
+     </pre>
+
+<p>
+And the resulting connection configuration is the following
+</p>
+<pre class="code bash">pi<span class="sy0">@</span>grappolo ~ $ <span class="kw2">ifconfig</span>
+eth0      Link encap:Ethernet  HWaddr b8:<span class="nu0">27</span>:eb:b6:4b:a5  
+          inet addr:10.141.255.254  Bcast:10.141.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:<span class="nu0">1500</span>  Metric:<span class="nu0">1</span>
+          RX packets:<span class="nu0">69</span> errors:<span class="nu0">0</span> dropped:<span class="nu0">0</span> overruns:<span class="nu0">0</span> frame:<span class="nu0">0</span>
+          TX packets:<span class="nu0">23</span> errors:<span class="nu0">0</span> dropped:<span class="nu0">0</span> overruns:<span class="nu0">0</span> carrier:<span class="nu0">0</span>
+          collisions:<span class="nu0">0</span> txqueuelen:<span class="nu0">1000</span> 
+          RX bytes:<span class="nu0">9100</span> <span class="br0">&#40;</span><span class="nu0">8.8</span> KiB<span class="br0">&#41;</span>  TX bytes:<span class="nu0">3231</span> <span class="br0">&#40;</span><span class="nu0">3.1</span> KiB<span class="br0">&#41;</span>
+&nbsp;
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:<span class="nu0">65536</span>  Metric:<span class="nu0">1</span>
+          RX packets:<span class="nu0">72</span> errors:<span class="nu0">0</span> dropped:<span class="nu0">0</span> overruns:<span class="nu0">0</span> frame:<span class="nu0">0</span>
+          TX packets:<span class="nu0">72</span> errors:<span class="nu0">0</span> dropped:<span class="nu0">0</span> overruns:<span class="nu0">0</span> carrier:<span class="nu0">0</span>
+          collisions:<span class="nu0">0</span> txqueuelen:<span class="nu0">0</span> 
+          RX bytes:<span class="nu0">6288</span> <span class="br0">&#40;</span><span class="nu0">6.1</span> KiB<span class="br0">&#41;</span>  TX bytes:<span class="nu0">6288</span> <span class="br0">&#40;</span><span class="nu0">6.1</span> KiB<span class="br0">&#41;</span>
+&nbsp;
+wlan0     Link encap:Ethernet  HWaddr 00:<span class="nu0">87</span>:<span class="nu0">31</span>:<span class="nu0">13</span>:<span class="nu0">37</span>:aa  
+          inet addr:192.168.1.81  Bcast:192.168.1.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:<span class="nu0">1500</span>  Metric:<span class="nu0">1</span>
+          RX packets:<span class="nu0">455</span> errors:<span class="nu0">0</span> dropped:<span class="nu0">0</span> overruns:<span class="nu0">0</span> frame:<span class="nu0">0</span>
+          TX packets:<span class="nu0">221</span> errors:<span class="nu0">0</span> dropped:<span class="nu0">0</span> overruns:<span class="nu0">0</span> carrier:<span class="nu0">0</span>
+          collisions:<span class="nu0">0</span> txqueuelen:<span class="nu0">1000</span> 
+          RX bytes:<span class="nu0">104200</span> <span class="br0">&#40;</span><span class="nu0">101.7</span> KiB<span class="br0">&#41;</span>  TX bytes:<span class="nu0">29337</span> <span class="br0">&#40;</span><span class="nu0">28.6</span> KiB<span class="br0">&#41;</span></pre>
+
+<p>
+To read your configuration information (address; netmask; network; broadcast; gateway) you can type:
+</p>
+<pre class="code">   pi@grappolo ~ $ ifconfig | grep -A1 eth0 | tail -1  
+        inet addr:10.141.255.254  Bcast:10.141.255.255  Mask:255.255.0.0</pre>
+<pre class="code">   pi@grappolo ~ $ netstat -nr | tail -2 | awk &#039;{if(NR==1)print &quot;Gateway &quot;$2 \\ 
+                   else print &quot;Destination &quot;$1 }&#039; 
+             Gateway 0.0.0.0
+             Destination 192.168.1.0</pre>
+
+<p>
+<del>          Gateway 192.168.1.254
+          Destination 192.168.1.0</del>
+We use the 10.141.255 internal static ip address to avoid any inconvenient ip-adress overlap between the dhcp extrnal and static internal cluster network configurations.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Set connections configurations&quot;,&quot;hid&quot;:&quot;set_connections_configurations&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:9,&quot;range&quot;:&quot;6333-9835&quot;} -->
+<h3 class="sectionedit10" id="install_software">Install Software</h3>
+<div class="level3">
+
+<p>
+<strong> R language and environment for statistical computing</strong><br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:rlogo-5.png" class="media" title="wiki:rlogo-5.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=4e104f&amp;media=wiki:rlogo-5.png" class="media" alt="" width="100" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:logo_whitew_awk.png" class="media" title="wiki:logo_whitew_awk.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=779f62&amp;media=wiki:logo_whitew_awk.png" class="media" alt="" width="100" /></a>
+</p>
+<pre class="code bash"><span class="kw2">wget</span> http:<span class="sy0">//</span>cran.rstudio.com<span class="sy0">/</span>src<span class="sy0">/</span>base<span class="sy0">/</span>R-<span class="nu0">3</span><span class="sy0">/</span>R-3.1.2.tar.gz
+<span class="kw2">mkdir</span> R_HOME
+<span class="kw2">mv</span> R-3.1.2.tar.gz R_HOME<span class="sy0">/</span>
+<span class="kw3">cd</span> R_HOME<span class="sy0">/</span>
+<span class="kw2">tar</span> zxvf R-3.1.2.tar.gz
+<span class="kw3">cd</span> R-3.1.2<span class="sy0">/</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> gfortran libreadline6-dev libx11-dev libxt-dev
+.<span class="sy0">/</span>configure
+<span class="kw2">make</span>
+<span class="kw2">sudo</span> <span class="kw2">make</span> <span class="kw2">install</span>
+<span class="co0"># get a coup of tea and start watching Battleship Potemkin you have an hour to wait</span></pre>
+
+<p>
+<strong> PROG.4 - GDAL/OGR / GRASS </strong> geospatial libraries <br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:logo_gdal.png" class="media" title="wiki:logo_gdal.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=4a18c0&amp;media=wiki:logo_gdal.png" class="media" alt="" width="100" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:grasslogo_vector_small.png" class="media" title="wiki:grasslogo_vector_small.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=419280&amp;media=wiki:grasslogo_vector_small.png" class="media" alt="" width="100" /></a>
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">apt-get install</span> grass grass-doc grass-dev</pre>
+
+<p>
+<strong> Emacs editor</strong> <br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:logo_emacs.png" class="media" title="wiki:logo_emacs.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=a6ea25&amp;media=wiki:logo_emacs.png" class="media" alt="" width="100" /></a><br/>
+
+… for people like Giuseppe or Pieter refusing to type on any other black squared thing with a cursor!
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">apt-get install</span> emacs</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install Software&quot;,&quot;hid&quot;:&quot;install_software&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:10,&quot;range&quot;:&quot;9836-10734&quot;} -->
+<h3 class="sectionedit11" id="install_other_useful_tools">Install other useful tools</h3>
+<div class="level3">
+
+<p>
+I like the bash <a href="http://ss64.com/bash/locate.html" class="urlextern" target="blanc" title="http://ss64.com/bash/locate.html" rel="nofollow noopener"> locate</a> command.
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">apt-get install</span> mlocate
+<span class="kw2">sudo</span> <span class="kw2">updatedb</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install other useful tools&quot;,&quot;hid&quot;:&quot;install_other_useful_tools&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:11,&quot;range&quot;:&quot;10735-10905&quot;} -->
+<h3 class="sectionedit12" id="setting_up_an_nfs_server">Setting Up an NFS Server</h3>
+<div class="level3">
+
+<p>
+The default installation of Grid Engine assumes that the excutables corresponding to the sge command are found on a $SGE_ROOT directory sitting on a shared filesystem accessible by all hosts in the cluster <a href="http://arc.liv.ac.uk/SGE/howto/nfsreduce.html" class="urlextern" target="blanc" title="http://arc.liv.ac.uk/SGE/howto/nfsreduce.html" rel="nofollow noopener"> more info here</a>.<br/>
+
+For this purpose, we use a Network File System (NFS) which is a distributed file system allowing a user on a client computer to access files over a network. We are going to create and share the /usr/local/apps folder between master and slave nodes and be able to install the Grid engine executables and configuration files in the slave nodes. We first install the nfs server in the master:
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">apt-get install</span> nfs-kernel-server portmap nfs-common
+<span class="kw2">sudo</span> <span class="kw2">nano</span> <span class="sy0">/</span>etc<span class="sy0">/</span>exports
+<span class="co0"># append  &quot;/usr/local/apps 10.141.0.0/16(rw,sync)&quot; to the end of /etc/exports file</span>
+&nbsp;
+<span class="kw2">sudo</span> service rpcbind restart
+<span class="kw2">sudo</span> <span class="sy0">/</span>etc<span class="sy0">/</span>init.d<span class="sy0">/</span>nfs-kernel-server restart</pre>
+
+<p>
+Next you need to switch into appropriate <a href="http://www.tldp.org/LDP/sag/html/run-levels-intro.html" class="urlextern" target="blanc" title="http://www.tldp.org/LDP/sag/html/run-levels-intro.html" rel="nofollow noopener"> Linux Run Level</a> (e.g. A run level is a state of init and the whole system that defines what system services are operating.) 
+Raspi by default is set to a state of run level 2 - Local Multiuser with Networking but without network service (like NFS) - and we want to switch to run level 3 - Full Multiuser with Networking. Once we are in level 3 we can use the two <em>update-rc.d</em> command below to allow automatic starting of the nfs servers at reboot.
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">nano</span> <span class="sy0">/</span>etc<span class="sy0">/</span>inittab
+<span class="co0"># to set default runlevel = 3</span>
+<span class="co0"># change id:2:initdefault with: id:3.... it should look like this:</span>
+<span class="co0"># The default runlevel.</span>
+<span class="co0"># id:3:initdefault:</span>
+<span class="kw2">sudo</span> update-rc.d nfs-kernel-server defaults
+<span class="kw2">sudo</span> update-rc.d rpcbind defaults
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> nfs-kernel-server portmap nfs-common
+<span class="kw2">sudo</span> <span class="kw2">nano</span> <span class="sy0">/</span>etc<span class="sy0">/</span>exports <span class="co0"># add the export as above</span>
+<span class="kw2">sudo</span> service portmap start
+<span class="kw2">sudo</span> reboot</pre>
+<div class="notetip"> <strong> /etc/init.d/nfs-kernel-server status <strong>to check nfs service status<br/>
+
+</strong> runlevel </strong> to check your default run level
+
+</div><div class="notewarning"> if is not running at reboot try the lines below 
+</div><pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">apt-get purge</span> rpcbind
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> nfs-kernel-server portmap nfs-common
+<span class="kw2">sudo</span> <span class="kw2">nano</span> <span class="sy0">/</span>etc<span class="sy0">/</span>exports <span class="co0"># edit the exports as above</span>
+<span class="kw2">sudo</span> service portmap start <span class="co0"># this didn't actually worked</span>
+<span class="kw2">sudo</span> reboot</pre>
+
+<p>
+Later we will create a folder in the client server @node1  and mount in as shared with the correspondent folder in grappolo.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Setting Up an NFS Server&quot;,&quot;hid&quot;:&quot;setting_up_an_nfs_server&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:12,&quot;range&quot;:&quot;10906-13393&quot;} -->
+<h3 class="sectionedit13" id="do_a_partial_backup">Do a partial backup</h3>
+<div class="level3">
+
+<p>
+Shut down the raspi, remove the sd card and insert it in a linux machine. Copy sd image file to computer disk as back up.
+</p>
+<pre class="code">   umount /dev/sdb1
+   umount /dev/sdb2
+   sudo dd bs=4M if=/dev/sdb of=raspian_grassR_masterpw.img</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Do a partial backup&quot;,&quot;hid&quot;:&quot;do_a_partial_backup&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:13,&quot;range&quot;:&quot;13394-13652&quot;} -->
+<h2 class="sectionedit14" id="install_grid_engine_-_master_pi">Install Grid Engine - Master pi</h2>
+<div class="level2">
+
+<p>
+Grid Engine is typically used on a computer farm or high-performance computing (HPC) cluster and is responsible for accepting, scheduling, dispatching, and managing the remote and distributed execution of large numbers of standalone, parallel or interactive user jobs. It also manages and schedules the allocation of distributed resources such as processors, memory, disk space.<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Araspi_hpc&amp;media=wiki:gridengine-logo.png" class="media" title="wiki:gridengine-logo.png"><img src="/dokuwiki/lib/exe/fetch.php?w=200&amp;tok=c275d3&amp;media=wiki:gridengine-logo.png" class="media" alt="" width="200" /></a><br/>
+
+We use the open source <a href="http://gridscheduler.sourceforge.net/" class="urlextern" target="blanc" title="http://gridscheduler.sourceforge.net/" rel="nofollow noopener">Open Grid Schcheduler|</a> as batch-queuing system. This is one of the most common software used in HPC clusters around the world and we aim at teaching its use.<br/>
+
+We will first install some dependency packages that I&#039;ve found missing in raspian.
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">apt-get install</span> <span class="kw2">csh</span>  <span class="co0"># csh shell</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> libpam0g-dev
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> lesstif2-dev</pre>
+
+<p>
+Then compile 
+</p>
+<pre class="code bash"><span class="kw2">wget</span> http:<span class="sy0">//</span>softlayer-ams.dl.sourceforge.net<span class="sy0">/</span>project<span class="sy0">/</span>gridscheduler<span class="sy0">/</span>GE2011.11p1<span class="sy0">/</span>GE2011.11p1.tar.gz
+<span class="kw2">tar</span> zvxf GE2011.11p1.tar.gz
+<span class="kw3">cd</span> GE2011.11p1<span class="sy0">/</span><span class="kw3">source</span>
+<span class="kw3">export</span> <span class="re2">LDFLAGS</span>=-L<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>arm-linux-gnueabihf
+.<span class="sy0">/</span>aimk <span class="re5">-no-java</span> <span class="re5">-no-jni</span> <span class="re5">-no-secure</span> <span class="re5">-spool-classic</span> <span class="re5">-no-dump</span> <span class="re5">-only-depend</span>
+.<span class="sy0">/</span>scripts<span class="sy0">/</span>zerodepend
+.<span class="sy0">/</span>aimk <span class="re5">-no-java</span> <span class="re5">-no-jni</span> <span class="re5">-no-secure</span> <span class="re5">-spool-classic</span> <span class="re5">-no-dump</span> depend
+.<span class="sy0">/</span>aimk <span class="re5">-no-java</span> <span class="re5">-no-jni</span> <span class="re5">-no-secure</span> <span class="re5">-spool-classic</span> <span class="re5">-no-dump</span> <span class="re5">-no-qmon</span></pre>
+
+<p>
+Have a tea and a siesta… for a 30min …
+</p>
+
+<p>
+The compilation succeeded. First edit the /etc/hosts file making sure the internal ip-address is correct.
+</p>
+<pre class="code bash">127.0.0.1       localhost
+::<span class="nu0">1</span>             localhost ip6-localhost ip6-loopback
+fe00::<span class="nu0">0</span>         ip6-localnet
+ff00::<span class="nu0">0</span>         ip6-mcastprefix
+ff02::<span class="nu0">1</span>         ip6-allnodes
+ff02::<span class="nu0">2</span>         ip6-allrouters
+&nbsp;
+10.141.255.254  grappolo</pre>
+
+<p>
+Now install as follow:
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">mkdir</span> <span class="re5">-p</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1
+<span class="kw2">sudo</span> <span class="kw2">su</span>
+<span class="kw2">chmod</span> <span class="nu0">777</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1<span class="sy0">/</span>
+<span class="kw3">exit</span>
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1<span class="sy0">/</span>bin<span class="sy0">/</span>linux-arm<span class="sy0">/</span>
+<span class="kw3">export</span> <span class="re2">SGE_ROOT</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1
+<span class="kw3">cd</span>  <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1
+scripts<span class="sy0">/</span>distinst <span class="re5">-all</span> <span class="re5">-local</span> <span class="re5">-noexit</span>
+<span class="kw3">cd</span> <span class="re1">$SGE_ROOT</span>
+.<span class="sy0">/</span>install_qmaster</pre>
+
+<p>
+The interactive install console will start and we have follow similar settings to those suggested @ <a href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslSge" class="urlextern" target="blanc" title="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslSge" rel="nofollow noopener"> FslSGE </a>:<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> press enter at the intro screen</div>
+</li>
+<li class="level1"><div class="li"> press “y” and then specify <strong>admin</strong> as the user id</div>
+</li>
+<li class="level1"><div class="li"> leave the install dir as /opt/sge</div>
+</li>
+<li class="level1"><div class="li"> You will now be asked about port configuration for the master, normally you would choose the default (2) which uses the /etc/services file </div>
+</li>
+<li class="level1"><div class="li"> accept the sge<em>qmaster info
+  * You will now be asked about port configuration for the master, normally you would choose the default (2) which uses the /etc/services file
+  * accept the sge</em>execd info</div>
+</li>
+<li class="level1"><div class="li"> leave the cell name as “default”</div>
+</li>
+<li class="level1"><div class="li"> Enter <strong>grappolo</strong> as the appropriate cluster name when requested</div>
+</li>
+<li class="level1"><div class="li"> leave the spool dir as is</div>
+</li>
+<li class="level1"><div class="li"> press “n” for no windows hosts!</div>
+</li>
+<li class="level1"><div class="li"> press “y” (permissions are set correctly)</div>
+</li>
+<li class="level1"><div class="li"> press “y” for all hosts in one domain</div>
+</li>
+<li class="level1"><div class="li"> For the Java available on your Qmaster answer “n” for the wish to use SGE Inspect or SDM then enable the JMX MBean server</div>
+</li>
+<li class="level1"><div class="li"> press enter to accept the directory creation notification</div>
+</li>
+<li class="level1"><div class="li"> enter “classic” for classic spooling (berkeleydb may be more appropriate for large clusters)</div>
+</li>
+<li class="level1"><div class="li"> press enter to accept the next notice</div>
+</li>
+<li class="level1"><div class="li"> enterthe default “20000-20100” as the GID range (increase this range if you have execution nodes capable of running more than 100 concurrent jobs)</div>
+</li>
+<li class="level1"><div class="li"> accept the default spool dir or specify a different folder (for example if you wish to use a shared or local folder outside of SGE_ROOT</div>
+</li>
+<li class="level1"><div class="li"> email address enter default (no email)</div>
+</li>
+<li class="level1"><div class="li"> press “n” to refuse to change the parameters you have just configured</div>
+</li>
+<li class="level1"><div class="li"> press enter to accept the next notice</div>
+</li>
+<li class="level1"><div class="li"> press “y” to install the startup scripts</div>
+</li>
+<li class="level1"><div class="li"> press enter twice to confirm the following messages</div>
+</li>
+<li class="level1"><div class="li"> press “n” for a file with a list of hosts</div>
+</li>
+<li class="level1"><div class="li"> enter the node1 as names of your hosts who will be able to administer and submit jobs (enter alone to finish adding hosts)</div>
+</li>
+<li class="level1"><div class="li"> shadow hosts (press “default”)</div>
+</li>
+<li class="level1"><div class="li"> choose “1” for normal configuration and agree with “y”</div>
+</li>
+<li class="level1"><div class="li"> press enter to accept the next message and “n” to refuse to see the previous screen again and then finally enter to exit the installer </div>
+</li>
+</ul>
+
+<p>
+You will have to go through the same process for node1<br/>
+
+Create a new /etc/profile.d/grappolo.sh scripts with links of our system configurations and grid engine environment. Then reboot and start the grid engine
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> leafpad <span class="sy0">/</span>etc<span class="sy0">/</span>profile.d<span class="sy0">/</span>grappolo.sh
+<span class="co0"># add the following 3 lines to this script.</span>
+<span class="kw3">export</span> <span class="re2">SGE_ROOT</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1
+<span class="kw3">export</span> <span class="re2">SGE_CELL</span>=<span class="st0">&quot;default&quot;</span>
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1<span class="sy0">/</span>bin<span class="sy0">/</span>linux-arm<span class="sy0">/</span>
+<span class="co0"># save and close grappolo.sh</span>
+<span class="kw2">sudo</span> reboot
+<span class="kw2">ssh</span> <span class="kw2">ssh</span> <span class="re5">-X</span> pi<span class="sy0">@</span>192.168.1.81 <span class="co0"># again from your computer and start the sge</span>
+etc<span class="sy0">/</span>init.d<span class="sy0">/</span>sgemaster.grappolo start
+&nbsp;
+<span class="co0"># cd $SGE_ROOT/default/common/</span>
+<span class="co0"># ./sgemaster start</span>
+<span class="co0"># ./sgeexecd start</span></pre>
+
+</div>
+
+<h4 id="do_a_partial_backup1">Do a partial backup</h4>
+<div class="level4">
+
+<p>
+Shut down grappolo, remove the sd card and insert it in a linux machine. Copy sd image file to computer disk as back up.
+</p>
+<pre class="code">   umount /dev/sdb1
+   umount /dev/sdb2
+   sudo dd bs=4M if=/dev/sdb of=raspian_SGEgrassR_masterpw.img</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install Grid Engine - Master pi&quot;,&quot;hid&quot;:&quot;install_grid_engine_-_master_pi&quot;,&quot;codeblockOffset&quot;:10,&quot;secid&quot;:14,&quot;range&quot;:&quot;13653-18882&quot;} -->
+<h2 class="sectionedit15" id="install_grid_engine_on_nodes">Install Grid Engine on Nodes</h2>
+<div class="level2">
+
+<p>
+First add the node1 ip-address to the hosts list in the master node <em>grappolo</em>
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">nano</span>  <span class="sy0">/</span>etc<span class="sy0">/</span>hosts
+<span class="co0"># append this &quot;10.141.0.1      node1&quot; at the end of file </span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install Grid Engine on Nodes&quot;,&quot;hid&quot;:&quot;install_grid_engine_on_nodes&quot;,&quot;codeblockOffset&quot;:15,&quot;secid&quot;:15,&quot;range&quot;:&quot;18883-19105&quot;} -->
+<h3 class="sectionedit16" id="clone_node1">Clone node1</h3>
+<div class="level3">
+
+<p>
+Insert a new micro sd card into a laptop (in our case is mounted at<em> /dev/mmcblk0 </em>; unmount the card and copy the “.img” we have previously created with raspian <abbr title="Operating System">OS</abbr> grass and R installed.
+</p>
+<pre class="code bash"><span class="kw2">umount</span> <span class="sy0">/</span>dev<span class="sy0">/</span>mmcblk0p1
+<span class="kw2">umount</span> <span class="sy0">/</span>dev<span class="sy0">/</span>mmcblk0p2
+<span class="kw2">sudo</span> <span class="kw2">dd</span> <span class="re2">bs</span>=4M <span class="re2">if</span>=<span class="sy0">/</span>media<span class="sy0">/</span>leXar<span class="sy0">/</span>raspian_grassR_masterpw <span class="re2">of</span>=<span class="sy0">/</span>dev<span class="sy0">/</span>mmcblk0</pre>
+
+<p>
+Log into the pi-node :
+</p>
+<ul>
+<li class="level1"><div class="li"> change hostname “grappolo” to “node1” ; </div>
+</li>
+</ul>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">nano</span> <span class="sy0">/</span>etc<span class="sy0">/</span><span class="kw2">hostname</span> </pre>
+<ul>
+<li class="level1"><div class="li"> change password to <em>node1pw</em>  and later <em>node2pw</em></div>
+</li>
+</ul>
+<pre class="code bash"><span class="kw2">passwd</span> </pre>
+<ul>
+<li class="level1"><div class="li"> edit the /etc/network/interfaces file as below: </div>
+</li>
+</ul>
+<pre class="code bash">auto lo
+iface lo inet loopback
+&nbsp;
+auto eth0
+allow-hotplug eth0
+iface eth0 inet static
+address 10.141.0.1 <span class="co0"># use ....141.0.2 in node2</span>
+netmask 255.255.0.0
+network 10.141.0.0
+broadcast 10.141.255.255
+gateway 10.141.255.254</pre>
+<ul>
+<li class="level1"><div class="li"> Add ip-address of node1, node2 and grappolo in the /etc/hosts file list as below</div>
+</li>
+</ul>
+<pre class="code bash">127.0.0.1       localhost
+::<span class="nu0">1</span>             localhost ip6-localhost ip6-loopback
+fe00::<span class="nu0">0</span>         ip6-localnet
+ff00::<span class="nu0">0</span>         ip6-mcastprefix
+ff02::<span class="nu0">1</span>         ip6-allnodes
+ff02::<span class="nu0">2</span>         ip6-allrouters
+&nbsp;
+10.141.255.254  grappolo
+10.141.0.1      node1
+10.141.0.2      node2</pre>
+
+<p>
+Link grid engine environment and executables in a new grappolo.sh script that looks like this
+</p>
+<pre class="code bash"><span class="kw2">cat</span> <span class="sy0">/</span>etc<span class="sy0">/</span>profile.d<span class="sy0">/</span>grappolo.sh
+<span class="kw3">export</span> <span class="re2">SGE_ROOT</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1<span class="sy0">/</span>bin<span class="sy0">/</span>linux-arm<span class="sy0">/</span></pre>
+
+<p>
+Now shut-down node 1 and create a micro sd card for node 2 as above and of course replacing “node1” with “node2”. Then Plug node1, node2 and grappolo togheter and continue the installation mounting nfs shared folders 
+</p>
+
+<p>
+Link the /usr/local/apps folder in grappolo using the nfs:
+</p>
+<ul>
+<li class="level1"><div class="li"> can create a folder in node1 </div>
+</li>
+<li class="level1"><div class="li"> mount it in as shared with the correspondent folder in grappolo. </div>
+</li>
+</ul>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">mkdir</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps
+<span class="kw2">sudo</span> <span class="kw2">mount</span> grappolo:<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps</pre>
+
+<p>
+To allow auto mount /usr/local/apps in node1 and 2 at reeboot, edit the  /etc/fstab file and append the following line  : 
+</p>
+<pre class="code bash">grappolo:<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps	<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps	nfs	<span class="re2">rsize</span>=<span class="nu0">8192</span>,<span class="re2">wsize</span>=<span class="nu0">8192</span>,<span class="re2">timeo</span>=<span class="nu0">14</span>,intr,rw	<span class="nu0">0</span>	<span class="nu0">0</span></pre>
+
+<p>
+Allow grappolo to ssh into node1 without a password
+Exit from node1, generate a key pair and copy the key from grappolo to node1. 
+</p>
+<pre class="code bash">pi<span class="sy0">@</span>node1 <span class="kw3">exit</span>
+pi<span class="sy0">@</span>grappolo ~ $ <span class="kw2">ssh-keygen</span> <span class="re5">-t</span> rsa <span class="re5">-P</span> <span class="st0">&quot;&quot;</span>
+pi<span class="sy0">@</span>grappolo ~ $ ssh-copy-id admin<span class="sy0">@</span>node1
+pi<span class="sy0">@</span>grappolo ~ $ <span class="kw2">ssh</span> admin<span class="sy0">@</span>node1
+pi<span class="sy0">@</span>node1 ~ $ </pre>
+
+<p>
+Allow node1 to ssh into grappolo without a password (the other way around from before:
+Log in from node1, to grappolo 
+</p>
+
+<p>
+generate a key pair and copy the key from grappolo to node1. 
+</p>
+<pre class="code bash">pi<span class="sy0">@</span>node1 ~ $ <span class="kw2">ssh-keygen</span> <span class="re5">-t</span> rsa <span class="re5">-P</span> <span class="st0">&quot;&quot;</span>
+pi<span class="sy0">@</span>node1 ~ $ ssh-copy-id <span class="st_h">'admin@grappolo'</span>
+pi<span class="sy0">@</span>node1 ~ $ <span class="kw2">ssh</span> admin<span class="sy0">@</span>grappolo
+pi<span class="sy0">@</span>grappolo ~ $ </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Clone node1&quot;,&quot;hid&quot;:&quot;clone_node1&quot;,&quot;codeblockOffset&quot;:16,&quot;secid&quot;:16,&quot;range&quot;:&quot;19106-21918&quot;} -->
+<h2 class="sectionedit17" id="install_hadoop_dependencies_and_environment">Install Hadoop dependencies and environment</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install Hadoop dependencies and environment&quot;,&quot;hid&quot;:&quot;install_hadoop_dependencies_and_environment&quot;,&quot;codeblockOffset&quot;:26,&quot;secid&quot;:17,&quot;range&quot;:&quot;21919-21974&quot;} -->
+<h3 class="sectionedit18" id="install_java">Install Java</h3>
+<div class="level3">
+<pre class="code"> sudo apt-get install openjdk-7-jdk
+ java -version
+ #java version &quot;1.7.0_75&quot;
+ #OpenJDK Runtime Environment (IcedTea 2.5.4) (7u75-2.5.4-1~deb7u1+rpi1)
+ #OpenJDK Zero VM (build 24.75-b04, mixed mode)</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install Java&quot;,&quot;hid&quot;:&quot;install_java&quot;,&quot;codeblockOffset&quot;:26,&quot;secid&quot;:18,&quot;range&quot;:&quot;21975-22207&quot;} -->
+<h3 class="sectionedit19" id="create_and_config_hadoop_user_and_groups">Create and config Hadoop user and groups</h3>
+<div class="level3">
+<pre class="code"> sudo addgroup hadoop
+ #Enter new UNIX password: 
+ hduserpw
+ #type return for the next 4 questions
+   * Give hduser the ability to sudo 
+ sudo adduser hduser sudo # gives the ability to hduser sudo
+   * Login as hduser  
+ logout 
+ ssh hduser@192.168.1.80</pre>
+
+</div>
+
+<h4 id="setup_ssh">Setup ssh</h4>
+<div class="level4">
+
+<p>
+Generate a key pair to login without password
+</p>
+<pre class="code"> ssh-keygen -t rsa -P &quot;&quot;
+ </pre>
+
+<p>
+Copy public key into user authorized key store<br/>
+
+</p>
+<pre class="code bash">   <span class="kw2">cat</span> ~<span class="sy0">/</span>.ssh<span class="sy0">/</span>id_rsa.pub <span class="sy0">&gt;&gt;</span> ~<span class="sy0">/</span>.ssh<span class="sy0">/</span>authorized_keys</pre>
+
+<p>
+<br/>
+Verify if ssh works on localhost without password for hduser
+</p>
+<pre class="code"> ssh localhost
+ #yes
+ exit # Go back to previous shell (pi/root).</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Create and config Hadoop user and groups&quot;,&quot;hid&quot;:&quot;create_and_config_hadoop_user_and_groups&quot;,&quot;codeblockOffset&quot;:26,&quot;secid&quot;:19,&quot;range&quot;:&quot;22208-22887&quot;} -->
+<h3 class="sectionedit20" id="install_hadoop">Install Hadoop</h3>
+<div class="level3">
+<pre class="code bash"><span class="kw2">wget</span> http:<span class="sy0">//</span>apache.mirrors.spacedump.net<span class="sy0">/</span>hadoop<span class="sy0">/</span>core<span class="sy0">/</span>hadoop-1.2.1<span class="sy0">/</span>hadoop-1.2.1.tar.gz
+<span class="kw2">sudo</span> <span class="kw2">tar</span> <span class="re5">-vxzf</span> hadoop-1.2.1.tar.gz <span class="re5">-C</span> <span class="sy0">/</span>usr<span class="sy0">/</span><span class="kw3">local</span>
+<span class="kw3">cd</span> <span class="sy0">/</span>usr<span class="sy0">/</span><span class="kw3">local</span>
+<span class="kw2">sudo</span> <span class="kw2">mv</span> hadoop-1.2.1<span class="sy0">/</span>  hadoop
+<span class="kw2">sudo</span> <span class="kw2">chown</span> <span class="re5">-R</span> hduser:hadoop hadoop</pre>
+
+</div>
+
+<h4 id="configure_the_user_environment">Configure the user environment</h4>
+<div class="level4">
+<pre class="code bash"><span class="kw3">cd</span>
+<span class="kw2">nano</span> .bashrc
+<span class="co0">#add to file:</span>
+<span class="kw3">export</span> <span class="re2">JAVA_HOME</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>jvm<span class="sy0">/</span>java-<span class="nu0">7</span>-openjdk-armhf
+<span class="kw3">export</span> <span class="re2">HADOOP_INSTALL</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$HADOOP_INSTALL</span><span class="sy0">/</span>bin
+<span class="co0"># save and close .bashrc</span>
+<span class="kw2">sudo</span> reboot</pre>
+
+</div>
+
+<h4 id="configure_hadoop">Configure Hadoop</h4>
+<div class="level4">
+
+<p>
+login as hduser
+</p>
+<pre class="code bash">hadoop version
+<span class="co0">#Hadoop 1.2.1</span>
+<span class="co0">#Subversion https://svn.apache.org/repos/asf/hadoop/common/branches/branch-1.2 -r 1503152</span>
+<span class="co0">#Compiled by mattf on Mon Jul 22 15:23:09 PDT 2013</span>
+<span class="co0">#This command was run using /usr/local/hadoop/hadoop-core-1.2.1.jar</span></pre>
+
+<p>
+Set up environment that defines some overall runtime parameters:
+</p>
+<pre class="code bash"><span class="kw2">nano</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop<span class="sy0">/</span>conf<span class="sy0">/</span>hadoop-env.sh
+<span class="co0">#edited at end:</span>
+<span class="kw3">export</span> <span class="re2">JAVA_HOME</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>jvm<span class="sy0">/</span>java-<span class="nu0">7</span>-openjdk-armhf
+<span class="kw3">export</span> <span class="re2">HADOOP_HEAPSIZE</span>=<span class="nu0">272</span></pre>
+
+<p>
+CORE-SITE.XML
+</p>
+<pre class="code bash"><span class="kw2">nano</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop<span class="sy0">/</span>conf<span class="sy0">/</span>core-site.xml
+<span class="co0">#Add these lines in file:</span>
+<span class="sy0">&lt;</span>configuration<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>property<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>name<span class="sy0">&gt;</span>hadoop.tmp.dir<span class="sy0">&lt;/</span>name<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>value<span class="sy0">&gt;/</span>fs<span class="sy0">/</span>hadoop<span class="sy0">/</span>tmp<span class="sy0">&lt;/</span>value<span class="sy0">&gt;</span>    <span class="sy0">&lt;</span>description<span class="sy0">&gt;</span>Sets the operating directory <span class="kw1">for</span> Hadoop data.
+    <span class="sy0">&lt;/</span>description<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;/</span>property<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;</span>property<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>name<span class="sy0">&gt;</span>fs.default.name<span class="sy0">&lt;/</span>name<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>value<span class="sy0">&gt;</span>hdfs:<span class="sy0">//</span>localhost:<span class="nu0">54310</span><span class="sy0">&lt;/</span>value<span class="sy0">&gt;</span>    <span class="sy0">&lt;</span>description<span class="sy0">&gt;</span>The name of the default <span class="kw2">file</span> system.  A URI whose
+    scheme and authority determine the FileSystem implementation.
+    The URI<span class="st_h">'s scheme determines the config property (fs.SCHEME.impl) naming
+    the FileSystem implementation class.  The URI'</span>s authority is used to
+    determine the host, port, etc. <span class="kw1">for</span> a filesystem.  
+    <span class="sy0">&lt;/</span>description<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;/</span>property<span class="sy0">&gt;</span>
+<span class="sy0">&lt;/</span>configuration<span class="sy0">&gt;</span></pre>
+
+<p>
+MAPRED-SITE.XML
+</p>
+<pre class="code bash"><span class="kw2">nano</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop<span class="sy0">/</span>conf<span class="sy0">/</span>mapred-site.xml
+<span class="co0">#added following:</span>
+<span class="sy0">&lt;</span>property<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>name<span class="sy0">&gt;</span>mapred.job.tracker<span class="sy0">&lt;/</span>name<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>value<span class="sy0">&gt;</span>localhost:<span class="nu0">54311</span><span class="sy0">&lt;/</span>value<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>description<span class="sy0">&gt;</span>The host and port that the MapReduce job tracker runs
+    at.  If <span class="st0">&quot;local&quot;</span>, <span class="kw1">then</span> <span class="kw3">jobs</span> are run in-process <span class="kw2">as</span> a single map
+    and reduce task.
+    <span class="sy0">&lt;/</span>description<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;/</span>property<span class="sy0">&gt;</span></pre>
+
+<p>
+HDFS-SITE.XML 
+</p>
+<pre class="code bash"><span class="kw2">nano</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop<span class="sy0">/</span>conf<span class="sy0">/</span>hdfs-site.xml
+<span class="co0">#added following:</span>
+<span class="sy0">&lt;</span>property<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>name<span class="sy0">&gt;</span>dfs.replication<span class="sy0">&lt;/</span>name<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>value<span class="sy0">&gt;</span><span class="nu0">1</span><span class="sy0">&lt;/</span>value<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>description<span class="sy0">&gt;</span>Default block replication.
+    The actual number of replications can be specified when the <span class="kw2">file</span> is created.
+    The default is used <span class="kw1">if</span> replication is not specified <span class="kw1">in</span> create time.
+    <span class="sy0">&lt;/</span>description<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;/</span>property<span class="sy0">&gt;</span></pre>
+
+<p>
+Create working directory and set permission:
+</p>
+<pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">mkdir</span> <span class="re5">-p</span> <span class="sy0">/</span>fs<span class="sy0">/</span>hadoop<span class="sy0">/</span>tmp
+<span class="kw2">sudo</span> <span class="kw2">chown</span> hduser:hadoop <span class="sy0">/</span>fs<span class="sy0">/</span>hadoop<span class="sy0">/</span>tmp
+<span class="kw2">sudo</span> <span class="kw2">chmod</span> <span class="nu0">750</span> <span class="sy0">/</span>fs<span class="sy0">/</span>hadoop<span class="sy0">/</span>tmp<span class="sy0">/</span></pre>
+
+<p>
+Format the working directory:
+</p>
+<pre class="code bash"><span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop<span class="sy0">/</span>bin<span class="sy0">/</span>hadoop namenode <span class="re5">-format</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install Hadoop&quot;,&quot;hid&quot;:&quot;install_hadoop&quot;,&quot;codeblockOffset&quot;:27,&quot;secid&quot;:20,&quot;range&quot;:&quot;22888-25721&quot;} -->
+<h3 class="sectionedit21" id="create_node_1_2">Create node 1, 2 ...</h3>
+<div class="level3">
+
+<p>
+Rename the cloned operating system pi@head as pi@node1
+go to raspi-config –
+</p>
+<blockquote><div class="no">
+</div></blockquote>
+
+<p>
+&gt; advanced hostname\\ 
+</p>
+</div></blockquote>
+
+<p>
+
+R
+</p>
+
+<p>
+ename the cloned operating system pi@head as pi@node1
+Change password to node1pw
+Change static ip        address 192.168.1.82  to 192.168.1.81<br/>
+
+</p>
+<pre class="code"> sudo nano /etc/network/interfaces
+ address 192.168.1.81
+
+
+ </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Create node 1, 2 ...&quot;,&quot;hid&quot;:&quot;create_node_1_2&quot;,&quot;codeblockOffset&quot;:36,&quot;secid&quot;:21,&quot;range&quot;:&quot;25722-&quot;} -->

@@ -1,0 +1,4 @@
+   RF23tuned = randomForest (respredFT8$FType ~ pr104 + pr105 + pr106 + pr109 + pr110 + pr111 + pr118 + pr120 + pr123 + pr126 + pr128 + pr131 + pr134 + pr135 + pr136 + pr137 + pr138 + pr198 + pr200 + pr201 + pr202 + pr203 + pr204 , data = respredFT8, ntree=1500, mtry=8) 
+&nbsp;
+   #save(RF23tuned,file=&quot;~/ost4sem/studycase/ITA_veg/results/RF23tune_ITAveg&quot;)
+   save(RF23tuned,file=&quot;~/ost4sem/studycase/ITA_veg/myresults/RF23tune_ITAveg&quot;)

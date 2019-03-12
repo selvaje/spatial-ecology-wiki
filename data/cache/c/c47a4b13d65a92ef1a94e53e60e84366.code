@@ -1,0 +1,29 @@
+##################################################
+###make movie, Bayesian random parameter draw version
+##################################################
+setwd(&quot;/home/astrom/Till AD!/GIS-Norge/out&quot;)
+#system(&quot;g.region rows=1080 cols=1280 -p&quot;)
+system(&quot;g.region rows=1412 cols=1670 -p&quot;)
+#system(&quot;g.region rast=Elev_dem_eid -p&quot;)
+&nbsp;
+&nbsp;
+for(i in 1:50){
+B.prediction&lt;-exp(model.matrix(glm(1:nrow(temp)~Arealdekke+Elev,data=temp)) %*% B.new()) ##Multiply the model matrix with the random drawn parameters
+pred.frame$predict&lt;-numeric(nrow(pred.frame))
+pred.frame$predict[pred.frame$Arealdekke==3 | pred.frame$Arealdekke==9 | pred.frame$Arealdekke==12 | pred.frame$Arealdekke==14 | pred.frame$Arealdekke==15 | pred.frame$Arealdekke==19]&lt;-B.prediction
+elev$B.pred&lt;-pred.frame$predict
+&nbsp;
+elev$B.rand.pois&lt;-rpois(nrow(elev),elev$B.pred) ##Pick one random draw from the estimated mean in each pixel
+&nbsp;
+writeRAST6(elev,paste(&quot;pois&quot;,i,sep=&quot;&quot;),zcol=&quot;B.rand.pois&quot;,overwrite=T)
+}
+system(&quot;for i in `seq 1 50` 
+ do
+  r.out.png input=pois$i output=pois$i
+   g.remove rast=pois$i 
+    done&quot;)
+&nbsp;
+system(&quot;convert -delay 20 *.png 1670B-rand-pois.mpg&quot;)
+&nbsp;
+&nbsp;
+##############################################################

@@ -1,0 +1,10 @@
+<span class="co1">-- Syntax</span>
+encode<span class="br0">&#40;</span> mddExp<span class="sy0">,</span> formatidentifier <span class="br0">&#41;</span>
+encode<span class="br0">&#40;</span> mddExp<span class="sy0">,</span> formatidentifier<span class="sy0">,</span> formatParams <span class="br0">&#41;</span>
+decode<span class="br0">&#40;</span> mddExp <span class="br0">&#41;</span>
+decode<span class="br0">&#40;</span> mddExp<span class="sy0">,</span> formatParams <span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">-- Insert a file in the database and let the decode function figure out the type</span>
+<span class="kw1">INSERT</span> <span class="kw1">INTO</span> rgb <span class="kw1">VALUES</span> decode<span class="br0">&#40;</span> $1 <span class="br0">&#41;</span>
+<span class="co1">-- Get it out as png</span>
+<span class="kw1">SELECT</span> encode<span class="br0">&#40;</span> rgb<span class="sy0">,</span> “png” <span class="br0">&#41;</span> <span class="kw1">FROM</span> rgb

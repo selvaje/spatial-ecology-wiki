@@ -1,0 +1,4 @@
+  sink(&quot;myscript_output_example.txt&quot;)
+  i &lt;- 1:10
+  outer(i, i, &quot;*&quot;)
+  sink()
