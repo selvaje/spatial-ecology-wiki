@@ -1,2 +1,0 @@
-  path.rasters = as.character(&quot;/home/ste/ost4sem/grassdbnew/europe/Vmodel/cellhd/&quot;)
-  path.results = as.character(&quot;/home/ste/ost4sem/studycase/ITA_veg/outmaps/&quot;)

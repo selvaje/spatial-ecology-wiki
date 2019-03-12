@@ -1,1 +1,0 @@
-gdal_merge.py <span class="re5">-separate</span>  <span class="re5">-o</span> RGB_TOA_REF.tif    Band4_TOA_REF.tif Band3_TOA_REF.tif Band2_TOA_REF.tif

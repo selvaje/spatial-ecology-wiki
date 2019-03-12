@@ -1,3 +1,0 @@
-<span class="kw2">sudo</span> <span class="kw2">apt-get update</span> <span class="sy0">&amp;&amp;</span> <span class="kw2">sudo</span> <span class="kw2">apt-get dist-upgrade</span>
-<span class="kw2">sudo</span> <span class="kw2">apt-get update</span> <span class="sy0">&amp;&amp;</span> <span class="kw2">sudo</span> <span class="kw2">apt-get install</span> apm-navio2
-<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> hostapd

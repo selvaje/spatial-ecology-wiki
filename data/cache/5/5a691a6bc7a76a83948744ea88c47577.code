@@ -1,8 +1,0 @@
-gdalbuildvrt <span class="re1">$OUTDIR</span><span class="sy0">/</span>merge.vrt <span class="re1">$INDIR</span><span class="sy0">/</span>input<span class="br0">&#91;</span><span class="nu0">1</span>-<span class="nu0">3</span><span class="br0">&#93;</span>.tif 
-gdal_translate <span class="re1">$OUTDIR</span><span class="sy0">/</span>merge.vrt <span class="re1">$OUTDIR</span><span class="sy0">/</span>merge.tif
-&nbsp;
-                      <span class="co0"># first argument   # second argument</span>
-oft-calc  <span class="re5">-ot</span> Float64 <span class="re1">$OUTDIR</span><span class="sy0">/</span>merge.tif  <span class="re1">$OUTDIR</span><span class="sy0">/</span>sum.tif  <span class="sy0">&lt;&lt;</span>EOF <span class="co0"># inputs requested from the oft-calc</span>
-<span class="nu0">1</span>
-<span class="co0">#1 #2 #3 + +</span>
-EOF

@@ -1,2 +1,0 @@
-#installo i paccheti necessari
-install.packages(c(&quot;outliers&quot;, &quot;nortest&quot;, &quot;automap&quot;))

@@ -1,3 +1,0 @@
-summary(fields$xcoor)
-summary(fields$ycoor)
-coordinates(fields)&lt;-c(&quot;xcoor&quot;, &quot;ycoor&quot;)

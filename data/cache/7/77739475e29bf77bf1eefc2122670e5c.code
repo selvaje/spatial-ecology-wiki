@@ -1,3 +1,0 @@
-<span class="kw1">for</span> month <span class="kw1">in</span> 01 02 03 04 ; <span class="kw1">do</span> 
-   <span class="kw2">wget</span> ftp:<span class="sy0">//</span>weldftp.cr.usgs.gov<span class="sy0">/</span>CONUS<span class="sy0">/</span><span class="nu0">2005</span><span class="sy0">/</span>monthly<span class="sy0">/</span>month<span class="re1">$month</span><span class="sy0">/</span>CONUS.month<span class="re1">$month</span>.2005.h00v06.v1.5.hdf
-<span class="kw1">done</span>

@@ -1,8 +1,0 @@
-pal &lt;- brewer.pal(10,&quot;RdBu&quot;)
-q10 &lt;- classIntervals(fields$residual, n = 20, style=&quot;quantile&quot;)
-q10Colours &lt;- findColours(q10, pal)
-plot(fields, axes=TRUE, col = q10Colours, pch =20)
-title(&quot;residuals&quot;)
-legend(&quot;topleft&quot;, fill = attr(q10Colours, &quot;palette&quot;), legend=names(attr(q10Colours, &quot;table&quot;)), bty=&quot;n&quot;)
-dev.copy(png,filename=&quot;~/ost4sem/project/unidk2010/nutrients/R/map_of_Residuals.png&quot;,width = 1500, height = 1000, bg=&quot;white&quot;)
-dev.off()

@@ -1,1 +1,0 @@
-<span class="kw1">for</span> i <span class="kw1">in</span> a b c d f ; <span class="kw1">do</span>  <span class="kw3">echo</span> the value of i is <span class="re1">$i</span> ; <span class="kw1">done</span>

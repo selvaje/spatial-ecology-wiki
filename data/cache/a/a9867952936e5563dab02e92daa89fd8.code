@@ -1,3 +1,0 @@
-<span class="kw1">for</span> var <span class="kw1">in</span> <span class="nu0">2005</span> <span class="nu0">2006</span> <span class="nu0">2007</span>; <span class="kw1">do</span>
-    <span class="kw2">grep</span> <span class="re1">$var</span> input.txt <span class="sy0">|</span> <span class="kw2">wc</span> <span class="re5">-l</span>     
-<span class="kw1">done</span> 

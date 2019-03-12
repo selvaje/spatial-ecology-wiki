@@ -1,5 +1,0 @@
-   library(rgdal)
-   library(maptools)
-   library(grid)
-   library(randomForest) 
-   print(&quot; ------------- NOW CREATE predictors grid stack  -------------&quot;)

@@ -1,3 +1,0 @@
-   pred47= subset(pred47, pred47$FType != &quot;11&quot; &amp; pred47$FType != &quot;10&quot;)
-   pred47 = drop.levels(pred47)
-&nbsp;

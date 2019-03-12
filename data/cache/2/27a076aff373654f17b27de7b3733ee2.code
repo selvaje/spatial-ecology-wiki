@@ -1,3 +1,0 @@
-   write.asciigrid(data2map, paste(path.results,t,&quot;tile_ITAveg.asc&quot;,sep=&quot;&quot;))
-&nbsp;
-   cat(&quot;-----------------------------------------Tile&quot;, t,&quot;created--------------------------\n&quot;)

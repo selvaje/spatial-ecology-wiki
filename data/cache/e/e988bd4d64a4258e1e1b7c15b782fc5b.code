@@ -1,8 +1,0 @@
-<span class="kw1">for</span> y <span class="kw1">in</span> <span class="re1">$Year</span> ; <span class="kw1">do</span> 
-<span class="kw1">for</span> m <span class="kw1">in</span> <span class="re1">$month</span> ; <span class="kw1">do</span>
-<span class="kw2">cp</span> example_text.txt <span class="re1">$y</span><span class="sy0">/</span><span class="re1">$m</span><span class="sy0">/</span>copy_of_text.txt ;
-<span class="kw1">done</span> ;
-<span class="kw1">done</span>
-&nbsp;
-<span class="kw2">ls</span> <span class="sy0">*/</span>
-<span class="kw2">ls</span> <span class="sy0">*/*/</span>

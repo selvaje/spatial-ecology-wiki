@@ -1,1 +1,0 @@
-gdal2tiles.py <span class="re5">-g</span> AxxxY <span class="re5">-e</span> <span class="re5">-z</span> <span class="nu0">12</span> temp.vrt

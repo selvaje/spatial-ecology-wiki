@@ -1,1 +1,0 @@
-    pksieve <span class="re5">-i</span> testmap_feature_fusion.tif <span class="re5">-o</span> testmap_feature_fusion_sieved.tif <span class="re5">-s</span> <span class="nu0">5</span>

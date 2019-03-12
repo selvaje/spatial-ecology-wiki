@@ -1,2 +1,0 @@
-   <span class="kw2">awk</span> <span class="re5">-f</span> date_script.awk MMDD.txt <span class="sy0">&gt;</span> head_MMDD_tail2.txt
-   <span class="kw2">more</span> head_MMDD_tail2.txt

@@ -1,8 +1,0 @@
-<span class="co1">-- Syntax</span>
-sdom<span class="br0">&#40;</span>mddExpression<span class="br0">&#41;</span>
-&nbsp;
-<span class="co1">-- Returning the sdom of mr</span>
-<span class="kw1">SELECT</span> sdom<span class="br0">&#40;</span>mr<span class="br0">&#41;</span> <span class="kw1">FROM</span> mr <span class="co1">-- Result: [0:255;0:210]</span>
-<span class="kw1">SELECT</span> sdom<span class="br0">&#40;</span>mr<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="kw1">FROM</span> mr <span class="co1">-- Result: [0:255]</span>
-<span class="kw1">SELECT</span> sdom<span class="br0">&#40;</span>mr<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">.</span>lo <span class="kw1">FROM</span> mr <span class="co1">-- Result: [0]</span>
-<span class="kw1">SELECT</span> sdom<span class="br0">&#40;</span>mr<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">.</span>hi <span class="kw1">FROM</span> mr <span class="co1">-- Result: [255]</span>

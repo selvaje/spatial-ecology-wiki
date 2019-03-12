@@ -1,8 +1,0 @@
-<span class="kw1">time</span>  <span class="br0">&#40;</span> 
-<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="re1">$INDIR</span><span class="sy0">/</span><span class="nu0">20</span>?<span class="nu0">0</span>_TSSP_??-ENS-A2-SP20_43023435.tif  ; <span class="kw1">do</span> <span class="kw1">for</span> res <span class="kw1">in</span> <span class="nu0">0.008</span> <span class="nu0">0.08</span> ; <span class="kw1">do</span> <span class="kw3">echo</span> <span class="re1">$file</span> <span class="re1">$res</span> ; <span class="kw1">done</span> ; <span class="kw1">done</span> <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">2</span> <span class="re5">-P</span> <span class="nu0">2</span> <span class="kw2">bash</span> <span class="re5">-c</span> $<span class="st_h">'
-file=$1
-res=$2
-filename=$(basename $file .tif)
-gdalwarp -r cubic -tr $res $res -t_srs EPSG:4326 $file $OUTDIR/RES$res&quot;_&quot;$file -overwrite
-)
-'</span> _

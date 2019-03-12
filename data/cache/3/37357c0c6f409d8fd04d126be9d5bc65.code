@@ -1,2 +1,0 @@
-<span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">3</span>,<span class="nu0">3</span> <span class="re5">-g</span> input.txt <span class="sy0">&gt;&gt;</span> input_s.txt
-<span class="kw2">wc</span> <span class="re5">-l</span> input_s.txt

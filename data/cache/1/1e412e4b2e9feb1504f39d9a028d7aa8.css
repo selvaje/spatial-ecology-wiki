@@ -138,6 +138,8 @@ Screen and Print Styles for the Wrap Plugin
 /* XXXXXXXXX /lib/plugins/move/all.less XXXXXXXXX */
 /* XXXXXXXXX /lib/plugins/issuetracker/all.css XXXXXXXXX */
 /* XXXXXXXXX /lib/plugins/issuetracker/all.less XXXXXXXXX */
+/* XXXXXXXXX /lib/plugins/doodle3/all.css XXXXXXXXX */
+/* XXXXXXXXX /lib/plugins/doodle3/all.less XXXXXXXXX */
 /* XXXXXXXXX /lib/tpl/dokuwiki/css/mobile.less XXXXXXXXX */
 /**
  * This file provides styles for mobile devices
@@ -237,6 +239,8 @@ Screen and Print Styles for the Wrap Plugin
 /* XXXXXXXXX /lib/plugins/move/speech.less XXXXXXXXX */
 /* XXXXXXXXX /lib/plugins/issuetracker/speech.css XXXXXXXXX */
 /* XXXXXXXXX /lib/plugins/issuetracker/speech.less XXXXXXXXX */
+/* XXXXXXXXX /lib/plugins/doodle3/speech.css XXXXXXXXX */
+/* XXXXXXXXX /lib/plugins/doodle3/speech.less XXXXXXXXX */
 /* /@media  END speech styles */
 @media screen {
   a.interwiki {
@@ -805,6 +809,10 @@ Screen Styles for the Wrap Plugin (additional to all.css)
   /* ----- Issue List Elements ------- */
   /* ----- Issue Detail Elements ----- */
   /* XXXXXXXXX /lib/plugins/issuetracker/style.less XXXXXXXXX */
+  /* XXXXXXXXX /lib/plugins/doodle3/screen.css XXXXXXXXX */
+  /* XXXXXXXXX /lib/plugins/doodle3/screen.less XXXXXXXXX */
+  /* XXXXXXXXX /lib/plugins/doodle3/style.css XXXXXXXXX */
+  /* XXXXXXXXX /lib/plugins/doodle3/style.less XXXXXXXXX */
   /* XXXXXXXXX /lib/tpl/dokuwiki/css/basic.less XXXXXXXXX */
   /**
  * This file provides the most basic styles.
@@ -3754,9 +3762,7 @@ Screen Styles for the Wrap Plugin (additional to all.css)
   .noteimportant,
   .notewarning,
   .notetip {
-    margin: 2em;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 2em auto;
     width: 70% !important;
     min-height: 40px;
     clear: both;
@@ -3769,25 +3775,26 @@ Screen Styles for the Wrap Plugin (additional to all.css)
     -moz-border-radius: 20px;
     -khtml-border-radius: 20px;
     border-radius: 20px;
+    color: black;
   }
   .noteclassic {
     /*border: 1px solid #99D;*/
-    background-color: #eef;
+    background-color: #eeeeff;
     background-image: url(/dokuwiki/lib/plugins/note/images/note.png);
   }
   .noteimportant {
     /*border: 1px solid #ff0;*/
-    background-color: #ffc;
+    background-color: #ffffcc;
     background-image: url(/dokuwiki/lib/plugins/note/images/important.png);
   }
   .notewarning {
     /*border: 1px solid #d99;*/
-    background-color: #fdd;
+    background-color: #ffdddd;
     background-image: url(/dokuwiki/lib/plugins/note/images/warning.png);
   }
   .notetip {
     /*border: 1px solid #9d9;*/
-    background-color: #dfd;
+    background-color: #ddffdd;
     background-image: url(/dokuwiki/lib/plugins/note/images/tip.png);
   }
   .it__negative_feedback {
@@ -5036,6 +5043,36 @@ Screen Styles for the Wrap Plugin (additional to all.css)
     font-size: inherit;
     border: 1px solid #CED2DB;
     border-radius: 3px;
+  }
+  div.dokuwiki table.inline td.okay {
+    background-color: #afa;
+    text-align: center;
+  }
+  div.dokuwiki table.inline td.notokay {
+    background-color: #fcc;
+    text-align: center;
+  }
+  .doodle3_scrollcontainer {
+    overflow-x: auto;
+    margin-bottom: 19.6px;
+  }
+  .doodle__edit {
+    background: url(/dokuwiki/lib/plugins/doodle3/../../../lib/images/pencil.png) top right no-repeat;
+    width: 20px;
+    height: 20px;
+    padding: 0 0 0 10px;
+    cursor: pointer;
+    border: 0;
+    color: rgba(0,0,0,0);
+  }
+  .doodle__delete {
+    background: url(/dokuwiki/lib/plugins/doodle3/../../../lib/images/del.png) top right no-repeat;
+    width: 20px;
+    height: 20px;
+    padding: 0 0 0 10px;
+    cursor: pointer;
+    border: 0;
+    color: rgba(0,0,0,0);
   }
   html {
     overflow-x: auto;
@@ -9008,6 +9045,8 @@ Styles shared between print.css and pdf.css
   /* ----- Issue List Elements ------- */
   /* ----- Issue Detail Elements ----- */
   /* XXXXXXXXX /lib/plugins/issuetracker/print.less XXXXXXXXX */
+  /* XXXXXXXXX /lib/plugins/doodle3/print.css XXXXXXXXX */
+  /* XXXXXXXXX /lib/plugins/doodle3/print.less XXXXXXXXX */
   /* XXXXXXXXX /lib/tpl/dokuwiki/css/print.css XXXXXXXXX */
   /**
  * This file provides the styles for printing.

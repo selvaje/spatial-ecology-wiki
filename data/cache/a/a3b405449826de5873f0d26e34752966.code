@@ -1,9 +1,0 @@
-<span class="kw3">export</span> <span class="re2">OUTDIR</span>=<span class="re1">$HOME</span><span class="sy0">/</span>outdir
-<span class="kw3">export</span> <span class="re2">INDIR</span>=<span class="sy0">/</span>data<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica
-<span class="kw1">time</span>  <span class="br0">&#40;</span> 
-<span class="kw2">ls</span> <span class="re1">$INDIR</span><span class="sy0">/</span><span class="nu0">20</span>?<span class="nu0">0</span>_TSSP_IP-ENS-A2-SP20_43023435.tif  <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">3</span>  <span class="kw2">bash</span> <span class="re5">-c</span> $<span class="st_h">'
-file=$1
-filename=$(basename $file .tif)
-gdalwarp -r cubic -tr 0.008 0.008 -t_srs EPSG:4326 $file  $OUTDIR/proj_$filename.tif -overwrite
-'</span> _ 
-<span class="br0">&#41;</span>

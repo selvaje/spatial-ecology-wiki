@@ -1,6 +1,0 @@
-   pred23 = subset(pred47, select = c(FType, pr104,pr105,pr106,pr109,pr110,pr111,pr118,pr120,pr123,pr126,pr128,pr131,pr134,pr135,pr136,pr137,pr138,pr198,pr200,pr201,pr202,pr203,pr204))
-&nbsp;
-   RF23pred10cl = randomForest (pred23$FType ~pr104 + pr105 + pr106 + pr109 + pr110 + pr111 + pr118 + pr120 + pr123 + pr126 + pr128 + pr131 + pr134 + pr135 + pr136 + pr137 + pr138 + pr198 + pr200 + pr201 + pr202 + pr203 + pr204 , data = pred23, ntree=1500 ) 
-&nbsp;
-   #save(RF23pred10cl,file=&quot;~/ost4sem/studycase/ITA_veg/results/RF23pred10cl&quot;)
-   save(RF23pred10cl,file=&quot;~/ost4sem/studycase/ITA_veg/myresults/RF23pred10cl&quot;)

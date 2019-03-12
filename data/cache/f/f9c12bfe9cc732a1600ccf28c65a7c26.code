@@ -1,4 +1,0 @@
-# set cooridnate
-coordinates(VNdataOK) = ~ Lon + Lat
-coordinates(BigdataOK) = ~ Lon + Lat
-# loop over date in 365 days of 2006

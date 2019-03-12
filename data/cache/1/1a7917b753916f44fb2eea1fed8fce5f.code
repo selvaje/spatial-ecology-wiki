@@ -1,3 +1,0 @@
-gnuplot
-<span class="kw1">set</span> <a target="blanc" href="http://www.google.com/search?q=%22set+xrange%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">xrange</span></a> <span class="br0">&#91;</span><span class="nu0">2000</span><span class="sy0">:</span><span class="nu0">14000</span><span class="br0">&#93;</span> 
-<span class="kw1">splot</span> <span class="st0">'input.txt'</span>   u <span class="nu0">3</span><span class="sy0">:</span><span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span>

@@ -1,7 +1,0 @@
-a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:29:"Running R with multiple cores";s:11:"description";a:2:{s:15:"tableofcontents";a:4:{i:0;a:4:{s:3:"hid";s:29:"running_r_with_multiple_cores";s:5:"title";s:29:"Running R with multiple cores";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:30:"example_of_a_template_r_script";s:5:"title";s:33:"1. Example of a template R script";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:2;a:4:{s:3:"hid";s:53:"example_of_a_bash_script_to_exchange_variables_with_r";s:5:"title";s:56:"2. Example of a bash script to exchange variables with R";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:3;a:4:{s:3:"hid";s:64:"process_the_r_script_using_the_template_bash_within_a_xargs_loop";s:5:"title";s:67:"3. Process the R script using the template bash within a xargs loop";s:4:"type";s:2:"ul";s:5:"level";i:2;}}s:8:"abstract";s:278:"Running R with multiple cores
-
-If you need to recursively process an R function or an R script n times, you can extract the for loop in bash and process each R function or script with a different CPU.
-How to do it:
-
-	*  built a template R script
-	*  built a template bash script";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

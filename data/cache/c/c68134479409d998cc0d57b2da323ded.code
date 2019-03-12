@@ -1,8 +1,0 @@
-install.packages(&quot;SpatialPack&quot;)
-library(SpatialPack)
-&nbsp;
-# Compare young and mature beef lifestocks.
-modified.ttest(rank(agri@data$cattle_under1yr_v),rank(agri@data$beef_v),coordinates(coordinates(agri)))
-# F-statistic: 89.6019 on 1 and 134.5361 DF, p-value: 0 
-# alternative hypothesis: true autocorrelation is not equal to 0
-# sample correlation: 0.6323

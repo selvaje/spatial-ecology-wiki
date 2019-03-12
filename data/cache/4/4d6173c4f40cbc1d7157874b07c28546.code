@@ -1,7 +1,0 @@
-<span class="kw2">chmod</span> <span class="nu0">777</span> ost4sem_average.sh
-<span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">2</span>,<span class="nu0">2</span> input.asc <span class="sy0">&gt;</span> input_s.asc
-~<span class="sy0">/</span>sh<span class="sy0">/</span>ost4sem_average.sh input_s.asc output.asc <span class="co2">&lt;&lt;EOF
-y
-2
-4
-EOF</span>

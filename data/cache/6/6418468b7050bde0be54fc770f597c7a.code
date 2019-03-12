@@ -1,9 +1,0 @@
-<span class="co1">-- Selecting one atomic scalar value</span>
-<span class="kw1">SELECT</span> m<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> <span class="kw1">FROM</span> Values1D <span class="kw1">AS</span> m
-&nbsp;
-<span class="co1">-- Selecting one composite scalar value</span>
-<span class="kw1">SELECT</span> m<span class="br0">&#91;</span><span class="nu0">0</span>;<span class="nu0">0</span><span class="br0">&#93;</span> <span class="kw1">FROM</span> rgb <span class="kw1">AS</span> m
-&nbsp;
-<span class="co1">-- Selecting a mdd value </span>
-<span class="kw1">SELECT</span> m<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">10</span><span class="br0">&#93;</span> <span class="kw1">FROM</span> Values1D <span class="kw1">AS</span> m
-<span class="kw1">SELECT</span> m<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">10</span>;<span class="nu0">0</span>:<span class="nu0">10</span><span class="br0">&#93;</span> <span class="kw1">FROM</span> mr <span class="kw1">AS</span> m

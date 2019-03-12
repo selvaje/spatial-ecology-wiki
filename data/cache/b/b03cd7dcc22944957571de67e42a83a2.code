@@ -1,3 +1,0 @@
-pkstatogr <span class="re5">-i</span> input.shp <span class="re5">-f</span> FIELDID <span class="re5">-n</span> <span class="nu0">100</span> <span class="co0"># report histogram of values in FIELDID (to standard output)</span>
-&nbsp;
-pkstatogr <span class="re5">-i</span> input.shp <span class="re5">-f</span> FIELDID <span class="re5">-m</span> <span class="re5">-M</span> <span class="re5">-mean</span> <span class="re5">-stdev</span> <span class="co0"># report min, max, mean and standard deviation of values in FIELDID (to standard output)</span>

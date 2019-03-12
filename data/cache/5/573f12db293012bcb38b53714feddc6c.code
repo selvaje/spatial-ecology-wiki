@@ -1,4 +1,0 @@
-<span class="kw1">plot</span> \
-     <span class="st0">&quot;data/water_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'water'</span><span class="sy0">,</span>\
-     <span class="st0">&quot;data/forest_landsat_mean_stdev.txt&quot;</span> u <span class="nu0">0</span><span class="sy0">:</span><span class="nu0">1</span> <span class="kw5">with</span> <span class="kw5">lines</span> <a target="blanc" href="http://www.google.com/search?q=%22set+title%22+site%3Ahttp%3A%2F%2Fwww.gnuplot.info%2Fdocs%2F&amp;btnI=lucky"><span class="kw2">title</span></a> <span class="st0">'forest'</span>
-<span class="kw1">replot</span>

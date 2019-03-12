@@ -1,1 +1,0 @@
-db.in.ogr <span class="re2">dsn</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>basedata.csv <span class="re2">output</span>=basedata <span class="re2">key</span>=BLOKNR

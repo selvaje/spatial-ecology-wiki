@@ -1,5 +1,0 @@
-ward.LatLon &lt;- spTransform(ward,CRS(&quot;+init=epsg:4326&quot;))
-cornwall.watercolor = openmap(c(lat = ward.LatLon@bbox[2,2],lon= ward.LatLon@bbox[1,1] ),c(lat = ward.LatLon@bbox[2,1],lon = ward.LatLon@bbox[1,2]), type=&quot;stamen-watercolor&quot;)
-plot(cornwall.watercolor)
-ward.3857 &lt;- spTransform(ward,CRS(&quot;+init=epsg:3857&quot;))
-plot(ward.3857, add = TRUE, lwd =1, ext = extent(ward.3857), border = &quot;darkgreen&quot; )

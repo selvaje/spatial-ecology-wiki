@@ -1,4 +1,0 @@
-cd <span class="sy4">~</span><span class="sy3">/</span>ost4sem<span class="sy3">/</span>exercise<span class="sy3">/</span>basic_adv_awk
-awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="re0">$5</span> , <span class="re0">$2</span> <span class="br0">&#125;</span>' input.txt   <span class="co1"># print a column 5 and 2  </span>
-awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="kw3">NF</span> <span class="br0">&#125;</span>'  input.txt       <span class="co1"># print number of column</span>
-awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="kw3">NR</span> <span class="br0">&#125;</span>' input.txt        <span class="co1"># print number of row</span>

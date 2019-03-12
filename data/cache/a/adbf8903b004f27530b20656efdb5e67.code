@@ -1,4 +1,0 @@
-for cov in ( LandsatMultiBand )
-return encode (
-(( cov.b3+ cov .b1 )/2)[ E (490000:492000) , N (6000000)] ,
-&quot;csv&quot;)

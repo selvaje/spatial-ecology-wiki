@@ -1,1 +1,0 @@
-pkcreatect <span class="re5">-min</span> <span class="nu0">0</span> <span class="re5">-max</span> <span class="nu0">100</span> <span class="sy0">&gt;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise4<span class="sy0">/</span>ct_ndvi.txt

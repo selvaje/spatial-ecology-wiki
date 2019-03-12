@@ -1,4 +1,0 @@
-for c in ( AvgLandTemp )
-return encode(
-c[ansi(&quot;2014-07&quot;)],
-&quot;png&quot;)

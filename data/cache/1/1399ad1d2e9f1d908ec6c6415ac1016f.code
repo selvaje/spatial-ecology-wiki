@@ -1,8 +1,0 @@
-v.in.ogr <span class="re5">-e</span> <span class="re2">dsn</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>25opl_info.shp <span class="re2">output</span>=opl25 <span class="re5">--overwrite</span> 
-v.clean <span class="re2">input</span>=opl25 <span class="re2">output</span>=oplc25 <span class="re2">tool</span>=rmdupl,bpol <span class="re2">error</span>=myerroropl
-g.remove <span class="re2">vect</span>=opl25 <span class="co0">#Remove file not cleaned</span>
-&nbsp;
-v.in.ogr <span class="re5">-e</span> <span class="re2">dsn</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>Markblok.shp <span class="re2">output</span>=Markblok1 <span class="re5">--overwrite</span>
-v.clean <span class="re2">input</span>=Markblok1 <span class="re2">output</span>=Markblokc <span class="re2">tool</span>=rmdupl,bpol <span class="re2">error</span>=myerrormarkblok
-g.remove <span class="re2">vect</span>=Markblok1 
-qgis <span class="sy0">&amp;</span> <span class="co0">#Open Quantum GIS to explore data</span>

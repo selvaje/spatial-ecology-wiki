@@ -1,3 +1,0 @@
-v.db.addcol <span class="re2">map</span>=Markblok9<span class="sy0">@</span>PERMANENT <span class="re2">layer</span>=<span class="nu0">1</span> <span class="st_h">'columns=dist double precision'</span><span class="co0">#Add a new column for use in the v.distance </span>
-v.info <span class="re5">-c</span> Markblok9
-v.distance <span class="re2">from</span>=Markblok9 <span class="re2">to</span>=opl15 <span class="re2">from_type</span>=point <span class="re2">to_type</span>=boundary <span class="re2">output</span>=distance_9_15 <span class="re2">upload</span>=dist <span class="re2">column</span>=dist <span class="re5">--overwrite</span>

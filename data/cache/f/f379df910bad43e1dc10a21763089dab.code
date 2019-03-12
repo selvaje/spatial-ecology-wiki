@@ -1,4 +1,0 @@
-<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.tif 
-<span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="br0">&#41;</span>
-r.in.gdal <span class="re2">input</span>=<span class="re1">$file</span>.tif  <span class="re2">output</span>=<span class="re1">$file</span>
-<span class="kw1">done</span>

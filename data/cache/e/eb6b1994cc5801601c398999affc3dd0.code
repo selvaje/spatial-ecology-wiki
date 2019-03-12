@@ -1,6 +1,0 @@
-   pred = read.dbf(&quot;~/ost4sem/grassdb/europe/Vmodel/dbf/resp_p.dbf&quot;)
-   # you can use the 70 points of the ~/ost4sem/grassdbnew/europe/Vmodel/dbf/resp_p70.dbf and check if results are ok
-   # you can use the 7000 points preprocessed dbf using this file:
-   # pred = read.dbf(&quot;~/ost4sem/studycase/ITA_veg/data/resp_p.dbf&quot;)
-   pred = na.omit(pred)
-&nbsp;

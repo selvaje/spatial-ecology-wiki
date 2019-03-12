@@ -1,6 +1,0 @@
-<span class="kw1">for</span> YEAR <span class="kw1">in</span> <span class="nu0">2006</span> <span class="nu0">2007</span> <span class="nu0">2008</span> <span class="nu0">2009</span> <span class="nu0">2010</span>;<span class="kw1">do</span> 
-    <span class="kw3">echo</span> <span class="st0">&quot;processing year <span class="es3">${YEAR}</span>&quot;</span>
-    <span class="kw1">for</span> MONTH <span class="kw1">in</span> 01 02 03 04 05 06 07 08 09 <span class="nu0">10</span> <span class="nu0">11</span> <span class="nu0">12</span>; <span class="kw1">do</span> 
-	pkinfo <span class="re5">-i</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise4<span class="sy0">/</span><span class="co1">${YEAR}</span><span class="co1">${MONTH}</span>-MODIS500_CW_NDVI.tif <span class="re5">-stat</span>
-    <span class="kw1">done</span><span class="sy0">|</span> <span class="kw2">awk</span> <span class="st_h">'{print $2,$4,$6,$8}'</span> <span class="sy0">&gt;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise4<span class="sy0">/</span>mean_ndvi_<span class="co1">${YEAR}</span>.txt
-<span class="kw1">done</span>

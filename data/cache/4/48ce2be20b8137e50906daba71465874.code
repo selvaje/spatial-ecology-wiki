@@ -1,3 +1,0 @@
-<span class="kw2">wget</span> https:<span class="sy0">//</span>dl.dropboxusercontent.com<span class="sy0">/</span>u<span class="sy0">/</span><span class="nu0">29337496</span><span class="sy0">/</span>create_location.sh
-<span class="kw3">source</span> create_location.sh <span class="sy0">/</span>dev<span class="sy0">/</span>shm location <span class="re1">$HOME</span><span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>input_proj.tif  
-r.report input_proj

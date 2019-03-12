@@ -1,4 +1,0 @@
-<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>_cut.tif ; <span class="kw1">do</span> 
-    <span class="re2">RAST</span>=<span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$file</span> _cut.tif<span class="sy0">`</span>
-    r.in.gdal <span class="re2">in</span>=<span class="re1">$file</span>  <span class="re2">out</span>=<span class="re1">$RAST</span> 
-<span class="kw1">done</span>

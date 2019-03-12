@@ -1,1 +1,0 @@
-    pkclassify_svm <span class="re5">-t</span> training_casi.shp <span class="re5">-i</span> validation_casi.shp

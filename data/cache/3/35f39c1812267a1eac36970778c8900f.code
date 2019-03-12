@@ -1,2 +1,0 @@
-<span class="kw2">sudo</span> <span class="kw2">mkdir</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps
-<span class="kw2">sudo</span> <span class="kw2">mount</span> grappolo:<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps

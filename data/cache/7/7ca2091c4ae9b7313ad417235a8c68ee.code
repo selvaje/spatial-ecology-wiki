@@ -1,8 +1,0 @@
-<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> L5168065_06520091206_B<span class="br0">&#91;</span><span class="nu0">1</span>-<span class="nu0">9</span><span class="br0">&#93;</span><span class="nu0">0</span>.TIF ; <span class="kw1">do</span> 
-    <span class="re2">imagename</span>=<span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$file</span> .TIF<span class="sy0">`</span>   <span class="co0"># select the file name without the extension.</span>
-    <span class="kw2">rm</span>  <span class="re1">$imagename</span><span class="st0">&quot;_prj.tif&quot;</span>
-    gdalwarp  -s_srs EPSG:<span class="nu0">32636</span> -t_srs <span class="st0">&quot;+proj=utm +zone=36 +south +a=6378249.145 +b=6356514.870 +units=m +towgs84=-160,-6,-302&quot;</span> <span class="re1">$file</span> tmp.tif
-    gdal_translate <span class="re5">-co</span> <span class="st0">&quot;COMPRESS=LZW&quot;</span> <span class="re5">-projwin</span> <span class="nu0">760000</span> <span class="nu0">9260000</span> <span class="nu0">860000</span> <span class="nu0">9190000</span> tmp.tif <span class="re1">$imagename</span><span class="st0">&quot;_cut.tif&quot;</span>
-    <span class="kw2">rm</span> <span class="re1">$file</span>    <span class="co0"># remove imput file </span>
-<span class="kw1">done</span> 
-<span class="kw2">rm</span> tmp.tif <span class="sy0">*</span>.txt README.GTF

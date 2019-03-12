@@ -1,1 +1,0 @@
-<span class="kw2">grep</span> <span class="st0">&quot;2007&quot;</span> input.txt <span class="sy0">|</span> <span class="kw2">wc</span>

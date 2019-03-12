@@ -1,1 +1,0 @@
-ogr2ogr <span class="re5">-f</span> SQLite <span class="re5">-update</span> <span class="re5">-append</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>validation.sqlite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise8<span class="sy0">/</span>validation_nonforest_label.sqlite

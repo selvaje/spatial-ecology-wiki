@@ -1,8 +1,0 @@
-<span class="kw3">cd</span>
-<span class="kw2">nano</span> .bashrc
-<span class="co0">#add to file:</span>
-<span class="kw3">export</span> <span class="re2">JAVA_HOME</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>jvm<span class="sy0">/</span>java-<span class="nu0">7</span>-openjdk-armhf
-<span class="kw3">export</span> <span class="re2">HADOOP_INSTALL</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop
-<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$HADOOP_INSTALL</span><span class="sy0">/</span>bin
-<span class="co0"># save and close .bashrc</span>
-<span class="kw2">sudo</span> reboot

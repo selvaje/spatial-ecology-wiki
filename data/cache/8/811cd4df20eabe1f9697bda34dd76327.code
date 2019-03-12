@@ -1,4 +1,0 @@
-<span class="co1"># 2D plot</span>
-<span class="kw1">plot</span> <span class="st0">&quot;&lt;awk '{if (NR%100== 0) print $0}' aver_month_nuts3.asc &quot;</span> u <span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span>
-<span class="co1"># 3D plot</span>
-<span class="kw1">splot</span> <span class="st0">&quot;&lt;awk '{if (NR%100== 0) print $0}' aver_month_nuts3.asc &quot;</span> u <span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span><span class="sy0">:</span><span class="nu0">7</span>

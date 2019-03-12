@@ -1,1 +1,0 @@
-ogr2ogr <span class="re5">-f</span> <span class="st0">&quot;SQLite&quot;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>cornwall_osm.sqlite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>xapi_meta.osm

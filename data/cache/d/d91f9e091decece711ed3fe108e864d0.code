@@ -1,4 +1,0 @@
-<span class="st0">&quot;&quot;&quot;Convert lat/lon to utm&quot;&quot;&quot;</span>
-<span class="kw1">import</span> utm
-<span class="kw1">print</span> utm.<span class="me1">from_latlon</span><span class="br0">&#40;</span><span class="nu0">48.55199390882121</span><span class="sy0">,</span> <span class="nu0">8.725555729071763</span><span class="br0">&#41;</span>
-&nbsp;

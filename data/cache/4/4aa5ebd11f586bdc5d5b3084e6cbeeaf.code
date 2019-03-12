@@ -1,3 +1,0 @@
-grass <span class="re5">-text</span> ost4sem<span class="sy0">/</span>grassdb<span class="sy0">/</span>Missouri<span class="sy0">/</span>PERMANENT<span class="sy0">/</span>
-v.in.ogr <span class="re5">-r</span> <span class="re2">dsn</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>siteplan<span class="sy0">/</span>data<span class="sy0">/</span>vector<span class="sy0">/</span>soilsample.shp <span class="re2">output</span>=soilsamples
-v.surf.idw <span class="re2">input</span>=soilsamples  <span class="re2">output</span>=soilmapIDW <span class="re2">column</span>=soil_depth <span class="re5">--overwrite</span>

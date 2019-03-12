@@ -1,6 +1,0 @@
-<span class="kw2">cat</span> <span class="sy0">&gt;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise4<span class="sy0">/</span>points.txt <span class="co2">&lt;&lt;EOF
-water 3323125 3162875
-forest 3225625 3123125
-grass 3225625 3123625
-agriculture 3226375 3123125
-EOF</span>

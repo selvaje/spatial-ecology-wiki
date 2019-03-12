@@ -1,5 +1,0 @@
-pkstat <span class="re5">-i</span> input.txt <span class="re5">-n</span> <span class="co0"># count number of records (same as wc -l input.txt)</span>
-&nbsp;
-pkstat <span class="re5">-i</span> input.txt <span class="re5">-hist</span> <span class="re5">-bin</span> <span class="nu0">100</span> <span class="re5">-c</span> <span class="nu0">1</span> <span class="re5">-rel</span> <span class="co0"># report relative histogram in second column (starting from 0) using 100 bins.</span>
-&nbsp;
-pkstat <span class="re5">-i</span> input.txt <span class="re5">-m</span> <span class="re5">-c</span> <span class="nu0">0</span> <span class="re5">-c</span> <span class="nu0">1</span> <span class="co0"># report mean value of colums 0 and 1.</span>

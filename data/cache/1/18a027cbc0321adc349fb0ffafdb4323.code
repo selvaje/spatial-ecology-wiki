@@ -1,5 +1,0 @@
-<span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">year</span>=<span class="nu0">2000</span> ; year<span class="sy0">&lt;</span>=<span class="nu0">2008</span> ; year++<span class="br0">&#41;</span><span class="br0">&#41;</span>; <span class="kw1">do</span>
-<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$year</span> <span class="sy0">!</span>= <span class="nu0">2003</span> <span class="br0">&#93;</span> ; <span class="kw1">then</span>
-    <span class="kw2">grep</span> <span class="st0">&quot; <span class="es2">$year</span> &quot;</span> aver_month_nuts3_fire.asc  <span class="sy0">|</span> <span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">5</span>,<span class="nu0">5</span> <span class="re5">-g</span> <span class="sy0">|</span> <span class="kw2">tail</span> <span class="re5">-1</span>       
-<span class="kw1">fi</span>
-<span class="kw1">done</span>

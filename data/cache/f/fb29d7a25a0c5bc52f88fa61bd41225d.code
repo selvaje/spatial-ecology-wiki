@@ -1,6 +1,0 @@
-...
-    &quot;coverage_id&quot;: &quot;LandsatMultiBand&quot;,
-    &quot;paths&quot;: [
-      &quot;/var/geodata/LandsatMultiBand/*.tif&quot;
-    ]
-...

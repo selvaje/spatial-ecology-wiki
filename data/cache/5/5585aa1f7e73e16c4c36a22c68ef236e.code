@@ -1,5 +1,0 @@
-   predFT8 = respredFT8
-   predFT8$FType = NULL
-   tune.mtry.RF23t = tuneRF(predFT8, respredFT8$FType, ntreeTry = 600)
-   &gt;mtry = 8 
-&nbsp;

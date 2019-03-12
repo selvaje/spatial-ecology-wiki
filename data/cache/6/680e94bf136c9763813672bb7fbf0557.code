@@ -1,6 +1,0 @@
-   rm(data2map)
-   rm(datagrids)
-   rm(pred.mapRF)
-   rm(pred.mapRFindex)
-   gc()
-   }

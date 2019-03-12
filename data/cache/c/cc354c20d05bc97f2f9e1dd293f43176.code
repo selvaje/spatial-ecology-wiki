@@ -1,3 +1,0 @@
-<span class="kw1">SELECT</span> mr – mr2
-<span class="kw1">FROM</span>  mr<span class="sy0">,</span> mr2
-<span class="kw1">WHERE</span>  some_cells<span class="br0">&#40;</span> mr – mr2 <span class="sy0">&gt;</span> <span class="nu0">50</span> <span class="br0">&#41;</span>

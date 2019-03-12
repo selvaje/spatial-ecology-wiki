@@ -1,2 +1,0 @@
-<span class="kw2">awk</span> <span class="st_h">'BEGIN { print &quot;Month Day&quot;}    {print }    END { print &quot;end file&quot;}'</span> MMDD.txt <span class="sy0">&gt;</span> head_MMDD_tail.txt
-<span class="kw2">more</span> head_MMDD_tail.txt

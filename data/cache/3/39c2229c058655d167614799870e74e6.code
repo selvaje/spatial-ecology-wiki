@@ -1,7 +1,0 @@
-<span class="re2">Year</span>=<span class="st0">&quot;Yr2000 Yr2001 Yr2002 Yr2003 Yr2004 Yr2005 Yr2006 Yr2007 Yr2008 Yr2009 Yr2010&quot;</span>
-<span class="re2">month</span>=<span class="st0">&quot;Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec&quot;</span>
-<span class="kw1">for</span> y <span class="kw1">in</span> <span class="re1">$Year</span> ; <span class="kw1">do</span>  <span class="kw2">mkdir</span> <span class="re1">$y</span>
-<span class="kw1">for</span> m <span class="kw1">in</span> <span class="re1">$month</span> ; <span class="kw1">do</span> <span class="kw2">mkdir</span> <span class="re1">$y</span><span class="sy0">/</span><span class="re1">$m</span> ; 
-<span class="kw1">done</span> ; 
-<span class="kw1">done</span>
-<span class="kw2">ls</span> <span class="sy0">*/*/</span>

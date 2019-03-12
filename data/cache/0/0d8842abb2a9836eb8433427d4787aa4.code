@@ -1,2 +1,0 @@
-<span class="kw2">grep</span> <span class="st0">&quot; 2007 &quot;</span> aver_month_nuts3_fire.asc  <span class="sy0">|</span> <span class="kw2">wc</span> <span class="re5">-l</span> 
-<span class="kw2">grep</span> <span class="st0">&quot; 2002 &quot;</span> aver_month_nuts3_fire.asc  <span class="sy0">|</span> <span class="kw2">wc</span> <span class="re5">-l</span> 

@@ -1,2 +1,0 @@
-<span class="kw2">ls</span> <span class="sy0">/</span>lustre<span class="sy0">/</span>scratch<span class="sy0">/</span>client<span class="sy0">/</span>fas<span class="sy0">/</span>geodata<span class="sy0">/</span>aw524<span class="sy0">/</span>data<span class="sy0">/</span>
-gdalinfo <span class="sy0">/</span>lustre<span class="sy0">/</span>scratch<span class="sy0">/</span>client<span class="sy0">/</span>fas<span class="sy0">/</span>geodata<span class="sy0">/</span>aw524<span class="sy0">/</span>data<span class="sy0">/</span>worldclim<span class="sy0">/</span>bio_9.bil

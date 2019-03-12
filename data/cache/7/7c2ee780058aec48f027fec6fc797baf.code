@@ -1,6 +1,0 @@
-<span class="co1">#!/usr/bin/env python</span>
-<span class="co1">#</span>
-<span class="co1"># Example use of the re.sub function</span>
-<span class="co1">#</span>
-<span class="kw1">import</span> <span class="kw3">re</span>
-<span class="kw1">print</span> <span class="kw3">re</span>.<span class="me1">sub</span><span class="br0">&#40;</span><span class="st0">'a+'</span><span class="sy0">,</span> <span class="st0">'++<span class="es0">\\</span>g&lt;0&gt;++'</span><span class="sy0">,</span> <span class="st0">'a test aaaa of aaaaaa'</span><span class="br0">&#41;</span>
