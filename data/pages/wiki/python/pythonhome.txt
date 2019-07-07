@@ -22,18 +22,18 @@ Material prepared by:\\
 
    cd /home/user/ost4sem/exercise/python_intro
    wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
-   jupyter-notebook  /home/user/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
+   jupyter-lab  /home/user/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
    
 
-  * Introduction to Python 2 [[ http://www.spatial-ecology.net/ost4sem/exercise/python_intro/01_Python_Intro.html|  02_Geo_Python ]]\\
+  * Introduction to Python 2 [[ http://www.spatial-ecology.net/ost4sem/exercise/python_intro/02_Geo_Python.html |  02_Geo_Python ]]\\
 
    cd /home/user/ost4sem/exercise/python_intro/
    wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
-   jupyter-notebook  /home/user/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
+   jupyter-lab  /home/user/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
    
 
-
-  * [[ wiki:python:basicpython1 | Python Fibonaci ]]
+  * [[ wiki:python:pythonenvironments | Python Environments ]]
+  * [[ wiki:python:basicpython1 | Python Fibonacci ]]
   * [[ wiki:python:basicpython2 | Python for dummies - wiki]]
   * [[ wiki:python:basicpython3 | Python for not-so-dummies - wiki]] (frankie)
   * [[ wiki:python:basicpython4 | Use Python for pattern searching ]] (frankie)
@@ -44,7 +44,7 @@ Material prepared by:\\
   * [[ https://research.computing.yale.edu/training/ycrc-bootcamps/ycrc-bootcamp-python-mpi-parallel-programming | Python MPI for Parallel Programming ]] (Stephen Weston)
   * [[ https://research.computing.yale.edu/training/ycrc-bootcamps/scripting-python | Scripting with Python ]] (Stephen Weston)
   * [[ wiki:python:anetaurban | python urban ]]
- 
+
 
 \\
 ===== Python exercises =====

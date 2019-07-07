@@ -29,47 +29,8 @@ Contact us  //info at spatial-ecology.net// to organize a training and see more 
 ==== News ==== 
 
 <note tip>
-** [[ http://spatial-ecology.net/test/ | Geocomputation Summer Schools 2019 ]]**\\
-</note>
-
-<note tip>
-** Summer School Matera 2018 **\\
-** Geocomputation using free and open source software **
-
-[[ https://docs.google.com/document/d/1SNvX6-M4vlY8L9GgC23qiactNHXVxuwgiTwgipvFoFI/pub | Program ]] \\
-[[ http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:Matera2018sotis | Satisfactory survey ]] \\
-[[ http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:Matera2018 | Partecipant List ]] (check your student ID)  \\
-
-** Internet Connection **\\
-Please use the internet connection only for searching material needed for the course. 
-Avoid superfluous navigation such as facebook and youtube \\
-
-**WIFI 1 (ID students 1-6)**\\
-\\
-WifiName: VodafoneMobileWifi-38BD44 \\
-Password: 5427569146 \\
-\\
-**WIFI 2 (ID students 7-12)**\\
-\\
-WifiName: VodafoneMobileWifi-359741 \\
-Password: 3777265110\\
-\\
-**WIFI 3 (ID students 13-18)**\\
-(If you can rather then the wifi use the LAN - see below)\\
-\\
-WifiName: UnibasFree\\
-Password: Matera18\\
-\\
-**LAN (static IP)  (ID students 19-25)**\\
-(if you can not set the LAN login to UnibasFree)\\
-\\
-IP:              10.11.112.11-30  ## select a number from 11 to 30 \\
-Subnet mask:     255.255.240.0\\
-Gateway:         10.11.112.253\\
-\\
-DNS:              10.12.0.10\\
-\\
-
+** [[ https://www.pe-rc.nl/geocomputation | Geocomputation Summer Schools 2019 - Wageningen ]]**\\
+** [[ https://docs.google.com/document/d/e/2PACX-1vTyLsEotRvkSyCRJty-zBt7zScpPIw4axLhwOLnYo6I99zggRBaB89JVGeOTCmu85LBrkDru8-ysx_h/pub | Geocomputation Summer Schools 2019 - Program ]]**\\
 </note>
 
 <note tip>
@@ -88,15 +49,7 @@ How to use it:\\
 
 
 
-<note tip>
-**Date**: November 20, 2015\\
-**Speaker**: Giuseppe Amatulli:\\
-Analyst/Developer in Spatial Biodiversity Science Ecology/Evolutionary Biology - Yale University\\
-**Topic**: "Big Data meets Geo-Computation: combining research reproducibility and processing efficiency at Yale"\\
-\\
-https://www.youtube.com/watch?v=XcQCb0GeUMU
-\\
-</note>
+
 
 <note tip>
 Codes development of all the projects carry on at Yale University.Each single point cluster identify a project and each point in the cluster represent a scripting procedure.\\

@@ -25,17 +25,19 @@ and download this scripts
 \\
    cd /home/user/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/*10poly.*  /home/user/ost4sem/exercise/basic_adv_gdalogr/
 \\
-Sequential for loop
+
+=== Sequential for loop ===
+
 {{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_seq1.R}}
-Insert the xy crop in the Sequential for loop. The mask command now is performed on smaller raster dataset. 	
+=== Insert the xy crop in the Sequential for loop. The mask command now is performed on smaller raster dataset ===
 {{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_seq2.R}}
-Foreach loop that "sends" the full shape file and the full raster to the workers.
+=== Foreach loop that "sends" the full shape file and the full raster to the workers ===
 {{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par1.R}}
-Foreach loop that "sends" only one polygon per task and the full raster to the workers
+=== Foreach loop that "sends" only one polygon per task and the full raster to the workers ===
 {{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par2.R}}
-Foreach loop that "sends" a chunk of polygons and the full raster to the workers
+=== Foreach loop that "sends" a chunk of polygons and the full raster to the workers ===
 {{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par3.R}}
-Identify polygon groups, using the centroid in kmean cluster. 
+=== Identify polygon groups, using the centroid in kmean cluster ===
 Foreach loop that "sends" polygons that belong to the same cluster and a cropped  raster (rasterDp) to the workers
 {{gh>   https://github.com/selvaje/spatial-ecology-codes/blob/master/wiki/R/moran_par4.R}} 	
 

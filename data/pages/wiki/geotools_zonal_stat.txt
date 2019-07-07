@@ -8,20 +8,20 @@ The output is a txt file with the statistical value of each category.\\
 
 ===== SYNOPSIS =====
 
-ost4sem_zonal_stats.py  [-category_no_data nodata_value]  [-raster_no_data nodata_value]\\
+ost4sem\_zonal\_stats.py  [-category\_no\_data nodata\_value]  [-raster\_no\_data nodata\_value]\\
 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [-mean] [-mode] [-median] [-stddev] [-min] [-max] [-sum]\\
-\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ src_category   src_raster   dst_file\\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ src\_category   src\_raster   dst\_file\\
 
--category_no_data nodata_value : no data value in the category raster. \\
+-category\_no\_data nodata\_value : no data value in the category raster. \\
 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ No data value can be identify by the user or directly take in tif\\
 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ but the "NoData Value=?" must be present in the tif.
 \\
--raster_no_data nodata_value : no data value in the continuos raster. \\
+-raster\_no\_data nodata\_value : no data value in the continuos raster. \\
 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ No data value can be identify by the user or directly take in tif\\
 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ but the "NoData Value=?" must be present in the tif.\\
-src_category : category raster ; layer used to group values for computing statisctics \\
-src_raster :   continues raster ; layer used to perform statisctics \\
-dst_file : destination file in txt format.
+src\_category : category raster ; layer used to group values for computing statisctics \\
+src\_raster :   continues raster ; layer used to perform statisctics \\
+dst\_file : destination file in txt format.
 \\
 \\
 [OPTIONS]\\
@@ -30,19 +30,13 @@ If no option are reported the category value and counted pixel for each category
 \\
 -max : calculate maximum value of the continues raster in each grouped category \\
 -min : calculate min value of the continues raster in each grouped category \\
--stddev : calculate [[http://en.wikipedia.org/wiki/Standard_deviation | standard deviation  ]]  value of the continues raster in each grouped category \\
+-stddev : calculate standard deviation value of the continues raster in each grouped category \\
 -mean  : calculate mean value of the continues raster in each grouped category \\
-
-
-===== DOWNLOAD =====
-Download python script: [[http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_zonal_stats.py.zip | ost4sem_zonal_stats.py.zip  ]]\\
-Download python script: [[http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_zonal_stats.py  | ost4sem_zonal_stats.py  ]]\\
-Download python script: [[http://www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_zonal_stats.pdf | ost4sem_zonal_stats.pdf  ]]\\
-
-===== EXAMPLE =====
+\\
 
 <code bash>
-mv ./ost4sem_zonal_stats.py ./ost4sem_zonal_stats.py.zip
+wget www.spatial-ecology.net/ost4sem/geo_tools/ost4sem_zonal_stats.py.zip
+mv ./ost4sem_zonal_stats.py.zip ./ost4sem_zonal_stats.py
 chmod 777 ./ost4sem_zonal_stats.py
 ./ost4sem_zonal_stats.py -max -min -stddev -mean   category.tif dem.tif stat.txt
 </code>

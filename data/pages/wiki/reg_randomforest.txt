@@ -1,0 +1,10 @@
+
+
+Regression with Random Forest  [[http://www.spatial-ecology.net/ost4sem/exercise/machine_learning/RF/pred_RF.html |  html version of the script pred_RF  ]]\\
+
+
+
+   cd /home/user/ost4sem/exercise/machine_learning/RF
+   wget -N http://www.spatial-ecology.net/ost4sem/exercise/machine_learning/RF/pred_RF.ipynb
+   jupyter-lab  /home/user/ost4sem/exercise/machine_learning/RF/pred_RF.ipynb
+ 

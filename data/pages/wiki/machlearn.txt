@@ -1,4 +1,23 @@
 
 ====== Machine Learning ======
 
+===== Estimating nitrogen and phosphorus concentrations in streams and rivers across the contiguous United States: a machine learning framework =====
+
+Paper at https://peerj.com/preprints/27585/
+
+
+[[ http://www.spatial-ecology.net/ost4sem/lecture/GeoComp_ML.pdf  | Presentation: Geocomputation in machine
+learning domain ]]\\
+
+[[ http://www.spatial-ecology.net/ost4sem/lecture/Fundamental_ML_theory.pdf  | Presentation: Random Forest in Geocomputation ]]\\
+
+[[ http://www.spatial-ecology.net/ost4sem/lecture/Neural_Networks_Matera_v4.pdf | Presentation: Artificial Neural Network in Geocomputation ]]\\
+
+[[ https://xmindshare.s3.amazonaws.com/preview/af6c68942231427888ee90e1b5f6d4c6UZdihkzL-ayGmU-501.png | machine learning framework2 ]] 
+[[ https://jixta.files.wordpress.com/2015/11/machinelearningalgorithms.png | machine learning framework2 ]] 
+
+  * [[ wiki:reg_randomForest | Regression with Random Forest ]]
+  * [[ wiki:reg_neuronetwork | Regression with Artificial Neural Network (TensorFlow & Keras)]]
+
+
 https://github.com/YaleDHLab/lab-workshops/tree/master/machine-learning

@@ -498,3 +498,13 @@ spi_10kmmedian_merit.png
 tci_10kmmedian_merit.png
 altitude_10kmmedian_merit.png
 merit_tile.jpg
+wiki:mean_asb_error_lr0.001_moment0.9_nesttrue.png
+wiki:mean_sq_error_lr0.001_moment0.9_nesttrue.png
+wiki:r_scaled_lr0.001_moment0.9_nesttrue.png
+wiki:r_unscaled_lr0.001_moment0.9_nesttrue.png
+wiki:mean_sq_error_lr0.001_moment0.9_rmsprop.png
+wiki:r_unscaled_lr0.001_moment0.9_rmsprop.png
+wiki:mean_sq_error_lr0.0005_moment0.9_amsgradtrue_param500_run1.png
+wiki:r_unscaled_lr0.0005_moment0.9_amsgradtrue_param500_run1.png
+overview_scripts.png
+wiki:cluster_computing.jpg

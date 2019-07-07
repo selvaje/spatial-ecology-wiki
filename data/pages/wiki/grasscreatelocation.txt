@@ -1,4 +1,6 @@
-====== GRASS70 Create Location using ancillary layer  ======
+====== GRASS Create Location using ancillary layer  ======
+
+===== Execute GRASS commands while beeing in GRASS   =====
 
 Create a location in a new grass database using a referenced dataset.\\
 \\
@@ -16,11 +18,11 @@ cd ~/ost4sem/grassdbnew/
 gdalwarp   -t_srs EPSG:4326  -s_srs EPSG:4326  input.tif input_proj.tif
 </code>
 
-Run the grass70 command  which create the newlocation based on the input_proj.tif 
+Run the grass74 command  which creates the newlocation based on the input_proj.tif 
 
 <code bash>
 rm -rf ~/ost4sem/grassdbnew/newlocation
-grass72 -text -c input_proj.tif newlocation ~/ost4sem/grassdbnew 
+grass74 -text -c input_proj.tif newlocation ~/ost4sem/grassdbnew 
 </code>
 
 
@@ -38,18 +40,14 @@ done
 </code>
 
 
-# from csv to shapefile 
-<code bash>
-pkascii2ogr  
-</code>
+===== Execute GRASS commands from BASH without enter in GRASS =====
 
-import the shapefile 
-<code bash>
-v.in.ogr 
-</code>
 
 <code bash>
-r.stream.snap 
+cd ~/ost4sem/grassdbnew/
+rm -rf ~/ost4sem/grassdbnew/newlocation
+grass74 -text -c input_proj.tif  -e ~/ost4sem/grassdbnew/newlocation 
+grass74 ~/ost4sem/grassdbnew/newlocation/PERMANENT/ --exec r.external input=input_proj.tif  output=input_proj
+grass74 ~/ost4sem/grassdbnew/newlocation/PERMANENT/ --exec r.info input_proj
+
 </code>
-
-

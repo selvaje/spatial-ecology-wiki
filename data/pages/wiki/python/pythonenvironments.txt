@@ -1,0 +1,33 @@
+====== Different version and evironments ======
+
+Python has some peculiar ways to manage use of different versions of the language, packages and to allow the deployment of running environments for your code. You will soon need to understand how to distribute your scripts and program to others as well on all your computers and clusters. The main other problem is how to force to cohexist scripts that require different/colliding versions of packages, and simply how to work when your system administrator is not around.
+
+All different approaches have pros and cons.
+
+  * Use your distribution kits (e.g. rpm and deb packages)
+  * Use [[https://www.python.org/downloads/|python.org]] kits
+  * Use [[https://github.com/pyenv/pyenv|pyenv]] to switch versions of language (mainly 2 vs 3, but non only)
+  * Use [[https://virtualenv.pypa.io/en/latest/|virtualenv]] to switch versions of packages
+  * Use third party [[https://www.anaconda.com/distribution/|Anaconda]] and its conda/miniconda tool
+  * Use [[https://brew.sh/|homebrew]] on MacOS.
+  * Use a general deployment tool, such as [[https://docs.docker.com/|docker]] and other containers
+
+===== Pyenv pre-reqs =====
+
+  sudo apt install curl git-core gcc make zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libssl-dev
+
+In general, right dependencies for Python are documented (and up-to-date) here:
+
+  https://devguide.python.org/setup/#build-dependencies
+
+===== Pyenv install =====
+
+The recommended way is using the pyenv installer
+
+  https://github.com/pyenv/pyenv-installer
+
+else it is possible to clone the official repository from github:
+
+  git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+
+

@@ -93,7 +93,7 @@ Project environment settings
 
 
 
-GRASS70 Create Location using ancillary layer
+GRASS Create Location using ancillary layer
 Open Source Tools for Spatial Ecological Modeling
 Template for project poposal
 
@@ -553,3 +553,9 @@ Satisfaction Survey
 Preparation
 Geomorpho90m - Global high-resolution geomorphometry layers: empirical evaluation and accuracy assessment
 Machine Learning
+Regression with Artificial Neural Networks (Tensorflow)
+Different version and evironments
+
+Geocomputation at High Performance Computing Cluster (HPC) Anunna
+Multicore processing in python - Zonal Statistic
+GRASS70 Create Location using ancillary layer - python

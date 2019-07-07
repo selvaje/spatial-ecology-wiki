@@ -12,7 +12,7 @@ Select a study area and create a stack layer.
 Unsupervised classification using clustering algorithm KMeans 
 
 
-  otbcli_KMeansClassification   -in   LT51680612010231MLK00.vrt -nc 15 -maxit 1500 -ct 0.0001 -out  LT51680612010231MLK00_KMeans.tif 
+  otbcli_KMeansClassification   -in   LT51680612010231MLK00.vrt -nc 15 -maxit 1500 -out  LT51680612010231MLK00_KMeans.tif 
   pkcreatect -co=COMPRESS=DEFLATE -co=ZLEVEL=9   -min  1 -max 15    -i   LT51680612010231MLK00_KMeans.tif   -o   LT51680612010231MLK00_KMeans_ct.tif
    openev LT51680612010231MLK00_KMeans_ct.tif
 

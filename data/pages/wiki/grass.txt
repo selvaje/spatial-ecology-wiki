@@ -21,7 +21,8 @@ On this page of the wiki we provide different sections (see in the table of cont
   * [[grassvariables|Setting GRASS64 variables for GRASS bash job ]]
   * [[GRASSBatchjobs  |  GRASS64 Batch jobs ]]
 GRASS70 Batch jobs
-  * [[GRASScreatelocation  |  GRASS70 Create Location using ancillary layer ]]
+  * [[GRASScreatelocation  |  GRASS70 Create Location using ancillary layer - bash]]
+  * [[GRASScreatelocationPython  |  GRASS70 Create Location using ancillary layer - python]]
   * [[grassvariables7 | Setting GRASS70 variables for GRASS bash job]]
   * [[grass7exercise | Exercise Create a Location, enter in GRASS and import data ]] 
   * [[GRASS_HPC   |  GRASS in the YALE-HPC  ]]
