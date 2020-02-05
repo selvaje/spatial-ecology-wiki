@@ -52,8 +52,8 @@ head $OUTDIR/iris_edited.csv
 
 <code bash| bash_r.sh>
 
-export INDIR=/data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
-export OUTDIR=/data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+export INDIR=~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+export OUTDIR=~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
 
 # To compare processing speed, let's use the command time
 
@@ -93,8 +93,8 @@ In our case the one image will be passed to one processor and the second image w
 
 <code bash| bash_r_xargs.sh>
 
-export INDIR=/data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
-export OUTDIR=/data/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+export  INDIR=~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+export OUTDIR=~/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
 
 time (
 

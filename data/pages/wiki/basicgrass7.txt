@@ -28,7 +28,7 @@ The wxGUI graphical user interface provides options to rename/remove LOCATIONs a
 
  
 There are several ways to use and open Grass. The simplest way is to open a terminal and type:
-   grass74 -gui
+   grass74 -text
 
 A second option is to use the Python GUI by typing in the terminal:
 

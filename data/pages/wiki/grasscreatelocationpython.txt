@@ -2,9 +2,10 @@
 
 [[http://www.spatial-ecology.net/ost4sem/exercise/python_grass/01_Grass_Python_LS.html | 01_Grass_Python_LS.html ]]
 
-
+  sudo pip2 install grass-session
   cd /home/user/ost4sem/exercise/python_grass
   cp /home/user/ost4sem/exercise/basic_adv_gdalogr/input_proj.tif /home/user/ost4sem/exercise/python_grass
+  rm -f /home/user/ost4sem/exercise/python_grass/01_Grass_Python_LS.ipynb
   wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_grass/01_Grass_Python_LS.ipynb
   jupyter-lab  /home/user/ost4sem/exercise/python_grass/01_Grass_Python_LS.ipynb
   

@@ -1,0 +1,249 @@
+
+<h1 class="sectionedit1" id="multicore_processing_in_python_-_zonal_statistic">Multicore processing in python - Zonal Statistic</h1>
+<div class="level1">
+
+<p>
+Calculate zonal statistic (min mean max standard deviation) 
+</p>
+<pre class="code">cd /home/user/ost4sem/exercise/python_multicore</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Multicore processing in python - Zonal Statistic&quot;,&quot;hid&quot;:&quot;multicore_processing_in_python_-_zonal_statistic&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-178&quot;} -->
+<h3 class="sectionedit2" id="one_core">One core</h3>
+<div class="level3">
+
+<p>
+Running zonal statistical and the get the mean of the pixels fallen inside each poligon.<br/>
+
+home/capooti/webapps/spatialecology_static/ost4sem/exercise/
+</p>
+<pre class="code">python zonal_stats_basic_sp.py borders_tribes.shp popc_0ADProj.tif zonal_stat_sp.txt</pre>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:multicore_python&amp;codeblock=0" title="Download Snippet" class="mediafile mf_py">zonal_stats_basic_sp.py</a></dt>
+<dd><pre class="code python"><span class="kw1">from</span> osgeo <span class="kw1">import</span> gdal<span class="sy0">,</span> ogr<span class="sy0">,</span> osr
+<span class="kw1">import</span> numpy<span class="sy0">,</span> <span class="kw3">sys</span>
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+&nbsp;
+<span class="kw1">def</span> fmtFloat <span class="br0">&#40;</span>x<span class="br0">&#41;</span> :
+    <span class="kw1">return</span> <span class="kw2">float</span><span class="br0">&#40;</span><span class="st0">&quot;{0:.2f}&quot;</span>.<span class="me1">format</span><span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">def</span> proc<span class="br0">&#40;</span> <span class="br0">&#41;</span>:
+    raster <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>input_value_raster<span class="br0">&#41;</span>
+    shape <span class="sy0">=</span> ogr.<span class="me1">Open</span><span class="br0">&#40;</span>input_zone_polygon<span class="br0">&#41;</span>
+    lyr <span class="sy0">=</span> shape.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    statsArr <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+    <span class="kw1">for</span> fid <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>lyr.<span class="me1">GetFeatureCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+        feat <span class="sy0">=</span> lyr.<span class="me1">GetFeature</span><span class="br0">&#40;</span>fid<span class="br0">&#41;</span>
+    <span class="co1"># Get extent of feat</span>
+        geom <span class="sy0">=</span> feat.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw1">if</span> geom.<span class="me1">GetGeometryName</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="st0">&quot;MULTIPOLYGON&quot;</span>:
+            count <span class="sy0">=</span> <span class="nu0">0</span>
+            pointsX <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+            pointsY <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+            <span class="kw1">for</span> polygon <span class="kw1">in</span> geom:
+                geomInner <span class="sy0">=</span> geom.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span>count<span class="br0">&#41;</span>
+                ring <span class="sy0">=</span> geomInner.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+                numpoints <span class="sy0">=</span> ring.<span class="me1">GetPointCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+                <span class="kw1">for</span> p <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>numpoints<span class="br0">&#41;</span>:
+                    lon<span class="sy0">,</span> lat<span class="sy0">,</span> z <span class="sy0">=</span> ring.<span class="me1">GetPoint</span><span class="br0">&#40;</span>p<span class="br0">&#41;</span>
+                    pointsX.<span class="me1">append</span><span class="br0">&#40;</span>lon<span class="br0">&#41;</span>
+                    pointsY.<span class="me1">append</span><span class="br0">&#40;</span>lat<span class="br0">&#41;</span>
+                count +<span class="sy0">=</span> <span class="nu0">1</span>
+        <span class="kw1">elif</span> geom.<span class="me1">GetGeometryName</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="st0">&quot;POLYGON&quot;</span>:
+            ring <span class="sy0">=</span> geom.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+            numpoints <span class="sy0">=</span> ring.<span class="me1">GetPointCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+            pointsX <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+            pointsY <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+            <span class="kw1">for</span> p <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>numpoints<span class="br0">&#41;</span>:
+                lon<span class="sy0">,</span> lat<span class="sy0">,</span> z <span class="sy0">=</span> ring.<span class="me1">GetPoint</span><span class="br0">&#40;</span>p<span class="br0">&#41;</span>
+                pointsX.<span class="me1">append</span><span class="br0">&#40;</span>lon<span class="br0">&#41;</span>
+                pointsY.<span class="me1">append</span><span class="br0">&#40;</span>lat<span class="br0">&#41;</span>
+        <span class="kw1">else</span>:
+            <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+        xmin <span class="sy0">=</span> <span class="kw2">min</span><span class="br0">&#40;</span>pointsX<span class="br0">&#41;</span>
+        xmax <span class="sy0">=</span> <span class="kw2">max</span><span class="br0">&#40;</span>pointsX<span class="br0">&#41;</span>
+        ymin <span class="sy0">=</span> <span class="kw2">min</span><span class="br0">&#40;</span>pointsY<span class="br0">&#41;</span>
+        ymax <span class="sy0">=</span> <span class="kw2">max</span><span class="br0">&#40;</span>pointsY<span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1"># Specify offset and rows and columns to read</span>
+        xoff <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>xmin - xOrigin<span class="br0">&#41;</span> / pixelWidth<span class="br0">&#41;</span>
+        yoff <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>yOrigin - ymax<span class="br0">&#41;</span> / pixelWidth<span class="br0">&#41;</span>
+        xcount <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>xmax - xmin<span class="br0">&#41;</span> / pixelWidth<span class="br0">&#41;</span> + <span class="nu0">1</span>
+        ycount <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>ymax - ymin<span class="br0">&#41;</span> / pixelWidth<span class="br0">&#41;</span> + <span class="nu0">1</span>
+&nbsp;
+        <span class="co1"># Create memory target raster</span>
+        target_ds <span class="sy0">=</span> gdal.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">&quot;MEM&quot;</span><span class="br0">&#41;</span>.<span class="me1">Create</span><span class="br0">&#40;</span><span class="st0">&quot;&quot;</span><span class="sy0">,</span> xcount<span class="sy0">,</span> ycount<span class="sy0">,</span> gdal.<span class="me1">GDT_Byte</span><span class="br0">&#41;</span>
+        target_ds.<span class="me1">SetGeoTransform</span><span class="br0">&#40;</span><span class="br0">&#40;</span>xmin<span class="sy0">,</span> pixelWidth<span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> ymax<span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> pixelHeight<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1"># Create for target raster the same projection as for the value raster</span>
+        raster_srs <span class="sy0">=</span> osr.<span class="me1">SpatialReference</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        raster_srs.<span class="me1">ImportFromWkt</span><span class="br0">&#40;</span>raster.<span class="me1">GetProjectionRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        target_ds.<span class="me1">SetProjection</span><span class="br0">&#40;</span>raster_srs.<span class="me1">ExportToWkt</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1"># Rasterize zone polygon to raster</span>
+        gdal.<span class="me1">RasterizeLayer</span><span class="br0">&#40;</span>target_ds<span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> lyr<span class="sy0">,</span> burn_values<span class="sy0">=</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1"># Read raster as arrays</span>
+        banddataraster <span class="sy0">=</span> raster.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+        dataraster <span class="sy0">=</span> banddataraster.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span>xoff<span class="sy0">,</span> yoff<span class="sy0">,</span> xcount<span class="sy0">,</span> ycount<span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>
+            numpy.<span class="kw2">float</span>
+        <span class="br0">&#41;</span>
+&nbsp;
+        bandmask <span class="sy0">=</span> target_ds.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+        datamask <span class="sy0">=</span> bandmask.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> xcount<span class="sy0">,</span> ycount<span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>numpy.<span class="kw2">float</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1"># Mask zone of raster</span>
+        zoneraster <span class="sy0">=</span> numpy.<span class="me1">ma</span>.<span class="me1">masked_array</span><span class="br0">&#40;</span>dataraster<span class="sy0">,</span> numpy.<span class="me1">logical_not</span><span class="br0">&#40;</span>datamask<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+        feature_stats <span class="sy0">=</span> <span class="br0">&#123;</span>
+        <span class="st0">'min'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="kw2">min</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st0">'mean'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="me1">mean</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st0">'max'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="kw2">max</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st0">'std'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="me1">std</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st0">'sum'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="kw2">sum</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+        <span class="st0">'fid'</span>: <span class="kw2">int</span><span class="br0">&#40;</span>feat.<span class="me1">GetFID</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#125;</span>
+        statsArr.<span class="me1">append</span><span class="br0">&#40;</span>feature_stats<span class="br0">&#41;</span>    
+    <span class="kw1">return</span> statsArr
+&nbsp;
+<span class="co1"># Open data</span>
+input_zone_polygon <span class="sy0">=</span> <span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+input_value_raster <span class="sy0">=</span> <span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span>
+output_stats <span class="sy0">=</span> <span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span>
+&nbsp;
+rast <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>input_value_raster<span class="br0">&#41;</span>
+shp <span class="sy0">=</span> ogr.<span class="me1">Open</span><span class="br0">&#40;</span>input_zone_polygon<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Get raster georeference info</span>
+transform <span class="sy0">=</span> rast.<span class="me1">GetGeoTransform</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+xOrigin <span class="sy0">=</span> transform<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+yOrigin <span class="sy0">=</span> transform<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span>
+pixelWidth <span class="sy0">=</span> transform<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+pixelHeight <span class="sy0">=</span> transform<span class="br0">&#91;</span><span class="nu0">5</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="co1"># Start the processes</span>
+layer <span class="sy0">=</span> shp.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+statsOut <span class="sy0">=</span> proc<span class="br0">&#40;</span><span class="br0">&#41;</span>
+dfOut <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#40;</span>statsOut<span class="br0">&#41;</span><span class="br0">&#41;</span>
+dfOut.<span class="me1">to_csv</span><span class="br0">&#40;</span>output_stats<span class="sy0">,</span>sep<span class="sy0">=</span><span class="st0">&quot;<span class="es0">\t</span>&quot;</span><span class="sy0">,</span>index<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;One core&quot;,&quot;hid&quot;:&quot;one_core&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;179-4040&quot;} -->
+<h3 class="sectionedit3" id="multi_core">Multi core</h3>
+<div class="level3">
+<pre class="code">python zonal_stats_basic_my.py borders_tribes.shp popc_0ADProj.tif zonal_stat_mp.txt</pre>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:multicore_python&amp;codeblock=1" title="Download Snippet" class="mediafile mf_py">zonal_stats_basic_mp.py</a></dt>
+<dd><pre class="code python"><span class="kw1">from</span> osgeo <span class="kw1">import</span> gdal<span class="sy0">,</span> ogr<span class="sy0">,</span> osr
+<span class="kw1">import</span> numpy<span class="sy0">,</span> <span class="kw3">sys</span>
+<span class="kw1">from</span> multiprocessing <span class="kw1">import</span> Pool 
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+&nbsp;
+&nbsp;
+<span class="kw1">def</span> fmtFloat <span class="br0">&#40;</span>x<span class="br0">&#41;</span> :
+    <span class="kw1">return</span> <span class="kw2">float</span><span class="br0">&#40;</span><span class="st0">&quot;{0:.2f}&quot;</span>.<span class="me1">format</span><span class="br0">&#40;</span>x<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">def</span> proc<span class="br0">&#40;</span>fid<span class="br0">&#41;</span>:
+    shape <span class="sy0">=</span> ogr.<span class="me1">Open</span><span class="br0">&#40;</span>input_zone_polygon<span class="br0">&#41;</span>
+    lyr <span class="sy0">=</span> shape.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    feat <span class="sy0">=</span> lyr.<span class="me1">GetFeature</span><span class="br0">&#40;</span>fid<span class="br0">&#41;</span>
+    raster <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>input_value_raster<span class="br0">&#41;</span>
+    geom <span class="sy0">=</span> feat.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">if</span> geom.<span class="me1">GetGeometryName</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="st0">&quot;MULTIPOLYGON&quot;</span>:
+        count <span class="sy0">=</span> <span class="nu0">0</span>
+        pointsX <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+        pointsY <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+        <span class="kw1">for</span> polygon <span class="kw1">in</span> geom:
+            geomInner <span class="sy0">=</span> geom.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span>count<span class="br0">&#41;</span>
+            ring <span class="sy0">=</span> geomInner.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+            numpoints <span class="sy0">=</span> ring.<span class="me1">GetPointCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+            <span class="kw1">for</span> p <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>numpoints<span class="br0">&#41;</span>:
+                lon<span class="sy0">,</span> lat<span class="sy0">,</span> z <span class="sy0">=</span> ring.<span class="me1">GetPoint</span><span class="br0">&#40;</span>p<span class="br0">&#41;</span>
+                pointsX.<span class="me1">append</span><span class="br0">&#40;</span>lon<span class="br0">&#41;</span>
+                pointsY.<span class="me1">append</span><span class="br0">&#40;</span>lat<span class="br0">&#41;</span>
+            count +<span class="sy0">=</span> <span class="nu0">1</span>
+    <span class="kw1">elif</span> geom.<span class="me1">GetGeometryName</span><span class="br0">&#40;</span><span class="br0">&#41;</span> <span class="sy0">==</span> <span class="st0">&quot;POLYGON&quot;</span>:
+        ring <span class="sy0">=</span> geom.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+        numpoints <span class="sy0">=</span> ring.<span class="me1">GetPointCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        pointsX <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+        pointsY <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+        <span class="kw1">for</span> p <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>numpoints<span class="br0">&#41;</span>:
+            lon<span class="sy0">,</span> lat<span class="sy0">,</span> z <span class="sy0">=</span> ring.<span class="me1">GetPoint</span><span class="br0">&#40;</span>p<span class="br0">&#41;</span>
+            pointsX.<span class="me1">append</span><span class="br0">&#40;</span>lon<span class="br0">&#41;</span>
+            pointsY.<span class="me1">append</span><span class="br0">&#40;</span>lat<span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">else</span>:
+        <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+    xmin <span class="sy0">=</span> <span class="kw2">min</span><span class="br0">&#40;</span>pointsX<span class="br0">&#41;</span>
+    xmax <span class="sy0">=</span> <span class="kw2">max</span><span class="br0">&#40;</span>pointsX<span class="br0">&#41;</span>
+    ymin <span class="sy0">=</span> <span class="kw2">min</span><span class="br0">&#40;</span>pointsY<span class="br0">&#41;</span>
+    ymax <span class="sy0">=</span> <span class="kw2">max</span><span class="br0">&#40;</span>pointsY<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Specify offset and rows and columns to read</span>
+    xoff <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>xmin - xOrigin<span class="br0">&#41;</span> / pixelWidth<span class="br0">&#41;</span>
+    yoff <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>yOrigin - ymax<span class="br0">&#41;</span> / pixelWidth<span class="br0">&#41;</span>
+    xcount <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>xmax - xmin<span class="br0">&#41;</span> / pixelWidth<span class="br0">&#41;</span> + <span class="nu0">1</span>
+    ycount <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span><span class="br0">&#40;</span>ymax - ymin<span class="br0">&#41;</span> / pixelWidth<span class="br0">&#41;</span> + <span class="nu0">1</span>
+&nbsp;
+    <span class="co1"># Create memory target raster</span>
+    target_ds <span class="sy0">=</span> gdal.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">&quot;MEM&quot;</span><span class="br0">&#41;</span>.<span class="me1">Create</span><span class="br0">&#40;</span><span class="st0">&quot;&quot;</span><span class="sy0">,</span> xcount<span class="sy0">,</span> ycount<span class="sy0">,</span> gdal.<span class="me1">GDT_Byte</span><span class="br0">&#41;</span>
+    target_ds.<span class="me1">SetGeoTransform</span><span class="br0">&#40;</span><span class="br0">&#40;</span>xmin<span class="sy0">,</span> pixelWidth<span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> ymax<span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> pixelHeight<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Create for target raster the same projection as for the value raster</span>
+    raster_srs <span class="sy0">=</span> osr.<span class="me1">SpatialReference</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    raster_srs.<span class="me1">ImportFromWkt</span><span class="br0">&#40;</span>raster.<span class="me1">GetProjectionRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    target_ds.<span class="me1">SetProjection</span><span class="br0">&#40;</span>raster_srs.<span class="me1">ExportToWkt</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Rasterize zone polygon to raster</span>
+    gdal.<span class="me1">RasterizeLayer</span><span class="br0">&#40;</span>target_ds<span class="sy0">,</span> <span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> lyr<span class="sy0">,</span> burn_values<span class="sy0">=</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Read raster as arrays</span>
+    banddataraster <span class="sy0">=</span> raster.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    dataraster <span class="sy0">=</span> banddataraster.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span>xoff<span class="sy0">,</span> yoff<span class="sy0">,</span> xcount<span class="sy0">,</span> ycount<span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>
+        numpy.<span class="kw2">float</span>
+    <span class="br0">&#41;</span>
+&nbsp;
+    bandmask <span class="sy0">=</span> target_ds.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+    datamask <span class="sy0">=</span> bandmask.<span class="me1">ReadAsArray</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> xcount<span class="sy0">,</span> ycount<span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>numpy.<span class="kw2">float</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Mask zone of raster</span>
+    zoneraster <span class="sy0">=</span> numpy.<span class="me1">ma</span>.<span class="me1">masked_array</span><span class="br0">&#40;</span>dataraster<span class="sy0">,</span> numpy.<span class="me1">logical_not</span><span class="br0">&#40;</span>datamask<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+    feature_stats <span class="sy0">=</span> <span class="br0">&#123;</span>
+    <span class="st0">'min'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="kw2">min</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st0">'mean'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="me1">mean</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st0">'max'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="kw2">max</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st0">'std'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="me1">std</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st0">'sum'</span>: fmtFloat<span class="br0">&#40;</span>numpy.<span class="kw2">sum</span><span class="br0">&#40;</span>zoneraster<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    <span class="st0">'fid'</span>: <span class="kw2">int</span><span class="br0">&#40;</span>feat.<span class="me1">GetFID</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#125;</span>
+    <span class="kw1">return</span> feature_stats
+&nbsp;
+<span class="co1"># Open data</span>
+input_zone_polygon <span class="sy0">=</span> <span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+input_value_raster <span class="sy0">=</span> <span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span>
+output_stats <span class="sy0">=</span> <span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span>
+&nbsp;
+rast <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>input_value_raster<span class="br0">&#41;</span>
+shp <span class="sy0">=</span> ogr.<span class="me1">Open</span><span class="br0">&#40;</span>input_zone_polygon<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Get raster georeference info</span>
+transform <span class="sy0">=</span> rast.<span class="me1">GetGeoTransform</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+xOrigin <span class="sy0">=</span> transform<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+yOrigin <span class="sy0">=</span> transform<span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span>
+pixelWidth <span class="sy0">=</span> transform<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+pixelHeight <span class="sy0">=</span> transform<span class="br0">&#91;</span><span class="nu0">5</span><span class="br0">&#93;</span>
+&nbsp;
+&nbsp;
+<span class="co1"># Start the processes</span>
+layer <span class="sy0">=</span> shp.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+featList <span class="sy0">=</span> <span class="kw2">range</span><span class="br0">&#40;</span>layer.<span class="me1">GetFeatureCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+p <span class="sy0">=</span> Pool<span class="br0">&#40;</span>processes<span class="sy0">=</span><span class="nu0">8</span><span class="br0">&#41;</span>
+pOut <span class="sy0">=</span> p.<span class="kw2">map</span><span class="br0">&#40;</span>proc<span class="sy0">,</span> featList<span class="br0">&#41;</span>
+dfOut <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#40;</span>pOut<span class="br0">&#41;</span><span class="br0">&#41;</span>
+dfOut.<span class="me1">to_csv</span><span class="br0">&#40;</span>output_stats<span class="sy0">,</span>sep<span class="sy0">=</span><span class="st0">&quot;<span class="es0">\t</span>&quot;</span><span class="sy0">,</span>index<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Multi core&quot;,&quot;hid&quot;:&quot;multi_core&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;4041-&quot;} -->

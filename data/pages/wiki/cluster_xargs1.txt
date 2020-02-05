@@ -28,12 +28,12 @@ The //**xargs**// command allows to run a process splitting the task to several 
 
 <code bash>
 
-ls 20?0_TSSP_IP-ENS-A2-SP20_43023435.tif  | xargs -n 1 -P 2  bash -c $'
+time ( ls 20?0_TSSP_IP-ENS-A2-SP20_43023435.tif  | xargs -n 1 -P 2  bash -c $'
 
 file=$1
 gdalwarp -r cubic -tr 0.008 0.008 -t_srs EPSG:4326 $file  proj_$file -overwrite
 
-' _ 
+' _ ) 
 
 </code>
 The //-n// option identifies the argument. The argument is the variable imported inside the loop. \\
@@ -53,7 +53,7 @@ For example, the following picture shows the processing time during the xargs lo
 
 The use of more arguments is also possible
 <code bash>
-time  for file in 20?0_TSSP_??-ENS-A2-SP20_43023435.tif  ; do for res in 0.008 0.08 ; do echo $file $res ; done ; done | xargs -n 2 -P 2 bash -c $'
+for file in 20?0_TSSP_??-ENS-A2-SP20_43023435.tif  ; do for res in 0.008 0.08 ; do echo $file $res ; done ; done | xargs -n 2 -P 2 bash -c $'
 
 file=$1
 res=$2

@@ -20,18 +20,21 @@ Material prepared by:\\
   * [[ wiki:python:basicpython |  Starting with Python - wiki]] 
   * Introduction to Python 1 [[ http://www.spatial-ecology.net/ost4sem/exercise/python_intro/01_Python_Intro.html|  01_Python_Intro  ]]\\
 
-   cd /home/user/ost4sem/exercise/python_intro
-   wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
-   jupyter-lab  /home/user/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
-   
+  cd /home/user/ost4sem/exercise/python_intro
+  wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
+  wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/pairs.dat
+  jupyter-lab  /home/user/ost4sem/exercise/python_intro/01_Python_Intro.ipynb
+     
 
   * Introduction to Python 2 [[ http://www.spatial-ecology.net/ost4sem/exercise/python_intro/02_Geo_Python.html |  02_Geo_Python ]]\\
 
-   cd /home/user/ost4sem/exercise/python_intro/
-   wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
-   jupyter-lab  /home/user/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
-   
+  cd /home/user/ost4sem/exercise/python_intro/
+  wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
+  jupyter-lab  /home/user/ost4sem/exercise/python_intro/02_Geo_Python.ipynb
+  
 
+
+  * [[ wiki:python:python_geoadvance | Python Advance ]]
   * [[ wiki:python:pythonenvironments | Python Environments ]]
   * [[ wiki:python:basicpython1 | Python Fibonacci ]]
   * [[ wiki:python:basicpython2 | Python for dummies - wiki]]
@@ -60,6 +63,11 @@ Material prepared by:\\
   * [[https://grasswiki.osgeo.org/wiki/GRASS_and_Python| grass.script]] writing python scripts in GRASS
   * [[http://rpy2.bitbucket.org/| Rpy2]] an interface to R from Python
   * [[http://www.slideshare.net/bytemining/rpy2| nice lecture]] explaining what rpy2 does.
+  * [[https://pcjericks.github.io/py-gdalogr-cookbook/ | Python GDAL/OGR Cookbook ]] 
+
+
+
+
 
 
  

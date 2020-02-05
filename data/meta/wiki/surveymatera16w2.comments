@@ -1,4 +1,4 @@
-a:5:{s:5:"title";s:20:" Please answer here ";s:6:"status";i:1;s:6:"number";i:12;s:8:"comments";a:12:{s:32:"84ba46dac04333d129ca2659e58e2e9e";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.198";s:4:"name";s:12:"Nick Triozzi";s:4:"mail";s:17:"ntriozzi@amnh.org";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1466168615;}s:3:"raw";s:644:"1. Python, not so much. I spent nearly the whole day of python completely in the dark. 
+a:5:{s:5:"title";s:20:" Please answer here ";s:6:"status";i:1;s:6:"number";i:13;s:8:"comments";a:13:{s:32:"84ba46dac04333d129ca2659e58e2e9e";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.198";s:4:"name";s:12:"Nick Triozzi";s:4:"mail";s:17:"ntriozzi@amnh.org";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1466168615;}s:3:"raw";s:644:"1. Python, not so much. I spent nearly the whole day of python completely in the dark. 
 2. I was happy to be exposed to OAM, ODM, and Rasdaman. However, I will still need to re-do the Rasdaman exercises in addition to learning the basics of bash commands. These are tools I will use in my work.
 3. I would have liked to work more directly with the imagery we collected with the drone, and perhaps have a hands-on exercise in programming the camera with CHDK, et cetera. It was helpful to see how the drone was constructed, and I am interested in doing this on my own.
 4. I would consider retaking this course once I am a bit more experienced. 
@@ -39,7 +39,7 @@ But in general it was a great week and I learned so much! Thanks for organizing 
 <p>
 Best, Sandra
 </p>
-";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"1a08251dfc0f634780a0d97d48772fcb";}s:32:"14fa4842fd9664a1239ecdd1aed08c17";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.212";s:4:"name";s:5:"Ehsan";s:4:"mail";s:18:"ehsankhl@yahoo.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1466169176;}s:3:"raw";s:67:"Thanks for this course. It was really so informative and useful. 
+";s:6:"parent";N;s:7:"replies";a:1:{i:0;s:32:"0db63ba0486ee07aa2ca6321ef5f4f70";}s:4:"show";b:1;s:3:"cid";s:32:"1a08251dfc0f634780a0d97d48772fcb";}s:32:"14fa4842fd9664a1239ecdd1aed08c17";a:8:{s:4:"user";a:5:{s:2:"id";s:18:"test193.204.23.212";s:4:"name";s:5:"Ehsan";s:4:"mail";s:18:"ehsankhl@yahoo.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1466169176;}s:3:"raw";s:67:"Thanks for this course. It was really so informative and useful. 
 
 ";s:5:"xhtml";s:76:"
 <p>
@@ -4276,4 +4276,8 @@ golden goose outlet <a href="https://www.goldengoosesneakersale.us/" class="urle
 <p>
 Philippe Model Sneakers <a href="https://www.philippemodelsale.com/" class="urlextern" target="blanc" title="https://www.philippemodelsale.com/" rel="nofollow noopener">https://www.philippemodelsale.com/</a> ,
 </p>
-";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"73db7cced24b2c55155ce48233fbbcee";}}s:11:"subscribers";N;}
+";s:6:"parent";N;s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"73db7cced24b2c55155ce48233fbbcee";}s:32:"0db63ba0486ee07aa2ca6321ef5f4f70";a:8:{s:4:"user";a:5:{s:2:"id";s:19:"test139.195.188.176";s:4:"name";s:20:"Jasa desain interior";s:4:"mail";s:25:"val.interior.id@gmail.com";s:7:"address";s:0:"";s:3:"url";s:0:"";}s:4:"date";a:1:{s:7:"created";i:1580029505;}s:3:"raw";s:55:"Jika butuh jasa desain interior bisa ke val-interior.id";s:5:"xhtml";s:66:"
+<p>
+Jika butuh jasa desain interior bisa ke val-interior.id
+</p>
+";s:6:"parent";s:32:"1a08251dfc0f634780a0d97d48772fcb";s:7:"replies";a:0:{}s:4:"show";b:1;s:3:"cid";s:32:"0db63ba0486ee07aa2ca6321ef5f4f70";}}s:11:"subscribers";N;}

@@ -29,8 +29,11 @@ Contact us  //info at spatial-ecology.net// to organize a training and see more 
 ==== News ==== 
 
 <note tip>
-** [[ https://www.pe-rc.nl/geocomputation | Geocomputation Summer Schools 2019 - Wageningen ]]**\\
-** [[ https://docs.google.com/document/d/e/2PACX-1vTyLsEotRvkSyCRJty-zBt7zScpPIw4axLhwOLnYo6I99zggRBaB89JVGeOTCmu85LBrkDru8-ysx_h/pub | Geocomputation Summer Schools 2019 - Program ]]**\\
+**Use GDAL, PKTOOLS and GRASS for massive raster operations in hydrology** 
+workshop at **2019 CUAHSI Hydroinformatics Conference**.\\
+[[ http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:gdalpktools_kenya | Use GDAL/OGR and PKTOOLS for raster/vector operations ]]\\
+[[ http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:basicgrass7 | Starting with GRASS 7.4]]\\
+[[ http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:grasscreatelocation | Create GRASS Location using ancillary layer ]]
 </note>
 
 <note tip>

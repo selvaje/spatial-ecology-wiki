@@ -1,0 +1,14 @@
+
+====== Python Advance ======
+
+[[ http://www.spatial-ecology.net/ost4sem/exercise/python_adv/01_GeoPython.html |  Adv GeoPython]]  
+
+
+  mkdir /home/user/ost4sem/exercise/python_adv
+  cd /home/user/ost4sem/exercise/python_adv
+  wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_adv/01_GeoPython.ipynb
+  wget -N http://www.spatial-ecology.net/ost4sem/exercise/python_adv/Codes.tar.bz2
+  tar -jxvf Codes.tar.bz2
+  jupyter-lab  /home/user/ost4sem/exercise/python_adv/01_GeoPython.ipynb
+  
+[[ http://www.spatial-ecology.net/ost4sem/exercise/python_adv/02_Python_MISC.html |  MISC]]  

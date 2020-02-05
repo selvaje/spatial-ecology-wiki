@@ -46,7 +46,7 @@ mkdir $HOME/bin
 cp -r /tmp/bin  $HOME
 
 # copy bash setting
-cp  /tmp/.bashrc_GUEST  $HOME/.bashrc
+cp  /tmp/.bashrc_GUESTS  $HOME/.bashrc
 
 # load the new bash setting
 source $HOME/.bashrc
@@ -57,13 +57,15 @@ The Geocomputation software (GRASS PKTOOLS and GDAL) are loaded directly in your
 
 ===== Filter an image =====
 
-{{ ::overview_scripts.png?1000 |}}
+{{overview_scripts.png?1000 |}}
 
 Status of the jobs in slurm can be seen by:
 
 
+  squeue --all
   sacct
   sinfo
+  
 
 building up some specific alias and save to $HOME/.bashrc
 

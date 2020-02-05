@@ -5,7 +5,7 @@
 On this page of the wiki we provide different sections (see in the table of contents): 
 
 ===== Grass Lectures =====
-  * Introduction to GRASS: [[http://www.spatial-ecology.net/ost4sem/lecture/grass_intro.pdf|download ]] or  VM@: ~/ost4sem/lecture/GRASS_intro_ste.pdf
+  * Introduction to GRASS: [[http://www.spatial-ecology.net/ost4sem/lecture/grass_intro.pdf|download ]] 
 
 ===== GRASS Tutorials =====
   * [[basicgrass2|Starting with GRASS for Yale]]
