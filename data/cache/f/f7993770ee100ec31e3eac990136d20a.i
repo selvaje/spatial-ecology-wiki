@@ -1,0 +1,9 @@
+a:16:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:10:"Quick Help";i:1;i:4;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:4;}i:2;i:1;}i:3;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:1;}i:4;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:163:"On this page you can delete all outdated files and folders of your DokuWiki to 
+reduce the space consumption on your web host. Simply copy/paste the content 
+from ";}i:2;i:21;}i:5;a:3:{i:0;s:12:"externallink";i:1;a:2:{i:0;s:79:"https://raw.githubusercontent.com/splitbrain/dokuwiki/stable/data/deleted.files";i:1;s:43:"GitHub: /dokuwiki/stable/data/deleted.files";}i:2;i:184;}i:6;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:119:" into the 
+text area below. Folders, which are empty after remove of outdated files will be 
+deleted also. Reading the ";}i:2;i:311;}i:7;a:3:{i:0;s:13:"interwikilink";i:1;a:4:{i:0;s:21:"doku>plugin:removeold";i:1;s:18:"plugin description";i:2;s:4:"doku";i:3;s:16:"plugin:removeold";}i:2;i:430;}i:8;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:96:" might 
+help your understanding of the functionality and delivering plugin update 
+information. ";}i:2;i:474;}i:9;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:570;}i:10;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:573;}i:11;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:573;}i:12;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:241:"We kindly want to remind that this plugin just works with the information provided 
+within the textarea. It cannot check if these files are really obsolete. Here we 
+rely on the infomation and good work provided by DokuWiki Core Development.";}i:2;i:575;}i:13;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:816;}i:14;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:816;}i:15;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:816;}}
