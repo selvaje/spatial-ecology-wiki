@@ -1,0 +1,7 @@
+reg1 &lt;- lm(markdata$Nudv_kg_N ~ markdata$GLRareal_N+markdata$jb_N+markdata$N_han_N+markdata$N_hus_N)
+reg2 &lt;- lm(markdata$Nudv_kg_N ~ markdata$GLRareal_N+markdata$N_han_N+markdata$N_hus_N)
+.
+.
+.
+reg8 &lt;- lm(markdata$Nudv_kg_N ~ markdata$GLRareal_N+markdata$N_han_N+markdata$N_hus_N+markdata$HaGraesVed_N+markdata$HaKornVaar_N+markdata$HaBrakSkov_N+markdata$HaKornVin_N)
+summary(reg8)

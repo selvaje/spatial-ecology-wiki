@@ -1,0 +1,23 @@
+<span class="co0"># extract land surface parameters based on GDEM</span>
+r.slope.aspect <span class="re2">elevation</span>=Reggdem <span class="re2">slope</span>=Regslope <span class="re2">aspect</span>=Regaspect <span class="re5">--overwrite</span>
+&nbsp;
+<span class="co0"># create the table of atributes for the Meteo points</span>
+<span class="co0">#v.db.droptable -f map=VNMeteo</span>
+<span class="co0">#v.db.addtable VNMeteo col=&quot;VNaspect double,VNslope double&quot;</span>
+v.db.addcol RegMeteo <span class="re2">col</span>=<span class="st0">&quot;Regelev double,Regaspect double,Regslope double&quot;</span>
+v.what.rast <span class="re2">rast</span>=Reggdem <span class="re2">vect</span>=RegMeteo <span class="re2">col</span>=Regelev
+v.what.rast <span class="re2">rast</span>=Regaspect <span class="re2">vect</span>=RegMeteo <span class="re2">col</span>=Regaspect
+v.what.rast <span class="re2">rast</span>=Regslope <span class="re2">vect</span>=RegMeteo <span class="re2">col</span>=Regslope
+&nbsp;
+<span class="co0"># add distance from the coast</span>
+v.db.addcol RegMeteo <span class="re2">col</span>=<span class="st0">&quot;DMetCoast double&quot;</span>
+v.distance <span class="re2">from</span>=RegMeteo <span class="re2">to</span>=RegCoast <span class="re2">output</span>=DMeteoCoast <span class="re2">upload</span>=dist <span class="re2">column</span>=DMetCoast <span class="re5">--overwrite</span>
+&nbsp;
+&nbsp;
+<span class="co0"># drop unneccessary columns in VNMeteo table</span>
+db.columns <span class="re2">table</span>=VNMeteo
+<span class="kw1">for</span> <span class="kw2">col</span> <span class="kw1">in</span> Data_YES Commune District Province F9 F10; <span class="kw1">do</span>
+  v.db.dropcol <span class="re2">map</span>=RegMeteo <span class="re2">column</span>=<span class="re1">$col</span>
+<span class="kw1">done</span>
+db.columns <span class="re2">table</span>=RegMeteo
+v.db.select RegMeteo <span class="sy0">|</span> <span class="kw2">head</span>

@@ -1,0 +1,119 @@
+
+<h1 class="sectionedit1" id="basic_awk_scripts">Basic AWK scripts</h1>
+<div class="level1">
+
+<p>
+Exercise:<br/>
+
+Script: open by rstudio <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/basic_awk.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/basic_awk.sh" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_awk/basic_awk.sh  </a><br/>
+
+Data: <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/input.txt" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_awk/input.txt" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_awk/input.txt </a><br/>
+
+Directory: ~/ost4sem/exercise/basic<em>adv</em>awk<br/>
+
+<br/>
+
+</p>
+<pre class="code bash">rstudio ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_awk<span class="sy0">/</span>basic_awk.sh <span class="sy0">&amp;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Basic AWK scripts&quot;,&quot;hid&quot;:&quot;basic_awk_scripts&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-454&quot;} -->
+<h3 class="sectionedit2" id="predefined_variables">Predefined variables</h3>
+<div class="level3">
+
+<p>
+Change directory, printing and summarise the data by predefined variables:
+</p>
+<pre class="code awk">cd <span class="sy4">~</span><span class="sy3">/</span>ost4sem<span class="sy3">/</span>exercise<span class="sy3">/</span>basic_adv_awk
+awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="re0">$5</span> , <span class="re0">$2</span> <span class="br0">&#125;</span>' input.txt   <span class="co1"># print a column 5 and 2  </span>
+awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="kw3">NF</span> <span class="br0">&#125;</span>'  input.txt       <span class="co1"># print number of column</span>
+awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="kw3">NR</span> <span class="br0">&#125;</span>' input.txt        <span class="co1"># print number of row</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Predefined variables&quot;,&quot;hid&quot;:&quot;predefined_variables&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:2,&quot;range&quot;:&quot;455-800&quot;} -->
+<h2 class="sectionedit3" id="use_begin_and_end">Use BEGIN and END</h2>
+<div class="level2">
+
+<p>
+Print a header and tail in a file:
+</p>
+<pre class="code awk">awk '<span class="kw2">BEGIN</span> <span class="br0">&#123;</span> <span class="kw5">print</span> <span class="st0">&quot;CODE&quot;</span><span class="br0">&#125;</span> <span class="br0">&#123;</span> <span class="kw5">print</span> <span class="re0">$5</span> <span class="br0">&#125;</span> <span class="kw2">END</span> <span class="br0">&#123;</span><span class="kw5">print</span> <span class="st0">&quot;TOT&quot;</span><span class="br0">&#125;</span>' input.txt</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Use BEGIN and END&quot;,&quot;hid&quot;:&quot;use_begin_and_end&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:3,&quot;range&quot;:&quot;801-954&quot;} -->
+<h3 class="sectionedit4" id="bash_and_awk">Bash and AWK</h3>
+<div class="level3">
+
+<p>
+Sort base on column number 5 and then print column 5: 
+</p>
+<pre class="code awk">sort <span class="sy3">-</span>k <span class="nu0">5</span>,<span class="nu0">5</span> <span class="sy3">-</span>g  input.txt  |   awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="re0">$5</span> <span class="br0">&#125;</span>'  <span class="sy2">&gt;</span> output.txt </pre>
+
+<p>
+print column 5 and then sort column number 1 (that was previously number 5)
+</p>
+<pre class="code awk">awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="re0">$5</span> <span class="br0">&#125;</span>'  input.txt  |  sort <span class="sy3">-</span>k <span class="nu0">1</span>,<span class="nu0">1</span>   <span class="sy2">&gt;</span> output.txt </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Bash and AWK&quot;,&quot;hid&quot;:&quot;bash_and_awk&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;955-1277&quot;} -->
+<h2 class="sectionedit5" id="bash_variables_in_awk">Bash variables in AWK</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Bash variables in AWK&quot;,&quot;hid&quot;:&quot;bash_variables_in_awk&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:5,&quot;range&quot;:&quot;1278-1311&quot;} -->
+<h3 class="sectionedit6" id="import_a_variable_in_awk_and_insert_the_awk-action_in_a_loop">Import a variable in awk and insert the awk-action in a loop</h3>
+<div class="level3">
+<pre class="code awk"><span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span> i=<span class="nu0">1</span> ; i<span class="sy2">&lt;=</span><span class="nu0">4</span> ; i<span class="sy3">++</span>  <span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">do</span>
+awk  <span class="sy3">-</span>v i=<span class="re0">$i</span>  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="re0">$i</span> <span class="br0">&#125;</span>' input.txt  
+done </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Import a variable in awk and insert the awk-action in a loop&quot;,&quot;hid&quot;:&quot;import_a_variable_in_awk_and_insert_the_awk-action_in_a_loop&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:6,&quot;range&quot;:&quot;1312-1481&quot;} -->
+<h2 class="sectionedit7" id="awk_operations">AWK operations</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Mathematical operation:</div>
+</li>
+</ul>
+<pre class="code awk">awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="kw4">log</span><span class="br0">&#40;</span><span class="re0">$1</span><span class="br0">&#41;</span> <span class="br0">&#125;</span>' input.txt  </pre>
+
+<p>
+String operation:
+</p>
+<pre class="code awk">awk  '<span class="br0">&#123;</span> <span class="kw5">print</span> <span class="kw4">substr</span><span class="br0">&#40;</span><span class="re0">$1</span>,<span class="nu0">1</span>,<span class="nu0">4</span><span class="br0">&#41;</span> <span class="br0">&#125;</span>' input.txt </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;AWK operations&quot;,&quot;hid&quot;:&quot;awk_operations&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:7,&quot;range&quot;:&quot;1482-1674&quot;} -->
+<h3 class="sectionedit8" id="query_operation">Query operation:</h3>
+<div class="level3">
+<pre class="code awk">awk  '<span class="br0">&#123;</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="re0">$3</span><span class="sy2">&gt;</span><span class="nu0">2</span><span class="br0">&#41;</span> <span class="kw5">print</span> <span class="re0">$3</span> <span class="br0">&#125;</span>'  input.txt
+awk  '<span class="br0">&#123;</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="re0">$3</span><span class="sy2">&gt;=</span><span class="nu0">2</span><span class="br0">&#41;</span> <span class="kw5">print</span> <span class="re0">$3</span> <span class="br0">&#125;</span>' input.txt  
+awk  '<span class="br0">&#123;</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="re0">$3</span><span class="sy2">&lt;</span><span class="nu0">2</span><span class="br0">&#41;</span> <span class="kw5">print</span> <span class="re0">$3</span> <span class="br0">&#125;</span>'  input.txt</pre>
+
+<p>
+The logical operator (if condition) can be inserted also out side from the “{}”. <br/>
+
+This is an example.<br/>
+
+Add an index to the input file txt file:
+</p>
+<pre class="code awk">awk '<span class="kw3">NR</span><span class="sy2">==</span><span class="nu0">1</span> <span class="br0">&#123;</span> <span class="kw5">print</span> <span class="st0">&quot;index &quot;</span><span class="re0">$0</span> <span class="br0">&#125;</span> NR<span class="sy2">&gt;</span><span class="nu0">1</span> <span class="br0">&#123;</span> <span class="kw5">print</span> NR<span class="sy3">-</span><span class="nu0">1</span>,<span class="re0">$0</span> <span class="br0">&#125;</span>' input.txt <span class="sy2">&gt;</span> output_withID.txt</pre>
+
+<p>
+The same operation can be done also with this syntax
+</p>
+<pre class="code awk">awk ' <span class="br0">&#123;</span> <span class="kw1">if</span> <span class="br0">&#40;</span><span class="kw3">NR</span><span class="sy2">==</span><span class="nu0">1</span><span class="br0">&#41;</span> <span class="br0">&#123;</span> <span class="kw5">print</span> <span class="st0">&quot;index &quot;</span><span class="re0">$0</span> <span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span> <span class="kw5">print</span> NR<span class="sy3">-</span><span class="nu0">1</span>,<span class="re0">$0</span> <span class="br0">&#125;</span><span class="br0">&#125;</span>' input.txt <span class="sy2">&gt;</span> output_withID.txt</pre>
+<ul>
+<li class="level1"><div class="li">Query operation for file management
+If we want to count files in a folder <em>tmp</em> of size bigger than 1Mb we can concatenate 3 functions piping each output as input for the next functiont</div>
+</li>
+</ul>
+<pre class="code awk">ls <span class="sy3">-</span>l <span class="sy3">/</span>tmp<span class="sy3">/</span> | awk '<span class="br0">&#123;</span>s=<span class="re0">$5</span>; <span class="kw1">if</span><span class="br0">&#40;</span>s<span class="sy2">&gt;</span><span class="nu0">1000000</span><span class="br0">&#41;</span><span class="br0">&#123;</span><span class="kw5">print</span><span class="re0">$0</span><span class="br0">&#125;</span><span class="br0">&#125;</span>'| wc <span class="sy3">-</span>l</pre>
+<ul>
+<li class="level1"><div class="li">Split a large file into small files of 100 lines each</div>
+</li>
+</ul>
+<pre class="code awk">awk  'NR<span class="sy3">%</span>100<span class="sy2">==</span><span class="nu0">1</span><span class="br0">&#123;</span>x=<span class="st0">&quot;blockfile&quot;</span><span class="sy3">++</span>i ; <span class="br0">&#125;</span><span class="br0">&#123;</span><span class="kw5">print</span> <span class="sy2">&gt;</span> x<span class="br0">&#125;</span>'  input.txt </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Query operation:&quot;,&quot;hid&quot;:&quot;query_operation&quot;,&quot;codeblockOffset&quot;:8,&quot;secid&quot;:8,&quot;range&quot;:&quot;1675-&quot;} -->

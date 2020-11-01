@@ -551,13 +551,15 @@ Students List
 
 Satisfaction Survey
 Preparation
-Geomorpho90m - Global high-resolution geomorphometry layers: empirical evaluation and accuracy assessment
+Geomorpho90m: technical documentation
 Machine Learning
 Regression with Artificial Neural Networks (Tensorflow)
 Different version and evironments
 
-Geocomputation at High Performance Computing Cluster (HPC) Anunna
+Geocomputation at High Performance Computing Cluster (HPC) Grace
 Multicore processing in python - Zonal Statistic
 GRASS70 Create Location using ancillary layer - python
 Python Advance
 Presentation
+Water Modeling
+Install pktools, openev and R 4.0.2 in OSGeoLive 13 Linux Virtual

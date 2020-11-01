@@ -1,0 +1,125 @@
+
+<h2 class="sectionedit1" id="use_of_qsub_and_xargs_in_for_running_r_sections_simultaneously">Use of qsub and xargs in for running R sections simultaneously</h2>
+<div class="level2">
+
+<p>
+We have seen in the  <a href="/dokuwiki/doku.php?id=wiki:cluster_qsub" class="wikilink1" title="wiki:cluster_qsub"> Transform a simple &quot;for loop script&quot; in multicore &quot;for loop script&quot; using qsub</a> how to use qsub and xargs to perform multicore processing. Now we see how to integrate R in xargs and run the job by qsub. 
+</p>
+
+<p>
+The object of the exercise is to calculate the Moran&#039;s I index (using R) inside the polygons of the poly_fr.sh shape file.
+</p>
+<pre class="code"> # logging to yaleHPC from your terminal
+ ssh -X geodata??@omega.hpc.yale.edu</pre>
+<pre class="code"> cd $HOME
+ wget https://dl.dropboxusercontent.com/u/29337496/.bashrc 
+ source $HOME/.bashrc
+ # if you do not have the folder or you are log to the Yale-HPC
+ 
+ mkdir -p $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/output_txt
+ mkdir -p $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif
+ cd $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif
+ wget https://dl.dropboxusercontent.com/u/29337496/2020_TSSP_IP-ENS-A2-SP20_43023435.tif
+ wget https://dl.dropboxusercontent.com/u/29337496/2050_TSSP_IP-ENS-A2-SP20_43023435.tif
+ wget https://dl.dropboxusercontent.com/u/29337496/2080_TSSP_IP-ENS-A2-SP20_43023435.tif
+ 
+ mkdir -p $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp
+ cd $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp
+ wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.dbf
+ wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.prj
+ wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.qpj
+ wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.shp
+ wget https://dl.dropboxusercontent.com/u/29337496/poly_fr.shx
+ 
+ $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/
+ wget https://dl.dropboxusercontent.com/u/29337496/myQSUBXARGSRscript4cluster.sh
+ </pre>
+
+<p>
+<br/>
+
+Split the shape file in 2 shape files with a single polygon 
+<br/>
+
+</p>
+<pre class="code"> ogr2ogr  -select   id   -where &#039;id=2&#039;       $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp/poly_fr2.shp $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp/poly_fr.shp
+ ogr2ogr  -select   id   -where &#039;id=1&#039;       $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp/poly_fr1.shp $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_shp/poly_fr.shp
+ mkdir /$HOME/stdout
+ mkdir /$HOME/stderr</pre>
+
+<p>
+<br/>
+
+</p>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:cluster_qsubinter&amp;codeblock=0" title="Download Snippet" class="mediafile mf_sh">myQSUBXARGSRscript4cluster.sh</a></dt>
+<dd><pre class="code bash"><span class="co0"># qsub syntax </span>
+<span class="co0"># for file in  $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif/20?0_TSSP_IP-ENS-A2-SP20_43023435.tif  ; do qsub   -v file=$file $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/myQSUBXARGSRscript4cluster.sh  ; done </span>
+&nbsp;
+<span class="co0"># bash syntax</span>
+<span class="co0"># for file in  $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/input_tif/2020_TSSP_IP-ENS-A2-SP20_43023435.tif  ; do bash  $HOME/ost4sem/exercise/basic_adv_gdalogr/fagus_sylvatica/myQSUBXARGSRscript4cluster.sh   $file ; done  </span>
+&nbsp;
+&nbsp;
+<span class="co0">#PBS -S /bin/bash </span>
+<span class="co0">#PBS -q devel</span>
+<span class="co0">#PBS -l walltime=0:02:00   </span>
+<span class="co0">#PBS -l nodes=1:ppn=2      </span>
+<span class="co0">#PBS -V</span>
+<span class="co0">#PBS -o /$HOME/stdout       </span>
+<span class="co0">#PBS -e /$HOME/stderr </span>
+&nbsp;
+<span class="co0"># varibles</span>
+&nbsp;
+<span class="co0"># export file=$1</span>
+<span class="kw3">export</span> <span class="re2">file</span>=<span class="re1">$file</span> 
+<span class="kw3">export</span> <span class="re2">INTIF</span>=<span class="re1">$HOME</span><span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span>input_tif
+<span class="kw3">export</span> <span class="re2">INSHP</span>=<span class="re1">$HOME</span><span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span>input_shp
+<span class="kw3">export</span> <span class="re2">OUTTXT</span>=<span class="re1">$HOME</span><span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span>output_txt
+<span class="kw3">export</span> <span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="kw2">ls</span> <span class="re1">$INSHP</span><span class="sy0">/</span>poly_fr?.shp  <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">2</span> <span class="kw2">bash</span>  <span class="re5">-c</span> $<span class="st_h">'
+&nbsp;
+SHP=$1
+shpname=$(basename $SHP .shp)
+export id=${shpname:7:1}
+echo id = $id  
+&nbsp;
+pkcrop -ot Int16   -m -1 -e  $SHP -i $file -o $INTIF/${filename}_crop${id}.tif 
+&nbsp;
+export file_crop=$INTIF/${filename}_crop${id}.tif 
+&nbsp;
+echo beforR $file_crop
+# start R and import bash variables (the file name)
+&nbsp;
+echo  $file_crop
+R --vanilla -q &lt;&lt;EOF
+&nbsp;
+# install.packages(&quot;rgdal&quot;)
+# install.packages(&quot;raster&quot;)
+library(rgdal)
+library(raster)
+&nbsp;
+file_crop = Sys.getenv(\'</span>file_crop<span class="co3">\'</span><span class="br0">&#41;</span>
+OUTTXT = Sys.getenv<span class="br0">&#40;</span><span class="co3">\'</span>OUTTXT<span class="co3">\'</span><span class="br0">&#41;</span>
+filename = Sys.getenv<span class="br0">&#40;</span><span class="co3">\'</span>filename<span class="co3">\'</span><span class="br0">&#41;</span>
+<span class="kw2">id</span> = Sys.getenv<span class="br0">&#40;</span><span class="co3">\'</span><span class="kw2">id</span><span class="co3">\'</span><span class="br0">&#41;</span>
+&nbsp;
+rastD = raster<span class="br0">&#40;</span> file_crop<span class="br0">&#41;</span>
+&nbsp;
+rastD = raster<span class="br0">&#40;</span>file_crop <span class="br0">&#41;</span>
+M_text = Moran<span class="br0">&#40;</span>rastD, <span class="re2">w</span>=matrix<span class="br0">&#40;</span><span class="nu0">1</span>, <span class="nu0">3</span>, <span class="nu0">3</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+M_text
+&nbsp;
+write.table <span class="br0">&#40;</span>M_text<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> ,paste<span class="br0">&#40;</span>OUTTXT,<span class="st0">&quot;/&quot;</span>,<span class="st0">&quot;poly&quot;</span>,<span class="kw2">id</span>,<span class="st0">&quot;_&quot;</span>,filename,<span class="st0">&quot;.txt&quot;</span>,<span class="re2">sep</span>=<span class="st0">&quot;&quot;</span> <span class="br0">&#41;</span>  ,row.names = F , col.names = F<span class="br0">&#41;</span>
+&nbsp;
+EOF
+&nbsp;
+<span class="st_h">' _ 
+&nbsp;
+cat   $OUTTXT/poly*_${filename}.txt   &gt;   $OUTTXT/poly_${filename}.txt  
+exit 
+checkjob -v $PBS_JOBID</span></pre>
+</dd></dl>
+
+</div>

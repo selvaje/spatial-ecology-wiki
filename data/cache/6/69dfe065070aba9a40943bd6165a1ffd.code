@@ -1,0 +1,4 @@
+<span class="kw2">wget</span> www.spatial-ecology.net<span class="sy0">/</span>ost4sem<span class="sy0">/</span>geo_tools<span class="sy0">/</span>ost4sem_zonal_stats.py.zip
+<span class="kw2">mv</span> .<span class="sy0">/</span>ost4sem_zonal_stats.py.zip .<span class="sy0">/</span>ost4sem_zonal_stats.py
+<span class="kw2">chmod</span> <span class="nu0">777</span> .<span class="sy0">/</span>ost4sem_zonal_stats.py
+.<span class="sy0">/</span>ost4sem_zonal_stats.py <span class="re5">-max</span> <span class="re5">-min</span> <span class="re5">-stddev</span> <span class="re5">-mean</span>   category.tif dem.tif stat.txt

@@ -1,0 +1,85 @@
+
+<h2 class="sectionedit1" id="name">NAME</h2>
+<div class="level2">
+
+<p>
+<strong>ost4sem<em>zonal</em>stats.py</strong>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;NAME&quot;,&quot;hid&quot;:&quot;name&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-45&quot;} -->
+<h2 class="sectionedit2" id="description">DESCRIPTION</h2>
+<div class="level2">
+
+<p>
+This command line zonal statistic calculator is built for gdal supported files.<br/>
+
+It calculates mean min max and stdev values of a continuos raster (e.g. dem) based on a different categorized raster.<br/>
+
+The output is a txt file with the statistical value of each category.<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;DESCRIPTION&quot;,&quot;hid&quot;:&quot;description&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;46-344&quot;} -->
+<h2 class="sectionedit3" id="synopsis">SYNOPSIS</h2>
+<div class="level2">
+
+<p>
+ost4sem_zonal_stats.py  [-category_no_data nodata_value]  [-raster_no_data nodata_value]<br/>
+
+                                       [-mean] [-mode] [-median] [-stddev] [-min] [-max] [-sum]<br/>
+
+                                       src_category   src_raster   dst_file<br/>
+
+</p>
+
+<p>
+-category_no_data nodata_value : no data value in the category raster. <br/>
+
+                                            No data value can be identify by the user or directly take in tif<br/>
+
+                                            but the “NoData Value=?” must be present in the tif.
+<br/>
+
+-raster_no_data nodata_value : no data value in the continuos raster. <br/>
+
+                                           No data value can be identify by the user or directly take in tif<br/>
+
+                                           but the “NoData Value=?” must be present in the tif.<br/>
+
+src_category : category raster ; layer used to group values for computing statisctics <br/>
+
+src_raster :   continues raster ; layer used to perform statisctics <br/>
+
+dst_file : destination file in txt format.
+<br/>
+
+<br/>
+
+[OPTIONS]<br/>
+
+<br/>
+
+If no option are reported the category value and counted pixel for each category will be reported in the destination file.<br/>
+
+<br/>
+
+-max : calculate maximum value of the continues raster in each grouped category <br/>
+
+-min : calculate min value of the continues raster in each grouped category <br/>
+
+-stddev : calculate standard deviation value of the continues raster in each grouped category <br/>
+
+-mean  : calculate mean value of the continues raster in each grouped category <br/>
+
+<br/>
+
+</p>
+<pre class="code bash"><span class="kw2">wget</span> www.spatial-ecology.net<span class="sy0">/</span>ost4sem<span class="sy0">/</span>geo_tools<span class="sy0">/</span>ost4sem_zonal_stats.py.zip
+<span class="kw2">mv</span> .<span class="sy0">/</span>ost4sem_zonal_stats.py.zip .<span class="sy0">/</span>ost4sem_zonal_stats.py
+<span class="kw2">chmod</span> <span class="nu0">777</span> .<span class="sy0">/</span>ost4sem_zonal_stats.py
+.<span class="sy0">/</span>ost4sem_zonal_stats.py <span class="re5">-max</span> <span class="re5">-min</span> <span class="re5">-stddev</span> <span class="re5">-mean</span>   category.tif dem.tif stat.txt</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;SYNOPSIS&quot;,&quot;hid&quot;:&quot;synopsis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;345-&quot;} -->

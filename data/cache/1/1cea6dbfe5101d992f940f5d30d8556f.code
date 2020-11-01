@@ -1,0 +1,10 @@
+<span class="kw2">nano</span> <span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>hadoop<span class="sy0">/</span>conf<span class="sy0">/</span>hdfs-site.xml
+<span class="co0">#added following:</span>
+<span class="sy0">&lt;</span>property<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>name<span class="sy0">&gt;</span>dfs.replication<span class="sy0">&lt;/</span>name<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>value<span class="sy0">&gt;</span><span class="nu0">1</span><span class="sy0">&lt;/</span>value<span class="sy0">&gt;</span>
+    <span class="sy0">&lt;</span>description<span class="sy0">&gt;</span>Default block replication.
+    The actual number of replications can be specified when the <span class="kw2">file</span> is created.
+    The default is used <span class="kw1">if</span> replication is not specified <span class="kw1">in</span> create time.
+    <span class="sy0">&lt;/</span>description<span class="sy0">&gt;</span>
+  <span class="sy0">&lt;/</span>property<span class="sy0">&gt;</span>

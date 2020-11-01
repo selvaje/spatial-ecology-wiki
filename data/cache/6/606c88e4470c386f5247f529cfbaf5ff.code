@@ -1,0 +1,4 @@
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>grass64
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span>bin:<span class="re1">$GISBASE</span><span class="sy0">/</span>scripts
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=~<span class="sy0">/</span>.grassrc6

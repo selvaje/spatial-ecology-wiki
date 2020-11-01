@@ -1,0 +1,451 @@
+
+<h1 class="sectionedit1" id="forest_biomass_production_estimate_for_energetic_use">FOREST BIOMASS PRODUCTION ESTIMATE FOR ENERGETIC USE</h1>
+<div class="level1">
+
+<p>
+Multicrireria analysis and fuzzy logic approach can help the estimation of potential forest biomass production according to environmental variability.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;FOREST BIOMASS PRODUCTION ESTIMATE FOR ENERGETIC USE&quot;,&quot;hid&quot;:&quot;forest_biomass_production_estimate_for_energetic_use&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-219&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+In this exercise we will estimate the potential forest biomass retractable from the forested area of Potenza territory. This will allow us to practice and learn some Bash shell scripting and awk commands within the grass environment. We will also automatically generate maps of covered forest. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;220-540&quot;} -->
+<h3 class="sectionedit3" id="general_framework">General framework</h3>
+<div class="level3">
+
+<p>
+The use of GIS system enables data integration of different origin and nature, that refer to the same area (criteria). The overlay operation allows you to overlope two or more layers in the form of maps allowing the analysis of the attributes that occupy the same geographical space. Multicriterial spatial techniques use GIS as basic structure of the analysis of multiple synergistic factors.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;General framework&quot;,&quot;hid&quot;:&quot;general_framework&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;541-967&quot;} -->
+<h3 class="sectionedit4" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+The main objective of this exercise is to estimate the potential forest biomass that can be logged. GIS and multicriterial analysis, are applied to analyse the various factors that contribute to increase or reduce the forest biomass production. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;968-1243&quot;} -->
+<h2 class="sectionedit5" id="metadata">METADATA</h2>
+<div class="level2">
+
+<p>
+For this project the following dataset have been analysed:
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1244-1324&quot;} -->
+<h3 class="sectionedit6" id="raster_data">Raster data</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Raster data&quot;,&quot;hid&quot;:&quot;raster_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1325-1345&quot;} -->
+<h1 class="sectionedit7" id="a_portion_of_basilicata_map_in_raster_file">A portion of Basilicata map in raster file.</h1>
+<div class="level1">
+<pre class="code"> 
+user@ubuntu:~/ost4sem/project/input/raster$ gdalinfo Pantano.tif 
+Driver: GTiff/GeoTIFF
+Files: Pantano.tif
+Size is 4167, 3089
+Coordinate System is `&#039;
+Metadata:
+  TIFFTAG_XRESOLUTION=500
+  TIFFTAG_YRESOLUTION=500
+  TIFFTAG_RESOLUTIONUNIT=2 (pixels/inch)
+Image Structure Metadata:
+  INTERLEAVE=PIXEL
+Corner Coordinates:
+Upper Left  (    0.0,    0.0)
+Lower Left  (    0.0, 3089.0)
+Upper Right ( 4167.0,    0.0)
+Lower Right ( 4167.0, 3089.0)
+Center      ( 2083.5, 1544.5)
+Band 1 Block=4167x8 Type=Byte, ColorInterp=Red
+Band 2 Block=4167x8 Type=Byte, ColorInterp=Green
+Band 3 Block=4167x8 Type=Byte, ColorInterp=Blue</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;A portion of Basilicata map in raster file.&quot;,&quot;hid&quot;:&quot;a_portion_of_basilicata_map_in_raster_file&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;1346-2021&quot;} -->
+<h3 class="sectionedit8" id="vector_data">Vector Data</h3>
+<div class="level3">
+<pre class="code">Layer name: CFR_BASILICATA_ALDO_VERIFICATO_INTERSECT_AREA
+Geometry: Polygon
+Feature Count: 9558
+Extent: (528851.122213, 4416607.927641) - (657652.441710, 4554165.280001)
+Layer SRS WKT:
+PROJCS[&quot;WGS_1984_UTM_Zone_33N&quot;,
+    GEOGCS[&quot;GCS_WGS_1984&quot;,
+        DATUM[&quot;WGS_1984&quot;,
+            SPHEROID[&quot;WGS_1984&quot;,6378137.0,298.257223563]],
+        PRIMEM[&quot;Greenwich&quot;,0.0],
+        UNIT[&quot;Degree&quot;,0.0174532925199433]],
+    PROJECTION[&quot;Transverse_Mercator&quot;],
+    PARAMETER[&quot;False_Easting&quot;,500000.0],
+    PARAMETER[&quot;False_Northing&quot;,0.0],
+    PARAMETER[&quot;Central_Meridian&quot;,15.0],
+    PARAMETER[&quot;Scale_Factor&quot;,0.9996],
+    PARAMETER[&quot;Latitude_Of_Origin&quot;,0.0],
+    UNIT[&quot;Meter&quot;,1.0]]
+CODICEREGI: String (254.0)
+CODICEPROV: String (254.0)
+CODICECOMU: String (254.0)
+NOMECOMUNE: String (254.0)
+COM_MONTAN: String (254.0)
+ID_PROGRES: Real (19.0)
+ID_SEZ: Integer (7.0)
+ORTOFOTO: Integer (6.0)
+PRIM_LIV: Integer (3.0)
+SEC_LIV: Integer (3.0)
+TERZ_LIV: Integer (3.0)
+SP1: Integer (3.0)
+SP2: Integer (3.0)
+SP3: Integer (3.0)
+SP4: Integer (3.0)
+SP5: Integer (3.0)
+SP6: Integer (3.0)
+SP7: Integer (3.0)
+SP8: Integer (3.0)
+SP9: Integer (3.0)
+SP10: Integer (3.0)
+SP1_: Real (16.0)
+SP2_: Real (16.0)
+SP3_: Real (16.0)
+SP4_: Real (16.0)
+COPATT: Integer (3.0)
+COPREG: Integer (3.0)
+ACCESS: Integer (3.0)
+NATUR: Integer (3.0)
+VIGORE: Integer (3.0)
+VALORICR: Integer (3.0)
+FRUIB: Integer (3.0)
+NOTE: String (200.0)
+SUPERF_HA: Real (19.11)
+QUOTA_MIN: Real (11.0)
+QUOTA_MAX: Real (11.0)
+QUOTA_MEDI: Real (19.4)
+PEND_MIN: Real (19.4)
+PEND_MAX: Real (19.4)
+PEND_MEDIA: Real (19.4)
+F_AREA: Real (19.11)
+OGRFeature(CFR_BASILICATA_ALDO_VERIFICATO_INTERSECT_AREA):0
+  CODICEREGI (String) = 17
+  CODICEPROV (String) = 076
+  CODICECOMU (String) = 043
+  NOMECOMUNE (String) = LAVELLO
+  COM_MONTAN (String) = LAVELLO E MONTEMILONE
+  ID_PROGRES (Real) =                  31
+  ID_SEZ (Integer) = 2
+  ORTOFOTO (Integer) = 453070
+  PRIM_LIV (Integer) = 136
+  SEC_LIV (Integer) = 200
+  TERZ_LIV (Integer) = 315
+  SP1 (Integer) = 134
+  SP2 (Integer) = 95
+  SP3 (Integer) = 78
+  SP4 (Integer) = 0
+  SP5 (Integer) = 0
+  SP6 (Integer) = 0
+  SP7 (Integer) = 0
+  SP8 (Integer) = 0
+  SP9 (Integer) = 0
+  SP10 (Integer) = 0
+  SP1_ (Real) =               50
+  SP2_ (Real) =               20
+  SP3_ (Real) =               20
+  SP4_ (Real) =                0
+  COPATT (Integer) = 902
+  COPREG (Integer) = 0
+  ACCESS (Integer) = 401
+  NATUR (Integer) = 503
+  VIGORE (Integer) = 602
+  VALORICR (Integer) = 702
+  FRUIB (Integer) = 802
+  NOTE (String) = (null)
+  SUPERF_HA (Real) =      29.52825226084
+  QUOTA_MIN (Real) =         107
+  QUOTA_MAX (Real) =         147
+  QUOTA_MEDI (Real) =            116.3989
+  PEND_MIN (Real) =              0.0000
+  PEND_MAX (Real) =              5.1997
+  PEND_MEDIA (Real) =              0.8801
+  F_AREA (Real) =  295282.52260844968
+  MULTIPOLYGON </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector Data&quot;,&quot;hid&quot;:&quot;vector_data&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:8,&quot;range&quot;:&quot;2022-4877&quot;} -->
+<h3 class="sectionedit9" id="text_files_and_tables">Text files and tables</h3>
+<div class="level3">
+
+<p>
+Input data for biomass estimation:  vegetation cover, forest vegetation type, slope, elevation etc
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Text files and tables&quot;,&quot;hid&quot;:&quot;text_files_and_tables&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:9,&quot;range&quot;:&quot;4878-5009&quot;} -->
+<h2 class="sectionedit10" id="method">METHOD</h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> Rasterization shp and spatial criteria in <em>ectar</em> unity measure (pixel = 100 * 100 meters);</div>
+</li>
+<li class="level1"><div class="li"> Application of <em>fuzzy logic</em> method;</div>
+</li>
+<li class="level1"><div class="li"> replacement of the spatial information criteria with generated weighted coefficient (vegetation cover, forest vegetation type, slope, elevation etc);</div>
+</li>
+<li class="level1"><div class="li"> Union and subsequent query of the information for each raster pixel:</div>
+</li>
+</ol>
+<ul>
+<li class="level1"><div class="li"> Aj = ∑Xij  [ƒ(Jaccess) + ƒ(Jpend) + ƒ(Jcop) + ƒ(J3liv) + ƒ(Jvig) 5־¹]  ×  Wj <br/>
+</div>
+</li>
+</ul>
+
+<p>
+Where:<br/>
+
+Aj = Productivity;<br/>
+
+Xij  = Unitary provvigion for forestry category, for ectar in twenty years;<br/>
+
+ƒ(Jaccess) = Fuzzy function for accessibility criteria;<br/>
+
+ƒ(Jpend) = Fuzzy function for accessibility criteria;<br/>
+
+ƒ(Jcop) = Fuzzy function for accessibility criteria;<br/>
+
+ƒ(J3liv) = Fuzzy function for accessibility criteria<br/>
+
+ƒ(Jvig) = Fuzzy function for accessibility criteria;<br/>
+
+Wj = Forestry area value.. <br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:10,&quot;range&quot;:&quot;5010-5921&quot;} -->
+<h2 class="sectionedit11" id="data_import">DATA IMPORT</h2>
+<div class="level2">
+<pre class="code bash"><span class="co0">#    1. Rasterization shp and spatial criteria in ectar unity measure (pixel = 100 * 100 meters);</span>
+<span class="co0">#    2. Application of fuzzy logic method;</span>
+<span class="co0">#    3. Replacement of the spatial information criteria with generated weighted coefficient (vegetation cover, forest vegetation type, slope, elevation etc);</span>
+<span class="co0">#    4. Union and subsequent query of the information for each raster pixel:</span>
+&nbsp;
+&nbsp;
+<span class="co0">##</span>
+<span class="co0"># Open Qgis and create a new location:  Basilicata, mapset: biomass using italian extent and</span>
+<span class="co0"># projection as follow</span>
+<span class="co0"># name: Universe Traverse Marcator</span>
+<span class="co0"># proj: utm</span>
+<span class="co0"># datum: wgs84</span>
+<span class="co0"># ellps: wgs84</span>
+<span class="co0"># zone: 33</span>
+<span class="co0"># no_defets: definied</span>
+<span class="co0"># EPGS: 32633</span>
+&nbsp;
+<span class="co0">#  start grass in the new working directory</span>
+grass <span class="re5">-text</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdb<span class="sy0">/</span>basilicata<span class="sy0">/</span>biomass<span class="sy0">/</span>
+&nbsp;
+<span class="co0"># import Pignola raster file</span>
+r.in.gdal   <span class="re5">-o</span> <span class="re2">input</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>raster<span class="sy0">/</span>Pantano.tif <span class="re2">output</span>=Pantano_raster
+<span class="co0"># -o override projection,  -e = extent to the new shp file extent</span>
+&nbsp;
+<span class="co0"># import forest cover shp file</span>
+v.in.ogr   <span class="re5">-o</span> <span class="re5">-e</span> <span class="re2">dsn</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>shp<span class="sy0">/</span>CFR_BASILICATA_ALDO_VERIFICATO_INTERSECT_AREA.shp <span class="re2">output</span>=bas_forest
+<span class="co0"># -o override projection,  -e = extent to the new shp file extent</span>
+&nbsp;
+<span class="co0"># WARNING: 518 areas represent more (overlapping) features, because polygons</span>
+<span class="co0">#          overlap in input layer(s). Such areas are linked to more than 1</span>
+<span class="co0">#          row in attribute table. The number of features for those areas is</span>
+<span class="co0">#          stored as category in layer 2</span>
+<span class="co0"># 14178 input polygons</span>
+<span class="co0"># Total area: 4.031687e+09 (17773 areas)</span>
+<span class="co0"># Overlapping area: 5.491385e+05 (518 areas)</span>
+<span class="co0"># Area without category: 4.781430e+08 (4133 areas)</span>
+&nbsp;
+<span class="co0"># # select, in shp file, study area from comune = Pignola</span>
+<span class="co0"># g.region bas_forest</span>
+<span class="co0"># </span>
+<span class="co0"># # select, in shp file, study area from coordinate projection, WGS 84 - UTM N 33</span>
+<span class="co0"># g.region n=5322500 s=401000 w=300700 e=889700</span>
+<span class="co0"># </span>
+<span class="co0"># # select study area from multiple comune or other parameter</span>
+<span class="co0"># v.extract input=bas_forest output=pantano_forest    where=&quot;(NOMECOMUNE = 'PIGNOLA') or (NOMECOMUNE = 'TITO') or (NOMECOMUNE = 'ABRIOLA') or (NOMECOMUNE = 'SASSO DI CASTALDA') or (NOMECOMUNE = 'PICERNO') or (NOMECOMUNE = 'SATRIANO DI LUCANIA') or (NOMECOMUNE = 'CALVELLO') or (NOMECOMUNE = 'POTENZA')&quot; new=-1 --overwrite ; d.mon start=x1 ; d.vect pantano_forest</span>
+&nbsp;
+<span class="co0"># select study area from buffer area (used method)</span>
+    <span class="co0">## create a new empty vector map that contain a point of selected coordinates, and a circle of 15000 meters ray </span>
+    v.edit <span class="re2">tool</span>=create <span class="re2">map</span>=biomass_plant
+&nbsp;
+    <span class="co0">## create a point, from coordinate projection, that will represent the centre of a circle of 15000 meters ray </span>
+    <span class="kw3">echo</span> <span class="st0">&quot;P 1 1
+     563280 4493294
+     1 1&quot;</span> <span class="sy0">|</span> v.edit <span class="re5">-n</span> <span class="re2">tool</span>=add <span class="re2">map</span>=biomass_plant
+&nbsp;
+    <span class="co0">## generate a buffer area</span>
+    v.buffer <span class="re2">input</span>=biomass_plant <span class="re2">output</span>=circles <span class="re2">type</span>=point <span class="re2">buffer</span>=<span class="nu0">15000</span>
+&nbsp;
+    <span class="co0">## Selects features from vector map (A) by features from other vector map in the buffer circle (B). </span>
+    v.select <span class="re2">ainput</span>=bas_forest <span class="re2">binput</span>=circles <span class="re2">output</span>=baslimit <span class="re2">operator</span>=overlap
+&nbsp;
+<span class="co0"># create folder: reclass_table</span>
+<span class="kw2">mkdir</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table
+&nbsp;
+<span class="co0"># Rasterization shp and spatial criteria in unity measure (pixel = 5 * 5 meters)</span>
+<span class="co0"># change resolution in 5 meters</span>
+g.region <span class="re2">res</span>=<span class="nu0">5</span> <span class="re2">vect</span>=baslimit
+&nbsp;
+<span class="co0"># 1. convert a unique baslimit.shp file, with multiple informations, in n. 5 raster file of 5 meters side with unique parameter information considered more relevant to the use of forest stands  </span>
+<span class="co0"># 2. Replacement of the spatial information criteria with fuzzy logic weighted coefficient;</span>
+&nbsp;
+<span class="co0">######</span>
+<span class="co0"># Aj = Productivity in mc/ectar for vegetation cover type</span>
+v.to.rast <span class="re2">input</span>=baslimit <span class="re2">output</span>=prim_liv <span class="re2">use</span>=attr <span class="re2">col</span>=PRIM_LIV  <span class="re5">--overwrite</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;101 thru 104 = 265 faggio&quot;</span> <span class="sy0">&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;105 thru 111 = 427 rimboschimenti misti&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;112 thru 114 = 645 castagno&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;115 thru 123 = 260 querceti&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;124 thru 126 = 0 arbusteti&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;127 thru 135 = 200 pini mediterranei&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;136 thru 140 = 500 igrofile&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;141 thru 144 = 200 rimboschimenti&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;145 thru 146 = 0 temporaneamente priva&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt
+&nbsp;
+r.reclass <span class="re2">input</span>=prim_liv <span class="re2">output</span>=prim_liv_r <span class="re2">rules</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_prim_liv.txt <span class="re5">--overwrite</span> 
+&nbsp;
+<span class="co0"># convert from integer to double value</span>
+r.mapcalc prim_liv_r2 = prim_liv_r<span class="sy0">*</span><span class="nu0">0.00100000</span>
+&nbsp;
+&nbsp;
+<span class="co0">######</span>
+<span class="co0"># ƒ(Jaccess) = Fuzzy function for accessibility criteria;</span>
+v.to.rast <span class="re2">input</span>=baslimit <span class="re2">output</span>=access <span class="re2">use</span>=attr <span class="re2">column</span>=ACCESS  <span class="re5">--overwrite</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;401 = 10 buona&quot;</span> <span class="sy0">&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_access.txt
+<span class="kw3">echo</span> <span class="st0">&quot;402 = 7 scarsa&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_access.txt
+<span class="kw3">echo</span> <span class="st0">&quot;403 = 4 insufficiente&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_access.txt
+&nbsp;
+r.reclass <span class="re2">input</span>=access <span class="re2">output</span>=access_r <span class="re2">rules</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_access.txt  <span class="re5">--overwrite</span> 
+&nbsp;
+<span class="co0"># convert from integer to double value</span>
+r.mapcalc access_r2 = access_r<span class="sy0">*</span><span class="nu0">0.10000</span>
+&nbsp;
+&nbsp;
+<span class="co0">######</span>
+<span class="co0"># ƒ(Jpend) = Fuzzy function for slope criteria;</span>
+v.to.rast <span class="re2">input</span>=baslimit <span class="re2">output</span>=pend_media <span class="re2">use</span>=attr <span class="re2">column</span>=PEND_MEDIA  <span class="re5">--overwrite</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;1 thru 18 = 10 buona&quot;</span> <span class="sy0">&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_pend_media.txt <span class="re5">--overwrite</span>
+<span class="kw3">echo</span> <span class="st0">&quot;19 thru 24 = 7 scarsa&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_pend_media.txt <span class="re5">--overwrite</span>
+<span class="kw3">echo</span> <span class="st0">&quot;25 thru 31 = 4 scarsa&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_pend_media.txt <span class="re5">--overwrite</span>
+<span class="kw3">echo</span> <span class="st0">&quot;32 thru 100 = 0 Insufficiente&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_pend_media.txt <span class="re5">--overwrite</span>
+&nbsp;
+r.reclass <span class="re2">input</span>=pend_media <span class="re2">output</span>=pend_media_r <span class="re2">rules</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_pend_media.txt <span class="re5">--overwrite</span>
+&nbsp;
+<span class="co0"># convert from integer to double value</span>
+r.mapcalc pend_media_r2 = pend_media_r<span class="sy0">*</span><span class="nu0">0.100000</span>
+&nbsp;
+&nbsp;
+<span class="co0">######</span>
+<span class="co0"># ƒ(J3liv) = Fuzzy function for utilisation type criteria</span>
+v.to.rast <span class="re2">input</span>=baslimit <span class="re2">output</span>=terz_liv <span class="re2">use</span>=attr <span class="re2">col</span>=TERZ_LIV  <span class="re5">--overwrite</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;301 thru 302 = 10 ceduo&quot;</span> <span class="sy0">&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_terz_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;303 thru 306 = 20 ceduo coniferato&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_terz_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;308 thru 309 = 10 popolamenti transitori&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_terz_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;310 thru 311 = 4 novelleto e perticaia&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_terz_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;312 thru 313 = 8 fustaia giovane e matura&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_terz_liv.txt
+<span class="kw3">echo</span> <span class="st0">&quot;315 thru 320 = 12 fustaia disetaneiforme&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_terz_liv.txt
+&nbsp;
+r.reclass <span class="re2">input</span>=terz_liv <span class="re2">output</span>=terz_liv_r <span class="re2">rules</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_terz_liv.txt <span class="re5">--overwrite</span>
+&nbsp;
+<span class="co0"># convert from integer to double value</span>
+r.mapcalc terz_liv_r2 = terz_liv_r<span class="sy0">*</span><span class="nu0">0.100000</span>
+&nbsp;
+&nbsp;
+<span class="co0">######</span>
+<span class="co0"># ƒ(Jvig) = Fuzzy function for fertility criteria;</span>
+v.to.rast <span class="re2">input</span>=baslimit <span class="re2">output</span>=vigore <span class="re2">use</span>=attr <span class="re2">col</span>=VIGORE  <span class="re5">--overwrite</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;603 = 10 alto&quot;</span> <span class="sy0">&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_vigore.txt
+<span class="kw3">echo</span> <span class="st0">&quot;602 = 7 medio&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_vigore.txt
+<span class="kw3">echo</span> <span class="st0">&quot;601 = 4 basso&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_vigore.txt
+&nbsp;
+r.reclass <span class="re2">input</span>=vigore <span class="re2">output</span>=vigore_r <span class="re2">rules</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_vigore.txt <span class="re5">--overwrite</span> 
+&nbsp;
+<span class="co0"># convert from integer to double value</span>
+r.mapcalc vigore_r2 = vigore_r<span class="sy0">*</span><span class="nu0">0.100000</span>
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="co0"># ƒ(Jquot) = Fuzzy function for elevation criteria;</span>
+v.to.rast <span class="re2">input</span>=baslimit <span class="re2">output</span>=quota_medi <span class="re2">use</span>=attr <span class="re2">col</span>=QUOTA_MEDI  <span class="re5">--overwrite</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;0 thru 1400 = 1 buona&quot;</span> <span class="sy0">&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_quota_medi.txt <span class="re5">--overwrite</span>
+<span class="kw3">echo</span> <span class="st0">&quot;1400 thru 2000 = 0 nulla&quot;</span> <span class="sy0">&gt;&gt;</span> <span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_quota_medi.txt <span class="re5">--overwrite</span>
+&nbsp;
+r.reclass <span class="re2">input</span>=quota_medi <span class="re2">output</span>=quota_medi_r <span class="re2">rules</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>input<span class="sy0">/</span>reclass_table<span class="sy0">/</span>reclass_quota_medi.txt <span class="re5">--overwrite</span> 
+&nbsp;
+<span class="co0"># overlope of the various informative stands obtained</span>
+&nbsp;
+          <span class="co0"># Aj = ∑Xij [ƒ(Jaccess) + ƒ(Jpend) + ƒ(Jvig) + ƒ(J3liv) + ƒ(Jvig) 5־¹]</span>
+&nbsp;
+                  <span class="co0"># where:</span>
+                  <span class="co0"># Aj = Productivity; </span>
+                  <span class="co0"># Xij = Unitary provvigion for forestry category, for ectar in twenty years;</span>
+                  <span class="co0"># ƒ(Jaccess) = Fuzzy function for accessibility criteria;</span>
+                  <span class="co0"># ƒ(Jpend) = Fuzzy function for slope criteria;</span>
+                  <span class="co0"># ƒ(J3liv) = Fuzzy function for accessibility criteria</span>
+                  <span class="co0"># ƒ(Jvig) = Fuzzy function for vigore criteria;</span>
+                  <span class="co0"># ƒ(Jquot) = Fuzzy function for elevation criteria;</span>
+                  <span class="co0"># Wj = Forestry area value..</span>
+&nbsp;
+r.mapcalc <span class="re2">produttivita</span>=<span class="st0">&quot;prim_liv_r2*((access_r2+pend_media_r2+terz_liv_r2+vigore_r2+quota_medi_r)/5)&quot;</span>
+\\</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;DATA IMPORT&quot;,&quot;hid&quot;:&quot;data_import&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:11,&quot;range&quot;:&quot;5922-15151&quot;} -->
+<h2 class="sectionedit12" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+
+<p>
+The multicriteria analysis method presented allowed, through the use of GIS Open Source and the utilise of ponderized coefficients alongside the characters considered most accidents on forest utilization, have developed a methodology for the characterization of land for the purpose of ecological and territorial planning. All this through the process of a substantial body of data recovered in the field, through their inclusion in overlapping layers rightly allowed analysis of the values per hectare.
+</p>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikibas10%3Abas10biomas&amp;media=wiki:produttivita.png" class="media" title="wiki:produttivita.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=55c9db&amp;media=wiki:produttivita.png" class="media" alt="" width="300" /></a>
+<br/>
+
+</p>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikibas10%3Abas10biomas&amp;media=wiki:unibas108biomas.png" class="media" title="wiki:unibas108biomas.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=ac9ecb&amp;media=wiki:unibas108biomas.png" class="media" alt="" width="300" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wikibas10%3Abas10biomas&amp;media=wiki:unibas108biomas_legend.png" class="media" title="wiki:unibas108biomas_legend.png"><img src="/dokuwiki/lib/exe/fetch.php?w=100&amp;tok=6f271d&amp;media=wiki:unibas108biomas_legend.png" class="media" alt="" width="100" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS and DISCUSSION&quot;,&quot;hid&quot;:&quot;results_and_discussion&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:12,&quot;range&quot;:&quot;15152-15806&quot;} -->
+<h2 class="sectionedit13" id="bibliography">BIBLIOGRAPHY</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> <a href="http://ecology.msu.montana.edu/labdsv/R/labs/lab11/lab11.html" class="urlextern" target="blanc" title="http://ecology.msu.montana.edu/labdsv/R/labs/lab11/lab11.html" rel="nofollow noopener">Fuzzy classification from Montana University</a></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <a href="http://wiki.gfoss.it/index.php/Creazione_del_DTM_con_GRASS_6.0.2" class="urlextern" target="blanc" title="http://wiki.gfoss.it/index.php/Creazione_del_DTM_con_GRASS_6.0.2" rel="nofollow noopener">http://wiki.gfoss.it/index.php/Creazione_del_DTM_con_GRASS_6.0.2</a></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.ing.unitn.it/~grass/docs/tutorial_62/htdocs/comandi/r.mapcalc.htm" class="urlextern" target="blanc" title="http://www.ing.unitn.it/~grass/docs/tutorial_62/htdocs/comandi/r.mapcalc.htm" rel="nofollow noopener">http://www.ing.unitn.it/~grass/docs/tutorial_62/htdocs/comandi/r.mapcalc.htm</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;BIBLIOGRAPHY&quot;,&quot;hid&quot;:&quot;bibliography&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:13,&quot;range&quot;:&quot;15807-&quot;} -->

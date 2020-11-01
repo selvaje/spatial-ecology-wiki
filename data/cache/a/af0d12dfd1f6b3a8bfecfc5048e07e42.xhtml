@@ -1,0 +1,104 @@
+
+<h1 class="sectionedit1" id="language_integrationimport_export_variables_and_integrate_different_languages_in_one_script">Language integration: import/export variables and integrate different languages in one script</h1>
+<div class="level1">
+
+<p>
+Often there is a need to switch from one language to another one. The different languages need to communicate by passing variables from one to the other one.<br/>
+
+<br/>
+
+This is an example of a <em>for bash loop</em> where I do something in bash then I start an R script using the  <a href="http://en.wikipedia.org/wiki/End-of-file" class="urlextern" target="blanc" title="http://en.wikipedia.org/wiki/End-of-file" rel="nofollow noopener">EOF</a> function.<br/>
+
+<br/>
+
+The  <em>export</em> bash function and the <em>Sys.getenv()</em> R function allows to exchange variables between R and bash. We can use this functionality to embed an R command in bash.<br/>
+
+</p>
+<pre class="code bash"><span class="kw3">export</span> <span class="re2">INDIR</span>=path<span class="sy0">/</span>path<span class="sy0">/</span>path
+<span class="kw3">export</span> <span class="re2">OUTDIR</span>=path<span class="sy0">/</span>path<span class="sy0">/</span>path
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="re1">$INDIR</span><span class="sy0">/</span>input<span class="br0">&#91;</span><span class="nu0">1</span>-<span class="nu0">3</span><span class="br0">&#93;</span>.tif  ; <span class="kw1">do</span> 
+&nbsp;
+<span class="co0"># crop the image based on polygon shapefile (poly.shp) </span>
+<span class="kw3">export</span>  <span class="re2">filename</span>=<span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="sy0">`</span>
+pkcrop  <span class="re5">-e</span> <span class="re1">$INDIR</span><span class="sy0">/</span>poly.shp  <span class="re1">$file</span> <span class="re5">-o</span> <span class="re1">$OUTDIR</span><span class="sy0">/</span><span class="co1">${filename}</span>_crop.tif   
+&nbsp;
+R <span class="re5">--vanilla</span> <span class="re5">--no-readline</span>   <span class="re5">-q</span>  <span class="co2">&lt;&lt; EOF
+&nbsp;
+INDIR = Sys.getenv(c('INDIR'))
+OUTDIR = Sys.getenv(c('OUTDIR'))
+filename = Sys.getenv(c('filename'))
+&nbsp;
+paste(&quot;do somthing with&quot;,INDIR,&quot;/&quot;,filename,&quot;_crop.tif&quot; )
+&nbsp;
+# if you get a file you can export with write.table
+&nbsp;
+# if you get a number you can use Sys.setenv() to export the variable in R:
+&nbsp;
+EOF</span>
+&nbsp;
+<span class="co0"># continue the operation in bash loop  eventually </span>
+<span class="co0"># using the variable settled by Sys.setenv()</span>
+&nbsp;
+<span class="kw1">done</span> 
+&nbsp;
+<span class="co0"># continue the operation in bash outside from the loop </span>
+<span class="co0"># eventually using the variable settled by Sys.setenv()</span></pre>
+
+<p>
+The previous example is useful if the R part is not long and can be integrate in the bash script as a text. Instead if the R script is long we can store it as an Rscript and call it from bash.<br/>
+
+</p>
+<pre class="code bash"><span class="kw3">export</span> <span class="re2">INDIR</span>=path<span class="sy0">/</span>path<span class="sy0">/</span>path
+<span class="kw3">export</span> <span class="re2">OUTDIR</span>=path<span class="sy0">/</span>path<span class="sy0">/</span>path
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="re1">$INDIR</span><span class="sy0">/</span>input<span class="br0">&#91;</span><span class="nu0">1</span>-<span class="nu0">3</span><span class="br0">&#93;</span>.tif  ; <span class="kw1">do</span> 
+&nbsp;
+<span class="co0"># crop the image based on polygon shapefile (poly.shp) </span>
+<span class="kw3">export</span>  <span class="re2">filename</span>=<span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="sy0">`</span>
+pkcrop  <span class="re5">-e</span> <span class="re1">$INDIR</span><span class="sy0">/</span>poly.shp  <span class="re1">$file</span> <span class="re5">-o</span> <span class="re1">$OUTDIR</span><span class="sy0">/</span><span class="co1">${filename}</span>_crop.tif
+&nbsp;
+R <span class="re5">--vanilla</span> <span class="re5">--no-readline</span>  <span class="re5">-q</span>    <span class="sy0">&lt;</span>    myRscript.R
+&nbsp;
+<span class="co0"># Rscript myRscript.R</span>
+&nbsp;
+<span class="co0"># continue the operation in bash loop</span>
+&nbsp;
+<span class="kw1">done</span> 
+&nbsp;
+<span class="co0"># continue the operation in bash outside from the loop</span></pre>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+In bash/c like command you can pass variables by setting arguments or by using the <abbr title="End of file">EOF</abbr> syntax.<br/>
+<br/>
+Let&#039;s suppose that the 3 tif are overlapping the same area and that I want make the sum of the 3. 
+</p>
+<pre class="code bash">gdalbuildvrt <span class="re1">$OUTDIR</span><span class="sy0">/</span>merge.vrt <span class="re1">$INDIR</span><span class="sy0">/</span>input<span class="br0">&#91;</span><span class="nu0">1</span>-<span class="nu0">3</span><span class="br0">&#93;</span>.tif 
+gdal_translate <span class="re1">$OUTDIR</span><span class="sy0">/</span>merge.vrt <span class="re1">$OUTDIR</span><span class="sy0">/</span>merge.tif
+&nbsp;
+                      <span class="co0"># first argument   # second argument</span>
+oft-calc  <span class="re5">-ot</span> Float64 <span class="re1">$OUTDIR</span><span class="sy0">/</span>merge.tif  <span class="re1">$OUTDIR</span><span class="sy0">/</span>sum.tif  <span class="sy0">&lt;&lt;</span>EOF <span class="co0"># inputs requested from the oft-calc</span>
+<span class="nu0">1</span>
+<span class="co0">#1 #2 #3 + +</span>
+EOF</pre>
+
+<p>
+<br/>
+
+In R you can call bash commands by the R command <em>system()</em>
+<br/>
+
+</p>
+<pre class="code bash">R</pre>
+<pre class="code bash">system<span class="br0">&#40;</span><span class="st0">&quot;pwd&quot;</span><span class="br0">&#41;</span></pre>
+
+<p>
+So you can use several bash commands and so olso gdal commands (such as gdal_translate). In this case your main working environment will be R
+</p>
+
+</div>

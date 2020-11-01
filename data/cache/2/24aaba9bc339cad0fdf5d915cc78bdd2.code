@@ -1,0 +1,17 @@
+<span class="co1">#!/usr/bin/python3</span>
+&nbsp;
+<span class="co1"># Create a pdf with a map image</span>
+&nbsp;
+<span class="kw1">import</span> fpdf
+&nbsp;
+<span class="co1"># PDF constructor:</span>
+<span class="co1"># Portrait, millimeter units, A4 page size</span>
+pdf<span class="sy0">=</span>fpdf.<span class="me1">FPDF</span><span class="br0">&#40;</span><span class="st0">&quot;P&quot;</span><span class="sy0">,</span> <span class="st0">&quot;mm&quot;</span><span class="sy0">,</span> <span class="st0">&quot;A4&quot;</span><span class="br0">&#41;</span>
+<span class="co1"># create a new page</span>
+pdf.<span class="me1">add_page</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="co1"># Set font: arial, bold, size 20</span>
+pdf.<span class="me1">set_font</span><span class="br0">&#40;</span><span class="st0">'Arial'</span><span class="sy0">,</span><span class="st0">'B'</span><span class="sy0">,</span><span class="nu0">20</span><span class="br0">&#41;</span>
+<span class="co1"># Create a new cell: 160 x 25mm, text contents, no border, centered</span>
+pdf.<span class="me1">cell</span><span class="br0">&#40;</span><span class="nu0">160</span><span class="sy0">,</span><span class="nu0">25</span><span class="sy0">,</span><span class="st0">'Hancock County Boundary'</span><span class="sy0">,</span> border<span class="sy0">=</span><span class="nu0">0</span><span class="sy0">,</span> align<span class="sy0">=</span><span class="st0">&quot;C&quot;</span><span class="br0">&#41;</span>
+pdf.<span class="me1">image</span><span class="br0">&#40;</span><span class="st0">&quot;hancock.png&quot;</span><span class="sy0">,</span><span class="nu0">25</span><span class="sy0">,</span><span class="nu0">50</span><span class="sy0">,</span><span class="nu0">150</span><span class="sy0">,</span><span class="nu0">160</span><span class="br0">&#41;</span>
+pdf.<span class="me1">output</span><span class="br0">&#40;</span><span class="st0">'map.pdf'</span><span class="sy0">,</span><span class="st0">'F'</span><span class="br0">&#41;</span>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://www.spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://www.spatial-ecology.net/dokuwiki/feed.php">
+        <title> wiki:personalpages</title>
+        <description></description>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2020-11-01T16:34:04+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:albamininni&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:alexdumitrun&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:giuseppeamatulli&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pieterkempeneers&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pubgiu&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pubste&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:stefanocasalegno&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:victoriaobrien&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:vladmerticariu&amp;rev=1594967994&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <url>http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:albamininni&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:albamininni</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:albamininni&amp;rev=1594967994&amp;do=diff</link>
+        <description>Dr Alba N. Mininni
+
+University of Basilicata, Italy
+
+DiCEM - Dipartimento delle Culture Europee e del Mediterraneo: Architettura, Ambiente, Patrimoni Culturali
+
+
+Alba is a food biotechnologist with expertise in molecular biology, gene expression and ionomic analysis, soil science and fruit quality.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:alexdumitrun&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:alexdumitrun</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:alexdumitrun&amp;rev=1594967994&amp;do=diff</link>
+        <description>Alex Dumitru
+
+Jacobs University, Bremen, Germany
+
+Large-Scale Scientific Information Systems Research Group
+
+
+Summary
+
+Alex Dumitru is a computer scientist with a vast expertise in array and
+scientific databases, geospatial standards and web service standards
+compliance. He is a contributor to the OGC WCS standards ecosystem and the
+main implementer of the rasdaman WCS and WCPS services, the reference
+implementation of the aforementioned standards. Alex is passionate about
+exploiting powerful ha…</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:giuseppeamatulli&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:giuseppeamatulli</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:giuseppeamatulli&amp;rev=1594967994&amp;do=diff</link>
+        <description>Dr. Giuseppe Amatulli
+
+
+
+ orcid.org/0000-0002-8341-2830
+
+
+Giuseppe is a forest scientist and spatial modeller with expertize in computer science. His research activity is mainly dedicated to wildland fire with special emphasis on wildfire occurrence and pattern recognition, and wildfire risk assessment based on human and bio-physical parameters. Beside this is also interest in species distribution model, areal distribution and potential shift under climate change condition. He daily dealing with…</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pieterkempeneers&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:pieterkempeneers</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pieterkempeneers&amp;rev=1594967994&amp;do=diff</link>
+        <description>Dr Pieter Kempeneers
+
+Pieter is an engineer in electronics and has been working as a researcher since 1995. He started with the Department of Telecommunications and Information Processing at the Ghent University  Since 1999, he has been working as a scientist in remote sensing with national and international research institutes (VITO, Belgium and the Joint Research Centre of the European Commission, Italy). His research focus is on image processing, pattern recognition, and multi- and hyperspect…</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pubgiu&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:pubgiu</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pubgiu&amp;rev=1594967994&amp;do=diff</link>
+        <description>Refereed Journal Papers
+
+	*  Amatulli, G, A. Camia, San-Miguel-Ayanz J. (2013).  Estimating future burned area under changing climate in the EU-Mediterranean countries using machine learning techniques. Science of The Total Environment
+	*  Casalegno, S., Amatulli, G., Bastrup-Birk, A., Houston Durrant, T., Pekkarinen, A., (2011).  Modelling and mapping the suitability of European forest formations at 1-km resolution.  European Journal of Forest Research.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pubste&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:pubste</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:pubste&amp;rev=1594967994&amp;do=diff</link>
+        <description>Peer review and book chapters
+
+ Recently subitted
+
+	*  Stott I., S. Casalegno, Kevin J. Gaston. J. Appl. Ecol. - Local-to-landscape effects of built environments on multiple ecosystem services.
+	*  Casalegno S., Bennie J., Inger R. Gaston K. - Ecological Applications -</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:stefanocasalegno&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:stefanocasalegno</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:stefanocasalegno&amp;rev=1594967994&amp;do=diff</link>
+        <description>Dr Stefano Casalegno
+
+Stefano is an environmental and data scientist with expertise in extracting knowledge from complex data sources.
+
+Trained at ecology, agriculture, satellite image analysis and GIS, with broad range of spatio-temporal data processing and predictive modelling skills, both technical and strategic.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:victoriaobrien&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:victoriaobrien</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:victoriaobrien&amp;rev=1594967994&amp;do=diff</link>
+        <description>Vlad Merticariu
+
+Jacobs University, Bremen, Germany
+
+Large-Scale Scientific Information Systems Research Group
+
+
+Summary
+
+Vlad is a computer scientist with a vast expertise in distributed systems, databases, geospatial standards and web service standards compliance. He is a contributor to the rasdaman array database engine, as well as OGC WCS standards ecosystem. Vlad's research interest falls under the category of parallel query processing: a network of machines collaborate for answering a sing…</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:vladmerticariu&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:personalpages:vladmerticariu</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:personalpages:vladmerticariu&amp;rev=1594967994&amp;do=diff</link>
+        <description>Vlad Merticariu
+
+Jacobs University, Bremen, Germany
+
+Large-Scale Scientific Information Systems Research Group
+
+
+Summary
+
+Vlad is a computer scientist with a vast expertise in distributed systems, databases, geospatial standards and web service standards compliance. He is a contributor to the rasdaman array database engine, as well as OGC WCS standards ecosystem. Vlad's research interest falls under the category of parallel query processing: a network of machines collaborate for answering a sing…</description>
+    </item>
+</rdf:RDF>

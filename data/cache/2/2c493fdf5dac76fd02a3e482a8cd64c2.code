@@ -1,0 +1,3 @@
+<span class="kw2">rm</span> <span class="re5">-rf</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+<span class="kw2">cp</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>input.tif ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>input.tif

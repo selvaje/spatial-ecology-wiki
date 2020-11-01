@@ -1,0 +1,152 @@
+
+<h2 class="sectionedit1" id="geomorpho90mtechnical_documentation">Geomorpho90m: technical documentation</h2>
+<div class="level2">
+
+<p>
+Scientific Data<br/>
+
+<a href="https://www.nature.com/articles/s41597-020-0479-6" class="urlextern" target="blanc" title="https://www.nature.com/articles/s41597-020-0479-6" rel="nofollow noopener"> Geomorpho90m, empirical evaluation and accuracy assessment of global high-resolution geomorphometric layers</a><br/>
+
+<br/>
+
+“Giuseppe Amatulli, Daniel McInerney, Tushar Sethi, Peter Strobl, Sami Domisch”<br/>
+
+</p>
+
+</div>
+
+<h4 id="download_procedure">Download Procedure</h4>
+<div class="level4">
+
+<p>
+Geomorpho90m is a set of geomorphometric variables derived from <a href="http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/" class="urlextern" target="blanc" title="http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/" rel="nofollow noopener"> MERIT-DEM</a>. The are available at 3 resolutions:
+</p>
+<ul>
+<li class="level1"><div class="li">100 m resolution, under Equi7 projection.</div>
+</li>
+<li class="level1"><div class="li">3 arc-second (~90m) resolution, under WGS84 Geographic Coordinate System.</div>
+</li>
+<li class="level1"><div class="li">7.5 arc-second (~250m) resolution, under WGS84 Geographic Coordinate System.</div>
+</li>
+</ul>
+
+<p>
+The layers can be downloaded from <a href="https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94" class="urlextern" target="blanc" title="https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94" rel="nofollow noopener">https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94</a>. This repository contains:<br/>
+
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>gemgeomorphometry_90m_wgs84</strong> contains 26 subfolders labelled in accordance to the geomorphometry layer name (see table 1 in publication). Each subfolder contains 57 tar. In each tar there are from 1 to 37 tif. Each tif (90m resolution; extend 5&times;5 degree) contain one band. The full size for a global geomorphometry variable is 4-80G for a total of 1148 tiles. The data type for the tif is Float32, which ensure maximum precision.</div>
+</li>
+<li class="level1"><div class="li"> <strong>gemgeomorphometry_pangaea250m_wgs84</strong> contains 26 tif (250m resolution; extend full globe). These files are prepared for global analysis and/or to be ingested in web-GIS platform. The file size for each tif can is 100M-6G. The data type for this file is Int16 or UInt16 and the pixel value has been multiplied by a scaling factor reported in the geotif as metadata. It is possible to obtain the scaling factor using <em>gdalinfo</em>. To obatain the orginal value multiply the tif by the scaling factor. Nonetheless, for maximum precision use 90m or 100m resolutions that are stored as data type Float32. </div>
+</li>
+<li class="level1"><div class="li"> <strong>gemgeomorphometry_100m_equi7</strong> contains 26 subfolders labelled in accordance to the geomorphometry layer name (see table 1 in publication). The full size for one geomorphometry variable is 5-53G for a total of 863 tif tiles. The data type for the tif is Float32, which ensure maximum precision.</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+Global visualization of the 250m is visible at <a href="https://openlandmap.org/" class="urlextern" target="blanc" title="https://openlandmap.org/" rel="nofollow noopener">https://openlandmap.org/</a> under Relief/Geology Item, starting from <strong>1.7 Cosine of the aspect</strong>.
+<br/>
+
+<br/>
+
+All the data layers are distributed under:<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=cc-by-4.0.png" class="media" title="cc-by-4.0.png"><img src="/dokuwiki/lib/exe/fetch.php?w=80&amp;tok=32ae68&amp;media=cc-by-4.0.png" class="media" alt="" width="80" /></a><a href="https://creativecommons.org/licenses/by/4.0/" class="urlextern" target="blanc" title="https://creativecommons.org/licenses/by/4.0/" rel="nofollow noopener"> Creative Commons Attribution 4.0 International</a>.<br/>
+
+<br/>
+
+<br/>
+
+The download can be done by clicking procedure or by command line scripting routine. The last one can be achieved by <a href="https://rclone.org" class="urlextern" target="blanc" title="https://rclone.org" rel="nofollow noopener">https://rclone.org</a> by following the Google Drive procedure authentification at <a href="https://rclone.org/drive/" class="urlextern" target="blanc" title="https://rclone.org/drive/" rel="nofollow noopener">https://rclone.org/drive/</a>. 
+You will need to authenticate reclone with your Google Drive account and then share the geomorphometry_v.1.0 folder with your own Google Drive. Afterwards, you will be able to mount your Google Drive and access directly to the geomorphometry_v.1.0 archive. You will need a fast connection to download the full archive.<br/>
+<br/>
+
+The download of the 90m resolution in WGS84 can be also done from <a href="https://portal.opentopography.org/dataspace/dataset?opentopoID=OTDS.012020.4326.1" class="urlextern" target="blanc" title="https://portal.opentopography.org/dataspace/dataset?opentopoID=OTDS.012020.4326.1" rel="nofollow noopener"> www.opentopography.org</a>. Using the <a href="http://www.spatial-ecology.net/ost4sem/geomorpho90m/opentopography_tiles.txt" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/geomorpho90m/opentopography_tiles.txt" rel="nofollow noopener"> opentopography_tiles.txt</a>  it possible to download the full globe.
+</p>
+<pre class="code">for tile in $(cat opentopography_tiles.txt ) ; do 
+wget  https://cloud.sdsc.edu/v1/AUTH_opentopography/hosted_data/OTDS.012020.4326.1/raster/aspect-cosine/aspect-cosine_90M_$tile.tar.gz
+done</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Geomorpho90m: technical documentation&quot;,&quot;hid&quot;:&quot;geomorpho90mtechnical_documentation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-3645&quot;} -->
+<h3 class="sectionedit2" id="tiling_system_under_wgs84_geographic_coordinate_system">Tiling System under WGS84 Geographic Coordinate System</h3>
+<div class="level3">
+
+<p>
+The Tiling System under WGS84 follows the same nomenclature and tile extent of the MERIT-DEM. Detail information can be found in <a href="http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/" class="urlextern" target="blanc" title="http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/" rel="nofollow noopener">http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/</a>  (see Data Description).
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=merit_tile.jpg" class="media" title="merit_tile.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=800&amp;tok=ec10b7&amp;media=merit_tile.jpg" class="mediaright" alt="" width="800" /></a>
+MERIT-DEM Tiling System (source Day Yamazaki)
+<br/>
+
+</p>
+
+</div>
+
+<h4 id="elevation">Elevation</h4>
+<div class="level4">
+
+<p>
+<a href="http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/" class="urlextern" target="blanc" title="http://hydro.iis.u-tokyo.ac.jp/~yamadai/MERIT_DEM/" rel="nofollow noopener"> MERIT-DEM </a>
+</p>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=altitude_10kmmedian_merit.png" class="media" title="altitude_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=altitude_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Tiling System under WGS84 Geographic Coordinate System&quot;,&quot;hid&quot;:&quot;tiling_system_under_wgs84_geographic_coordinate_system&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;3646-4121&quot;} -->
+<h3 class="sectionedit3" id="slope_and_aspect">Slope and aspect</h3>
+<div class="level3">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=slope_10kmmedian_merit.png" class="media" title="slope_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=slope_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=aspect_10kmmedian_merit.png" class="media wikilink2" title="aspect_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=aspect_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=aspectcosine_10kmmedian_merit.png" class="media" title="aspectcosine_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=aspectcosine_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=aspectsine_10kmmedian_merit.png" class="media" title="aspectsine_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=aspectsine_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=eastness_10kmmedian_merit.png" class="media" title="eastness_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=eastness_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=northness_10kmmedian_merit.png" class="media" title="northness_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=northness_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Slope and aspect&quot;,&quot;hid&quot;:&quot;slope_and_aspect&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;4122-4380&quot;} -->
+<h3 class="sectionedit4" id="roughness">Roughness</h3>
+<div class="level3">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=roughness_10kmmedian_merit.png" class="media" title="roughness_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=roughness_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=tri_10kmmedian_merit.png" class="media" title="tri_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=tri_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=vrm_10kmmedian_merit.png" class="media" title="vrm_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=vrm_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=tpi_10kmmedian_merit.png" class="media" title="tpi_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=tpi_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Roughness&quot;,&quot;hid&quot;:&quot;roughness&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;4381-4540&quot;} -->
+<h3 class="sectionedit5" id="curvature">Curvature</h3>
+<div class="level3">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=dx_10kmmedian_merit.png" class="media" title="dx_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=dx_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=dxx_10kmmedian_merit.png" class="media" title="dxx_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=dxx_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=dy_10kmmedian_merit.png" class="media" title="dy_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=dy_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=dyy_10kmmedian_merit.png" class="media" title="dyy_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=dyy_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=dxy_10kmmedian_merit.png" class="media" title="dxy_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=dxy_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=pcurv_10kmmedian_merit.png" class="media" title="pcurv_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=pcurv_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=tcurv_10kmmedian_merit.png" class="media" title="tcurv_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=tcurv_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Curvature&quot;,&quot;hid&quot;:&quot;curvature&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;4541-4794&quot;} -->
+<h3 class="sectionedit6" id="compound_index">Compound index</h3>
+<div class="level3">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=spi_10kmmedian_merit.png" class="media" title="spi_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=spi_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=topovar90m&amp;media=tci_10kmmedian_merit.png" class="media" title="tci_10kmmedian_merit.png"><img src="/dokuwiki/lib/exe/fetch.php?media=tci_10kmmedian_merit.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Compound index&quot;,&quot;hid&quot;:&quot;compound_index&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;4795-&quot;} -->

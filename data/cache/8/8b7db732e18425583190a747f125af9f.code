@@ -1,0 +1,10 @@
+#creo i boxplot
+a=3
+for (i in c(&quot;As&quot;,&quot;Be&quot;,&quot;Cd&quot;,&quot;Co&quot;,&quot;Cr&quot;,&quot;Cu&quot;,&quot;Ni&quot;,&quot;Pb&quot;,&quot;Sb&quot;,&quot;Se&quot;,&quot;Sn&quot;,&quot;Tl&quot;,&quot;V&quot;,&quot;Zn&quot;)){
+    png(paste(&quot;~/ost4sem/project/output/boxplot_&quot;,i,&quot;.png&quot;,sep=&quot;&quot;),width = 800, height = 800)
+    a=a+1
+    boxplot(punti[[a]], main=i, cex.main=3, cex=2, axes=F, col=7)
+    axis(2, cex.axis=2)
+    box()
+    dev.off()
+}

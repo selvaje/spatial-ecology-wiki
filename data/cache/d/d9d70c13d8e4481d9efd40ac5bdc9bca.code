@@ -1,0 +1,50 @@
+   for(t in 1:57){
+&nbsp;
+   datagrids = readGDAL(paste(path.rasters,&quot;pr104ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))
+   datagrids$pr104 = datagrids$band1
+   datagrids$pr105 = readGDAL(paste(path.rasters,&quot;pr105ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   datagrids$pr106 = readGDAL(paste(path.rasters,&quot;pr106ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   gc()
+&nbsp;
+   datagrids$pr109 = readGDAL(paste(path.rasters,&quot;pr109ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr110 = readGDAL(paste(path.rasters,&quot;pr110ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   gc()
+   datagrids$pr111 = readGDAL(paste(path.rasters,&quot;pr111ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr118 = readGDAL(paste(path.rasters,&quot;pr118ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   gc()
+   datagrids$pr120 = readGDAL(paste(path.rasters,&quot;pr120ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr123 = readGDAL(paste(path.rasters,&quot;pr123ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   gc()
+   datagrids$pr126 = readGDAL(paste(path.rasters,&quot;pr126ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr128 = readGDAL(paste(path.rasters,&quot;pr128ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   gc()
+   datagrids$pr131 = readGDAL(paste(path.rasters,&quot;pr131ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr134 = readGDAL(paste(path.rasters,&quot;pr134ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   gc()
+   datagrids$pr135 = readGDAL(paste(path.rasters,&quot;pr135ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr136 = readGDAL(paste(path.rasters,&quot;pr136ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   gc()
+   datagrids$pr137 = readGDAL(paste(path.rasters,&quot;pr137ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr138 = readGDAL(paste(path.rasters,&quot;pr138ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   datagrids$pr198 = readGDAL(paste(path.rasters,&quot;pr198ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr200 = readGDAL(paste(path.rasters,&quot;pr200ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   gc()
+&nbsp;
+   datagrids$pr201 = readGDAL(paste(path.rasters,&quot;pr201ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr202 = readGDAL(paste(path.rasters,&quot;pr202ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   gc()
+   datagrids$pr203 = readGDAL(paste(path.rasters,&quot;pr203ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+   datagrids$pr204 = readGDAL(paste(path.rasters,&quot;pr204ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1480,20))$band1
+&nbsp;
+   gc()
+&nbsp;
+   cat(&quot; ---- 23 grids inported into datagrids file - now drawing the map------\n&quot;)
+&nbsp;

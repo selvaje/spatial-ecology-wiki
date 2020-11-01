@@ -1,0 +1,14 @@
+<span class="co1">#!/usr/bin/python3</span>
+&nbsp;
+<span class="co1"># Convert a shapefile to WKT using ogr</span>
+<span class="kw1">from</span> osgeo <span class="kw1">import</span> ogr
+shape <span class="sy0">=</span> ogr.<span class="me1">Open</span><span class="br0">&#40;</span><span class="st0">&quot;../files/polygon.shp&quot;</span><span class="br0">&#41;</span>
+layer <span class="sy0">=</span> shape.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+feature <span class="sy0">=</span> layer.<span class="me1">GetNextFeature</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+geom <span class="sy0">=</span> feature.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+wkt <span class="sy0">=</span> geom.<span class="me1">ExportToWkt</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="co1"># View the WKT</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>wkt<span class="br0">&#41;</span>
+<span class="co1"># Ingest the WKT we made and check the envelope</span>
+poly <span class="sy0">=</span> ogr.<span class="me1">CreateGeometryFromWkt</span><span class="br0">&#40;</span>wkt<span class="br0">&#41;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span>poly.<span class="me1">GetEnvelope</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

@@ -1,0 +1,13 @@
+pkinfo <span class="re5">-i</span> image.tif <span class="re5">-nb</span>                          <span class="co0">#show number of bands in raster image.tif</span>
+&nbsp;
+pkinfo <span class="re5">-i</span> image.tif <span class="re5">-max</span> <span class="re5">-b</span> <span class="nu0">1</span>                    <span class="co0">#show maximum value of band 1 (starting from 0) of raster image.tif</span>
+&nbsp;
+pkinfo <span class="re5">-i</span> image.tif <span class="re5">-x</span> <span class="nu0">0</span> <span class="re5">-y</span> <span class="nu0">0</span> <span class="re5">-r</span> <span class="re5">-b</span> <span class="nu0">3</span> <span class="re5">-b</span> <span class="nu0">2</span> <span class="re5">-b</span> <span class="nu0">1</span>  <span class="co0">#read (dump) upper left pixel value for bands 3,2,1</span>
+&nbsp;
+pkinfo <span class="re5">-i</span> image.tif <span class="re5">-x</span> <span class="nu0">3528120</span> <span class="re5">-y</span> <span class="nu0">4329681</span> <span class="re5">-geo</span> <span class="re5">-r</span> <span class="re5">-b</span> <span class="nu0">3</span> <span class="re5">-b</span> <span class="nu0">2</span> <span class="re5">-b</span> <span class="nu0">1</span>  <span class="co0">#read (dump) pixel value at this geographic location (x,y) for bands 3,2,1</span>
+&nbsp;
+pkinfo <span class="re5">-i</span> image1.tif <span class="re5">-bb</span>  <span class="co0">#show bounding box (-ulx -uly -lrx -lry) in geo coordinates for image1.tif</span>
+&nbsp;
+pkinfo <span class="re5">-i</span> image1.tif <span class="re5">-i</span> image2.tif <span class="re5">-i</span> image3.tif <span class="re5">-bb</span>  <span class="co0">#show bounding box (-ulx -uly -lrx -lry) in geo coordinates for each image (and union and intersect)</span>
+&nbsp;
+pkinfo <span class="re5">-i</span> image1.tif <span class="re5">--mask</span> <span class="nu0">0</span> <span class="re5">--mask</span> <span class="nu0">255</span> <span class="re5">-ref</span>  <span class="co0">#show the refence pixel (centre of gravity) for image1.tif, treating 0 and 255 as NO VALUE</span>

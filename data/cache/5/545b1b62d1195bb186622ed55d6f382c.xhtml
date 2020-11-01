@@ -1,0 +1,128 @@
+
+<h1 class="sectionedit1" id="load_plot_vector_layers_do_spatial_joins_in_r">Load, plot vector layers &amp; do spatial joins in R</h1>
+<div class="level1">
+
+<p>
+<a href="/dokuwiki/doku.php?id=wiki:rstat:r_geography" class="wikilink1" title="wiki:rstat:r_geography">Back to spatial analyses in R</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Load, plot vector layers &amp; do spatial joins in R&quot;,&quot;hid&quot;:&quot;load_plot_vector_layers_do_spatial_joins_in_r&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-123&quot;} -->
+<h2 class="sectionedit2" id="vector_data_visualization">Vector data visualization</h2>
+<div class="level2">
+
+<p>
+We have followed a <a href="http://spatial.ly/2013/12/introduction-spatial-data-ggplot2/" class="urlextern" target="blanc" title="http://spatial.ly/2013/12/introduction-spatial-data-ggplot2/" rel="nofollow noopener"> spatial.ly</a> tutorial to replicate and improve our case study. Here we work on vector layers, first download a compressed folder in linux environment and extract it and check what you have using bash functions within R.<br/>
+
+</p>
+<pre class="code"> system(&quot;wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/vector/cornwall_agri.zip&quot;)
+ system(&quot;unzip cornwall_agri.zip&quot;)
+ system(&quot;ogrinfo -al cornwall_ward_27700.shp | more &quot;)
+ # ... 
+ # Layer SRS WKT:
+ # (unknown)</pre>
+
+<p>
+We downloaded a vector shape file in EPSG 27700 but this info is not available in the metadata, so we can update the metadata with projection parameters in a new layer.<br/>
+
+</p>
+<pre class="code"> system(&quot;ogr2ogr -s_srs EPSG:27700 -t_srs EPSG:27700 cornwall.shp cornwall_ward_27700.shp&quot;)</pre>
+
+<p>
+Using the raster library we can load shape files in R from linux <abbr title="Operating System">OS</abbr> folder.
+</p>
+<pre class="code"> library(raster)
+ ward.no.proj &lt;- shapefile(&quot;cornwall_ward_27700.shp&quot;)
+ ward &lt;- shapefile(&quot;cornwall.shp&quot;)
+ # Tell the difference between the two layers
+ summary(ward.no.proj)
+ summary(ward)</pre>
+<div class="plugin_note notetip"><a href="http://www.inside-r.org/packages/cran/rgdal/docs/ogrInfo" class="urlextern" target="blanc" title="http://www.inside-r.org/packages/cran/rgdal/docs/ogrInfo" rel="nofollow noopener"> More</a> readings on using <strong>rgdal</strong> library to load vector maps
+</div>
+<p>
+<br/>
+
+The raster library has a plot function able to plot R spatial objects such as the SpatialPolygonsDataFrame which is the corresponding object to the vector shape file we just imported. raster plot is overwriting the basic plot fuction of R.<br/>
+
+</p>
+<pre class="code">plot(ward)</pre>
+
+<p>
+The ward administrative boudary in cornwall<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_vect&amp;media=wiki:rstat:wardsr.png" class="media" title="wiki:rstat:wardsr.png"><img src="/dokuwiki/lib/exe/fetch.php?w=200&amp;tok=aefdf9&amp;media=wiki:rstat:wardsr.png" class="media" alt="" width="200" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector data visualization&quot;,&quot;hid&quot;:&quot;vector_data_visualization&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;124-1735&quot;} -->
+<h2 class="sectionedit3" id="spatial_join_in_r">Spatial Join in R</h2>
+<div class="level2">
+
+<p>
+We can load  a text table in csv format, do a join by identifier and plot maps with statistics.<br/>
+
+</p>
+<pre class="code"> stat = read.csv(&quot;SYNT_2002.csv&quot;, header=T)</pre>
+
+<p>
+To join files we need a common identifier. Which is the table and vector file common ID? Find it and merge the files using <strong>merge</strong> function from raster library to then plot the map and save the join vector file in your working directory outside R.<br/>
+
+</p>
+<pre class="code">  str(stat)
+  str(ward)
+  agri &lt;- merge(ward, stat, by.x=&#039;PI&#039;, by.y=&#039;ID&#039;)
+  writeOGR(agri, &quot;.&quot;, &quot;agristat&quot;, driver=&quot;ESRI Shapefile&quot;)</pre>
+
+<p>
+<br/>
+
+</p>
+
+<p>
+Now we can plot in the ward map some features about agriculture using the statistics we have joined to our spatial database using the <strong>ggplot2</strong> library.<br/>
+
+</p>
+<div class="plugin_note notetip"><a href="http://www.ceb-institute.org/bbs/wp-content/uploads/2011/09/handout_ggplot2.pdf" class="urlextern" target="blanc" title="http://www.ceb-institute.org/bbs/wp-content/uploads/2011/09/handout_ggplot2.pdf" rel="nofollow noopener">a ggplot2 tutorial</a> and <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" class="urlextern" target="blanc" title="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf" rel="nofollow noopener"> ggplot2 cheatsheet </a>
+</div>
+<p>
+Plotting some features of our database (ex: ward surface vs numberof diary livestock per ward) in black and white and in colour.
+</p>
+<pre class="code"> library(ggplot2)
+ # simple visualization black and white
+ p&lt;-ggplot(agri@data, aes(SUM_HA,dairy_v))
+ p+geom_point()
+ # Add some colours
+ p+geom_point(colour=&quot;red&quot;, size=2)
+ # Add a legend
+ p+geom_point(aes(colour=SUM_HA, size=dairy_v))
+ # Add labels  (these are too many for our cvisualization)
+ p+geom_point(aes(colour=SUM_HA,size=dairy_v))+geom_text(size=8,aes(label=FIRST_NM))</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_vect&amp;media=wiki:rstat:screenshot_from_2016-05-29_15-30-34.png" class="media" title="wiki:rstat:screenshot_from_2016-05-29_15-30-34.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=ed8e88&amp;media=wiki:rstat:screenshot_from_2016-05-29_15-30-34.png" class="media" alt="" width="300" /></a><br/>
+
+Play with this and plot other informations…
+<br/>
+
+Now we map the number of Diary livestock in Cornwall per each ward. We use fortify ( check ?fortify in R).
+</p>
+<pre class="code"> agri_geom&lt;-fortify(agri, region=&quot;PI&quot;)
+ agri_geom&lt;-merge(agri_geom, agri@data, by.x=&quot;id&quot;, by.y=&quot;PI&quot;)
+ head(agri_geom)
+ ## The map function:
+ ## Map&lt;-ggplot(agri_geom, aes(long,lat, group=group, fill=dairy_v))
+ ## + geom_polygon()+ coord_equal() + 
+ ## labs(x=&quot;Easting (m)&quot;, y=&quot;Northing (m)&quot;,fill= &quot;# of livestocks&quot;)
+ ## + ggtitle (&quot;Dairy cow in Cornwall&quot;)
+ Map&lt;-ggplot(agri_geom, aes(long,lat, group=group, fill=dairy_v))+ geom_polygon()+ coord_equal() + labs(x=&quot;Easting (m)&quot;, y=&quot;Northing (m)&quot;,fill= &quot;# of livestocks&quot;)+ ggtitle (&quot;Dairy cow in Cornwall&quot;)
+ Map
+ # Black and white map
+ Map + scale_fill_gradient(low=&quot;white&quot;, high=&quot;black&quot;)</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_vect&amp;media=wiki:rstat:ggplot2_r.png" class="media" title="wiki:rstat:ggplot2_r.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=4fb21b&amp;media=wiki:rstat:ggplot2_r.png" class="media" alt="" width="400" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_vect&amp;media=wiki:rstat:ggplot_bw.png" class="media" title="wiki:rstat:ggplot_bw.png"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=82c181&amp;media=wiki:rstat:ggplot_bw.png" class="media" alt="" width="400" /></a><br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Spatial Join in R&quot;,&quot;hid&quot;:&quot;spatial_join_in_r&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1736-&quot;} -->

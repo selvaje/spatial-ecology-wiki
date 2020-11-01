@@ -1,0 +1,1 @@
+<span class="kw3">echo</span> This is my exercise <span class="kw1">for</span> learning <span class="kw2">bash</span> scripting <span class="re1">$Year</span> <span class="re1">$month</span> <span class="sy0">&gt;&gt;</span> example_text.txt 

@@ -1,0 +1,169 @@
+<span class="co0">#!/bin/bash</span>
+<span class="co0">#</span>
+<span class="co0"># Copenhagen June 2010, ost4sem, unidk2010</span>
+<span class="co0">#</span>
+<span class="co0"># Title: Envelope models</span>
+<span class="co0"># Authors: Alistair Auffret, Dag Endresen, Torben Wittwer, Zhenlin Yang</span>
+<span class="co0"># Script: envmod_data.sh</span>
+<span class="co0"># Description: Species distribution data for envelope modeling</span>
+<span class="co0"># Step 1 :: Species occurrence data (point, lon, lat input)</span>
+<span class="co0">#</span>
+&nbsp;
+&nbsp;
+<span class="co0">#######################</span>
+<span class="co0"># Home directory folder</span>
+<span class="re2">home_dir</span>=<span class="st0">&quot;~/ost4sem/project/unidk2010/envmod/&quot;</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>envmod<span class="sy0">/</span>
+&nbsp;
+&nbsp;
+<span class="co0">###################################################</span>
+<span class="co0"># Install tofrodos for import of windows text files</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> tofrodos
+&nbsp;
+&nbsp;
+<span class="co0">###################################</span>
+<span class="co0"># Create directory folder structure</span>
+<span class="co0"># -a file exists, -f file exists, -f file exists and is regular file, -d directory exists</span>
+<span class="co0">#</span>
+<span class="kw1">for</span> folder_name <span class="kw1">in</span> input output sh_script grassdb input<span class="sy0">/</span>species input<span class="sy0">/</span>worldclim input<span class="sy0">/</span>corine input<span class="sy0">/</span>sjv; <span class="kw1">do</span>
+ <span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re5">-d</span> <span class="re1">$folder_name</span> <span class="br0">&#93;</span>; <span class="kw1">then</span> <span class="br0">&#123;</span> <span class="kw3">echo</span> <span class="st0">&quot;folder <span class="es2">$folder_name</span> exists&quot;</span>; <span class="br0">&#125;</span> <span class="kw1">else</span> <span class="br0">&#123;</span> <span class="kw3">echo</span> <span class="st0">&quot;folder <span class="es2">$folder_name</span> does NOT exists&quot;</span>; <span class="kw2">mkdir</span> <span class="re1">$folder_name</span>; <span class="br0">&#125;</span> <span class="kw1">fi</span>
+<span class="kw1">done</span>
+<span class="co0">#</span>
+<span class="kw2">ls</span> <span class="re5">-lR</span>
+<span class="kw2">ls</span> <span class="re5">-l</span> input
+&nbsp;
+&nbsp;
+<span class="co0">#####################################################</span>
+<span class="co0"># Species list (we will use one of the options below)</span>
+<span class="co0">#</span>
+<span class="co0"># Species list in a variable</span>
+<span class="re2">species_list</span>=<span class="st0">&quot;vanessa+atalanta humulus+lupulus scolitantides+orion sedum+acre crambe+maritima&quot;</span>
+<span class="co0">#</span>
+<span class="co0"># Species list in a text file</span>
+<span class="kw3">echo</span> <span class="st0">&quot;pyrgus+armoricanus&quot;</span> <span class="st0">&quot;crambe+maritima&quot;</span> <span class="sy0">&gt;</span> <span class="st0">&quot;input/species/species_list.txt&quot;</span>
+<span class="kw2">cat</span> input<span class="sy0">/</span>species<span class="sy0">/</span>species_list.txt
+<span class="co0">#</span>
+<span class="co0"># Read species list from text file to variable</span>
+<span class="re2">species_list</span>=<span class="sy0">`</span><span class="kw2">cat</span> input<span class="sy0">/</span>species<span class="sy0">/</span>species_list.txt<span class="sy0">`</span>
+<span class="kw3">echo</span> <span class="re1">$species_list</span>
+<span class="co0">#</span>
+<span class="co0"># Test loop of species list</span>
+<span class="kw1">for</span> species <span class="kw1">in</span> <span class="re1">$species_list</span>; <span class="kw1">do</span> <span class="kw3">echo</span> <span class="re5">-e</span> <span class="st0">&quot;Species :: &quot;</span><span class="re1">$species</span><span class="st0">&quot; <span class="es1">\n</span>&quot;</span>; <span class="kw1">done</span>
+&nbsp;
+<span class="co0"># download European country iso list</span>
+<span class="kw2">wget</span> <span class="re5">-O</span> .<span class="sy0">/</span>input<span class="sy0">/</span>isocountry.txt <span class="st0">&quot;http://www.maxmind.com/eu_country_list.txt&quot;</span>
+&nbsp;
+&nbsp;
+<span class="co0">######################################################</span>
+<span class="co0"># Download species occurrence data from GBIF with wget</span>
+<span class="co0"># http://data.gbif.org/ws/rest/occurrence</span>
+<span class="co0"># http://wiki.gbif.org/dadiwiki/wikka.php?wakka=DeveloperAPIs</span>
+<span class="co0"># http://wwwdev.ngb.se/portal/files/cwr/CWR-Portal-Technical-Description.pdf</span>
+<span class="co0">#</span>
+<span class="co0"># originregioncode=EEU,NEU,SEU,WEU // EEU-Eastern Europe,NEU-Northern Europe,SEU-Southern Europe,WEU-Western Europe</span>
+<span class="co0"># originisocountrycode=SE // Occurrences from Sweden</span>
+<span class="co0">#</span>
+<span class="co0"># wget -O outputfile; file to print some file information</span>
+<span class="co0"># lynx http://data.gbif.org/ws/rest/occurrence/count?originisocountrycode=SE&amp;scientificname=pyrgus+armoricanus&amp;georeferencedonly=false</span>
+<span class="co0"># wget -O ./input/species/test.xml &quot;http://data.gbif.org/ws/rest/occurrence/list?originisocountrycode=SE&amp;scientificname=pyrgus+armoricanus&amp;georeferencedonly=true&quot;</span>
+<span class="co0">#</span>
+<span class="co0"># loop species</span>
+&nbsp;
+&nbsp;
+<span class="co0">#########################</span>
+<span class="co0"># download species for each european country</span>
+<span class="co0"># xmlstarlet to read XML</span>
+<span class="co0"># sudo apt-get install xmlstarlet # to install xmlstarlet on Ubuntu</span>
+<span class="co0"># Convert XML to text with xmlstarlet see: http://dave.ecoforge.net/wiki/HowTo/GbifRest</span>
+<span class="co0">#</span>
+<span class="kw1">for</span> country <span class="kw1">in</span> <span class="sy0">`</span><span class="kw2">awk</span> <span class="st_h">'{if (NR&gt;3) print $1}'</span> .<span class="sy0">/</span>input<span class="sy0">/</span>isocountry.txt<span class="sy0">`</span>; <span class="kw1">do</span>
+  <span class="kw1">for</span> species <span class="kw1">in</span> <span class="re1">$species_list</span>; <span class="kw1">do</span>
+    <span class="kw3">echo</span> <span class="re5">-e</span> <span class="st0">&quot;Species :: &quot;</span><span class="re1">$species</span><span class="st0">&quot;<span class="es1">\n</span>&quot;</span>;
+    <span class="kw2">wget</span> <span class="re5">-O</span> <span class="st0">&quot;./input/species/&quot;</span><span class="re1">$species</span><span class="st0">&quot;_&quot;</span><span class="re1">$country</span><span class="st0">&quot;.xml&quot;</span> <span class="st0">&quot;http://data.gbif.org/ws/rest/occurrence/list?originisocountrycode=<span class="es2">$country</span>&amp;scientificname=&quot;</span><span class="re1">$species</span><span class="st0">&quot;&amp;georeferencedonly=true&amp;mode=processed&quot;</span>
+    <span class="co0"># NB! for species occurrences per country above 1 000 hits we need to make paging</span>
+    <span class="co0"># Check the XML response if there are more than the maximum returned 1 000 records</span>
+    <span class="co0"># Check if the XML element gbif:summary have the attribute next=1000</span>
+    <span class="co0"># http://data.gbif.org/ws/rest/occurrence/list?startindex=1000&amp;... (for page two)</span>
+    <span class="co0"># while loop until no more next page would be a solution</span>
+  xmlstarlet sel <span class="re5">-T</span> \
+    <span class="re5">-N</span> <span class="re2">tn</span>=<span class="st0">&quot;http://rs.tdwg.org/ontology/voc/TaxonName#&quot;</span> \
+    <span class="re5">-N</span> <span class="re2">to</span>=<span class="st0">&quot;http://rs.tdwg.org/ontology/voc/TaxonOccurrence#&quot;</span> \
+    <span class="re5">-t</span> <span class="re5">-m</span> <span class="st0">&quot;//to:TaxonOccurrence&quot;</span> \
+    <span class="re5">-v</span> <span class="st0">&quot;concat(.//tn:nameComplete,';',to:decimalLongitude,';',to:decimalLatitude)&quot;</span> \
+    <span class="re5">-n</span> \
+    .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="st0">&quot;<span class="es2">$species</span>&quot;</span>_<span class="st0">&quot;<span class="es2">$country</span>&quot;</span>.xml <span class="sy0">&gt;</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="st0">&quot;<span class="es2">$species</span>&quot;</span>_<span class="st0">&quot;<span class="es2">$country</span>&quot;</span>.txt
+  <span class="kw1">done</span>
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0">#concatenate species occurrence data from all countries</span>
+<span class="kw1">for</span> species <span class="kw1">in</span> <span class="re1">$species_list</span>; <span class="kw1">do</span>
+  <span class="kw2">cat</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="st0">&quot;<span class="es2">$species</span>&quot;</span>_<span class="sy0">*</span>.txt <span class="sy0">&gt;</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="st0">&quot;<span class="es2">$species</span>&quot;</span>.txt
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0">#make nicer species list</span>
+<span class="kw1">for</span> species <span class="kw1">in</span> <span class="re1">$species_list</span>; <span class="kw1">do</span>
+  <span class="re2">specname</span>=<span class="sy0">`</span><span class="kw3">echo</span> <span class="st0">&quot;<span class="es2">$species</span>&quot;</span><span class="sy0">`</span>
+  <span class="kw2">cat</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="st0">&quot;<span class="es2">$species</span>&quot;</span>.txt <span class="sy0">|</span> <span class="kw2">tr</span> <span class="br0">&#91;</span>,<span class="br0">&#93;</span> <span class="br0">&#91;</span>.<span class="br0">&#93;</span> <span class="sy0">|</span> <span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">i</span>=<span class="st0">&quot;<span class="es2">$specname</span>&quot;</span> <span class="st_h">'BEGIN{FS=&quot;;&quot;};{print i, &quot;,&quot;, $2,&quot;,&quot;,$3}'</span> <span class="sy0">|</span> <span class="kw2">tr</span> <span class="re5">-d</span> <span class="br0">&#91;</span>:blank:<span class="br0">&#93;</span> <span class="sy0">|</span> <span class="kw2">tr</span> <span class="st0">&quot;+&quot;</span> <span class="st0">&quot; &quot;</span> <span class="sy0">&gt;</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span>temp.txt
+  <span class="kw2">cat</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span>temp.txt <span class="sy0">&gt;</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="st0">&quot;<span class="es2">$species</span>&quot;</span>.txt
+<span class="kw1">done</span>
+<span class="kw2">rm</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span>temp.txt
+&nbsp;
+<span class="co0"># make some nice col names for each species distribution file</span>
+<span class="kw1">for</span> spec <span class="kw1">in</span> <span class="re1">$species_list</span>; <span class="kw1">do</span>
+  <span class="kw2">awk</span> <span class="st_h">'BEGIN { print &quot;species,long,lat&quot;}'</span> <span class="sy0">&gt;</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span>temp.txt
+  <span class="kw2">awk</span> <span class="st_h">'{print $0}'</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="re1">$spec</span>.txt <span class="sy0">&gt;&gt;</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span>temp.txt
+  <span class="kw2">cat</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span>temp.txt <span class="sy0">&gt;</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="re1">$spec</span>.txt
+<span class="kw1">done</span>
+<span class="kw2">rm</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span>temp.txt
+&nbsp;
+<span class="co0">#</span>
+<span class="kw2">ls</span> <span class="re5">-l</span> input<span class="sy0">/</span>species
+<span class="kw2">head</span> <span class="re5">-40</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="re1">$species</span>.xml
+<span class="kw2">head</span> <span class="re5">-10</span> .<span class="sy0">/</span>input<span class="sy0">/</span>species<span class="sy0">/</span><span class="re1">$species</span>.txt
+&nbsp;
+&nbsp;
+<span class="co0">#########################</span>
+<span class="co0"># Download WorldClim data</span>
+<span class="co0"># http://www.worldclim.org/download</span>
+<span class="co0"># Current climate (there is also future and some past climate)</span>
+<span class="co0"># wget -P prefix directory save files to</span>
+<span class="co0">#</span>
+<span class="kw1">for</span> layer <span class="kw1">in</span> tmin tmax tmean prec bio alt; <span class="kw1">do</span> <span class="co0"># tmin tmax tmean prec bio alt</span>
+ <span class="kw1">for</span> resolution <span class="kw1">in</span> 10m; <span class="kw1">do</span> <span class="co0"># 30s, 2-5m, 5m, 10m (NB! finer resolution files are LARGE)</span>
+  <span class="kw2">wget</span> <span class="re5">-P</span> <span class="st0">&quot;./input/worldclim/current/wc_&quot;</span><span class="re1">$resolution</span> <span class="st0">&quot;http://r-gis.org/climate/worldclim1_4/grid/cur/&quot;</span><span class="re1">$layer</span><span class="st0">&quot;_&quot;</span><span class="re1">$resolution</span><span class="st0">&quot;_bil.zip&quot;</span>
+  <span class="kw2">sleep</span> <span class="nu0">2</span> <span class="co0"># wait 5 seconds between wget sessions to avoid overloading worldclim</span>
+ <span class="kw1">done</span>
+<span class="kw1">done</span>
+<span class="kw2">ls</span> <span class="re5">-l</span> input<span class="sy0">/</span>worldclim<span class="sy0">/</span>current
+<span class="co0">#</span>
+<span class="co0"># Future climate (do we plan to need this...?)</span>
+<span class="kw1">for</span> layer <span class="kw1">in</span> tmin tmax; <span class="kw1">do</span> <span class="co0"># tmin tmax tmean prec bio alt</span>
+ <span class="kw1">for</span> resolution <span class="kw1">in</span> 10m; <span class="kw1">do</span> <span class="co0"># 30s, 2-5m, 5m, 10m (NB! finer resolution files are LARGE)</span>
+  <span class="kw1">for</span> model <span class="kw1">in</span> CCCMA; <span class="kw1">do</span> <span class="co0"># CCCMA, HADCM3, CSIRO</span>
+   <span class="kw1">for</span> scenario <span class="kw1">in</span> A2a; <span class="kw1">do</span> <span class="co0"># A2a, B2a</span>
+    <span class="kw1">for</span> year <span class="kw1">in</span> <span class="nu0">2020</span>; <span class="kw1">do</span> <span class="co0"># 2020, 2050, 2080</span>
+     <span class="co0">#http://r-gis.org/climate/worldclim1_4/grid/fut/IPPC3/CCCMA/wc_10m_CCCMA_A2a_2020_tmin.zip</span>
+     <span class="kw2">wget</span> <span class="re5">-P</span> .<span class="sy0">/</span>input<span class="sy0">/</span>worldclim<span class="sy0">/</span>future <span class="st0">&quot;http://r-gis.org/climate/worldclim1_4/grid/fut/IPPC3/&quot;</span><span class="re1">$model</span><span class="st0">&quot;/wc_&quot;</span><span class="re1">$resolution</span><span class="st0">&quot;_&quot;</span><span class="re1">$model</span><span class="st0">&quot;_&quot;</span><span class="re1">$scenario</span><span class="st0">&quot;_&quot;</span><span class="re1">$year</span><span class="st0">&quot;_&quot;</span><span class="re1">$layer</span><span class="st0">&quot;.zip&quot;</span>
+     <span class="kw2">sleep</span> <span class="nu0">5</span> <span class="co0"># wait 5 seconds between wget sessions to avoid overloading worldclim</span>
+    <span class="kw1">done</span>
+   <span class="kw1">done</span>
+  <span class="kw1">done</span>
+ <span class="kw1">done</span>
+<span class="kw1">done</span>
+<span class="kw2">ls</span> <span class="re5">-l</span> .<span class="sy0">/</span>input<span class="sy0">/</span>worldclim<span class="sy0">/</span>future
+&nbsp;
+&nbsp;
+<span class="co0">#####################################</span>
+<span class="co0"># Download CORINE Land cover from EEA</span>
+<span class="co0"># http://www.eea.europa.eu/data-and-maps/data</span>
+<span class="co0"># Corine Land Cover (clc) 2006 raster data, resolution 250 m (g250_06.zip, ZIP archive 26.76 MB)</span>
+<span class="co0"># /data-and-maps/data/ga-downloads/SH04UZP80M/corine-land-cover-2006-raster/g250_06.zip</span>
+<span class="co0"># Legends :: clc_legend.csv (Plain Text  3.88 KB) </span>
+<span class="co0"># /data-and-maps/data/ga-downloads/SH04UZP80M/corine-land-cover-2006-raster/clc_legend.csv</span>
+<span class="co0">#</span>
+<span class="kw2">wget</span> <span class="re5">-O</span> .<span class="sy0">/</span>input<span class="sy0">/</span>corine<span class="sy0">/</span>clc_g250_06.zip <span class="st0">&quot;http://www.eea.europa.eu/data-and-maps/data/corine-land-cover-2006-raster/clc-2006-v13-250m/g250_06.zip/at_download/file&quot;</span>
+&nbsp;
+<span class="co0"># unzip data</span>
+<span class="kw2">unzip</span> <span class="re5">-d</span> .<span class="sy0">/</span>input<span class="sy0">/</span>corine<span class="sy0">/</span>clc .<span class="sy0">/</span>input<span class="sy0">/</span>corine<span class="sy0">/</span>clc_g250_06.zip
+<span class="kw2">ls</span> <span class="re5">-l</span> .<span class="sy0">/</span>input<span class="sy0">/</span>corine
+<span class="kw2">ls</span> <span class="re5">-l</span> .<span class="sy0">/</span>input<span class="sy0">/</span>corine<span class="sy0">/</span>clc

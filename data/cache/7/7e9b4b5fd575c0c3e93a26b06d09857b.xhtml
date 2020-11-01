@@ -1,0 +1,131 @@
+
+<h2 class="sectionedit1" id="create_a_dem_from_point_data">Create a dem from point data</h2>
+<div class="level2">
+
+<p>
+Exercise:<br/>
+
+Script: open by kate <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/dem/dem.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/dem/dem.sh" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_gdalogr/dem/dem.sh &amp; </a><br/>
+
+Data: <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/dem/M0227-[1-4]N.H29" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gdalogr/dem/M0227-[1-4]N.H29" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_gdalogr/dem/M0227-[1-4]N.H29 </a><br/>
+
+Directory: ~/ost4sem/exercise/basic<em>adv</em>gdalogr/dem<br/>
+
+<br/>
+
+Before running the script migrate to ~/ost4sem/exercise/basic<em>adv</em>gdalogr/dem and return to the following questions:<br/>
+
+<br/>
+
+<em>Do the M0227-[1-4]N.H29 files  have a header?<br/>
+
+How many lines do the files have?<br/>
+
+Is it the same for all the files?<br/>
+
+Plot one file in 3D using gnuplot.<br/>
+
+Sample the data using awk.<br/>
+
+Plot all the files in gnuplot.<br/>
+
+Can we create a dem from this file?<br/>
+
+Are all the files geographically contiguous.?<br/>
+
+Is there an overlap between the files?<br/>
+
+Which is the gdal command that allows me to create a surface from points data?</em><br/>
+
+<br/>
+
+Merge all the files into one file:<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Get rid of the header lines.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Merge the first and second columns.<br/>
+</div>
+</li>
+</ul>
+<pre class="code bash"><span class="kw2">rm</span> point.asc 
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> M<span class="sy0">*</span> ; <span class="kw1">do</span>
+    <span class="kw2">awk</span> <span class="st_h">'{if (NF&lt;=3) print $1 $2,$3 }'</span>  <span class="re1">$file</span>  <span class="sy0">&gt;&gt;</span> point.asc  
+<span class="kw1">done</span></pre>
+
+<p>
+At this point the file point.asc includes all the previous files and can be sorted based on the first column.
+</p>
+<pre class="code bash"><span class="kw2">sort</span> <span class="re5">-k</span> <span class="nu0">1</span>,<span class="nu0">1</span>   point.asc  <span class="sy0">&gt;</span> point_s.asc </pre>
+
+<p>
+The point that will have the same coordinates will be closed and can be deleted. 
+Create a header for the csv file.
+</p>
+<pre class="code bash"><span class="kw2">rm</span> point.csv
+<span class="kw3">echo</span> <span class="st0">&quot;<span class="es1">\&quot;</span>X<span class="es1">\&quot;</span>,<span class="es1">\&quot;</span>Y<span class="es1">\&quot;</span>,<span class="es1">\&quot;</span>Z<span class="es1">\&quot;</span>&quot;</span> <span class="sy0">&gt;</span> point.csv </pre>
+
+<p>
+<em>Why there is the “\” simbol?</em><br/>
+
+</p>
+
+<p>
+Create an AWK script able to delete the numbers that are equal.  Do not copy/paste the awk script from the wiki, copy it from the source script. <strong>THIS CAN BE ALSO DONE WITH A BASH COMMAND</strong> search.
+</p>
+<pre class="code bash"><span class="kw2">awk</span> <span class="st_h">'{  
+    if(NR==1) { 
+	    old=$1 
+            z=$2 
+            print substr($1,1,6) &quot;,&quot; substr($1,7,7) &quot;,&quot; $2  
+	} 
+    else 
+	{
+	    if($1!=old) {
+		    print substr(old,1,6) &quot;,&quot; substr(old,7,7) &quot;,&quot; z ; 
+		    old=$1 ; 
+		    z=$2}
+	}
+} 
+END { 
+    print substr(old,1,6) &quot;,&quot; substr(old,7,7) &quot;,&quot; z ; 
+    old=$1 ; 
+    z=$2  
+}'</span>  point_s.asc  <span class="sy0">&gt;&gt;</span> point.csv</pre>
+
+<p>
+The file point.csv can be used as an input file to create a point ogr format.<br/>
+
+Read carefully “READING COMMA SEPARATED VALUES” at <a href="http://www.gdal.org/gdal_grid.html" class="urlextern" target="blanc" title="http://www.gdal.org/gdal_grid.html" rel="nofollow noopener"> http://www.gdal.org/gdal_grid.html </a><br/>
+
+and explain how it is working<br/>
+
+</p>
+<pre class="code bash"><span class="kw3">echo</span> <span class="st0">&quot;&lt;OGRVRTDataSource&gt;&quot;</span> <span class="sy0">&gt;</span> point.vrt
+<span class="kw3">echo</span> <span class="st0">&quot;    &lt;OGRVRTLayer name=<span class="es1">\&quot;</span>point<span class="es1">\&quot;</span>&gt;&quot;</span> <span class="sy0">&gt;&gt;</span>  point.vrt
+<span class="kw3">echo</span> <span class="st0">&quot;        &lt;SrcDataSource&gt;point.csv&lt;/SrcDataSource&gt;&quot;</span>  <span class="sy0">&gt;&gt;</span>  point.vrt 
+<span class="kw3">echo</span> <span class="st0">&quot;	      &lt;GeometryType&gt;wkbPoint&lt;/GeometryType&gt;&quot;</span>  <span class="sy0">&gt;&gt;</span>  point.vrt  
+<span class="kw3">echo</span> <span class="st0">&quot;	      &lt;GeometryField encoding=<span class="es1">\&quot;</span>PointFromColumns<span class="es1">\&quot;</span> x=<span class="es1">\&quot;</span>X<span class="es1">\&quot;</span> y=<span class="es1">\&quot;</span>Y<span class="es1">\&quot;</span> z=<span class="es1">\&quot;</span>Z<span class="es1">\&quot;</span>/&gt; &quot;</span>  <span class="sy0">&gt;&gt;</span>  point.vrt 
+<span class="kw3">echo</span> <span class="st0">&quot;    &lt;/OGRVRTLayer&gt;&quot;</span>  <span class="sy0">&gt;&gt;</span>   point.vrt  
+<span class="kw3">echo</span> <span class="st0">&quot;&lt;/OGRVRTDataSource&gt;&quot;</span>  <span class="sy0">&gt;&gt;</span>   point.vrt </pre>
+
+<p>
+You have created a point file in ogr format. <br/>
+
+You can use gdal_grid to create a regular grid (raster).<br/>
+
+Two ways are performed using two interpolation methods.
+</p>
+<pre class="code bash">gdal_grid <span class="re5">-a</span> average:<span class="re2">radius1</span>=<span class="nu0">25</span>:<span class="re2">radius2</span>=<span class="nu0">25</span>:<span class="re2">angle</span>=<span class="nu0">0.0</span>:<span class="re2">min_points</span>=<span class="nu0">1</span>:<span class="re2">nodata</span>=-<span class="nu0">9</span> <span class="re5">-outsize</span> <span class="nu0">100</span> <span class="nu0">100</span> <span class="re5">-of</span> EHdr <span class="re5">-ot</span> Float32 <span class="re5">-l</span> point point.vrt 25avg.tif </pre>
+
+<p>
+Open the two 25avg.tif and by openev.<br/>
+
+Read the image characteristic by gdalinfo.<br/>
+
+Make a new image with pixel size  = 100
+</p>
+
+</div>

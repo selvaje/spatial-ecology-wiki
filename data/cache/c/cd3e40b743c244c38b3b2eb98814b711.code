@@ -1,0 +1,28 @@
+<span class="co1">#!/usr/bin/env python</span>
+<span class="kw1">import</span> <span class="kw3">os</span><span class="sy0">,</span> <span class="kw3">sys</span>
+<span class="kw1">from</span> osgeo <span class="kw1">import</span> ogr
+&nbsp;
+driver <span class="sy0">=</span> ogr.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">'ESRI Shapefile'</span><span class="br0">&#41;</span>
+fn <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span><span class="kw3">os</span>.<span class="me1">environ</span>.<span class="me1">get</span><span class="br0">&#40;</span><span class="st0">'DATADIR'</span><span class="sy0">,</span> <span class="st0">'.'</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">'poly_fr.shp'</span><span class="br0">&#41;</span>
+dataSource <span class="sy0">=</span> driver.<span class="me1">Open</span><span class="br0">&#40;</span>fn<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span>
+<span class="kw1">if</span> dataSource <span class="kw1">is</span> <span class="kw2">None</span>:
+  <span class="kw1">print</span> <span class="st0">'Error opening'</span><span class="sy0">,</span> fn
+  <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+&nbsp;
+layer <span class="sy0">=</span> dataSource.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+numFeatures <span class="sy0">=</span> layer.<span class="me1">GetFeatureCount</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> <span class="st0">'Feature count:'</span><span class="sy0">,</span> numFeatures
+&nbsp;
+extend <span class="sy0">=</span> layer.<span class="me1">GetExtent</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> <span class="st0">'Extend:'</span><span class="sy0">,</span> extend
+&nbsp;
+feature <span class="sy0">=</span> layer.<span class="me1">GetNextFeature</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">while</span> feature:
+    <span class="kw1">print</span> feature.<span class="me1">GetField</span><span class="br0">&#40;</span><span class="st0">'id'</span><span class="br0">&#41;</span>
+    geometry <span class="sy0">=</span> feature.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> geometry.<span class="me1">Centroid</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> geometry.<span class="me1">ExportToWkt</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    feature.<span class="me1">Destroy</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    feature <span class="sy0">=</span> layer.<span class="me1">GetNextFeature</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+dataSource.<span class="me1">Destroy</span><span class="br0">&#40;</span><span class="br0">&#41;</span>

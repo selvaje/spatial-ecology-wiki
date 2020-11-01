@@ -17,6 +17,7 @@
   * [[wiki:exercises|Exercises]] & [[wiki:lectures|lectures]]\\
   * [[uav:uav_inro|Drone mapping]] & [[wiki:grappolo|Grappolo]]\\
   * [[wiki:machlearn|Machine learning ]]\\
+  * [[wiki:water|Water modeling ]]\\
 **Data**:
   * [[topovar90m|Geomorpho90m]]\\
 **Community:**\\

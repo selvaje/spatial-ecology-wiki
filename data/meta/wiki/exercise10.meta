@@ -1,4 +1,4 @@
-a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:42:"Exercise 10: Create yearly MODIS composite";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:40:"exercise_10create_yearly_modis_composite";s:5:"title";s:42:"Exercise 10: Create yearly MODIS composite";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:342:"Exercise 10: Create yearly MODIS composite
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1594967994;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:42:"Exercise 10: Create yearly MODIS composite";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:40:"exercise_10create_yearly_modis_composite";s:5:"title";s:42:"Exercise 10: Create yearly MODIS composite";s:4:"type";s:2:"ul";s:5:"level";i:1;}}s:8:"abstract";s:342:"Exercise 10: Create yearly MODIS composite
 
 In this exercise the following tools will be used:
 

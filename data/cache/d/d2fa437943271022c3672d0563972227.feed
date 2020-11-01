@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://spatial-ecology.net/dokuwiki/feed.php">
+        <title></title>
+        <description></description>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2020-11-01T13:23:47+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:pkt_openev_osgeolive&amp;rev=1597819237&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:gdalpktools_kenya&amp;rev=1597819097&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:install&amp;rev=1597818907&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:install_linux&amp;rev=1597818725&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?image=slurm_logo.png&amp;ns=&amp;rev=1589025912&amp;tab_details=history&amp;mediado=diff&amp;do=media"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?image=wiki%3Alogo.png&amp;ns=wiki&amp;rev=1589024585&amp;tab_details=history&amp;mediado=diff&amp;do=media"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?image=cc-by-4.0.png&amp;ns=&amp;rev=1587047753&amp;tab_details=history&amp;mediado=diff&amp;do=media"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <url>http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:pkt_openev_osgeolive&amp;rev=1597819237&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-19T06:40:37+0000</dc:date>
+        <dc:creator>ost4sem_giu (ost4sem_giu@undisclosed.example.com)</dc:creator>
+        <title>wiki:pkt_openev_osgeolive</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:pkt_openev_osgeolive&amp;rev=1597819237&amp;do=diff</link>
+        <description>Install pktools, openev and R 4.0.2 in OSGeoLive 13 Linux Virtual
+
+sudo require a pw that in for the OSGeoLive 13 is user 
+
+pay attention that when you type the pw you do not see that you are typing it is just for security.
+
+Install pktools with the package manager</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:gdalpktools_kenya&amp;rev=1597819097&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-19T06:38:17+0000</dc:date>
+        <dc:creator>ost4sem_giu (ost4sem_giu@undisclosed.example.com)</dc:creator>
+        <title>wiki:gdalpktools_kenya - [Enreach OSGeoLive Linux Virtual with PKTOOLS and Openev] </title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:gdalpktools_kenya&amp;rev=1597819097&amp;do=diff</link>
+        <description>Use GDAL/OGR and PKTOOLS for raster/vector operations
+
+Enreach OSGeoLive Linux Virtual with PKTOOLS and Openev
+
+
+
+If you download the OSGeoLive 13 directly from &lt;https://live.osgeo.org/en/index.html&gt; then you have to install pktools and openev following this procedure  Install pktools, openev and R 4.0.2 in OSGeoLive 13 Linux Virtual  
+
+
+In the Ubuntu VM
+_</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:install&amp;rev=1597818907&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-19T06:35:07+0000</dc:date>
+        <dc:creator>ost4sem_giu (ost4sem_giu@undisclosed.example.com)</dc:creator>
+        <title>wiki:install - [Create a virtual machine with spatial ecological modelling software] </title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:install&amp;rev=1597818907&amp;do=diff</link>
+        <description>Create a virtual machine with spatial ecological modelling software
+
+The virtual machine VM includes software for GIS data processing and all Open Source tools used in spatial-ecology.net
+
+The use of a VM allows you not to install linux ubuntu in your computer but just to use it.</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:install_linux&amp;rev=1597818725&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-08-19T06:32:05+0000</dc:date>
+        <dc:creator>ost4sem_giu (ost4sem_giu@undisclosed.example.com)</dc:creator>
+        <title>wiki:install_linux</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:install_linux&amp;rev=1597818725&amp;do=diff</link>
+        <description>Install Linux Ubuntu with spatial ecological modelling software as main OS
+
+
+
+
+
+
+Preparation of an Ubuntu Linux OS
+
+	* Download an iso linux ubuntu file from &lt;http://www.ubuntu.com/download/ubuntu/download&gt; and store it on your pc
+	* Open a Virtual machine player and create a new operating system from the iso file you downloaded and stored</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?image=slurm_logo.png&amp;ns=&amp;rev=1589025912&amp;tab_details=history&amp;mediado=diff&amp;do=media">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-05-09T12:05:12+0000</dc:date>
+        <dc:creator>new_ost4sem_admin (new_ost4sem_admin@undisclosed.example.com)</dc:creator>
+        <title>slurm_logo.png - created</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?image=slurm_logo.png&amp;ns=&amp;rev=1589025912&amp;tab_details=history&amp;mediado=diff&amp;do=media</link>
+        <description>&lt;img src=&quot;http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=500&amp;h=457&amp;t=1594967988&amp;amp;tok=7e9017&amp;amp;media=slurm_logo.png&quot; alt=&quot;slurm_logo.png&quot; /&gt;</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?image=wiki%3Alogo.png&amp;ns=wiki&amp;rev=1589024585&amp;tab_details=history&amp;mediado=diff&amp;do=media">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-05-09T11:43:05+0000</dc:date>
+        <dc:creator>new_ost4sem_admin (new_ost4sem_admin@undisclosed.example.com)</dc:creator>
+        <title>wiki:logo.png</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?image=wiki%3Alogo.png&amp;ns=wiki&amp;rev=1589024585&amp;tab_details=history&amp;mediado=diff&amp;do=media</link>
+        <description>&lt;img src=&quot;http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=500&amp;h=38&amp;t=1594967989&amp;amp;tok=e5afa7&amp;amp;media=wiki:logo.png&quot; alt=&quot;wiki:logo.png&quot; /&gt;</description>
+    </item>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?image=cc-by-4.0.png&amp;ns=&amp;rev=1587047753&amp;tab_details=history&amp;mediado=diff&amp;do=media">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-04-16T14:35:53+0000</dc:date>
+        <dc:creator>ost4sem_giu (ost4sem_giu@undisclosed.example.com)</dc:creator>
+        <title>cc-by-4.0.png - created</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?image=cc-by-4.0.png&amp;ns=&amp;rev=1587047753&amp;tab_details=history&amp;mediado=diff&amp;do=media</link>
+        <description>&lt;img src=&quot;http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?w=80&amp;h=15&amp;t=1594967989&amp;amp;tok=17ccb1&amp;amp;media=cc-by-4.0.png&quot; alt=&quot;cc-by-4.0.png&quot; /&gt;</description>
+    </item>
+</rdf:RDF>

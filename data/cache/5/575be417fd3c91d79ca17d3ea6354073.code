@@ -1,0 +1,3 @@
+<span class="kw2">umount</span> <span class="sy0">/</span>dev<span class="sy0">/</span>mmcblk0p1
+<span class="kw2">umount</span> <span class="sy0">/</span>dev<span class="sy0">/</span>mmcblk0p2
+<span class="kw2">sudo</span> <span class="kw2">dd</span> <span class="re2">bs</span>=4M <span class="re2">if</span>=<span class="sy0">/</span>media<span class="sy0">/</span>leXar<span class="sy0">/</span>raspian_grassR_masterpw <span class="re2">of</span>=<span class="sy0">/</span>dev<span class="sy0">/</span>mmcblk0

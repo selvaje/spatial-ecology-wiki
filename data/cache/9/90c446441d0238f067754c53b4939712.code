@@ -1,0 +1,2 @@
+<span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_grass<span class="sy0">/</span>tmp_image
+pdftk <span class="sy0">*</span>.pdf <span class="kw2">cat</span> output combined.pdf

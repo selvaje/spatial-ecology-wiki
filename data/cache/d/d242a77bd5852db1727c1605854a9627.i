@@ -1,0 +1,114 @@
+a:3:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:4:"code";i:1;a:3:{i:0;s:5307:"
+#!/bin/bash
+#Modified by Stefano casalegno from getData version 0.2 written by Hans Bosch and Sonya Ahamed for AfSIS project, Columbia University 
+#This script downloads Modis data for computing NDVI cumulate values in Cornwall as a metric of the ecosystem service value plant productivity
+#
+#Pre condition:
+#    Adequate space needs to be allocated for downloads and temp files
+#    Write permissions to file system 
+#    The variable tileList needs to contain the exact name of the tile
+#    Network access to Modis ftp server ftp://e4ftl01.cr.usgs.gov
+#    Requires curl to be installed see http://curl.haxx.se
+#
+#Post condition:
+#    Base directory is created with multiple date sub directories 
+#    Sub directories created and populated with desired tiles
+#    Script builds directories starting from script execution point
+#   
+#    Select the zone of interest from this file http://gis.cri.fmach.it/data/modis_sinusoidal.zip
+#    Declare tiles to download in variable tileList (see details on the sinusoidal projection here http://gis.cri.fmach.it/modis-sinusoidal-gis-files/  )
+#
+#    your working dir is named after modis product name: (see https://lpdaac.usgs.gov/products/modis_products_table)
+#    Create root directory for downloads https://lpdaac.usgs.gov/products/modis_products_table/mod13q1
+#
+mkdir ~/MODIS
+cd ~/MODIS/
+tileList=(h18v03 h17v03 h17v4) # My zone of interest 
+baseDir=MOD13Q1.005            # MODIS product name
+mkdir $baseDir
+cd $baseDir
+#Determine the directory dates for $baseDir
+curl ftp://e4ftl01.cr.usgs.gov/MOLT/$baseDir/ --user anonymous:user@mailservice.com > dirDates
+for eachDate in `cat dirDates|awk '{print $8}'` ; do #Process each date in the $baseDir
+echo $eachDate
+mkdir $eachDate
+cd $eachDate    # Now that we have the dates get the directory listing under that date
+curl ftp://e4ftl01.cr.usgs.gov/MOLT/$baseDir/$eachDate/ --user anonymous:user@mailservice.com > allFiles4Date
+grep hdf allFiles4Date > files2Get         # From all the files only get the *.hdf and *.hdf.xml files
+   for eachTile in ${tileList[*]} ; do     # Get only the tiles needed 
+   grep $eachTile files2Get > tiles2Get
+     for eachFile in `cat tiles2Get|awk '{print $8}'` ; do 
+     curl -O ftp://e4ftl01.cr.usgs.gov/MOLT/$baseDir/$eachDate/$eachFile --user anonymous:user@mailservice.com
+     done
+   done
+cd ..  #Change directory up one to base dir
+done
+
+##### DOWNLOADING DONE
+#### Set Grass environment 
+# Define the appropriate UK projection to the project using an existing image reprojected to the target EPSG:27700
+mkdir ~/MODIS/grassdb
+cd ~/ost4sem/grassdb/
+gdalwarp   -t_srs EPSG:27700  -s_srs EPSG:3035  ost4sem/studycase/ITA_veg/data/physic_pr/pr200/hdr.adf input_proj.tif
+bash ~/ost4sem/exercise/basic_adv_grass/create_location.sh input_proj.tif modis27700
+
+
+# Setting GRASS variables for GRASS bash job
+export GRASSDB=~/MODIS/grassdb
+export LOCATION=modis27700
+export MAPSET=PERMANENT
+echo "LOCATION_NAME: $LOCATION"                  >  $HOME/.grassrc6_$$
+echo "MAPSET: $MAPSET"                           >> $HOME/.grassrc6_$$
+echo "DIGITIZER: none"                           >> $HOME/.grassrc6_$$
+echo "GRASS_GUI: text"                           >> $HOME/.grassrc6_$$
+echo "GISDBASE: $GRASSDB" >> $HOME/.grassrc6_$$
+export GISBASE=/usr/lib/grass64
+export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts
+export LD_LIBRARY_PATH="$GISBASE/lib"
+export GISRC=~/.grassrc6_$$
+export GIS_LOCK=$$  #   use process ID (PID) as lock file number
+g.mapset -c mapset=processing
+##### Next steps are 
+#       - convert hdr to Gtif, 
+#       - MERGE tiles 
+#       - REPROJECT DATA to EPSG27700 UK projection
+#       - cumulate all images using only positive values 
+cd /disk2/MODIS
+mkdir $baseDir"_TIF"
+mkdir MOD13Q1.005_TIF/NDVI
+mkdir MOD13Q1.005_TIF/NDVI_Merge
+cd /disk2/MODIS/MOD13Q1.005
+
+# create a template file with all pixels = 0 values
+eachDate=2000.02.18
+gdal_merge.py -o ../../MOD13Q1.005_TIF/template_modis_proj.tif $(ls ../../MOD13Q1.005_TIF/NDVI/*tif)
+gdalwarp -s_srs '+proj=sinu +R=6371007.181 +nadgrids=@null +wktext' -t_srs EPSG:27700 -r cubic  ../../MOD13Q1.005_TIF/template_modis_proj.tif ../../MOD13Q1.005_TIF/template_27700.tif
+r.in.gdal -e input=/disk2/MODIS/MOD13Q1.005_TIF/template_27700.tif output=template 
+g.region rast=template  nsres=236.13777419 ewres=236.13777419
+r.mapcalc template = "0"
+
+##
+
+for eachDate in `cat dirDates|awk '{print $8}'` ; do #Process each date in the $baseDir
+echo $eachDate
+cd $eachDate
+
+for file in *.hdf ; do
+gdal_translate  'HDF4_EOS:EOS_GRID:"'$file'":MODIS_Grid_16DAY_250m_500m_VI:250m 16 days NDVI' ../../MOD13Q1.005_TIF/NDVI/NDVI_$eachDate$(basename $file .hdf)".tif"
+done 
+
+gdal_merge.py -o ../../MOD13Q1.005_TIF/NDVI_Merge/NDVI$eachDate.tif $(ls ../../MOD13Q1.005_TIF/NDVI/*tif)
+   
+gdalwarp -s_srs '+proj=sinu +R=6371007.181 +nadgrids=@null +wktext' -t_srs EPSG:27700 -r cubic   ../../MOD13Q1.005_TIF/NDVI_Merge/NDVI$eachDate.tif  ../../MOD13Q1.005_TIF/NDVI_Merge/NDVI_import.tif
+r.external input=/disk2/MODIS/MOD13Q1.005_TIF/NDVI_Merge/NDVI_import.tif output=import --overwrite
+r.mapcalc out = "if(  import >= 0 , template+import  , template )"
+r.mapcalc template = out
+rm ~/MODIS/MOD13Q1.005_TIF/NDVI_Merge/*
+rm ~/MODIS/MOD13Q1.005_TIF/NDVI/*
+cd ../
+done
+
+r.out.gdal input=template output=~/MODIS/NDVI_sum.tif
+
+# FINISH NDVI 
+";i:1;s:4:"bash";i:2;s:23:"- plant_productivity.sh";}i:2;i:6;}i:2;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:6;}}

@@ -1,0 +1,20 @@
+<span class="co0"># create folders for standard error and standard output </span>
+<span class="kw2">mkdir</span> <span class="sy0">/</span>lustre<span class="sy0">/</span>scratch<span class="sy0">/</span>GUESTS<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>stderr
+<span class="kw2">mkdir</span> <span class="sy0">/</span>lustre<span class="sy0">/</span>scratch<span class="sy0">/</span>GUESTS<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>stdout 
+&nbsp;
+<span class="co0"># create soft link to scratch </span>
+<span class="kw2">ln</span> <span class="re5">-s</span> <span class="sy0">/</span>lustre<span class="sy0">/</span>scratch<span class="sy0">/</span>GUESTS<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>  <span class="re1">$HOME</span><span class="sy0">/</span>scratch30
+&nbsp;
+<span class="co0"># copy data </span>
+<span class="kw2">cp</span>  <span class="re5">-r</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>ost4sem <span class="re1">$HOME</span><span class="sy0">/</span>
+&nbsp;
+<span class="co0"># copy visualization tool </span>
+&nbsp;
+<span class="kw2">mkdir</span> <span class="re1">$HOME</span><span class="sy0">/</span>bin
+<span class="kw2">cp</span> <span class="re5">-r</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>bin  <span class="re1">$HOME</span>
+&nbsp;
+<span class="co0"># copy bash setting</span>
+<span class="kw2">cp</span>  <span class="sy0">/</span>tmp<span class="sy0">/</span>.bashrc_GUESTS  <span class="re1">$HOME</span><span class="sy0">/</span>.bashrc
+&nbsp;
+<span class="co0"># load the new bash setting</span>
+<span class="kw3">source</span> <span class="re1">$HOME</span><span class="sy0">/</span>.bashrc

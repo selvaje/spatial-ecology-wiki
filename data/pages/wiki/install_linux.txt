@@ -99,7 +99,7 @@ Installation procedure (osgeolive 10.5 )
 
      sudo apt-get install libxext6:i386 lsb-core lib32gcc-4.7-dev 
      cd /tmp
-     wget ftp://ftp.ihg.uni-duisburg.de/GIS/OpenEV/openev-linux-180.tar.gz
+     wget wget https://ayera.dl.sourceforge.net/project/openev/OpenEV/1.8.0/openev-linux-180.tar.gz
      tar xvf openev-linux-180.tar.gz
      cd openev
      sudo ./install linux   /usr/bin/openev
@@ -113,6 +113,17 @@ Installation procedure Debian streach August 7th, 2017
     wget http://ftp.us.debian.org/debian/pool/main/g/gcc-3.3/libstdc++5_3.3.6-28_i386.deb
     sudo dpkg -i  libstdc++5_3.3.6-28_i386.deb
     
+Installation procedure osgeolive 13
+
+     sudo apt-get install libc6:i386
+     sudo apt-get install libxext6:i386
+     
+     be sure that the link under /usr/bin/openev/lib/ are present 
+     libgdk-1.2.so.0 -> libgdk-1.2.so.0.9.1
+        
+    
+
+** Install orfeotoolbox **
 
 deb http://ppa.launchpad.net/otb/orfeotoolbox-nightly/ubuntu precise main
 deb-src http://ppa.launchpad.net/otb/orfeotoolbox-nightly/ubuntu precise main
@@ -203,6 +214,16 @@ rgdal installation in the a cluster
 
     sudo apt-get -y install kate konsole emacs
  
+
+==== install R 4 in osgeolive 13 ====
+
+   sudo apt update 
+   sudo apt upgrade
+   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+   sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran40/'
+   sudo apt update 
+   sudo apt install r-base r-base-core r-recommended r-base-dev
+
 
 ====== Personalize your working environment ======
 \\

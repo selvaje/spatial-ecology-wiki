@@ -1,0 +1,27 @@
+<span class="co0"># Title: This script processes the ASTER GDEM</span>
+<span class="co0"># Author: Le Dang Trung</span>
+<span class="co0"># Email: trung@foi.dk</span>
+<span class="co0"># Org: Institute of Food and Resource Economics, University of Copenhagen</span>
+&nbsp;
+<span class="co0">##########################################################################################################################################</span>
+<span class="co0">#     Folders settings                                                                                                                   #</span>
+<span class="co0">##########################################################################################################################################</span>
+<span class="co0"># project (mother) folder</span>
+<span class="kw3">export</span> <span class="re2">projfolder</span>=<span class="st_h">'/home/user/Dropbox/OSGIScourse/VNspatial'</span>
+&nbsp;
+<span class="co0"># data folder for Gdem</span>
+<span class="kw3">export</span> <span class="re2">data_gdem</span>=<span class="st_h">'/home/user/Dropbox/Data/Meteo/GDEM'</span>
+&nbsp;
+<span class="co0"># folder for grass database</span>
+<span class="kw3">export</span> <span class="re2">data_grassvn</span>=<span class="re1">$projfolder</span><span class="sy0">/</span>grassdb<span class="sy0">/</span>vietnam
+&nbsp;
+<span class="co0"># folder for shapefiles</span>
+<span class="kw3">export</span> <span class="re2">data_shpfiles</span>=<span class="st_h">'/home/user/Dropbox/OSGIScourse/VNproject'</span>
+&nbsp;
+<span class="co0"># folder for raster files</span>
+<span class="kw2">mkdir</span> <span class="re1">$projfolder</span><span class="sy0">/</span>raster
+<span class="kw3">export</span> <span class="re2">data_raster</span>=<span class="re1">$projfolder</span><span class="sy0">/</span>raster
+&nbsp;
+<span class="co0"># folder for vector files</span>
+<span class="kw2">mkdir</span> <span class="re1">$projfolder</span><span class="sy0">/</span>vector
+<span class="kw3">export</span> <span class="re2">data_vector</span>=<span class="re1">$projfolder</span><span class="sy0">/</span>vector

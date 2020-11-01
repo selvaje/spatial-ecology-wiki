@@ -1,0 +1,4 @@
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="re1">$DIR</span><span class="sy0">/</span><span class="nu0">20</span><span class="sy0">*</span>crop.tif ; <span class="kw1">do</span>
+   <span class="re2">filename</span>=<span class="sy0">`</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="sy0">`</span>  
+   oft-stat <span class="re5">-i</span> <span class="re1">$file</span>  <span class="re5">-o</span>  <span class="re1">$DIR</span><span class="sy0">/</span><span class="re1">$filename</span><span class="st0">&quot;.txt&quot;</span>  <span class="re5">-um</span> <span class="re1">$DIR</span><span class="sy0">/</span>poly_fr.tif
+<span class="kw1">done</span>

@@ -1,0 +1,5 @@
+   data2map = readGDAL(paste(path.rasters,&quot;pr104ita&quot;,sep=&quot;&quot;), offset=c(0,tile[t]), region.dim=c(1500,20))
+   cat(&quot;geocoordinates inported\n&quot;)
+&nbsp;
+   data2map$band1 = 20
+   cat(&quot; no data value is now = 15 in this tile[t]\n&quot;)

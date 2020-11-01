@@ -1,0 +1,178 @@
+
+<h1 class="sectionedit1" id="exploratory_analysis_of_air_quality_database">Exploratory analysis of air quality database</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Exploratory analysis of air quality database&quot;,&quot;hid&quot;:&quot;exploratory_analysis_of_air_quality_database&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-60&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+The context of this study consider the damage of calcarenite stone in archeological site caused by weathering and pollution. Much interest focus on previsional risk assessment.<br/>
+
+The degradation of the cultural heritage begins immediately after its implementation and the speed of its degradation depends on both natural and anthropogenic factors. The process of deterioration is progressive and irreversible, and the timing and mode of impact is different depending on the characteristics of materials, physico-chemical agents and  biological processes that are involved. It is evident that the conservation and restoration of such structures require the understanding of physical-chemical and biological processes causing the deterioration of materials, and the knowledge of restoration strategies.
+At today, the limits imposed by EU regulations about air pollution have been issued aiming at the safeguard of human health and ecosystem, but not considering the damages to the archaeological sites.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;61-1087&quot;} -->
+<h2 class="sectionedit3" id="project_objectives">Project objectives</h2>
+<div class="level2">
+
+<p>
+We carry out a preliminary analysis of the available air quality database.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1088-1198&quot;} -->
+<h2 class="sectionedit4" id="metadata">METADATA</h2>
+<div class="level2">
+
+<p>
+Excell file including 16899 observations for 13 variables.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1199-1283&quot;} -->
+<h2 class="sectionedit5" id="method">METHOD</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">import xls table in R</div>
+</li>
+<li class="level1"><div class="li">plot air quality fluctuations vs h for one day</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1284-1382&quot;} -->
+<h2 class="sectionedit6" id="metadata1">METADATA</h2>
+<div class="level2">
+
+<p>
+Excell file including 16899 observations for 13 variables.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata1&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1383-1468&quot;} -->
+<h2 class="sectionedit7" id="method1">METHOD</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">import xls table in R</div>
+</li>
+<li class="level1"><div class="li">plot air quality fluctuations vs h for one day</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method1&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;1469-1569&quot;} -->
+<h2 class="sectionedit8" id="data_import_and_processing">DATA IMPORT AND PROCESSING</h2>
+<div class="level2">
+
+<p>
+The following script is used to:
+</p>
+<ol>
+<li class="level1"><div class="li"> import xls table</div>
+</li>
+<li class="level1"><div class="li"> subset data using the following parameters: CO, NO, NO2, NOX, SO2, Pm10, O3</div>
+</li>
+<li class="level1"><div class="li"> compute the means of each subset</div>
+</li>
+<li class="level1"><div class="li"> plot subset of parameters fluctuation during one day</div>
+</li>
+</ol>
+<pre class="code r">#1.Import xls data
+library (gdata) #library for import xls
+input.path = (&quot;/home/user/ost4sem/project/r_script/&quot;)
+qualiaria= read.xls (paste (input.path,&quot;SanNicola_dal_01_01_2010_Al_30_04_2010.xls&quot;, sep=&quot;&quot;))
+str (qualiaria)
+&nbsp;
+# 2.subset qualiaria using Parametro =CO 
+qualiaria.co = subset(qualiaria, qualiaria$Parametro==&quot;CO&quot;)
+qualiaria.no = subset(qualiaria, qualiaria$Parametro==&quot;NO&quot;)
+qualiaria.no2 = subset(qualiaria, qualiaria$Parametro==&quot;NO2&quot;)
+qualiaria.noX = subset(qualiaria, qualiaria$Parametro==&quot;NOX&quot;)
+qualiaria.so2 = subset(qualiaria, qualiaria$Parametro==&quot;SO2&quot;)
+qualiaria.pm10 = subset(qualiaria, qualiaria$Parametro==&quot;PM10&quot;)
+qualiaria.o3 = subset(qualiaria, qualiaria$Parametro==&quot;O3&quot;)
+&nbsp;
+NOmean = mean (qualiaria.no$Media)
+NO2mean = mean (qualiaria.no2$Media)
+NOXmean = mean (qualiaria.noX$Media)
+SO2mean = mean (qualiaria.so2$Media)
+PM10mean = mean (qualiaria.pm10$Media)
+O3mean = mean (qualiaria.o3$Media)
+str (qualiaria.co)
+&nbsp;
+#3. COmean
+# mean (qualiaria.co$Media)
+COmean = mean (qualiaria.co$Media) # memory date
+&nbsp;
+&nbsp;
+&nbsp;
+#5. Save graphics
+png(&quot;~/ost4sem/exercise/basic_adv_r/outputs/qualiaria.co.png&quot;, width=800, height=800)
+plot (qualiaria.co$Media) 
+dev.off()
+system(&quot; display ~/ost4sem/exercise/basic_adv_r/outputs/qualiaria.co.png&quot;) #to view the graphic
+&nbsp;
+#6.Save more graphics in one graphic
+png(&quot;/home/user/ost4sem/project/output/qualiaria24h.to.png&quot;, width=1600, height=800)
+# par(mar=c(4,2,4,2))
+par(mar=c(7,8,9,1))
+plot (log(qualiaria.no$Media[1:24],2), 
+  type=&quot;l&quot;, ylim=c(0,5.2), lwd=6, axes=FALSE, main=&quot;Daily Air fluctuations&quot; ,
+  xlab=&quot;hours&quot;, 
+  ylab=&quot;Air components (log)&quot;, 
+  cex.main=3, cex.lab=3)
+points (abs(log(qualiaria.co$Media[1:24],2)), type=&quot;l&quot;,col= &quot;red&quot;,lwd=6) 
+points (abs(log(qualiaria.no2$Media[1:24],2)), type=&quot;l&quot;,col= &quot;brown&quot;,lwd=6)
+points (abs(log(qualiaria.noX$Media[1:24],2)), type=&quot;l&quot;, col= &quot;green&quot;,lwd=6)
+points (abs(log(qualiaria.o3$Media[1:24],2)), type=&quot;l&quot;,col= &quot;blue&quot;,lwd=6)
+points (abs(log(qualiaria.pm10$Media[1:24],2)), type=&quot;l&quot;,col= &quot;orange&quot;,lwd=6)
+points (abs(log(qualiaria.so2$Media[1:24],2)), type=&quot;l&quot;, col= &quot;grey&quot;,lwd=6)
+axis(2, cex.axis=2)
+axis(1, at=seq(1,24,by=4), labels=seq(1,24,by=4), cex.axis=2)
+box()
+&nbsp;
+legend(14,5.3, 
+legend = c(&quot;CO&quot;,&quot;No2&quot;,&quot;No&quot;), 
+col=c(&quot;black&quot;,&quot;red&quot;,&quot;brown&quot;),
+bty=&quot;n&quot;,
+lty=1,
+lwd=4,
+cex=2)
+&nbsp;
+legend(18,5.3, 
+legend = c(&quot;NoX&quot;,&quot;O3&quot;,&quot;Pm10&quot;,&quot;So2&quot;), 
+col=c(&quot;green&quot;,&quot;blue&quot;,&quot;orange&quot;,&quot;grey&quot;),
+bty=&quot;n&quot;,
+lty=1,
+lwd=4,
+cex=2)
+dev.off()</pre>
+
+<p>
+<strong> Output image </strong>
+</p>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikibas10%3Abas10rxls&amp;media=wiki:qualiaria24h.to.png" class="media" title="wiki:qualiaria24h.to.png"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=3a2f47&amp;media=wiki:qualiaria24h.to.png" class="media" alt="" width="1000" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;DATA IMPORT AND PROCESSING&quot;,&quot;hid&quot;:&quot;data_import_and_processing&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;1570-&quot;} -->

@@ -1,0 +1,3 @@
+shell
+<span class="kw2">head</span> input.txt
+<span class="kw3">exit</span>

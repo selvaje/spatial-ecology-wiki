@@ -1,0 +1,110 @@
+<span class="co0">#!/usr/bin/env python</span>
+<span class="co0"># version 1  </span>
+<span class="co0"># August 7 2013</span>
+<span class="co0">#******************************************************************************</span>
+<span class="co0">#  add addattr-area.py</span>
+<span class="co0">#</span>
+<span class="co0">#  Repository: www.spatial-eclogy.net</span>
+<span class="co0">#  Purpose:  Command line to add attribute area at each polygon in a shapefile.</span>
+<span class="co0">#            The new attribute name, defined by the user, will be add to the shapefile. </span>
+<span class="co0">#            In case the attribute name was already present in the shapefile the new value will be stored</span>
+<span class="co0">#            The script can be used also to drop a specific item (like  ogrinfo  -al -geom=NO  -sql &quot;ALTER TABLE layername  DROP itemname &quot; input.shp )</span>
+<span class="co0">#            No new shapefile will be created  </span>
+<span class="co0">#  Author:   Giuseppe Amatulli, giuseppe.amatulli@gmail.com</span>
+<span class="co0">#******************************************************************************</span>
+<span class="co0">#  Copyright (c) 2013, Giuseppe Amatulli, giuseppe.amatulli@gmail.com</span>
+<span class="co0"># </span>
+<span class="co0">#  Permission is hereby granted, free of charge, to any person obtaining a</span>
+<span class="co0">#  copy of this software and associated documentation files (the &quot;Software&quot;),</span>
+<span class="co0">#  to deal in the Software without restriction, including without limitation</span>
+<span class="co0">#  the rights to use, copy, modify, merge, publish, distribute, sublicense,</span>
+<span class="co0">#  and/or sell copies of the Software, and to permit persons to whom the</span>
+<span class="co0">#  Software is furnished to do so, subject to the following conditions:</span>
+<span class="co0"># </span>
+<span class="co0">#  The above copyright notice and this permission notice shall be included</span>
+<span class="co0">#  in all copies or substantial portions of the Software.</span>
+<span class="co0"># </span>
+<span class="co0">#  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span>
+<span class="co0">#  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="co0">#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL</span>
+<span class="co0">#  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="co0">#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="co0">#  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="co0">#  DEALINGS IN THE SOFTWARE.</span>
+<span class="co0">#******************************************************************************</span>
+<span class="co0"># addattr-area.py src_shapefile item_name [-drop]</span>
+<span class="co0">################################################################</span>
+&nbsp;
+&nbsp;
+from osgeo import ogr
+import sys
+&nbsp;
+def Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    print<span class="br0">&#40;</span><span class="st_h">'Usage: addattr-area.py src_shapefile item_name [-drop]'</span><span class="br0">&#41;</span>
+    print<span class="br0">&#40;</span><span class="st_h">'Use -drop flag to drop an existing item'</span><span class="br0">&#41;</span>
+    sys.exit<span class="br0">&#40;</span> <span class="nu0">1</span> <span class="br0">&#41;</span>
+&nbsp;
+<span class="re2">input</span>=None
+<span class="re2">itemname</span>=None
+<span class="re2">drop</span>=None
+<span class="re2">itemdrop</span>=None
+&nbsp;
+<span class="kw1">if</span> len<span class="br0">&#40;</span>sys.argv<span class="br0">&#41;</span> <span class="sy0">&lt;</span> <span class="nu0">2</span>:
+    sys.exit<span class="br0">&#40;</span>Usage<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># Parse command line arguments.</span>
+i = <span class="nu0">1</span>
+<span class="kw1">while</span> i <span class="sy0">&lt;</span> len<span class="br0">&#40;</span>sys.argv<span class="br0">&#41;</span>:
+    arg = sys.argv<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+    <span class="kw1">if</span> input is None:
+        input = arg
+    <span class="kw1">elif</span> itemname is None:
+        itemname = arg
+    <span class="kw1">elif</span> arg == <span class="st_h">'-drop'</span>:
+        itemdrop = itemname
+    else:
+        Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    i = i + <span class="nu0">1</span>
+&nbsp;
+<span class="kw1">if</span>  input is None:
+    Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">if</span>  itemname is None:
+    Usage<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># Open a Shapefile, and get field names</span>
+<span class="kw3">source</span> = ogr.Open<span class="br0">&#40;</span>input,<span class="nu0">1</span><span class="br0">&#41;</span>
+layer = source.GetLayer<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="co0"># delete the item for the -drop flag and exist. </span>
+<span class="co0"># no more action will be executed.</span>
+<span class="co0"># delete the field if the index of the fild is != -1 </span>
+<span class="kw1">if</span> itemdrop == itemname : 
+    <span class="kw1">if</span> layer.GetLayerDefn<span class="br0">&#40;</span><span class="br0">&#41;</span>.GetFieldIndex<span class="br0">&#40;</span>itemname<span class="br0">&#41;</span> <span class="sy0">!</span>= <span class="re5">-1</span> :
+        layer.DeleteField<span class="br0">&#40;</span>layer.GetLayerDefn<span class="br0">&#40;</span><span class="br0">&#41;</span>.GetFieldIndex<span class="br0">&#40;</span>itemname<span class="br0">&#41;</span><span class="br0">&#41;</span> 
+    sys.exit<span class="br0">&#40;</span> <span class="nu0">1</span> <span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># delete the field if the index of the fild is != -1 </span>
+<span class="kw1">if</span> layer.GetLayerDefn<span class="br0">&#40;</span><span class="br0">&#41;</span>.GetFieldIndex<span class="br0">&#40;</span>itemname<span class="br0">&#41;</span> <span class="sy0">!</span>= <span class="re5">-1</span> :
+    layer.DeleteField<span class="br0">&#40;</span>layer.GetLayerDefn<span class="br0">&#40;</span><span class="br0">&#41;</span>.GetFieldIndex<span class="br0">&#40;</span>itemname<span class="br0">&#41;</span><span class="br0">&#41;</span> 
+&nbsp;
+<span class="co0"># add the field</span>
+&nbsp;
+new_field = ogr.FieldDefn<span class="br0">&#40;</span>itemname, ogr.OFTReal <span class="br0">&#41;</span> 
+layer.CreateField<span class="br0">&#40;</span>new_field<span class="br0">&#41;</span>
+&nbsp;
+print <span class="br0">&#40;</span><span class="st_h">'Adding item and calculate the area'</span><span class="br0">&#41;</span> 
+&nbsp;
+<span class="kw1">for</span> poly <span class="kw1">in</span> xrange<span class="br0">&#40;</span>layer.GetFeatureCount<span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span> :
+    feature = layer.GetFeature<span class="br0">&#40;</span>poly<span class="br0">&#41;</span>
+    <span class="re2">geom</span>=feature.GetGeometryRef<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="re2">area</span>=geom.GetArea<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    feature.SetField<span class="br0">&#40;</span>itemname,area<span class="br0">&#41;</span>
+    <span class="kw1">if</span> layer.SetFeature<span class="br0">&#40;</span>feature<span class="br0">&#41;</span> <span class="sy0">!</span>= <span class="nu0">0</span>:
+        print <span class="st0">&quot;Failed to create feature in shapefile.<span class="es1">\n</span>&quot;</span>
+        sys.exit<span class="br0">&#40;</span> <span class="nu0">1</span> <span class="br0">&#41;</span>
+    feature.Destroy<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># Close the Shapefile</span>
+<span class="kw3">source</span> = None

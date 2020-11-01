@@ -1,0 +1,166 @@
+
+<h1 class="sectionedit1" id="reprojection_and_extraction_of_modis_vcf_data">Reprojection and extraction of MODIS VCF data</h1>
+<div class="level1">
+
+<p>
+Nandin-Erdene Tsendbazar 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Reprojection and extraction of MODIS VCF data&quot;,&quot;hid&quot;:&quot;reprojection_and_extraction_of_modis_vcf_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-87&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;88-113&quot;} -->
+<h3 class="sectionedit3" id="general_framework_of_the_analysis">General framework of the analysis</h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> Background: When using a reference data of a land cover map to validate another land cover map, we need to improve the reference data in a way it fits the legend system of the target map. MODIS VCF data provide tree cover percentage information and this is useful in determining closed and open forests with a given thresholds. </div>
+</li>
+<li class="level1"><div class="li"> keywords: MODIS VCF, reprojection, data extraction on a polygon area</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;General framework of the analysis&quot;,&quot;hid&quot;:&quot;general_framework_of_the_analysis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;114-565&quot;} -->
+<h3 class="sectionedit4" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+Global data of MODIS VCF are reprojected from sinusoidal projection to WGS84 which are compatible with the reference data and a target land cover map (use the wget command to download the file ) . The average of three years VCF data is calculated and the average VCF within the reference locations is extracted. The extracted VCF info within the reference locations will be grouped into different categorical classes which are compatible to the target map. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;566-1057&quot;} -->
+<h2 class="sectionedit5" id="metadata">METADATA</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1058-1079&quot;} -->
+<h3 class="sectionedit6" id="vector_data">Vector data</h3>
+<div class="level3">
+
+<p>
+A polygon file of 1.5&times;1.5 km rectangles at random locations of the world land mass. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector data&quot;,&quot;hid&quot;:&quot;vector_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1080-1187&quot;} -->
+<h3 class="sectionedit7" id="raster_data">Raster data</h3>
+<div class="level3">
+
+<p>
+Vegetation Continuous Fields data of MODIS (<a href="https://lpdaac.usgs.gov/products/modis_products_table/mod44b" class="urlextern" target="blanc" title="https://lpdaac.usgs.gov/products/modis_products_table/mod44b" rel="nofollow noopener">https://lpdaac.usgs.gov/products/modis_products_table/mod44b</a>) at 250 m resolution for the year 2004, 2005 and 2006. This data has been downloaded and mosaiced for the extent of the world. Data has original MODIS sinusoidal projection.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Raster data&quot;,&quot;hid&quot;:&quot;raster_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;1188-1489&quot;} -->
+<h2 class="sectionedit8" id="method">METHOD</h2>
+<div class="level2">
+
+<p>
+Global MODIS VCF data of 2004, 2005 and 2006 are reprojected into WGS84 projection using gdalwarp. Mean VCF value for each rectangle of the vector data is extracted for each year using GRASS and the final 3-year average VCF value for each location is calculated in R. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;1490-1780&quot;} -->
+<h2 class="sectionedit9" id="computational_implementation">Computational implementation</h2>
+<div class="level2">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_nadin&amp;codeblock=0" title="Download Snippet" class="mediafile mf_">- mycode</a></dt>
+<dd><pre class="code bash"><span class="co0">#/bin/bash</span>
+<span class="co0">#VCF data for the 2004, 2005 and 2006 are re-projected. </span>
+<span class="kw3">cd</span> <span class="sy0">/</span>media<span class="sy0">/</span>DATA1<span class="sy0">/</span>tsend001<span class="sy0">/</span>vcf_modis_global 
+<span class="kw1">time</span> <span class="br0">&#40;</span><span class="kw2">ls</span> mod44b_world_200?_250.tif <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">12</span> <span class="kw2">bash</span> gdal_warp.sh <span class="br0">&#41;</span></pre>
+</dd></dl>
+
+<p>
+gdal_warp.sh contains :
+</p>
+<pre class="code R"># save following code as gdal_warp.sh
+file=$1
+gdalwarp -r bilinear -t_srs EPSG:4326 $file  proj_$file -overwrite</pre>
+
+<p>
+VCF values for the sample locations are extracted using GRASS
+</p>
+<pre class="code R"># Using the reprojected images, GRASS working environment is created; and
+#images vector files are imported to GRASS.
+&nbsp;
+#create new grass database folder
+mkdir /media/DATA1/tsend001/vcf_modis_global/grassdb
+&nbsp;
+#copy projected VCF file into that folder so that creation of
+#new grass environment can make use of the informations on the 
+#projection and extent. 
+cp /media/DATA1/tsend001/vcf_modis_global/proj_mod44b_world_2005_250.tif /media/DATA1/tsend001/vcf_modis_global/grassdb/proj_mod44b_world_2005_250.tif
+&nbsp;
+#change directory to grassdb
+cd /media/DATA1/tsend001/vcf_modis_global/grassdb
+&nbsp;
+# Download the create_location.sh.zip(http://www.spatial-ecology.net/dokuwiki/lib/exe/fetch.php?media=wiki:create_location.sh.zip) and save it in your directory
+#Rename create_location.sh.zip create_location.sh by mv create_location.sh.zip create_location.sh
+#Run the script create_location.sh which creates the newlocation with inside the imported proj_*.tif.  
+bash /media/DATA1/tsend001/vcf_modis_global/scripts/create_location.sh proj_mod44b_world_2005_250.tif new_grass_loc /media/DATA1/tsend001/vcf_modis_global/grassdb 
+#open grass environement
+grass70 -text /media/DATA1/tsend001/vcf_modis_global;/grassdb/new_grass_loc/PERMANENT
+&nbsp;
+###### start perform script tasks 
+&nbsp;
+#import raster files into grass environment
+&nbsp;
+r.in.gdal input=/media/DATA1/tsend001/vcf_modis_global/proj_mod44b_world_2004_250.tif output=2004_VCF  --overwrite 
+r.in.gdal input=/media/DATA1/tsend001/vcf_modis_global/proj_mod44b_world_2005_250.tif output=2005_VCF  --overwrite 
+r.in.gdal input=/media/DATA1/tsend001/vcf_modis_global/proj_mod44b_world_2006_250.tif output=2006_VCF  --overwrite 
+&nbsp;
+# import the vector polygons
+v.in.ogr -c dsn=/media/DATA1/tsend001/vcf_modis_global/points_combined_translated_5x5_rec.shp output=glob_samples1 --overwrite
+&nbsp;
+#extract the values of VCF over the sample locations and #extracted values will be added to the attribute table of the #vector data
+v.rast.stats glob_samples raster=2004_VCF colprefix=v_4 -c --verbose
+v.rast.stats glob_samples raster=2005_VCF colprefix=v_5 -c --verbose
+v.rast.stats glob_samples raster=2006_VCF colprefix=v_6 -c --verbose
+&nbsp;
+#check the results
+v.info -c glob_samples
+v.db.select glob_samples
+v.univar glob_samples column=v_4_mean #calculate summary stats per field
+&nbsp;
+#export the glob_samples to shp
+v.out.ogr input=glob_samples type=area dsn=/media/DATA1/tsend001/vcf_modis_global/globsample_vcf.shp
+&nbsp;
+#Start R and import the shape file to calculate mean VCF values for three years
+R --vanilla -q &lt;&lt;EOF
+library(rgdal)
+globsample_vcf&lt;-readOGR(&quot;/media/DATA1/tsend001/vcf_modis_global/globsample_vcf.shp&quot; , &quot;globsample_vcf&quot;)
+globsample_vcf_mean&lt;-globsample_vcf[, c(1:49, 55,64,73)]
+globsample_vcf_mean$vcf&lt;-rowMeans(globsample_vcf_mean@data[c(50:52)])
+writeOGR(globsample_vcf_mean, dsn=&quot;/media/DATA1/tsend001/vcf_modis_global/globsample_vcf_mean1.shp&quot;, &quot;globsample_vcf_mean1&quot; , &quot;ESRI Shapefile&quot;)
+EOF</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Computational implementation&quot;,&quot;hid&quot;:&quot;computational_implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;1781-5204&quot;} -->
+<h2 class="sectionedit10" id="results">RESULTS</h2>
+<div class="level2">
+
+<p>
+The output of the exercise is described below. 
+</p>
+<ul>
+<li class="level1"><div class="li">Reprojected VCF 2005 <br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_nadin&amp;media=wikistudholland:vcf_points.jpg" class="media" title="wikistudholland:vcf_points.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=9d7571&amp;media=wikistudholland:vcf_points.jpg" class="media" title="Sample points overlaid on MODIS VCF image of 2005" alt="Sample points overlaid on MODIS VCF image of 2005" width="600" /></a>
+<br/>
+
+<br/>
+</div>
+</li>
+<li class="level1"><div class="li">Extracted VCF values at sample location<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_nadin&amp;media=wikistudholland:vcf_points_vcf.jpg" class="media" title="wikistudholland:vcf_points_vcf.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=07ca1a&amp;media=wikistudholland:vcf_points_vcf.jpg" class="media" title="3-year average VCF values at sample location" alt="3-year average VCF values at sample location" width="600" /></a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS&quot;,&quot;hid&quot;:&quot;results&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:10,&quot;range&quot;:&quot;5205-&quot;} -->

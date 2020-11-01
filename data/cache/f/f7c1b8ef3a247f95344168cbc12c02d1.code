@@ -1,0 +1,7 @@
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>grass70
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span>bin:<span class="re1">$GISBASE</span><span class="sy0">/</span>scripts
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GRASS_LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$LD_LIBRARY_PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">PYTHONPATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/etc/python:<span class="es2">$PYTHONPATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">MANPATH</span>=<span class="re1">$MANPATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span><span class="kw2">man</span>

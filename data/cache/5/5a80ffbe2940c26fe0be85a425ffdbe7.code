@@ -1,0 +1,6 @@
+<span class="re2">x</span>=<span class="kw2">tree</span>
+<span class="kw1">if</span> <span class="br0">&#91;</span> <span class="re1">$x</span> = <span class="st0">&quot;tree&quot;</span> <span class="br0">&#93;</span>; <span class="kw1">then</span>
+<span class="kw3">echo</span> x is equal <span class="kw2">tree</span> 
+<span class="kw1">else</span>
+<span class="kw3">echo</span> x is not equal to <span class="kw2">tree</span>
+<span class="kw1">fi</span>

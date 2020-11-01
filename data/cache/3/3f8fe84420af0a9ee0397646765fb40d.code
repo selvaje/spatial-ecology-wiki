@@ -1,0 +1,2 @@
+ogrinfo input.shp <span class="re5">-sql</span> <span class="st0">&quot;ALTER TABLE input ADD COLUMN VolArea real(9,5)&quot;</span>
+ogrinfo input.shp <span class="re5">-dialect</span> SQLite <span class="re5">-sql</span> <span class="st0">&quot;UPDATE Input set VolArea = Vol_total/Lake_area&quot;</span>

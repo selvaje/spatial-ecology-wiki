@@ -1,0 +1,32 @@
+<span class="st0">&quot;&quot;&quot;Perform a simple difference image change detection on a 
+'before' and 'after' image.&quot;&quot;&quot;</span>
+<span class="kw1">import</span> gdal<span class="sy0">,</span> gdalnumeric
+<span class="kw1">import</span> numpy <span class="kw1">as</span> np
+&nbsp;
+<span class="co1"># &quot;Before&quot; image</span>
+im1 <span class="sy0">=</span> <span class="st0">&quot;before.tif&quot;</span>
+<span class="co1"># &quot;After&quot; image</span>
+im2 <span class="sy0">=</span> <span class="st0">&quot;after.tif&quot;</span>
+<span class="co1"># Load before and after into arrays</span>
+ar1 <span class="sy0">=</span> gdalnumeric.<span class="me1">LoadFile</span><span class="br0">&#40;</span>im1<span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">int8</span><span class="br0">&#41;</span>                                 
+ar2 <span class="sy0">=</span> gdalnumeric.<span class="me1">LoadFile</span><span class="br0">&#40;</span>im2<span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">int8</span><span class="br0">&#41;</span>
+<span class="co1"># Perform a simple array difference on the images</span>
+diff <span class="sy0">=</span> ar2 - ar1
+<span class="co1"># Set up our classification scheme to try</span>
+<span class="co1"># and isolate significant changes</span>
+classes <span class="sy0">=</span> np.<span class="me1">histogram</span><span class="br0">&#40;</span>diff<span class="sy0">,</span> bins<span class="sy0">=</span><span class="nu0">5</span><span class="br0">&#41;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+<span class="co1"># The color black is repeated to mask insignificant changes</span>
+lut <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">255</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#91;</span><span class="nu0">255</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#93;</span>
+<span class="co1"># Starting value for classification</span>
+start <span class="sy0">=</span> <span class="nu0">1</span>
+<span class="co1"># Set up the output image</span>
+rgb <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="nu0">3</span><span class="sy0">,</span> diff.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> diff.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span><span class="br0">&#41;</span><span class="sy0">,</span> np.<span class="me1">int8</span><span class="br0">&#41;</span>       
+<span class="co1"># Process all classes and assign colors</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>classes<span class="br0">&#41;</span><span class="br0">&#41;</span>:
+    mask <span class="sy0">=</span> np.<span class="me1">logical_and</span><span class="br0">&#40;</span>start <span class="sy0">&lt;=</span> diff<span class="sy0">,</span> diff <span class="sy0">&lt;=</span> classes<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#41;</span>
+    <span class="kw1">for</span> j <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="kw2">len</span><span class="br0">&#40;</span>lut<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>:
+        rgb<span class="br0">&#91;</span>j<span class="br0">&#93;</span> <span class="sy0">=</span> np.<span class="me1">choose</span><span class="br0">&#40;</span>mask<span class="sy0">,</span> <span class="br0">&#40;</span>rgb<span class="br0">&#91;</span>j<span class="br0">&#93;</span><span class="sy0">,</span> lut<span class="br0">&#91;</span>i<span class="br0">&#93;</span><span class="br0">&#91;</span>j<span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    start <span class="sy0">=</span> classes<span class="br0">&#91;</span>i<span class="br0">&#93;</span>+<span class="nu0">1</span>
+<span class="co1"># Save the output image</span>
+gdalnumeric.<span class="me1">SaveArray</span><span class="br0">&#40;</span>rgb<span class="sy0">,</span> <span class="st0">&quot;change.tif&quot;</span><span class="sy0">,</span> format<span class="sy0">=</span><span class="st0">&quot;GTiff&quot;</span><span class="sy0">,</span> prototype<span class="sy0">=</span>im2<span class="br0">&#41;</span>
+&nbsp;

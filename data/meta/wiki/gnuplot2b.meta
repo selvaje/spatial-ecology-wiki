@@ -1,0 +1,13 @@
+a:2:{s:7:"current";a:6:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1594967994;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:503:"reset
+set style line 1 lc rgb '#dd181f' linetype 1 linewidth 2 pointtype 7 #red
+set style line 2 lc rgb '#ffa500' linetype 1 linewidth 2 pointtype 7 #orange/yellow
+set border linewidth 1.5
+set title 'Top Of Atmosphere signatures from Landsat'
+set key left
+# Legend
+set xtics ('Blue' 0, 'Green' 1, 'Red' 2, 'NIR' 3, 'SWIR1' 4, 'SWIR2' 5)
+set ylabel 'Digital number'
+set terminal pngcairo
+set output 'output/exercise2/landsat_mean_stdev.png'
+plot \
+     "<awk '{if(NR!=6&&NR!=7) print $0}' output/exerc…";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

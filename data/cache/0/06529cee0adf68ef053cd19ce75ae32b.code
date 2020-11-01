@@ -1,0 +1,113 @@
+##### We use new developed allometric model to calculate biomass for each species in 35 plots
+&nbsp;
+logbiomass=-10.6327+2.5986*log(DBH$DBHcm)
+logb=logbiomass
+biomv=exp(logb) 
+biomv                                     # Final biomass values
+&nbsp;
+# Calculating total biomass for whole species in dataset DBH
+&nbsp;
+sum(biomv)
+ 43.09005                                 # Total biomass in 35 plots
+&nbsp;
+# But how much is present in 1 ha?
+# we convert our plot size (707m2) into ha; 1 ha = 10,000m2 which gives = 0.71 ha
+# Calculating the area covered by 35 plots: 0.71 ha X 35 = 24.85ha
+# Therefore: 43.09005 biomass = 24.85ha: so 1 ha = 1.734006 biomass
+# From literature carbon is 50% of the biomass.
+# So in 1 ha = 0.867003 Carbon
+# In 6000 ha = 0.867003*6000 = 5202.018 Carbon
+&nbsp;
+&nbsp;
+&nbsp;
+====== FURTHER DATA ANALYSIS AND DATA VISUALIZATION ======
+&nbsp;
+&nbsp;
+&nbsp;
+##create BM column in DBH and insert biomv
+DBH$BM=biomv
+&nbsp;
+##plot DBH vs Biomass (1982 trees)
+&nbsp;
+plot(DBH$DBHcm, DBH$BM)
+&nbsp;
+##histogramm to see the distribution of DBH (1982 trees)
+hist(DBH$DBHcm)
+&nbsp;
+## renaming DBH file with final biomass
+biofin=DBH
+&nbsp;
+## get gdata library
+library(gdata)
+&nbsp;
+## cumulate biomass per plot
+cum.plot=matrix(NA,nrow=69,ncol=2)
+for (pid in c(1:69)){
+tmp=subset(biofin,biofin$PlotID==pid)
+cum.plot[pid,2]=sum(tmp$BM)
+cum.plot[pid,1]=pid
+}
+## omit 0 values
+cum.plot=subset(cum.plot,cum.plot[,2]&gt;0)
+&nbsp;
+## Add biomass to the coordinate database
+plotcoor$biomass=cum.plot[,2]  #biomass per plot
+&nbsp;
+#load Lattice library
+&nbsp;
+library(lattice)
+&nbsp;
+##plot of &quot;plotbiomass&quot; at east and north coordinates 
+levelplot(plotcoor$biomass~plotcoor$Easting..m.*plotcoor$Northing..m.)
+##plot of elevation at east and north coordinates 
+levelplot(plotcoor$Elevation..m.~plotcoor$Easting..m.*plotcoor$Northing..m.)
+&nbsp;
+## cumulate biomass per species
+spname=as.factor(levels(biofin$Species))
+cum.sp=matrix(NA,nrow=91,ncol=2)
+for (sp in c(1:91)){
+tmp=subset(biofin,biofin$Species==spname[sp])
+cum.sp[sp,2]=sum(tmp$BM)
+cum.sp[sp,1]=sp
+}
+&nbsp;
+##plot cum biomass/species
+plot(cum.sp[,1], cum.sp[,2])
+&nbsp;
+###creating png
+##png DBH vs BM 35 plots
+&nbsp;
+png(paste(outdir,&quot;DBH_BM&quot;,sep=&quot;&quot;), width = 400, height = 400)
+par(mar=c(5,5,2,1))
+plot(DBH$DBHcm, DBH$BM, main=&quot;DBH (1982 trees) vs biomass based on model&quot;, xlab=&quot;DBH (cm)&quot;, ylab=&quot;biomass (t)&quot;)
+dev.off()
+&nbsp;
+##png BM measured/BM predicted based on 17 samples
+png(paste(outdir,&quot;BMmeas_BM_pred&quot;, sep=&quot;&quot;), width = 400, height = 400)
+par(mar=c(5,5,2,1))
+plot(spdata$BmT, biom_pred_trans, main=&quot;BM B. speciformis measured vs calculated&quot;, xlab=&quot;biomass (t) measured&quot;, ylab=&quot;biomass (t) calculated&quot;)
+dev.off()
+&nbsp;
+##png histogramm of DBH
+png(paste(outdir,&quot;his_DBH_35&quot;,sep=&quot;&quot;), width = 400, height = 400)
+par(mar=c(5,5,2,1))
+hist(DBH$DBHcm, main=&quot;DBH (1982 trees)&quot;, xlab=&quot;DBH (cm)&quot;)
+dev.off()
+&nbsp;
+##png  of &quot;plotbiomass&quot; at east and north coordinates 
+png(paste(outdir,&quot;levpl_plotbio_coor&quot;,sep=&quot;&quot;), width = 600, height = 400)
+par(mar=c(5,5,1,1))
+levelplot(plotcoor$biomass~plotcoor$Easting..m.*plotcoor$Northing..m., main= &quot;biomass (t)/plot&quot;, xlab=&quot;East&quot;, ylab=&quot;North&quot;)
+dev.off()
+&nbsp;
+##png  of elevation at east and north coordinates 
+png(paste(outdir,&quot;level_plot_elev&quot;,sep=&quot;&quot;), width = 600, height = 400)
+par(mar=c(5,5,1,1))
+levelplot(plotcoor$Elevation..m.~plotcoor$Easting..m.*plotcoor$Northing..m.,main=&quot;Elevation (m) study area&quot;, xlab=&quot;East&quot;, ylab=&quot;North&quot; )
+dev.off()
+&nbsp;
+##png cum biomass/species
+png(paste(outdir,&quot;cum_BM_spec&quot;,sep=&quot;&quot;), width = 400, height = 400)
+par(mar=c(5,5,2,1))
+plot(cum.sp[,1], cum.sp[,2],main=&quot;Cumulated BM (t)/species&quot;, xlab=&quot;species&quot;, ylab=&quot;biomass(t)&quot; )
+dev.off()

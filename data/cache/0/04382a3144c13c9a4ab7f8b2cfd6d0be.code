@@ -1,0 +1,42 @@
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>selv<span class="sy0">/</span>spatial-ecology-codes<span class="sy0">/</span>wiki<span class="sy0">/</span>watershedsegment
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-f</span> <span class="re1">$DIR</span><span class="sy0">/</span>grassdb ; <span class="kw2">mkdir</span> <span class="re1">$DIR</span><span class="sy0">/</span>grassdb
+&nbsp;
+gdal_edit.py -a_nodata <span class="nu0">0</span>  <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif
+grass72 <span class="re5">-e</span> <span class="re5">-text</span>  <span class="re5">-c</span>  <span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif   <span class="re1">$DIR</span><span class="sy0">/</span>grassdb<span class="sy0">/</span>loc_cost
+&nbsp;
+<span class="co0"># set up grass variables</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;GISDBASE: <span class="es3">${DIR}</span>/grassdb&quot;</span>         <span class="sy0">&gt;</span>  <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;LOCATION_NAME: loc_cost&quot;</span>          <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;MAPSET: PERMANENT&quot;</span>                <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GUI: text&quot;</span>                        <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GRASS_GUI: wxpython&quot;</span>              <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>lib<span class="sy0">/</span>grass72
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span>bin:<span class="re1">$GISBASE</span><span class="sy0">/</span>scripts
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GRASS_LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$LD_LIBRARY_PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">PYTHONPATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/etc/python:<span class="es2">$PYTHONPATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">MANPATH</span>=<span class="re1">$MANPATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span><span class="kw2">man</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span>
+&nbsp;
+g.gisenv 
+&nbsp;
+r.in.gdal <span class="re2">input</span>=<span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_peak.tif <span class="re2">output</span>=peak  <span class="re5">--o</span>
+r.in.gdal <span class="re2">input</span>=<span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0.tif      <span class="re2">output</span>=builtup    <span class="re5">--overwrite</span>   <span class="re2">memory</span>=<span class="nu0">2047</span> 
+&nbsp;
+<span class="co0"># complementary builtup</span>
+r.mapcalc <span class="st0">&quot; builtup_comp =  ( 1 - builtup )   &quot;</span>  <span class="re5">--overwrite</span>
+&nbsp;
+<span class="kw3">echo</span> start to calculate the cost
+&nbsp;
+r.cost  <span class="re5">-k</span> <span class="re2">input</span>=builtup_comp <span class="re2">output</span>=builtup_cost <span class="re2">start_raster</span>=peak <span class="re2">null_cost</span>=-<span class="nu0">1</span> <span class="re5">--overwrite</span> 
+r.colors  <span class="re5">-r</span> <span class="re2">map</span>=builtup_comp
+&nbsp;
+r.out.gdal <span class="re5">--overwrite</span> <span class="re2">nodata</span>=-<span class="nu0">1</span> <span class="re5">-c</span> <span class="re5">-f</span> <span class="re2">createopt</span>=<span class="st0">&quot;COMPRESS=DEFLATE,ZLEVEL=9&quot;</span> <span class="re2">type</span>=Float32 <span class="re2">format</span>=GTiff  <span class="re2">input</span>=builtup_cost  <span class="re2">output</span>=<span class="re1">$DIR</span><span class="sy0">/</span>GHS_BUILT_LDS2014_GLOBE_R2016A_54009_1k_v1_0_cost.tif
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-rf</span> <span class="re1">$DIR</span><span class="sy0">/</span>grassdb

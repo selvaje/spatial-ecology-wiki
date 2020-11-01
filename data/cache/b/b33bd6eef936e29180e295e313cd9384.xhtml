@@ -1,0 +1,102 @@
+
+<h1 class="sectionedit1" id="exercise_1aview_landsat_image_and_overlay_vector">Exercise 1a: View Landsat image and overlay vector</h1>
+<div class="level1">
+
+<p>
+In this exercise the following tools will be used:
+</p>
+<ul>
+<li class="level1"><div class="li"> gdal/ogr tools: ogr2ogr, openev</div>
+</li>
+</ul>
+
+<p>
+Create a directory for this exercise:
+</p>
+<pre class="code bash"><span class="kw2">mkdir</span> <span class="re5">-p</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise1</pre>
+
+<p>
+Open the Landsat image with an image viewer (e.g., openev)
+</p>
+<pre class="code bash">openev <span class="re5">-h</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span></pre>
+
+<p>
+<em class="u">Select different band settings (false colour images)</em>
+</p>
+
+<p>
+consult web page with landsat bands for different thematic band settings
+</p>
+<div class="plugin_note notetip">Natural (true) colour for Landsat image: R=band 3(red), G=band 2 (green), B=band1 (blue)
+</div>
+<p>
+<em class="u">Zoom in on particular area of interest</em>
+</p>
+<ul>
+<li class="level1"><div class="li">method 1: use + button</div>
+</li>
+<li class="level1"><div class="li">method 2: control button + drag window</div>
+</li>
+<li class="level1"><div class="li">method 3: control button + left mouse button</div>
+</li>
+</ul>
+
+<p>
+<em class="u">Zoom out</em>
+</p>
+<ul>
+<li class="level1"><div class="li">method 1: use - button</div>
+</li>
+<li class="level1"><div class="li">method 2: control button + right mouse button</div>
+</li>
+<li class="level1"><div class="li">method 3: use fit all layers button (square box with arrow in each corners)</div>
+</li>
+</ul>
+
+<p>
+<em class="u">Reproject water vector to epsg:3035 (ETRS89:LAEA)</em>
+</p>
+<pre class="code bash">ogr2ogr -t_srs epsg:<span class="nu0">3035</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise1<span class="sy0">/</span>cornwall_water_3035.shp <span class="co1">${VECTORDIR}</span><span class="sy0">/</span>cornwall_water.shp</pre>
+
+<p>
+<em class="u">Create vector with forested areas by selecting forest from natural vector and reprojecting to epsg:3035 (ETRS89:LAEA)</em>
+</p>
+<pre class="code bash">ogr2ogr -t_srs epsg:<span class="nu0">3035</span> <span class="re5">-where</span> <span class="st0">&quot;TYPE in ('forest')&quot;</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise1<span class="sy0">/</span>cornwall_forest_3035.shp <span class="co1">${VECTORDIR}</span><span class="sy0">/</span>cornwall_natural.shp</pre>
+
+<p>
+<em class="u">Open forest vector in openev on top of landsat raster image</em>
+</p>
+
+<p>
+Question: can you distinguish forest from other vegetated areas?
+</p>
+
+<p>
+Question: can you easily distinguish forest from inland water?
+</p>
+
+<p>
+<em class="u">Select the standard false colour composite for Landsat imagery</em>
+</p>
+
+<p>
+Consult web pages
+</p>
+<ul>
+<li class="level1"><div class="li"><a href="http://web.pdx.edu/~emch/ip1/bandcombinations.html" class="urlextern" target="blanc" title="http://web.pdx.edu/~emch/ip1/bandcombinations.html" rel="nofollow noopener">http://web.pdx.edu/~emch/ip1/bandcombinations.html</a></div>
+</li>
+<li class="level1"><div class="li"><a href="http://zulu.ssc.nasa.gov/mrsid/tutorial/Landsat%20Tutorial-V1.html" class="urlextern" target="blanc" title="http://zulu.ssc.nasa.gov/mrsid/tutorial/Landsat%20Tutorial-V1.html" rel="nofollow noopener">http://zulu.ssc.nasa.gov/mrsid/tutorial/Landsat%20Tutorial-V1.html</a></div>
+</li>
+</ul>
+<div class="plugin_note notetip">Standard false colour settings for Landsat imagery: R=band 4(NIR), G=band 3(red), B=band2(green)
+</div><div class="plugin_note notewarning">Do not forget to enhance raster after loading new band combination using the button with horizontal line
+</div>
+<p>
+Question: What does vegetation look like in this false colour image, why?
+</p>
+
+<p>
+Questions: What about water and forest now?
+</p>
+
+</div>

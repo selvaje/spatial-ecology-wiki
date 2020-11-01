@@ -1,0 +1,95 @@
+
+<h1 class="sectionedit1" id="install_ubuntu_with_spatial-ecology_tools_in_your_computer">Install ubuntu with spatial-ecology tools in your computer</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Install ubuntu with spatial-ecology tools in your computer&quot;,&quot;hid&quot;:&quot;install_ubuntu_with_spatial-ecology_tools_in_your_computer&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-75&quot;} -->
+<h3 class="sectionedit2" id="step_1open_the_virtual_machine_previously_created">STEP 1 : Open the virtual machine previously created</h3>
+<div class="level3">
+
+<p>
+<a href="/dokuwiki/doku.php?id=wiki:install_linux" class="wikilink1" title="wiki:install_linux">click here</a> if you have not create your VM yet
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;STEP 1 : Open the virtual machine previously created&quot;,&quot;hid&quot;:&quot;step_1open_the_virtual_machine_previously_created&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;76-214&quot;} -->
+<h3 class="sectionedit3" id="step_2install_remastersys">STEP 2 : install Remastersys</h3>
+<div class="level3">
+
+<p>
+<em>Remastersys</em> is a full system backup including personal data to a live cd or dvd that we will use to install the virtual machine Ubuntu with GIS <abbr title="Operating System">OS</abbr> in our computer. (see: <a href="http://www.geekconnection.org/remastersys/" class="urlextern" target="blanc" title="http://www.geekconnection.org/remastersys/" rel="nofollow noopener">http://www.geekconnection.org/remastersys/</a> )
+</p>
+<pre class="code">   sudo su
+   wget -O - http://www.remastersys.com/ubuntu/remastersys.gpg.key | apt-key add -
+   
+   echo &quot;# added for remastersys repository&quot; &gt;&gt; /etc/apt/sources.list 
+   echo &quot;deb http://www.remastersys.com/ubuntu precise main&quot; &gt;&gt; /etc/apt/sources.list
+   
+   apt-get update 
+   apt-get install remastersys 
+   </pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;STEP 2 : install Remastersys&quot;,&quot;hid&quot;:&quot;step_2install_remastersys&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;215-810&quot;} -->
+<h3 class="sectionedit4" id="step_3create_an_iso_file_from_remastersys">STEP 3 : Create an iso file from Remastersys</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Click on Application &gt; System tools &gt; Administration &gt; remastersys</div>
+</li>
+<li class="level1"><div class="li"> Click on Backup</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;STEP 3 : Create an iso file from Remastersys&quot;,&quot;hid&quot;:&quot;step_3create_an_iso_file_from_remastersys&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;811-962&quot;} -->
+<h3 class="sectionedit5" id="step_3create_a_start_up_disk_using_the_iso_file">STEP 3 : Create a start up disk using the iso file</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Click on Application &gt; System tools &gt; Administration &gt; Startup disk creator</div>
+</li>
+<li class="level1"><div class="li"> As <strong>Source disc iso</strong> select the iso you just created in the  <em> home/remastersys/remastersys/  </em> folder</div>
+</li>
+<li class="level1"><div class="li"> As <strong> Disc to use </strong> select and use a usb stick </div>
+</li>
+<li class="level1"><div class="li"> Shut down your VM</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;STEP 3 : Create a start up disk using the iso file&quot;,&quot;hid&quot;:&quot;step_3create_a_start_up_disk_using_the_iso_file&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;963-1295&quot;} -->
+<h3 class="sectionedit6" id="step_3select_reboot_mode_from_usb_stick_in_your_bios">STEP 3 : Select reboot mode from USB stick in your BIOS</h3>
+<div class="level3">
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;STEP 3 : Select reboot mode from USB stick in your BIOS&quot;,&quot;hid&quot;:&quot;step_3select_reboot_mode_from_usb_stick_in_your_bios&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1296-1366&quot;} -->
+<h3 class="sectionedit7" id="step_4reeboot_from_usb_stick_and_follow_the_installation_wizard">STEP 4 : Reeboot from USB stick and follow the installation wizard</h3>
+<div class="level3">
+
+<p>
+You can choose within the wizard to install ubuntu as the only operating system or maintain another operational operating system in your computer.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;STEP 4 : Reeboot from USB stick and follow the installation wizard&quot;,&quot;hid&quot;:&quot;step_4reeboot_from_usb_stick_and_follow_the_installation_wizard&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;1367-&quot;} -->

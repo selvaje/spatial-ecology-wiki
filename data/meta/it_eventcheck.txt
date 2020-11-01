@@ -1,0 +1,30 @@
+a:4:{s:15:"microtime_start";d:1604069518.1628649;s:6:"client";s:7:"felipem";s:4:"name";N;s:4:"mail";N;}* function _update_it_files
+Can't update IssueTracker records due to missing old mail value. 
+This may lead into troubles for the just updated user. 
+Better to turn back the changes same way (except on passwords) and use the Update Profile action of your template.
+IssueTracker: 0 issue creator entries updated
+IssueTracker: 0 follower entries updated
+IssueTracker: 0 assignments updated
+IssueTracker: 0 comment author entries updated
+IssueTracker: 0 mod-log entries updated
+
+
+allowdebug = false
+* function handle_usermod_after
+ --- BEFORE --- | --- AFTER ---
+felipem <= ? => felipem
+ <= ? => Felipe Manzoni Barbosa
+ <= ? => felipe93mb@gmail.com
+DIFF in mail => update issues, comments and modlog
+
+
+0 seconds
+* function handle_usermod_after
+ --- BEFORE --- | --- AFTER ---
+felipem <= ? => felipem
+ <= ? => Felipe Manzoni Barbosa
+ <= ? => felipe93mb@gmail.com
+DIFF in mail => update issues, comments and modlog
+
+
+0 seconds

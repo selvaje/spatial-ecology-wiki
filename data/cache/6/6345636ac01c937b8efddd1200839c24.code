@@ -1,0 +1,9 @@
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> points.shp <span class="re5">-o</span> extracted.shp <span class="co0"># extract all bands from input.tif to extracted.shp at pixel locations defined in points.shp.</span>
+&nbsp;
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> polygons.shp <span class="re5">-o</span> extracted.shp <span class="re5">-l</span> <span class="re5">-b</span> <span class="nu0">0</span> <span class="co0"># extract band 0 from input.tif to extracted.shp at pixel locations covered by polygons.shp.</span>
+&nbsp;
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> polygons.shp <span class="re5">-o</span> extracted.shp <span class="re5">-l</span> <span class="re5">-r</span> <span class="nu0">1</span> <span class="re5">-b</span> <span class="nu0">1</span> <span class="co0"># extract band 1 from input.tif to extracted.shp at centroid of polygon.</span>
+&nbsp;
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> sample.tif <span class="re5">-o</span> extracted.shp <span class="re5">-t</span> <span class="nu0">10</span> <span class="re5">-c</span> <span class="nu0">1</span> <span class="re5">-c</span> <span class="nu0">2</span> <span class="re5">-c</span> <span class="nu0">3</span> <span class="co0"># extract all bands for 10 percent of the samples in sample.tif where sample.tif equals 1,2 or 3 (class values) to extracted.shp.</span>
+&nbsp;
+pkextract <span class="re5">-i</span> input.tif <span class="re5">-s</span> sample.tif <span class="re5">-o</span> extracted.shp <span class="re5">-t</span> <span class="re5">-5000</span> <span class="re5">-c</span> <span class="nu0">1</span> <span class="co0"># extract all bands for a maximum of 5000 samples (if available) for each class in sample.tif to extracted.shp.</span>

@@ -1,0 +1,160 @@
+
+<h1 class="sectionedit1" id="access_spatial-ecology_ubuntu_from_a_virtual_machine">Access Spatial-Ecology Ubuntu from a Virtual Machine</h1>
+<div class="level1">
+
+<p>
+<br/>
+
+This procedure <strong>does not install a Linux beside Windows or MacOS, but inside Windows or MacOS. In other words your main <abbr title="Operating System">OS</abbr> will be remain Windows or MacOS, and you will boot the pc as before. There is not any risk for your data or for your main <abbr title="Operating System">OS</abbr>.</strong><br/>
+
+This solution is very good for learning how to use Linux, being in the main time under your own <abbr title="Operating System">OS</abbr>. When you fill confident, let&#039;s say after 6 months, you can decide to have a full installation of Linux.<br/>
+
+<br/>
+
+For installation of OSGEO-live follow the <a href="https://live.osgeo.org/en/index.html" class="urlextern" target="blanc" title="https://live.osgeo.org/en/index.html" rel="nofollow noopener">https://live.osgeo.org/en/index.html</a>
+</p>
+
+<p>
+<br/>
+
+The root password for the osgeo-live is “user”
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Access Spatial-Ecology Ubuntu from a Virtual Machine&quot;,&quot;hid&quot;:&quot;access_spatial-ecology_ubuntu_from_a_virtual_machine&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-672&quot;} -->
+<h2 class="sectionedit2" id="become_a_self-taught_programmer">Become a self-taught programmer</h2>
+<div class="level2">
+
+<p>
+You are now ready to learn how to use Linux! Follow the the exercise pages in <a href="http://www.spatial-ecology.net" class="urlextern" target="blanc" title="http://www.spatial-ecology.net" rel="nofollow noopener">http://www.spatial-ecology.net</a> in this order:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:bash" class="wikilink1" title="wiki:bash">Linux Bash</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:awk" class="wikilink1" title="wiki:awk">AWK language</a><br/>
+  * <a href="/doku.php?id=wiki:gdal" class="wikilink1" title="wiki:gdal">Gdal / Ogr</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:grass" class="wikilink1" title="wiki:grass">GRASS GIS</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:r" class="wikilink1" title="wiki:r">R project</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:cluster_processing" class="wikilink1" title="wiki:cluster_processing"> Cluster computer</a></div>
+</li>
+</ul>
+
+<p>
+Do not try to jump over if you did not assimilate the commands/concepts.
+<br/>
+
+You can integrate the previews sections with the following pages. 
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:gnuplot" class="wikilink1" title="wiki:gnuplot">GNUPLOT</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:wikiqgis:qgis" class="wikilink1" title="wiki:wikiqgis:qgis">Quantum Gis</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:geo_tools" class="wikilink1" title="wiki:geo_tools"> Geo tools</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:pk_tools" class="wikilink1" title="wiki:pk_tools"> PKTOOLS </a></div>
+</li>
+<li class="level1"><div class="li"> <a href="/doku.php?id=wiki:weld" class="wikilink1" title="wiki:weld"> WELD</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Become a self-taught programmer&quot;,&quot;hid&quot;:&quot;become_a_self-taught_programmer&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;673-1305&quot;} -->
+<h2 class="sectionedit3" id="folder_sharing_option_virtualbox">Folder sharing option VirtualBox</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li">Shutdown the LVM</div>
+</li>
+<li class="level1"><div class="li">In the virtualbox manager, right click on the LVM and choose settings</div>
+</li>
+<li class="level1"><div class="li">Click “shared folders” tab</div>
+</li>
+<li class="level1"><div class="li">Select “Machine Folders”</div>
+</li>
+<li class="level1"><div class="li">Click the little plus icon and navigate to the folder you want to access: e.g. shared<em>folder
+  * Start the LVM
+  * In the linux a terminal type: sudo mount -a -t vboxsf   shared</em>folder     /media/sf<em>shared</em>folder  (change the shared_folder according to your folder name )</div>
+</li>
+<li class="level1"><div class="li">The directory should be available in /media/ </div>
+</li>
+</ul>
+
+<p>
+There is more info at <a href="http://www.virtualbox.org/manual/ch04.html" class="urlextern" target="blanc" title="http://www.virtualbox.org/manual/ch04.html" rel="nofollow noopener"> VirtualBox help shared folder section</a>
+</p>
+
+<p>
+If after a reboot the shared folder is not access under /media/  you have to mount manually:
+</p>
+<ul>
+<li class="level1"><div class="li">sudo adduser user  vboxsf</div>
+</li>
+<li class="level1"><div class="li">reboot<ul>
+<li class="level1"><div class="li"> ln -s /media/sf_LVM_share/    LVM_share</div>
+</li>
+</ul>
+
+<p>
+the rest is not useful any more
+</p>
+</div>
+</li>
+<li class="level1"><div class="li">sudo mount -a -t vboxsf shared_folder   /media/sf_shared_folder <br/>
+</div>
+</li>
+</ul>
+
+<p>
+in same case to allow write/read permission to the folder 
+</p>
+<ul>
+<li class="level1"><div class="li">sudo mount -t vboxsf -o uid=1000,gid=1000 shared_folder   /media/sf_shared_folder</div>
+</li>
+</ul>
+
+<p>
+to auto startpu the mount add the line<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> mount -a  -t vboxsf   shared_folder    /media/sf_shared_folder/<br/>
+</div>
+</li>
+</ul>
+
+<p>
+to /etc/init.d/rc.local<br/>
+
+</p>
+
+<p>
+<br/>
+
+Moreover sometime is useful install 
+sudo apt-get install virtualbox-guest-dkms
+</p>
+
+<p>
+<br/>
+
+Duplicate UUID<br/>
+
+<br/>
+
+Open the Command Prompt<br/>
+
+Change the directory to where VirtualBox is installed <br/>
+
+</p>
+<pre class="code">dir C:\Program Files\Oracle\VirtualBox)
+VBOXMANAGE.EXE internalcommands sethduuid  ..\LVM\osgeo-live-10.5-vm.vmdk</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Folder sharing option VirtualBox&quot;,&quot;hid&quot;:&quot;folder_sharing_option_virtualbox&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1306-&quot;} -->

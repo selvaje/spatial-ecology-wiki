@@ -1,0 +1,32 @@
+#################################################
+### Bayesian version of the simple GLM model
+#################################################
+&nbsp;
+##This script will produce a Bayesian version of the simple GLM I did earlier.
+##The result will be that the uncertainty in all the parameter estimations will be taken into account
+## when estimating each parameter. This will result in wider confidence bounds for the parameters (which can
+## be said to better represent our unceartainty about the system)
+##
+##
+## Finally, I will not just use the best estimate of all the parameters in the GLM for the predictions, but instead take random draws
+## from the posterior distribution of these parameters. One set of parameter draws will be used to create one prediction about the system.
+## Then, I will take another draw and repeat the process, resulting in many realized predictions.
+## Most of the parameter random draws will lie close to the best estimate, but I will allow for the fact
+## that I don't have absolute knowledge about the exact value of these parameters (or if you like, that there is no single &quot;true&quot; value)
+##
+## With this set of predictions, I can then visualize the uncertainty, calculate variation of predictions for each pixel or the whole map, sort them and display the 2.5 and 97.5 % quantiles 
+## to create &quot;credable confidence bounds&quot; on the maps
+&nbsp;
+##First load the &quot;rjags&quot; package
+&nbsp;
+library(rjags) ##This will make R and JAGS talk to each other
+load.module(&quot;glm&quot;) ##This is a JAGS module that is good to use when modelling GLM like models
+&nbsp;
+##Set up the model in JAGS (The actual model is in the text file, shown a bit later below)
+Bayesian.glm&lt;-jags.model(&quot;~/scripts/glm1.txt&quot;,data=bumble,n.chains=3)
+update(Bayesian.glm,1000) ## Burn in period for the Marcov chains
+&nbsp;
+## Get samples of the MCMC chains. Specify wich parameters to &quot;collect&quot; 10 000 updates and collect only every 50th to combat autocorrelation
+B.out&lt;-coda.samples(Bayesian.glm,c(&quot;intercept&quot;,&quot;dekke&quot;,&quot;elev.par&quot;),n.iter=10000,thin=50) 
+&nbsp;
+gelman.diag(B.out[,2:8]) # Check convergence of chains

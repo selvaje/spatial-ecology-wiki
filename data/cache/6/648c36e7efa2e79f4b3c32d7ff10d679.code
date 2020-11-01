@@ -1,0 +1,14 @@
+<span class="co1">#!/usr/bin/python3</span>
+&nbsp;
+<span class="co1">#Examine a shapefile with ogr                                                                        </span>
+&nbsp;
+<span class="kw1">from</span> osgeo <span class="kw1">import</span> ogr
+<span class="co1"># open the shapefile</span>
+shp <span class="sy0">=</span> ogr.<span class="me1">Open</span><span class="br0">&#40;</span><span class="st0">&quot;../files/point.shp&quot;</span><span class="br0">&#41;</span>
+<span class="co1"># Get the layer</span>
+layer <span class="sy0">=</span> shp.<span class="me1">GetLayer</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="co1"># Loop through the features</span>
+<span class="co1"># and print information about them</span>
+<span class="kw1">for</span> feature <span class="kw1">in</span> layer:
+  geometry <span class="sy0">=</span> feature.<span class="me1">GetGeometryRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  <span class="kw1">print</span><span class="br0">&#40;</span>geometry.<span class="me1">GetX</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> geometry.<span class="me1">GetY</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="sy0">,</span> feature.<span class="me1">GetField</span><span class="br0">&#40;</span><span class="st0">&quot;FIRST_FLD&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>

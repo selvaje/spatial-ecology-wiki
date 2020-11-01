@@ -1,0 +1,200 @@
+
+<h1 class="sectionedit1" id="grass_in_the_yale-hpc">GRASS in the YALE-HPC</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;GRASS in the YALE-HPC&quot;,&quot;hid&quot;:&quot;grass_in_the_yale-hpc&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-36&quot;} -->
+<h2 class="sectionedit2" id="start_grass_in_non-interactively_mode_in_a_pre-existing_location">Start GRASS in non-interactively mode in a pre-existing location</h2>
+<div class="level2">
+
+<p>
+For this exercise we are going to use the $HOME/ost4sem/grassdb/europe and $HOME/ost4sem/exercise/basic<em>adv</em>gdalogr/input_proj.tif file if do not have please download 
+</p>
+<pre class="code">mkdir -p $HOME/ost4sem/grassdb/
+cd $HOME/ost4sem/grassdb/
+wget https://dl.dropboxusercontent.com/u/29337496/europe.tar.gz
+tar xvzf europe.tar.gz
+wget https://dl.dropboxusercontent.com/u/29337496/input_proj.tif
+mkdir -p  $HOME/ost4sem/exercise/basic_adv_gdalogr/
+mv  $HOME/input_proj.tif $HOME/ost4sem/exercise/basic_adv_gdalogr/</pre>
+
+<p>
+<br/>
+
+If you are using qsub in a HPC you should run GRASS scripts in a non-interactively from outside of a GRASS session by setting the GRASS<em>BATCH</em>JOB environment variables.<br/>
+
+When GRASS is started with this environment variables set it will automatically run the contents of the script given in the variable, then close the GRASS session when complete. 
+</p>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:grass_hpc&amp;codeblock=0" title="Download Snippet" class="mediafile mf_sh_">enter_grass.sh </a></dt>
+<dd><pre class="code bash"><span class="co0">#!/bin/bash</span>
+&nbsp;
+<span class="re2">GISDBASE</span>=$<span class="br0">&#40;</span><span class="kw2">dirname</span> $<span class="br0">&#40;</span><span class="kw2">dirname</span>  <span class="re4">$1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="re2">LOCATION_NAME</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> $<span class="br0">&#40;</span><span class="kw2">dirname</span>  <span class="re4">$1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="re2">MAPSET</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span>  <span class="re4">$1</span><span class="br0">&#41;</span> 
+&nbsp;
+<span class="kw3">echo</span> Enter <span class="kw1">in</span> GRASS using GISDBASE = <span class="re1">$GISDBASE</span>, LOCATION = <span class="re1">$LOCATION_NAME</span>, MAPSET = <span class="re1">$MAPSET</span>  
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;GISDBASE: <span class="es2">$GISDBASE</span>&quot;</span>                 <span class="sy0">&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>grass<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;LOCATION_NAME: <span class="es2">$LOCATION_NAME</span>&quot;</span>      <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>grass<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;MAPSET: <span class="es2">$MAPSET</span>&quot;</span>                    <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>grass<span class="re4">$$</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GRASS_GUI: text&quot;</span>                    <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>grass<span class="re4">$$</span>
+&nbsp;
+<span class="co0"># path to GRASS settings file</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>grass<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GRASS_PYTHON</span>=python
+<span class="kw3">export</span> <span class="re2">GRASS_MESSAGE_FORMAT</span>=plain
+<span class="kw3">export</span> <span class="re2">GRASS_PAGER</span>=<span class="kw2">cat</span>
+<span class="kw3">export</span> <span class="re2">GRASS_WISH</span>=wish
+<span class="kw3">export</span> <span class="re2">GRASS_ADDON_BASE</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>addons
+<span class="kw3">export</span> <span class="re2">GRASS_VERSION</span>=7.0.0beta1
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Apps<span class="sy0">/</span>GRASS<span class="sy0">/</span>7.0.0beta1<span class="sy0">/</span>grass-7.0.0beta1
+<span class="kw3">export</span> <span class="re2">GRASS_PROJSHARE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Libs<span class="sy0">/</span>PROJ<span class="sy0">/</span>4.8.0<span class="sy0">/</span>share<span class="sy0">/</span>proj<span class="sy0">/</span>
+<span class="kw3">export</span> <span class="re2">PROJ_DIR</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Libs<span class="sy0">/</span>PROJ<span class="sy0">/</span>4.8.0
+&nbsp;
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/bin:<span class="es2">$GISBASE</span>/scripts:<span class="es2">$PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="re1">$LD_LIBRARY_PATH</span>:<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GRASS_LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$LD_LIBRARY_PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">PYTHONPATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/etc/python:<span class="es2">$PYTHONPATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">MANPATH</span>=<span class="re1">$MANPATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span><span class="kw2">man</span>
+<span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GRASS_OVERWRITE</span>=<span class="nu0">1</span>
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+<span class="kw3">echo</span> Welcome to GRASS 
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+&nbsp;
+g.gisenv  
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+<span class="kw3">echo</span> Start to use GRASS comands
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Start GRASS in non-interactively mode in a pre-existing location&quot;,&quot;hid&quot;:&quot;start_grass_in_non-interactively_mode_in_a_pre-existing_location&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;37-2437&quot;} -->
+<h3 class="sectionedit3" id="how_to_use_it">How to use it</h3>
+<div class="level3">
+
+<p>
+Download or copy/paste the file in your editor and save as enter_grass.sh.<br/>
+
+Load the script with the command source and specify the mapset.
+</p>
+<pre class="code">wget https://dl.dropboxusercontent.com/u/29337496/enter_grass.sh
+source enter_grass.sh  $HOME/ost4sem/grassdb/europe/PERMANENT</pre>
+
+<p>
+You can test if you are GRASS by using a grass command
+</p>
+<pre class="code">g.list rast</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;How to use it&quot;,&quot;hid&quot;:&quot;how_to_use_it&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;2438-2813&quot;} -->
+<h2 class="sectionedit4" id="start_grass_in_non-interactively_mode_and_create_a_location">Start GRASS in non-interactively mode and create a location</h2>
+<div class="level2">
+
+<p>
+In case you want create a location on the flight based on a pre-existing georeferenced dataset and keep using grass command for that file you can use this file. 
+</p>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:grass_hpc&amp;codeblock=1" title="Download Snippet" class="mediafile mf_sh_">create_location.sh </a></dt>
+<dd><pre class="code bash">&nbsp;
+<span class="co0">#!/bin/bash</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">GISDBASE</span>=<span class="re4">$1</span>
+<span class="kw3">export</span> <span class="re2">LOCATION</span>=<span class="re4">$2</span>
+<span class="kw3">export</span> <span class="re2">file</span>=<span class="re4">$3</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span>  <span class="re1">$file</span> .tif<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-rf</span>  <span class="re1">$GISDBASE</span><span class="sy0">/</span><span class="re1">$LOCATION</span> <span class="re1">$GISDBASE</span><span class="sy0">/</span>loc_tmp
+&nbsp;
+<span class="kw2">mkdir</span> <span class="re5">-p</span>  <span class="re1">$GISDBASE</span><span class="sy0">/</span>loc_tmp<span class="sy0">/</span>tmp
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;LOCATION_NAME: loc_tmp&quot;</span>                                                       <span class="sy0">&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GISDBASE: /dev/shm&quot;</span>                                                          <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+<span class="kw3">echo</span> <span class="st0">&quot;MAPSET: tmp&quot;</span>                                                                 <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GRASS_GUI: text&quot;</span>                                                             <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+&nbsp;
+<span class="co0"># path to GRASS settings file</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+<span class="kw3">export</span> <span class="re2">GRASS_PYTHON</span>=python
+<span class="kw3">export</span> <span class="re2">GRASS_MESSAGE_FORMAT</span>=plain
+<span class="kw3">export</span> <span class="re2">GRASS_PAGER</span>=<span class="kw2">cat</span>
+<span class="kw3">export</span> <span class="re2">GRASS_WISH</span>=wish
+<span class="kw3">export</span> <span class="re2">GRASS_ADDON_BASE</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>addons
+<span class="kw3">export</span> <span class="re2">GRASS_VERSION</span>=7.0.0beta1
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Apps<span class="sy0">/</span>GRASS<span class="sy0">/</span>7.0.0beta1<span class="sy0">/</span>grass-7.0.0beta1
+<span class="kw3">export</span> <span class="re2">GRASS_PROJSHARE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Libs<span class="sy0">/</span>PROJ<span class="sy0">/</span>4.8.0<span class="sy0">/</span>share<span class="sy0">/</span>proj<span class="sy0">/</span>
+<span class="kw3">export</span> <span class="re2">PROJ_DIR</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Libs<span class="sy0">/</span>PROJ<span class="sy0">/</span>4.8.0
+&nbsp;
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/bin:<span class="es2">$GISBASE</span>/scripts:<span class="es2">$PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="re1">$LD_LIBRARY_PATH</span>:<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GRASS_LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$LD_LIBRARY_PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">PYTHONPATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/etc/python:<span class="es2">$PYTHONPATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">MANPATH</span>=<span class="re1">$MANPATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span><span class="kw2">man</span>
+<span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GRASS_OVERWRITE</span>=<span class="nu0">1</span>
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-rf</span>  <span class="re1">$GISDBASE</span><span class="sy0">/</span><span class="re1">$LOCATION</span>
+&nbsp;
+<span class="kw3">echo</span> start importing 
+r.in.gdal <span class="re2">in</span>=<span class="re1">$file</span>   <span class="re2">out</span>=<span class="re1">$filename</span>  <span class="re2">location</span>=<span class="re1">$LOCATION</span>
+&nbsp;
+g.mapset <span class="re2">mapset</span>=PERMANENT  <span class="re2">location</span>=<span class="re1">$LOCATION</span>
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-rf</span>  <span class="re1">$GISDBASE</span><span class="sy0">/</span>loc_tmp
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+<span class="kw3">echo</span>  Welcome to GRASS
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+&nbsp;
+g.gisenv 
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+<span class="kw3">echo</span> Start to use GRASS comands
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Start GRASS in non-interactively mode and create a location&quot;,&quot;hid&quot;:&quot;start_grass_in_non-interactively_mode_and_create_a_location&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:4,&quot;range&quot;:&quot;2814-4858&quot;} -->
+<h3 class="sectionedit5" id="how_to_use_it1">How to use it</h3>
+<div class="level3">
+
+<p>
+Download or copy/paste the file in your editor and save as create<em>location.sh.<br/>
+
+Load the script with the command source and specify the grass database location</em>name and file to import.
+</p>
+<pre class="code">source create_location.sh /dev/shm location $HOME/ost4sem/exercise/basic_adv_gdalogr/input_proj.tif  </pre>
+
+<p>
+You can test if you are GRASS by using a grass comand
+</p>
+<pre class="code">g.list rast</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;How to use it&quot;,&quot;hid&quot;:&quot;how_to_use_it1&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:5,&quot;range&quot;:&quot;4859-5247&quot;} -->
+<h2 class="sectionedit6" id="start_grass_in_non-interactively_and_perform_an_analysis">Start GRASS in non-interactively and perform an analysis</h2>
+<div class="level2">
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:grass_hpc&amp;codeblock=2" title="Download Snippet" class="mediafile mf_sh_">my_grass_analysis.sh </a></dt>
+<dd><pre class="code bash"><span class="kw2">wget</span> https:<span class="sy0">//</span>dl.dropboxusercontent.com<span class="sy0">/</span>u<span class="sy0">/</span><span class="nu0">29337496</span><span class="sy0">/</span>create_location.sh
+<span class="kw3">source</span> create_location.sh <span class="sy0">/</span>dev<span class="sy0">/</span>shm location <span class="re1">$HOME</span><span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>input_proj.tif  
+r.report input_proj</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Start GRASS in non-interactively and perform an analysis&quot;,&quot;hid&quot;:&quot;start_grass_in_non-interactively_and_perform_an_analysis&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:6,&quot;range&quot;:&quot;5248-5554&quot;} -->
+<h3 class="sectionedit7" id="how_to_use_it2">How to use it</h3>
+<div class="level3">
+
+<p>
+Copy/Paste the file in your editor and save as my<em>grass</em>analysis.sh.<br/>
+
+</p>
+<pre class="code">bash my_grass_analysis.sh</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;How to use it&quot;,&quot;hid&quot;:&quot;how_to_use_it2&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:7,&quot;range&quot;:&quot;5555-&quot;} -->

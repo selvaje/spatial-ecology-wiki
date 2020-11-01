@@ -1,0 +1,53 @@
+##### 1. directly from GRASS:----------------------------------------------------
+## in terminal, start grass:
+# grass ~/Documents/GISdata/GRASSDB/swedenSWEREF/SGUsoil/
+## open R from within a running GRASS session:
+# open -a RStudio.app &amp;
+&nbsp;
+library(spgrass6)
+&nbsp;
+# allows the use of grass commands from within R:
+system('g.list type=rast')
+&nbsp;
+## read grass raster: readRAST6()
+&nbsp;
+soil1 &lt;- readRAST6(vname=&quot;SGU_soil_1km&quot;)    
+&nbsp;
+# takes longer than loading from a file 
+# returns large SpatialGridDataFrame (eats up memory)
+&nbsp;
+# vname can be vector of multiple files, 
+# cat=&quot;SGU_soil_1km&quot; should allow factor, but gives error for integer
+&nbsp;
+system('exit')
+&nbsp;
+&nbsp;
+##### 2. indirectly from GRASS:-------------------------------------------------------
+&nbsp;
+library(raster)
+&nbsp;
+### raster()- from cellhd in grass db: 
+soil2 = raster(&quot;~/Documents/GISdata/GRASSDB/swedenSWEREF/SGUsoil/cellhd/SGU_soil_1km&quot;)
+&nbsp;
+# error - doesnt recognize file format
+&nbsp;
+&nbsp;
+##### 3. rgdal via tif:---------------------------------------------------------------
+&nbsp;
+library(rgdal)
+&nbsp;
+### readGDAL(): 
+soil3 &lt;- readGDAL(fname=&quot;~/Documents/GISdata/ph_predictors_sweref_50m/SGU_soil_50m.tif&quot;)
+&nbsp;
+# returns large SpatialGridDataFrame (eats up memory)
+# speed similar to readRAST6()
+&nbsp;
+&nbsp;
+##### 4. raster() via tif: ---------------------------------------------------------------
+&nbsp;
+library(raster)
+&nbsp;
+### raster():
+soil &lt;- raster(&quot;~/Documents/GISdata/ph_predictors_sweref_50m/SGU_soil_50m.tif&quot;, values=T) 
+&nbsp;
+# uses very little memory - creates link to raster, virtual representation

@@ -1,0 +1,117 @@
+
+<h1 class="sectionedit1" id="introduction_to_bash">Introduction to Bash</h1>
+<div class="level1">
+
+<p>
+The object of this document is the use of Bash language to explore and manipulate files rather than to set/interact with the operation system.<br/>
+
+You can read and follow the text.  At the same time you can copy the commands included in the frames part of this document and paste them into an interactive Bash shell.<br/>
+
+Once you have familiarity with the general commands of Bash you can further advance in learning bash with online manuals and guides. There is a large variety of documentation available at:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.linux.org/lessons/advanced/x1110.html" class="urlextern" target="blanc" title="http://www.linux.org/lessons/advanced/x1110.html" rel="nofollow noopener">http://www.linux.org/lessons/advanced/x1110.html</a> </div>
+</li>
+<li class="level1"><div class="li"> <a href="http://tldp.org/LDP/abs/html/" class="urlextern" target="blanc" title="http://tldp.org/LDP/abs/html/" rel="nofollow noopener">http://tldp.org/LDP/abs/html/</a></div>
+</li>
+</ul>
+
+<p>
+A very useful summary of the most important commands can be found on <a href="http://www.spatial-ecology.net/ost4sem/reference/UnixLinux_command_reference_card.pdf" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/reference/UnixLinux_command_reference_card.pdf" rel="nofollow noopener"> ~/ost4sem/reference/UnixLinux_command_reference_card.pdf  </a>. It is recommended to print and use it during the course.
+<br/>
+
+The best way is just to try each command using a file, and/or search on the Internet for more examples and deeper explanations.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Introduction to Bash&quot;,&quot;hid&quot;:&quot;introduction_to_bash&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-1043&quot;} -->
+<h2 class="sectionedit2" id="searching_for_a_command_getting_help_running_a_command_saving_a_result">Searching for a command, getting help, running a command, saving a result</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Searching for a command, getting help, running a command, saving a result&quot;,&quot;hid&quot;:&quot;searching_for_a_command_getting_help_running_a_command_saving_a_result&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1044-1129&quot;} -->
+<h3 class="sectionedit3" id="searching_for_a_command_getting_help">Searching for a command, getting help</h3>
+<div class="level3">
+
+<p>
+In a Shell window (the terminal) the following prompt is written:
+</p>
+<pre class="code"> user@pc_name:directrory$</pre>
+
+<p>
+after the $ you are able to insert the command<br/>
+
+Command syntax:
+</p>
+<pre class="code"> command [option] [file]</pre>
+
+<p>
+The symbol [] identifies an optional feature of the command. It can be inserted to retrieve more information or different setting of a command.<br/>
+
+To get a command for a specific action type “apropos the<em>word</em>that<em>you</em>need”.<br/>
+
+e.g. I want to search for a command able to count the line in a file
+</p>
+<pre class="code bash">   <span class="kw2">man</span> <span class="re5">-k</span> count</pre>
+
+<p>
+in the last lines you get:<br/>
+
+“wc (1)               - print newline, word, and byte counts for each file”<br/>
+
+so the command “wc” is your command<br/>
+
+To get information about a command type “man command” or info “command” e.g.
+</p>
+<pre class="code bash">   <span class="kw2">man</span> <span class="kw2">wc</span></pre>
+
+<p>
+or
+</p>
+<pre class="code bash">   info <span class="kw2">wc</span></pre>
+
+<p>
+To exit from the help press “q”
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Searching for a command, getting help&quot;,&quot;hid&quot;:&quot;searching_for_a_command_getting_help&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1130-2013&quot;} -->
+<h3 class="sectionedit4" id="running_a_command_saving_a_result">Running a command, saving a result</h3>
+<div class="level3">
+
+<p>
+<br/>
+
+The symbols &gt; are used to save the result of a command in a file.<br/>
+
+Instead &lt; is used to retrieve information from a file.<br/>
+
+<br/>
+
+In this case, using the informatics terminology we can use the expression “standard input and output redirection”.<br/>
+
+<br/>
+
+This page summarize the <a href="http://www.mathinfo.u-picardie.fr/asch/f/MeCS/courseware/users/help/general/unix/redirection.html" class="urlextern" target="blanc" title="http://www.mathinfo.u-picardie.fr/asch/f/MeCS/courseware/users/help/general/unix/redirection.html" rel="nofollow noopener">Standard Input and Output Redirection</a> common used.<br/>
+
+<br/>
+
+In this course we will mainly use the symbol &gt;  &gt; &gt;  &lt;. e.g.<br/>
+
+</p>
+<pre class="code bash">   <span class="kw2">ls</span> <span class="sy0">&gt;</span> mylist.txt</pre>
+
+<p>
+it will save the file names that you have under the directory in a file called mylist.txt
+</p>
+<pre class="code bash">   <span class="kw2">ls</span> <span class="sy0">&gt;&gt;</span> mylist.txt</pre>
+
+<p>
+It will append again the file names to the same file without deleting the previous content of the file.<br/>
+
+See the result by typing:
+</p>
+<pre class="code bash">   <span class="kw2">more</span> mylist.txt</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Running a command, saving a result&quot;,&quot;hid&quot;:&quot;running_a_command_saving_a_result&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;2014-&quot;} -->

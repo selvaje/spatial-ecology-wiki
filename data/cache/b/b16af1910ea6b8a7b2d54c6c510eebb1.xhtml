@@ -1,0 +1,78 @@
+
+<h1 class="sectionedit1" id="linking_elephant_movement_and_ndvi_in_ugalla_ecosystem_western_tanzania">Linking Elephant Movement and NDVI in Ugalla ecosystem, Western Tanzania</h1>
+<div class="level1">
+
+<p>
+By Elikana Kalumanga
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Linking Elephant Movement and NDVI in Ugalla ecosystem, Western Tanzania&quot;,&quot;hid&quot;:&quot;linking_elephant_movement_and_ndvi_in_ugalla_ecosystem_western_tanzania&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-112&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+Little is known on the ecology of elephants and other large mammals in Western Tanzania (Caro, 1999; Westert, 2006). To contribute to the ecological knowledge of elephants in Western Tanzania, I intend to test the hypothesis that elephant movements are mostly correlated to the high vegetation NDVI values among other social, economic and environmental factors. Elephants are the largest surviving terrestrial mammal on the planet earth. Compared to other wild mammals, elephants play a vital ecological role in their range ecosystem as ecosystem engineers. In most ecosystems, elephants have modified their habitats, thus supporting the very survival and existence of several other wild species. Knowledge on how elephants move in Ugalla ecosystem will help informed elephant conservation. Compared to many other ecosystems and protected areas in Tanzania, Ugalla ecosystem is managed differently; partly is managed as Game Reserves, Forest Reserves, Game Controlled Areas and Wildlife Management Areas. However, we are yet to understand how elephant move across these protected areas. 
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;113-1232&quot;} -->
+<h3 class="sectionedit3" id="project_objectives_and_suggestion">PROJECT OBJECTIVES and SUGGESTION</h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> Loading elephant GPS track clean  data and reproject into MODIS sinusoidal projection/ or  into the projected coordinate system WCS 84/UTM zone 36S</div>
+</li>
+<li class="level1"><div class="li"> Download MODIS-NDVI (e.g. modis composite 16) temporally synchronized with GPS (use wget command in bash)<br/>
+  - Extract value from NDVI co-occurring in GPS tracks and produce txt file. </div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;PROJECT OBJECTIVES and SUGGESTION&quot;,&quot;hid&quot;:&quot;project_objectives_and_suggestion&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1233-1618&quot;} -->
+<h2 class="sectionedit4" id="metadata">METADATA</h2>
+<div class="level2">
+
+<p>
+Both vector and raster data were used. Vector data includes the CSV files containing elephant GPS lat-long coordinates. The Raster data includes the MODIS HDF NDVI images.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1619-1820&quot;} -->
+<h2 class="sectionedit5" id="computational_implementation-command_line_work_in_progress">Computational implementation-Command Line (work in progress)</h2>
+<div class="level2">
+
+<p>
+Some further explanation of the overall analyses and of each step
+paste your code here
+</p>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_elikana&amp;codeblock=0" title="Download Snippet" class="mediafile mf_">- mycode</a></dt>
+<dd><pre class="code bash"><span class="co0">#/bin/bash</span>
+<span class="co0"># Comment your code to make it more easy to understand. </span>
+<span class="kw2">wget</span> ftp:<span class="sy0">//</span>something.rar 
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.tif ; <span class="kw1">do</span> 
+  <span class="kw3">echo</span> <span class="re1">$file</span> ; gdalinfo <span class="re5">-mm</span> <span class="re1">$file</span>  <span class="sy0">|</span> <span class="kw2">grep</span> <span class="st0">&quot;Min/Max&quot;</span> 
+<span class="kw1">done</span></pre>
+</dd></dl>
+
+<p>
+Describe your second code if needed, what it does …
+</p>
+<pre class="code R"># my R code here</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Computational implementation-Command Line (work in progress)&quot;,&quot;hid&quot;:&quot;computational_implementation-command_line_work_in_progress&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1821-2283&quot;} -->
+<h2 class="sectionedit6" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+
+<p>
+Show us the output of the analyses upload images if needed with “add images” link in the upper bar of this window while editing
+</p>
+
+<p>
+<em>Later on after the training you could improve the script and upgrade your wiki project page</em>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS and DISCUSSION&quot;,&quot;hid&quot;:&quot;results_and_discussion&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:6,&quot;range&quot;:&quot;2284-&quot;} -->

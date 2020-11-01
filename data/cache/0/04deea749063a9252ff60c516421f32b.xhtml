@@ -1,0 +1,273 @@
+
+<h2 class="sectionedit1" id="geocomputation_at_high_performance_computing_cluster_hpc_grace">Geocomputation at High Performance Computing Cluster (HPC) Grace</h2>
+<div class="level2">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Aanunna_setting&amp;media=wiki:cluster_computing.jpg" class="media" title="wiki:cluster_computing.jpg"><img src="/dokuwiki/lib/exe/fetch.php?w=400&amp;tok=41378d&amp;media=wiki:cluster_computing.jpg" class="mediacenter" alt="" width="400" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Geocomputation at High Performance Computing Cluster (HPC) Grace&quot;,&quot;hid&quot;:&quot;geocomputation_at_high_performance_computing_cluster_hpc_grace&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-119&quot;} -->
+<h2 class="sectionedit2" id="filter_an_image">Filter an image</h2>
+<div class="level2">
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Aanunna_setting&amp;media=wiki:overview_scripts.png" class="media" title="wiki:overview_scripts.png"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=8867a2&amp;media=wiki:overview_scripts.png" class="medialeft" alt="" width="1000" /></a>
+</p>
+
+<p>
+Status of the jobs in slurm can be seen by:
+</p>
+<pre class="code">squeue --all
+sacct
+sinfo</pre>
+
+<p>
+building up some specific alias and save to $HOME/.bashrc
+</p>
+<pre class="code">alias myq=&#039;squeue -u $USER   -o &quot;%.9F %.10K %.4P %.80j %3D%2C%.8T %.9M  %.9l  %.S  %R&quot;&#039;
+alias err=&#039;ll -rt    /gpfs/scratch60/fas/sbsc/$USER/stderr/*&#039;
+alias errl=&#039;ll -rt    /gpfs/scratch60/fas/sbsc/$USER/stderr/* | tail &#039;
+alias errlless=&#039; less  $(ls  -rt    /gpfs/scratch60/fas/sbsc/$USER/stderr/* | tail -1 ) &#039;
+alias errlmore=&#039; more  $(ls  -rt    /gpfs/scratch60/fas/sbsc/$USER/stderr/* | tail -1 ) &#039;
+alias out=&#039;ll -rt    /gpfs/scratch60/fas/sbsc/$USER/stdout/*&#039;
+alias outl=&#039;ll -rt    /gpfs/scratch60/fas/sbsc/$USER/stdout/* | tail &#039;
+alias outlless=&#039; less  $(ls  -rt    /gpfs/scratch60/fas/sbsc/$USER/stdout/* | tail -1 ) &#039;
+alias outlmore=&#039; more  $(ls  -rt    /gpfs/scratch60/fas/sbsc/$USER/stdout/* | tail -1 ) &#039;</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Filter an image&quot;,&quot;hid&quot;:&quot;filter_an_image&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;120-1055&quot;} -->
+<h3 class="sectionedit3" id="prepare_raster_dataset">Prepare raster dataset</h3>
+<div class="level3">
+
+<p>
+A portion of a <a href="http://www.spatial-ecology.net/ost4sem/exercise/KenyaGIS/Landsat/LT51680612010231MLK00_B123_proj.tar.gz" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/KenyaGIS/Landsat/LT51680612010231MLK00_B123_proj.tar.gz" rel="nofollow noopener"> Landsat image  </a>
+</p>
+<pre class="code"> wget http://www.spatial-ecology.net/ost4sem/exercise/KenyaGIS/Landsat/LT51680612010231MLK00_B123_proj.tar.gz
+ tar -xvzf LT51680612010231MLK00_B123_proj.tar.gz
+ ### download the scripts 
+ wget -N -O sc01_split_tif.sh &quot;http://www.spatial-ecology.net/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=0&quot;
+ wget -N -O sc02a_filter_tif_forloop.sh &quot;http://www.spatial-ecology.net/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=1&quot;
+ wget -N -O sc02b_filter_tif_xargs.sh &quot;http://www.spatial-ecology.net/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=2&quot;
+ wget -N -O sc02c_filter_tif_njobs.sh &quot;http://www.spatial-ecology.net/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=3&quot;
+ wget -N -O sc02d_filter_tif_arrayjobs.sh &quot;http://www.spatial-ecology.net/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=4&quot;
+ </pre>
+
+<p>
+will be divided in 4 vrt tiles each one containing 3 bands. The vrt will be used in the following scripting procedures.<br/>
+
+</p>
+<pre class="code">sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc01_split_tif.sh</pre>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=0" title="Download Snippet" class="mediafile mf_sh">sc01_split_tif.sh</a></dt>
+<dd><pre class="code bash"><span class="co0">#!/bin/bash</span>
+<span class="co0">#SBATCH -p day</span>
+<span class="co0">#SBATCH -J sc01_split_tif.sh</span>
+<span class="co0">#SBATCH -n 1 -c 1 -N 1</span>
+<span class="co0">#SBATCH -t 1:00:00 </span>
+<span class="co0">#SBATCH -o /gpfs/scratch60/fas/sbsc/ga254/stdout/sc01_split_tif.sh.%J.out</span>
+<span class="co0">#SBATCH -e /gpfs/scratch60/fas/sbsc/ga254/stderr/sc01_split_tif.sh.%J.err</span>
+<span class="co0">#SBATCH --mail-type=ALL</span>
+<span class="co0">#SBATCH --mail-user=email</span>
+<span class="co0">#SBATCH --mem-per-cpu=4G</span>
+&nbsp;
+<span class="co0">####### sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc01_split_tif.sh</span>
+&nbsp;
+module load GEOS<span class="sy0">/</span>3.6.2-foss-2018a-Python-2.7.14 
+module load GDAL<span class="sy0">/</span>2.2.3-foss-2018a-Python-2.7.14
+module load GSL<span class="sy0">/</span><span class="nu0">2.3</span>-GCCcore-6.4.0
+module load Boost<span class="sy0">/</span>1.66.0-foss-2018a
+module load PKTOOLS<span class="sy0">/</span>2.6.7.6-foss-2018a 
+module load Armadillo<span class="sy0">/</span>8.400.0-foss-2018a
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>gpfs<span class="sy0">/</span>loomis<span class="sy0">/</span>home.grace<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>geocomputation<span class="sy0">/</span>Landsat
+&nbsp;
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> <span class="re5">-te</span> <span class="nu0">36.5</span> -<span class="nu0">1.5</span> <span class="nu0">37</span> <span class="re5">-1</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_UL.vrt <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B1_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B2_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B3_proj.tif
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> <span class="re5">-te</span> <span class="nu0">36.5</span> <span class="re5">-2</span> <span class="nu0">37</span> -<span class="nu0">1.5</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_LL.vrt <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B1_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B2_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B3_proj.tif
+&nbsp;
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> <span class="re5">-te</span> <span class="nu0">37</span> -<span class="nu0">1.5</span> <span class="nu0">37.5</span> <span class="re5">-1</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_UR.vrt <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B1_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B2_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B3_proj.tif
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> <span class="re5">-te</span> <span class="nu0">37</span> <span class="re5">-2</span> <span class="nu0">37.5</span> -<span class="nu0">1.5</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_LR.vrt <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B1_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B2_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B3_proj.tif</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Prepare raster dataset&quot;,&quot;hid&quot;:&quot;prepare_raster_dataset&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1056-3859&quot;} -->
+<h3 class="sectionedit4" id="sc02a_proces_4_tiles_in_one_node_using_a_cpu_with_the_bash_for_loop">sc02a Proces 4 tiles in one node using a cpu with the bash for loop</h3>
+<div class="level3">
+
+<p>
+This is the easiest procedure to perform a geocomputation operation. Lunch a job that use a normal for loop to iterate on the 4 tiles. After the iterations (pkfilter) the for tiles can be re-merged by gdalbuildvrt and gdal_translate.
+</p>
+<pre class="code">sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc02a_filter_tif_forloop.sh</pre>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=1" title="Download Snippet" class="mediafile mf_sh">sc02a_filter_tif_forloop.sh</a></dt>
+<dd><pre class="code bash"><span class="co0">#!/bin/bash</span>
+<span class="co0">#SBATCH -p day</span>
+<span class="co0">#SBATCH -J sc02a_filter_tif_forloop.sh</span>
+<span class="co0">#SBATCH -n 1 -c 1 -N 1</span>
+<span class="co0">#SBATCH -t 1:00:00 </span>
+<span class="co0">#SBATCH -o /gpfs/scratch60/fas/sbsc/ga254/stdout/sc02a_filter_tif_forloop.sh.%J.out</span>
+<span class="co0">#SBATCH -e /gpfs/scratch60/fas/sbsc/ga254/stderr/sc02a_filter_tif_forloop.sh.%J.err</span>
+<span class="co0">#SBATCH --mail-type=ALL</span>
+<span class="co0">#SBATCH --mail-user=email</span>
+<span class="co0">#SBATCH --mem-per-cpu=4G</span>
+&nbsp;
+<span class="co0">####### sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc02a_filter_tif_forloop.sh</span>
+&nbsp;
+module load GEOS<span class="sy0">/</span>3.6.2-foss-2018a-Python-2.7.14 
+module load GDAL<span class="sy0">/</span>2.2.3-foss-2018a-Python-2.7.14
+module load GSL<span class="sy0">/</span><span class="nu0">2.3</span>-GCCcore-6.4.0
+module load Boost<span class="sy0">/</span>1.66.0-foss-2018a
+module load PKTOOLS<span class="sy0">/</span>2.6.7.6-foss-2018a 
+module load Armadillo<span class="sy0">/</span>8.400.0-foss-2018a
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>gpfs<span class="sy0">/</span>loomis<span class="sy0">/</span>home.grace<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>geocomputation<span class="sy0">/</span>Landsat
+&nbsp;
+<span class="kw3">echo</span> filter the stack_??.vrt files 
+&nbsp;
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_??.vrt  ; <span class="kw1">do</span> 
+<span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .vrt<span class="br0">&#41;</span>
+pkfilter <span class="re5">-of</span> GTiff  <span class="re5">-dx</span> <span class="nu0">3</span> <span class="re5">-dy</span> <span class="nu0">3</span>  <span class="re5">-f</span> mean <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-i</span> <span class="re1">$file</span> <span class="re5">-o</span>  <span class="re1">$DIR</span><span class="sy0">/</span><span class="re1">$filename</span>.tif 
+<span class="kw1">done</span> 
+&nbsp;
+<span class="kw3">echo</span>  re-create the large tif 
+&nbsp;
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack.vrt   <span class="re1">$DIR</span><span class="sy0">/</span>stack_UL.tif  <span class="re1">$DIR</span><span class="sy0">/</span>stack_LL.tif    <span class="re1">$DIR</span><span class="sy0">/</span>stack_UR.tif   <span class="re1">$DIR</span><span class="sy0">/</span>stack_LR.tif  
+<span class="re2">GDAL_CACHEMAX</span>=<span class="nu0">3000</span>
+gdal_translate <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  <span class="re1">$DIR</span><span class="sy0">/</span>stack.vrt <span class="re1">$DIR</span><span class="sy0">/</span>stack_filter.tif 
+<span class="kw2">rm</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_UL.tif  <span class="re1">$DIR</span><span class="sy0">/</span>stack_LL.tif    <span class="re1">$DIR</span><span class="sy0">/</span>stack_UR.tif   <span class="re1">$DIR</span><span class="sy0">/</span>stack_LR.tif <span class="re1">$DIR</span><span class="sy0">/</span>stack.vrt</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;sc02a Proces 4 tiles in one node using a cpu with the bash for loop&quot;,&quot;hid&quot;:&quot;sc02a_proces_4_tiles_in_one_node_using_a_cpu_with_the_bash_for_loop&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:4,&quot;range&quot;:&quot;3860-5652&quot;} -->
+<h3 class="sectionedit5" id="sc02b_multi-process_inside_one_node_using_4_cpu_using_xargs">sc02b Multi-process inside one node using 4 cpu using xargs</h3>
+<div class="level3">
+
+<p>
+This is one of the most efficient ways to perform a geocomputation operation. Lunch a job that use xargs to compute the iterations in a multicore (4 cpu in this case). After the iterations (pkfilter) the 4 tiles can be re-merged by gdalbuildvrt and gdal_translate. The use of xargs allows to constrains all the iterations in one node using different cpus. The advantage is that after xargs all the tiles will be ready to be merged back. A disadvantage can be that in case you are requesting many cpu (e.g. 24) you have to wait that one node will have 24 cpu free. A good compromise can be just requested 8-12 cpu and add more time to the wall time (-t) 
+</p>
+<pre class="code">sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc02b_filter_tif_xargs.sh</pre>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=2" title="Download Snippet" class="mediafile mf_sh">sc02b_filter_tif_xargs.sh</a></dt>
+<dd><pre class="code bash"><span class="co0">#!/bin/bash</span>
+<span class="co0">#SBATCH -p day</span>
+<span class="co0">#SBATCH -J sc02b_filter_tif_xargs.sh</span>
+<span class="co0">#SBATCH -n 1 -c 4 -N 1</span>
+<span class="co0">#SBATCH -t 1:00:00 </span>
+<span class="co0">#SBATCH -o /gpfs/scratch60/fas/sbsc/ga254/stdout/sc02b_filter_tif_xargs.sh.%J.out</span>
+<span class="co0">#SBATCH -e /gpfs/scratch60/fas/sbsc/ga254/stderr/sc02b_filter_tif_xargs.sh.%J.err</span>
+<span class="co0">#SBATCH --mail-type=ALL</span>
+<span class="co0">#SBATCH --mail-user=email</span>
+<span class="co0">#SBATCH --mem-per-cpu=4G</span>
+&nbsp;
+<span class="co0">####### sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc02b_filter_tif_xargs.sh</span>
+&nbsp;
+module load GEOS<span class="sy0">/</span>3.6.2-foss-2018a-Python-2.7.14 
+module load GDAL<span class="sy0">/</span>2.2.3-foss-2018a-Python-2.7.14
+module load GSL<span class="sy0">/</span><span class="nu0">2.3</span>-GCCcore-6.4.0
+module load Boost<span class="sy0">/</span>1.66.0-foss-2018a
+module load PKTOOLS<span class="sy0">/</span>2.6.7.6-foss-2018a 
+module load Armadillo<span class="sy0">/</span>8.400.0-foss-2018a
+&nbsp;
+<span class="kw3">export</span> <span class="re2">DIR</span>=<span class="sy0">/</span>gpfs<span class="sy0">/</span>loomis<span class="sy0">/</span>home.grace<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>geocomputation<span class="sy0">/</span>Landsat
+&nbsp;
+<span class="kw3">echo</span> start the multicore computation
+&nbsp;
+<span class="kw2">ls</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_??.vrt <span class="sy0">|</span> <span class="kw2">xargs</span> <span class="re5">-n</span> <span class="nu0">1</span> <span class="re5">-P</span> <span class="nu0">4</span> <span class="kw2">bash</span> <span class="re5">-c</span> $<span class="st_h">'  
+file=$1
+filename=$(basename $file .vrt)
+pkfilter -of GTiff  -dx 3 -dy 3  -f mean -co COMPRESS=DEFLATE -co ZLEVEL=9 -i $file -o  $DIR/$filename.tif 
+'</span> _ 
+&nbsp;
+<span class="kw3">echo</span>  re-create the large tif 
+&nbsp;
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack.vrt   <span class="re1">$DIR</span><span class="sy0">/</span>stack_UL.tif  <span class="re1">$DIR</span><span class="sy0">/</span>stack_LL.tif    <span class="re1">$DIR</span><span class="sy0">/</span>stack_UR.tif   <span class="re1">$DIR</span><span class="sy0">/</span>stack_LR.tif  
+<span class="re2">GDAL_CACHEMAX</span>=<span class="nu0">10000</span>
+gdal_translate <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span>  <span class="re1">$DIR</span><span class="sy0">/</span>stack.vrt <span class="re1">$DIR</span><span class="sy0">/</span>stack_filter.tif 
+<span class="kw2">rm</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_UL.tif  <span class="re1">$DIR</span><span class="sy0">/</span>stack_LL.tif    <span class="re1">$DIR</span><span class="sy0">/</span>stack_UR.tif   <span class="re1">$DIR</span><span class="sy0">/</span>stack_LR.tif <span class="re1">$DIR</span><span class="sy0">/</span>stack.vrt</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;sc02b Multi-process inside one node using 4 cpu using xargs&quot;,&quot;hid&quot;:&quot;sc02b_multi-process_inside_one_node_using_4_cpu_using_xargs&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:5,&quot;range&quot;:&quot;5653-7874&quot;} -->
+<h3 class="sectionedit6" id="sc02c_proces_4_tiles_with_4_indepent_jobs_-_one_node_one_cpu">sc02c Proces 4 tiles with 4 indepent jobs - one node one cpu</h3>
+<div class="level3">
+
+<p>
+This is a good way to run 4 independent jobs. Each job can perform one iteration. This option is good if need to lunch 100-200 jobs. You can also think that inside each job you can nest a xargs operation. The disadvantage is that each script will finish independently from the other so the only way to re-merge the tif is wait that all the jobs are finished. 
+</p>
+<pre class="code">for file in /gpfs/loomis/home.grace/$USER/geocomputation/Landsat/stack_??.vrt 
+do sbatch --export=file=$file  /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc02c_filter_tif_njobs.sh 
+done </pre>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=3" title="Download Snippet" class="mediafile mf_sh">sc02c_filter_tif_njobs.sh</a></dt>
+<dd><pre class="code bash"><span class="co0">#!/bin/bash</span>
+<span class="co0">#SBATCH -p day</span>
+<span class="co0">#SBATCH -J sc02c_filter_tif_njobs.sh</span>
+<span class="co0">#SBATCH -n 1 -c 1 -N 1</span>
+<span class="co0">#SBATCH -t 1:00:00 </span>
+<span class="co0">#SBATCH -o /gpfs/scratch60/fas/sbsc/ga254/stdout/sc02c_filter_tif_njobs.sh.%J.out</span>
+<span class="co0">#SBATCH -e /gpfs/scratch60/fas/sbsc/ga254/stderr/sc02c_filter_tif_njobs.sh.%J.err</span>
+<span class="co0">#SBATCH --mail-type=ALL</span>
+<span class="co0">#SBATCH --mail-user=email</span>
+<span class="co0">#SBATCH --mem-per-cpu=4G</span>
+&nbsp;
+<span class="co0">####### for file in /gpfs/loomis/home.grace/$USER/geocomputation/Landsat/stack_??.vrt  ; do sbatch --export=file=$file  /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc02c_filter_tif_njobs.sh ; done </span>
+&nbsp;
+module load GEOS<span class="sy0">/</span>3.6.2-foss-2018a-Python-2.7.14 
+module load GDAL<span class="sy0">/</span>2.2.3-foss-2018a-Python-2.7.14
+module load GSL<span class="sy0">/</span><span class="nu0">2.3</span>-GCCcore-6.4.0
+module load Boost<span class="sy0">/</span>1.66.0-foss-2018a
+module load PKTOOLS<span class="sy0">/</span>2.6.7.6-foss-2018a 
+module load Armadillo<span class="sy0">/</span>8.400.0-foss-2018a
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>gpfs<span class="sy0">/</span>loomis<span class="sy0">/</span>home.grace<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>geocomputation<span class="sy0">/</span>Landsat
+&nbsp;
+<span class="kw3">echo</span> filter the <span class="re1">$file</span> <span class="kw2">file</span> 
+&nbsp;
+<span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .vrt<span class="br0">&#41;</span>
+pkfilter <span class="re5">-of</span> GTiff  <span class="re5">-dx</span> <span class="nu0">3</span> <span class="re5">-dy</span> <span class="nu0">3</span>  <span class="re5">-f</span> mean <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-i</span> <span class="re1">$file</span> <span class="re5">-o</span>  <span class="re1">$DIR</span><span class="sy0">/</span><span class="re1">$filename</span>.tif 
+&nbsp;
+<span class="kw3">echo</span>  re-create the large tif by another script</pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;sc02c Proces 4 tiles with 4 indepent jobs - one node one cpu&quot;,&quot;hid&quot;:&quot;sc02c_proces_4_tiles_with_4_indepent_jobs_-_one_node_one_cpu&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:6,&quot;range&quot;:&quot;7875-9638&quot;} -->
+<h3 class="sectionedit7" id="sc02c_proces_4_tiles_with_1_job_lunching_4-array-job_-_one_node_one_cpu">sc02c Proces 4 tiles with 1 job lunching 4-array-job - one node one cpu</h3>
+<div class="level3">
+
+<p>
+This is a good way to run 4 independent jobs-array. Each job-array can perform one iteration. This option is good if you need to lunch many many computations (e.g. 1000-2000). You can also think that inside each job you can nest a xargs operation. The disadvantage is that each script will finish independently from the other so the only way to re-merge the tif is waiting that all the jobs are finished. 
+</p>
+<pre class="code">sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc02d_filter_tif_arrayjobs.sh</pre>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wiki:anunna_setting&amp;codeblock=4" title="Download Snippet" class="mediafile mf_sh">sc02d_filter_tif_arrayjobs.sh</a></dt>
+<dd><pre class="code bash"><span class="co0">#!/bin/bash</span>
+<span class="co0">#SBATCH -p day</span>
+<span class="co0">#SBATCH -J sc02d_filter_tif_arrayjobs.sh</span>
+<span class="co0">#SBATCH -n 1 -c 1 -N 1</span>
+<span class="co0">#SBATCH -t 1:00:00 </span>
+<span class="co0">#SBATCH -o /gpfs/scratch60/fas/sbsc/ga254/stdout/sc02d_filter_tif_arrayjobs.sh.%A_%a.out </span>
+<span class="co0">#SBATCH -e /gpfs/scratch60/fas/sbsc/ga254/stderr/sc02d_filter_tif_arrayjobs.sh.%A_%a.err</span>
+<span class="co0">#SBATCH --mail-type=ALL</span>
+<span class="co0">#SBATCH --mail-user=email</span>
+<span class="co0">#SBATCH --mem-per-cpu=4G</span>
+<span class="co0">#SBATCH --array=1-4</span>
+&nbsp;
+<span class="co0">####### sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc02d_filter_tif_arrayjobs.sh</span>
+&nbsp;
+module load GEOS<span class="sy0">/</span>3.6.2-foss-2018a-Python-2.7.14 
+module load GDAL<span class="sy0">/</span>2.2.3-foss-2018a-Python-2.7.14
+module load GSL<span class="sy0">/</span><span class="nu0">2.3</span>-GCCcore-6.4.0
+module load Boost<span class="sy0">/</span>1.66.0-foss-2018a
+module load PKTOOLS<span class="sy0">/</span>2.6.7.6-foss-2018a 
+module load Armadillo<span class="sy0">/</span>8.400.0-foss-2018a
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>gpfs<span class="sy0">/</span>loomis<span class="sy0">/</span>home.grace<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>geocomputation<span class="sy0">/</span>Landsat
+&nbsp;
+<span class="re2">file</span>=$<span class="br0">&#40;</span><span class="kw2">ls</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_??.vrt  <span class="sy0">|</span> <span class="kw2">head</span>  <span class="re5">-n</span>  <span class="re1">$SLURM_ARRAY_TASK_ID</span> <span class="sy0">|</span> <span class="kw2">tail</span>  <span class="re5">-1</span> <span class="br0">&#41;</span>
+&nbsp;
+<span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .vrt<span class="br0">&#41;</span>
+pkfilter <span class="re5">-of</span> GTiff  <span class="re5">-dx</span> <span class="nu0">3</span> <span class="re5">-dy</span> <span class="nu0">3</span>  <span class="re5">-f</span> mean <span class="re5">-co</span> <span class="re2">COMPRESS</span>=DEFLATE <span class="re5">-co</span> <span class="re2">ZLEVEL</span>=<span class="nu0">9</span> <span class="re5">-i</span> <span class="re1">$file</span> <span class="re5">-o</span>  <span class="re1">$DIR</span><span class="sy0">/</span><span class="re1">$filename</span>.tif </pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;sc02c Proces 4 tiles with 1 job lunching 4-array-job - one node one cpu&quot;,&quot;hid&quot;:&quot;sc02c_proces_4_tiles_with_1_job_lunching_4-array-job_-_one_node_one_cpu&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:7,&quot;range&quot;:&quot;9639-&quot;} -->

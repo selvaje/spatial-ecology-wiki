@@ -1,0 +1,3 @@
+<span class="co1">-- Selecting the mr image with the pixel intensity reduces by a factor of 2</span>
+<span class="kw1">SELECT</span> mr <span class="sy0">/</span> <span class="nu0">2</span>
+<span class="kw1">FROM</span>   mr

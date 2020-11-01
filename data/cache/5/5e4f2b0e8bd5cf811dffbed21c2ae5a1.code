@@ -1,0 +1,8 @@
+<span class="kw3">export</span> <span class="re2">MODIS500DIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>week2<span class="sy0">/</span>MODIS500
+<span class="kw3">export</span> <span class="re2">MODIS250DIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>week2<span class="sy0">/</span>MODIS250
+<span class="kw3">export</span> <span class="re2">LANDSATDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>week2<span class="sy0">/</span>LANDSAT^C
+<span class="kw3">export</span> <span class="re2">LANDSATDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>week2<span class="sy0">/</span>LANDSATDIR
+<span class="kw3">export</span> <span class="re2">LANDSATIMG</span>=<span class="nu0">19990724</span>_L7E_IP_IW.tif
+<span class="kw3">export</span> <span class="re2">FMAPDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>week2<span class="sy0">/</span>FMAP2006
+<span class="kw3">export</span> <span class="re2">VECTORDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>week2<span class="sy0">/</span>cornwall_vector
+<span class="kw3">export</span> <span class="re2">OUTPUTDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>user<span class="sy0">/</span>week2<span class="sy0">/</span>output

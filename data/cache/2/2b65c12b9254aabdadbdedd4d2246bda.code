@@ -1,0 +1,6 @@
+<span class="kw2">rm</span> <span class="re5">-f</span> shp<span class="sy0">/</span>TM_WORLD_BORDERS_Area100.shp
+ogr2ogr  shp<span class="sy0">/</span>TM_WORLD_BORDERS_Area100.shp shp<span class="sy0">/</span>TM_WORLD_BORDERS.shp
+&nbsp;
+ogrinfo <span class="re5">-sql</span> <span class="st0">&quot;ALTER TABLE TM_WORLD_BORDERS_Area100 ADD COLUMN Area100 real(12,0)&quot;</span> shp<span class="sy0">/</span>TM_WORLD_BORDERS_Area100.shp
+&nbsp;
+ogrinfo  <span class="re5">-dialect</span> SQLite <span class="re5">-sql</span> <span class="st0">&quot;UPDATE TM_WORLD_BORDERS_Area100 set Area100 = AREA + 10 &quot;</span> shp<span class="sy0">/</span>TM_WORLD_BORDERS_Area100.shp 

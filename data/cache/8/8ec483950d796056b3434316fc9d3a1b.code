@@ -1,0 +1,11 @@
+auto lo
+iface lo inet loopback
+&nbsp;
+auto eth0
+allow-hotplug eth0
+iface eth0 inet static
+address 10.141.0.1 <span class="co0"># use ....141.0.2 in node2</span>
+netmask 255.255.0.0
+network 10.141.0.0
+broadcast 10.141.255.255
+gateway 10.141.255.254

@@ -1,0 +1,250 @@
+<span class="kw1">from</span> <span class="kw3">__future__</span> <span class="kw1">import</span> absolute_import<span class="sy0">,</span> division<span class="sy0">,</span> print_function
+<span class="kw1">import</span> pathlib
+<span class="kw1">import</span> matplotlib.<span class="me1">pyplot</span> <span class="kw1">as</span> plt
+<span class="kw1">import</span> pandas <span class="kw1">as</span> pd
+<span class="kw1">from</span> sklearn.<span class="me1">metrics</span> <span class="kw1">import</span> r2_score
+<span class="kw1">from</span> sklearn.<span class="me1">preprocessing</span> <span class="kw1">import</span> MinMaxScaler
+<span class="kw1">import</span> seaborn <span class="kw1">as</span> sns
+<span class="kw1">import</span> tensorflow <span class="kw1">as</span> tf
+<span class="kw1">from</span> tensorflow <span class="kw1">import</span> keras
+<span class="kw1">from</span> tensorflow.<span class="me1">keras</span> <span class="kw1">import</span> layers
+<span class="kw1">from</span> tensorflow.<span class="me1">keras</span>.<span class="me1">models</span> <span class="kw1">import</span> model_from_json
+<span class="kw1">import</span> <span class="kw3">os</span> 
+<span class="kw1">print</span><span class="br0">&#40;</span>tf.__version__<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># root_ML = os.getcwd()</span>
+root_NN <span class="sy0">=</span> <span class="st0">'/home/user/ost4sem/exercise/machine_learning/NN/'</span>
+root_ML <span class="sy0">=</span> <span class="st0">'/home/user/ost4sem/exercise/machine_learning/'</span>
+<span class="kw3">os</span>.<span class="me1">chdir</span><span class="br0">&#40;</span>root_NN<span class="br0">&#41;</span>
+dirName <span class="sy0">=</span> <span class="st0">'RMSprop'</span>
+<span class="kw1">try</span>:
+    <span class="co1"># Create target Directory</span>
+    <span class="kw3">os</span>.<span class="me1">mkdir</span><span class="br0">&#40;</span>dirName<span class="br0">&#41;</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Directory &quot;</span> <span class="sy0">,</span> dirName <span class="sy0">,</span>  <span class="st0">&quot; Created &quot;</span><span class="br0">&#41;</span> 
+<span class="kw1">except</span> FileExistsError:
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">&quot;Directory &quot;</span> <span class="sy0">,</span> dirName <span class="sy0">,</span>  <span class="st0">&quot; already exists&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+path_to_save <span class="sy0">=</span> root_NN + dirName
+<span class="co1"># lr_range=[0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]</span>
+lr_val<span class="sy0">=</span><span class="nu0">0.001</span>
+<span class="co1"># momentum_range = [0.95, 0.90, 0.85] #momentum = rho in this context</span>
+momentum_val <span class="sy0">=</span> <span class="nu0">0.9</span>
+decay_val <span class="sy0">=</span> <span class="nu0">1e-6</span>
+&nbsp;
+&nbsp;
+plt.<span class="me1">close</span><span class="br0">&#40;</span><span class="st0">'all'</span><span class="br0">&#41;</span>
+dataset <span class="sy0">=</span> pd.<span class="me1">read_csv</span><span class="br0">&#40;</span>root_ML + <span class="st0">&quot;US_TN_season_1_proc.csv&quot;</span><span class="br0">&#41;</span>	
+dataset.<span class="me1">tail</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Check for NaN in this table and drop them if there are</span>
+dataset.<span class="me1">isna</span><span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="kw2">sum</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+dataset.<span class="me1">dropna</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Split the dataset into a training set and a test set.</span>
+dataset_orig <span class="sy0">=</span> dataset <span class="co1">#keep a backup of the original dataset. Might be useful.</span>
+&nbsp;
+<span class="co1"># Remove extra variables from the dataset (keep just the 47 predictors and the 'bcmean' (what we are predicting)</span>
+dataset <span class="sy0">=</span> dataset.<span class="me1">drop</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">&quot;RVunif_bc&quot;</span><span class="sy0">,</span><span class="st0">&quot;mean&quot;</span><span class="sy0">,</span><span class="st0">&quot;std&quot;</span><span class="sy0">,</span><span class="st0">&quot;cv&quot;</span><span class="sy0">,</span><span class="st0">&quot;longitude&quot;</span><span class="sy0">,</span><span class="st0">&quot;latitude&quot;</span><span class="sy0">,</span><span class="st0">&quot;RVunif&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span>axis<span class="sy0">=</span><span class="nu0">1</span><span class="br0">&#41;</span>
+dataset_orig2 <span class="sy0">=</span> dataset
+dataset.<span class="me1">to_csv</span><span class="br0">&#40;</span><span class="st0">'dataset_clean.csv'</span><span class="sy0">,</span>index<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span> <span class="co1">#Saving the csv file just for easier visualization of the raw data</span>
+&nbsp;
+<span class="co1"># Rescale: differences in scales accross input variables may increase the difficulty of the problem being modeled and results on unstable weights for connections</span>
+sc <span class="sy0">=</span> MinMaxScaler<span class="br0">&#40;</span>feature_range <span class="sy0">=</span> <span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="co1">#Scaling features to a range between 0 and 1</span>
+&nbsp;
+<span class="co1"># Scaling and translating each feature to our chosen range</span>
+dataset <span class="sy0">=</span> sc.<span class="me1">fit_transform</span><span class="br0">&#40;</span>dataset<span class="br0">&#41;</span> 
+dataset <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>dataset<span class="sy0">,</span> columns <span class="sy0">=</span> dataset_orig2.<span class="me1">columns</span><span class="br0">&#41;</span>
+dataset_scaled <span class="sy0">=</span> dataset <span class="co1">#Just backup</span>
+inverse_data <span class="sy0">=</span> sc.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>dataset<span class="br0">&#41;</span> <span class="co1">#just to make sure it works</span>
+&nbsp;
+train_dataset <span class="sy0">=</span> dataset.<span class="me1">sample</span><span class="br0">&#40;</span>frac<span class="sy0">=</span><span class="nu0">0.8</span><span class="sy0">,</span>random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span>
+test_dataset <span class="sy0">=</span> dataset.<span class="me1">drop</span><span class="br0">&#40;</span>train_dataset.<span class="me1">index</span><span class="br0">&#41;</span>
+train_dataset_orig <span class="sy0">=</span> dataset_orig2.<span class="me1">sample</span><span class="br0">&#40;</span>frac<span class="sy0">=</span><span class="nu0">0.8</span><span class="sy0">,</span>random_state<span class="sy0">=</span><span class="nu0">0</span><span class="br0">&#41;</span> <span class="co1">#just backup</span>
+test_dataset_orig <span class="sy0">=</span>  dataset_orig2.<span class="me1">drop</span><span class="br0">&#40;</span>train_dataset_orig.<span class="me1">index</span><span class="br0">&#41;</span> <span class="co1">#just backup</span>
+&nbsp;
+<span class="co1">#Inspect the original mean (still missing some formatting)</span>
+sns.<span class="kw2">set</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+f<span class="sy0">,</span> <span class="br0">&#40;</span>ax1<span class="sy0">,</span>ax2<span class="br0">&#41;</span> <span class="sy0">=</span> plt.<span class="me1">subplots</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span>sharex<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+sns.<span class="me1">distplot</span><span class="br0">&#40;</span>train_dataset<span class="br0">&#91;</span><span class="st0">&quot;bcmean&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span>hist<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span>kde<span class="sy0">=</span><span class="kw2">False</span><span class="sy0">,</span>bins<span class="sy0">=</span><span class="nu0">75</span><span class="sy0">,</span>color<span class="sy0">=</span><span class="st0">'darkblue'</span><span class="sy0">,</span>  ax<span class="sy0">=</span>ax1<span class="sy0">,</span> axlabel<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span>
+sns.<span class="me1">kdeplot</span><span class="br0">&#40;</span>train_dataset<span class="br0">&#91;</span><span class="st0">&quot;bcmean&quot;</span><span class="br0">&#93;</span><span class="sy0">,</span>bw<span class="sy0">=</span><span class="nu0">0.15</span><span class="sy0">,</span>legend<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span>color<span class="sy0">=</span><span class="st0">'darkblue'</span><span class="sy0">,</span> ax<span class="sy0">=</span>ax2<span class="br0">&#41;</span>
+&nbsp;
+ax1.<span class="me1">set_title</span><span class="br0">&#40;</span><span class="st0">'Original  histogram'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">legend</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">'bcmean'</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_title</span><span class="br0">&#40;</span><span class="st0">'KDE'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_xlabel</span><span class="br0">&#40;</span><span class="st0">'Mean Concentration N'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_ylabel</span><span class="br0">&#40;</span><span class="st0">'Count'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_ylabel</span><span class="br0">&#40;</span><span class="st0">'Dist'</span><span class="br0">&#41;</span>
+<span class="co1"># plt.show()</span>
+&nbsp;
+<span class="co1">#Check the overall stats</span>
+train_stats <span class="sy0">=</span> train_dataset.<span class="me1">describe</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+train_stats.<span class="me1">pop</span><span class="br0">&#40;</span><span class="st0">'bcmean'</span><span class="br0">&#41;</span> <span class="co1">#because that is what we are trying to predict</span>
+train_stats <span class="sy0">=</span> train_stats.<span class="me1">transpose</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+train_stats <span class="co1">#now train_stats has 47 predictors (as described in the paper).</span>
+&nbsp;
+<span class="co1"># Remove the output from our list of predictors</span>
+train_dataset.<span class="me1">to_csv</span><span class="br0">&#40;</span><span class="st0">'train_dataset.csv'</span><span class="sy0">,</span>index<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span> 
+train_labels <span class="sy0">=</span> train_dataset.<span class="me1">pop</span><span class="br0">&#40;</span><span class="st0">'bcmean'</span><span class="br0">&#41;</span>
+test_dataset.<span class="me1">to_csv</span><span class="br0">&#40;</span><span class="st0">'test_dataset.csv'</span><span class="sy0">,</span>index<span class="sy0">=</span><span class="kw2">False</span><span class="br0">&#41;</span>
+test_labels <span class="sy0">=</span> test_dataset.<span class="me1">pop</span><span class="br0">&#40;</span><span class="st0">'bcmean'</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="co1"># Inspect the joint distribution of a few pairs of columns from the training set</span>
+<span class="co1"># We can observe that the process of scalling the data did not affect the skewness of the data</span>
+<span class="co1">#sns.pairplot(train_dataset[[&quot;lc09&quot;, &quot;lc07&quot;, &quot;hydro05&quot;, &quot;hydro07&quot;,&quot;soil01&quot;,&quot;dem&quot;]], diag_kind=&quot;kde&quot;)</span>
+<span class="co1">## plt.show()</span>
+&nbsp;
+<span class="co1">#Normalize the data because the data has very different ranges (not really crucial for the prediction to use the raw data)</span>
+<span class="co1">#def norm(x):</span>
+<span class="co1"># return (x - train_stats['mean']) / train_stats['std']</span>
+normed_train_data <span class="sy0">=</span> train_dataset <span class="co1">#norm(train_dataset)</span>
+normed_test_data <span class="sy0">=</span> test_dataset <span class="co1">#norm(test_dataset)</span>
+&nbsp;
+<span class="co1"># Build the model. 'Sequential' model with two densely connected hidden layers, and an output layer that returns a single, continuous value</span>
+<span class="co1"># The architecture can be freely modified (pretty much whatever works better for your data)</span>
+<span class="kw1">def</span> build_model<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+  model <span class="sy0">=</span> keras.<span class="me1">Sequential</span><span class="br0">&#40;</span><span class="br0">&#91;</span>
+    layers.<span class="me1">Dense</span><span class="br0">&#40;</span><span class="nu0">64</span><span class="sy0">,</span>kernel_initializer<span class="sy0">=</span><span class="st0">'normal'</span><span class="sy0">,</span>activation<span class="sy0">=</span>tf.<span class="me1">nn</span>.<span class="me1">relu</span><span class="sy0">,</span>input_shape<span class="sy0">=</span><span class="br0">&#91;</span><span class="kw2">len</span><span class="br0">&#40;</span>train_dataset.<span class="me1">keys</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    layers.<span class="me1">Dropout</span><span class="br0">&#40;</span><span class="nu0">0.2</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    layers.<span class="me1">Dense</span><span class="br0">&#40;</span><span class="nu0">64</span><span class="sy0">,</span> activation<span class="sy0">=</span>tf.<span class="me1">nn</span>.<span class="me1">relu</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    layers.<span class="me1">Dropout</span><span class="br0">&#40;</span><span class="nu0">0.2</span><span class="br0">&#41;</span><span class="sy0">,</span>
+    layers.<span class="me1">Dense</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span>kernel_initializer<span class="sy0">=</span><span class="st0">'normal'</span><span class="sy0">,</span>activation<span class="sy0">=</span><span class="st0">'sigmoid'</span><span class="br0">&#41;</span>
+  <span class="br0">&#93;</span><span class="br0">&#41;</span>
+  optimizer <span class="sy0">=</span> tf.<span class="me1">keras</span>.<span class="me1">optimizers</span>.<span class="me1">RMSprop</span><span class="br0">&#40;</span>lr<span class="sy0">=</span>lr_val<span class="sy0">,</span> rho<span class="sy0">=</span>momentum_val<span class="sy0">,</span> decay<span class="sy0">=</span>decay_val<span class="br0">&#41;</span> <span class="co1">#many other options for optmizer</span>
+  model.<span class="kw2">compile</span><span class="br0">&#40;</span>loss<span class="sy0">=</span><span class="st0">'mean_squared_error'</span><span class="sy0">,</span>
+                optimizer<span class="sy0">=</span>optimizer<span class="sy0">,</span>
+                metrics<span class="sy0">=</span><span class="br0">&#91;</span><span class="st0">'mean_absolute_error'</span><span class="sy0">,</span> <span class="st0">'mean_squared_error'</span><span class="br0">&#93;</span><span class="br0">&#41;</span> <span class="co1">#When dealing with classification, 'accuracy' is very useful as well</span>
+  <span class="kw1">return</span> model
+&nbsp;
+model <span class="sy0">=</span> build_model<span class="br0">&#40;</span><span class="br0">&#41;</span>
+model.<span class="me1">summary</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Take 10 samples from training dataset for quick test</span>
+example_batch <span class="sy0">=</span> normed_train_data<span class="br0">&#91;</span>:<span class="nu0">10</span><span class="br0">&#93;</span>
+example_result <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>example_batch<span class="br0">&#41;</span>
+example_result
+&nbsp;
+<span class="co1"># The patience parameter is the amount of epochs to check for improvement</span>
+early_stop <span class="sy0">=</span> keras.<span class="me1">callbacks</span>.<span class="me1">EarlyStopping</span><span class="br0">&#40;</span>monitor<span class="sy0">=</span><span class="st0">'val_loss'</span><span class="sy0">,</span> min_delta<span class="sy0">=</span><span class="nu0">0.001</span><span class="sy0">,</span> patience<span class="sy0">=</span><span class="nu0">100</span><span class="sy0">,</span> mode<span class="sy0">=</span><span class="st0">'auto'</span><span class="sy0">,</span> baseline<span class="sy0">=</span><span class="kw2">None</span><span class="sy0">,</span> restore_best_weights<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+&nbsp;
+EPOCHS <span class="sy0">=</span> <span class="nu0">5000</span>
+&nbsp;
+history <span class="sy0">=</span> model.<span class="me1">fit</span><span class="br0">&#40;</span>
+  normed_train_data<span class="sy0">,</span> train_labels<span class="sy0">,</span>
+  epochs<span class="sy0">=</span>EPOCHS<span class="sy0">,</span> 
+  validation_split<span class="sy0">=</span><span class="nu0">0.1</span><span class="sy0">,</span>
+  shuffle<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span> verbose<span class="sy0">=</span><span class="nu0">2</span><span class="sy0">,</span>
+  callbacks<span class="sy0">=</span><span class="br0">&#91;</span>early_stop<span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Plot the progress of the training</span>
+hist <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>history.<span class="me1">history</span><span class="br0">&#41;</span>
+hist<span class="br0">&#91;</span><span class="st0">'epoch'</span><span class="br0">&#93;</span> <span class="sy0">=</span> history.<span class="me1">epoch</span>
+hist.<span class="me1">tail</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">def</span> plot_history<span class="br0">&#40;</span>history<span class="br0">&#41;</span>:
+  hist <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>history.<span class="me1">history</span><span class="br0">&#41;</span>
+  hist<span class="br0">&#91;</span><span class="st0">'epoch'</span><span class="br0">&#93;</span> <span class="sy0">=</span> history.<span class="me1">epoch</span>
+  plt.<span class="me1">figure</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Epoch'</span><span class="br0">&#41;</span>
+  plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Mean Abs Error [Mean Conc. N]'</span><span class="br0">&#41;</span>
+  plt.<span class="me1">plot</span><span class="br0">&#40;</span>hist<span class="br0">&#91;</span><span class="st0">'epoch'</span><span class="br0">&#93;</span><span class="sy0">,</span> hist<span class="br0">&#91;</span><span class="st0">'mean_absolute_error'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+           label<span class="sy0">=</span><span class="st0">'Train Error'</span><span class="br0">&#41;</span>
+  plt.<span class="me1">plot</span><span class="br0">&#40;</span>hist<span class="br0">&#91;</span><span class="st0">'epoch'</span><span class="br0">&#93;</span><span class="sy0">,</span> hist<span class="br0">&#91;</span><span class="st0">'val_mean_absolute_error'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+           label <span class="sy0">=</span> <span class="st0">'Val Error'</span><span class="br0">&#41;</span>
+  <span class="co1">#plt.ylim([0,1])</span>
+  plt.<span class="me1">legend</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  plt.<span class="me1">savefig</span><span class="br0">&#40;</span>path_to_save + <span class="st0">'/mean_asb_error_lr'</span> + <span class="kw2">str</span><span class="br0">&#40;</span>lr_val<span class="br0">&#41;</span> + <span class="st0">'_moment'</span> + <span class="kw2">str</span><span class="br0">&#40;</span>momentum_val<span class="br0">&#41;</span> +  <span class="st0">'.png'</span><span class="sy0">,</span> bbox_inches<span class="sy0">=</span><span class="st0">'tight'</span><span class="br0">&#41;</span>
+  plt.<span class="me1">figure</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  plt.<span class="me1">xlabel</span><span class="br0">&#40;</span><span class="st0">'Epoch'</span><span class="br0">&#41;</span>
+  plt.<span class="me1">ylabel</span><span class="br0">&#40;</span><span class="st0">'Mean Square Error [$(Mean Conc.)^2$]'</span><span class="br0">&#41;</span>
+  plt.<span class="me1">plot</span><span class="br0">&#40;</span>hist<span class="br0">&#91;</span><span class="st0">'epoch'</span><span class="br0">&#93;</span><span class="sy0">,</span> hist<span class="br0">&#91;</span><span class="st0">'mean_squared_error'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+           label<span class="sy0">=</span><span class="st0">'Train Error'</span><span class="br0">&#41;</span>
+  plt.<span class="me1">plot</span><span class="br0">&#40;</span>hist<span class="br0">&#91;</span><span class="st0">'epoch'</span><span class="br0">&#93;</span><span class="sy0">,</span> hist<span class="br0">&#91;</span><span class="st0">'val_mean_squared_error'</span><span class="br0">&#93;</span><span class="sy0">,</span>
+           label <span class="sy0">=</span> <span class="st0">'Val Error'</span><span class="br0">&#41;</span>
+  <span class="co1">#plt.ylim([0,3])</span>
+  plt.<span class="me1">legend</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+  plt.<span class="me1">savefig</span><span class="br0">&#40;</span>path_to_save + <span class="st0">'/mean_sq_error_lr'</span> + <span class="kw2">str</span><span class="br0">&#40;</span>lr_val<span class="br0">&#41;</span> + <span class="st0">'_moment'</span> + <span class="kw2">str</span><span class="br0">&#40;</span>momentum_val<span class="br0">&#41;</span> +  <span class="st0">'.png'</span><span class="sy0">,</span> bbox_inches<span class="sy0">=</span><span class="st0">'tight'</span><span class="br0">&#41;</span>
+  <span class="co1"># plt.show()</span>
+&nbsp;
+plot_history<span class="br0">&#40;</span>history<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">#Time for a real test</span>
+f<span class="sy0">,</span> <span class="br0">&#40;</span>ax1<span class="sy0">,</span>ax2<span class="br0">&#41;</span> <span class="sy0">=</span> plt.<span class="me1">subplots</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span> sharey<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+test_predictions <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>normed_test_data<span class="br0">&#41;</span>.<span class="me1">flatten</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+r <span class="sy0">=</span> r2_score<span class="br0">&#40;</span>test_labels<span class="sy0">,</span> test_predictions<span class="br0">&#41;</span>
+ax1.<span class="me1">scatter</span><span class="br0">&#40;</span>test_labels<span class="sy0">,</span> test_predictions<span class="sy0">,</span>alpha<span class="sy0">=</span><span class="nu0">0.5</span><span class="sy0">,</span> label<span class="sy0">=</span><span class="st0">'$R^2$ = %.3f'</span> % <span class="br0">&#40;</span>r<span class="br0">&#41;</span><span class="br0">&#41;</span>
+ax1.<span class="me1">legend</span><span class="br0">&#40;</span>loc<span class="sy0">=</span><span class="st0">&quot;upper left&quot;</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_xlabel</span><span class="br0">&#40;</span><span class="st0">'True Values [Mean Conc.]'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_ylabel</span><span class="br0">&#40;</span><span class="st0">'Predictions [Mean Conc.]'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'equal'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'square'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_xlim</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_ylim</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+_ <span class="sy0">=</span> ax1.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#91;</span>-<span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span>-<span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="st0">'r:'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_title</span><span class="br0">&#40;</span><span class="st0">'Test dataset'</span><span class="br0">&#41;</span>
+f.<span class="me1">set_figheight</span><span class="br0">&#40;</span><span class="nu0">30</span><span class="br0">&#41;</span>
+f.<span class="me1">set_figwidth</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="br0">&#41;</span>
+<span class="co1">#plt.show()</span>
+<span class="co1">#plt.close('all')</span>
+&nbsp;
+<span class="co1">#Whole dataset</span>
+dataset_labels <span class="sy0">=</span> dataset.<span class="me1">pop</span><span class="br0">&#40;</span><span class="st0">'bcmean'</span><span class="br0">&#41;</span>
+normed_dataset <span class="sy0">=</span> dataset
+dataset_predictions <span class="sy0">=</span> model.<span class="me1">predict</span><span class="br0">&#40;</span>normed_dataset<span class="br0">&#41;</span>.<span class="me1">flatten</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+r <span class="sy0">=</span> r2_score<span class="br0">&#40;</span>dataset_labels<span class="sy0">,</span> dataset_predictions<span class="br0">&#41;</span>
+ax2.<span class="me1">scatter</span><span class="br0">&#40;</span>dataset_labels<span class="sy0">,</span> dataset_predictions<span class="sy0">,</span> alpha<span class="sy0">=</span><span class="nu0">0.5</span><span class="sy0">,</span> label<span class="sy0">=</span><span class="st0">'$R^2$ = %.3f'</span> % <span class="br0">&#40;</span>r<span class="br0">&#41;</span><span class="br0">&#41;</span>
+ax2.<span class="me1">legend</span><span class="br0">&#40;</span>loc<span class="sy0">=</span><span class="st0">&quot;upper left&quot;</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_xlabel</span><span class="br0">&#40;</span><span class="st0">'True Values [Mean Conc.]'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_ylabel</span><span class="br0">&#40;</span><span class="st0">'Predictions [Mean Conc.]'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'equal'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'square'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_xlim</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_ylim</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+_ <span class="sy0">=</span> ax2.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#91;</span>-<span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span>-<span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="st0">'r:'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_title</span><span class="br0">&#40;</span><span class="st0">'Whole dataset'</span><span class="br0">&#41;</span>
+<span class="co1"># plt.show()</span>
+plt.<span class="me1">savefig</span><span class="br0">&#40;</span>path_to_save + <span class="st0">'/R_scaled_lr'</span> + <span class="kw2">str</span><span class="br0">&#40;</span>lr_val<span class="br0">&#41;</span> + <span class="st0">'_moment'</span> + <span class="kw2">str</span><span class="br0">&#40;</span>momentum_val<span class="br0">&#41;</span> +  <span class="st0">'.png'</span><span class="sy0">,</span> bbox_inches<span class="sy0">=</span><span class="st0">'tight'</span><span class="br0">&#41;</span>
+<span class="co1">#plt.close('all')</span>
+&nbsp;
+<span class="co1">#Undo scale step</span>
+normed_test_data<span class="br0">&#91;</span><span class="st0">'bcmean'</span><span class="br0">&#93;</span> <span class="sy0">=</span> test_predictions
+inverse_data <span class="sy0">=</span> sc.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>normed_test_data<span class="br0">&#41;</span>
+inverse_data <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>inverse_data<span class="sy0">,</span> columns <span class="sy0">=</span> dataset_orig2.<span class="me1">columns</span><span class="br0">&#41;</span>
+test_predictions <span class="sy0">=</span> inverse_data.<span class="me1">pop</span><span class="br0">&#40;</span><span class="st0">'bcmean'</span><span class="br0">&#41;</span>
+test_labels <span class="sy0">=</span> test_dataset_orig.<span class="me1">pop</span><span class="br0">&#40;</span><span class="st0">'bcmean'</span><span class="br0">&#41;</span>
+f<span class="sy0">,</span> <span class="br0">&#40;</span>ax1<span class="sy0">,</span>ax2<span class="br0">&#41;</span> <span class="sy0">=</span> plt.<span class="me1">subplots</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span> sharey<span class="sy0">=</span><span class="kw2">True</span><span class="br0">&#41;</span>
+r <span class="sy0">=</span> r2_score<span class="br0">&#40;</span>test_labels<span class="sy0">,</span> test_predictions<span class="br0">&#41;</span>
+ax1.<span class="me1">scatter</span><span class="br0">&#40;</span>test_labels<span class="sy0">,</span> test_predictions<span class="sy0">,</span> alpha<span class="sy0">=</span><span class="nu0">0.5</span><span class="sy0">,</span> label<span class="sy0">=</span><span class="st0">'$R^2$ = %.3f'</span> % <span class="br0">&#40;</span>r<span class="br0">&#41;</span><span class="br0">&#41;</span>
+ax1.<span class="me1">legend</span><span class="br0">&#40;</span>loc<span class="sy0">=</span><span class="st0">&quot;upper left&quot;</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_xlabel</span><span class="br0">&#40;</span><span class="st0">'True Values [Mean Conc.]'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_ylabel</span><span class="br0">&#40;</span><span class="st0">'Predictions [Mean Conc.]'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'equal'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'square'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_xlim</span><span class="br0">&#40;</span><span class="br0">&#91;</span>-<span class="nu0">3</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_ylim</span><span class="br0">&#40;</span><span class="br0">&#91;</span>-<span class="nu0">3</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+_ <span class="sy0">=</span> ax1.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#91;</span>-<span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span>-<span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="st0">'r:'</span><span class="br0">&#41;</span>
+ax1.<span class="me1">set_title</span><span class="br0">&#40;</span><span class="st0">'Test dataset'</span><span class="br0">&#41;</span>
+f.<span class="me1">set_figheight</span><span class="br0">&#40;</span><span class="nu0">30</span><span class="br0">&#41;</span>
+f.<span class="me1">set_figwidth</span><span class="br0">&#40;</span><span class="nu0">10</span><span class="br0">&#41;</span>
+<span class="co1">#plt.show()</span>
+&nbsp;
+<span class="co1">#Whole dataset</span>
+normed_dataset<span class="br0">&#91;</span><span class="st0">'bcmean'</span><span class="br0">&#93;</span> <span class="sy0">=</span> dataset_predictions
+inverse_data <span class="sy0">=</span> sc.<span class="me1">inverse_transform</span><span class="br0">&#40;</span>normed_dataset<span class="br0">&#41;</span>
+inverse_data <span class="sy0">=</span> pd.<span class="me1">DataFrame</span><span class="br0">&#40;</span>inverse_data<span class="sy0">,</span> columns <span class="sy0">=</span> dataset_orig2.<span class="me1">columns</span><span class="br0">&#41;</span>
+dataset_predictions <span class="sy0">=</span> inverse_data.<span class="me1">pop</span><span class="br0">&#40;</span><span class="st0">'bcmean'</span><span class="br0">&#41;</span>
+dataset_labels <span class="sy0">=</span> dataset_orig2.<span class="me1">pop</span><span class="br0">&#40;</span><span class="st0">'bcmean'</span><span class="br0">&#41;</span>
+r <span class="sy0">=</span> r2_score<span class="br0">&#40;</span>dataset_labels<span class="sy0">,</span> dataset_predictions<span class="br0">&#41;</span>
+ax2.<span class="me1">scatter</span><span class="br0">&#40;</span>dataset_labels<span class="sy0">,</span> dataset_predictions<span class="sy0">,</span> alpha<span class="sy0">=</span><span class="nu0">0.5</span><span class="sy0">,</span> label<span class="sy0">=</span><span class="st0">'$R^2$ = %.3f'</span> % <span class="br0">&#40;</span>r<span class="br0">&#41;</span><span class="br0">&#41;</span>
+ax2.<span class="me1">legend</span><span class="br0">&#40;</span>loc<span class="sy0">=</span><span class="st0">&quot;upper left&quot;</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_xlabel</span><span class="br0">&#40;</span><span class="st0">'True Values [Mean Conc.]'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_ylabel</span><span class="br0">&#40;</span><span class="st0">'Predictions [Mean Conc.]'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'equal'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">axis</span><span class="br0">&#40;</span><span class="st0">'square'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_xlim</span><span class="br0">&#40;</span><span class="br0">&#91;</span>-<span class="nu0">3</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_ylim</span><span class="br0">&#40;</span><span class="br0">&#91;</span>-<span class="nu0">3</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+_ <span class="sy0">=</span> ax2.<span class="me1">plot</span><span class="br0">&#40;</span><span class="br0">&#91;</span>-<span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="br0">&#91;</span>-<span class="nu0">100</span><span class="sy0">,</span> <span class="nu0">100</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="st0">'r:'</span><span class="br0">&#41;</span>
+ax2.<span class="me1">set_title</span><span class="br0">&#40;</span><span class="st0">'Whole dataset'</span><span class="br0">&#41;</span>
+<span class="co1"># plt.show()</span>
+plt.<span class="me1">savefig</span><span class="br0">&#40;</span>path_to_save + <span class="st0">'/R_unscaled_lr'</span> + <span class="kw2">str</span><span class="br0">&#40;</span>lr_val<span class="br0">&#41;</span> + <span class="st0">'_moment'</span> + <span class="kw2">str</span><span class="br0">&#40;</span>momentum_val<span class="br0">&#41;</span> +  <span class="st0">'.png'</span><span class="sy0">,</span> bbox_inches<span class="sy0">=</span><span class="st0">'tight'</span><span class="br0">&#41;</span>
+<span class="kw1">del</span> model

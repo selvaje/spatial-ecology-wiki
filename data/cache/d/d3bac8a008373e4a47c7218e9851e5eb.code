@@ -1,0 +1,1 @@
+pkpolygonize <span class="re5">-i</span> input.tif <span class="re5">-m</span> input.tif <span class="re5">-o</span> ouput.shp <span class="co0"># create vector file from raster image (typically a classification image), based on pixel (land cover class) values.</span>

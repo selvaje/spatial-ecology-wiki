@@ -1,0 +1,1 @@
+ogr2ogr <span class="re5">-f</span> <span class="st0">&quot;SQLite&quot;</span> -t_srs epsg:<span class="nu0">3035</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>osm_multipolygons.sqlite <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>cornwall_osm.sqlite multipolygons

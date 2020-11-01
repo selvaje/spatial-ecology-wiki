@@ -1,0 +1,20 @@
+
+<h4 id="r_vs_bash">R vs BASH</h4>
+<div class="level4">
+
+</div>
+
+<h5 id="create_a_text_file_and_understand_pc_performance">Create a text file and understand pc performance</h5>
+<div class="level5">
+
+<p>
+in bash
+</p>
+<pre class="code bash"><span class="kw1">time</span> <span class="kw2">seq</span> <span class="nu0">1</span>  <span class="nu0">100000000</span>  <span class="sy0">&gt;</span> <span class="sy0">/</span>tmp<span class="sy0">/</span>test.txt </pre>
+
+<p>
+in R
+</p>
+<pre class="code R">ptm &lt;- proc.time() ;  a = seq(1, 100000000 )   ; proc.time() - ptm</pre>
+
+</div>

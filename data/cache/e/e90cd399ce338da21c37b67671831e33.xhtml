@@ -1,0 +1,402 @@
+
+<h1 class="sectionedit1" id="modelling_wheat_harvest_dates_in_france">Modelling Wheat Harvest Dates in France</h1>
+<div class="level1">
+
+<p>
+Aart van der Linden
+<br/>
+
+Animal Production Systems group,
+<br/>
+
+Plant Production Systems group, 
+<br/>
+
+Wageningen University
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Modelling Wheat Harvest Dates in France&quot;,&quot;hid&quot;:&quot;modelling_wheat_harvest_dates_in_france&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-175&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+Temperature and daylength are the most important drivers for crop development. The rate of development of cereals can be described as a function of the growing degree days (GDD). Wheat requires 1600 GDD from sowing to maturity and harvest.  The amount of GDD increases when temperature is higher than a base temperature (BT). The BT is 4.5 degrees Celsius for wheat. 
+</p>
+
+<p>
+If the amount of GDD is 300, and today&#039;s average temperature is 16.5 degrees Celsius, the GDD at the end of the day equals 300 + 16.5 - 4.5 = 312 GDD. The amount of GDD cannot decrease due to temperatures lower than the BT. Wheat is consired to be ready for harvest when the amount of GDD exceeds 1600. 
+</p>
+
+<p>
+Differences in harvest date of wheat are expected between regions due to differences in climate. The aim of this excercise is to assess when farmers can harvest their wheat in France, if the wheat variety has a 1600 GDD requirement and 4.5 degrees Celsius BT.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;176-1145&quot;} -->
+<h3 class="sectionedit3" id="general_framework_of_the_analysis">General framework of the analysis</h3>
+<div class="level3">
+
+<p>
+R is used as program language. The following steps have been taken to assess the harvest date of wheat in France:
+</p>
+<ol>
+<li class="level1"><div class="li">Collection of daily average temperature data for 0.5 x 0.5 degrees grid cells for 1995 till 2013(<a href="http://www.ecad.eu/download/ensembles/download.php" class="urlextern" target="blanc" title="http://www.ecad.eu/download/ensembles/download.php" rel="nofollow noopener">http://www.ecad.eu/download/ensembles/download.php</a>). The .gz data are unzipped to .nc data files. The package ncdf in R can read these data files. The datafile covers Europe, West-Asia and North-Africa.<br/>
+</div>
+</li>
+<li class="level0"><div class="li">Construction of the wheat development model based on the GDD and BT. The temperature data used are Julian day 1-300 of the year 1995. The wheat development model is run for all grids of France and the surroundig countries. The model covers longitudes of -5 to 10 degrees and latitudes of 41-52 degrees. 
+</div>
+</li>
+<li class="level0"><div class="li">Construction of a raster with harvest date values (Julian day in 1995) and mapping based on this raster.<br/>
+<br/>
+
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;General framework of the analysis&quot;,&quot;hid&quot;:&quot;general_framework_of_the_analysis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1146-2039&quot;} -->
+<h3 class="sectionedit4" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+Assessment wheat harvest dates in France (although the model is applicable to any European country, and more crops can be added)
+</p>
+</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;2040-2198&quot;} -->
+<h3 class="sectionedit5" id="vector_data">Vector data</h3>
+<div class="level3">
+<pre class="code">Two files were created that indicate the x and y coordinates of the map of France, using the R package &#039;mapdata&#039;. The coordinates of France were form mapdata were split into polygons. Two polygons were constructed: the French mainland and the island Corsica. Some very small islands in the Atlantic ocean were removed.</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector data&quot;,&quot;hid&quot;:&quot;vector_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;2199-2547&quot;} -->
+<h3 class="sectionedit6" id="raster_data">Raster data</h3>
+<div class="level3">
+<pre class="code">Daily average temperature data, 0.5 x 0.5 grids, 1995-2013, for Europe, West-Asia and North-Africa. 
+http://www.ecad.eu/download/ensembles/download.php</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Raster data&quot;,&quot;hid&quot;:&quot;raster_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2548-2725&quot;} -->
+<h3 class="sectionedit7" id="other_data_sources">Other data sources</h3>
+<div class="level3">
+<pre class="code">http://en.wikipedia.org/wiki/Growing_degree-day
+
+http://www.fao.org/docrep/006/y4011e/y4011e06.htm</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Other data sources&quot;,&quot;hid&quot;:&quot;other_data_sources&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;2726-2858&quot;} -->
+<h2 class="sectionedit8" id="method">METHOD</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;2859-2879&quot;} -->
+<h2 class="sectionedit9" id="computational_implementation">Computational implementation</h2>
+<div class="level2">
+
+<p>
+The following code is used to make a 0.5 degrees raster of France:
+</p>
+<pre class="code R"># How to make a 0.5 x 0.5 raster image of France?
+library(mapdata)
+# Selection of the region of interest:
+map('worldHires', region = 'France', xlim = c(-5,10), ylim = c(41,52)) # Creates a map of France
+Francemapdata &lt;- map('worldHires', region = 'France', xlim = c(-5,10), ylim = c(41,52)) 
+plot(Francemapdata) # Visualises the coordinates 
+&nbsp;
+# Francemapdata cannot be put in the function rasterize()
+# Therefore, we plot the longitude and latitude of the coordinates 
+print(Francemapdata$x)
+print(Francemapdata$y)
+Matrixfrance &lt;- cbind(Francemapdata$x,Francemapdata$y)
+# The coordinates are a bit messy (NA's, coordinates not ranked in subsequent order). 
+# Data have to be corrected manually for France. I saved the data for the French mainland
+# and Corsica as .csv files.</pre>
+
+<p>
+The .csv files from the previous code are now objects called &#039;mainland&#039; and &#039;Corsica&#039; in the code below.
+</p>
+<pre class="code R">#####################################################################################################
+# Course Spatio temporal modelling                                                                  #
+# January 2014                                                                                      #
+# Author: Aart van der Linden                                                                       #
+#                                                                                                   #
+# Aim of the model: Simulate maturation and harvest of wheat based on gridded daily temperature     #
+# data for France                                                                                   #
+#####################################################################################################
+&nbsp;
+# Packages required
+library(ncdf)
+library(raster)
+library(rasterVis)
+library(sp)
+library(colorspace)
+library(maptools)
+library(maps)
+library(mapdata)
+&nbsp;
+# Basic geographical information
+&nbsp;
+longbase &lt;- -5          # left border longitude of map (degrees)
+latbase  &lt;- 41          # bottom border latitude of map (degrees)
+&nbsp;
+nrlonggrids &lt;- 30       # amount of 0.5 grids to the east
+nrlatgrids  &lt;- 24       # amount of 0.5 grids to the north
+nrmaxtime   &lt;- 300      # time series (days)
+&nbsp;
+# Basic crop parameters
+TSUM  &lt;- 1600           # degree days required for maturation of wheat (http://en.wikipedia.org/wiki/Growing_degree-day)
+BASET &lt;- 4.5            # base temperature wheat (http://www.fao.org/docrep/006/y4011e/y4011e06.htm)
+&nbsp;
+#Opening the temperature data file
+&nbsp;
+X &lt;- open.ncdf(&quot;C:/Weather_data/tg_0.50deg_reg_1995-2013_v9.0.nc&quot;)   # Open a weather dataset for France with daily mean temperatures
+# Dataset starts at 40 W longitude and at 25 N latitude
+&nbsp;
+&nbsp;
+&nbsp;
+# Create a raster with grids that belong to France
+Mainland &lt;- read.csv(file=&quot;M:/R/Francemainland.csv&quot;,head=FALSE,sep=&quot;,&quot;)  # Data file mainland from package &quot;mapdata&quot;
+Corsica  &lt;- read.csv(file=&quot;M:/R/Francecorsica.csv&quot;,head=FALSE,sep=&quot;,&quot;)   # Data file mainland from package &quot;mapdata&quot;
+&nbsp;
+Mainlandpolygon &lt;- Polygons(list(Polygon(Mainland)),1)                   # Polygon for the French mainland
+Corsicapolygon  &lt;- Polygons(list(Polygon(Corsica)),2)                    # Polygon for the island Corsica
+&nbsp;
+MapFrance &lt;- SpatialPolygons(list(Mainlandpolygon, Corsicapolygon)  )    # Join the two polygons
+&nbsp;
+plot(MapFrance, xlim=c(longbase,(longbase+nrlonggrids/2)), ylim=c(latbase,(latbase+nrlatgrids/2)))  # Plot the map of France with the mainland and Corsica
+&nbsp;
+# rasterizing polygons: from a detailed polygon to a coarse grid
+&nbsp;
+r1 &lt;- raster(ncol=nrlonggrids, nrow=nrlatgrids)                          # Construct a raster with 30 x 24 grids
+r2 &lt;- raster()
+res(r2)=c(0.5,0.5)
+e &lt;- extent(longbase, (longbase+nrlonggrids/2), latbase, (latbase+nrlatgrids/2))      # Geographical coordinates of France
+rc &lt;- crop(r2, e)                                                                     # Creates a cropped image rc
+&nbsp;
+&nbsp;
+r1 &lt;- rasterize(MapFrance, rc, fun='min', background = 0.0)               # Convert the map of France into a raster
+plot(r1,xlim=c(longbase,(longbase+nrlonggrids/2)), ylim=c(latbase,(latbase+nrlatgrids/2)))  # Plot the raster of France with the mainland and Corsica, Figure 3.
+&nbsp;
+#####################################################################
+#                      Model maturity wheat                         #
+#####################################################################
+&nbsp;
+GDD        = array(dim=c(nrlonggrids,nrlatgrids,nrmaxtime+1))            # array for growing degree days     
+MAT        = array(dim=c(nrlonggrids,nrlatgrids,nrmaxtime))              # array for heading (0=no, 1 =yes)
+MATDATE    = matrix(nrow=nrlonggrids, ncol=nrlatgrids)                   # time after 1 jan for heading in days
+&nbsp;
+&nbsp;
+Tmean      = NULL                                                        # statements that time, longitude and latitude start at 1
+time       = NULL                                                        # relative to the left-bottom corner
+time[1]    = 1
+long       = NULL
+long[1]    = 1
+lat        = NULL
+lat[1]     = 1
+&nbsp;
+for (x in 1:nrlonggrids) {                                               # model run for longitude (x), latitude(y) and time(i)
+  for (y in 1:nrlatgrids) {  
+    for (i in 1:nrmaxtime) {
+&nbsp;
+    long[x+1] = long[x]+1                                                # longitude, latitude and time each increase 1 after a step
+    lat[y+1]  = lat[y]+1
+    time[i+1] = time[i]+1 
+&nbsp;
+    GDD[x,y,1] = 0                                                       # inital value for GDD is zero
+    MAT[x,y,1] = 0                                                       # inital value for FLO is zero
+&nbsp;
+    Tmean[i] &lt;- get.var.ncdf(X, start= c(2*longbase+81+long[x],2*latbase-50+lat[y],time[i]), count=c(long[x],lat[y],time[i]))  # reads Tmean from file
+&nbsp;
+    if(Tmean[i]&gt;BASET) GDD[x,y,i+1] = GDD[x,y,i] + (Tmean[i]-BASET) else GDD[x,y,i+1] = GDD[x,y,i]   # calculation GDD over time, longitude and latitude
+    if(GDD[x,y,i]&gt;TSUM) MAT[x,y,i] = 1 else MAT[x,y,i] = 0                                       # calculation FLO over time, longitude and latitude
+&nbsp;
+    MATDATE[x,y] = time[i]-sum(MAT[x,y,1:i])+1                                                # calculation FLOWERDATE over longitude and latitude
+    if(Tmean[1]&lt;(-90)) MATDATE[x,y] = NaN                                                     # exclude grids without weather data
+&nbsp;
+    }
+  }
+}
+&nbsp;
+MATDATE &lt;- rotate(MATDATE)                           # turn the flowerdate matrix three times 90 degrees to get the correct map
+MATDATE &lt;- rotate(MATDATE)
+MATDATE &lt;- rotate(MATDATE)
+&nbsp;
+&nbsp;
+rharvest = NULL                                             # creates a raster with values for harvest dates
+rharvest &lt;- raster(ncol=nrlonggrids, nrow=nrlatgrids,
+                  xmn = longbase, xmx = (longbase+nrlonggrids/2), ymn = latbase, ymx = (latbase+nrlatgrids/2))
+&nbsp;
+values(rharvest) &lt;- MATDATE
+&nbsp;
+Legend &lt;- seq(152, nrmaxtime, 30.5)                            # legend for map
+&nbsp;
+boundaries &lt;- map('worldHires',  fill=TRUE,                # get country borders
+                  xlim=c(longbase,(longbase+nrlonggrids/2)), ylim=c(latbase,(latbase+nrlatgrids/2)),
+                  plot=FALSE)
+&nbsp;
+## read the map2SpatialPolygons help page for details
+IDs &lt;- sapply(strsplit(boundaries$names, &quot;:&quot;), function(x) x[1])
+Borders &lt;- map2SpatialPolygons(boundaries, IDs=IDs, proj4string=CRS(projection(rharvest)))  # country borders in spatial polygon
+&nbsp;
+# Figure 4 
+&nbsp;
+levelplot(rharvest, 
+     main  =&quot;Wheat harvest date (day of the year)&quot;,
+     margin=FALSE,
+     xlab  =list('Longitude', fontface='bold'),
+     ylab  =list('Latitude', rot=45, fontface='bold'),
+     at    =Legend, 
+     par.settings= rasterTheme(region = c('lawngreen','green3','darkgreen','brown')),
+&nbsp;
+&nbsp;
+) + layer(sp.polygons(Borders))
+&nbsp;
+r1[r1 &lt; 0.5] &lt;- NA
+mask &lt;- mask(rharvest, r1)
+&nbsp;
+boundaries &lt;- map('worldHires',region='France',  fill=TRUE,                                         
+                  xlim=c(longbase,(longbase+nrlonggrids/2)), ylim=c(latbase,(latbase+nrlatgrids/2)),
+                  plot=FALSE)
+&nbsp;
+## read the map2SpatialPolygons help page for details
+IDs &lt;- sapply(strsplit(boundaries$names, &quot;:&quot;), function(x) x[1])
+Borders &lt;- map2SpatialPolygons(boundaries, IDs=IDs, proj4string=CRS(projection(rharvest)))
+&nbsp;
+# Figure 5.
+levelplot(mask, 
+          main  =&quot;Wheat harvest date (day of the year)&quot;,
+          margin=FALSE,
+          xlab  =list('Longitude', fontface='bold'),
+          ylab  =list('Latitude', rot=45, fontface='bold'),
+          at    =Legend, 
+          par.settings= rasterTheme(region = c('lawngreen','green3','darkgreen','brown')),
+&nbsp;
+&nbsp;
+) + layer(sp.polygons(Borders))
+&nbsp;
+Colourhist &lt;- rep(c('lawngreen','green3','darkgreen','brown'),c(30.5,30.5,30.5,30.5))
+&nbsp;
+histogram(mask, main= &quot;Histogram wheat harvest dates&quot;, xlab = &quot;day of the year&quot;, 
+          par.settings= rasterTheme(region = c('lawngreen','green3','darkgreen','brown')),
+          col=&quot;goldenrod1&quot;)
+&nbsp;
+&nbsp;
+#gc() # empty RAM
+&nbsp;
+proc.time()
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+# Plot a time series (example of the data), Figure 1. 
+BBB &lt;- get.var.ncdf(X, start= c(72,33,1), count=c(1,1,6940))         # 72 = longitude -5, 33 = latitude 41 (calibrated on the island Corsica)
+XXX &lt;- c(seq(from = 1, to = 6940, by =1))                            # Make a time series
+plot(BBB~XXX, ylim= c(-10,35), xlab=&quot;time&quot;, ylab=&quot;temperature (degrees Celsius)&quot;, pch=16, cex=0.3, col = &quot;red&quot;)                                       # Plot the time series
+&nbsp;
+&nbsp;
+AAA &lt;- get.var.ncdf(X, start= c(72,33,1), count=c(30,24,1))          # Data for the map of France (turned version)
+&nbsp;
+&nbsp;
+AAA[AAA&lt;(-99.0)]&lt;- NaN 
+&nbsp;
+rotate &lt;- function(AAA) t(apply(AAA, 2, rev))                        # Define the rotation 
+AAA &lt;-rotate(AAA)                                                    # Turn the map three times 90 degrees
+AAA &lt;-rotate(AAA)
+AAA &lt;-rotate(AAA)
+&nbsp;
+r &lt;- raster(ncol=30, nrow=24)                                        # Create raster, equal to the size of France
+values(r) &lt;- AAA                                                     # Put the data for France in the raster
+&nbsp;
+# Figure 2.
+plot(r)                                                              # Plot the raster</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Computational implementation&quot;,&quot;hid&quot;:&quot;computational_implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;2880-13193&quot;} -->
+<h2 class="sectionedit10" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+
+<p>
+An example of a time series for one coordinate is given in figure 1, a map of France with average temperatures for one day is given in figure 2. Those two figures visualise the big dataset a bit.
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:temperaturetime.png" class="media" title="wikistudholland:temperaturetime.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=9cfb66&amp;media=wikistudholland:temperaturetime.png" class="media" alt="" width="600" /></a>
+<br/>
+
+Figure 1. Average daily temperature of the coordinate -5 W, 41 N, from 1995 to 2013.
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:dailytemp.png" class="media" title="wikistudholland:dailytemp.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=b50865&amp;media=wikistudholland:dailytemp.png" class="media" alt="" width="600" /></a>
+<br/>
+
+Figure 2. Average temperature for France (longitude (-5 W - 10 E), latitude (41 N - 52N) at the 1st January 1995. 
+<br/>
+
+</p>
+
+<p>
+A raster of France, including the island Corsica was made based on the data of the mapdata package in r, using the command rasterize()
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:polygonsfrance.png" class="media" title="wikistudholland:polygonsfrance.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=e4f7f7&amp;media=wikistudholland:polygonsfrance.png" class="media" alt="" width="600" /></a>
+<br/>
+
+Figure 3. Grid cells (0.5 x 0.5 degrees) of France and Corsica. The colours indicate the number of the polygons (1= main land, 2 = Corsica)
+<br/>
+
+</p>
+
+<p>
+The research question was when French farmers can harvest the wheat (Fig. 4).
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:harvesteurope.png" class="media" title="wikistudholland:harvesteurope.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=268d18&amp;media=wikistudholland:harvesteurope.png" class="media" alt="" width="600" /></a>
+<br/>
+
+Figure 4. Modelled harvest dates of wheat in France and neighbouring countries in 1995. Light green = June; Lawn green = July; Dark green = August and Brown red is September. White spots indicate places that are sea, ocean or land with harvest after September. 
+<br/>
+
+</p>
+
+<p>
+France is plotted in Fig. 4, but also the neighbouring countries. Therefore, we apply the mask of Fig. 3 to Fig. 4.
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:harvestfrance.png" class="media" title="wikistudholland:harvestfrance.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=5c7257&amp;media=wikistudholland:harvestfrance.png" class="media" alt="" width="600" /></a>
+<br/>
+
+Figure 5. Modelled harvest dates of wheat in France in 1995.
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:histogramharvest.png" class="media" title="wikistudholland:histogramharvest.png"><img src="/dokuwiki/lib/exe/fetch.php?w=600&amp;tok=ce9548&amp;media=wikistudholland:histogramharvest.png" class="media" alt="" width="600" /></a>
+<br/>
+
+Figure 6. Histogram of the modelled wheat harvest dates for France.
+<br/>
+
+</p>
+
+<p>
+We can also compare the variability in harvest dates between subsequent years.
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:harvest1995.png" class="media" title="wikistudholland:harvest1995.png"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=580d38&amp;media=wikistudholland:harvest1995.png" class="media" alt="" width="1000" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:harvest1996.png" class="media" title="wikistudholland:harvest1996.png"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=8baf53&amp;media=wikistudholland:harvest1996.png" class="media" alt="" width="1000" /></a>
+<br/>
+
+Figure 7. Wheat harvest in 1995 (upper figure) and 1996.
+<br/>
+
+</p>
+
+<p>
+Another option is to plot a new region. Here the initial coordinate is set at -15 W longitude and 37 N latitude. Adapting those two numbers results in Fig. 8.
+<br/>
+
+<a href="/dokuwiki/lib/exe/detail.php?id=wikistudholland%3Autwente_aart&amp;media=wikistudholland:spain1995.png" class="media" title="wikistudholland:spain1995.png"><img src="/dokuwiki/lib/exe/fetch.php?w=1000&amp;tok=275564&amp;media=wikistudholland:spain1995.png" class="media" alt="" width="1000" /></a>
+<br/>
+
+Figure 8. Wheat harvest date 1995 with (-15,37) as an initial coordinate
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS and DISCUSSION&quot;,&quot;hid&quot;:&quot;results_and_discussion&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:10,&quot;range&quot;:&quot;13194-&quot;} -->

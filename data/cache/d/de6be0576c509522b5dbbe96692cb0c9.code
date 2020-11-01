@@ -1,0 +1,5 @@
+GET http://ows.rasdaman.org/rasdaman/ows?
+service=WCS&amp;
+version=2.0.1&amp;
+request=DescribeCoverage&amp;
+coverageId=AvgLandTemp

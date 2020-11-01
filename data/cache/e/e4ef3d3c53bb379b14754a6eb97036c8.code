@@ -1,0 +1,163 @@
+<span class="kw1">import</span> <span class="kw3">sys</span>
+<span class="kw1">from</span> multiprocessing.<span class="me1">managers</span> <span class="kw1">import</span> SyncManager
+<span class="kw1">from</span> functools <span class="kw1">import</span> partial
+<span class="kw1">import</span> multiprocessing
+<span class="kw1">from</span> <span class="kw3">Queue</span> <span class="kw1">import</span> <span class="kw3">Queue</span> <span class="kw1">as</span> _Queue
+<span class="kw1">import</span> <span class="kw3">time</span>
+&nbsp;
+<span class="kw1">class</span> <span class="kw3">Queue</span><span class="br0">&#40;</span>_Queue<span class="br0">&#41;</span>:
+    <span class="st0">&quot;&quot;&quot; A picklable queue. &quot;&quot;&quot;</span>
+    <span class="kw1">def</span> __getstate__<span class="br0">&#40;</span><span class="kw2">self</span><span class="br0">&#41;</span>:
+        <span class="co1"># Only pickle the state we care about</span>
+        <span class="kw1">return</span> <span class="br0">&#40;</span><span class="kw2">self</span>.<span class="me1">maxsize</span><span class="sy0">,</span> <span class="kw2">self</span>.<span class="me1">queue</span><span class="sy0">,</span> <span class="kw2">self</span>.<span class="me1">unfinished_tasks</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">def</span> __setstate__<span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">,</span> state<span class="br0">&#41;</span>:
+        <span class="co1"># Re-initialize the object, then overwrite the default state with</span>
+        <span class="co1"># our pickled state.</span>
+        <span class="kw3">Queue</span>.<span class="kw4">__init__</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="br0">&#41;</span>
+        <span class="kw2">self</span>.<span class="me1">maxsize</span> <span class="sy0">=</span> state<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+        <span class="kw2">self</span>.<span class="me1">queue</span> <span class="sy0">=</span> state<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+        <span class="kw2">self</span>.<span class="me1">unfinished_tasks</span> <span class="sy0">=</span> state<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span>
+&nbsp;
+&nbsp;
+<span class="kw1">def</span> get_q<span class="br0">&#40;</span>q<span class="br0">&#41;</span>:
+    <span class="kw1">return</span> q
+&nbsp;
+<span class="kw1">def</span> make_nums<span class="br0">&#40;</span>N<span class="br0">&#41;</span>:
+    <span class="st0">&quot;&quot;&quot; Create N large numbers to factorize.
+    &quot;&quot;&quot;</span>
+    nums <span class="sy0">=</span> <span class="br0">&#91;</span><span class="nu0">999999999999</span><span class="br0">&#93;</span>
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">xrange</span><span class="br0">&#40;</span>N<span class="br0">&#41;</span>:
+        nums.<span class="me1">append</span><span class="br0">&#40;</span>nums<span class="br0">&#91;</span>-<span class="nu0">1</span><span class="br0">&#93;</span> + <span class="nu0">2</span><span class="br0">&#41;</span>
+    <span class="kw1">return</span> nums
+&nbsp;
+<span class="kw1">def</span> factorizer_worker<span class="br0">&#40;</span>job_q<span class="sy0">,</span> result_q<span class="br0">&#41;</span>:
+    <span class="st0">&quot;&quot;&quot; A worker function to be launched in a separate process. Takes jobs from
+        job_q - each job a list of numbers to factorize. When the job is done,
+        the result (dict mapping number -&gt; list of factors) is placed into
+        result_q. Runs until job_q is empty.
+    &quot;&quot;&quot;</span>
+    <span class="kw1">while</span> <span class="kw2">True</span>:
+        <span class="kw1">try</span>:
+            job <span class="sy0">=</span> job_q.<span class="me1">get_nowait</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+            outdict <span class="sy0">=</span> <span class="br0">&#123;</span>n: factorize_naive<span class="br0">&#40;</span>n<span class="br0">&#41;</span> <span class="kw1">for</span> n <span class="kw1">in</span> job<span class="br0">&#125;</span>
+            result_q.<span class="me1">put</span><span class="br0">&#40;</span>outdict<span class="br0">&#41;</span>
+            <span class="kw1">print</span> outdict
+        <span class="kw1">except</span>:
+            <span class="kw1">return</span>
+&nbsp;
+<span class="kw1">def</span> mp_factorizer<span class="br0">&#40;</span>shared_job_q<span class="sy0">,</span> shared_result_q<span class="sy0">,</span> nprocs<span class="br0">&#41;</span>:
+    <span class="st0">&quot;&quot;&quot; Split the work with jobs in shared_job_q and results in
+        shared_result_q into several processes. Launch each process with
+        factorizer_worker as the worker function, and wait until all are
+        finished.
+    &quot;&quot;&quot;</span>
+    procs <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="kw1">print</span> shared_job_q
+    <span class="kw1">print</span> shared_result_q
+&nbsp;
+    <span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>nprocs<span class="br0">&#41;</span>:
+        p <span class="sy0">=</span> multiprocessing.<span class="me1">Process</span><span class="br0">&#40;</span>
+                target<span class="sy0">=</span>factorizer_worker<span class="sy0">,</span>
+                args<span class="sy0">=</span><span class="br0">&#40;</span>shared_job_q<span class="sy0">,</span> shared_result_q<span class="br0">&#41;</span><span class="br0">&#41;</span>
+        procs.<span class="me1">append</span><span class="br0">&#40;</span>p<span class="br0">&#41;</span>
+        p.<span class="me1">start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">for</span> p <span class="kw1">in</span> procs:
+        p.<span class="me1">join</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">def</span> submitjobs<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    <span class="kw1">for</span> n <span class="kw1">in</span> <span class="kw2">range</span> <span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">2</span><span class="sy0">,</span><span class="nu0">3</span><span class="br0">&#41;</span>:
+        <span class="kw1">return</span> <span class="br0">&#91;</span>n<span class="sy0">,</span> <span class="st0">&quot;hello&quot;</span><span class="sy0">,</span> <span class="st0">&quot;args&quot;</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="kw1">class</span> JobQueueManager<span class="br0">&#40;</span>SyncManager<span class="br0">&#41;</span>:
+    <span class="kw1">pass</span>
+&nbsp;
+&nbsp;
+<span class="kw1">def</span> make_server_manager<span class="br0">&#40;</span>port<span class="sy0">,</span> authkey<span class="br0">&#41;</span>:
+    job_q <span class="sy0">=</span> <span class="kw3">Queue</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    result_q <span class="sy0">=</span> <span class="kw3">Queue</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+    job_q.<span class="me1">put</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">&quot;900000000000&quot;</span><span class="sy0">,</span> <span class="st0">&quot;hello&quot;</span><span class="sy0">,</span> <span class="st0">&quot;1st entry&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    job_q.<span class="me1">put</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">&quot;900000000000&quot;</span><span class="sy0">,</span> <span class="st0">&quot;hello&quot;</span><span class="sy0">,</span> <span class="st0">&quot;2st entry&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    job_q.<span class="me1">put</span><span class="br0">&#40;</span><span class="br0">&#91;</span><span class="st0">&quot;900000000000&quot;</span><span class="sy0">,</span> <span class="st0">&quot;hello&quot;</span><span class="sy0">,</span> <span class="st0">&quot;3st entry&quot;</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+    <span class="co1">#job_q.put([&quot;process&quot;, &quot;hey&quot;, &quot;args&quot;]) # Submit a job</span>
+    <span class="co1">#job_q.put(submitjobs()) # submit another job</span>
+&nbsp;
+    JobQueueManager.<span class="me1">register</span><span class="br0">&#40;</span><span class="st0">'get_job_q'</span><span class="sy0">,</span> <span class="kw2">callable</span><span class="sy0">=</span>partial<span class="br0">&#40;</span>get_q<span class="sy0">,</span> job_q<span class="br0">&#41;</span><span class="br0">&#41;</span>
+    JobQueueManager.<span class="me1">register</span><span class="br0">&#40;</span><span class="st0">'get_result_q'</span><span class="sy0">,</span> <span class="kw2">callable</span><span class="sy0">=</span>partial<span class="br0">&#40;</span>get_q<span class="sy0">,</span> result_q<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+    manager <span class="sy0">=</span> JobQueueManager<span class="br0">&#40;</span>address<span class="sy0">=</span><span class="br0">&#40;</span><span class="st0">'localhost'</span><span class="sy0">,</span> port<span class="br0">&#41;</span><span class="sy0">,</span> authkey<span class="sy0">=</span>authkey<span class="br0">&#41;</span>
+    manager.<span class="me1">start</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Server started at port %s'</span> % port<span class="br0">&#41;</span>
+    <span class="kw1">return</span> manager
+&nbsp;
+<span class="kw1">def</span> make_client_manager<span class="br0">&#40;</span>port<span class="sy0">,</span> authkey<span class="br0">&#41;</span>:
+    JobQueueManager.<span class="me1">register</span><span class="br0">&#40;</span><span class="st0">'get_job_q'</span><span class="br0">&#41;</span>
+    JobQueueManager.<span class="me1">register</span><span class="br0">&#40;</span><span class="st0">'get_result_q'</span><span class="br0">&#41;</span>
+    manager <span class="sy0">=</span> JobQueueManager<span class="br0">&#40;</span>address<span class="sy0">=</span><span class="br0">&#40;</span><span class="st0">'localhost'</span><span class="sy0">,</span> port<span class="br0">&#41;</span><span class="sy0">,</span> authkey<span class="sy0">=</span>authkey<span class="br0">&#41;</span>
+    manager.<span class="me1">connect</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="kw1">print</span> <span class="st0">'Client connected to %s:%s'</span> % <span class="br0">&#40;</span><span class="st0">&quot;localhost&quot;</span><span class="sy0">,</span> port<span class="br0">&#41;</span>
+    <span class="kw1">return</span> manager
+&nbsp;
+<span class="kw1">def</span> runclient<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    manager <span class="sy0">=</span> make_client_manager<span class="br0">&#40;</span><span class="nu0">50000</span><span class="sy0">,</span> <span class="st0">&quot;abcdefg&quot;</span><span class="br0">&#41;</span>
+    <span class="kw1">try</span>:
+        job_q <span class="sy0">=</span> manager.<span class="me1">get_job_q</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="co1">#print job_q</span>
+        result_q <span class="sy0">=</span> manager.<span class="me1">get_result_q</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw1">print</span><span class="br0">&#40;</span>job_q.<span class="me1">get_nowait</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="co1">#mp_factorizer(job_q, result_q, 4) # RUN PROGRAM</span>
+        result_q.<span class="me1">put</span><span class="br0">&#40;</span><span class="br0">&#123;</span><span class="nu0">1</span>:<span class="nu0">2</span><span class="br0">&#125;</span><span class="br0">&#41;</span>
+    <span class="kw1">except</span>:
+        <span class="kw1">print</span> <span class="st0">&quot;queue empty&quot;</span>
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="kw1">def</span> runserver<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+    manager <span class="sy0">=</span> make_server_manager<span class="br0">&#40;</span><span class="nu0">50000</span><span class="sy0">,</span> <span class="st0">&quot;abcdefg&quot;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;jobs&quot;</span>
+    shared_job_q <span class="sy0">=</span> manager.<span class="me1">get_job_q</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    shared_result_q <span class="sy0">=</span> manager.<span class="me1">get_result_q</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+    N <span class="sy0">=</span> <span class="nu0">3</span>
+    nums <span class="sy0">=</span> make_nums<span class="br0">&#40;</span>N<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># The numbers are split into chunks. Each chunk is pushed into the job</span>
+    <span class="co1"># queue.</span>
+    <span class="co1">#chunksize = 43</span>
+    <span class="co1">#for i in range(0, len(nums), chunksize):</span>
+        <span class="co1">#print (nums[i:i + chunksize])</span>
+       <span class="co1"># shared_job_q.put(nums[i:i + chunksize])</span>
+    <span class="co1">#print shared_job_q</span>
+&nbsp;
+    <span class="co1"># Wait until all results are ready in shared_result_q</span>
+    numresults <span class="sy0">=</span> <span class="nu0">0</span>
+    resultdict <span class="sy0">=</span> <span class="br0">&#123;</span><span class="br0">&#125;</span>
+    <span class="kw1">while</span> numresults <span class="sy0">&lt;</span> N:
+        <span class="kw1">print</span> numresults
+        outdict <span class="sy0">=</span> shared_result_q.<span class="me1">get</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        resultdict.<span class="me1">update</span><span class="br0">&#40;</span>outdict<span class="br0">&#41;</span>
+        numresults +<span class="sy0">=</span> <span class="kw2">len</span><span class="br0">&#40;</span>outdict<span class="br0">&#41;</span>
+        <span class="kw1">print</span> <span class="br0">&#40;</span><span class="st0">&quot;update&quot;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span> <span class="st0">&quot;- - - &quot;</span> + <span class="kw2">str</span><span class="br0">&#40;</span>numresults<span class="br0">&#41;</span> + <span class="st0">&quot; Processes run&quot;</span>
+    <span class="co1"># Sleep a bit before shutting down the server - to give clients time to</span>
+    <span class="co1"># realize the job queue is empty and exit in an orderly way.</span>
+    <span class="kw3">time</span>.<span class="me1">sleep</span><span class="br0">&#40;</span><span class="nu0">2</span><span class="br0">&#41;</span>
+    manager.<span class="me1">shutdown</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">print</span><span class="br0">&#40;</span><span class="st0">'Server at port %s closed'</span> % <span class="nu0">50000</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="co1">#    server = manager.get_server()</span>
+<span class="co1">#    server.serve_forever()</span>
+&nbsp;
+&nbsp;
+<span class="kw1">if</span> __name__ <span class="sy0">==</span> <span class="st0">&quot;__main__&quot;</span>:
+    <span class="kw1">if</span> <span class="kw2">len</span><span class="br0">&#40;</span><span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#41;</span> <span class="sy0">&gt;</span> <span class="nu0">1</span> <span class="kw1">and</span> <span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">==</span> <span class="st0">&quot;--client&quot;</span>:
+        runclient<span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="kw1">else</span>:
+        runserver<span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;

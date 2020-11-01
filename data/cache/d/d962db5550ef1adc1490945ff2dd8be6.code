@@ -1,0 +1,3 @@
+for c in ( AvgLandTemp )
+return encode(c[Lat(40.6), Long(16.6), ansi(&quot;2014-01&quot;:&quot;2014-12&quot;)] + 273.15,
+&quot;csv&quot;)

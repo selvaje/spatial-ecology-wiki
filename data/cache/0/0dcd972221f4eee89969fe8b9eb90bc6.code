@@ -1,0 +1,7 @@
+<span class="co1">#!/usr/bin/python3</span>
+&nbsp;
+<span class="co1"># Retrieve a file using urllib</span>
+<span class="kw1">import</span> <span class="kw3">urllib</span>.<span class="me1">request</span>
+url <span class="sy0">=</span> <span class="st0">&quot;http://spatial-ecology.net/dokuwiki/lib/exe/fetch.php?media=wiki:python:hancock.zip&quot;</span>
+fileName <span class="sy0">=</span> <span class="st0">&quot;hancock.zip&quot;</span>
+<span class="kw3">urllib</span>.<span class="me1">request</span>.<span class="me1">urlretrieve</span><span class="br0">&#40;</span>url<span class="sy0">,</span> fileName<span class="br0">&#41;</span>

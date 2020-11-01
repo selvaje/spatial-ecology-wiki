@@ -1,0 +1,29 @@
+<span class="st0">&quot;&quot;&quot;Automatically extract features of a thresholded image to a shapefile&quot;&quot;&quot;</span>
+<span class="kw1">import</span> gdal
+<span class="kw1">import</span> ogr<span class="sy0">,</span> osr
+&nbsp;
+<span class="co1"># Thresholded input raster name</span>
+src <span class="sy0">=</span> <span class="st0">&quot;islands_classified.tiff&quot;</span>
+<span class="co1"># Output shapefile name</span>
+tgt <span class="sy0">=</span> <span class="st0">&quot;extract.shp&quot;</span>
+<span class="co1"># OGR layer name</span>
+tgtLayer <span class="sy0">=</span> <span class="st0">&quot;extract&quot;</span>
+<span class="co1"># Open the input raster</span>
+srcDS <span class="sy0">=</span> gdal.<span class="me1">Open</span><span class="br0">&#40;</span>src<span class="br0">&#41;</span>
+<span class="co1"># Grab the first band</span>
+band <span class="sy0">=</span> srcDS.<span class="me1">GetRasterBand</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="br0">&#41;</span>
+<span class="co1"># Force gdal to use the band as a mask</span>
+mask <span class="sy0">=</span> band
+<span class="co1"># Set up the output shapefile</span>
+driver <span class="sy0">=</span> ogr.<span class="me1">GetDriverByName</span><span class="br0">&#40;</span><span class="st0">&quot;ESRI Shapefile&quot;</span><span class="br0">&#41;</span>
+shp <span class="sy0">=</span> driver.<span class="me1">CreateDataSource</span><span class="br0">&#40;</span>tgt<span class="br0">&#41;</span>
+<span class="co1"># Copy the spatial reference</span>
+srs <span class="sy0">=</span> osr.<span class="me1">SpatialReference</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+srs.<span class="me1">ImportFromWkt</span><span class="br0">&#40;</span>srcDS.<span class="me1">GetProjectionRef</span><span class="br0">&#40;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+layer <span class="sy0">=</span> shp.<span class="me1">CreateLayer</span><span class="br0">&#40;</span>tgtLayer<span class="sy0">,</span> srs<span class="sy0">=</span>srs<span class="br0">&#41;</span>
+<span class="co1"># Set up the dbf file</span>
+fd <span class="sy0">=</span> ogr.<span class="me1">FieldDefn</span><span class="br0">&#40;</span> <span class="st0">&quot;DN&quot;</span><span class="sy0">,</span> ogr.<span class="me1">OFTInteger</span> <span class="br0">&#41;</span>
+layer.<span class="me1">CreateField</span><span class="br0">&#40;</span>fd<span class="br0">&#41;</span>
+dst_field <span class="sy0">=</span> <span class="nu0">0</span>
+<span class="co1"># Automatically extract features from an image!</span>
+extract <span class="sy0">=</span> gdal.<span class="me1">Polygonize</span><span class="br0">&#40;</span>band<span class="sy0">,</span> mask<span class="sy0">,</span> layer<span class="sy0">,</span> dst_field<span class="sy0">,</span> <span class="br0">&#91;</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="kw2">None</span><span class="br0">&#41;</span>

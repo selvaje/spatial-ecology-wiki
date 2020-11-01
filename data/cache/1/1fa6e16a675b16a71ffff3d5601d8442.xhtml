@@ -1,0 +1,277 @@
+
+<h1 class="sectionedit1" id="zonal_statistics_benchmark">Zonal Statistics Benchmark</h1>
+<div class="level1">
+
+<p>
+This script is a quick prototype for doing a benchmark between different tools for zonal statistics. It is in quite crude state but should work if you have the tools installed on your system. For this demo, Open Foris Tools, SAGA GIS and pktools work - other tools yet to come.
+</p>
+
+<p>
+Install them:<br/>
+<a href="http://www.openforis.org/OFwiki/index.php/Installing_Open_Foris_Geospatial_Toolkit" class="urlextern" target="blanc" title="http://www.openforis.org/OFwiki/index.php/Installing_Open_Foris_Geospatial_Toolkit" rel="nofollow noopener"> Open Foris Geospatial Toolkit</a><br/>
+<a href="https://sourceforge.net/p/saga-gis/wiki/Binary%20Packages/" class="urlextern" target="blanc" title="https://sourceforge.net/p/saga-gis/wiki/Binary%20Packages/" rel="nofollow noopener"> SAGA GIS</a><br/>
+<code>sudo apt-get install pktools</code>
+</p>
+
+<p>
+<a href="https://spideroak.com/browse/share/tka/matera2017" class="urlextern" target="blanc" title="https://spideroak.com/browse/share/tka/matera2017" rel="nofollow noopener"> Download the script + some testing data</a> and get in touch if you like: <code>k-an–dle-r@gc-i.de</code> (remove all hyphens but the last one from the address)
+</p>
+
+<p>
+You can find possible further development at <a href="http://opengeodata.de" class="urlextern" target="blanc" title="http://opengeodata.de" rel="nofollow noopener"> opengeodata.de</a>.
+</p>
+
+<p>
+Usage:
+</p>
+<pre class="code">Usage:
+        python zonalStatBenchmark [tools] [input raster] [input mask / shape]
+        
+        [tools]                expects a chain of numbers, seperated by a hyphen; 
+                               e.g. 1-2-6 for selecting oft-stat, pktools and SAGA
+        [input raster]         the raster file for input
+        [input mask / shape]   the raster or shape mask; be aware: some 
+                               tools allow only raster input, some only 
+                               vector input - so save a vector file and 
+                               its rasterization with the same name in 
+                               the same dir
+        
+        The following tools are available:
+        
+        1. oft-stat
+        2. pktools
+        3. Python / GDAL (perrygeo gist) (not yet)
+        4. GRASS (not yet)
+        5. R (not yet)
+        6. SAGA</pre>
+
+<p>
+Sample output:
+</p>
+<pre class="code bash">.<span class="sy0">/</span>zonalStatBenchmark.py <span class="nu0">1</span>-<span class="nu0">6</span>-<span class="nu0">2</span> <span class="nu0">2050</span>_TSSP_IM-ENS-A2-SP20_43023435_crop.tif poly_fr.tif
+All selected tools ran successfully.
+&nbsp;
+ID       Tool              <span class="kw1">time</span>      
+<span class="nu0">1</span>        Open Foris Tools  seconds: <span class="nu0">0.04</span>  cpu-load: <span class="nu0">97</span><span class="sy0">%</span>
+<span class="nu0">2</span>        pktools           seconds: <span class="nu0">0.19</span>  cpu-load: <span class="nu0">98</span><span class="sy0">%</span>
+<span class="nu0">6</span>        SAGA              seconds: <span class="nu0">0.17</span>  cpu-load: <span class="nu0">96</span><span class="sy0">%</span></pre>
+
+<p>
+The code:
+</p>
+<pre class="code python"><span class="co1">#!/usr/bin/python</span>
+<span class="co1"># -*- coding: utf-8 -*-</span>
+&nbsp;
+<span class="kw1">import</span> <span class="kw3">subprocess</span>
+<span class="kw1">import</span> <span class="kw3">sys</span>
+<span class="kw1">import</span> <span class="kw3">os</span>
+<span class="kw1">from</span> <span class="kw3">collections</span> <span class="kw1">import</span> defaultdict
+&nbsp;
+<span class="kw1">class</span> zonalBenchmark:
+    <span class="st0">'''
+    The script will provide a straight forward way to compare
+    different zonal statistic implementations.
+    '''</span>  
+&nbsp;
+    <span class="kw1">def</span> <span class="kw4">__init__</span><span class="br0">&#40;</span><span class="kw2">self</span><span class="br0">&#41;</span>:
+        <span class="st0">'''
+        TODO: possible tools to benchmark
+&nbsp;
+        1. oft-stat
+        2. pktools
+        3. Python/GDAL (perrygeo - gist)
+        4. GRASS
+        5. R
+        6. SAGA
+        7. QGIS
+        8. rasterstats
+        9. starspan
+        10. R - multicore
+        11. PostGIS
+        12. GeoTools
+        '''</span>
+&nbsp;
+&nbsp;
+    <span class="kw1">def</span> checkInstallStatus<span class="br0">&#40;</span><span class="br0">&#41;</span>:
+        <span class="st0">'''
+        Check if the selected provider(s) are available on the 
+        (linux) machine.
+        '''</span>
+&nbsp;
+    <span class="kw1">def</span> getArguments<span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">,</span> args<span class="br0">&#41;</span>:
+        <span class="st0">'''
+        Get the links to the data which has been provided by the CLI 
+        and hand it to the execution. Checks also if the data exists.
+        '''</span> 
+&nbsp;
+        <span class="co1"># show help for no arguments</span>
+        <span class="kw1">if</span> <span class="kw2">len</span><span class="br0">&#40;</span>args<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span> <span class="sy0">&lt;</span> <span class="nu0">2</span>:
+            zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">showUsage</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+            <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw1">try</span>:
+            <span class="kw1">if</span> args<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">==</span> <span class="st0">'-h'</span> <span class="kw1">or</span> args<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> <span class="sy0">==</span> <span class="st0">'--help'</span>:
+                zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">showUsage</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+                <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw1">except</span> <span class="kw2">IndexError</span>:
+            zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">showUsage</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+            <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1"># get arguments for tools, split them, convert to int and sort</span>
+        <span class="kw1">try</span>:
+            toolsArgs <span class="sy0">=</span> args<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">'-'</span><span class="br0">&#41;</span>
+            tools <span class="sy0">=</span> <span class="kw2">sorted</span><span class="br0">&#40;</span><span class="kw2">map</span><span class="br0">&#40;</span><span class="kw2">int</span><span class="sy0">,</span> toolsArgs<span class="br0">&#41;</span><span class="sy0">,</span> key<span class="sy0">=</span><span class="kw2">int</span><span class="br0">&#41;</span>
+        <span class="kw1">except</span> <span class="br0">&#40;</span><span class="kw2">TypeError</span><span class="sy0">,</span> <span class="kw2">ValueError</span><span class="br0">&#41;</span> <span class="kw1">as</span> e:
+            zonalBenchmark<span class="br0">&#40;</span>args<span class="br0">&#41;</span>.<span class="me1">showUsage</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+            <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span> 
+&nbsp;
+        <span class="co1"># dict of implemented tools</span>
+        availableTools <span class="sy0">=</span> <span class="br0">&#123;</span><span class="nu0">1</span>:<span class="st0">'Open Foris Tools'</span><span class="sy0">,</span>
+                            <span class="nu0">2</span>: <span class="st0">'pktools'</span><span class="sy0">,</span>
+                            <span class="nu0">3</span>: <span class="st0">'perrygeo'</span><span class="sy0">,</span>
+                            <span class="nu0">4</span>: <span class="st0">'GRASS'</span><span class="sy0">,</span>
+                            <span class="nu0">5</span>: <span class="st0">'R'</span><span class="sy0">,</span>
+                            <span class="nu0">6</span>: <span class="st0">'SAGA'</span><span class="br0">&#125;</span>
+        selectedTools <span class="sy0">=</span> <span class="br0">&#123;</span><span class="br0">&#125;</span>
+&nbsp;
+        <span class="co1"># create dict for selected tools</span>
+        <span class="kw1">for</span> item <span class="kw1">in</span> tools:
+            <span class="kw1">if</span> item <span class="kw1">in</span> availableTools:
+                selectedTools.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#123;</span>item: availableTools<span class="br0">&#91;</span>item<span class="br0">&#93;</span><span class="br0">&#125;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1"># get input file</span>
+        workingDir <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">dirname</span><span class="br0">&#40;</span><span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">realpath</span><span class="br0">&#40;</span>__file__<span class="br0">&#41;</span><span class="br0">&#41;</span>
+        <span class="kw1">try</span>:
+            inputArg <span class="sy0">=</span> args<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span>
+            inputFile <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span>workingDir<span class="sy0">,</span> inputArg<span class="br0">&#41;</span>
+            <span class="kw1">if</span> <span class="kw1">not</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">isfile</span><span class="br0">&#40;</span>inputFile<span class="br0">&#41;</span>:
+                <span class="kw1">print</span> <span class="st0">'ERROR: Input file does not exist<span class="es0">\Y</span>ou can run <span class="es0">\'</span>{0} --help<span class="es0">\'</span> for usage of the program.<span class="es0">\n</span>'</span>.<span class="me1">format</span><span class="br0">&#40;</span><span class="kw2">str</span><span class="br0">&#40;</span>args<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>.<span class="me1">lstrip</span><span class="br0">&#40;</span><span class="st0">'./'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+                <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw1">except</span> <span class="br0">&#40;</span><span class="kw2">IndexError</span><span class="sy0">,</span> <span class="kw2">ValueError</span><span class="br0">&#41;</span> <span class="kw1">as</span> e:
+            zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">showUsage</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1"># get mask file        </span>
+        <span class="kw1">try</span>:
+            maskArg <span class="sy0">=</span> args<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">3</span><span class="br0">&#93;</span>
+            maskFile <span class="sy0">=</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">join</span><span class="br0">&#40;</span>workingDir<span class="sy0">,</span> maskArg<span class="br0">&#41;</span>
+            <span class="kw1">if</span> <span class="kw1">not</span> <span class="kw3">os</span>.<span class="me1">path</span>.<span class="me1">isfile</span><span class="br0">&#40;</span>maskFile<span class="br0">&#41;</span>:
+                <span class="kw1">print</span> <span class="st0">'ERROR: Mask file does not exist<span class="es0">\n</span>You can run <span class="es0">\'</span>{0} --help<span class="es0">\'</span> for usage of the program.<span class="es0">\n</span>'</span>.<span class="me1">format</span><span class="br0">&#40;</span><span class="kw2">str</span><span class="br0">&#40;</span>args<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>.<span class="me1">lstrip</span><span class="br0">&#40;</span><span class="st0">'./'</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+                <span class="kw3">sys</span>.<span class="me1">exit</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+        <span class="kw1">except</span> <span class="br0">&#40;</span><span class="kw2">IndexError</span><span class="sy0">,</span> <span class="kw2">ValueError</span><span class="br0">&#41;</span> <span class="kw1">as</span> e:
+            zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">showUsage</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="kw1">return</span> selectedTools<span class="sy0">,</span> inputFile<span class="sy0">,</span> maskFile
+&nbsp;
+&nbsp;
+    <span class="kw1">def</span> setCommands<span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">,</span> selectedTools<span class="sy0">,</span> inputFile<span class="sy0">,</span> maskFile<span class="br0">&#41;</span>:
+        <span class="st0">'''
+        Constructs the actual command(s) for the selected providers.
+        '''</span>   
+        selectedCommands <span class="sy0">=</span> <span class="br0">&#123;</span><span class="br0">&#125;</span>
+        <span class="kw1">if</span> <span class="nu0">1</span> <span class="kw1">in</span> selectedTools:
+            oftCMD <span class="sy0">=</span> <span class="st0">'oft-stat -i {0} -o /tmp/oft_out.txt -um {1}'</span>.<span class="me1">format</span><span class="br0">&#40;</span>inputFile<span class="sy0">,</span> maskFile<span class="br0">&#41;</span>
+            selectedCommands.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#123;</span><span class="nu0">1</span>:oftCMD<span class="br0">&#125;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="kw1">if</span> <span class="nu0">2</span> <span class="kw1">in</span> selectedTools:
+            maskFileShp <span class="sy0">=</span> maskFile.<span class="me1">replace</span><span class="br0">&#40;</span><span class="st0">'tif'</span><span class="sy0">,</span><span class="st0">'shp'</span><span class="br0">&#41;</span>
+            pkCMD <span class="sy0">=</span> <span class="st0">'pkextract -f <span class="es0">\'</span>ESRI Shapefile<span class="es0">\'</span> -s {0} -i {1} -o /tmp/pk_out.shp -polygon --rule mean'</span>.<span class="me1">format</span><span class="br0">&#40;</span>maskFileShp<span class="sy0">,</span> inputFile<span class="br0">&#41;</span>
+            selectedCommands.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#123;</span><span class="nu0">2</span>:pkCMD<span class="br0">&#125;</span><span class="br0">&#41;</span>    
+&nbsp;
+        <span class="kw1">if</span> <span class="nu0">6</span> <span class="kw1">in</span> selectedTools:
+            sagaCMD <span class="sy0">=</span> <span class="st0">'saga_cmd statistics_grid 5 -ZONES {0} -STATLIST {1} -OUTTAB /tmp/saga_out.txt'</span>.<span class="me1">format</span><span class="br0">&#40;</span>maskFile<span class="sy0">,</span> inputFile<span class="br0">&#41;</span>
+            selectedCommands.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#123;</span><span class="nu0">6</span>:sagaCMD<span class="br0">&#125;</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+        <span class="kw1">return</span> selectedCommands
+&nbsp;
+&nbsp;
+&nbsp;
+    <span class="kw1">def</span> executeCommands<span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">,</span> <span class="kw3">commands</span><span class="br0">&#41;</span>: 
+        <span class="st0">'''
+        Executes the command for the selected provider.
+        '''</span>
+        outputByCommand <span class="sy0">=</span> <span class="br0">&#123;</span><span class="br0">&#125;</span>
+        <span class="kw1">for</span> key<span class="sy0">,</span> value <span class="kw1">in</span> <span class="kw3">commands</span>.<span class="me1">items</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+            <span class="kw1">try</span>:
+                output <span class="sy0">=</span> <span class="kw3">subprocess</span>.<span class="me1">check_output</span><span class="br0">&#40;</span>
+                <span class="st0">'/usr/bin/time -f &quot;seconds: %e <span class="es0">\n</span>cpu-load: %P&quot; {0} | tail -2'</span>.<span class="me1">format</span><span class="br0">&#40;</span>value<span class="br0">&#41;</span><span class="sy0">,</span>
+                shell<span class="sy0">=</span><span class="kw2">True</span><span class="sy0">,</span>
+                stderr<span class="sy0">=</span><span class="kw3">subprocess</span>.<span class="me1">STDOUT</span>
+                <span class="br0">&#41;</span>                       
+            <span class="kw1">except</span> <span class="kw3">subprocess</span>.<span class="me1">CalledProcessError</span> <span class="kw1">as</span> grepexc:
+                <span class="kw1">print</span> <span class="st0">&quot;error code&quot;</span><span class="sy0">,</span> grepexc.<span class="me1">returncode</span><span class="sy0">,</span> grepexc.<span class="me1">output</span>
+&nbsp;
+            outputByCommand.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#123;</span>key:output<span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">28</span><span class="br0">&#93;</span><span class="br0">&#125;</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+        <span class="kw1">return</span> outputByCommand
+&nbsp;
+&nbsp;
+    <span class="kw1">def</span> showOutput<span class="br0">&#40;</span><span class="kw2">self</span><span class="sy0">,</span> output<span class="sy0">,</span> selectedTools<span class="br0">&#41;</span>:
+        <span class="st0">'''
+        Construct a pretty table to show a comparison of the programs
+        on the command line.
+        '''</span>
+        <span class="co1">#~ print selectedTools</span>
+        <span class="co1">#~ #print json.dumps(output, sort_keys=True, indent=4)</span>
+        <span class="co1">#~ for key, value in output.items():</span>
+            <span class="co1">#~ print key</span>
+        <span class="kw1">for</span> key <span class="kw1">in</span> output:
+            output.<span class="me1">update</span><span class="br0">&#40;</span><span class="br0">&#123;</span>key:output<span class="br0">&#91;</span>key<span class="br0">&#93;</span>.<span class="me1">split</span><span class="br0">&#40;</span><span class="st0">'<span class="es0">\n</span>'</span><span class="br0">&#41;</span><span class="br0">&#125;</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="co1">#print output</span>
+&nbsp;
+        dd <span class="sy0">=</span> defaultdict<span class="br0">&#40;</span><span class="kw2">list</span><span class="br0">&#41;</span>
+&nbsp;
+        <span class="kw1">for</span> d <span class="kw1">in</span> <span class="br0">&#40;</span>selectedTools<span class="sy0">,</span> output<span class="br0">&#41;</span>: <span class="co1"># you can list as many input dicts as you want here</span>
+            <span class="kw1">for</span> key<span class="sy0">,</span> value <span class="kw1">in</span> d.<span class="me1">iteritems</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+                dd<span class="br0">&#91;</span>key<span class="br0">&#93;</span>.<span class="me1">append</span><span class="br0">&#40;</span>value<span class="br0">&#41;</span>  
+        <span class="co1">#print dd</span>
+&nbsp;
+        out <span class="sy0">=</span> <span class="st0">''</span>
+&nbsp;
+        <span class="kw1">for</span> k<span class="sy0">,</span> v <span class="kw1">in</span> dd.<span class="me1">iteritems</span><span class="br0">&#40;</span><span class="br0">&#41;</span>:
+            tool<span class="sy0">,</span> <span class="kw3">time</span> <span class="sy0">=</span> v
+            out +<span class="sy0">=</span> <span class="st0">&quot;{:&lt;8} {:&lt;17} {:&lt;10} {:&lt;10}<span class="es0">\n</span>&quot;</span>.<span class="me1">format</span><span class="br0">&#40;</span>k<span class="sy0">,</span> tool<span class="sy0">,</span> <span class="kw3">time</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> <span class="kw3">time</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span>          
+&nbsp;
+        <span class="kw1">return</span> out
+&nbsp;
+    <span class="kw1">def</span> showUsage<span class="br0">&#40;</span><span class="kw2">self</span><span class="br0">&#41;</span>:
+        <span class="co1">#print zonalBenchmark.__init__.__doc__</span>
+        <span class="kw1">print</span> u<span class="st0">'''Usage:
+        python zonalStatBenchmark [tools] [input raster] [input mask / shape]
+&nbsp;
+        [tools]                expects a chain of numbers, seperated by a hyphen; 
+                               e.g. 1-2-6 for selecting oft-stat, pktools and SAGA
+        [input raster]         the raster file for input
+        [input mask / shape]   the raster or shape mask; be aware: some 
+                               tools allow only raster input, some only 
+                               vector input - so save a vector file and 
+                               its rasterization with the same name in 
+                               the same dir
+&nbsp;
+        The following tools are available:
+&nbsp;
+        1. oft-stat
+        2. pktools
+        3̶.̶ ̶P̶y̶t̶h̶o̶n̶/̶G̶D̶A̶L̶ ̶(̶p̶e̶r̶r̶y̶g̶e̶o̶ ̶-̶ ̶g̶i̶s̶t̶)̶
+        4̶.̶ ̶G̶R̶A̶S̶S̶
+        5̶.̶ ̶R̶
+        6. SAGA
+        '''</span>
+&nbsp;
+args <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+args.<span class="me1">append</span><span class="br0">&#40;</span><span class="kw3">sys</span>.<span class="me1">argv</span><span class="br0">&#41;</span>
+&nbsp;
+userArgs <span class="sy0">=</span> zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">getArguments</span><span class="br0">&#40;</span>args<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw3">commands</span> <span class="sy0">=</span> zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">setCommands</span><span class="br0">&#40;</span>userArgs<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="sy0">,</span> userArgs<span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="sy0">,</span> userArgs<span class="br0">&#91;</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+timeOutput <span class="sy0">=</span> zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">executeCommands</span><span class="br0">&#40;</span><span class="kw3">commands</span><span class="br0">&#41;</span>
+&nbsp;
+output <span class="sy0">=</span> zonalBenchmark<span class="br0">&#40;</span><span class="br0">&#41;</span>.<span class="me1">showOutput</span><span class="br0">&#40;</span>timeOutput<span class="sy0">,</span> userArgs<span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="kw1">print</span> <span class="st0">&quot;All selected tools ran successfully.<span class="es0">\n</span>&quot;</span>
+<span class="kw1">print</span> <span class="st0">&quot;{:&lt;8} {:&lt;17} {:&lt;10}&quot;</span>.<span class="me1">format</span><span class="br0">&#40;</span><span class="st0">'ID'</span><span class="sy0">,</span><span class="st0">'Tool'</span><span class="sy0">,</span><span class="st0">'time'</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> output</pre>
+
+</div>

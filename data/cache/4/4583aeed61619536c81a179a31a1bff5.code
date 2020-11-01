@@ -1,0 +1,1 @@
+    pkfilter <span class="re5">-f</span> linearfeature <span class="re5">-ot</span> UInt16 <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_NDVI.tif <span class="re5">-o</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_LINEAR.tif <span class="re5">-l1</span> <span class="re5">-l2</span>

@@ -1,0 +1,5 @@
+   library(gdata) # used to drep.levels function
+   library(foreign) # used to read.dbf function
+   library(randomForest) # Modelling function
+   library(mda) # confusion matrix
+   library (vcd)

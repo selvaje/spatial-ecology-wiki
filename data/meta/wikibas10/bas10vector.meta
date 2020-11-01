@@ -1,0 +1,18 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1594967994;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:31:"TITLE: Vector data manipulation";s:11:"description";a:2:{s:15:"tableofcontents";a:8:{i:0;a:4:{s:3:"hid";s:29:"titlevector_data_manipulation";s:5:"title";s:31:"TITLE: Vector data manipulation";s:4:"type";s:2:"ul";s:5:"level";i:1;}i:1;a:4:{s:3:"hid";s:12:"introduction";s:5:"title";s:12:"INTRODUCTION";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:2;a:4:{s:3:"hid";s:8:"metadata";s:5:"title";s:8:"METADATA";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:3;a:4:{s:3:"hid";s:11:"vector_data";s:5:"title";s:11:"Vector Data";s:4:"type";s:2:"ul";s:5:"level";i:3;}i:4;a:4:{s:3:"hid";s:6:"method";s:5:"title";s:6:"METHOD";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:5;a:4:{s:3:"hid";s:11:"data_import";s:5:"title";s:11:"DATA IMPORT";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:6;a:4:{s:3:"hid";s:15:"data_processing";s:5:"title";s:15:"DATA PROCESSING";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:7;a:4:{s:3:"hid";s:22:"results_and_discussion";s:5:"title";s:22:"RESULTS and DISCUSSION";s:4:"type";s:2:"ul";s:5:"level";i:2;}}s:8:"abstract";s:256:"TITLE: Vector data manipulation
+
+
+
+
+INTRODUCTION
+
+The methodology is to work with vector data.
+The goal of this work is to create the cross section profile from vector data. This profile is presented as a 3D graph. 
+
+
+
+METADATA
+
+Vector Data
+
+
+Name: section";}s:8:"relation";a:2:{s:5:"media";a:2:{s:25:"wiki:bas10_vect_input.png";b:1;s:16:"wiki:graphic.jpg";b:1;}s:10:"firstimage";s:25:"wiki:bas10_vect_input.png";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

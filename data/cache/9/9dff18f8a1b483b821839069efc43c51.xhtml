@@ -1,0 +1,37 @@
+
+<h1 class="sectionedit1" id="the_awk_syntax">The AWK syntax</h1>
+<div class="level1">
+
+<p>
+The awk syntax is:<br/>
+
+<em>awk &#039;[pattern] {action} [pattern]&#039; input.txt &gt; output.txt</em><br/>
+
+The awk <em>line</em> is always placed between single-quotation (&#039;) and not back-quotation (`).<br/>
+
+The awk structure is composed of <em>patterns</em> and <em>actions.</em><br/>
+
+1. The <em>[pattern]</em> (optional feature) can be:
+</p>
+<ul>
+<li class="level1"><div class="li"> BEGIN {action} (actions computed before reading the input).</div>
+</li>
+<li class="level1"><div class="li"> END  {action} (actions computed at the end of the input).</div>
+</li>
+</ul>
+
+<p>
+2. The main action ({action}) is computed by reading the input line by line.
+The actions include commands and operations.<br/>
+
+Therefore the full awk syntax can be represented in this way:<br/>
+
+<em>awk &#039;BEGIN {action} {action} END {action}&#039; input.txt &gt; output.txt</em><br/>
+
+in practice<br/>
+
+<em>awk &#039;BEGIN {action before the input.txt reading } {action during the input.txt reading} END {action after the input.txt reading}&#039; input.txt &gt; output.txt</em><br/>
+
+</p>
+
+</div>

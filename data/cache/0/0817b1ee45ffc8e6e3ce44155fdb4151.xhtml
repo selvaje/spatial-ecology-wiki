@@ -1,0 +1,141 @@
+
+<h1 class="sectionedit1" id="a_landscape_and_climate_data_logistic_model_of_tsetse_distribution_in_kenya">A Landscape and Climate Data Logistic Model of Tsetse Distribution in Kenya</h1>
+<div class="level1">
+
+<p>
+Reference at <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011809" class="urlextern" target="blanc" title="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011809" rel="nofollow noopener"> Moore and Messina 2009</a>.<br/>
+
+<a href="/lib/exe/detail.php?id=wiki%3Avector_deseas&amp;media=wiki:untitled.png" class="media" title="wiki:untitled.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=89d266&amp;media=wiki:untitled.png" class="media" alt="" width="300" /></a><a href="/lib/exe/detail.php?id=wiki%3Avector_deseas&amp;media=wiki:tsetse_sinecology.png" class="media" title="wiki:tsetse_sinecology.png"><img src="/lib/exe/fetch.php?w=500&amp;tok=a8db28&amp;media=wiki:tsetse_sinecology.png" class="media" alt="" width="500" /></a><a href="/lib/exe/detail.php?id=wiki%3Avector_deseas&amp;media=wiki:tzee_covariate.png" class="media" title="wiki:tzee_covariate.png"><img src="/lib/exe/fetch.php?w=300&amp;tok=ae2fb3&amp;media=wiki:tzee_covariate.png" class="media" alt="" width="300" /></a><br/>
+
+Reference at <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011809" class="urlextern" target="blanc" title="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0011809" rel="nofollow noopener"> Moore and Messina 2009</a>.
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;A Landscape and Climate Data Logistic Model of Tsetse Distribution in Kenya&quot;,&quot;hid&quot;:&quot;a_landscape_and_climate_data_logistic_model_of_tsetse_distribution_in_kenya&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-427&quot;} -->
+<h1 class="sectionedit2" id="a_landscape_and_climate_data_logistic_model_of_tsetse_distribution_in_uganda">A Landscape and Climate Data Logistic Model of Tsetse Distribution in Uganda</h1>
+<div class="level1">
+<dl class="code">
+<dt><a href="/doku.php?do=export_code&amp;id=wiki:vector_deseas&amp;codeblock=0" title="Download Snippet" class="mediafile mf_r_">SDM.R </a></dt>
+<dd><pre class="code R">library(raster)
+library(ggplot2)
+library(gplots)
+library(mgcv)
+library(hier.part)
+library(rasterVis)
+&nbsp;
+# The Environmental data Import
+# variable list acronyms /home/user/ost4sem/exercise/geodata_SDM/SuppTab1.pdf 
+&nbsp;
+# Variable selection is tricky business and we're not going to dwell on it here... We'll use the following variables.
+# Precipitation Seasonality
+ug_bio_15 =raster (&quot;/home/user/ost4sem/exercise/geodata_SDM/precipitation/ug_bio_15.tif&quot;)
+# Temperature Seasonality
+ug_bio_4 = raster (&quot;/home/user/ost4sem/exercise/geodata_SDM/temperature/ug_bio_4.tif&quot;)
+# Normalized Difference Vegetation Index (Mean)
+NDVImean =raster (&quot;/home/user/ost4sem/exercise/geodata_SDM/vegetation/NDVImean08-11.tif&quot;) 
+names(NDVImean) = &quot;NDVImean&quot;
+# Gross Primary Productivity (Mean)
+GPPmean =raster (&quot;/home/user/ost4sem/exercise/geodata_SDM/vegetation/GPPmean08-11.tif&quot;) 
+names(LAImean) = &quot;LAImean&quot;
+# Leaf Area Index (Mean)
+LAImean = raster (&quot;/home/user/ost4sem/exercise/geodata_SDM/vegetation/LAImean08-11.tif&quot;) 
+names(LAImean) = &quot;LAImean&quot;
+# Digital elevation model 
+GMTED2010 = raster (&quot;/home/user/ost4sem/exercise/geodata_SDM/dem/GMTED2010.tif&quot;) 
+# Human influence 
+human =   raster(&quot;/home/user/ost4sem/exercise/geodata_SDM/humaninfluence/humanInfluence.tif&quot;)
+# Lat Long
+rasterX = raster (&quot;/home/user/ost4sem/exercise/geodata_SDM/latlong/rasterX.tif&quot;)
+rasterY = raster (&quot;/home/user/ost4sem/exercise/geodata_SDM/latlong/rasterY.tif&quot;)
+names(human) = &quot;human&quot;
+&nbsp;
+# Read the environmental data in as a raster stack
+env=stack( GMTED2010 , ug_bio_15, ug_bio_4, NDVImean, GPPmean, LAImean, rasterX, rasterY, human ,  full.names = TRUE )
+plot(env)
+&nbsp;
+# Scaling and centering the environmental variables to zero mean and variance of 1, using the scale function is typically a good idea.
+vars = c(&quot;GMTED2010&quot;, &quot;ug_bio_15&quot;,&quot;ug_bio_4&quot;,&quot;NDVImean&quot;,&quot;GPPmean&quot;,&quot;LAImean&quot;,&quot;rasterX&quot;, &quot;rasterY&quot; , &quot;human&quot;)
+senv=scale(env[[vars]])
+plot(senv)
+&nbsp;
+# Load presence and absence
+&nbsp;
+presence = read.table (&quot;/home/user/ost4sem/exercise/geodata_SDM/latlong/presence.txt&quot;)
+absence = read.table (&quot;/home/user/ost4sem/exercise/geodata_SDM/latlong/absence.txt&quot;)
+points=as.data.frame(rbind(presence, absence))
+names(points) = c(&quot;X&quot;,&quot;Y&quot;,&quot;PA&quot;)
+coordinates(points)= ~X+Y
+&nbsp;
+table(points$PA)
+&nbsp;
+plot(ug_bio_15)
+points(subset( points , PA == 0 )  , pch = 1  )
+points(subset( points , PA == 1 ) , col='red' , pch =3 )
+&nbsp;
+# Annotate the point records with the scaled environmental data
+&nbsp;
+points.annot=raster::extract(senv, points , na.rm=F , SP = T , df=TRUE)
+points.annot$PA = points$PA
+# eliminate NA
+points.annot=na.omit(points.annot)
+&nbsp;
+# Variable selection 
+# Covariate correlation
+# Scatterplot matrix of the available environmental data.
+&nbsp;
+splom(senv,varname.cex=2)
+&nbsp;
+hier.part(points.annot$PA, points.annot[,2:9] , fam = &quot;binomial&quot;,gof = &quot;Rsqu&quot;)
+&nbsp;
+# Model Fitting
+# Fit a simple GLM to the data
+&nbsp;
+m1glm=glm(PA ~ ug_bio_4, data=points.annot,family=binomial(logit))
+m2glm=glm(PA ~ ug_bio_4 + ug_bio_15 + LAImean + NDVImean, data=points.annot,family=binomial(logit))
+&nbsp;
+m1gam=gam(PA ~ GMTED2010 + ug_bio_4+ ug_bio_15 + NDVImean, data=points.annot,family=binomial(logit))
+m2gam=gam(PA ~ GMTED2010 + ug_bio_4+ ug_bio_15 + NDVImean + human + s(rasterX, rasterY), data=points.annot,family=binomial(logit))
+&nbsp;
+&nbsp;
+# Feel free to try various model formulas (adding or removing terms) and see how the model performs.
+&nbsp;
+p1glm=raster::predict(senv,m1glm,type=&quot;response&quot;, 
+                   file=&quot;/home/user/ost4sem/exercise/geodata_SDM/prediction/p1glm.tif&quot;,overwrite=T)
+p2glm=raster::predict(senv,m2glm,type=&quot;response&quot;,
+                   file=&quot;/home/user/ost4sem/exercise/geodata_SDM/prediction/p2glm.tif&quot;,overwrite=T)
+&nbsp;
+p1gam=raster::predict(senv,m1gam,type=&quot;response&quot;,
+                   file=&quot;/home/user/ost4sem/exercise/geodata_SDM/prediction/p1gam.tif&quot;,overwrite=T)
+p2gam=raster::predict(senv,m2gam,type=&quot;response&quot;,
+                   file=&quot;/home/user/ost4sem/exercise/geodata_SDM/prediction/p2gam.tif&quot;,overwrite=T)
+&nbsp;
+plot(p1gam)
+points(subset( points , PA == 0 )  , pch = 1  )
+points(subset( points , PA == 1 ) , col='red' , pch =3 )</pre>
+</dd></dl>
+
+<p>
+more example:<br/>
+
+<a href="https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro2/hSDM_intro.md" class="urlextern" target="blanc" title="https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro2/hSDM_intro.md" rel="nofollow noopener">https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro2/hSDM_intro.md</a>
+<a href="https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro/SDM.md" class="urlextern" target="blanc" title="https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro/SDM.md" rel="nofollow noopener">https://github.com/adammwilson/SpatialAnalysisTutorials/blob/master/SDM_intro/SDM.md</a>
+<br/>
+
+the vignette from the dismo package is also a great resource.<br/>
+
+<a href="http://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf" class="urlextern" target="blanc" title="http://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf" rel="nofollow noopener">http://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf</a><br/>
+
+<br/>
+
+find the right probability thresholds<br/>
+
+<a href="http://cran.r-project.org/web/packages/OptimalCutpoints/OptimalCutpoints.pdf" class="urlextern" target="blanc" title="http://cran.r-project.org/web/packages/OptimalCutpoints/OptimalCutpoints.pdf" rel="nofollow noopener">http://cran.r-project.org/web/packages/OptimalCutpoints/OptimalCutpoints.pdf</a><br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;A Landscape and Climate Data Logistic Model of Tsetse Distribution in Uganda&quot;,&quot;hid&quot;:&quot;a_landscape_and_climate_data_logistic_model_of_tsetse_distribution_in_uganda&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;428-&quot;} -->

@@ -1,0 +1,18 @@
+########################################################
+####### FITTING A GLM TO RASTER DATA PREDICTORS ########
+########################################################
+fitn &lt;- glm(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitn)
+str(fitn)
+plot(fitn)
+&nbsp;
+########################################################
+####### FITTING A GAM TO RASTER DATA PREDICTORS ########
+########################################################
+require(mgcv)
+fitgam &lt;- gam(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitgam)
+str(fitgam)
+plot(fitgam)

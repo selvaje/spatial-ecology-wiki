@@ -1,0 +1,53 @@
+
+<h1 class="sectionedit1" id="grass_create_location_using_ancillary_layer">GRASS Create Location using ancillary layer</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;GRASS Create Location using ancillary layer&quot;,&quot;hid&quot;:&quot;grass_create_location_using_ancillary_layer&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-60&quot;} -->
+<h2 class="sectionedit2" id="execute_grass_commands_while_beeing_in_grass">Execute GRASS commands while beeing in GRASS</h2>
+<div class="level2">
+
+<p>
+Create a location in a new grass database using a referenced dataset.<br/>
+
+<br/>
+
+Create a new GrassDataBase and copy the input.tif 
+</p>
+<pre class="code bash"><span class="kw2">rm</span> <span class="re5">-rf</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+<span class="kw2">cp</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>input.tif ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>input.tif</pre>
+
+<p>
+Define a projection to the input.tif
+</p>
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+gdalwarp   -t_srs EPSG:<span class="nu0">4326</span>  -s_srs EPSG:<span class="nu0">4326</span>  input.tif input_proj.tif</pre>
+
+<p>
+Run the grass74 command  which creates the newlocation based on the input_proj.tif 
+</p>
+<pre class="code bash"><span class="kw2">rm</span> <span class="re5">-rf</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>newlocation
+grass74 <span class="re5">-text</span> <span class="re5">-c</span> input_proj.tif newlocation ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew </pre>
+<pre class="code bash">r.in.gdal <span class="re2">input</span>=input_proj.tif  <span class="re2">output</span>=input_proj</pre>
+
+<p>
+import the date
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.tif 
+<span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="br0">&#41;</span>
+r.in.gdal <span class="re2">input</span>=<span class="re1">$file</span>.tif  <span class="re2">output</span>=<span class="re1">$file</span>
+<span class="kw1">done</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Execute GRASS commands while beeing in GRASS&quot;,&quot;hid&quot;:&quot;execute_grass_commands_while_beeing_in_grass&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;61-980&quot;} -->
+<h2 class="sectionedit3" id="execute_grass_commands_from_bash_without_enter_in_grass">Execute GRASS commands from BASH without enter in GRASS</h2>
+<div class="level2">
+<pre class="code bash"><span class="kw3">cd</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>
+<span class="kw2">rm</span> <span class="re5">-rf</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>newlocation
+grass74 <span class="re5">-text</span> <span class="re5">-c</span> input_proj.tif  <span class="re5">-e</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>newlocation 
+grass74 ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>newlocation<span class="sy0">/</span>PERMANENT<span class="sy0">/</span> <span class="re5">--exec</span> r.external <span class="re2">input</span>=input_proj.tif  <span class="re2">output</span>=input_proj
+grass74 ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdbnew<span class="sy0">/</span>newlocation<span class="sy0">/</span>PERMANENT<span class="sy0">/</span> <span class="re5">--exec</span> r.info input_proj</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Execute GRASS commands from BASH without enter in GRASS&quot;,&quot;hid&quot;:&quot;execute_grass_commands_from_bash_without_enter_in_grass&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:3,&quot;range&quot;:&quot;981-&quot;} -->

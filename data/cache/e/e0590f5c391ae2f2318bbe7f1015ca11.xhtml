@@ -1,0 +1,57 @@
+
+<h1 class="sectionedit1" id="pkreclass">pkreclass</h1>
+<div class="level1">
+
+<p>
+NAME
+</p>
+<pre class="code"> pkreclass - replace pixel values in raster file</pre>
+
+<p>
+SYNOPSIS
+</p>
+<pre class="code bash">   pkreclass <span class="re5">-i</span> input <span class="re5">-o</span> output <span class="br0">&#91;</span>OPTION<span class="br0">&#93;</span></pre>
+
+<p>
+DESCRIPTION
+</p>
+<pre class="code"> Reclassify pixels from class to reclass using command line options or ASCII code file
+     </pre>
+
+<p>
+OPTIONS
+</p>
+<pre class="code bash">   <span class="re5">-i</span>     <span class="re5">--input</span>                Input image <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-m</span>     <span class="re5">--mask</span>                 Mask image<span class="br0">&#40;</span>s<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-t</span>     <span class="re5">--invalid</span>              Mask value<span class="br0">&#40;</span>s<span class="br0">&#41;</span> where image is invalid. Use one value <span class="kw1">for</span> each mask, or multiple values <span class="kw1">for</span> a single mask. <span class="br0">&#40;</span>default: <span class="nu0">1</span><span class="br0">&#41;</span>
+   <span class="re5">-f</span>     <span class="re5">--flag</span>                 Flag value to put <span class="kw1">in</span> image <span class="kw1">if</span> not valid <span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-code</span>   <span class="re5">--code</span>                 Recode text <span class="kw2">file</span> <span class="br0">&#40;</span><span class="nu0">2</span> colums: from to<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-c</span>     <span class="re5">--class</span>                list of classes to reclass <span class="br0">&#40;</span><span class="kw1">in</span> combination with reclass option<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-r</span>     <span class="re5">--reclass</span>              list of recoded class<span class="br0">&#40;</span>es<span class="br0">&#41;</span> <span class="br0">&#40;</span><span class="kw1">in</span> combination with class option<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-ct</span>    <span class="re5">--ct</span>                   color table <span class="br0">&#40;</span><span class="kw2">file</span> with <span class="nu0">5</span> columns: <span class="kw2">id</span> R G B ALFA <span class="br0">&#40;</span><span class="nu0">0</span>: transparent, <span class="nu0">255</span>: solid<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-o</span>     <span class="re5">--output</span>               Output mask <span class="kw2">file</span> <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-ot</span>    <span class="re5">--otype</span>                Data <span class="kw3">type</span> <span class="kw1">for</span> output image <span class="br0">&#40;</span><span class="br0">&#123;</span>Byte<span class="sy0">/</span>Int16<span class="sy0">/</span>UInt16<span class="sy0">/</span>UInt32<span class="sy0">/</span>Int32<span class="sy0">/</span>Float32<span class="sy0">/</span>Float64<span class="sy0">/</span>CInt16<span class="sy0">/</span>CInt32<span class="sy0">/</span>CFloat32<span class="sy0">/</span>CFloat64<span class="br0">&#125;</span><span class="br0">&#41;</span>. Empty string: inherit <span class="kw3">type</span> from input image <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-b</span>     <span class="re5">--band</span>                 band index to replace <span class="br0">&#40;</span>other bands are copied to output<span class="br0">&#41;</span> <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span>
+   <span class="re5">-n</span>     <span class="re5">--fname</span>                field name of the shape <span class="kw2">file</span> to be replaced <span class="br0">&#40;</span>default: label<span class="br0">&#41;</span>
+   <span class="re5">-co</span>    <span class="re5">--co</span>                   options: <span class="re2">NAME</span>=VALUE <span class="br0">&#91;</span>-co <span class="re2">COMPRESS</span>=LZW<span class="br0">&#93;</span> <span class="br0">&#91;</span>-co <span class="re2">INTERLEAVE</span>=BAND<span class="br0">&#93;</span> <span class="br0">&#40;</span>default: <span class="re2">INTERLEAVE</span>=BAND<span class="br0">&#41;</span>
+   <span class="re5">-d</span>     <span class="re5">--description</span>          Set image description <span class="br0">&#40;</span>default: <span class="sy0">&lt;</span>empty string<span class="sy0">&gt;</span><span class="br0">&#41;</span>
+   <span class="re5">-v</span>     <span class="re5">--verbose</span>              verbose <span class="br0">&#40;</span>default: <span class="nu0">0</span><span class="br0">&#41;</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;pkreclass&quot;,&quot;hid&quot;:&quot;pkreclass&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-1901&quot;} -->
+<h1 class="sectionedit2" id="examples">Examples</h1>
+<div class="level1">
+<pre class="code bash">pkreclass <span class="re5">-i</span> input1.tif <span class="re5">-o</span> output.tif <span class="re5">-c</span> <span class="nu0">1</span> <span class="re5">-r</span> <span class="nu0">0</span> <span class="re5">-c</span> <span class="nu0">2</span> <span class="re5">-r</span> <span class="nu0">0</span> <span class="co0"># replace pixel values 1 and 2 with value 0</span>
+&nbsp;
+pkreclass <span class="re5">-i</span> vector.shp <span class="re5">-o</span> output.shp <span class="re5">-c</span> FROM <span class="re5">-r</span> TO <span class="re5">-n</span> INFIELD <span class="co0"># replace FROM with TO in field INFIELD (of type string) in vector file vector.shp and write to new vector output.shp</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Examples&quot;,&quot;hid&quot;:&quot;examples&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:2,&quot;range&quot;:&quot;1902-2228&quot;} -->
+<h2 class="sectionedit3" id="advanced_examples">Advanced examples</h2>
+<div class="level2">
+<pre class="code bash"><span class="kw1">for</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">i</span>=<span class="nu0">0</span>;i<span class="sy0">&lt;</span><span class="nu0">256</span>;++i<span class="br0">&#41;</span><span class="br0">&#41;</span>;<span class="kw1">do</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re1">$i</span><span class="sy0">&lt;</span><span class="nu0">100</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;<span class="kw1">then</span> <span class="kw3">echo</span> <span class="st0">&quot;<span class="es2">$i</span> 1&quot;</span>;<span class="kw1">else</span> <span class="kw3">echo</span> <span class="st0">&quot;<span class="es2">$i</span> 0&quot;</span>;<span class="kw1">fi</span>;<span class="kw1">done</span> <span class="sy0">&gt;</span> code.txt; pkreclass <span class="re5">-i</span> input1.tif <span class="re5">-o</span> output.tif <span class="re5">--code</span> code.txt; <span class="co0"># replace all values smaller than 100 with 1, all other values with 0</span>
+&nbsp;
+pkreclass <span class="re5">-i</span> input1.tif <span class="re5">-o</span> output.tif $<span class="br0">&#40;</span><span class="kw1">for</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re2">i</span>=<span class="nu0">0</span>;i<span class="sy0">&lt;</span><span class="nu0">256</span>;++i<span class="br0">&#41;</span><span class="br0">&#41;</span>;<span class="kw1">do</span> <span class="kw1">if</span><span class="br0">&#40;</span><span class="br0">&#40;</span><span class="re1">$i</span><span class="sy0">&lt;</span><span class="nu0">100</span><span class="br0">&#41;</span><span class="br0">&#41;</span>;<span class="kw1">then</span> <span class="kw3">echo</span> <span class="re5">-n</span> <span class="st0">&quot; -c <span class="es2">$i</span> &quot;</span> <span class="st0">&quot; -r 1&quot;</span>;<span class="kw1">else</span> <span class="kw3">echo</span> <span class="st0">&quot; -c <span class="es2">$i</span> &quot;</span> <span class="st0">&quot; -r 0&quot;</span>;<span class="kw1">fi</span>;<span class="kw1">done</span><span class="br0">&#41;</span> <span class="co0"># same as previous but without temporary file</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Advanced examples&quot;,&quot;hid&quot;:&quot;advanced_examples&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:3,&quot;range&quot;:&quot;2229-&quot;} -->

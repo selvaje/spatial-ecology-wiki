@@ -1,0 +1,12 @@
+<span class="st0">&quot;&quot;&quot;Swap bands in a raster satellite image&quot;&quot;&quot;</span>
+<span class="co1"># Module within the GDAL python package </span>
+<span class="kw1">import</span> gdalnumeric
+<span class="co1"># name of our source image</span>
+src <span class="sy0">=</span> <span class="st0">&quot;FalseColor.tif&quot;</span>
+<span class="co1"># load the source image into an array</span>
+arr <span class="sy0">=</span> gdalnumeric.<span class="me1">LoadFile</span><span class="br0">&#40;</span>src<span class="br0">&#41;</span>
+<span class="co1"># swap bands 1 and 2 for a natural color image.</span>
+<span class="co1"># We will use numpy &quot;advanced slicing&quot; to reorder the bands.</span>
+<span class="co1"># Using the source image</span>
+gdalnumeric.<span class="me1">SaveArray</span><span class="br0">&#40;</span>arr<span class="br0">&#91;</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">2</span><span class="br0">&#93;</span><span class="sy0">,</span>:<span class="br0">&#93;</span><span class="sy0">,</span> <span class="st0">&quot;swap.tif&quot;</span><span class="sy0">,</span> format<span class="sy0">=</span><span class="st0">&quot;GTiff&quot;</span><span class="sy0">,</span> prototype<span class="sy0">=</span>src<span class="br0">&#41;</span>
+&nbsp;

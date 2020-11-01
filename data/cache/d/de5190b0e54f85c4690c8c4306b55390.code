@@ -1,0 +1,50 @@
+<span class="kw1">import</span> <span class="kw3">urllib</span>
+<span class="kw1">from</span> <span class="kw3">xml</span>.<span class="me1">dom</span> <span class="kw1">import</span> minidom
+&nbsp;
+<span class="co1"># Nextbus API command mode</span>
+command <span class="sy0">=</span> <span class="st0">&quot;vehicleLocations&quot;</span>
+&nbsp;
+<span class="co1"># Nextbus customer to query</span>
+agency <span class="sy0">=</span> <span class="st0">&quot;chapel-hill&quot;</span>
+&nbsp;
+<span class="co1"># Bus we want to query</span>
+route <span class="sy0">=</span> <span class="st0">&quot;A&quot;</span>
+&nbsp;
+<span class="co1"># Time in milliseconds since the </span>
+<span class="co1"># 1970 epoch time.  All tracks</span>
+<span class="co1"># after this time will be returned.</span>
+<span class="co1"># 0 only returns data for the last</span>
+<span class="co1"># 15 minutes</span>
+epoch <span class="sy0">=</span> <span class="st0">&quot;0&quot;</span>
+&nbsp;
+<span class="co1">## Build our query url</span>
+<span class="co1">#</span>
+<span class="co1"># webservices base url</span>
+url <span class="sy0">=</span> <span class="st0">&quot;http://webservices.nextbus.com&quot;</span>
+<span class="co1"># web service path</span>
+url +<span class="sy0">=</span> <span class="st0">&quot;/service/publicXMLFeed?&quot;</span>
+<span class="co1"># service command/mode</span>
+url +<span class="sy0">=</span> <span class="st0">&quot;command=&quot;</span> + command
+<span class="co1"># agency </span>
+url +<span class="sy0">=</span> <span class="st0">&quot;&amp;a=&quot;</span> + agency
+url +<span class="sy0">=</span>  <span class="st0">&quot;&amp;r=&quot;</span> + route
+url +<span class="sy0">=</span> <span class="st0">&quot;&amp;t=&quot;</span> + epoch
+&nbsp;
+<span class="co1"># Access the REST URL</span>
+feed <span class="sy0">=</span> <span class="kw3">urllib</span>.<span class="me1">urlopen</span><span class="br0">&#40;</span>url<span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="kw1">if</span> feed:
+  <span class="co1"># Parse the xml feed</span>
+  <span class="kw3">xml</span> <span class="sy0">=</span> minidom.<span class="me1">parse</span><span class="br0">&#40;</span>feed<span class="br0">&#41;</span>
+  <span class="co1"># Get the vehicle tags</span>
+  vehicles <span class="sy0">=</span> <span class="kw3">xml</span>.<span class="me1">getElementsByTagName</span><span class="br0">&#40;</span><span class="st0">&quot;vehicle&quot;</span><span class="br0">&#41;</span>
+  <span class="co1"># Get the most recent one. Normally there will</span>
+  <span class="co1"># be only one.</span>
+  <span class="kw1">if</span> vehicles:
+    bus <span class="sy0">=</span> vehicles.<span class="me1">pop</span><span class="br0">&#40;</span><span class="br0">&#41;</span>
+    <span class="co1"># Print the bus latitude and longitude</span>
+    att <span class="sy0">=</span> bus.<span class="me1">attributes</span>
+    <span class="kw1">print</span> att<span class="br0">&#91;</span><span class="st0">&quot;lon&quot;</span><span class="br0">&#93;</span>.<span class="me1">value</span><span class="sy0">,</span> <span class="st0">&quot;,&quot;</span><span class="sy0">,</span> att<span class="br0">&#91;</span><span class="st0">&quot;lat&quot;</span><span class="br0">&#93;</span>.<span class="me1">value</span>
+  <span class="kw1">else</span>:
+    <span class="kw1">print</span> <span class="st0">&quot;No vehicles found.&quot;</span>

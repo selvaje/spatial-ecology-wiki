@@ -1,0 +1,302 @@
+
+<p>
+This script summarises all the commands shown during the course, using a real example of research study.
+The final aim is to find a correlation equation between burnt area and Fire Weather Index, for each Mediterranean European country.
+It is based on 3 more scripts average<em>w.sh and file2R.awk fire</em>eumed.awk
+</p>
+
+<p>
+Study case:<br/>
+
+Script: open by kate <a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/sh_script/fire_statistic_w.sh </a><br/>
+
+Ancillary scripts: <br/>
+
+<a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/average_w.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/sh_script/average_w.sh" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/sh_script/average_w.sh </a><br/>
+
+<a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/awk_script/fire_eumed.awk" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/awk_script/fire_eumed.awk" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/awk_script/fire_eumed.awk  </a><br/>
+
+<a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/awk_script/file2R.awk" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/awk_script/file2R.awk" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/awk_script/file2R.awk  </a><br/>
+
+<a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/r_script/fire_model_country.R" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/r_script/fire_model_country.R" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/r_script/fire_model_country.R</a><br/>
+
+</p>
+
+<p>
+The average<em>w.sh it is a combination of bash and awk language.<br/>
+
+The file2R.awk is a simple function of awk able to standardise the input for R.<br/>
+
+The fire</em>eumed.awk is a complex function of awk able to sum the data aver<em>month</em>nuts3<em>fire.asc.<br/>
+
+The fire</em>model_country.R is a simple script of R that perform a step-wise regression and saves the function coefficient in a file. 
+</p>
+
+<p>
+Data:<br/>
+
+<a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc </a><br/>
+
+<a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3_fire.asc" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/input/aver_month_nuts3.asc </a><br/>
+
+<a href="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/nuts3_area.asc" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/studycase/fire_risk/tables/input/nuts3_area.asc" rel="nofollow noopener"> ~/ost4sem/studycase/fire_risk/tables/input/nuts3_area.asc </a><br/>
+
+<br/>
+
+Input directory: ~/ost4sem/studycase/fire<em>risk/tables/input<br/>
+
+Output direcotry: ~/ost4sem/studycase/fire</em>risk/tables/output<br/>
+
+<br/>
+
+<em>Explore the data in the directory.<br/>
+
+How many line has the aver<em>month</em>nuts3.asc file?<br/>
+
+How many line has the nuts3<em>area.asc file?<br/>
+
+How I can read the first 4 line of the files?<br/>
+
+How I can read the last  4 line of the files?<br/>
+
+How I can read just the 22th line of the files? and by AWK?<br/>
+
+The files have a header?<br/>
+
+The which are the common columns?<em><br/>
+
+<br/>
+
+Setting working space variables. The working space variables are useful in case you move the data from one directory to another directory.<br/>
+&lt;code bash&gt;
+INPUT=~/ost4sem/studycase/fire<em>risk/tables/input
+OUTPUT=~/ost4sem/studycase/fire</em>risk/tables/output
+AWK<em>SCR=~/ost4sem/studycase/fire</em>risk/awk<em>script
+R</em>SCR=~/ost4sem/studycase/fire<em>risk/r</em>script
+SH<em>SCR=~/ost4sem/studycase/fire</em>risk/sh_script
+
+cd $INPUT
+&lt;/code&gt;
+
+</em>How to print the value of a variable?<br/>
+
+How to print the working directory?<em><br/>
+
+<br/>
+
+In order to join two tables you need to sort the data before. 
+Sorting the files based on the first column.
+&lt;code bash&gt;
+sort -k 1,1 aver<em>month</em>nuts3.asc &gt; aver<em>month</em>nuts3<em>s.asc<br/>
+sort -k 1,1 nuts3</em>area.asc &gt;   nuts3<em>area</em>s.asc 
+&lt;/code&gt;
+Join the files based on the sorted columns.<br/>
+
+The common column is always written in the first position, followed by first file columns and then second file columns.
+&lt;code bash&gt;
+echo running the join
+join -1 1 -2 1  aver<em>month</em>nuts3<em>s.asc   nuts3</em>area<em>s.asc  &gt;  aver</em>month<em>nuts3</em>area.asc 
+rm aver<em>month</em>nuts3<em>s.asc  nuts3</em>area_s.asc 
+&lt;/code&gt;
+
+Create a country list name. The “^” will be used in the grep command to search just in the 1st column of the input file. This will speed up the computation.
+&lt;code bash&gt;
+echo “EUmed -e ^ES -e ^IT -e ^GR  -e ^PT -e ^FR61 -e ^FR62 -e ^FR81 -e ^FR82 -e ^FR712 -e ^FR713 -e ^FR723 -e ^FR831 -e ^FR832” &gt; country.txt
+echo “ES -e ^ES” » country.txt
+echo “IT -e ^IT” » country.txt
+echo “GR -e ^GR” » country.txt
+echo “PT -e ^PT” » country.txt
+echo “FRmed -e ^FR61 -e ^FR62 -e ^FR81 -e ^FR82 -e ^FR712 -e ^FR713 -e ^FR723 -e ^FR831 -e ^FR832” » country.txt
+&lt;/code&gt;
+</em>How can you read all the content of the file country</em>list<em>name.txt?<br/>
+
+What is the meaning of “ » ”<em><br/>
+
+<br/>
+
+In the following loop another script will be used ~ ost4sem/studycase/fire<em>risk/sh</em>script/average<em>w.sh <br/>
+
+Run the following command and replay the questions. 
+&lt;code bash&gt;
+sh ~/ost4sem/studycase/fire</em>risk/sh<em>script/average</em>w.sh aver<em>month</em>nuts3<em>area.asc  tmp</em>output.asc 
+&lt;/code&gt;
+This kind of script requires input arguments, which provides a lot of flexibility to the computation.
+The inputs that you inserted manually can be inserted in a script using the «<abbr title="End of file">EOF</abbr>  syntax see in further.<br/>
+
+<br/>
+
+Create a loop able to read recursively one line in the country<em>list</em>name.txt and process the aver<em>month</em>nuts3_area.asc for each country. 
+
+&lt;code bash&gt;
+for <sup><a href="#fn__1" id="fnt__1" class="fn_top">1)</a></sup> ; do 
+
+    # creating 2 variables from the country<em>list</em>name.txt<br/>
+
+    country<em>grep=<code>head -$line country.txt | tail -1 | awk &#039;{ print $1=&quot;&quot; ,$0 }&#039;</code> # this will be used for grep the file 
+    country</em>name=<code>awk -v line=$line &#039;{ if(line==NR) print $1  }&#039; country.txt</code>    # this to rename the file for each country
+    echo “$country<em>grep” ;  echo “$country</em>name”
+
+    # grep the string of country<em>grep in the file. 
+    # the file  grep</em>aver<em>month</em>nuts3_area.asc will include only the country that are included in one line
+
+    grep  $country<em>grep aver</em>month<em>nuts3</em>area.asc &gt;   grep<em>aver</em>month<em>nuts3</em>area.asc
+
+
+    # calculate  montly weighted average in the period 1985-2004, 
+    # so my  ClASS/ID will be the YYYYMM  and the weighted column will be the area<br/>
+
+    # extract the YYYY from the 2nd column select the years from 1985 to 2004,<br/>
+    # print  NUTS3 MM all the column | sorting based on the 2nd column 
+ 
+    awk &#039;{ if(substr($2,1,4)&gt;=1985 &amp;&amp; substr($2,1,4)⇐2004) print $0 }&#039; grep<em>aver</em>month<em>nuts3</em>area.asc | sort -k 2,2 &gt; grep<em>aver</em>month<em>nuts3</em>area_s.asc
+
+    # run the weighted average calculation. Befor the <abbr title="End of file">EOF</abbr> parameter never space or tab!! 
+$SH<em>SCR/average</em>w.sh grep<em>aver</em>month<em>nuts3</em>area<em>s.asc  grep</em>aver<em>month</em>nuts3<em>area</em>w.asc «<abbr title="End of file">EOF</abbr>
+n
+2
+14
+6
+<abbr title="End of file">EOF</abbr>
+
+# create an header
+echo “YYYY MM AV<em>TEMP AV</em>WIND AV<em>HUM AV</em>PREP AV<em>FFMC AV</em>DMC AV<em>DC AV</em>ISI AV<em>BUI AV</em>FWI AV<em>DSR” &gt;  “aver</em>yearmonth<em>w</em>era40<em>“$country</em>name”<em>85</em>04.asc”
+
+# split and print the 2nd column, delate the 1st, 14th, 4nd column, and print all columns<br/>
+awk &#039;{print substr($2,1,4),substr($2,5,2),$1=“”,$14=“”,$2=“”,$0}&#039;  grep<em>aver</em>month<em>nuts3</em>area<em>w.asc »  “aver</em>yearmonth<em>w</em>era40<em>“$country</em>name”<em>85</em>04.asc”
+
+
+# link the summed burnet area  with  climate montly average   1985-2004<br/>
+
+# grep the country | select the year  and print 2nd and 3rd col without space |  sorting | run the sum 
+
+grep  $country<em>grep  aver</em>month<em>nuts3</em>fire.asc | awk &#039;{ if($2&gt;=1985 &amp;&amp; $2⇐2004) print $2 $3,$4,$5 }&#039; | sort -k 1,1  |  awk -f  $AWK<em>SCR/fire</em>eumed.awk   &gt;  aver<em>month</em>nuts3<em>fire</em>s.asc 
+
+<br/>
+awk &#039;{ print $1 $2, $1=“”, $2=“”, $0 }&#039; “aver<em>yearmonth</em>w<em>era40</em>“$country<em>name”</em>85<em>04.asc” | sort -k 1,1  &gt;  “aver</em>yearmonth<em>w</em>era40<em>“$country</em>name”<em>85</em>04_s.asc”
+
+## create an header 
+    echo “YYYY MM BCOUNT LG<em>BCOUNT BAREA LG</em>BAREA BABC AV<em>TEMP AV</em>WIND AV<em>HUM AV</em>PREP AV<em>FFMC AV</em>DMC AV<em>DC AV</em>ISI AV<em>BUI AV</em>FWI AV<em>DSR” &gt;  $OUTPUT“/aver</em>yearmonth<em>w</em>era40<em>“$country</em>name”<em>85</em>04_fire.asc” 
+
+join -1 1 -2 1   aver<em>month</em>nuts3<em>fire</em>s.asc “aver<em>yearmonth</em>w<em>era40</em>“$country<em>name”</em>85<em>04</em>s.asc”   | awk &#039;{ print substr($1,1,4),substr($1,5,2),$2,log($2),$3,log($3),$3/$2,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14}&#039; »  $OUTPUT“/aver<em>yearmonth</em>w<em>era40</em>“$country<em>name”</em>85<em>04</em>fire.asc”<br/>
+
+## remuve intermediate file 
+rm   aver<em>month</em>nuts3<em>fire</em>s.asc “aver<em>yearmonth</em>w<em>era40</em>“$country<em>name”</em>85<em>04</em>s.asc”    grep<em>aver</em>month<em>nuts3</em>area.asc<br/>
+rm grep<em>aver</em>month<em>nuts3</em>area<em>w.asc grep</em>aver<em>month</em>nuts3<em>area</em>s.asc “aver<em>yearmonth</em>w<em>era40</em>“$country<em>name”</em>85_04.asc” 
+
+
+# the files are ready to be imported in R for statical computation. 
+# basically there are 3 ways.
+#
+# 1st create an R script using the echo command, directly in this script, like for the country.txt 
+#     This method is useful for short R script, because the quoting of echo command is 
+#     really annoying. An example will be shown further in the gnuplot section 
+#<br/>
+# 2nd create and R script in  another script and then run it. 
+# The R scripts, usually called name.R can be run by redirection of the input
+# R &lt; name.R   # for more info run $ man R
+#
+# 3rd create an R script using the r commands included in the <abbr title="End of file">EOF</abbr> syntax. 
+# R –no-save -q « <abbr title="End of file">EOF</abbr>
+# all the r commands
+# <abbr title="End of file">EOF</abbr>
+
+echo start running R script
+
+export country_name  # a bash variable needs to be exported to be used for other programs<br/>
+
+R –no-save -q  &lt;  $R<em>SCR/fire</em>model_country.R
+
+
+done 
+rm  aver<em>month</em>nuts3_area.asc 
+&lt;/code&gt;
+
+&lt;note tip&gt;This line    </em>R –no-save -q  &lt;  $R</em>SCR/fire<em>model</em>country.R</em>  can also be computed in the following way:
+&lt;/note&gt;
+</p>
+<div class="plugin_note notewarning">Do not run!
+</div><pre class="code bash">R <span class="re5">--no-save</span> <span class="re5">-q</span>  <span class="co2">&lt;&lt; EOF
+country=Sys.getenv('country_name') # import the variable in the R enviroment
+&nbsp;
+# import the data
+&nbsp;
+input_85_04=paste(&quot;~/corsoname/studycase/fire_risk/tables/output/aver_yearmonth_w_era40_&quot; , country , &quot;_85_04_fire.asc&quot;, sep=&quot;&quot;) 
+input_85_04  = read.delim ( input_85_04   , header = TRUE , sep = &quot; &quot;  )
+&nbsp;
+# built up a  model for summer-autumn  ~AV_DMC+AV_DC+AV_ISI+AV_BUI,AV_DSR
+# multiple regression with a step-wise selection
+&nbsp;
+input_85_04_M4_12e  = subset(input_85_04,  MM &gt; 4 &amp; MM &lt;  12 )
+lm_4_12e_ba = lm ( LG_BAREA~AV_DC+AV_ISI, input_85_04_M4_12e )  
+&nbsp;
+# export the model result in a txt format.
+write.table(capture.output(summary(lm_4_12e_ba)),paste(&quot;../output/mod_sum_&quot;,country ,&quot;.txt&quot;,sep = &quot;&quot;),row.names=FALSE, quote = FALSE)
+&nbsp;
+EOF</span></pre>
+
+<p>
+The results of R is a linear function and has been exported to a file called mod<em>sum</em>“$country_name”.txt“.
+This file will be used to import the function coefficient in gnuplot. 
+Starting the plotting action:
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="br0">&#40;</span><span class="br0">&#40;</span> <span class="re2">line</span>=<span class="nu0">1</span> ; line<span class="sy0">&lt;</span>=<span class="nu0">6</span> ; line++<span class="br0">&#41;</span><span class="br0">&#41;</span> ; <span class="kw1">do</span> 
+&nbsp;
+    <span class="re2">country_name</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">line</span>=<span class="re1">$line</span> <span class="st_h">'{if(line==NR) print $1}'</span> country.txt<span class="sy0">`</span>  <span class="co0"># this to rename the file for each country</span>
+    <span class="kw3">echo</span> <span class="st0">&quot;<span class="es2">$country_name</span>&quot;</span>
+&nbsp;
+    <span class="co0"># create a variable that change for each country</span>
+    <span class="co0"># getting the coefficient for the model </span>
+&nbsp;
+    <span class="re2">Inter</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="st_h">'{if(NR==12) print $2}'</span> <span class="re1">$OUTPUT</span><span class="st0">&quot;/mod_sum_&quot;</span><span class="re1">$country_name</span><span class="st0">&quot;.txt&quot;</span><span class="sy0">`</span>
+    <span class="re2">AV_DC</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="st_h">'{if(NR==13) print $2}'</span>  <span class="re1">$OUTPUT</span><span class="st0">&quot;/mod_sum_&quot;</span><span class="re1">$country_name</span><span class="st0">&quot;.txt&quot;</span><span class="sy0">`</span>
+    <span class="re2">AV_ISI</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="st_h">'{if(NR==14) print $2}'</span>  <span class="re1">$OUTPUT</span><span class="st0">&quot;/mod_sum_&quot;</span><span class="re1">$country_name</span><span class="st0">&quot;.txt&quot;</span><span class="sy0">`</span>
+    <span class="re2">std_erInt</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="st_h">'{if(NR==12) print $3}'</span>  <span class="re1">$OUTPUT</span><span class="st0">&quot;/mod_sum_&quot;</span><span class="re1">$country_name</span><span class="st0">&quot;.txt&quot;</span><span class="sy0">`</span>
+    <span class="re2">std_erAV_DC</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="st_h">'{if(NR==13) print $3}'</span>  <span class="re1">$OUTPUT</span><span class="st0">&quot;/mod_sum_&quot;</span><span class="re1">$country_name</span><span class="st0">&quot;.txt&quot;</span><span class="sy0">`</span>
+    <span class="re2">std_erAV_ISI</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="st_h">'{if(NR==14) print $3}'</span>  <span class="re1">$OUTPUT</span><span class="st0">&quot;/mod_sum_&quot;</span><span class="re1">$country_name</span><span class="st0">&quot;.txt&quot;</span><span class="sy0">`</span>
+&nbsp;
+<span class="co0"># create a script that use the  input for each country </span>
+&nbsp;
+    <span class="kw3">echo</span>  <span class="kw1">set</span> terminal postscript eps color solid lw <span class="nu0">4</span>  <span class="co3">\&quot;</span>Helvetica<span class="co3">\&quot;</span> <span class="nu0">24</span>  <span class="sy0">&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> <span class="kw2">size</span> <span class="nu0">2.5</span>,<span class="nu0">2.5</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="st0">&quot;set title <span class="es1">\&quot;</span>3d interpolated surface<span class="es1">\&quot;</span>&quot;</span> font <span class="co3">\&quot;</span>Helvetica,<span class="nu0">32</span><span class="co3">\&quot;</span>   <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> xlabel <span class="co3">\&quot;</span>DC_AVG<span class="co3">\&quot;</span>  font <span class="co3">\&quot;</span>Helvetica,<span class="nu0">24</span><span class="co3">\&quot;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> xrange <span class="br0">&#91;</span><span class="nu0">100</span>:<span class="nu0">1100</span><span class="br0">&#93;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> yrange <span class="br0">&#91;</span><span class="nu0">1</span>:<span class="nu0">8</span><span class="br0">&#93;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> zrange <span class="br0">&#91;</span><span class="nu0">0</span>:<span class="nu0">500000</span><span class="br0">&#93;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> ylabel <span class="co3">\&quot;</span>ISI_AVG<span class="co3">\&quot;</span>  font <span class="co3">\&quot;</span>Helvetica,<span class="nu0">24</span><span class="co3">\&quot;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> zlabel  offset +<span class="nu0">15</span>,+<span class="nu0">15</span>  <span class="co3">\&quot;</span>Burned Area \<span class="br0">&#40;</span>ha\<span class="br0">&#41;</span><span class="co3">\&quot;</span>  font <span class="co3">\&quot;</span>Helvetica,<span class="nu0">24</span><span class="co3">\&quot;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> key outside center bottom   <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> ticslevel <span class="nu0">0.02</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> view  <span class="nu0">80</span>,<span class="nu0">225</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> tics out  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> tic scale <span class="nu0">2</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> xtics nomirror  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> ytics nomirror  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> format y <span class="co3">\&quot;</span><span class="sy0">%</span>g<span class="co3">\&quot;</span>   <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> format z <span class="co3">\&quot;</span><span class="sy0">%</span>12.0f          <span class="co3">\&quot;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> format x <span class="co3">\&quot;</span><span class="sy0">%</span>g<span class="co3">\&quot;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="kw1">set</span> pointsize <span class="nu0">1.5</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+    <span class="kw3">echo</span>  <span class="st0">&quot;set output '<span class="es2">$OUTPUT</span>&quot;</span><span class="sy0">/</span><span class="st0">&quot;<span class="es2">$country_name</span>.ps'&quot;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+&nbsp;
+ <span class="kw3">echo</span> <span class="st0">&quot;splot <span class="es1">\&quot;</span>&lt; awk '{if(<span class="es1">\$</span>2==5) print}' <span class="es2">$OUTPUT</span>&quot;</span><span class="sy0">/</span>aver_yearmonth_w_era40_<span class="st0">&quot;<span class="es2">$country_name</span>&quot;</span>_85_04_fire.asc<span class="st0">&quot; <span class="es1">\&quot;</span> u 14:15:5 ti <span class="es1">\&quot;</span>May<span class="es1">\&quot;</span> w p 1 5,\<span class="es1">\
+</span><span class="es1">\&quot;</span>&lt; awk '{if ( <span class="es1">\$</span>2==6) print}' <span class="es2">$OUTPUT</span>&quot;</span><span class="sy0">/</span>aver_yearmonth_w_era40_<span class="st0">&quot;<span class="es2">$country_name</span>&quot;</span>_85_04_fire.asc<span class="st0">&quot; <span class="es1">\&quot;</span> u 14:15:5 ti <span class="es1">\&quot;</span>June<span class="es1">\&quot;</span> w p 2 5,\<span class="es1">\
+</span><span class="es1">\&quot;</span>&lt; awk '{if ( <span class="es1">\$</span>2==7) print}' <span class="es2">$OUTPUT</span>&quot;</span><span class="sy0">/</span>aver_yearmonth_w_era40_<span class="st0">&quot;<span class="es2">$country_name</span>&quot;</span>_85_04_fire.asc<span class="st0">&quot; <span class="es1">\&quot;</span> u 14:15:5 ti <span class="es1">\&quot;</span>July<span class="es1">\&quot;</span> w p 3 5,\<span class="es1">\
+</span><span class="es1">\&quot;</span>&lt; awk '{if ( <span class="es1">\$</span>2==8) print}' <span class="es2">$OUTPUT</span>&quot;</span><span class="sy0">/</span>aver_yearmonth_w_era40_<span class="st0">&quot;<span class="es2">$country_name</span>&quot;</span>_85_04_fire.asc<span class="st0">&quot; <span class="es1">\&quot;</span> u 14:15:5 ti <span class="es1">\&quot;</span>August<span class="es1">\&quot;</span> w p 4 5,\<span class="es1">\
+</span><span class="es1">\&quot;</span>&lt; awk '{if ( <span class="es1">\$</span>2==9) print}' <span class="es2">$OUTPUT</span>&quot;</span><span class="sy0">/</span>aver_yearmonth_w_era40_<span class="st0">&quot;<span class="es2">$country_name</span>&quot;</span>_85_04_fire.asc<span class="st0">&quot; <span class="es1">\&quot;</span> u 14:15:5 ti <span class="es1">\&quot;</span>September<span class="es1">\&quot;</span> w p 5 5,\<span class="es1">\
+</span><span class="es1">\&quot;</span>&lt; awk '{if ( <span class="es1">\$</span>2==10) print}' <span class="es2">$OUTPUT</span>&quot;</span><span class="sy0">/</span>aver_yearmonth_w_era40_<span class="st0">&quot;<span class="es2">$country_name</span>&quot;</span>_85_04_fire.asc<span class="st0">&quot; <span class="es1">\&quot;</span> u 14:15:5 ti <span class="es1">\&quot;</span>October<span class="es1">\&quot;</span> w p 6 5,\<span class="es1">\
+</span><span class="es1">\&quot;</span>&lt; awk '{if ( <span class="es1">\$</span>2==11) print}' <span class="es2">$OUTPUT</span>&quot;</span><span class="sy0">/</span>aver_yearmonth_w_era40_<span class="st0">&quot;<span class="es2">$country_name</span>&quot;</span>_85_04_fire.asc<span class="st0">&quot; <span class="es1">\&quot;</span> u 14:15:5 ti <span class="es1">\&quot;</span>November<span class="es1">\&quot;</span> w p 8 5 ,\<span class="es1">\
+</span>exp(((<span class="es2">$AV_DC</span>-<span class="es2">$std_erAV_DC</span>)*x)+((<span class="es2">$AV_ISI</span>-<span class="es2">$std_erAV_DC</span>)*y)+(<span class="es2">$Inter</span>-<span class="es2">$std_erInt</span>)) ti <span class="es1">\&quot;</span>Interpolated Surface - Std.Error<span class="es1">\&quot;</span> w l 9 ,\<span class="es1">\
+</span>exp((<span class="es2">$AV_DC</span>*x)+(<span class="es2">$AV_ISI</span>*y)+<span class="es2">$Inter</span>) ti <span class="es1">\&quot;</span>Interpolated Surface<span class="es1">\&quot;</span> w l 7,\<span class="es1">\
+</span>exp(((<span class="es2">$AV_DC</span>+<span class="es2">$std_erAV_DC</span>)*x)+((<span class="es2">$AV_ISI</span>+<span class="es2">$std_erAV_DC</span>)*y)+(<span class="es2">$Inter</span>+<span class="es2">$std_erInt</span>)) ti <span class="es1">\&quot;</span>Interpolated Surface + Std.Error<span class="es1">\&quot;</span> w l 8
+&quot;</span> <span class="sy0">&gt;&gt;</span> 3d_plot.plt 
+    <span class="kw3">echo</span> <span class="st0">&quot;exit&quot;</span>  <span class="sy0">&gt;&gt;</span> 3d_plot.plt
+&nbsp;
+    gnuplot <span class="sy0">&lt;</span>   3d_plot.plt 
+&nbsp;
+<span class="kw1">done</span> 
+&nbsp;
+<span class="kw2">rm</span> 3d_plot.plt country.txt </pre>
+<div class="footnotes">
+<div class="fn"><sup><a href="#fnt__1" id="fn__1" class="fn_bot">1)</a></sup> 
+<div class="content"> line=1 ; line⇐6 ; line++</div></div>
+</div>

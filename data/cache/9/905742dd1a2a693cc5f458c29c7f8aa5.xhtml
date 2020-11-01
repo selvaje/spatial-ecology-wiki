@@ -1,0 +1,85 @@
+
+<h1 class="sectionedit1" id="virtual_machine_installation_instruction">Virtual Machine installation instruction</h1>
+<div class="level1">
+
+<p>
+<strong>Workshop Descritpion</strong>
+GDAL and PKTOOLS are powerful commands line utilities mainly used for raster manipulation and analysis. In this workshop we will explain the main principle and philosophy about these tools by showing simple geodata processing for raster cropping and reprojection, image masking, spatial and temporal/spectral filtering as well as image classification. We will also have the opportunity to use Amazon cloud to perform high performance computation for image mosaicking and temporal spline. We will explain how to maximize computational implementation and process raster data more efficiently by building up routines that allow to save temporary rasters outputs in the RAM and use VRT files for tiling operation in a multicore environment. We expect basic command line knowledge (any language is fine) and a general knowhow of geospatial data processing. Participants should bring laptops with <a href="https://live.osgeo.org/en/index.html" class="urlextern" target="blanc" title="https://live.osgeo.org/en/index.html" rel="nofollow noopener"> OSGeo-Live </a> virtual machine and GDAL and PKTOOLS (info at <a href="https://goo.gl/pzsDTo" class="urlextern" target="blanc" title="https://goo.gl/pzsDTo" rel="nofollow noopener">https://goo.gl/pzsDTo</a>) already installed. 
+</p>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+
+<h4 id="prepare_your_os_for_the_workshop_following_these_steps">Prepare your OS for the workshop following these steps:</h4>
+<div class="level4">
+<ol>
+<li class="level1"><div class="li"> Be sure to have 30 Giga free in your hard disk and 4G of RAM.</div>
+</li>
+<li class="level1"><div class="li"> Any <abbr title="Operating System">OS</abbr> - Mac or Windows or Linux - is fine</div>
+</li>
+<li class="level1"><div class="li"> Install <a href="https://www.virtualbox.org" class="urlextern" target="blanc" title="https://www.virtualbox.org" rel="nofollow noopener"> VirtuaBox </a> player in you <abbr title="Operating System">OS</abbr></div>
+</li>
+<li class="level1"><div class="li"> Visit <a href="https://live.osgeo.org/en/index.html" class="urlextern" target="blanc" title="https://live.osgeo.org/en/index.html" rel="nofollow noopener"> OSGeo-Live Main page </a>  and at <a href="https://live.osgeo.org/en/download.html" class="urlextern" target="blanc" title="https://live.osgeo.org/en/download.html" rel="nofollow noopener"> OSGeo-Live Download page  </a> get the osgeo-live-vm (<a href="https://sourceforge.net/projects/osgeo-live/files/11.0/osgeo-live-11.0-vm.7z/download" class="urlextern" target="blanc" title="https://sourceforge.net/projects/osgeo-live/files/11.0/osgeo-live-11.0-vm.7z/download" rel="nofollow noopener"> osgeo-live-11.0-vm.7z</a>)<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Install the <a href="https://live.osgeo.org/en/index.html" class="urlextern" target="blanc" title="https://live.osgeo.org/en/index.html" rel="nofollow noopener"> OSGeo-Live </a> using the instruction at <a href="https://live.osgeo.org/en/quickstart/virtualization_quickstart.html" class="urlextern" target="blanc" title="https://live.osgeo.org/en/quickstart/virtualization_quickstart.html" rel="nofollow noopener"> Run OSGeo-Live in a Virtual Machine </a></div>
+</li>
+</ol>
+
+<p>
+<strong>For Windows users</strong> Pay attention when you arrive at this stage
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Afoss4ginstallation&amp;media=wiki:virtualbox_select_name.png" class="media" title="wiki:virtualbox_select_name.png"><img src="/dokuwiki/lib/exe/fetch.php?w=200&amp;tok=df6c3a&amp;media=wiki:virtualbox_select_name.png" class="medialeft" alt="" width="200" /></a>
+if you do not see Ubuntu (64bit) but only Ubuntu (32bit) means
+that your BIOS is not set for virtualization. Enter in the BIOS according to your PC
+configuration and enable virtualization (see example at <a href="https://goo.gl/Zgq14A" class="urlextern" target="blanc" title="https://goo.gl/Zgq14A" rel="nofollow noopener">https://goo.gl/Zgq14A</a>).
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+<br/>
+
+</p>
+
+</div>
+
+<h4 id="prepare_your_osgeo-live_with_additional_software_and_data_following_these_steps">Prepare your OSGeo-Live with additional software and data following these steps:</h4>
+<div class="level4">
+<ol>
+<li class="level1"><div class="li"> After have installed the OSGeo-Live Virtual Machine, start it and be sure to have the network connection working properly (google it something), open the Terminal (command line shell) by clicking on the green icon on the left down corner of the desktop and run the following commands to install ancillary software.</div>
+</li>
+</ol>
+<pre class="code"> cd /tmp
+ # get the installation script
+ wget https://www.dropbox.com/s/y6tkv7rxjfpfotp/install_pktools_openev_4osgeo.sh
+ # run the install_pktools_openev_4osgeo.sh script under admin status. 
+ # It is going to ask for a password which is &quot;user&quot;. 
+ # Pay attention that when you type you do not see the letter but you are writing the password!
+ # then press enter
+ sudo bash /tmp/install_pktools_openev_4osgeo.sh --enable-las --enable-fann
+ # could that that the OS update will ask to confirm (OK) some task, just follow the wizard instruction.</pre>
+<ol>
+<li class="level1"><div class="li"> Download geodata for the workshop</div>
+</li>
+</ol>
+<pre class="code"> cd /home/user
+ # this will take a while, be patient
+ wget https://www.dropbox.com/s/6y8zvme0v00siky/ost4sem.tar.gz
+ tar xzvf ost4sem.tar.gz</pre>
+
+</div>

@@ -1,0 +1,5 @@
+<span class="co4">admin@grappolo:~$ </span><span class="kw2">ssh</span> node1
+<span class="co4">admin@node1:~$ </span><span class="kw2">sudo</span> poweroff <span class="co0"># password: node1pw</span>
+<span class="co4">admin@grappolo:~$ </span><span class="kw2">ssh</span> node2 
+<span class="co4">admin@node2:~$ </span><span class="kw2">sudo</span> poweroff <span class="co0"># password: node2pw</span>
+<span class="co4">admin@grappolo:~$ </span><span class="kw2">sudo</span> poweroff <span class="co0"># password grappolo: admin</span>

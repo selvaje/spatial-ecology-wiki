@@ -1,0 +1,1386 @@
+
+<h1 class="sectionedit1" id="habitat_suitability_and_uncertainty_modeling_of_mollusk_fauna">Habitat Suitability and uncertainty Modeling of Mollusk Fauna</h1>
+<div class="level1">
+
+<p>
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Download the project proposal <a href="http://www.spatial-ecology.net/ost4sem/project/unidk2010/MARINE/documents/Copenhagen2010.pdf" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/project/unidk2010/MARINE/documents/Copenhagen2010.pdf" rel="nofollow noopener">  Copenhagen2010.pdf </a>.</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Habitat Suitability and uncertainty Modeling of Mollusk Fauna&quot;,&quot;hid&quot;:&quot;habitat_suitability_and_uncertainty_modeling_of_mollusk_fauna&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-238&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+<strong> I work together with Jens, see <a href="/dokuwiki/doku.php?id=wikidk:dk10mbee" class="wikilink1" title="wikidk:dk10mbee"> MODB&amp;B</a>. We use basically the same workflow and methods, but with different data sets.</strong>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;239-402&quot;} -->
+<h3 class="sectionedit3" id="general_framework_of_this_analysis">General framework of this analysis</h3>
+<div class="level3">
+
+<p>
+There are many methods available within the framework of Habitat Suitability Modeling (HMS). Common to all of them is that there will be a varying degree of uncertainty related to all of them depending on the variance related to the fitted values. This uncertainty is a key issue in HMS and needs to be addressed if we want our predictions to be valid in and useful to management and decision-makers. Jens and I address a simple method to visualize the uncertainty inherent to a particular prediction. This method is based on a random pick of drawn from our predictions based on the functions rnorm and rpois in R. These n random picks, based on the mean and SD of the fitted values of the model, can be considered as what would be likely to observe in the field if we went to each pixel n times.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;General framework of this analysis&quot;,&quot;hid&quot;:&quot;general_framework_of_this_analysis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;403-1246&quot;} -->
+<h3 class="sectionedit4" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+I had the following goals of this last week of coding:
+</p>
+
+<p>
+1) Using, or at least touching, as many as possible of the tools taught during the first week of the course.
+</p>
+<ul>
+<li class="level1"><div class="li">Bash<ul>
+<li class="level1"><div class="li"> AWK</div>
+</li>
+<li class="level1"><div class="li"> Bash-scripting of GRASS</div>
+</li>
+<li class="level1"><div class="li"> GRASS &amp; Qgis</div>
+</li>
+<li class="level1"><div class="li"> R</div>
+</li>
+<li class="level1"><div class="li"> ImageMagick</div>
+</li>
+</ul>
+
+<p>
+2) Avoid manual editing of files in spreadsheets or text editors.
+</p>
+</div>
+</li>
+</ul>
+
+<p>
+3) Looping over repetitive operations.
+</p>
+
+<p>
+4) Make the code as general as possible (still a way to go…).
+</p>
+<ul>
+<li class="level1"><div class="li"> This would allow for creating functions (at least in R).</div>
+</li>
+</ul>
+
+<p>
+5) Prepare a species data set and a predictor data set and merge/join them.
+</p>
+
+<p>
+6) Fit a GLM and GAM model to the Mollusk richness.
+</p>
+
+<p>
+7) Predict both models to new data (i.e. unsampled areas).
+</p>
+
+<p>
+8) Model uncertainty in the models by drawing random values from the fitted functions (i.e. “new fieldtrips”).
+</p>
+
+<p>
+9) Visualize uncertainty by making movies of predicted outcomes of the uncertainty models.
+</p>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;1247-2162&quot;} -->
+<h2 class="sectionedit5" id="metadata">METADATA</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METADATA&quot;,&quot;hid&quot;:&quot;metadata&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;2163-2183&quot;} -->
+<h3 class="sectionedit6" id="raster_data">Raster data</h3>
+<div class="level3">
+<ul>
+<li class="level1 node"><div class="li"> Bathymetry (DEM)</div>
+<ul>
+<li class="level2"><div class="li"> Res = 1 m, Extension = 1000 x 1050 m</div>
+</li>
+</ul>
+</li>
+<li class="level1 node"><div class="li"> Terrain variables derived from DEM</div>
+<ul>
+<li class="level2"><div class="li"> BPI, slope, aspect, curvature</div>
+</li>
+</ul>
+</li>
+<li class="level1 node"><div class="li"> Sea current data - bottom, surface, and water column</div>
+<ul>
+<li class="level2"><div class="li"> res = 15 m</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Acoustic classification from single-beam</div>
+</li>
+<li class="level1"><div class="li"> Habitat model (based on BPI, slope, and depth)</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Raster data&quot;,&quot;hid&quot;:&quot;raster_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;2184-2514&quot;} -->
+<h3 class="sectionedit7" id="vector_data">Vector Data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Stations - 28 stations in total</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector Data&quot;,&quot;hid&quot;:&quot;vector_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;2515-2572&quot;} -->
+<h3 class="sectionedit8" id="text_files_and_tables">Text files and tables</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Grainsize (sediment)</div>
+</li>
+<li class="level1"><div class="li"> Species-Abundance Matrix</div>
+</li>
+<li class="level1"><div class="li"> Predictor Matrix</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Text files and tables&quot;,&quot;hid&quot;:&quot;text_files_and_tables&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;2573-2679&quot;} -->
+<h3 class="sectionedit9" id="ortophoto">Ortophoto</h3>
+<div class="level3">
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Ortophoto&quot;,&quot;hid&quot;:&quot;ortophoto&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;2680-2702&quot;} -->
+<h2 class="sectionedit10" id="method">METHOD</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:10,&quot;range&quot;:&quot;2703-2721&quot;} -->
+<h3 class="sectionedit11" id="workflow">WORKFLOW</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Preparing two predictor datasets (EnvMat.txt and EnvMat2.csv) using bash, awk, and GRASS.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Merging species data set with predictor data sets in R.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Fitting GLM and GAM models in R using mollusk richness per sampled station as the response variable.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Prepared a data frame holding the new data to which I want to predict (in R).</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Predicting to new data/unvisited areas for both GLM and GAM models.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> In an attempt to estimate uncertainty of our models, Jens and I were using the rnorm function in R to simulate the possible outcome of new “field trips”.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Making an animation to visualize the uncertainty discovered by the “field trips”</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;WORKFLOW&quot;,&quot;hid&quot;:&quot;workflow&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:11,&quot;range&quot;:&quot;2722-3406&quot;} -->
+<h2 class="sectionedit12" id="data_import">DATA IMPORT</h2>
+<div class="level2">
+<pre class="code bash"><span class="co0">### Habitat Suitability and uncertainty Modeling of Mollusk Fauna</span>
+<span class="co0">### Thijs Chr. van Son (Jens Åstrøm)</span>
+&nbsp;
+<span class="re2">INDIR</span>=~<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>input			<span class="co0"># setting the input file directory </span>
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>output 		<span class="co0"># setting the output file directory </span>
+&nbsp;
+<span class="co0">### Extracting data from Grainsize.csv and put it into EnvMat.txt</span>
+<span class="kw3">cd</span> <span class="re1">$INDIR</span>
+<span class="co0"># awk '{ print NF }' EnvMat.csv		# there are 8 columns </span>
+&nbsp;
+<span class="co0">#######################################################################</span>
+<span class="co0">#######################################################################</span>
+<span class="co0">################ PREPARATION OF PREDICTOR DATA SET ####################</span>
+<span class="co0">#######################################################################</span>
+<span class="co0">#######################################################################</span>
+&nbsp;
+<span class="co0">#######################################################################</span>
+<span class="co0">############## Extracting grainsize parameters in R ###############</span>
+<span class="co0">#######################################################################</span>
+&nbsp;
+<span class="co0">### For each Station:</span>
+<span class="co0">## - linearly interpolate between known grainsize points</span>
+<span class="co0">## - extract percentiles</span>
+<span class="co0">## - calculate grainsize parameters</span>
+<span class="co0">## - load percentiles and parameters in a matrices</span>
+&nbsp;
+<span class="co0"># Importing the grainsize sediment data</span>
+Grainsize <span class="sy0">&lt;</span>- read.csv<span class="br0">&#40;</span><span class="st0">&quot;/home/thijs/a/PhD_data/Fielddata/EnvData/stut_grsz_compl.csv&quot;</span><span class="br0">&#41;</span>
+str<span class="br0">&#40;</span>Grainsize<span class="br0">&#41;</span>
+<span class="kw2">head</span><span class="br0">&#40;</span>Grainsize<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Fixing a typo</span>
+<span class="co4">Grainsize$</span>dry.wt <span class="sy0">&lt;</span>- Grainsize<span class="re1">$dry</span>.weigth
+str<span class="br0">&#40;</span>Grainsize<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Extracting the 0-2 cm layer</span>
+Upper <span class="sy0">&lt;</span>- Grainsize<span class="br0">&#91;</span>Grainsize<span class="re1">$layer</span> == <span class="st0">&quot;0-2&quot;</span>, <span class="br0">&#93;</span> <span class="co0"># Here the subset function can be used also</span>
+str<span class="br0">&#40;</span>Upper<span class="br0">&#41;</span>
+<span class="kw2">head</span><span class="br0">&#40;</span>Upper<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Creating a matrix to hold all parameters for each replicate</span>
+AllReps <span class="sy0">&lt;</span>- unique<span class="br0">&#40;</span>Upper<span class="re1">$sta</span>.rep<span class="br0">&#41;</span>
+a <span class="sy0">&lt;</span>- length<span class="br0">&#40;</span>AllReps<span class="br0">&#41;</span>
+Params <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="st0">&quot;Median&quot;</span>, <span class="st0">&quot;Sorting&quot;</span>, <span class="st0">&quot;Skewness&quot;</span>, <span class="st0">&quot;Kurtosis&quot;</span><span class="br0">&#41;</span>
+Param.mat <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>data = NA, nrow = length<span class="br0">&#40;</span>AllReps<span class="br0">&#41;</span>, ncol = length<span class="br0">&#40;</span>Params<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Defining objects to be used in Function(dt, percV) and</span>
+<span class="co0">## creates a matrix to hold percentiles for each replicateubuntu</span>
+percV <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">5</span>, <span class="nu0">16</span>, <span class="nu0">25</span>, <span class="nu0">50</span>, <span class="nu0">75</span>, <span class="nu0">84</span>, <span class="nu0">95</span><span class="br0">&#41;</span>
+o <span class="sy0">&lt;</span>- length<span class="br0">&#40;</span>percV<span class="br0">&#41;</span>
+dt <span class="sy0">&lt;</span>- Upper
+Perc.mat <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>data = NA, nrow = length<span class="br0">&#40;</span>AllReps<span class="br0">&#41;</span>, ncol = length<span class="br0">&#40;</span>percV<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Sourcing my functions</span>
+<span class="kw3">source</span><span class="br0">&#40;</span><span class="st0">&quot;/home/thijs/a/R/RCode/my_functions.r&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Run the PPsLog-function in a loop over all stations</span>
+<span class="kw1">for</span> <span class="br0">&#40;</span>i <span class="kw1">in</span> <span class="kw2">seq</span><span class="br0">&#40;</span>length = a<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    Rep.i <span class="sy0">&lt;</span>- AllReps<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+    dt.i <span class="sy0">&lt;</span>- dt<span class="br0">&#91;</span>dt<span class="re1">$sta</span>.rep == Rep.i, <span class="br0">&#93;</span>
+    <span class="co0"># output &lt;- PPsGeo(dt.i, percV)</span>
+    output <span class="sy0">&lt;</span>- PPsLog<span class="br0">&#40;</span>dt.i, percV<span class="br0">&#41;</span>
+    Param.mat<span class="br0">&#91;</span>i, <span class="br0">&#93;</span> <span class="sy0">&lt;</span>- output<span class="re1">$a</span>
+    Perc.mat<span class="br0">&#91;</span>i, <span class="br0">&#93;</span> <span class="sy0">&lt;</span>- output<span class="re1">$b</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+<span class="co0">## Setting the colnames and rownames of Param.mat</span>
+colnames<span class="br0">&#40;</span>Param.mat<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- Params
+rownames<span class="br0">&#40;</span>Param.mat<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- <span class="kw2">seq</span><span class="br0">&#40;</span><span class="nu0">1</span>:<span class="nu0">35</span><span class="br0">&#41;</span>
+Param.mat
+&nbsp;
+<span class="co0">## Coerce the matrix into a data frame  </span>
+Param.mat.df <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>Param.mat<span class="br0">&#41;</span>
+str<span class="br0">&#40;</span>Param.mat.df<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Adding the stations to the data frame</span>
+<span class="co4">Param.mat.df$</span>Reps <span class="sy0">&lt;</span>- AllReps
+&nbsp;
+<span class="co0">## Selecting Stations, Median,and Sorting</span>
+Param.mat.df <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span>Param.mat.df, <span class="kw1">select</span> = c<span class="br0">&#40;</span><span class="st0">&quot;Reps&quot;</span>, <span class="st0">&quot;Median&quot;</span>, <span class="st0">&quot;Sorting&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Stringsplit of the Reps column, which contain  both station and replicate in one string (e.g. 1_1)</span>
+<span class="co0"># The following splits the Reps column in two, and splitting at the underscore (&quot;_&quot;)</span>
+Rep_split <span class="sy0">&lt;</span>- strsplit<span class="br0">&#40;</span>as.character<span class="br0">&#40;</span>Param.mat.df<span class="re1">$Reps</span><span class="br0">&#41;</span>, <span class="st0">&quot;_&quot;</span><span class="br0">&#41;</span>	<span class="co0"># Creates a list of splitted values</span>
+&nbsp;
+<span class="co0">## Unlist the list created above and convert it into a matrix </span>
+Rep_split <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>unlist<span class="br0">&#40;</span>Rep_split<span class="br0">&#41;</span>, <span class="re2">ncol</span>=<span class="nu0">2</span>, byrow = TRUE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Adding the Rep_split outcome to Param.mat.df</span>
+<span class="co4">Param.mat.df$</span>Station <span class="sy0">&lt;</span>- Rep_split<span class="br0">&#91;</span>, <span class="nu0">1</span><span class="br0">&#93;</span>
+<span class="co4">Param.mat.df$</span>Replicate <span class="sy0">&lt;</span>- Rep_split<span class="br0">&#91;</span>, <span class="nu0">2</span><span class="br0">&#93;</span>
+&nbsp;
+<span class="co0">## Reshaping the data</span>
+<span class="co0"># Reshape can be used to apply functions within a variable containing subvariables</span>
+<span class="co0"># For example, I had some stations that had 3 replicates, and I wanted the mean of those</span>
+<span class="co0"># replicates per station</span>
+require<span class="br0">&#40;</span>reshape<span class="br0">&#41;</span>
+Param_melt <span class="sy0">&lt;</span>- melt<span class="br0">&#40;</span>Param.mat.df, c<span class="br0">&#40;</span><span class="st0">&quot;Reps&quot;</span>,<span class="st0">&quot;Station&quot;</span>,<span class="st0">&quot;Replicate&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+Param.mat.df <span class="sy0">&lt;</span>- cast<span class="br0">&#40;</span>Param_melt, formula = Station~variable, mean<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Making a vector containg selected stations (i.e. stations of interest)</span>
+Station <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">1</span>:<span class="nu0">24</span>,<span class="nu0">101</span>:<span class="nu0">104</span><span class="br0">&#41;</span>
+Station <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>Station<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Merging Param.mat.df and Station</span>
+<span class="co0"># This selects all the Stations in x, removes the stations in y</span>
+<span class="co0"># that is not present in x, and gives NA values to stations in x</span>
+<span class="co0"># not found in y</span>
+Param.mat.df <span class="sy0">&lt;</span>- merge<span class="br0">&#40;</span>x = Station, y = Param.mat.df, by.x = <span class="st0">&quot;Station&quot;</span>,
+	by.y = <span class="st0">&quot;Station&quot;</span>, all.x = TRUE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Writing the df to a .txt file</span>
+indir = <span class="st0">&quot;/home/ost4sem/project/input/&quot;</span>
+write.table<span class="br0">&#40;</span>Param.mat.df, <span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;Grain.txt&quot;</span>, sep = <span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>, sep = <span class="st0">&quot; &quot;</span>,
+	row.names = FALSE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">############################################################################</span>
+<span class="co0">############# IMPORTING OTHER ENVIRONMENTAL VARIABLES IN R #################</span>
+<span class="co0">############################################################################</span>
+&nbsp;
+<span class="co0"># Importing to set -9999 as NAs</span>
+Vars <span class="sy0">&lt;</span>- read.table<span class="br0">&#40;</span><span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;Variables.txt&quot;</span>, sep = <span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>, header = TRUE, sep = <span class="st0">&quot; &quot;</span>,
+	na.strings = -<span class="nu0">9999</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># Writing back to a txt file. Using white space as fieldseparator (thats what bash likes...)</span>
+write.table<span class="br0">&#40;</span>Vars, <span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;VarsNA.txt&quot;</span>, sep = <span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>, sep = <span class="st0">&quot; &quot;</span>,
+	row.names = FALSE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># Extracting all the columns containing the smallest sediment fraction (phi=10)</span>
+<span class="co0"># Also extract the station and replicate</span>
+less63.df <span class="sy0">&lt;</span>- subset<span class="br0">&#40;</span>Upper, Upper<span class="re1">$phi</span> == <span class="nu0">10</span>, <span class="kw1">select</span> = c<span class="br0">&#40;</span><span class="st0">&quot;station&quot;</span>, <span class="st0">&quot;rep&quot;</span>, <span class="st0">&quot;frequency&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Reshaping the data</span>
+require<span class="br0">&#40;</span>reshape<span class="br0">&#41;</span>
+Less_melt <span class="sy0">&lt;</span>- melt<span class="br0">&#40;</span>less63.df, c<span class="br0">&#40;</span><span class="st0">&quot;station&quot;</span>,<span class="st0">&quot;rep&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+less63.df <span class="sy0">&lt;</span>- cast<span class="br0">&#40;</span>Less_melt, formula = station~variable, mean<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Merge less63.df and Station</span>
+less63.df <span class="sy0">&lt;</span>- merge<span class="br0">&#40;</span>x = Station, y = less63.df, by.x = <span class="st0">&quot;Station&quot;</span>,
+	by.y = <span class="st0">&quot;station&quot;</span>, all.x = TRUE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0"># write as txt</span>
+write.table<span class="br0">&#40;</span>less63.df, <span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;less63.txt&quot;</span>, <span class="re2">sep</span>=<span class="st0">&quot;&quot;</span><span class="br0">&#41;</span>, sep = <span class="st0">&quot; &quot;</span>,
+	row.names = FALSE<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Save the image (i.e. all objects)</span>
+save.image<span class="br0">&#40;</span><span class="kw2">file</span> = paste<span class="br0">&#40;</span>indir, <span class="st0">&quot;Predictors.rdata&quot;</span>, sep = <span class="st0">&quot;&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">########################################################################</span>
+<span class="co0">########### COMBINING TEXT FILES INTO ENVMAT.CSV USING BASH ############</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+<span class="co0"># Make sure the files have a space as field separator</span>
+<span class="kw2">head</span> <span class="re5">-1</span> Grain.txt
+<span class="kw2">head</span> <span class="re5">-1</span> VarsNA.txt
+<span class="kw2">head</span> <span class="re5">-1</span> less63.txt
+&nbsp;
+<span class="co0"># Change the fieldseparator of Grainsize.csv</span>
+<span class="co0"># the first gsub argument is the old fs and the second the new fs</span>
+<span class="co0">### NB! Bash always work with space separated files</span>
+<span class="co0"># awk '{ gsub(&quot;,&quot; , &quot; &quot;) ; print }' Grainsize.csv &gt; GrainSize.csv</span>
+<span class="co0"># rm Grainsize.csv </span>
+&nbsp;
+<span class="co0">## sorting the common field of both files</span>
+<span class="co0"># Using the sort function alone moves the header information</span>
+<span class="co0"># and puts it somewhere else</span>
+<span class="co0"># sort -k 1,1 GrainSize.csv &gt; Grainsize_s.csv</span>
+<span class="co0"># sort -k 3,3 EnvVar.csv &gt; EnvVar_s.csv</span>
+&nbsp;
+<span class="co0">## The following using awk and sort keeps the header untouched</span>
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 1,1&quot;}}'</span> Grain.txt <span class="sy0">&gt;</span> GrainS.txt
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 3,3&quot;}}'</span> VarsNA.txt <span class="sy0">&gt;</span> VarsNAS.txt
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 1,1&quot;}}'</span> less63.txt <span class="sy0">&gt;</span> less63S.txt
+&nbsp;
+<span class="co0">## Check if the sort worked correctly</span>
+<span class="kw2">cat</span>  GrainS.txt
+<span class="kw2">cat</span>  VarsNAS.txt
+<span class="kw2">cat</span>  less63S.txt
+&nbsp;
+<span class="co0">## Join first VarsNAS and less63S</span>
+<span class="kw2">join</span> <span class="re5">--header</span> <span class="re5">-1</span> <span class="nu0">3</span> <span class="re5">-2</span> <span class="nu0">1</span> VarsNAS.txt less63S.txt <span class="sy0">&gt;</span> Temp.txt
+<span class="co0">## Then join Temp.txt and GrainS</span>
+<span class="kw2">join</span> <span class="re5">--header</span> <span class="re5">-1</span> <span class="nu0">1</span> <span class="re5">-2</span> <span class="nu0">1</span> Temp.txt GrainS.txt <span class="sy0">&gt;</span> EnvMatUS.txt
+&nbsp;
+<span class="co0">## Sorting EnvMatUS to get the stations in numerical order</span>
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -nk 1,1&quot;}}'</span> EnvMatUS.txt <span class="sy0">&gt;</span> EnvMat.txt
+&nbsp;
+&nbsp;
+<span class="co0">########################################################################</span>
+<span class="co0">############## POPULATING MY PREDICTOR DATASET IN GRASS ################</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+<span class="co0">######## Setting the GRASS variables in Bash is not working... #########</span>
+&nbsp;
+<span class="co0">## Setting GRASS variables in BASH</span>
+<span class="co0">#echo &quot;LOCATION_NAME: Stuteberget&quot; 	&gt; $HOME/.grassrc6</span>
+<span class="co0">#echo &quot;MAPSET: thijs&quot;            	&gt;&gt; $HOME/.grassrc6</span>
+<span class="co0">#echo &quot;DIGITIZER: none&quot;        		&gt;&gt; $HOME/.grassrc6</span>
+<span class="co0">#echo &quot;GRASS_GUI: -text&quot;        			&gt;&gt; $HOME/.grassrc6</span>
+<span class="co0">#echo &quot;GISDBASE: /home/thijs/a/grassdata&quot;      &gt;&gt; $HOME/.grassrc6</span>
+&nbsp;
+<span class="co0"># path to GRASS binaries and libraries:  </span>
+<span class="co0"># export GISBASE=/usr/lib/grass64</span>
+<span class="co0">#export GISBASE=/opt/grass-42555</span>
+<span class="co0">#export PATH=$PATH:$GISBASE/bin:$GISBASE/scripts:/opt/grass/bin</span>
+<span class="co0">#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:&quot;$GISBASE/lib&quot;</span>
+<span class="co0">#export GISRC=/home/thijs/.grassrc6</span>
+<span class="co0">#export GRASS_LD_LIBRARY_PATH=/opt/grass-42555/lib</span>
+<span class="co0"># use process ID (PID) as lock file number: </span>
+<span class="co0">#export GIS_LOCK=$$</span>
+&nbsp;
+&nbsp;
+<span class="co0">## Opening grass</span>
+grass64 <span class="re5">-wxpython</span> <span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>grassdata<span class="sy0">/</span>Stuteberget<span class="sy0">/</span>thijs
+&nbsp;
+<span class="co0">## Checking the region</span>
+g.region <span class="re5">-p</span>
+&nbsp;
+<span class="co0">## Checking available rasters</span>
+g.list rast
+&nbsp;
+&nbsp;
+<span class="co0">########################################################################</span>
+<span class="co0">####### POPULATING THE EnvMat.txt FILE  WITH PREDICTOR VARIABLES #######</span>
+<span class="co0">###################### BASH SCRIPTING OF GRASS #########################</span>
+<span class="co0">########################################################################</span>
+<span class="co0">### 			scriptname: vwhatrast.sh</span>
+<span class="co0">########################################################################</span>
+<span class="co0">###			1. Import Stations to GRASS		     ###</span>
+<span class="co0">###			2. v.what.rast in a loop		     ###</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+<span class="co0">#!/bin/sh</span>
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem
+<span class="re2">INDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>input
+<span class="re2">OUTDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>output
+&nbsp;
+<span class="co0">## After saving the filename, do:</span>
+<span class="co0">#chmod u+x /home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh</span>
+&nbsp;
+<span class="co0">## In the terminal, do:</span>
+<span class="co0"># export GRASS_BATCH_JOB=/home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh ; grass64 -text /home/thijs/a/grassdata/Stuteberget/thijs</span>
+<span class="co0">## To deactivate the batch job mode, run:</span>
+<span class="co0"># unset GRASS_BATCH_JOB</span>
+&nbsp;
+<span class="kw3">cd</span> <span class="re1">$INDIR</span>
+&nbsp;
+<span class="co0">## Checking available vector files</span>
+<span class="co0"># g.list vect</span>
+&nbsp;
+<span class="co0">## Extracting and appending two vectors containg station information</span>
+v.out.ascii SamplingStations<span class="sy0">@</span>thijs <span class="re2">fs</span>=, <span class="sy0">&gt;</span> Stations.csv
+v.out.ascii BigStations_new<span class="sy0">@</span>PERMANENT <span class="re2">fs</span>=, <span class="sy0">&gt;</span> BigStations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;Reading Stations.csv to the terminal&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="kw2">cat</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Reading BigStations.csv to the terminal&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span><span class="re5">-5</span>
+<span class="kw2">cat</span> BigStations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="co0"># Changing the numbering of the stations in BigStations.csv</span>
+<span class="kw2">awk</span> <span class="re5">-F</span> <span class="st0">&quot;,&quot;</span> <span class="st_h">'{ OFS=&quot;,&quot; ; print $1, $2, $3+100 }'</span> BigStations.csv <span class="sy0">&gt;&gt;</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;Reading both files when appended&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;--------------------------------&quot;</span>
+<span class="kw2">cat</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;END ----------------------------&quot;</span>
+&nbsp;
+<span class="co0">## Importing Stations.txt</span>
+v.in.ascii <span class="re2">input</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>Stations.csv <span class="re2">output</span>=EnvMatCop <span class="re2">fs</span>=, <span class="re2">columns</span>=<span class="st0">&quot;utm_x double, utm_y double, station int&quot;</span> <span class="re5">--o</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Printing the attribute table of the enewly created vector&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;---------------------------------------------------------&quot;</span>
+db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END------------------------------------------------------&quot;</span>
+&nbsp;
+<span class="co0">## Populating the EnvMatCop using v.what.rast</span>
+<span class="co0"># First, add columns to the attribute table</span>
+v.db.addcol <span class="re2">map</span>=EnvMatCop <span class="re2">columns</span>=<span class="st0">&quot;depth double, ac3 int, ac4 int, surmax double, bpi25 double, maxcur25 double&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking if the operation was successful&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;----------------------------------------&quot;</span>
+db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END-------------------------------------&quot;</span>
+&nbsp;
+<span class="co0"># Create vectors or arrays to hold the information over which to loop</span>
+<span class="kw3">echo</span> <span class="st0">&quot;depth ac3 ac4 surmax bpi25 maxcur25&quot;</span> <span class="sy0">&gt;</span> colnames.txt
+<span class="re2">rastnames</span>=<span class="st0">&quot;bathy_background 3cl_12.5m 4cl_12.5m speed_sur_max_stut BPI_25 maxic_25&quot;</span>
+&nbsp;
+<span class="co0">## Looping v.what.rast over all rasters and colnames in a one-to-one way</span>
+<span class="re2">col</span>=<span class="nu0">0</span>
+<span class="kw1">for</span> raster <span class="kw1">in</span> <span class="sy0">`</span><span class="kw3">echo</span> <span class="re1">$rastnames</span><span class="sy0">`</span> ; <span class="kw1">do</span>
+	<span class="re2">col</span>=$<span class="br0">&#40;</span><span class="br0">&#40;</span><span class="kw2">col</span>+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+	<span class="re2">colnames</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">col</span>=<span class="re1">$col</span> <span class="st_h">'{ print $col }'</span> colnames.txt<span class="sy0">`</span>
+	<span class="kw3">echo</span> <span class="re1">$raster</span>  <span class="re1">$colnames</span>  
+	v.what.rast <span class="re2">vect</span>=EnvMatCop <span class="re2">rast</span>=<span class="re1">$raster</span> <span class="re2">col</span>=<span class="re1">$colnames</span>
+<span class="kw1">done</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking the output again&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-------------------------&quot;</span>
+v.db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END ---------------------&quot;</span>
+&nbsp;
+<span class="co0">## Write it out as a csv file</span>
+v.out.ascii EnvMatCop <span class="re2">fs</span>=, <span class="re2">columns</span>=utm_x,utm_y,station,depth,ac3,ac4,surmax,bpi25,maxcur25 <span class="sy0">&gt;</span> EnvMat2.csv
+<span class="kw3">echo</span> <span class="st0">&quot;-----------------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking if the file is good&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-----------------------------------&quot;</span>
+<span class="kw2">cat</span> EnvMat2.csv
+<span class="kw3">echo</span> <span class="st0">&quot;END--------------------------------&quot;</span>
+&nbsp;
+<span class="co0">## It seems like the file lost its header through v.out.ascii, this can easily be added in R.</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+&nbsp;
+<span class="co0">########################################################################</span>
+<span class="co0">############## IMPORTING SPECIES ABUNDANCE MATRIX IN R #################</span>
+<span class="co0">########################################################################</span>
+<span class="co0">### MOLLUSCA ###</span>
+<span class="co0">## Created by T. van Son June 14, 2010</span>
+&nbsp;
+<span class="co0">## Load the saved image from above</span>
+load<span class="br0">&#40;</span><span class="kw2">file</span> = <span class="st0">&quot;/home/thijs/a/ost4sem/input/Predictors.rdata&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Importing the Mollusca Matrix</span>
+setwd<span class="br0">&#40;</span><span class="st0">&quot;/home/thijs/a/PhD_data/Fielddata/SpeciesData/Mollusca&quot;</span><span class="br0">&#41;</span>
+Moll <span class="sy0">&lt;</span>- read.csv<span class="br0">&#40;</span><span class="kw2">file</span> = <span class="st0">&quot;Mollusca_matrix.csv&quot;</span>, header = TRUE<span class="br0">&#41;</span>
+names<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>
+<span class="co0"># [1] &quot;Sta&quot;   &quot;Gr&quot;      &quot;StaGr&quot; &quot;Abr.alb&quot; &quot;Abr.nit&quot; &quot;Apo.pes&quot; &quot;Arc.isl&quot;</span>
+<span class="co0"># [8] &quot;Ant.ent&quot; &quot;Ast.ell&quot; &quot;Ast.mon&quot; &quot;Ast.sul&quot; &quot;Ast.sp&quot;  &quot;Buc.und&quot; &quot;Buc.sp&quot; </span>
+<span class="co0"># [15] &quot;Cor.gib&quot; &quot;Cus.cus&quot; &quot;Cyl.alb&quot; &quot;Dia.min&quot; &quot;Eus.mon&quot; &quot;Hia.arc&quot; &quot;Kur.bid&quot;</span>
+<span class="co0"># [22] &quot;Lep.cae&quot; &quot;Mac.cal&quot; &quot;Mya.tru&quot; &quot;Mya.sp&quot;  &quot;Myt.edu&quot; &quot;Nuc.ten&quot; &quot;Nuc.per&quot;</span>
+<span class="co0"># [29] &quot;Per.min&quot; &quot;Per.ova&quot; &quot;Pse.sep&quot; &quot;Ris_fam&quot; &quot;Tel.fer&quot; &quot;Thy.equ&quot; &quot;Thy.fle&quot;</span>
+<span class="co0"># [36] &quot;Thy.gou&quot; &quot;Thy.sar&quot; &quot;Thy.spp&quot; &quot;Thy.sp&quot;  &quot;Biv.ind&quot; &quot;Gas.ind&quot;</span>
+str<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Removing Biv.ind, Gas.ind, Thy.spp, and Thy.sp columns</span>
+Moll <span class="sy0">&lt;</span>- Moll<span class="br0">&#91;</span>, <span class="nu0">1</span>:<span class="nu0">37</span><span class="br0">&#93;</span>
+names<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>
+str<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>
+dim<span class="br0">&#40;</span>Moll<span class="br0">&#41;</span>	<span class="co0"># 139 37</span>
+&nbsp;
+<span class="co0">## In the df Moll the data is listed per grab pr station</span>
+<span class="co0">## Summarising the grabs per station and store it in MollSt</span>
+&nbsp;
+<span class="co0">## This works for station one</span>
+sapply<span class="br0">&#40;</span>Moll<span class="br0">&#91;</span>Moll<span class="re1">$Sta</span> == <span class="nu0">1</span>, <span class="nu0">4</span>:<span class="nu0">39</span><span class="br0">&#93;</span>, na.rm = TRUE, FUN = <span class="kw2">sum</span><span class="br0">&#41;</span>
+as.vector<span class="br0">&#40;</span>sapply<span class="br0">&#40;</span>Moll<span class="br0">&#91;</span>Moll<span class="re1">$Sta</span> == <span class="nu0">1</span>, <span class="nu0">4</span>:<span class="nu0">39</span><span class="br0">&#93;</span>, na.rm = TRUE, FUN = <span class="kw2">sum</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Unique stations</span>
+AllStations <span class="sy0">&lt;</span>- unique<span class="br0">&#40;</span>Moll<span class="re1">$Sta</span><span class="br0">&#41;</span>
+AllSpecies <span class="sy0">&lt;</span>- names<span class="br0">&#40;</span>Moll<span class="br0">&#91;</span>, <span class="nu0">4</span>:<span class="nu0">37</span><span class="br0">&#93;</span><span class="br0">&#41;</span>
+p <span class="sy0">&lt;</span>- length<span class="br0">&#40;</span>AllStations<span class="br0">&#41;</span>
+MollSt <span class="sy0">&lt;</span>- matrix<span class="br0">&#40;</span>data = NA, nrow = length<span class="br0">&#40;</span>AllStations<span class="br0">&#41;</span>, ncol = length<span class="br0">&#40;</span>AllSpecies<span class="br0">&#41;</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Looping over all stations</span>
+<span class="co0"># the sapply function needs to be wrapped by as.vector, otherwise it will return</span>
+<span class="co0"># the names of the species along with the sum of the species per station. Compare</span>
+<span class="co0"># the sapply code with and without the as.vector wrapping (See above).</span>
+&nbsp;
+  <span class="kw1">for</span> <span class="br0">&#40;</span>i <span class="kw1">in</span> <span class="kw2">seq</span><span class="br0">&#40;</span>length = p<span class="br0">&#41;</span><span class="br0">&#41;</span> <span class="br0">&#123;</span>
+    Sta.i <span class="sy0">&lt;</span>- AllStations<span class="br0">&#91;</span>i<span class="br0">&#93;</span>
+    temp <span class="sy0">&lt;</span>- as.vector<span class="br0">&#40;</span>sapply<span class="br0">&#40;</span>Moll<span class="br0">&#91;</span>Moll<span class="re1">$Sta</span> == Sta.i, <span class="nu0">4</span>:<span class="nu0">37</span><span class="br0">&#93;</span>, na.rm = TRUE, FUN = <span class="kw2">sum</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+    MollSt<span class="br0">&#91;</span>i, <span class="br0">&#93;</span> <span class="sy0">&lt;</span>- temp		<span class="co0"># for each iteration row i is fed into MollSt</span>
+    <span class="br0">&#125;</span>
+&nbsp;
+<span class="co0">## Coercing into a dataframe</span>
+MollSt <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>MollSt, row.names = AllStations<span class="br0">&#41;</span>
+colnames<span class="br0">&#40;</span>MollSt<span class="br0">&#41;</span> <span class="sy0">&lt;</span>- AllSpecies
+str<span class="br0">&#40;</span>MollSt<span class="br0">&#41;</span>
+names<span class="br0">&#40;</span>MollSt<span class="br0">&#41;</span>
+&nbsp;
+<span class="co0">## Adding the Stations to the dataframe MollSt</span>
+<span class="co4">MollSt$</span>Station <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">1</span>:<span class="nu0">24</span>, <span class="nu0">101</span>:<span class="nu0">104</span><span class="br0">&#41;</span>
+&nbsp;
+&nbsp;
+<span class="co0">## Calculating species abundance and richness per station</span>
+AbundSt <span class="sy0">&lt;</span>- as.vector<span class="br0">&#40;</span>rowSums<span class="br0">&#40;</span>MollSt, na.rm = TRUE<span class="br0">&#41;</span><span class="br0">&#41;</span>
+AbundSt
+<span class="co0"># Coercing into a dataframe and adding stations</span>
+AbundSt <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>AbundSt<span class="br0">&#41;</span>
+<span class="co4">AbundSt$</span>Station <span class="sy0">&lt;</span>- Station
+&nbsp;
+<span class="co0">## Calculating species richness</span>
+DiversSt <span class="sy0">&lt;</span>- as.vector<span class="br0">&#40;</span>rowSums<span class="br0">&#40;</span>MollSt <span class="sy0">&gt;</span> <span class="nu0">0</span>, na.rm = TRUE<span class="br0">&#41;</span><span class="br0">&#41;</span>
+DiversSt
+<span class="co0"># Coercing into a dataframe and adding stations</span>
+DiversSt <span class="sy0">&lt;</span>- as.data.frame<span class="br0">&#40;</span>DiversSt<span class="br0">&#41;</span>
+<span class="co4">DiversSt$</span>station <span class="sy0">&lt;</span>- c<span class="br0">&#40;</span><span class="nu0">1</span>:<span class="nu0">24</span>, <span class="nu0">101</span>:<span class="nu0">104</span><span class="br0">&#41;</span></pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;DATA IMPORT&quot;,&quot;hid&quot;:&quot;data_import&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:12,&quot;range&quot;:&quot;3407-18132&quot;} -->
+<h2 class="sectionedit13" id="data_processing">DATA PROCESSING</h2>
+<div class="level2">
+
+<p>
+<br/>
+
+</p>
+<pre class="code r">########################################################################
+########################################################################
+####################### MODEL FITTING IN R #############################
+########################################################################
+########################################################################
+&nbsp;
+################## FIRST ATTEMPT WITH POINT DATA #######################
+EnvMat.df &lt;- read.table(file = paste(indir, &quot;EnvMat.txt&quot;, sep = &quot;&quot;), header = TRUE)
+&nbsp;
+## Checking for collinearity
+# Reading in some pair functions
+panel.hist &lt;- function(x, ...)
+     {
+         usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+         par(usr = c(usr[1:2], 0, 1.5) )
+         h &lt;- hist(x, plot = FALSE)
+         breaks &lt;- h$breaks; nB &lt;- length(breaks)
+         y &lt;- h$counts; y &lt;- y/max(y)
+         rect(breaks[-nB], 0, breaks[-1], y, col=&quot;cyan&quot;, ...)
+     }
+panel.cor &lt;- function(x, y, digits=2, prefix=&quot;&quot;, cex.cor, ...)
+     {
+         usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+         par(usr = c(0, 1, 0, 1))
+         r &lt;- abs(cor(x, y))
+         txt &lt;- format(c(r, 0.123456789), digits=digits)[1]
+         txt &lt;- paste(prefix, txt, sep=&quot;&quot;)
+         if(missing(cex.cor)) cex.cor &lt;- 0.8/strwidth(txt)
+         text(0.5, 0.5, txt, cex = cex.cor * r)
+     }
+&nbsp;
+# Plotting a nice pair plot to check for collinearity
+pairs(EnvMat.df[, 4:11], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# na.action is not working...
+&nbsp;
+str(EnvMat.df)
+str(DiversSt)
+&nbsp;
+## Merging EnvMat.df and DiverSt
+Richness.df &lt;- merge(DiversSt, EnvMat.df)
+&nbsp;
+## Changing the variable name of the richness column
+names(Richness.df)[2] &lt;- &quot;rich&quot;
+&nbsp;
+########################################################################
+########## FITTING A GLM MODEL USING POINT DATA PREDICTORS #############
+########################################################################
+&nbsp;
+## First fit
+fit &lt;- glm(rich ~ toc + pendep + bmd2g + frequency + Sorting,
+	data = Richness.df)
+summary(fit)
+plot(fit)
+# Shapiro test - test for normality
+shapiro.test(resid(fit))
+# Histogram of richness
+hist(Richness.df$rich, breaks=15)
+# updating the model
+# .~. -the first point is to explain the same response, ~ means as a 
+# function of the same respones var, the last point tells to use the
+# same expl vars as before -frequency
+fit2 &lt;- update(fit, .~. -frequency)
+summary(fit2)
+anova(fit, fit2, test = &quot;F&quot;)
+&nbsp;
+# Looking the model matrix
+model.matrix(fit)
+coef(fit)
+model.matrix(fit) %*% coef(fit) # is the same as the fitted values
+fitted(fit)
+&nbsp;
+## Save the image (i.e. all objects)
+save.image(file = paste(indir, &quot;Richness.rdata&quot;, sep = &quot;&quot;))
+&nbsp;
+########################################################################
+########## FITTING A GLM MODEL USING RASTER DATA PREDICTORS #############
+########################################################################
+&nbsp;
+load(file = &quot;/home//ost4sem/project/input/Richness.rdata&quot;)
+EnvMat2.df &lt;- read.csv(file = paste(indir, &quot;EnvMat2.csv&quot;, sep = &quot;&quot;), header = F)
+&nbsp;
+## Removing duplicated x,y, and station columns
+EnvMat2.df &lt;- EnvMat2.df[, 4:12]
+&nbsp;
+## Adding the column names of EnvMat2.df
+colnames(EnvMat2.df) &lt;- c(&quot;utm_x&quot;, &quot;utm_y&quot;, &quot;station&quot;, &quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;, &quot;maxcur25&quot;)
+str(EnvMat2.df)
+&nbsp;
+## ac3 and ac4 are actually factors
+EnvMat2.df$fac3 &lt;- as.factor(EnvMat2.df$ac3)
+EnvMat2.df$fac4 &lt;- as.factor(EnvMat2.df$ac4)
+&nbsp;
+## Checking for collinearity among Predictors
+pairs(EnvMat2.df[, c(4, 7:11)], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# maxic25 and bpi25 are highly correlated. Leaving out maxic25 in further analysis
+&nbsp;
+##
+str(EnvMat2.df)
+str(DiversSt)
+&nbsp;
+# Changing the variable name of the richness
+names(DiversSt)[1] &lt;- &quot;rich&quot;
+&nbsp;
+## Merging EnvMat.df and DiverSt
+Richness2.df &lt;- merge(EnvMat2.df, DiversSt)
+&nbsp;
+## First fit with the new predictors
+fitn &lt;- glm(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitn)
+plot(fitn)
+# Shapiro test - test for normality
+shapiro.test(resid(fitn))
+# Histogram of richness
+hist(Richness2.df$rich, breaks=15)
+&nbsp;
+# Looking at the model matrix
+model.matrix(fitn)
+coef(fitn)
+model.matrix(fitn) %*% coef(fitn) # is the same as the fitted values
+fitted(fitn)
+&nbsp;
+## Save the image (i.e. all objects)
+save.image(file = paste(indir, &quot;Richness.rdata&quot;, sep = &quot;&quot;))
+&nbsp;
+########################################################################
+############### PREDICTING TO NEW DATA/UNSAMPLED AREAS #################
+######### BASED ON GLM MODEL AND RASTER POINT PREDICTOR DATA ###########
+########################################################################
+&nbsp;
+## Starting GRASS 
+grass64 -wxpython /home/user/ost4sem/grassdb/Stuteberget/thijs
+&nbsp;
+## Generating a new mapset to hold new map subsets
+g.mapset -c mapset=ost4sem	# the -c option tells GRASS to create a new mapset if the mapset doesnt exist
+g.mapset -l
+g.gisenv
+&nbsp;
+## Setting/checking the region sttings in GRASS
+g.region -p
+g.list region
+g.region region=QTC_grids -p # 80 x 84 = 6720 cells
+&nbsp;
+## Adding the thijs mapset
+g.mapsets addmapset=thijs
+&nbsp;
+## Generating map subsets so that every map has the same extension and res 
+r.mapcalc &quot;depth=bathy_background&quot;
+r.mapcalc &quot;surmax=speed_sur_max_stut&quot;
+r.mapcalc &quot;bpi25=BPI_25&quot;
+&nbsp;
+## Checking the extension and res of the map subsets
+r.info surmax
+&nbsp;
+## Start R
+R
+load(file = &quot;/home/user/ost4sem/project/input/Richness.rdata&quot;)
+## Load the spgrass6 package
+require(spgrass6)
+system(&quot;g.region region=QTC_grids -p&quot;)
+## Loading Predictor rasters from GRASS to R
+Rasters &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+# p &lt;- length(Rasters)
+Spdf.names &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+Temp.mat &lt;- matrix(data = NA, nrow = 6720, ncol = 5, byrow = T)
+&nbsp;
+# for loop
+for (i in 1:5) {
+	name &lt;- Spdf.names[i]
+	rast &lt;- Rasters[i]
+	print(name); print(rast)
+	name &lt;&lt;- readRAST6(rast) 	# double arrow assigns the object to the global env
+	Temp.mat[, i] &lt;- (name@data[, 1])
+}
+&nbsp;
+## Checking the Temp Matrix
+head(Temp.mat)
+&nbsp;
+## Coerce into a data frame
+Preddata &lt;- as.data.frame(Temp.mat)
+colnames(Preddata) &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+&nbsp;
+## ac3 and ac4 are factors
+Preddata$fac3 &lt;- as.factor(Preddata$ac3)
+Preddata$fac4 &lt;- as.factor(Preddata$ac4)
+str(Preddata)
+head(Preddata)
+&nbsp;
+## Predicting to new area
+prediction &lt;- predict(fitn, newdata = Preddata, type = &quot;response&quot;)
+str(prediction)
+&nbsp;
+## Adding the predicted data to an existing raster holding
+## the geographical information the set region
+name$new &lt;- prediction
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;firstpred&quot;, zcol=&quot;new&quot;, overwrite = T)
+&nbsp;
+#########################################################################
+################### RANDOMISATION OF PREDICTED DATA #####################
+#########################################################################
+&nbsp;
+## &quot;Another&quot; day in the field observing the richness of molluscs
+name$rnorm.pred&lt;-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+&nbsp;
+## Writing raster back to GRASS 
+writeRAST6(name, &quot;rnorm.pred&quot;, zcol=&quot;rnorm.pred&quot;, overwrite=T)
+&nbsp;
+#########################################################################
+###### MAKING AN ANIMATION OF THE UNCERTAINTY OF THE PREDICTIONS ########
+################## Script modified from Jens Åstrøm #####################
+#########################################################################
+setwd(&quot;/home/user/ost4sem/project/output&quot;)
+&nbsp;
+## Setting the region - this also relates to the resolution of the pngs made
+system(&quot;g.region region=QTC_grids -p&quot;)
+&nbsp;
+## Making fifty &quot;trips&quot; to the field collecting each pixel, and write the
+## outcome back to GRASS
+&nbsp;
+for(i in 1:50){
+name$rnorm&lt;-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+&nbsp;
+writeRAST6(name ,paste(&quot;rnorm&quot;,i,sep=&quot;&quot;) ,zcol=&quot;rnorm&quot; ,overwrite=T)
+}
+&nbsp;
+## Making a png pic of every new prediction
+system(&quot;for i in `seq 1 50`
+ do
+  r.out.png input=rnorm$i output=rnorm$i
+   g.remove rast=rnorm$i
+    done&quot;)
+&nbsp;
+## Convert all png pics into a movie
+system(&quot;convert -delay 20 *.png 80r_84c_rnorm.mpg&quot;)
+&nbsp;
+#indir = &quot;/home/user/ost4sem/project/input/&quot;
+#save.image(file = paste(indir, &quot;Richness.rdata&quot;, sep = &quot;&quot;))
+&nbsp;
+########### MAKING A NEW ANIMATION WITH A HIGHER RESOLUTION ###############
+## Creating a new mapset to hold rasters within the QTC_grids region with res=1
+system(&quot;g.mapset -c mapset=stut1m&quot;)
+system(&quot;g.region region=QTC_grids res=1 -p&quot;)
+&nbsp;
+## Resample the raster maps to a finer grid using interpolation
+## Is not giving the wanted result...
+#system(&quot;r.resamp.interp input=depth_12.5 output=depth_1&quot;)
+#system(&quot;r.resamp.interp input=surmax_12.5 output=surmax_1&quot;)
+#system(&quot;r.resamp.interp input=bpi25_12.5 output=bpi_1&quot;)
+#system(&quot;r.resamp.interp input=ac3_12.5 output=ac3_1&quot;)
+#system(&quot;r.resamp.interp input=ac4_12.5 output=ac4_1&quot;)
+&nbsp;
+## using r.mapcalc to make map subsets
+system(&quot;r.mapcalc 'ac3_1=ac3_12.5'&quot;)
+system(&quot;r.mapcalc 'ac4_1=ac4_12.5'&quot;)
+system(&quot;r.mapcalc 'depth_1=depth_12.5'&quot;)
+system(&quot;r.mapcalc 'surmax_1=surmax_12.5'&quot;)
+system(&quot;r.mapcalc 'bpi25_1=bpi25_12.5'&quot;)
+&nbsp;
+### Predicting to the new map subset raster files
+## Loading Predictor rasters from GRASS to R
+Rasters &lt;- c(&quot;depth_1&quot;, &quot;ac3_1&quot;, &quot;ac4_1&quot;, &quot;surmax_1&quot;, &quot;bpi25_1&quot;)
+# p &lt;- length(Rasters)
+Spdf.names &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+Temp.mat &lt;- matrix(data = NA, nrow = 1050000, ncol = 5, byrow = T)
+&nbsp;
+# for loop
+for (i in 1:5) {
+	name &lt;- Spdf.names[i]
+	rast &lt;- Rasters[i]
+	print(name); print(rast)
+	name &lt;&lt;- readRAST6(rast) 	# double arrow assigns the object to the global env
+	Temp.mat[, i] &lt;- (name@data[, 1])
+}
+&nbsp;
+## Checking the Temp Matrix 
+head(Temp.mat)
+&nbsp;
+## Coerce into a data frame
+Preddata &lt;- as.data.frame(Temp.mat)
+colnames(Preddata) &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+&nbsp;
+## ac3 and ac4 are factors
+Preddata$fac3 &lt;- as.factor(Preddata$ac3)
+Preddata$fac4 &lt;- as.factor(Preddata$ac4)
+str(Preddata)
+head(Preddata)
+&nbsp;
+## Predicting to new area
+prediction &lt;- predict(fitn, newdata = Preddata, type = &quot;response&quot;)
+str(prediction)
+&nbsp;
+## Adding the predicted data to an existing raster
+name$new &lt;- prediction
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;firstpred_1&quot;, zcol=&quot;new&quot;, overwrite = T)
+# Starting Qgis
+system(&quot;qgis &amp;&quot;)
+&nbsp;
+## &quot;Another&quot; day in the field observing the richness of molluscs
+name$rnorm.pred&lt;-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+&nbsp;
+## Writing raster back to GRASS 
+writeRAST6(name, &quot;rnorm.pred_1&quot;, zcol=&quot;rnorm.pred&quot;, overwrite=T)
+&nbsp;
+##############################################################################
+############ RANDOMISATION OF PREDICTED DATA OF HIGH RESOLUTION ##############
+##############################################################################
+&nbsp;
+### Now, making another 20 &quot;trips&quot; to the field and write it back to GRASS ###
+## Now the res=1, so nrows=1000 and ncols=1050
+## Only making 20 &quot;trips&quot;
+&nbsp;
+for(i in 1:20){
+name$rnorm&lt;-rnorm(nrow(name),name$new,sd=sd(resid(fitn)))
+&nbsp;
+writeRAST6(name ,paste(&quot;rnorm&quot;,i,sep=&quot;&quot;) ,zcol=&quot;rnorm&quot; ,overwrite=T)
+}
+&nbsp;
+## Making a png pic of every new prediction
+system(&quot;for i in `seq 1 20`
+ do
+  r.out.png input=rnorm$i output=rnorm$i
+   g.remove rast=rnorm$i
+    done&quot;)
+&nbsp;
+## Convert all png pics into an animation using ImageMagick
+system(&quot;convert -delay 20 *.png 1000r_1050c_rnorm.mpg&quot;)
+&nbsp;
+save.image(file = paste(indir, &quot;Richness.rdata&quot;, sep = &quot;&quot;))
+&nbsp;
+&nbsp;
+########################################################################
+############### PREDICTING TO NEW DATA/UNSAMPLED AREAS #################
+######### BASED ON GAM MODEL AND RASTER POINT PREDICTOR DATA ###########
+########################################################################
+&nbsp;
+load(file = &quot;/home/user/ost4sem/project/input/Richness.rdata&quot;)
+&nbsp;
+## Using the Richness2.df
+str(Richness2.df)
+head(Richness2.df)
+&nbsp;
+## Fitting a gam
+require(mgcv)
+fitgam &lt;- gam(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitgam)
+str(fitgam)
+# Shapiro test - test for normality
+shapiro.test(resid(fitgam))
+&nbsp;
+# Looking at the model matrix
+model.matrix(fitgam)
+coef(fitgam)
+model.matrix(fitgam) %*% coef(fitgam) # is the same as the fitted values
+fitted(fitgam)
+&nbsp;
+## Predicting to new area
+prediction.gam &lt;- predict(fitgam, newdata = Preddata, type = &quot;response&quot;)
+str(prediction.gam)
+&nbsp;
+## Adding the predicted data to an existing raster
+name$newgam &lt;- prediction.gam
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;predgam_1&quot;, zcol=&quot;newgam&quot;, overwrite = T)
+&nbsp;
+&nbsp;
+## Another day in the field observing the richness of molluscs
+name$rnorm.predgam&lt;-rnorm(nrow(name),name$newgam,sd=sd(resid(fitgam)))
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;rnormgam_1&quot;, zcol=&quot;rnorm.predgam&quot;, overwrite = T)
+&nbsp;
+&nbsp;
+### Now, making another fifty &quot;trips&quot; to the field and write it back to GRASS ###
+## Now the res=1, so nrows=1000 and ncols=1050
+## Only making 20 &quot;trips&quot;
+setwd(&quot;/home/user/ost4sem/project/output&quot;)
+&nbsp;
+for(i in 1:15){
+name$rnormgam&lt;-rnorm(nrow(name),name$newgam,sd=sd(resid(fitgam)))
+&nbsp;
+writeRAST6(name ,paste(&quot;rnormgam&quot;,i,sep=&quot;&quot;) ,zcol=&quot;rnormgam&quot; ,overwrite=T)
+}
+&nbsp;
+## Making a png pic of every new prediction
+system(&quot;for i in `seq 1 15`
+ do
+  r.out.png input=rnormgam$i output=rnormgam$i
+   g.remove rast=rnormgam$i
+    done&quot;)
+&nbsp;
+## Convert all png pics into an animation using ImageMagick
+system(&quot;convert -delay 20 *.png 1000r_1050c_rnorm_gam.mpg&quot;)
+cd ~/ost4sem/project</pre>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;DATA PROCESSING&quot;,&quot;hid&quot;:&quot;data_processing&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:13,&quot;range&quot;:&quot;18133-31387&quot;} -->
+<h3 class="sectionedit14" id="condensed_workflow">CONDENSED WORKFLOW</h3>
+<div class="level3">
+
+<p>
+This is just a selection of the code, the complete output can be found above.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;CONDENSED WORKFLOW&quot;,&quot;hid&quot;:&quot;condensed_workflow&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:14,&quot;range&quot;:&quot;31388-31496&quot;} -->
+<h3 class="sectionedit15" id="preparation_of_predictor_data_sets">Preparation of predictor data sets</h3>
+<div class="level3">
+
+<p>
+I had to prepare two predictor data sets. One that was based on point data (EnvMat.txt) and another that was based on raster data (EnvMat2.csv).
+</p>
+<pre class="code bash"><span class="co0">########################################################################</span>
+<span class="co0">##### COMBINING TEXT FILES OF POINT DATA INTO EnvMat.txt USING BASH ####</span>
+<span class="co0">########################################################################</span>
+&nbsp;
+<span class="co0"># Make sure the files have a space as field separator</span>
+<span class="kw2">head</span> <span class="re5">-1</span> Grain.txt
+<span class="kw2">head</span> <span class="re5">-1</span> VarsNA.txt
+<span class="kw2">head</span> <span class="re5">-1</span> less63.txt
+&nbsp;
+<span class="co0"># Change the fieldseparator of Grainsize.csv</span>
+<span class="co0"># the first gsub argument is the old fs and the second the new fs</span>
+<span class="co0">### NB! Bash always work with space separated files</span>
+<span class="co0"># awk '{ gsub(&quot;,&quot; , &quot; &quot;) ; print }' Grainsize.csv &gt; GrainSize.csv</span>
+<span class="co0"># rm Grainsize.csv </span>
+&nbsp;
+<span class="co0">## sorting the common field of both files</span>
+<span class="co0"># Using the sort function alone moves the header information</span>
+<span class="co0"># and puts it somewhere else</span>
+<span class="co0"># sort -k 1,1 GrainSize.csv &gt; Grainsize_s.csv</span>
+<span class="co0"># sort -k 3,3 EnvVar.csv &gt; EnvVar_s.csv</span>
+&nbsp;
+<span class="co0">## The following using awk and sort keeps the header untouched</span>
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 1,1&quot;}}'</span> Grain.txt <span class="sy0">&gt;</span> GrainS.txt
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 3,3&quot;}}'</span> VarsNA.txt <span class="sy0">&gt;</span> VarsNAS.txt
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -k 1,1&quot;}}'</span> less63.txt <span class="sy0">&gt;</span> less63S.txt
+&nbsp;
+<span class="co0">## Check if the sort worked correctly</span>
+<span class="kw2">cat</span>  GrainS.txt
+<span class="kw2">cat</span>  VarsNAS.txt
+<span class="kw2">cat</span>  less63S.txt
+&nbsp;
+<span class="co0">## Join first VarsNAS and less63S</span>
+<span class="kw2">join</span> <span class="re5">--header</span> <span class="re5">-1</span> <span class="nu0">3</span> <span class="re5">-2</span> <span class="nu0">1</span> VarsNAS.txt less63S.txt <span class="sy0">&gt;</span> Temp.txt
+<span class="co0">## Then join Temp.txt and GrainS</span>
+<span class="kw2">join</span> <span class="re5">--header</span> <span class="re5">-1</span> <span class="nu0">1</span> <span class="re5">-2</span> <span class="nu0">1</span> Temp.txt GrainS.txt <span class="sy0">&gt;</span> EnvMatUS.txt
+&nbsp;
+<span class="co0">## Sorting EnvMatUS to get the stations in numerical order</span>
+<span class="kw2">awk</span> <span class="st_h">'NR==1; {if(NR &gt; 1) {print $0 | &quot;sort -nk 1,1&quot;}}'</span> EnvMatUS.txt <span class="sy0">&gt;</span> EnvMat.txt
+&nbsp;
+<span class="co0">###########################################################################</span>
+<span class="co0"># PREPARING AND POPULATING THE EnvMat2.csv FILE  WITH PREDICTOR VARIABLES #</span>
+<span class="co0">###################### BASH SCRIPTING OF GRASS ############################</span>
+<span class="co0">###########################################################################</span>
+<span class="co0">### 			scriptname: vwhatrast.sh</span>
+<span class="co0">###########################################################################</span>
+<span class="co0">###			1. Import Stations to GRASS		     ######</span>
+<span class="co0">###			2. v.what.rast in a loop		     ######</span>
+<span class="co0">###########################################################################</span>
+&nbsp;
+<span class="co0">#!/bin/sh</span>
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem
+<span class="re2">INDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>input
+<span class="re2">OUTDIR</span>=<span class="sy0">/</span>home<span class="sy0">/</span>thijs<span class="sy0">/</span>a<span class="sy0">/</span>ost4sem<span class="sy0">/</span>output
+&nbsp;
+<span class="co0">## After saving the filename, do:</span>
+<span class="co0">#chmod u+x /home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh</span>
+&nbsp;
+<span class="co0">## In the terminal, do:</span>
+<span class="co0"># export GRASS_BATCH_JOB=/home/thijs/a/grassdata/Stuteberget/thijs/vwhatrast.sh ; grass64 -text /home/thijs/a/grassdata/Stuteberget/thijs</span>
+<span class="co0">## To deactivate the batch job mode, run:</span>
+<span class="co0"># unset GRASS_BATCH_JOB</span>
+&nbsp;
+<span class="kw3">cd</span> <span class="re1">$INDIR</span>
+&nbsp;
+<span class="co0">## Checking available vector files</span>
+<span class="co0"># g.list vect</span>
+&nbsp;
+<span class="co0">## Extracting and appending two vectors containg station information</span>
+v.out.ascii SamplingStations<span class="sy0">@</span>thijs <span class="re2">fs</span>=, <span class="sy0">&gt;</span> Stations.csv
+v.out.ascii BigStations_new<span class="sy0">@</span>PERMANENT <span class="re2">fs</span>=, <span class="sy0">&gt;</span> BigStations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;Reading Stations.csv to the terminal&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="kw2">cat</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Reading BigStations.csv to the terminal&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span><span class="re5">-5</span>
+<span class="kw2">cat</span> BigStations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;------------------------------------&quot;</span>
+<span class="co0"># Changing the numbering of the stations in BigStations.csv</span>
+<span class="kw2">awk</span> <span class="re5">-F</span> <span class="st0">&quot;,&quot;</span> <span class="st_h">'{ OFS=&quot;,&quot; ; print $1, $2, $3+100 }'</span> BigStations.csv <span class="sy0">&gt;&gt;</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;Reading both files when appended&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;--------------------------------&quot;</span>
+<span class="kw2">cat</span> Stations.csv
+<span class="kw3">echo</span> <span class="st0">&quot;END ----------------------------&quot;</span>
+&nbsp;
+<span class="co0">## Importing Stations.txt</span>
+v.in.ascii <span class="re2">input</span>=<span class="re1">$INDIR</span><span class="sy0">/</span>Stations.csv <span class="re2">output</span>=EnvMatCop <span class="re2">fs</span>=, <span class="re2">columns</span>=<span class="st0">&quot;utm_x double, utm_y double, station int&quot;</span> <span class="re5">--o</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Printing the attribute table of the enewly created vector&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;---------------------------------------------------------&quot;</span>
+db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END------------------------------------------------------&quot;</span>
+&nbsp;
+<span class="co0">## Populating the EnvMatCop using v.what.rast</span>
+<span class="co0"># First, add columns to the attribute table</span>
+v.db.addcol <span class="re2">map</span>=EnvMatCop <span class="re2">columns</span>=<span class="st0">&quot;depth double, ac3 int, ac4 int, surmax double, bpi25 double, maxcur25 double&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking if the operation was successful&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;----------------------------------------&quot;</span>
+db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END-------------------------------------&quot;</span>
+&nbsp;
+<span class="co0"># Create vectors or arrays to hold the information over which to loop</span>
+<span class="kw3">echo</span> <span class="st0">&quot;depth ac3 ac4 surmax bpi25 maxcur25&quot;</span> <span class="sy0">&gt;</span> colnames.txt
+<span class="re2">rastnames</span>=<span class="st0">&quot;bathy_background 3cl_12.5m 4cl_12.5m speed_sur_max_stut BPI_25 maxic_25&quot;</span>
+&nbsp;
+<span class="co0">## Looping v.what.rast over all rasters and colnames in a one-to-one way</span>
+<span class="re2">col</span>=<span class="nu0">0</span>
+<span class="kw1">for</span> raster <span class="kw1">in</span> <span class="sy0">`</span><span class="kw3">echo</span> <span class="re1">$rastnames</span><span class="sy0">`</span> ; <span class="kw1">do</span>
+	<span class="re2">col</span>=$<span class="br0">&#40;</span><span class="br0">&#40;</span><span class="kw2">col</span>+<span class="nu0">1</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+	<span class="re2">colnames</span>=<span class="sy0">`</span><span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">col</span>=<span class="re1">$col</span> <span class="st_h">'{ print $col }'</span> colnames.txt<span class="sy0">`</span>
+	<span class="kw3">echo</span> <span class="re1">$raster</span>  <span class="re1">$colnames</span>  
+	v.what.rast <span class="re2">vect</span>=EnvMatCop <span class="re2">rast</span>=<span class="re1">$raster</span> <span class="re2">col</span>=<span class="re1">$colnames</span>
+<span class="kw1">done</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking the output again&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-------------------------&quot;</span>
+v.db.select EnvMatCop
+<span class="kw3">echo</span> <span class="st0">&quot;END ---------------------&quot;</span>
+&nbsp;
+<span class="co0">## Write it out as a csv file</span>
+v.out.ascii EnvMatCop <span class="re2">fs</span>=, <span class="re2">columns</span>=utm_x,utm_y,station,depth,ac3,ac4,surmax,bpi25,maxcur25 <span class="sy0">&gt;</span> EnvMat2.csv
+<span class="kw3">echo</span> <span class="st0">&quot;-----------------------------------&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;Checking if the file is good&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;-----------------------------------&quot;</span>
+<span class="kw2">cat</span> EnvMat2.csv
+<span class="kw3">echo</span> <span class="st0">&quot;END--------------------------------&quot;</span></pre>
+
+<p>
+The mollusk richness file was ready from before (or needed only minor modifications)
+</p>
+
+<p>
+Merging the mollusk richness and predictor data set 
+</p>
+<pre class="code r">#######################################################################
+####### MERGING THE SPECIES RICHNESS AND THE EnvMat2.csv FILES ########
+#######################################################################
+EnvMat2.df &lt;- read.csv(file = paste(indir, &quot;EnvMat2.csv&quot;, sep = &quot;&quot;), header = F)
+&nbsp;
+## Removing duplicated x,y, and station columns
+EnvMat2.df &lt;- EnvMat2.df[, 4:12]
+&nbsp;
+## Adding the column names of EnvMat2.df
+colnames(EnvMat2.df) &lt;- c(&quot;utm_x&quot;, &quot;utm_y&quot;, &quot;station&quot;, &quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;, &quot;maxcur25&quot;)
+str(EnvMat2.df)
+&nbsp;
+## ac3 and ac4 are actually factors
+EnvMat2.df$fac3 &lt;- as.factor(EnvMat2.df$ac3)
+EnvMat2.df$fac4 &lt;- as.factor(EnvMat2.df$ac4)
+&nbsp;
+## Checking for collinearity among Predictors
+pairs(EnvMat2.df[, c(4, 7:11)], na.action = na.omit, diag.panel = panel.hist, upper.panel = panel.smooth,
+	lower.panel = panel.cor)
+# maxic25 and bpi25 are highly correlated. Leaving out maxic25 in further analysis
+&nbsp;
+##
+str(EnvMat2.df)
+str(DiversSt)
+&nbsp;
+# Changing the variable name of the richness
+names(DiversSt)[1] &lt;- &quot;rich&quot;
+&nbsp;
+## Merging EnvMat.df and DiverSt
+Richness2.df &lt;- merge(EnvMat2.df, DiversSt)</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Preparation of predictor data sets&quot;,&quot;hid&quot;:&quot;preparation_of_predictor_data_sets&quot;,&quot;codeblockOffset&quot;:2,&quot;secid&quot;:15,&quot;range&quot;:&quot;31497-38032&quot;} -->
+<h3 class="sectionedit16" id="model_parametrization">Model parametrization</h3>
+<div class="level3">
+
+<p>
+Fitting GLM and GAM models in R using mollusk richness as the response variable
+</p>
+<pre class="code r">########################################################
+####### FITTING A GLM TO RASTER DATA PREDICTORS ########
+########################################################
+fitn &lt;- glm(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitn)
+str(fitn)
+plot(fitn)
+&nbsp;
+########################################################
+####### FITTING A GAM TO RASTER DATA PREDICTORS ########
+########################################################
+require(mgcv)
+fitgam &lt;- gam(rich ~ depth + fac3 + fac4 + surmax + bpi25,
+	data = Richness2.df)
+summary(fitgam)
+str(fitgam)
+plot(fitgam)</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Model parametrization&quot;,&quot;hid&quot;:&quot;model_parametrization&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:16,&quot;range&quot;:&quot;38033-38757&quot;} -->
+<h3 class="sectionedit17" id="model_prediction">Model prediction</h3>
+<div class="level3">
+
+<p>
+Prepare new data to predict to in R, and predict to new data/unvisited areas using both the GLM and the GAM models.
+</p>
+<pre class="code r">########################################################################
+######### PREPARING AND PREDICTING TO NEW DATA/UNSAMPLED AREAS #########
+############ BASED ON GLM MODEL AND RASTER PREDICTOR DATA ##############
+########################################################################
+&nbsp;
+## Creating a new mapset to hold rasters within the QTC_grids region with res=1
+## Working from within R
+system(&quot;g.mapset -c mapset=stut1m&quot;)
+system(&quot;g.region region=QTC_grids res=1 -p&quot;)
+&nbsp;
+## Resample the raster maps to a finer grid using interpolation
+## Is not giving the wanted result...
+#system(&quot;r.resamp.interp input=depth_12.5 output=depth_1&quot;)
+#system(&quot;r.resamp.interp input=surmax_12.5 output=surmax_1&quot;)
+#system(&quot;r.resamp.interp input=bpi25_12.5 output=bpi_1&quot;)
+#system(&quot;r.resamp.interp input=ac3_12.5 output=ac3_1&quot;)
+#system(&quot;r.resamp.interp input=ac4_12.5 output=ac4_1&quot;)
+&nbsp;
+## using r.mapcalc to make map subsets
+system(&quot;r.mapcalc 'ac3_1=ac3_12.5'&quot;)
+system(&quot;r.mapcalc 'ac4_1=ac4_12.5'&quot;)
+system(&quot;r.mapcalc 'depth_1=depth_12.5'&quot;)
+system(&quot;r.mapcalc 'surmax_1=surmax_12.5'&quot;)
+system(&quot;r.mapcalc 'bpi25_1=bpi25_12.5'&quot;)
+&nbsp;
+### Predicting to the new map subset raster files
+## Loading Predictor rasters from GRASS to R
+Rasters &lt;- c(&quot;depth_1&quot;, &quot;ac3_1&quot;, &quot;ac4_1&quot;, &quot;surmax_1&quot;, &quot;bpi25_1&quot;)
+# p &lt;- length(Rasters)
+Spdf.names &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+Temp.mat &lt;- matrix(data = NA, nrow = 1050000, ncol = 5, byrow = T)
+&nbsp;
+# for loop
+for (i in 1:5) {
+	name &lt;- Spdf.names[i]
+	rast &lt;- Rasters[i]
+	print(name); print(rast)
+	name &lt;&lt;- readRAST6(rast) 	# double arrow assigns the object to the global env
+	Temp.mat[, i] &lt;- (name@data[, 1])
+}
+&nbsp;
+## Checking the Temp Matrix 
+head(Temp.mat)
+&nbsp;
+## Coerce into a data frame
+Preddata &lt;- as.data.frame(Temp.mat)
+colnames(Preddata) &lt;- c(&quot;depth&quot;, &quot;ac3&quot;, &quot;ac4&quot;, &quot;surmax&quot;, &quot;bpi25&quot;)
+&nbsp;
+## ac3 and ac4 are factors
+Preddata$fac3 &lt;- as.factor(Preddata$ac3)
+Preddata$fac4 &lt;- as.factor(Preddata$ac4)
+str(Preddata)
+head(Preddata)
+&nbsp;
+########################################################
+####### PREDICTING TO NEW DATA/UNSAMPLED AREAS #########
+########### USING GAM AND RASTER PREDICTORS ############
+########################################################
+prediction.gam &lt;- predict(fitgam, newdata = Preddata, type = &quot;response&quot;)
+str(prediction.gam)
+&nbsp;
+## Adding the predicted data to an existing raster
+name$newgam &lt;- prediction.gam
+&nbsp;
+## Writing raster back to GRASS
+writeRAST6(name, &quot;predgam_1&quot;, zcol=&quot;newgam&quot;, overwrite = T)
+&nbsp;
+########################################################
+############## RANDOMIZED &quot;FIELD TRIPS&quot; ################
+######### MODIFIED FROM JENS ÅSTRØM'S SCRIPT ###########
+########################################################
+### making 15 &quot;trips&quot; to the field and write it back to GRASS
+## Now the res=1, so nrows=1000 and ncols=1050
+## Only making 15 &quot;trips&quot;
+setwd(&quot;/home/user/ost4sem/project/output&quot;)
+&nbsp;
+for(i in 1:15){
+name$rnormgam&lt;-rnorm(nrow(name),name$newgam,sd=sd(resid(fitgam)))
+&nbsp;
+writeRAST6(name ,paste(&quot;rnormgam&quot;,i,sep=&quot;&quot;) ,zcol=&quot;rnormgam&quot; ,overwrite=T)
+}
+&nbsp;
+## Making a png pic of every new prediction
+system(&quot;for i in `seq 1 15`
+ do
+  r.out.png input=rnormgam$i output=rnormgam$i
+   g.remove rast=rnormgam$i
+    done&quot;)
+&nbsp;
+## Convert all png pics into an animation using ImageMagick
+system(&quot;convert -delay 20 *.png 1000r_1050c_rnorm_gam.mpg&quot;)
+cd ~/ost4sem/project</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Model prediction&quot;,&quot;hid&quot;:&quot;model_prediction&quot;,&quot;codeblockOffset&quot;:5,&quot;secid&quot;:17,&quot;range&quot;:&quot;38758-42238&quot;} -->
+<h3 class="sectionedit18" id="validation">Validation</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Validation&quot;,&quot;hid&quot;:&quot;validation&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:18,&quot;range&quot;:&quot;42239-42260&quot;} -->
+<h2 class="sectionedit19" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> GLM and GAM model prediction</div>
+</li>
+</ul>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10marine&amp;media=wikidk:glm_prediction_1m.png" class="media" title="wikidk:glm_prediction_1m.png"><img src="/dokuwiki/lib/exe/fetch.php?w=250&amp;h=250&amp;tok=b58507&amp;media=wikidk:glm_prediction_1m.png" class="media" title="GLM_prediction_1m" alt="GLM_prediction_1m" width="250" height="250" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10marine&amp;media=wikidk:gam_prediction_1m.png" class="media" title="wikidk:gam_prediction_1m.png"><img src="/dokuwiki/lib/exe/fetch.php?w=250&amp;h=250&amp;tok=88a519&amp;media=wikidk:gam_prediction_1m.png" class="media" title="GAM_prediction_1m" alt="GAM_prediction_1m" width="250" height="250" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li">Randomized GLM output</div>
+</li>
+</ul>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10marine&amp;media=wikidk:rnorm_glm23.png" class="media" title="wikidk:rnorm_glm23.png"><img src="/dokuwiki/lib/exe/fetch.php?w=250&amp;h=250&amp;tok=a7d389&amp;media=wikidk:rnorm_glm23.png" class="media" title="rnorm_glm23" alt="rnorm_glm23" width="250" height="250" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10marine&amp;media=wikidk:rnorm_glm24.png" class="media" title="wikidk:rnorm_glm24.png"><img src="/dokuwiki/lib/exe/fetch.php?w=250&amp;h=250&amp;tok=16aa9b&amp;media=wikidk:rnorm_glm24.png" class="media" title="rnorm_glm24" alt="rnorm_glm24" width="250" height="250" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li">Randomized GAM output</div>
+</li>
+</ul>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10marine&amp;media=wikidk:rnorm_gam14.png" class="media" title="wikidk:rnorm_gam14.png"><img src="/dokuwiki/lib/exe/fetch.php?w=250&amp;h=250&amp;tok=fde582&amp;media=wikidk:rnorm_gam14.png" class="media" title="rnorm_gam14" alt="rnorm_gam14" width="250" height="250" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=wikidk%3Adk10marine&amp;media=wikidk:rnorm_gam15.png" class="media" title="wikidk:rnorm_gam15.png"><img src="/dokuwiki/lib/exe/fetch.php?w=250&amp;h=250&amp;tok=412890&amp;media=wikidk:rnorm_gam15.png" class="media" title="rnorm_gam15" alt="rnorm_gam15" width="250" height="250" /></a>
+</p>
+
+<p>
+Insert a map and related table or graphics if available<br/>
+
+Discuss the biological or geographical significance of results
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS and DISCUSSION&quot;,&quot;hid&quot;:&quot;results_and_discussion&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:19,&quot;range&quot;:&quot;42261-&quot;} -->

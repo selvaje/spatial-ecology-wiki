@@ -1,0 +1,7 @@
+Finding info about the files: use ogrinfo
+<span class="kw3">cd</span>    ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input<span class="sy0">/</span>
+ogrinfo <span class="re5">-al</span>   ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input<span class="sy0">/</span>25opl_info.shp <span class="sy0">|</span> <span class="kw2">head</span> <span class="re5">-28</span>
+ogrinfo <span class="re5">-al</span>   ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input<span class="sy0">/</span>Markblok.shp <span class="sy0">|</span> <span class="kw2">head</span> <span class="re5">-28</span>
+&nbsp;
+Fancy loop <span class="kw1">for</span> calling projection <span class="kw1">for</span> all files 
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">*</span>.shp ; <span class="kw1">do</span> ogrinfo <span class="re5">-al</span> <span class="re1">$file</span>    <span class="sy0">|</span> <span class="kw2">grep</span> PROJCS  ; <span class="kw1">done</span> <span class="co0">#-al list all features in all layers</span>

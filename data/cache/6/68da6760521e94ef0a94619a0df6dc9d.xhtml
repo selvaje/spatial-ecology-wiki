@@ -1,0 +1,56 @@
+
+<h1 class="sectionedit1" id="different_version_and_evironments">Different version and evironments</h1>
+<div class="level1">
+
+<p>
+Python has some peculiar ways to manage use of different versions of the language, packages and to allow the deployment of running environments for your code. You will soon need to understand how to distribute your scripts and program to others as well on all your computers and clusters. The main other problem is how to force to cohexist scripts that require different/colliding versions of packages, and simply how to work when your system administrator is not around.
+</p>
+
+<p>
+All different approaches have pros and cons.
+</p>
+<ul>
+<li class="level1"><div class="li">Use your distribution kits (e.g. rpm and deb packages)</div>
+</li>
+<li class="level1"><div class="li">Use <a href="https://www.python.org/downloads/" class="urlextern" target="blanc" title="https://www.python.org/downloads/" rel="nofollow noopener">python.org</a> kits</div>
+</li>
+<li class="level1"><div class="li">Use <a href="https://github.com/pyenv/pyenv" class="urlextern" target="blanc" title="https://github.com/pyenv/pyenv" rel="nofollow noopener">pyenv</a> to switch versions of language (mainly 2 vs 3, but non only)</div>
+</li>
+<li class="level1"><div class="li">Use <a href="https://virtualenv.pypa.io/en/latest/" class="urlextern" target="blanc" title="https://virtualenv.pypa.io/en/latest/" rel="nofollow noopener">virtualenv</a> to switch versions of packages</div>
+</li>
+<li class="level1"><div class="li">Use third party <a href="https://www.anaconda.com/distribution/" class="urlextern" target="blanc" title="https://www.anaconda.com/distribution/" rel="nofollow noopener">Anaconda</a> and its conda/miniconda tool</div>
+</li>
+<li class="level1"><div class="li">Use <a href="https://brew.sh/" class="urlextern" target="blanc" title="https://brew.sh/" rel="nofollow noopener">homebrew</a> on MacOS.</div>
+</li>
+<li class="level1"><div class="li">Use a general deployment tool, such as <a href="https://docs.docker.com/" class="urlextern" target="blanc" title="https://docs.docker.com/" rel="nofollow noopener">docker</a> and other containers</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Different version and evironments&quot;,&quot;hid&quot;:&quot;different_version_and_evironments&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-1141&quot;} -->
+<h2 class="sectionedit2" id="pyenv_pre-reqs">Pyenv pre-reqs</h2>
+<div class="level2">
+<pre class="code">sudo apt install curl git-core gcc make zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libssl-dev</pre>
+
+<p>
+In general, right dependencies for Python are documented (and up-to-date) here:
+</p>
+<pre class="code">https://devguide.python.org/setup/#build-dependencies</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pyenv pre-reqs&quot;,&quot;hid&quot;:&quot;pyenv_pre-reqs&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;1142-1414&quot;} -->
+<h2 class="sectionedit3" id="pyenv_install">Pyenv install</h2>
+<div class="level2">
+
+<p>
+The recommended way is using the pyenv installer
+</p>
+<pre class="code">https://github.com/pyenv/pyenv-installer</pre>
+
+<p>
+else it is possible to clone the official repository from github:
+</p>
+<pre class="code">git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Pyenv install&quot;,&quot;hid&quot;:&quot;pyenv_install&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;1415-&quot;} -->

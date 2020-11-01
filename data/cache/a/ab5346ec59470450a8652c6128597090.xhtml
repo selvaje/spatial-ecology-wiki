@@ -1,0 +1,33 @@
+
+<h3 class="sectionedit1" id="accuracy_assessment">Accuracy assessment</h3>
+<div class="level3">
+
+</div>
+
+<h4 id="create_reference_vector_with_casi_bands_as_attributes">Create reference vector with CASI bands as attributes</h4>
+<div class="level4">
+<pre class="code bash">    pkextract <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_CASI.tif <span class="re5">-s</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_VA.shp <span class="re5">-o</span> validation_casi.shp</pre>
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wiki:contest:validation.png" class="mediacenter" alt="" />
+</p>
+
+</div>
+
+<h4 id="perform_accuracy_assessment_on_casi_bands_using_pkclassify_svm">Perform accuracy assessment on CASI bands using pkclassify_svm</h4>
+<div class="level4">
+<pre class="code bash">    pkclassify_svm <span class="re5">-t</span> training_casi.shp <span class="re5">-i</span> validation_casi.shp</pre>
+
+</div>
+
+<h4 id="perform_accuracy_assessment_on_casi_bands_using_pkdiff">Perform accuracy assessment on CASI bands using pkdiff</h4>
+<div class="level4">
+<pre class="code bash">    pkdiff <span class="re5">-i</span> testmap_casi.tif <span class="re5">-ref</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_VA.shp <span class="re5">-cm</span></pre>
+
+</div>
+
+<h4 id="perform_the_accuracy_assessment">Perform the accuracy assessment</h4>
+<div class="level4">
+<pre class="code bash">    pkdiff <span class="re5">-i</span> testmap_final_ff.tif <span class="re5">-ref</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_VA.shp <span class="re5">-cm</span></pre>
+
+</div>

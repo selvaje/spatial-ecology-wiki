@@ -1,0 +1,14 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1594967994;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:9:"R vs BASH";s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:11:"description";a:1:{s:8:"abstract";s:186:"R vs BASH
+
+Create a text file and understand pc performance
+
+in bash
+
+
+time seq 1  100000000  > /tmp/test.txt 
+
+
+in R
+
+
+ptm <- proc.time() ;  a = seq(1, 100000000 )   ; proc.time() - ptm";}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

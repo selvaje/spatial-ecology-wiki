@@ -1,0 +1,21 @@
+<span class="st0">&quot;&quot;&quot;Convert a spreadsheet to a shapefile&quot;&quot;&quot;</span>
+<span class="kw1">import</span> xlrd
+<span class="kw1">import</span> shapefile
+&nbsp;
+<span class="co1"># Open the spreadsheet reader</span>
+xls <span class="sy0">=</span> xlrd.<span class="me1">open_workbook</span><span class="br0">&#40;</span><span class="st0">&quot;NYC_MUSEUMS_GEO.xls&quot;</span><span class="br0">&#41;</span>
+sheet <span class="sy0">=</span> xls.<span class="me1">sheet_by_index</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Open the shapefile writer</span>
+w <span class="sy0">=</span> shapefile.<span class="me1">Writer</span><span class="br0">&#40;</span>shapefile.<span class="me1">POINT</span><span class="br0">&#41;</span>
+&nbsp;
+<span class="co1"># Move data from spreadsheet to shapefile</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>sheet.<span class="me1">ncols</span><span class="br0">&#41;</span>:
+  w.<span class="me1">field</span><span class="br0">&#40;</span><span class="kw2">str</span><span class="br0">&#40;</span>sheet.<span class="me1">cell</span><span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span>i<span class="br0">&#41;</span>.<span class="me1">value</span><span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">&quot;C&quot;</span><span class="sy0">,</span> <span class="nu0">40</span><span class="br0">&#41;</span>
+<span class="kw1">for</span> i <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span><span class="nu0">1</span><span class="sy0">,</span> sheet.<span class="me1">nrows</span><span class="br0">&#41;</span>:
+  values <span class="sy0">=</span> <span class="br0">&#91;</span><span class="br0">&#93;</span>
+  <span class="kw1">for</span> j <span class="kw1">in</span> <span class="kw2">range</span><span class="br0">&#40;</span>sheet.<span class="me1">ncols</span><span class="br0">&#41;</span>:
+    values.<span class="me1">append</span><span class="br0">&#40;</span>sheet.<span class="me1">cell</span><span class="br0">&#40;</span>i<span class="sy0">,</span>j<span class="br0">&#41;</span>.<span class="me1">value</span><span class="br0">&#41;</span>
+  w.<span class="me1">record</span><span class="br0">&#40;</span>*values<span class="br0">&#41;</span>
+  w.<span class="me1">point</span><span class="br0">&#40;</span><span class="kw2">float</span><span class="br0">&#40;</span>values<span class="br0">&#91;</span>-<span class="nu0">2</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="sy0">,</span><span class="kw2">float</span><span class="br0">&#40;</span>values<span class="br0">&#91;</span>-<span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+w.<span class="me1">save</span><span class="br0">&#40;</span><span class="st0">&quot;NYC_MUSEUMS_XLS2SHP&quot;</span><span class="br0">&#41;</span>

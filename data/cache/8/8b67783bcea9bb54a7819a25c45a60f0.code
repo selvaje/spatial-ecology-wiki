@@ -1,0 +1,97 @@
+    <span class="st0">&quot;&quot;&quot;
+    Converts a LIDAR LAS file to an
+    ASCII DEM.  Interpolation is used
+    to account for data loss.  
+    &quot;&quot;&quot;</span>
+    <span class="co1"># We only need 2 modules</span>
+    <span class="co1"># both available on PyPI!</span>
+    <span class="kw1">from</span> laspy.<span class="kw2">file</span> <span class="kw1">import</span> File
+    <span class="kw1">import</span> numpy <span class="kw1">as</span> np
+&nbsp;
+    <span class="co1"># Source LAS file</span>
+    source <span class="sy0">=</span> <span class="st0">&quot;lidar.las&quot;</span>
+&nbsp;
+    <span class="co1"># Output ASCII DEM file</span>
+    target <span class="sy0">=</span> <span class="st0">&quot;lidar.asc&quot;</span>
+&nbsp;
+    <span class="co1"># Grid cell size (data units)</span>
+    cell <span class="sy0">=</span> <span class="nu0">1.0</span>
+&nbsp;
+    <span class="co1"># No data value for output DEM</span>
+    NODATA <span class="sy0">=</span> <span class="nu0">0</span>
+&nbsp;
+    <span class="co1"># Open LIDAR LAS file</span>
+    las <span class="sy0">=</span> File<span class="br0">&#40;</span>source<span class="sy0">,</span> mode<span class="sy0">=</span><span class="st0">&quot;r&quot;</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1">#xyz min and max</span>
+    <span class="kw2">min</span> <span class="sy0">=</span> las.<span class="me1">header</span>.<span class="kw2">min</span>
+    <span class="kw2">max</span> <span class="sy0">=</span> las.<span class="me1">header</span>.<span class="kw2">max</span>
+&nbsp;
+    <span class="co1"># Get the x axis distance</span>
+    xdist <span class="sy0">=</span> <span class="kw2">max</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span> - <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Get the y axis distance</span>
+    ydist <span class="sy0">=</span> <span class="kw2">max</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span> - <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+&nbsp;
+    <span class="co1"># Number of columns for our grid</span>
+    cols <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>xdist<span class="br0">&#41;</span> / cell
+&nbsp;
+    <span class="co1"># Number of rows for our grid</span>
+    rows <span class="sy0">=</span> <span class="kw2">int</span><span class="br0">&#40;</span>ydist<span class="br0">&#41;</span> / cell
+&nbsp;
+    cols +<span class="sy0">=</span> <span class="nu0">1</span>
+    rows +<span class="sy0">=</span> <span class="nu0">1</span>
+&nbsp;
+    <span class="co1"># Track how many elevation</span>
+    <span class="co1"># values we aggregate</span>
+    count <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span>rows<span class="sy0">,</span> cols<span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">float32</span><span class="br0">&#41;</span>
+    <span class="co1"># Aggregate elevation values</span>
+    zsum <span class="sy0">=</span> np.<span class="me1">zeros</span><span class="br0">&#40;</span><span class="br0">&#40;</span>rows<span class="sy0">,</span> cols<span class="br0">&#41;</span><span class="br0">&#41;</span>.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">float32</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Y resolution is negative</span>
+    ycell <span class="sy0">=</span> -<span class="nu0">1</span> * cell
+&nbsp;
+    <span class="co1"># Project x,y values to grid</span>
+    projx <span class="sy0">=</span> <span class="br0">&#40;</span>las.<span class="me1">x</span> - <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span><span class="br0">&#41;</span> / cell
+    projy <span class="sy0">=</span> <span class="br0">&#40;</span>las.<span class="me1">y</span> - <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span><span class="br0">&#41;</span> / ycell
+    <span class="co1"># Cast to integers and clip for use as index</span>
+    ix <span class="sy0">=</span> projx.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">int32</span><span class="br0">&#41;</span>
+    iy <span class="sy0">=</span> projy.<span class="me1">astype</span><span class="br0">&#40;</span>np.<span class="me1">int32</span><span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Loop through x,y,z arrays, add to grid shape,</span>
+    <span class="co1"># and aggregate values for averaging</span>
+    <span class="kw1">for</span> x<span class="sy0">,</span>y<span class="sy0">,</span>z <span class="kw1">in</span> np.<span class="me1">nditer</span><span class="br0">&#40;</span><span class="br0">&#91;</span>ix<span class="sy0">,</span> iy<span class="sy0">,</span> las.<span class="me1">z</span><span class="br0">&#93;</span><span class="br0">&#41;</span>:
+      count<span class="br0">&#91;</span>y<span class="sy0">,</span> x<span class="br0">&#93;</span>+<span class="sy0">=</span><span class="nu0">1</span>
+      zsum<span class="br0">&#91;</span>y<span class="sy0">,</span> x<span class="br0">&#93;</span>+<span class="sy0">=</span>z
+&nbsp;
+    <span class="co1"># Change 0 values to 1 to avoid numpy warnings, </span>
+    <span class="co1"># and NaN values in array</span>
+    nonzero <span class="sy0">=</span> np.<span class="me1">where</span><span class="br0">&#40;</span>count<span class="sy0">&gt;</span><span class="nu0">0</span><span class="sy0">,</span> count<span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+    <span class="co1"># Average our z values</span>
+    zavg <span class="sy0">=</span> zsum/nonzero
+&nbsp;
+    <span class="co1"># Interpolate 0 values in array to avoid any</span>
+    <span class="co1"># holes in the grid</span>
+    mean <span class="sy0">=</span> np.<span class="me1">ones</span><span class="br0">&#40;</span><span class="br0">&#40;</span>rows<span class="sy0">,</span>cols<span class="br0">&#41;</span><span class="br0">&#41;</span> * np.<span class="me1">mean</span><span class="br0">&#40;</span>zavg<span class="br0">&#41;</span>
+    left <span class="sy0">=</span> np.<span class="me1">roll</span><span class="br0">&#40;</span>zavg<span class="sy0">,</span> -<span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+    lavg <span class="sy0">=</span> np.<span class="me1">where</span><span class="br0">&#40;</span>left<span class="sy0">&gt;</span><span class="nu0">0</span><span class="sy0">,</span>left<span class="sy0">,</span>mean<span class="br0">&#41;</span>
+    right <span class="sy0">=</span> np.<span class="me1">roll</span><span class="br0">&#40;</span>zavg<span class="sy0">,</span> <span class="nu0">1</span><span class="sy0">,</span> <span class="nu0">1</span><span class="br0">&#41;</span>
+    ravg <span class="sy0">=</span> np.<span class="me1">where</span><span class="br0">&#40;</span>right<span class="sy0">&gt;</span><span class="nu0">0</span><span class="sy0">,</span>right<span class="sy0">,</span>mean<span class="br0">&#41;</span>
+    interpolate <span class="sy0">=</span> <span class="br0">&#40;</span>lavg+ravg<span class="br0">&#41;</span>/<span class="nu0">2</span>
+    fill<span class="sy0">=</span>np.<span class="me1">where</span><span class="br0">&#40;</span>zavg<span class="sy0">&gt;</span><span class="nu0">0</span><span class="sy0">,</span>zavg<span class="sy0">,</span>interpolate<span class="br0">&#41;</span>
+&nbsp;
+    <span class="co1"># Create our ASCII DEM header</span>
+    header <span class="sy0">=</span> <span class="st0">&quot;ncols        %s<span class="es0">\n</span>&quot;</span> % fill.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;nrows        %s<span class="es0">\n</span>&quot;</span> % fill.<span class="me1">shape</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;xllcorner    %s<span class="es0">\n</span>&quot;</span> % <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">0</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;yllcorner    %s<span class="es0">\n</span>&quot;</span> % <span class="kw2">min</span><span class="br0">&#91;</span><span class="nu0">1</span><span class="br0">&#93;</span>
+    header +<span class="sy0">=</span> <span class="st0">&quot;cellsize     %s<span class="es0">\n</span>&quot;</span> % cell
+    header +<span class="sy0">=</span> <span class="st0">&quot;NODATA_value      %s<span class="es0">\n</span>&quot;</span> % NODATA
+&nbsp;
+    <span class="co1"># Open the output file, add the header, save the array</span>
+    <span class="kw1">with</span> <span class="kw2">open</span><span class="br0">&#40;</span>target<span class="sy0">,</span> <span class="st0">&quot;wb&quot;</span><span class="br0">&#41;</span> <span class="kw1">as</span> f:
+      f.<span class="me1">write</span><span class="br0">&#40;</span>header<span class="br0">&#41;</span>
+      <span class="co1"># The fmt string ensures we output floats </span>
+      <span class="co1"># that have at least one number but only </span>
+      <span class="co1"># two decimal places</span>
+      np.<span class="me1">savetxt</span><span class="br0">&#40;</span>f<span class="sy0">,</span> fill<span class="sy0">,</span> fmt<span class="sy0">=</span><span class="st0">&quot;%1.2f&quot;</span><span class="br0">&#41;</span>

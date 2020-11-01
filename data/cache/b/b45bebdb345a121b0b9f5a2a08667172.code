@@ -1,0 +1,11 @@
+<span class="co1">-- Syntax</span>
+concat mddExp <span class="kw1">WITH</span> mddExp <span class="sy0">...</span> <span class="kw1">WITH</span> mddExp along <span class="kw1">INTEGER</span>
+&nbsp;
+<span class="co1">-- Concatenating two images along the first dimension</span>
+<span class="kw1">SELECT</span> CONCAT mr <span class="kw1">WITH</span> mr ALONG <span class="nu0">0</span> <span class="kw1">FROM</span> mr
+&nbsp;
+<span class="co1">-- Arangement of 2 x 2 mr images</span>
+<span class="kw1">SELECT</span> CONCAT <span class="br0">&#40;</span>CONCAT mr <span class="kw1">WITH</span> mr ALONG <span class="nu0">0</span><span class="br0">&#41;</span>
+       <span class="kw1">WITH</span>   <span class="br0">&#40;</span>CONCAT mr <span class="kw1">WITH</span> mr ALONG <span class="nu0">0</span><span class="br0">&#41;</span>
+       ALONG <span class="nu0">1</span>
+<span class="kw1">FROM</span> mr

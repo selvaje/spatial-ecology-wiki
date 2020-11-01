@@ -4,6 +4,7 @@
 The virtual machine **VM** includes software for GIS data processing and all Open Source tools used in spatial-ecology.net\\
 The use of a VM allows you not to install linux ubuntu in your computer but just to use it. 
   * [[install_linux | How to create the Virtual machine and enrich UBUNTU with GIS and RS sw.   ]] \\
+  * [[ pkt_openev_osgeolive | Install pktools, openev and R 4.0.2 in OSGeoLive 13 Linux Virtual]]  \\
 \\
 
 ====== Access spatial-ecology ubuntu from a Virtual Machine ====== 

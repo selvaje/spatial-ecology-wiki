@@ -1,0 +1,10 @@
+matera.sat &lt;- gmap(&quot;Matera&quot;,type=&quot;satellite&quot;
+matera.LatLon &lt;- spTransform(matera.sat,CRS(&quot;+init=epsg:4326&quot;))
+sr &lt;- &quot;+init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;
+matera.LatLon &lt;-  projectRaster(matera.sat, crs = sr)
+xmin=bbox(matera.LatLon)[1,1]
+xmax=bbox(matera.LatLon)[1,2]
+ymax=bbox(matera.LatLon)[2,2]
+ymin=bbox(matera.LatLon)[2,1]
+matera.osm = openmap( c(lat = ymax, lon = xmin ) , c(lat = ymin, lon = xmax), type=&quot;osm&quot;)
+plot(matera.osm)

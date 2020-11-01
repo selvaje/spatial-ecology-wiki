@@ -1,0 +1,2 @@
+<span class="kw2">rm</span> <span class="re5">-f</span> vegetation<span class="sy0">/</span>tiles.shp
+gdaltindex  vegetation<span class="sy0">/</span>tiles.shp  vegetation<span class="sy0">/</span>stack_??.tif

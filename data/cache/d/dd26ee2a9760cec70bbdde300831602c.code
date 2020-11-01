@@ -1,0 +1,4 @@
+for c in ( AvgLandTemp ) return encode(
+switch case c[Lat(59.9), Long(10.7), ansi(&quot;2014-01&quot;:&quot;2014-12&quot;)] &gt; 0
+  return log(c[Lat(59.9), Long(10.7), ansi(&quot;2014-01&quot;:&quot;2014-12&quot;)])
+  default return 0, &quot;csv&quot;)

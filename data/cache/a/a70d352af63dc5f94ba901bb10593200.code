@@ -1,0 +1,8 @@
+<span class="co0">#   Sort points for section and X</span>
+<span class="kw2">awk</span> <span class="re5">-F</span> <span class="st0">&quot;|&quot;</span> <span class="st_h">'{ print $1, $2, $3, $4}'</span> point_sec_select.txt <span class="sy0">|</span> <span class="kw2">sort</span> <span class="re5">-g</span> <span class="re5">-k</span> <span class="nu0">1</span>,<span class="nu0">1</span> <span class="re5">-k</span> <span class="nu0">3</span>,<span class="nu0">3</span>  <span class="sy0">&gt;</span> punti.txt
+&nbsp;
+<span class="co0">#   Remove duplicated points in the cross section</span>
+<span class="kw2">awk</span> <span class="st_h">'{if($1!=sez || $3!=x || $4!=y) print $0; sez=$1; x=$3; y=$4}'</span> punti.txt <span class="sy0">&gt;</span> punti_singoli.txt
+&nbsp;
+<span class="co0">#   Calculate distance between two points</span>
+<span class="kw2">awk</span> <span class="st_h">'{if(sez==$1) {print sez, sqrt((x-$3)^2+(y-$4)^2)+p, $2, sez*100} else {print $1, 0, $2, $1*100; p=0}; sez=$1; x=$3; y=$4}'</span> punti_singoli.txt <span class="sy0">&gt;</span> sezioni.txt

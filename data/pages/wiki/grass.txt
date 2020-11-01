@@ -10,7 +10,7 @@ On this page of the wiki we provide different sections (see in the table of cont
 ===== GRASS Tutorials =====
   * [[basicgrass2|Starting with GRASS for Yale]]
   * [[basicgrass|Starting with GRASS]]
-  * [[basicgrass7|Starting with GRASS 7.4]]
+  * [[basicgrass7|Starting with GRASS 7.4 - Web Seminar May 13,2021]]
   * [[basicgrassKenya|Starting with GRASS for Kenya]]
   * [[grassKenyaExtract|Extracting information from images with GRASS for Kenya]]
   * [[grassrivarvariable| Calculation of contiguous stream-specific variables - r.stream.watersheds & r.stream.variables ]]

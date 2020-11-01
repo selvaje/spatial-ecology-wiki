@@ -1,0 +1,68 @@
+
+<h1 class="sectionedit1" id="how_to_manipulate_hdf_with_open_source">How to manipulate HDF with open source.</h1>
+<div class="level1">
+
+<p>
+The HDF format is supported by GDAL and can be manipulated using scripting routines on a Linux machine.<br/>
+
+<br/>
+
+Download the data
+</p>
+<pre class="code bash"><span class="kw2">wget</span> ftp:<span class="sy0">//</span>weldftp.cr.usgs.gov<span class="sy0">/</span>CONUS<span class="sy0">/</span><span class="nu0">2011</span><span class="sy0">/</span>monthly<span class="sy0">/</span>month07<span class="sy0">/</span>CONUS.month07.2011.h08v08.v1.5.hdf</pre>
+
+<p>
+It is possible to see the internal structure of the HDF format using gdalinfo
+</p>
+<pre class="code bash">gdalinfo CONUS.month07.2011.h08v08.v1.5.hdf</pre>
+
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit2"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Aweld_hdf&amp;media=wiki:hdf_gdalinfo.png" class="media" title="wiki:hdf_gdalinfo.png"><img src="/dokuwiki/lib/exe/fetch.php?w=800&amp;tok=df0d23&amp;media=wiki:hdf_gdalinfo.png" class="media" alt="" width="800" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table&quot;,&quot;secid&quot;:2,&quot;range&quot;:&quot;441-475&quot;} -->
+<p>
+<br/>
+
+You can extract an HDF WELD band and convert it into GeoTiff format:
+</p>
+<pre class="code bash">gdal_translate HDF4_EOS:EOS_GRID:<span class="st0">&quot;CONUS.month07.2011.h08v08.v1.5.hdf&quot;</span>:WELD_GRID:Band1_TOA_REF Band1_TOA_REF.tif </pre>
+
+<p>
+You can do this for many bands: 
+</p>
+<pre class="code bash"><span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="sy0">`</span>gdalinfo CONUS.month07.2011.h08v08.v1.5.hdf <span class="sy0">|</span> <span class="kw2">grep</span> NAME <span class="sy0">|</span> <span class="kw2">awk</span> <span class="re5">-F</span> <span class="st0">&quot;=&quot;</span> <span class="st_h">'{print $2}'</span><span class="sy0">`</span> ; <span class="kw1">do</span>
+   gdal_translate <span class="re1">$file</span>   <span class="co1">${file:65}</span>.tif
+<span class="kw1">done</span></pre>
+
+<p>
+Create a RGB composit 
+</p>
+<pre class="code bash">gdal_merge.py <span class="re5">-separate</span>  <span class="re5">-o</span> RGB_TOA_REF.tif    Band4_TOA_REF.tif Band3_TOA_REF.tif Band2_TOA_REF.tif</pre>
+
+<p>
+See the data with openev
+</p>
+<pre class="code bash">openev RGB_TOA_REF.tif</pre>
+
+<p>
+<br/>
+
+</p>
+<div class="table sectionedit3"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Aweld_hdf&amp;media=wiki:rgb_openev.png" class="media" title="wiki:rgb_openev.png"><img src="/dokuwiki/lib/exe/fetch.php?w=700&amp;tok=29e7b1&amp;media=wiki:rgb_openev.png" class="media" alt="" width="700" /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT{&quot;target&quot;:&quot;table&quot;,&quot;name&quot;:&quot;&quot;,&quot;hid&quot;:&quot;table1&quot;,&quot;secid&quot;:3,&quot;range&quot;:&quot;1096-1128&quot;} -->
+<p>
+<br/>
+
+</p>
+
+</div>

@@ -1,0 +1,96 @@
+
+<h1 class="sectionedit1" id="the_gnuplot_syntax">The Gnuplot syntax</h1>
+<div class="level1">
+
+<p>
+Exercise:<br/>
+
+Script: open by kate <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_gnuplot/gnuplot.sh </a><br/>
+
+Data: <a href="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/input.txt" class="urlextern" target="blanc" title="http://www.spatial-ecology.net/ost4sem/exercise/basic_adv_gnuplot/input.txt" rel="nofollow noopener"> ~/ost4sem/exercise/basic_adv_gnuplot/input.txt </a><br/>
+
+Directory: ~/ost4sem/exercise/basic_adv_gnuplot
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The Gnuplot syntax&quot;,&quot;hid&quot;:&quot;the_gnuplot_syntax&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-389&quot;} -->
+<h2 class="sectionedit2" id="the_gnuplot_commands">The gnuplot commands</h2>
+<div class="level2">
+
+<p>
+The most important commands can grouped in two operations:<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Setting the plotting environment by: <em>set</em> command.<br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Plotting the data by: <em>plot</em>  and <em>splot</em> commands.<br/>
+</div>
+</li>
+</ul>
+
+<p>
+Syntax:
+</p>
+<pre class="code">     plot {&lt;ranges&gt;}
+          {&lt;function&gt; | {&quot;&lt;datafile&gt;&quot; {datafile-modifiers}}}
+          {axes &lt;axes&gt;} {&lt;title-spec&gt;} {with &lt;style&gt;}
+          {, {definitions,} &lt;function&gt; ...}</pre>
+
+<p>
+Here we will concentrate on commands for plotting data in 2D and 3D.<br/>
+
+<br/>
+
+Enter in gnuplot by:
+</p>
+<pre class="code bash">gnuplot</pre>
+
+<p>
+Plot standard function:
+</p>
+<pre class="code gnuplot"><span class="kw1">plot</span> <span class="kw4">sin</span> <span class="br0">&#40;</span><span class="kw5">x</span><span class="br0">&#41;</span> 		</pre>
+
+<p>
+Plot your data:
+</p>
+<pre class="code gnuplot"><span class="kw1">plot</span> <span class="st0">'input.txt'</span>   u <span class="nu0">3</span><span class="sy0">:</span><span class="nu0">4</span> </pre>
+
+<p>
+Query your data by AWK language:
+</p>
+<pre class="code gnuplot"><span class="kw1">plot</span> <span class="st0">&quot;&lt;awk '{if($2==2007) print $0 }'  input.txt &quot;</span> u <span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span></pre>
+
+<p>
+Plot two series of data in one plot:
+</p>
+<pre class="code gnuplot"><span class="kw1">plot</span> <span class="st0">&quot;&lt;awk '{if($2==2007) print $0 }'  input.txt &quot;</span> u <span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span><span class="sy0">,</span> <span class="st0">&quot;&lt;awk '{if($2==2005) print $0 }'  input.txt &quot;</span> u <span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span><span class="sy0">,</span></pre>
+
+<p>
+Sampling your data by AWK language:
+</p>
+<pre class="code gnuplot"><span class="co1"># 2D plot</span>
+<span class="kw1">plot</span> <span class="st0">&quot;&lt;awk '{if (NR%100== 0) print $0}' aver_month_nuts3.asc &quot;</span> u <span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span>
+<span class="co1"># 3D plot</span>
+<span class="kw1">splot</span> <span class="st0">&quot;&lt;awk '{if (NR%100== 0) print $0}' aver_month_nuts3.asc &quot;</span> u <span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span><span class="sy0">:</span><span class="nu0">7</span></pre>
+
+<p>
+Query your data by bash commands:
+</p>
+<pre class="code gnuplot"><span class="kw1">plot</span> <span class="st0">&quot;&lt; grep 2005  input.txt &quot;</span> u <span class="nu0">4</span><span class="sy0">:</span><span class="nu0">5</span></pre>
+
+<p>
+Run a bash command inside gnuplot using the symbol !
+</p>
+<pre class="code gnuplot"><span class="sy0">!</span> head input<span class="sy0">.</span>txt</pre>
+
+<p>
+Call the bash shell inside gnuplot and return to gnuplot
+</p>
+<pre class="code bash">shell
+<span class="kw2">head</span> input.txt
+<span class="kw3">exit</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;The gnuplot commands&quot;,&quot;hid&quot;:&quot;the_gnuplot_commands&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;390-&quot;} -->

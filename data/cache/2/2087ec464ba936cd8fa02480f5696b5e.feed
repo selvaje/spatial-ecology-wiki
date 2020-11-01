@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://spatial-ecology.net/dokuwiki/feed.php">
+        <title> wiki:grass</title>
+        <description></description>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2020-10-25T20:56:57+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:grass:grasstopovar&amp;rev=1594967994&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://spatial-ecology.net/dokuwiki/</link>
+        <url>http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:grass:grasstopovar&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wiki:grass:grasstopovar</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:grass:grasstopovar&amp;rev=1594967994&amp;do=diff</link>
+        <description>A suite of global, cross-scale topographic variables for environmental and biodiversity modeling
+
+Scripting procedure to recreate derived and aggregated topographic variables using  Global Multi-resolution Terrain Elevation Data 2010 (GMTED2010)  
+Script written by Giuseppe Amatulli
+
+This example contains the following steps:</description>
+    </item>
+</rdf:RDF>

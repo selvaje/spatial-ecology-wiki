@@ -1,0 +1,33 @@
+
+<h1 class="sectionedit1" id="download_and_unzip_files">Download and unzip files</h1>
+<div class="level1">
+
+<p>
+Supposing that you want download all the 6901??.tar.gz files  from this page  <a href="ftp://ftp.ncdc.noaa.gov/pub/data/nsrdb-solar/solar-only/" class="urlextern" target="blanc" title="ftp://ftp.ncdc.noaa.gov/pub/data/nsrdb-solar/solar-only/" rel="nofollow noopener">ftp://ftp.ncdc.noaa.gov/pub/data/nsrdb-solar/solar-only/</a> <br/>
+
+</p>
+
+<p>
+you can easily done with wget
+</p>
+<pre class="code">  cd /tmp
+  wget &quot;ftp://ftp.ncdc.noaa.gov/pub/data/nsrdb-solar/solar-only/6901??.tar.gz&quot;
+  </pre>
+
+<p>
+Now you want untar all your files 
+</p>
+<pre class="code">for file in *.tar.gz  ; do tar zxvf $file ; done</pre>
+
+<p>
+Now your files/folders will be stored in nsrdb_solar you can read one by: 
+</p>
+<pre class="code">head nsrdb_solar/690140/690140_1991.csv</pre>
+
+<p>
+And manipulate with AWK.
+</p>
+<div class="plugin_note notetip">In case of an http server wget does not allow the use of metacharacter or regular expressions, but we can use curl in a similar way. See an help forum <a href="http://www.linuxquestions.org/questions/linux-newbie-8/wget-with-regular-expressions-846368/" class="urlextern" target="blanc" title="http://www.linuxquestions.org/questions/linux-newbie-8/wget-with-regular-expressions-846368/" rel="nofollow noopener">http://www.linuxquestions.org/questions/linux-newbie-8/wget-with-regular-expressions-846368/</a>.
+
+</div>
+</div>

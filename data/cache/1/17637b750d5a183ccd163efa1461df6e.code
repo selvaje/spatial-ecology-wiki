@@ -1,0 +1,31 @@
+<span class="kw3">export</span> <span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span>
+<span class="kw3">export</span> <span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>basic_adv_gdalogr<span class="sy0">/</span>fagus_sylvatica<span class="sy0">/</span>
+&nbsp;
+<span class="co0"># To compare processing speed, let's use the command time</span>
+&nbsp;
+<span class="kw1">time</span> <span class="br0">&#40;</span>
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> <span class="re1">$INDIR</span><span class="sy0">/</span><span class="nu0">20</span>?<span class="nu0">0</span>_TSSP_??-ENS-A2-SP20_43023435.tif  ; <span class="kw1">do</span> 
+&nbsp;
+<span class="kw3">export</span>  <span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span> <span class="re1">$file</span> .tif<span class="br0">&#41;</span>
+&nbsp;
+R <span class="re5">--vanilla</span> <span class="re5">--no-readline</span>   <span class="re5">-q</span>  <span class="co2">&lt;&lt;'EOF'
+&nbsp;
+library(raster)
+&nbsp;
+INDIR = Sys.getenv(c('INDIR'))
+OUTDIR = Sys.getenv(c('OUTDIR'))
+filename = Sys.getenv(c('filename'))
+&nbsp;
+paste(&quot;start to process &quot;,INDIR,&quot;/&quot;,filename,&quot;.tif&quot;, sep=&quot;&quot; )
+&nbsp;
+data=raster(paste(INDIR,&quot;/&quot;,filename,&quot;.tif&quot;,sep=&quot;&quot;))
+r1 = crop(data, extent(3825000,4527900,2565000,3080000))
+writeRaster(r1 , paste(OUTDIR,&quot;/&quot;,filename,&quot;_crop.tif&quot;,sep=&quot;&quot;) , overwrite=TRUE )
+&nbsp;
+# if you get a file you can export with write.table
+# if you get a number you can use Sys.setenv() to export the variable in R:
+&nbsp;
+EOF</span>
+&nbsp;
+<span class="kw1">done</span> 
+<span class="br0">&#41;</span>

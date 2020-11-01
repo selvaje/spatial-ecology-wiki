@@ -1,0 +1,2 @@
+<span class="kw2">ls</span> <span class="sy0">/</span>usr<span class="sy0">/</span>bin <span class="sy0">&gt;</span> tmp.txt
+<span class="kw2">wc</span> <span class="re5">-l</span> tmp.txt

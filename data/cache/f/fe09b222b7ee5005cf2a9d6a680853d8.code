@@ -1,0 +1,4 @@
+<span class="co0"># looping trough the images</span>
+<span class="kw1">for</span> <span class="kw2">file</span> <span class="kw1">in</span> LST<span class="sy0">/</span>LST_MOYDmax_month?.tif LST<span class="sy0">/</span>LST_MOYDmax_month??.tif; <span class="kw1">do</span> 
+   gdallocationinfo <span class="re5">-valonly</span> <span class="re1">$file</span>  <span class="nu0">20</span> <span class="nu0">20</span>  
+<span class="kw1">done</span>

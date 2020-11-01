@@ -1,0 +1,35 @@
+======  Install pktools, openev and R 4.0.2 in OSGeoLive 13 Linux Virtual  ======
+
+sudo require a pw that in for the OSGeoLive 13 is //user// \\
+pay attention that when you type the pw you do not see that you are typing it is just for security.
+
+=== Install pktools with the package manager ===
+
+   sudo apt install pktools
+
+=== Install openev ===
+
+  sudo apt-get install libc6:i386
+  sudo apt-get install libxext6:i386
+
+  cd /tmp
+  wget https://ayera.dl.sourceforge.net/project/openev/OpenEV/1.8.0/openev-linux-180.tar.gz
+  tar xvf openev-linux-180.tar.gz
+  cd openev
+  sudo ./install linux   /usr/bin/openev
+  # add to the ~/.bashrc the alias openev
+  echo "alias openev='/usr/bin/openev/bin/openev' "  >>  ~/.bashrc
+  
+at this point you can run directly openev from the terminal 
+
+  openev
+  
+
+=== Install R version 4.0.2 ===
+
+  sudo apt update 
+  sudo apt upgrade
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+  sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran40/'
+  sudo apt update 
+  sudo apt install r-base r-base-core r-recommended r-base-dev

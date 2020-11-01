@@ -1,0 +1,14 @@
+<span class="co1">-- Syntax</span>
+count_cells<span class="br0">&#40;</span> mddExp <span class="br0">&#41;</span>
+add_cells<span class="br0">&#40;</span> mddExp <span class="br0">&#41;</span>
+avg_cells<span class="br0">&#40;</span> mddExp <span class="br0">&#41;</span>
+min_cells<span class="br0">&#40;</span> mddExp <span class="br0">&#41;</span>
+max_cells<span class="br0">&#40;</span> mddExp <span class="br0">&#41;</span>
+some_cells<span class="br0">&#40;</span> mddExp <span class="br0">&#41;</span>
+all_cells<span class="br0">&#40;</span> mddExp <span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">-- Returning all the images of collection mr where all pixel values are greater than 20</span>
+<span class="kw1">SELECT</span> mr <span class="kw1">FROM</span> mr <span class="kw1">WHERE</span> all_cells<span class="br0">&#40;</span> mr <span class="sy0">&gt;</span> <span class="nu0">20</span> <span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">-- Returning the average of a 1d collection</span>
+<span class="kw1">SELECT</span> avg_cells<span class="br0">&#40;</span>m<span class="br0">&#41;</span> <span class="kw1">FROM</span> Values1D <span class="kw1">AS</span> m

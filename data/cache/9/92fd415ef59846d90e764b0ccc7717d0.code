@@ -1,0 +1,2 @@
+<span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input   <span class="co0"># setting the input file directory which is necessary every time GRASS is opened </span>
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>output <span class="co0"># setting the output file directory</span>

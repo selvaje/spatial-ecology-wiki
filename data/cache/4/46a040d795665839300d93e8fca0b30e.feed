@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://www.spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://www.spatial-ecology.net/dokuwiki/feed.php">
+        <title> sitedesign</title>
+        <description></description>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2020-11-01T15:40:07+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_climate&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_fieldsample&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_geodatabase&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_hydromod&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_schedule&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_start&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_terrainmod&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_toolbox&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:sitedes_intro&amp;rev=1594967994&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <url>http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_climate&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:site_climate</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_climate&amp;rev=1594967994&amp;do=diff</link>
+        <description>Local Climate
+
+We are interested in few key climatic parameters affecting farm productivity and site design. We will start with analysing the following parameters:
+
+	*  Minimum winter temperatures (limiting factor)
+	*  Maximum daily rain (flush flooding)</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_fieldsample&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:site_fieldsample</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_fieldsample&amp;rev=1594967994&amp;do=diff</link>
+        <description>From field samples to Maps
+
+To monitor agricultural productivity and soil parameters or map our site for planning new landscape improvements we can use low cost technology.
+ Soil sampling for precision farming and permaculture site planning can be carried out on a regular grid sampling pattern. We are looking at collecting representative samples of the heterogeneity of our site. As a general rule, more spatially heterogeneous is the pattern we are interested in mapping, the more points we would …</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_geodatabase&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:site_geodatabase</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_geodatabase&amp;rev=1594967994&amp;do=diff</link>
+        <description>Example of Data repository
+
+	*   State data repository for Missouri
+	*   National data repository in USA
+	*  
+
+Satellite Data Repository
+
+	*  Web Enabled Landsat data: WELD
+	*  MODIS Normalized Difference Vegetation Index: MODIS
+	*  ASTER satellite imagery
+
+Vector and Raster base maps layers
+
+	*   Soil survey in USA
+	*  Water ressources
+	*  
+
+OpenStreetMap
+
+OpenStreetMap in QGIS: Wiki</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_hydromod&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:site_hydromod</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_hydromod&amp;rev=1594967994&amp;do=diff</link>
+        <description>Hydrological modelling for site design and permaculture
+
+GIS provide extended capacity for modelling surface water flows, sediment accumulation, flooding risk areas and other important landscape features related to the landscape hydrology we need to consider while planning site earthworks, ponds and hedges.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_schedule&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:site_schedule</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_schedule&amp;rev=1594967994&amp;do=diff</link>
+        <description>Day 1
+
+Introduction to Open source working environment, permaculture and GIS
+
+
+Morning
+
+	*  Knowing eachother
+	*  OSE Introduction
+	*  OSE Vision ( Site Tour / OSE Site Design Vision)
+	*  Spatial Ecology introduction 
+	*  Virtual Machine. Virtualbox installation</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_start&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:site_start</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_start&amp;rev=1594967994&amp;do=diff</link>
+        <description>Geography of Landscape for site design and permaculture
+
+In this first part of the tutorial we will set up a GIS working environment starting from downloading and harmonizing a DEM.
+
+Before starting any GIS analyses we need to define the geographical projection of our project. While dealing with different datasets, we'll need to reproject all layers to our defined projection. After defining our project we'll go through each step from the data acquisition to hydrological modelling and terrain mod…</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_terrainmod&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:site_terrainmod</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_terrainmod&amp;rev=1594967994&amp;do=diff</link>
+        <description>Terrain modelling for site design
+
+As well as for hydrological modelling, GIS provide extended capacity for modelling landscape. 
+Again we will use the Digital Elevation Models to extract key features for keyline and permaculture site design.
+Specifically we are interested in the following feature:</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_toolbox&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:site_toolbox</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:site_toolbox&amp;rev=1594967994&amp;do=diff</link>
+        <description>GIS toolbox for site design and Permaculture
+
+Besides Hydrological modelling and the Keylines - Lanscape terrain features there are other usefull GIS functionalities we can use in permaculture.
+
+Planting pattern
+
+While dealing with new plantations, we can use GIS to define a regular grid with defied plant distances for then going in the field and plant.</description>
+    </item>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:sitedes_intro&amp;rev=1594967994&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>sitedesign:sitedes_intro</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=sitedesign:sitedes_intro&amp;rev=1594967994&amp;do=diff</link>
+        <description>Open Source Mapping and Site Design Workshop
+
+Instructors
+
+	*  Stefano Casalegno University of Exeter, UK - Spatial-Ecology.
+	*   Marcin Jakubowski Open Source Ecology.
+	*  Darren Doherty The Regrarians platform.
+
+Schedule
+
+Build Yourself, Build your World
+
+The Open Source Mapping and Site Design workshop is an immersion 5 day experience in farm and landscape planning and design. We will go through a complete process of generating a site plan and map – geared especially at regenerative land use.…</description>
+    </item>
+</rdf:RDF>

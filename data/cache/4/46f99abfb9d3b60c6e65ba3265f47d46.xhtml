@@ -1,0 +1,238 @@
+
+<h1 class="sectionedit1" id="part_2">Part 2</h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li">Introduction to pktools</div>
+</li>
+<li class="level1"><div class="li">Image filtering</div>
+</li>
+<li class="level1"><div class="li">Image compositing</div>
+</li>
+<li class="level1"><div class="li">Information extraction from raster/vector images</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Part 2&quot;,&quot;hid&quot;:&quot;part_2&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-146&quot;} -->
+<h2 class="sectionedit2" id="introduction_to_pktools">Introduction to pktools</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Introduction to pktools&quot;,&quot;hid&quot;:&quot;introduction_to_pktools&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;147-183&quot;} -->
+<h3 class="sectionedit3" id="basic_concepts_and_web_page">Basic concepts and web page</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"><a href="http://pktools.nongnu.org" class="urlextern" target="blanc" title="http://pktools.nongnu.org" rel="nofollow noopener">http://pktools.nongnu.org</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Basic concepts and web page&quot;,&quot;hid&quot;:&quot;basic_concepts_and_web_page&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;184-252&quot;} -->
+<h3 class="sectionedit4" id="installation_of_tools">Installation of tools</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">linux_install.pdf</div>
+</li>
+<li class="level1"><div class="li">installation of pktools</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation of tools&quot;,&quot;hid&quot;:&quot;installation_of_tools&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;253-334&quot;} -->
+<h3 class="sectionedit5" id="image_filtering">Image filtering</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li">smoothing</div>
+</li>
+<li class="level1"><div class="li">wavelet transform</div>
+</li>
+<li class="level1"><div class="li">morphological filters</div>
+</li>
+<li class="level1"><div class="li">…</div>
+</li>
+</ul>
+
+<p>
+Open the lena image in an image viewer (e.g., openev)
+</p>
+<pre class="code">openev -h lena.tif</pre>
+<div class="plugin_note noteclassic"><a href="http://www.cs.cmu.edu/~chuck/lennapg/lenna.shtml" class="urlextern" target="blanc" title="http://www.cs.cmu.edu/~chuck/lennapg/lenna.shtml" rel="nofollow noopener">interesting background information on the lena image</a>
+
+</div>
+<p>
+Try different filtering techniques.
+</p>
+
+</div>
+
+<h5 id="smoothing_filter">Smoothing filter</h5>
+<div class="level5">
+<pre class="code">pkfilter -i lena.tif -f smooth -o lena_smooth.tif</pre>
+
+</div>
+
+<h5 id="sobel_edge_detection">Sobel edge detection</h5>
+<div class="level5">
+<pre class="code">pkfilter -i lena.tif -f sobelx -o lena_sobelx.tif
+pkfilter -i lena.tif -f sobely -o lena_sobely.tif</pre>
+
+</div>
+
+<h5 id="discrete_wavelet_transform">Discrete wavelet transform</h5>
+<div class="level5">
+
+<p>
+Forward wavelet transform
+</p>
+<pre class="code">pkfilter -i lena.tif -f dwt -o lena_dwt.tif -ot Float32</pre>
+
+<p>
+Inverse wavelet transform
+</p>
+<pre class="code">pkfilter -i lena_dwt.tif -f dwti -o lena_dwtdwti.tif -ot Byte</pre>
+
+<p>
+Compare both images with an image viewer.
+</p>
+
+<p>
+Note on JPG2000 (based on discrete wavelet transform). Check the result on ignoring high frequency content:
+</p>
+
+<p>
+Perform the forward discrete wavelet transform
+</p>
+<pre class="code">pkfilter -i lena.tif -f dwt -o lena_dwt.tif -ot Float32</pre>
+
+<p>
+Crop the low pass filter result only (in both X and Y):
+</p>
+<div class="plugin_note notetip">The image is of size 512&times;512
+
+</div><div class="plugin_note notewarning">Geotransform information is different for projected and not-projected images<br/>
+
+projected images: dy is negative!<br/>
+
+not-projected images: dy is positive!
+
+</div><pre class="code">pkcrop -i lena_dwt.tif -o lena_ll.tif -ulx 0 -uly 0 -lrx 256 -lry 256</pre>
+
+<p>
+Then set the image extent to the original image, setting all other components to 0:
+</p>
+<pre class="code">pkcrop -i lena_ll.tif -o lena_ll.tif -ulx 0 -uly 0 -lrx 512 -lry 512 -nodata 0</pre>
+<div class="plugin_note notetip">Notice input and output are the same (which works due to the line by line operation)
+
+</div>
+<p>
+Calculate the inverse discrete wavelet transform on the low pass filter components only:
+</p>
+<pre class="code">pkfilter -i lena_ll.tif -o lena_compressed.tif -f dwti -ot Byte</pre>
+
+<p>
+Though we threw away one fourth of the image, the reconstructed image is still looking nice. Zoom in on the hair and check that fine details are missing in the reconstructed image.
+</p>
+
+</div>
+
+<h5 id="morphological_filtering">Morphological filtering</h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li">erode</div>
+</li>
+<li class="level1"><div class="li">dilate</div>
+</li>
+<li class="level1"><div class="li">close</div>
+</li>
+<li class="level1"><div class="li">open
+</div>
+</li>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:exercise6b" class="wikilink1" title="wiki:exercise6b"> exercise 6b</a>: Morphological filtering applied to cloud masking</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Image filtering&quot;,&quot;hid&quot;:&quot;image_filtering&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;335-2588&quot;} -->
+<h3 class="sectionedit6" id="image_mosaicking_and_compositing">Image mosaicking and compositing</h3>
+<div class="level3">
+
+<p>
+Some definitions first:
+</p>
+
+</div>
+
+<h5 id="image_reprojection">Image reprojection</h5>
+<div class="level5">
+
+<p>
+transforms an image from one (source) projection to a new (target) projection. 
+</p>
+
+</div>
+
+<h5 id="image_warping">Image warping</h5>
+<div class="level5">
+
+<p>
+the process of registering an image with a georeferenced grid. The transformation of image coordinates (row and columns) to georeferenced coordinates (X and Y) is based on computing least squares fit
+polynomials from a provided set of ground control points (GCP). 
+</p>
+
+</div>
+
+<h5 id="image_mosaicing">Image mosaicing</h5>
+<div class="level5">
+
+<p>
+stiches multiple georeferenced input images to a single output image that covers the union bounding boxes of the individual input images. 
+</p>
+
+<p>
+GDAL utilities gdalwarp and gdal_merge.py can deal with reprojection, warping and mosaicing.
+</p>
+
+</div>
+
+<h5 id="image_compositing">Image compositing</h5>
+<div class="level5">
+
+<p>
+Combining multiple input images that overlap. Pixel values have in overlapping areas need to be resolved to a new value according to some composit rule. Typical rules to compose the new value are: maximum or minimum value and mean or median value. 
+</p>
+
+<p>
+There is currently no tools in GDAL dealing with image compositing where the user can select its own rules. We will use pkmosaic for this.
+</p>
+
+<p>
+<a href="http://pktools.nongnu.org/html/md_doc_pkmosaic.html#pkmosaic" class="urlextern" target="blanc" title="http://pktools.nongnu.org/html/md_doc_pkmosaic.html#pkmosaic" rel="nofollow noopener">Reference for pkmosaic</a>
+</p>
+
+<p>
+<a href="http://pktools.nongnu.org/html/md_doc_examples_pkmosaic.html#examples_pkmosaic" class="urlextern" target="blanc" title="http://pktools.nongnu.org/html/md_doc_examples_pkmosaic.html#examples_pkmosaic" rel="nofollow noopener">Examples</a>
+</p>
+<ul>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:exercise10" class="wikilink1" title="wiki:exercise10"> Image composits using pkmosaic </a>: exercise 10</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Image mosaicking and compositing&quot;,&quot;hid&quot;:&quot;image_mosaicking_and_compositing&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:6,&quot;range&quot;:&quot;2589-3969&quot;} -->
+<h3 class="sectionedit7" id="information_extraction_from_raster_and_vector_data">Information extraction from raster and vector data</h3>
+<div class="level3">
+
+<p>
+<a href="http://pktools.nongnu.org/html/md_doc_pkextract.html#pkextract" class="urlextern" target="blanc" title="http://pktools.nongnu.org/html/md_doc_pkextract.html#pkextract" rel="nofollow noopener">Reference for pkextract</a>
+</p>
+
+<p>
+<a href="http://pktools.nongnu.org/html/md_doc_examples_pkextract.html#examples_pkextract" class="urlextern" target="blanc" title="http://pktools.nongnu.org/html/md_doc_examples_pkextract.html#examples_pkextract" rel="nofollow noopener">Examples</a>
+</p>
+<ul>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:pktools_extraction" class="wikilink1" title="wiki:pktools_extraction"> Vector overlays and extraction </a>: exercises 1-5</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Information extraction from raster and vector data&quot;,&quot;hid&quot;:&quot;information_extraction_from_raster_and_vector_data&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:7,&quot;range&quot;:&quot;3970-&quot;} -->

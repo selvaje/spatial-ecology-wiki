@@ -1,0 +1,2 @@
+<span class="kw3">echo</span> <span class="st0">&quot;use $1&quot;</span>
+<span class="kw3">echo</span> <span class="st0">&quot;to create $2&quot;</span> 

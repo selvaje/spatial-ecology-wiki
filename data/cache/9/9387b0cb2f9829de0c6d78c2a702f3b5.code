@@ -1,0 +1,13 @@
+<span class="kw2">sudo</span> leafpad <span class="sy0">/</span>etc<span class="sy0">/</span>profile.d<span class="sy0">/</span>grappolo.sh
+<span class="co0"># add the following 3 lines to this script.</span>
+<span class="kw3">export</span> <span class="re2">SGE_ROOT</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1
+<span class="kw3">export</span> <span class="re2">SGE_CELL</span>=<span class="st0">&quot;default&quot;</span>
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="re1">$PATH</span>:<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>apps<span class="sy0">/</span>sge<span class="sy0">/</span>2011.11p1<span class="sy0">/</span>bin<span class="sy0">/</span>linux-arm<span class="sy0">/</span>
+<span class="co0"># save and close grappolo.sh</span>
+<span class="kw2">sudo</span> reboot
+<span class="kw2">ssh</span> <span class="kw2">ssh</span> <span class="re5">-X</span> pi<span class="sy0">@</span>192.168.1.81 <span class="co0"># again from your computer and start the sge</span>
+etc<span class="sy0">/</span>init.d<span class="sy0">/</span>sgemaster.grappolo start
+&nbsp;
+<span class="co0"># cd $SGE_ROOT/default/common/</span>
+<span class="co0"># ./sgemaster start</span>
+<span class="co0"># ./sgeexecd start</span>

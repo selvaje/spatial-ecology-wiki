@@ -1,0 +1,217 @@
+
+<h1 class="sectionedit1" id="basic_bash_scripts_for_hsdm">Basic bash scripts for hSDM</h1>
+<div class="level1">
+
+<p>
+Logging in the yale-HPC
+</p>
+<pre class="code"> ssh -X netID@omega.hpc.yale.edu</pre>
+
+<p>
+Copy bash setting to your home
+</p>
+<pre class="code"> cp -r  /lustre/scratch/client/fas/sbsc/ga254/.bashrc  $HOME/</pre>
+
+<p>
+Copy the data folder to you home directory (Peter , Marta, Kellie, Longzhu)
+</p>
+<pre class="code"> cp -r  /lustre/scratch/client/fas/sbsc/ga254/ost4sem $HOME/</pre>
+
+<p>
+If you are working in the virtual machine 
+</p>
+<pre class="code"> mkdir  $HOME/ost4sem/
+ mkdir  $HOME/ost4sem/exercise/
+ cd $HOME/ost4sem/exercise/
+ wget https://dl.dropboxusercontent.com/u/29337496/Introduction_to_hSDM.tar.gz
+ tar xvzf Introduction_to_hSDM.tar.gz</pre>
+
+<p>
+Exercise:<br/>
+
+Data: $HOME/scratch/ost4sem/exercise/Introduction<em>to</em>hSDM/input<em>txt/point</em>data.txt<br/>
+
+Directory: $HOME/scratch/ost4sem/exercise/Introduction<em>to</em>hSDM/input_txt<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Basic bash scripts for hSDM&quot;,&quot;hid&quot;:&quot;basic_bash_scripts_for_hsdm&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-765&quot;} -->
+<h2 class="sectionedit2" id="search_a_command">Search a command</h2>
+<div class="level2">
+
+<p>
+Change directory and create a little file from a large file:
+</p>
+<pre class="code bash"><span class="kw3">cd</span> <span class="re1">$HOME</span><span class="sy0">/</span>scratch<span class="sy0">/</span>ost4sem<span class="sy0">/</span>exercise<span class="sy0">/</span>Introduction_to_hSDM<span class="sy0">/</span>input_txt
+<span class="kw2">head</span> <span class="re5">-1000</span> point_data.txt <span class="sy0">&gt;</span> point_data_small.txt</pre>
+
+<p>
+Read/explore the point<em>data</em>small.txt file<br/>
+
+</p>
+
+<p>
+Run the following commands one by one.
+</p>
+<pre class="code bash"><span class="kw2">head</span> point_data_small.txt
+<span class="kw2">more</span> point_data_small.txt
+<span class="kw2">tail</span> point_data_small.txt</pre>
+
+<p>
+Count the line/word/character in a input.txt
+</p>
+<pre class="code bash"><span class="kw2">wc</span> point_data_small.txt</pre>
+
+<p>
+Search for a word in a file 
+</p>
+<pre class="code bash"><span class="kw2">grep</span> <span class="st0">&quot;2004-&quot;</span> point_data_small.txt</pre>
+
+<p>
+I want to search for a command able to sort the input.txt table based on the <em>Year</em> column (YYYY).
+</p>
+<pre class="code bash"><span class="kw2">man</span> <span class="re5">-k</span>  <span class="kw2">sort</span></pre>
+
+<p>
+The last lines contain:<br/>
+
+<em>sort (1)  - sort lines of text files</em><br/>
+
+So i will search how to use the sort command:
+</p>
+<pre class="code bash"><span class="kw2">man</span> <span class="kw2">sort</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Search a command&quot;,&quot;hid&quot;:&quot;search_a_command&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;766-1626&quot;} -->
+<h2 class="sectionedit3" id="sorting_a_file">Sorting a file</h2>
+<div class="level2">
+
+<p>
+The <em>-k</em> option identify the column of sorting:<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Sorting based on column number 2  ( -k 2,2)</div>
+</li>
+<li class="level1"><div class="li"> sorting based on column number 2 and then number 1 ( -k 2,1)</div>
+</li>
+</ul>
+
+<p>
+See again man sort for more options like -n -g<br/>
+
+Alfa numeric sorting:<br/>
+
+<em>sort -k 2,2 point<em>data</em>small.txt</em><br/>
+
+general numerical sorting<br/>
+
+<em>sort -k 2,2 -g  point<em>data</em>small.txt</em><br/>
+<br/>
+string numerical sorting<br/>
+
+<em>sort -k 2,2 -n  point<em>data</em>small.txt</em><br/>
+
+Save the result of a command in a file by “
+</p>
+<blockquote><div class="no">
+</div></blockquote>
+
+<p>
+&gt;&quot; symbol
+</p>
+</div></blockquote>
+
+<p>
+
+&lt;
+</p>
+
+<p>
+code bash&gt;
+sort -k 2,2 -g point<em>data</em>small.txt &gt; point<em>data</em>small<em>s.txt
+wc -l point</em>data<em>small.txt
+&lt;/code&gt;
+Which is the first and last year of observations?
+===== Append the command result to a file =====
+Add the result of a command in the already existing “output” file by ”»“ symbol
+&lt;code bash&gt;
+sort -k 3,3 -g point</em>data<em>small.txt » point</em>data<em>small</em>s.txt
+wc -l point<em>data</em>small<em>s.txt
+&lt;/code&gt;
+===== Concatenate commands =====
+We want to count how many observations exist in year 2004 in the point</em>data.txt<br/>
+
+Concatenate command by the “|” symbol
+Search for the  word “2004-” and count the line/word/character
+</p>
+<pre class="code bash"><span class="kw2">grep</span> <span class="st0">&quot;2004-&quot;</span> point_data.txt <span class="sy0">|</span> <span class="kw2">wc</span></pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Sorting a file&quot;,&quot;hid&quot;:&quot;sorting_a_file&quot;,&quot;codeblockOffset&quot;:6,&quot;secid&quot;:3,&quot;range&quot;:&quot;1627-2799&quot;} -->
+<h2 class="sectionedit4" id="use_the_variable">Use the variable</h2>
+<div class="level2">
+
+<p>
+Define the value of the variable, print it by putting it in front of the $ symbol
+</p>
+<pre class="code bash"><span class="re2">var</span>=<span class="nu0">21</span> ; <span class="kw3">echo</span> <span class="re1">$var</span></pre>
+
+<p>
+Define the value of the variable using the result of a command
+</p>
+<pre class="code bash"><span class="re2">var</span>=<span class="sy0">`</span><span class="kw2">grep</span> <span class="st0">&quot;2004-&quot;</span> point_data.txt <span class="sy0">|</span> <span class="kw2">wc</span> -l<span class="sy0">`</span>
+<span class="kw3">echo</span> <span class="re1">$var</span></pre>
+
+<p>
+Pay attention to differences between <code> and &#039; \\
+If the variable setting is equal to a command result and not equal to a string, use single back-quotation </code> to include the command.<br/>
+
+<em>var=varname</em><br/>
+
+<em>var=<code>command</code></em><br/>
+
+Remember var is space sensitive.<br/>
+
+<em>var=variable</em> is correct<br/>
+
+ 
+</p>
+<div class="plugin_note notewarning"> <em>var= variable</em> is not correct<br/>
+
+</div>
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Use the variable&quot;,&quot;hid&quot;:&quot;use_the_variable&quot;,&quot;codeblockOffset&quot;:7,&quot;secid&quot;:4,&quot;range&quot;:&quot;2800-3430&quot;} -->
+<h2 class="sectionedit5" id="for_loop">For loop</h2>
+<div class="level2">
+
+<p>
+We want to automatically count how many observations exist in the years 2004, 2005 and 2006 in the point<em>data.txt file.<br/>
+
+To solve this we can use the variable and list word/number loop function
+&lt;code bash&gt;
+for var in 2004- 2005- 2006-; do
+    grep $var point</em>data.txt | wc -l<br/>
+done 
+&lt;/code&gt;
+Now we want to automatically count how many observations exist from year 2000 to 2008 in point<em>data.txt file.<br/>
+
+For this use the serial number list loop function.<br/>
+
+&lt;code bash&gt;
+rm input</em>wc.txt
+for <sup><a href="#fn__1" id="fnt__1" class="fn_top">1)</a></sup>; do
+</p>
+<pre class="code">  grep ${var}- point_data.txt | wc -l  &gt;&gt; input_wc.txt</pre>
+
+<p>
+done 
+&lt;/code&gt;
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;For loop&quot;,&quot;hid&quot;:&quot;for_loop&quot;,&quot;codeblockOffset&quot;:9,&quot;secid&quot;:5,&quot;range&quot;:&quot;3431-&quot;} --><div class="footnotes">
+<div class="fn"><sup><a href="#fnt__1" id="fn__1" class="fn_bot">1)</a></sup> 
+<div class="content">var=2004 ; var⇐2006 ; var++</div></div>
+</div>

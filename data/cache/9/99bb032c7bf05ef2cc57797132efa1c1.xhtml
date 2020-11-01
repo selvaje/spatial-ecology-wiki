@@ -1,0 +1,56 @@
+
+<h1 class="sectionedit1" id="exercise_7adownload_vectors_from_openstreetmap">Exercise 7a: Download vectors from Openstreetmap</h1>
+<div class="level1">
+
+<p>
+pktools: pkinfo
+GDAL/OGR: gdaltransform
+bash: wget, mv
+</p>
+
+<p>
+<em class="u">Create a directory for this exercise</em>
+</p>
+<pre class="code bash"><span class="kw2">mkdir</span> <span class="re5">-p</span> <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7</pre>
+
+<p>
+<em class="u">Find bounding box in ETRS89/LAEA coordinates: </em>
+</p>
+<pre class="code bash">pkinfo <span class="re5">-bb</span> <span class="re5">-i</span> <span class="co1">${LANDSATDIR}</span><span class="sy0">/</span><span class="co1">${LANDSATIMG}</span></pre>
+
+<p>
+–ulx=3200000 –uly=3223750 –lrx=3394000 –lry=3091500
+</p>
+
+<p>
+<em class="u">Convert to WGS85 (epsg:4326)</em>
+</p>
+<pre class="code bash">gdaltransform -s_srs epsg:<span class="nu0">3035</span> -t_srs epsg:<span class="nu0">4326</span>
+<span class="nu0">3200000</span> <span class="nu0">3223750</span>
+-<span class="nu0">6.12149425235321</span> <span class="nu0">51.005834806829</span> <span class="nu0">0</span>
+<span class="nu0">3394000</span> <span class="nu0">3091500</span>
+-<span class="nu0">3.05910611391153</span> <span class="nu0">50.189810829506</span> <span class="nu0">0</span></pre>
+
+<p>
+In format minx,miny,maxx,maxy:<br/>
+
+</p>
+<pre class="code">-6.1214942523532, 50.189810829506, -3.05910611391153, 51.005834806829 </pre>
+
+<p>
+You can download a vector in your browser (or wget)
+</p>
+<div class="plugin_note notewarning">Downloading can take a while (425 <abbr title="Megabyte">MB</abbr> to download)
+
+</div><pre class="code bash"><span class="kw2">wget</span> http:<span class="sy0">//</span>overpass.osm.rambler.ru<span class="sy0">/</span>cgi<span class="sy0">/</span>xapi_meta?<span class="sy0">*</span><span class="br0">&#91;</span><span class="re2">bbox</span>=-<span class="nu0">6.121</span>,<span class="nu0">50.190</span>,-<span class="nu0">3.059</span>,<span class="nu0">51.0058</span><span class="br0">&#93;</span></pre>
+
+<p>
+You will get a file in XML format: xapi_meta.xml 
+</p>
+
+<p>
+<em class="u">Rename to osm</em>
+</p>
+<pre class="code bash"><span class="kw2">mv</span> ~<span class="sy0">/</span>Downloads<span class="sy0">/</span>xapi_meta.xml <span class="co1">${OUTPUTDIR}</span><span class="sy0">/</span>exercise7<span class="sy0">/</span>xapi_meta.osm</pre>
+
+</div>

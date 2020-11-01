@@ -1,0 +1,96 @@
+
+<h1 class="sectionedit1" id="mission_planner_and_ardupilot">Mission Planner and ArduPilot</h1>
+<div class="level1">
+
+<p>
+Back to <a href="/dokuwiki/doku.php?id=uav:toolchain" class="wikilink1" title="uav:toolchain">main menue</a>.<br/>
+
+<br/>
+
+<a href="http://copter.ardupilot.org/ardupilot/docs/common-history-of-ardupilot.html" class="urlextern" target="blanc" title="http://copter.ardupilot.org/ardupilot/docs/common-history-of-ardupilot.html" rel="nofollow noopener"> ArduPilot</a> is an open source suite and platform of Hardware, Firmware, Software and Community of users and developers providing autonomous multicopters, fixed-wing aircraft, traditional helicopters and ground rovers drones able to perform UAV / unmanned vehicle missions.<br/>
+
+</p>
+
+<p>
+<a href="http://ardupilot.org/planner/docs/mission-planner-overview.html" class="urlextern" target="blanc" title="http://ardupilot.org/planner/docs/mission-planner-overview.html" rel="nofollow noopener">Mission Planner</a> is a full-featured ground station application for the ArduPilot open source autopilot project. 
+Some interesting web links to ArduPilot platform;
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://copter.ardupilot.org/ardupilot/docs/common-history-of-ardupilot.html" class="urlextern" target="blanc" title="http://copter.ardupilot.org/ardupilot/docs/common-history-of-ardupilot.html" rel="nofollow noopener">History of ArduPilot</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://diydrones.com/" class="urlextern" target="blanc" title="http://diydrones.com/" rel="nofollow noopener">DIYDRONES</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Mission Planner and ArduPilot&quot;,&quot;hid&quot;:&quot;mission_planner_and_ardupilot&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-820&quot;} -->
+<h2 class="sectionedit2" id="installation">Installation</h2>
+<div class="level2">
+
+<p>
+Following <a href="http://www.rcgroups.com/forums/showthread.php?t=2179591" class="urlextern" target="blanc" title="http://www.rcgroups.com/forums/showthread.php?t=2179591" rel="nofollow noopener">these instructions</a>, we can install Mission Planner on debian derived linux <abbr title="Operating System">OS</abbr>. We need to perform the following:
+</p>
+<ol>
+<li class="level1"><div class="li"> Install Mono</div>
+</li>
+<li class="level1"><div class="li"> Set user rights</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://ardupilot.com/downloads/?did=82" class="urlextern" target="blanc" title="http://ardupilot.com/downloads/?did=82" rel="nofollow noopener">Download</a> and unzip Mission Planner </div>
+</li>
+<li class="level1"><div class="li"> Running Mission Planner over Mono </div>
+</li>
+</ol>
+<div class="plugin_note noteimportant">We have unzipped MissionPlanner in ~/software
+</div><pre class="code bash"><span class="kw2">sudo</span> <span class="kw2">apt-key adv</span> <span class="re5">--keyserver</span> hkp:<span class="sy0">//</span>keyserver.ubuntu.com:<span class="nu0">80</span> \\
+<span class="re5">--recv-keys</span> 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;deb http://download.mono-project.com/repo/debian wheezy main&quot;</span> <span class="sy0">|</span> <span class="kw2">sudo</span> \\
+<span class="kw2">tee</span> <span class="sy0">/</span>etc<span class="sy0">/</span>apt<span class="sy0">/</span>sources.list.d<span class="sy0">/</span>mono-xamarin.list
+&nbsp;
+<span class="kw2">sudo</span> <span class="kw2">apt-get update</span>
+&nbsp;
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> mono-runtime libmono-system-windows-forms4.0-cil \\
+libmono-system-xml-linq4.0-cil libmono-system-management4.0-cil \\
+libmono-system-web4.0-cil libmono-corlib4.5-cil \\
+libmono-system-numerics4.0-cil festival
+&nbsp;
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> mono-complete festival
+&nbsp;
+<span class="kw3">echo</span> <span class="re1">$USER</span>
+&nbsp;
+<span class="kw2">sudo</span> adduser <span class="re1">$USER</span> dialout
+&nbsp;
+<span class="kw3">cd</span> software<span class="sy0">/</span>missionplanner<span class="sy0">/</span>
+&nbsp;
+mono MissionPlanner.exe</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Installation&quot;,&quot;hid&quot;:&quot;installation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;821-1914&quot;} -->
+<h2 class="sectionedit3" id="usage">Usage</h2>
+<div class="level2">
+
+<p>
+We use mission planner to communicate between the laptop and the Pixhawk autopilot and specifically to:
+</p>
+<ol>
+<li class="level1"><div class="li"> Update parameter settings of the Iris+</div>
+</li>
+<li class="level1"><div class="li"> Check the correct compilation of parameter settings. Even if you use <strong>3DR Tower</strong> flight control software is good to double check parameters at least onece with MissionPlanner.</div>
+</li>
+<li class="level1"><div class="li"> Upload missions from laptop to pixhawk.</div>
+</li>
+<li class="level1"><div class="li"> Download log files of missions from Pixhawk to laptop once the drone has landed. </div>
+</li>
+</ol>
+<div class="plugin_note notetip">Log files include all flight parameters recorded during the flight (speed, direction, gps coordinates, altiyude etc. ) and used successively for post flight data processing and mapping.
+</div>
+<p>
+We can use Mission Planner to program a survey mission for mapping <a href="https://www.youtube.com/watch?v=LZGWmNXylMs" class="urlextern" target="blanc" title="https://www.youtube.com/watch?v=LZGWmNXylMs" rel="nofollow noopener">follow this video </a> to quick learn how to do. 
+</p>
+
+<p>
+We have now switched to to 3DR Tower software which is available for Android/linux platforms and is handy to use in the field with a tablet.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Usage&quot;,&quot;hid&quot;:&quot;usage&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;1915-&quot;} -->

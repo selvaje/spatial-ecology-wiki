@@ -1,0 +1,65 @@
+
+<h1 class="sectionedit1" id="remotely_sensed_vegetation_productivitynormalized_difference_vegetation_index_ndvi">Remotely Sensed Vegetation Productivity: Normalized Difference Vegetation Index (NDVI)</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Remotely Sensed Vegetation Productivity: Normalized Difference Vegetation Index (NDVI)&quot;,&quot;hid&quot;:&quot;remotely_sensed_vegetation_productivitynormalized_difference_vegetation_index_ndvi&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-103&quot;} -->
+<h2 class="sectionedit2" id="create_a_working_directory_of_your_choice">1. Create a working directory of your choice</h2>
+<div class="level2">
+<pre class="code"> mkdir /home/user/ost4sem/exercise/Alaska_NDVI</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;1. Create a working directory of your choice&quot;,&quot;hid&quot;:&quot;create_a_working_directory_of_your_choice&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;104-212&quot;} -->
+<h2 class="sectionedit3" id="setting_the_working_directory_download_landsat_imagery">2. Setting the working directory &amp; download landsat imagery</h2>
+<div class="level2">
+<pre class="code"> cd /home/user/ost4sem/exercise/Alaska_NDVI
+ wget http://e4ftl01.cr.usgs.gov/WELD/WELDAKSE.001/2007.06.01/Alaska.summer.2007.h06v02.doy153to242.v1.5.hdf
+ wget http://e4ftl01.cr.usgs.gov/WELD/WELDAKSE.001/2008.06.01/Alaska.summer.2008.h06v02.doy153to242.v1.5.hdf</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;2. Setting the working directory &amp; download landsat imagery&quot;,&quot;hid&quot;:&quot;setting_the_working_directory_download_landsat_imagery&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;213-559&quot;} -->
+<h2 class="sectionedit4" id="convert_the_hdf_files_to_individual_bands_tif">3. Convert the .hdf files to individual bands  .tif</h2>
+<div class="level2">
+<pre class="code"> for file in `gdalinfo Alaska.summer.2007.h06v02.doy153to242.v1.5.hdf | grep NAME | awk -F &quot;=&quot; &#039;{print $2}&#039;` ; do
+    gdal_translate $file   ${file:77}&quot;_2007&quot;.tif
+ done
+ for file in `gdalinfo Alaska.summer.2008.h06v02.doy153to242.v1.5.hdf | grep NAME | awk -F &quot;=&quot; &#039;{print $2}&#039;` ; do
+    gdal_translate $file   ${file:77}&quot;_2008&quot;.tif
+ done</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;3. Convert the .hdf files to individual bands  .tif&quot;,&quot;hid&quot;:&quot;convert_the_hdf_files_to_individual_bands_tif&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;560-975&quot;} -->
+<h2 class="sectionedit5" id="create_a_2007_and_2008_summer_landsat_composite">4. Create a 2007 and 2008 summer landsat composite</h2>
+<div class="level2">
+<pre class="code"> gdal_merge.py -separate  -o SUMMER_TOA_2007.tif   Band1_TOA_REF_2007.tif Band2_TOA_REF_2007.tif Band3_TOA_REF_2007.tif Band4_TOA_REF_2007.tif 
+ gdal_merge.py -separate  -o SUMMER_TOA_2008.tif   Band1_TOA_REF_2008.tif Band2_TOA_REF_2008.tif Band3_TOA_REF_2008.tif Band4_TOA_REF_2008.tif </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;4. Create a 2007 and 2008 summer landsat composite&quot;,&quot;hid&quot;:&quot;create_a_2007_and_2008_summer_landsat_composite&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;976-1333&quot;} -->
+<h2 class="sectionedit6" id="mask_out_cloud_pixels">5. Mask out cloud pixels</h2>
+<div class="level2">
+<pre class="code"> pksetmask -i SUMMER_TOA_2007.tif -m ACCA_State_2007.tif --operator &#039;=&#039; --msknodata 1 --nodata -32768 -o SUMMER_TOA_2007_mask.tif
+ pksetmask -i SUMMER_TOA_2008.tif -m ACCA_State_2008.tif --operator &#039;=&#039; --msknodata 1 --nodata -32768 -o SUMMER_TOA_2008_mask.tif</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;5. Mask out cloud pixels&quot;,&quot;hid&quot;:&quot;mask_out_cloud_pixels&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1334-1637&quot;} -->
+<h2 class="sectionedit7" id="crop_composite_images_to_region_of_interest">6. Crop composite images to region of interest</h2>
+<div class="level2">
+<pre class="code"> gdal_translate -projwin 100735 2170503 175864 2098452 SUMMER_TOA_2007_mask.tif SUMMER_TOA_2007_mask_crop.tif
+ gdal_translate -projwin 100735 2170503 175864 2098452 SUMMER_TOA_2008_mask.tif SUMMER_TOA_2008_mask_crop.tif</pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;6. Crop composite images to region of interest&quot;,&quot;hid&quot;:&quot;crop_composite_images_to_region_of_interest&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;1638-1922&quot;} -->
+<h2 class="sectionedit8" id="create_2007_and_2008_ndvi">7. Create 2007 and 2008 NDVI</h2>
+<div class="level2">
+<pre class="code"> gdal_calc.py -A SUMMER_TOA_2007_mask_crop.tif --A_band=4 -B SUMMER_TOA_2007_mask_crop.tif --B_band=3 --outfile=NDVI_2007.tif --type=&#039;Float32&#039; --calc=&quot;(A.astype(float)-B)/(A.astype(float)+B)&quot; --overwrite   
+ gdal_calc.py -A SUMMER_TOA_2008_mask_crop.tif --A_band=4 -B SUMMER_TOA_2008_mask_crop.tif --B_band=3 --outfile=NDVI_2008.tif --type=&#039;Float32&#039; --calc=&quot;(A.astype(float)-B)/(A.astype(float)+B)&quot; --overwrite  </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;7. Create 2007 and 2008 NDVI&quot;,&quot;hid&quot;:&quot;create_2007_and_2008_ndvi&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;1923-2382&quot;} -->
+<h2 class="sectionedit9" id="create_a_ndvi_differnce_image">8. Create a NDVI differnce image</h2>
+<div class="level2">
+<pre class="code"> gdal_calc.py -A NDVI_2007.tif -B NDVI_2008.tif --outfile=NDVI_2007to2008_difference.tif --type=&#039;Float32&#039;  --calc=&quot;(B-A)&quot; --overwrite  </pre>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;8. Create a NDVI differnce image&quot;,&quot;hid&quot;:&quot;create_a_ndvi_differnce_image&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;2383-&quot;} -->

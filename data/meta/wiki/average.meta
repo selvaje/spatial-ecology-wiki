@@ -1,0 +1,12 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1594967994;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:4:"NAME";s:11:"description";a:2:{s:15:"tableofcontents";a:5:{i:0;a:4:{s:3:"hid";s:4:"name";s:5:"title";s:4:"NAME";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:1;a:4:{s:3:"hid";s:11:"description";s:5:"title";s:11:"DESCRIPTION";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:2;a:4:{s:3:"hid";s:8:"synopsis";s:5:"title";s:8:"SYNOPSIS";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:3;a:4:{s:3:"hid";s:8:"download";s:5:"title";s:8:"DOWNLOAD";s:4:"type";s:2:"ul";s:5:"level";i:2;}i:4;a:4:{s:3:"hid";s:7:"example";s:5:"title";s:7:"EXAMPLE";s:4:"type";s:2:"ul";s:5:"level";i:2;}}s:8:"abstract";s:325:"NAME
+
+ost4sem_average.sh
+
+DESCRIPTION
+
+A nice combination of AWK script with bash argumens request.
+Calculate average of column txt files base on CLASS/ID column.
+
+all the row and column  are processed
+
+in case no CLASS/ID column in the file crate a dummy variable (e.g 1 ) for all che row                  ";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}s:8:"relation";a:1:{s:10:"firstimage";s:0:"";}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

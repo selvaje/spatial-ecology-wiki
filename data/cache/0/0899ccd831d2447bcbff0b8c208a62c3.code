@@ -1,0 +1,3 @@
+<span class="kw1">plot</span> \
+     <span class="kw4">sin</span><span class="br0">&#40;</span><span class="kw5">x</span><span class="br0">&#41;</span><span class="sy0">,</span>\
+     <span class="kw4">cos</span><span class="br0">&#40;</span><span class="kw5">x</span><span class="br0">&#41;</span>

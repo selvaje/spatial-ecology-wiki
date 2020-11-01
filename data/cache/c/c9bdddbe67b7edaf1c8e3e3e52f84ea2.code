@@ -1,0 +1,1 @@
+    pkextract <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_CASI.tif <span class="re5">-s</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_TR_26915.shp <span class="re5">-o</span> training_casi.shp

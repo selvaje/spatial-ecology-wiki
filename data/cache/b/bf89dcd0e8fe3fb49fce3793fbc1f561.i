@@ -1,0 +1,6 @@
+a:14:{i:0;a:3:{i:0;s:14:"document_start";i:1;a:0:{}i:2;i:0;}i:1;a:3:{i:0;s:6:"header";i:1;a:3:{i:0;s:45:"Satisfactory survey overall course evaluation";i:1;i:2;i:2;i:1;}i:2;i:1;}i:2;a:3:{i:0;s:12:"section_open";i:1;a:1:{i:0;i:2;}i:2;i:1;}i:3;a:3:{i:0;s:6:"plugin";i:1;a:4:{i:0;s:7:"doodle3";i:1;a:2:{s:6:"params";a:8:{s:5:"title";s:13:"Default title";s:4:"auth";i:0;s:10:"adminUsers";s:0:"";s:11:"adminGroups";s:0:"";s:9:"adminMail";N;s:8:"voteType";s:7:"default";s:6:"closed";b:0;s:10:"fieldwidth";s:4:"auto";}s:7:"choices";a:0:{}}i:2;i:5;i:3;s:129:"<doodle twentw2013-14| 1. Overall, how you would evaluate the full course? >
+^ 1 ^ 2 ^ 3 ^ 4 ^ 5 ^ 6 ^ 7 ^ 8 ^ 9 ^ 10 ^
+</doodle>";}i:2;i:59;}i:4;a:3:{i:0;s:6:"p_open";i:1;a:0:{}i:2;i:59;}i:5;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:189;}i:6;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:1:"
+";}i:2;i:191;}i:7;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:192;}i:8;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:67:"
+If you have remarks or suggestions feel free to send an e-mail to ";}i:2;i:194;}i:9;a:3:{i:0;s:9:"linebreak";i:1;a:0:{}i:2;i:261;}i:10;a:3:{i:0;s:5:"cdata";i:1;a:1:{i:0;s:55:"
+zurita.milla@gmail.com and giuseppe.amatulli@gmail.com";}i:2;i:263;}i:11;a:3:{i:0;s:7:"p_close";i:1;a:0:{}i:2;i:318;}i:12;a:3:{i:0;s:13:"section_close";i:1;a:0:{}i:2;i:318;}i:13;a:3:{i:0;s:12:"document_end";i:1;a:0:{}i:2;i:318;}}

@@ -1,0 +1,1 @@
+install.packages(pkgs=&quot;maptools&quot;,lib= &quot;/usr/lib/R/site-library/&quot;)

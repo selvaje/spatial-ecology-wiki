@@ -1,0 +1,328 @@
+
+<h1 class="sectionedit1" id="visualizing_agricultural_dynamics_in_india">Visualizing agricultural dynamics in INDIA</h1>
+<div class="level1">
+
+<p>
+Dirk van Apeldoorn <a href="http://www.dirkvanapeldoorn.nl" class="urlextern" target="blanc" title="http://www.dirkvanapeldoorn.nl" rel="nofollow noopener">http://www.dirkvanapeldoorn.nl</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Visualizing agricultural dynamics in INDIA&quot;,&quot;hid&quot;:&quot;visualizing_agricultural_dynamics_in_india&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-112&quot;} -->
+<h2 class="sectionedit2" id="introduction">INTRODUCTION</h2>
+<div class="level2">
+
+<p>
+new upcoming economies (Brazil Russia India China, BRIC) are generally poorly represented in global integrative assessment models <a href="http://themasites.pbl.nl/tridion/en/themasites/image/" class="urlextern" target="blanc" title="http://themasites.pbl.nl/tridion/en/themasites/image/" rel="nofollow noopener">http://themasites.pbl.nl/tridion/en/themasites/image/</a>. These countries are huge while data is only available at national scales. while within the countries large asymmetries of development exist. To improve these models it is therefore crucial to incorporate lower scale data of countries in these models.
+</p>
+
+<p>
+For India statistics have become available from the district level and upward. In this project I first want to rasterize vectors of administrative state boundaries from (<a href="http://gadm.org/" class="urlextern" target="blanc" title="http://gadm.org/" rel="nofollow noopener">http://gadm.org/</a> database ) and subsequently link the several administrative units to the statistics available at <a href="http://www.indiastat.com/" class="urlextern" target="blanc" title="http://www.indiastat.com/" rel="nofollow noopener">http://www.indiastat.com/</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;INTRODUCTION&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;113-896&quot;} -->
+<h3 class="sectionedit3" id="general_framework_of_the_analysis">General framework of the analysis</h3>
+<div class="level3">
+<ol>
+<li class="level1"><div class="li"> keywords: GRASS, r.univar, v.to.rast</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;General framework of the analysis&quot;,&quot;hid&quot;:&quot;general_framework_of_the_analysis&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;897-985&quot;} -->
+<h3 class="sectionedit4" id="project_objectives">Project objectives</h3>
+<div class="level3">
+
+<p>
+an area weighted raster map of administrative boundaries
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Project objectives&quot;,&quot;hid&quot;:&quot;project_objectives&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;986-1073&quot;} -->
+<h3 class="sectionedit5" id="vector_data">Vector data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="http://gadm.org/" class="urlextern" target="blanc" title="http://gadm.org/" rel="nofollow noopener">http://gadm.org/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector data&quot;,&quot;hid&quot;:&quot;vector_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;1074-1121&quot;} -->
+<h3 class="sectionedit6" id="raster_data">Raster data</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.myraster_data_are_here" class="urlextern" target="blanc" title="http://www.myraster_data_are_here" rel="nofollow noopener"> link to raster data if available</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Raster data&quot;,&quot;hid&quot;:&quot;raster_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1122-1220&quot;} -->
+<h3 class="sectionedit7" id="other_data_sources">Other data sources</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.myraster_data_are_here" class="urlextern" target="blanc" title="http://www.myraster_data_are_here" rel="nofollow noopener"> link to other data if needed</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Other data sources&quot;,&quot;hid&quot;:&quot;other_data_sources&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;1221-1321&quot;} -->
+<h2 class="sectionedit8" id="method">METHOD</h2>
+<div class="level2">
+
+<p>
+Describe your script. If you use a specific algorithm <a href="http://www.mylink.net" class="urlextern" target="blanc" title="http://www.mylink.net" rel="nofollow noopener"> link </a> the bibliographic references.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;METHOD&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;1322-1459&quot;} -->
+<h2 class="sectionedit9" id="computational_implementation">Computational implementation</h2>
+<div class="level2">
+
+<p>
+Some further explanation of the overall analyses and of each step
+paste your code here
+</p>
+<dl class="code">
+<dt><a href="/dokuwiki/doku.php?do=export_code&amp;id=wikistudholland:utwente_dirk&amp;codeblock=0" title="Download Snippet" class="mediafile mf_">- mycode</a></dt>
+<dd><pre class="code bash"><span class="co0">#create temp mapset</span>
+g.mapset <span class="re5">-c</span> <span class="re2">mapset</span>=workloc2
+<span class="co0">#check settings</span>
+g.gisenv 
+<span class="co0">#go to mapsetlocation</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>MANDIST<span class="sy0">/</span>INDIA2<span class="sy0">/</span>workloc2
+<span class="co0"># set location of dataset</span>
+<span class="re2">path</span>=<span class="st0">&quot;//media/sf_sharelinux/&quot;</span>
+&nbsp;
+<span class="co0">#add the PERMANENT mapset</span>
+g.mapsets <span class="re2">addmapset</span>=PERMANENT
+<span class="co0">#copy the projected raster to mapset workloc </span>
+g.copy <span class="re2">rast</span>=isonuts05<span class="sy0">@</span>PERMANENT,isonuts
+&nbsp;
+&nbsp;
+<span class="co0">#create binary rastermap at half degree for India isocode for india is 356</span>
+r.mapcalc <span class="st0">&quot; indiamap = if ( isonuts == 356 , 1 , 0) &quot;</span>
+<span class="co0">#create mask</span>
+r.mask <span class="re2">input</span>=indiamap <span class="re2">maskcats</span>=<span class="st0">&quot;1&quot;</span> <span class="re5">-o</span>
+<span class="co0">#set region</span>
+g.region <span class="re2">rast</span>=indiamap <span class="re2">zoom</span>=indiamap
+<span class="co0">#check region</span>
+g.region <span class="re5">-p</span>
+&nbsp;
+<span class="co0">#set database driver to sqlite</span>
+db.connect <span class="re2">driver</span>=sqlite <span class="re2">database</span>=<span class="st_h">'$GISDBASE/$LOCATION_NAME/$MAPSET/sqlite.db'</span>
+db.connect <span class="re5">-p</span>
+<span class="co0">#import the administrative boundaries of india </span>
+<span class="co0">#snap threshold value is used to snap boundary vertices to each other if the distance </span>
+<span class="co0">#in map units between two vertices is not larger than the threshold.</span>
+<span class="co0">#-o overwrite projection (use projection of location)</span>
+v.in.ogr <span class="re2">dsn</span>=<span class="sy0">//</span>media<span class="sy0">/</span>sf_sharelinux<span class="sy0">/</span>indiashape<span class="sy0">/</span>IND_adm1.shp\
+  <span class="re2">output</span>=statevect <span class="re2">snap</span>=1e-14 <span class="re5">--overwrite</span> <span class="re5">-o</span>
+<span class="co0"># transform the vector to grid</span>
+v.to.rast <span class="re2">input</span>=statevect <span class="re2">output</span>=stategrid  <span class="re2">use</span>=attr  <span class="re2">column</span>=ID_1  <span class="re5">--overwrite</span>
+<span class="co0">#import grid with area (km)of land per gridcell</span>
+<span class="co0"># India is big and area per gridcell change with latitude, </span>
+<span class="co0"># also accounts for gridcells that contain coasts</span>
+r.in.gdal <span class="re5">-o</span> <span class="re2">input</span>=<span class="re1">$path</span><span class="sy0">/</span>GAREALAND.asc <span class="re2">output</span>=CELLAREA <span class="re5">--quiet</span> <span class="re5">--overwrite</span>
+&nbsp;
+<span class="co0">#calculate zonal statistics  scripts based on example given in r.univar</span>
+<span class="co0">#for each state the zonal statistics are calculated</span>
+<span class="co0"># this output is piped to only obtain the the sum (column 13) and saved as txt file</span>
+r.univar <span class="re5">-t</span> <span class="re2">map</span>=CELLAREA <span class="re2">zones</span>=stategrid <span class="sy0">|</span> \
+  <span class="kw2">cut</span> -f1,<span class="nu0">13</span> <span class="re5">-d</span><span class="st_h">'|'</span> <span class="sy0">&gt;</span> gridarea.txt
+<span class="co0">#import area according to India. bash script expect output</span>
+<span class="co0"># could be circumvented but this was easier</span>
+<span class="kw2">bash</span> ~<span class="sy0">/</span>workdir<span class="sy0">/</span>script<span class="sy0">/</span>fromCSVtoTXT.sh <span class="re1">$path</span><span class="sy0">/</span>statearea.csv statearea.txt
+<span class="kw2">cut</span> -f1,<span class="nu0">3</span> statearea.txt <span class="re5">-d</span> <span class="st_h">' '</span><span class="sy0">&gt;</span>statearea2.txt
+<span class="kw2">rm</span> statearea.txt
+&nbsp;
+<span class="co0"># add columns to vector to include areas of grid, </span>
+<span class="co0">#the vector map and the official area</span>
+v.db.addcol <span class="re2">map</span>=statevect \
+  <span class="re2">columns</span>=<span class="st_h">'gridarea INTEGER,vectarea_km INTEGER,officialarea INTEGER'</span>
+&nbsp;
+<span class="co0"># create SQL command file to link the , sed is a streameditor </span>
+<span class="co0">#-e means expression 1d deletes first line -F in awk is sed delimitor</span>
+<span class="kw2">sed</span> <span class="re5">-e</span> <span class="st_h">'1d'</span> gridarea.txt <span class="sy0">|</span> <span class="kw2">awk</span> <span class="re5">-F</span><span class="st_h">'|'</span> \
+  <span class="st_h">'{print &quot;UPDATE statevect SET gridarea = &quot;$2&quot; WHERE cat = &quot;$1&quot;;&quot;}'</span> \
+   <span class="sy0">&gt;</span> gridarea_sqlcmd.txt
+&nbsp;
+<span class="kw2">sed</span> <span class="re5">-e</span> <span class="st_h">'1d'</span> statearea2.txt <span class="sy0">|</span> <span class="kw2">awk</span> <span class="re5">-F</span><span class="st_h">' '</span> \
+  <span class="st_h">'{print &quot;UPDATE statevect SET officialarea = &quot;$2&quot; WHERE cat = &quot;$1&quot;;&quot;}'</span> \
+   <span class="sy0">&gt;</span> statearea_sqlcmd.txt
+&nbsp;
+<span class="co0">#excute the sql statement</span>
+db.execute <span class="re2">input</span>=gridarea_sqlcmd.txt
+db.execute <span class="re2">input</span>=statearea_sqlcmd.txt
+&nbsp;
+<span class="co0">#calculate area in km^2</span>
+v.to.db <span class="re2">map</span>=statevect  <span class="re2">columns</span>=<span class="st_h">'vectarea_km'</span> <span class="re2">option</span>=area <span class="re2">units</span>=k
+&nbsp;
+<span class="co0">#show result</span>
+db.select <span class="re2">sql</span>=<span class="st0">&quot;SELECT cat,NAME_1,gridarea,vectarea_km,officialarea FROM statevect&quot;</span></pre>
+</dd></dl>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Computational implementation&quot;,&quot;hid&quot;:&quot;computational_implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:9,&quot;range&quot;:&quot;1460-4446&quot;} -->
+<h3 class="sectionedit10" id="model_prediction">Model prediction</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Model prediction&quot;,&quot;hid&quot;:&quot;model_prediction&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:10,&quot;range&quot;:&quot;4447-4473&quot;} -->
+<h3 class="sectionedit11" id="validation">Validation</h3>
+<div class="level3">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Validation&quot;,&quot;hid&quot;:&quot;validation&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:11,&quot;range&quot;:&quot;4474-4495&quot;} -->
+<h2 class="sectionedit12" id="results_and_discussion">RESULTS and DISCUSSION</h2>
+<div class="level2">
+
+<p>
+cat 	NAME<em>1 			gridarea 	vectarea</em>km 	officialarea
+</p>
+
+<p>
+1 	Andaman and Nicobar 			<strong>2841</strong> 	7610 	8249
+</p>
+
+<p>
+2 	Andhra Pradesh		 	267334 	274836 	275045
+</p>
+
+<p>
+3 	Arunachal Pradesh		 	81754 	82039 	83743
+</p>
+
+<p>
+4 	Assam 			79645 	78414 	78438
+</p>
+
+<p>
+5 	Bihar 			91730 	94232 	94163
+</p>
+
+<p>
+6 	Chandigarh 			<strong>2654</strong> 	118 	114
+</p>
+
+<p>
+7 	Chhattisgarh 			137799 	135431 	135191
+</p>
+
+<p>
+8 	<strong>Dadra and Nagar Haveli</strong>		 	 	491 	491
+</p>
+
+<p>
+9 	Daman and Diu 			<strong>1761</strong> 	555 	112
+</p>
+
+<p>
+10 	<strong>Delhi</strong> 			2706 	1502 	1483
+</p>
+
+<p>
+11 	Goa 			2971 	3695 	3702
+</p>
+
+<p>
+12 	Gujarat 			178363 	185246 	196024
+</p>
+
+<p>
+13 	Haryana 			40415 	44024 	44212
+</p>
+
+<p>
+14 	Himachal Pradesh 			52418 	55603 	55673
+</p>
+
+<p>
+15 	Jammu and Kashmir 			99774 	105660 	<strong>222236</strong>
+</p>
+
+<p>
+16 	Jharkhand 			87566 	80040 	79714
+</p>
+
+<p>
+17 	Karnataka 			192374 	191377 	191791
+</p>
+
+<p>
+18 	Kerala 			33459 	37700 	38863
+</p>
+
+<p>
+19 	<strong>Lakshadweep</strong> 			 	34 	32
+</p>
+
+<p>
+20 	Madhya Pradesh 			298346 	308054 	308245
+</p>
+
+<p>
+21 	Maharashtra 			295208 	307341 	307713
+</p>
+
+<p>
+22 	Manipur 			22421 	22320 	22327
+</p>
+
+<p>
+23 	Meghalaya 			25000 	22427 	22429
+</p>
+
+<p>
+24 	Mizoram 			19822 	21137 	21081
+</p>
+
+<p>
+25 	Nagaland 			16626 	16599 	16579
+</p>
+
+<p>
+26 	Orissa 			149782 	155638 	155707
+</p>
+
+<p>
+27 	<strong>Puducherry</strong> 			 	547 	479
+</p>
+
+<p>
+28 	Punjab 			45076 	50225 	50362
+</p>
+
+<p>
+29 	Rajasthan 			353003 	341901 	342239
+</p>
+
+<p>
+30 	Sikkim 			10950 	7080 	7096
+</p>
+
+<p>
+31 	Tamil Nadu 			125912 	130208 	130058
+</p>
+
+<p>
+32 	Tripura 			14114 	10447 	10486
+</p>
+
+<p>
+33 	Uttar Pradesh 			247598 	240751 	240928
+</p>
+
+<p>
+34 	Uttaranchal 			50706 	53808 	53483
+</p>
+
+<p>
+35 	West Bengal 			78197 	85240 	88752
+</p>
+
+<p>
+lessons learned do not stick to one environment. I tried to long to do determine areas of different states per gridcell this is easy in python not in GRASS as far as I know.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;RESULTS and DISCUSSION&quot;,&quot;hid&quot;:&quot;results_and_discussion&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:12,&quot;range&quot;:&quot;4496-&quot;} -->

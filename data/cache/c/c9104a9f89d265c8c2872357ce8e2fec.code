@@ -1,0 +1,28 @@
+# v.to.db -p mark option=coor &gt; &quot;\$INPUT&quot;coordinates.txt
+v.db.addcol map=mark layer=1 columns=&quot;xcoor double,ycoor double&quot;
+v.to.db  map=mark layer=1 option=coor column=xcoor,ycoor
+&nbsp;
+&nbsp;
+R --no-save -q  &lt;&lt; EOF
+&nbsp;
+library(foreign)
+mark&lt;-read.dbf(&quot;~/ost4sem/project/unidk2010/nutrients/grassdb/odense/fjord/dbf/mark.dbf&quot;) # 29var
+names(mark)=toupper(names(mark))
+mark\$comm.id=mark\$BLOKNR
+mark\$bloknr=NULL
+mark\$comm.id=c(1:10682)
+&nbsp;
+base&lt;-read.dbf(&quot;~/ost4sem/project/unidk2010/nutrients/grassdb/odense/PERMANENT/dbf/basedata.dbf&quot;) # 38
+names(base)=tolower(names(base))
+base\$comm.id=base\$bloknr
+base\$bloknr=NULL
+base\$comm.id=as.numeric(base\$comm.id)
+&nbsp;
+intable=merge(mark, base, by.mark = &quot;comm.id&quot;, by.base = &quot;comm.id&quot;) #64 var  not 67
+write.table(intable,file=&quot;~/ost4sem/project/unidk2010/nutrients/input/intable_1.txt&quot;,sep=&quot;|&quot;,col.names=TRUE, row.name=FALSE)
+&nbsp;
+EOF
+&nbsp;
+### making a map from a text file #
+&nbsp;
+cat ~/ost4sem/project/unidk2010/nutrients/input/intable_1.txt | v.in.ascii out=mypoints x=30 y=31 cat=1 skip=1 --overwrite

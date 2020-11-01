@@ -1,0 +1,32 @@
+i &lt;- 16802
+while(i &lt;= 17166) {
+  i
+  rain1day &lt;- subset(VNdataOK,VNdataOK$date==i)
+&nbsp;
+  # Kriging interpolation
+  krige = autoKrige(Rainfall ~ 1,rain1day,BigdataOK, model = c(&quot;Sph&quot;, &quot;Exp&quot;, &quot;Gau&quot;, &quot;Ste&quot;))
+  Rainfall_krige=krige$krige_output$var1.pred
+  rain_krige &lt;-aggregate(Rainfall_krige, by=list(BigdataOK$comID),FUN=mean)
+  names(rain_krige)[c(1,2)] &lt;- c(&quot;comID&quot;, &quot;rain_krige&quot;)
+&nbsp;
+  # Co-kriging interpolation
+  cokrige = autoKrige(Rainfall~Lat+Lon+Regelev+Regaspect+Regslope+DMetCoast,rain1day,BigdataOK, model = c(&quot;Sph&quot;, &quot;Exp&quot;, &quot;Gau&quot;, &quot;Ste&quot;))
+  Rainfall_cokrige=cokrige$krige_output$var1.pred
+  rain_cokrige &lt;-aggregate(Rainfall_cokrige, by=list(BigdataOK$comID),FUN=mean)
+  names(rain_cokrige)[c(1,2)] &lt;- c(&quot;comID&quot;, &quot;rain_cokrige&quot;)
+&nbsp;
+  textfile &lt;- merge(rain_krige, rain_cokrige, by=c(&quot;comID&quot;))
+  textfile$date &lt;- i
+&nbsp;
+  # write the textfile data frame to a text file
+   write.table(textfile, file=paste(&quot;Rain_Krige&quot;,i,&quot;.txt&quot;,sep=&quot;&quot;), sep=&quot;\t&quot;, col.names = NA)
+&nbsp;
+  # export graph
+  graph = paste(&quot;Rain_Krige&quot;,i,&quot;.png&quot;,sep=&quot;&quot;)
+  png(graph); plot(krige); dev.off()
+  graph = paste(&quot;Rain_coKrige&quot;,i,&quot;.png&quot;,sep=&quot;&quot;)
+  png(graph); plot(cokrige); dev.off()
+&nbsp;
+  # work on the next day
+  i &lt;-i+1
+  }

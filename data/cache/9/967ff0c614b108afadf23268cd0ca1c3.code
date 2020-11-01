@@ -1,0 +1,13 @@
+#kriging
+library(sp)
+coordinates(elementi_norm) = ~X + Y
+library(automap)
+a=2
+for (i in c(&quot;As&quot;,&quot;Be&quot;,&quot;Cd&quot;,&quot;Co&quot;,&quot;Cr&quot;,&quot;Cu&quot;,&quot;Ni&quot;,&quot;Pb&quot;,&quot;Sb&quot;,&quot;Se&quot;,&quot;Sn&quot;,&quot;Tl&quot;,&quot;V&quot;,&quot;Zn&quot;)){
+  if (mean(elementi_norm[[a]])!=0){
+    png(paste(&quot;~/ost4sem/project/output/automap_&quot;,i,&quot;.png&quot;,sep=&quot;&quot;),width = 800, height = 800)
+    plot(autoKrige(elementi_norm[[a]]~1,elementi_norm, model = c(&quot;Sph&quot;, &quot;Exp&quot;, &quot;Gau&quot;, &quot;Ste&quot;)))    
+    dev.off()}
+  else print(paste(i, &quot;non ha distribuzione normale&quot;, sep=&quot; &quot;))
+a=a+1
+}

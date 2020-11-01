@@ -1,0 +1,5 @@
+<span class="kw2">wget</span> http:<span class="sy0">//</span>apache.mirrors.spacedump.net<span class="sy0">/</span>hadoop<span class="sy0">/</span>core<span class="sy0">/</span>hadoop-1.2.1<span class="sy0">/</span>hadoop-1.2.1.tar.gz
+<span class="kw2">sudo</span> <span class="kw2">tar</span> <span class="re5">-vxzf</span> hadoop-1.2.1.tar.gz <span class="re5">-C</span> <span class="sy0">/</span>usr<span class="sy0">/</span><span class="kw3">local</span>
+<span class="kw3">cd</span> <span class="sy0">/</span>usr<span class="sy0">/</span><span class="kw3">local</span>
+<span class="kw2">sudo</span> <span class="kw2">mv</span> hadoop-1.2.1<span class="sy0">/</span>  hadoop
+<span class="kw2">sudo</span> <span class="kw2">chown</span> <span class="re5">-R</span> hduser:hadoop hadoop

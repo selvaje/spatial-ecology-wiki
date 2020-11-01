@@ -1,0 +1,15 @@
+<span class="co0"># create pdf</span>
+<span class="kw3">cd</span>  ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>cross_section<span class="sy0">/</span>output
+gnuplot <span class="co2">&lt;&lt;EOF
+#!/usr/local/bin/gnuplot
+set terminal postscript eps color
+set title &quot;Tronco fluviale&quot;
+set hidden3d
+set dgrid3d 30,30
+set output '~/ost4sem/cross_section/output/Tronco_fluviale.ps'
+splot &quot;sezioni.txt&quot; u 2:4:3 with lines ti &quot;&quot;
+quit
+EOF</span>
+<span class="kw3">echo</span> create the pdf
+<span class="kw2">ps2pdf</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>cross_section<span class="sy0">/</span>output<span class="sy0">/</span>Tronco_fluviale.ps ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>cross_section<span class="sy0">/</span>output<span class="sy0">/</span>Tronco_fluviale.pdf
+<span class="kw3">echo</span> finish

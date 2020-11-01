@@ -1,0 +1,27 @@
+<span class="co0">#!/bin/bash</span>
+<span class="co0">#SBATCH -p GUESTS_Low</span>
+<span class="co0">#SBATCH -J sc01_split_tif.sh</span>
+<span class="co0">#SBATCH -n 1 -c 1 -N 1</span>
+<span class="co0">#SBATCH -t 1:00:00 </span>
+<span class="co0">#SBATCH -o /gpfs/scratch60/fas/sbsc/ga254/stdout/sc01_split_tif.sh.%J.out</span>
+<span class="co0">#SBATCH -e /gpfs/scratch60/fas/sbsc/ga254/stderr/sc01_split_tif.sh.%J.err</span>
+<span class="co0">#SBATCH --mail-type=ALL</span>
+<span class="co0">#SBATCH --mail-user=email</span>
+<span class="co0">#SBATCH --mem-per-cpu=500M</span>
+&nbsp;
+<span class="co0">####### sbatch /gpfs/loomis/home.grace/$USER/geocomputation/scripts/sc01_split_tif.sh</span>
+&nbsp;
+module load GEOS<span class="sy0">/</span>3.6.2-foss-2018a-Python-2.7.14 
+module load GDAL<span class="sy0">/</span>2.2.3-foss-2018a-Python-2.7.14
+module load GSL<span class="sy0">/</span><span class="nu0">2.3</span>-GCCcore-6.4.0
+module load Boost<span class="sy0">/</span>1.66.0-foss-2018a
+module load PKTOOLS<span class="sy0">/</span>2.6.7.6-foss-2018a 
+module load Armadillo<span class="sy0">/</span>8.400.0-foss-2018a
+&nbsp;
+<span class="re2">DIR</span>=<span class="sy0">/</span>gpfs<span class="sy0">/</span>loomis<span class="sy0">/</span>home.grace<span class="sy0">/</span><span class="re1">$USER</span><span class="sy0">/</span>geocomputation<span class="sy0">/</span>Landsat
+&nbsp;
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> <span class="re5">-te</span> <span class="nu0">36.5</span> -<span class="nu0">1.5</span> <span class="nu0">37</span> <span class="re5">-1</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_UL.vrt <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B1_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B2_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B3_proj.tif
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> <span class="re5">-te</span> <span class="nu0">36.5</span> <span class="re5">-2</span> <span class="nu0">37</span> -<span class="nu0">1.5</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_LL.vrt <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B1_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B2_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B3_proj.tif
+&nbsp;
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> <span class="re5">-te</span> <span class="nu0">37</span> -<span class="nu0">1.5</span> <span class="nu0">37.5</span> <span class="re5">-1</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_UR.vrt <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B1_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B2_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B3_proj.tif
+gdalbuildvrt <span class="re5">-overwrite</span> <span class="re5">-separate</span> <span class="re5">-te</span> <span class="nu0">37</span> <span class="re5">-2</span> <span class="nu0">37.5</span> -<span class="nu0">1.5</span> <span class="re1">$DIR</span><span class="sy0">/</span>stack_LR.vrt <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B1_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B2_proj.tif <span class="re1">$DIR</span><span class="sy0">/</span>LT51680612010231MLK00_B3_proj.tif

@@ -1,0 +1,16 @@
+<span class="co1">#!/usr/bin/python3</span>
+&nbsp;
+<span class="co1"># Build KML manually using strings</span>
+<span class="kw3">xml</span> <span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;&lt;kml xmlns=&quot;http://www.opengis.net/kml/2.2&quot;&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;  &lt;Placemark&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;    &lt;name&gt;Office&lt;/name&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;    &lt;description&gt;Office Building&lt;/description&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;    &lt;Point&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;      &lt;coordinates&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;        -122.087461,37.422069&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;      &lt;/coordinates&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;    &lt;/Point&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;  &lt;/Placemark&gt;&quot;&quot;&quot;</span>
+<span class="kw3">xml</span> +<span class="sy0">=</span> <span class="st0">&quot;&quot;&quot;&lt;/kml&gt;&quot;&quot;&quot;</span>
+<span class="kw1">print</span><span class="br0">&#40;</span><span class="kw3">xml</span><span class="br0">&#41;</span>

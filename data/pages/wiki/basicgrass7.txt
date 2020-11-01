@@ -84,12 +84,12 @@ If you started grass correctly you should visualize the following lines on your 
   MAPSET=PERMANENT
   MONITOR=x2
   GRASS_GUI=text
-  GRASS 7.2.1 (europe):~ > 
+  GRASS 7.4.0 (europe):~ > 
 
 <note important>
 Running grass through the bash shell terminal allows you to use all command line functionality of both grass and shell. As an example you can type
   ls
-and visualize all files available in your shell current working directory. This means that all your output files produced by bash command lines functionality will be saved in the current working directory (if not specified differently). Many non-geographical grass output features such as text file reports or images will be saved as well in the current working directory. The ** GRASS 7.2.1 (europe):~ > ** inform you are currently working in the home folder. See
+and visualize all files available in your shell current working directory. This means that all your output files produced by bash command lines functionality will be saved in the current working directory (if not specified differently). Many non-geographical grass output features such as text file reports or images will be saved as well in the current working directory. The ** GRASS 7.4.0 (europe):~ > ** inform you are currently working in the home folder. See
   pwd
 for double checking the same information using a bash command instead of the grass ** g.gisenv ** command.
 </note>
@@ -99,9 +99,9 @@ It is a good working habit within Grass to set bash shell working directory the 
   cd ~/ost4sem/grassdb/europe/
 
 On the terminal you will no longer see 
-   GRASS 7.2.1 (europe):~ >
+   GRASS 7.4.0 (europe):~ >
 but  
-   GRASS 7.2.1 (europe):~/ost4sem/grassdb/europe >
+   GRASS 7.4.0 (europe):~/ost4sem/grassdb/europe >
 and you will be aware tif your current bash shell working directory match your grass location directory.
 </note>
 
@@ -115,13 +115,13 @@ The **g.mapset** command allows you to change the Grass working directory and su
   g.gisenv 
 
 Now you should see the following settings:
-  GRASS 7.2.1 (europe):~/ost4sem/grassdb/europe > g.gisenv
+  GRASS 7.4.0 (europe):~/ost4sem/grassdb/europe > g.gisenv
   GISDBASE=/home/user/ost4sem/grassdb
   LOCATION_NAME=europe
   MAPSET=PCEM
   MONITOR=x2
   GRASS_GUI=text
-  GRASS 7.2.1 (europe):~/ost4sem/grassdb/europe >
+  GRASS 7.4.0 (europe):~/ost4sem/grassdb/europe >
 
 <note tip>
 From grass 6.3 only the -c flag creates a new mapset if it doesn't exist.; -l List available mapsets (!)
@@ -133,8 +133,7 @@ To list your available maps:
   g.list vect  -p
   g.list rast -p
 
-The user can add, modify, and delete data layers that exist under his current mapset. Although the user can also access (i.e., use) data that are stored under other mapsets in the same GRASS location, the user can only make permanent changes (create or modify data) located in the current mapset. To access maps in a different current mapset we use the addmapset option in the g.mapset function. As an example:
-  g.mapsets mapset=PCEMstat   operation=add
+The user can add, modify, and delete data layers that exist under his current mapset. Although the user can also access (i.e., use) data that are stored under other mapsets in the same GRASS location, the user can only make permanent changes (create or modify data) located in the current mapset. 
 
 Now we can access the fnfpc\_crop mapset and eventually **copy** a map from the PCEMstat mapset to our current mapset directory using the g.copy function:
   g.copy rast=fnfpc_crop@PCEMstat,fnfpc_crop
@@ -179,21 +178,14 @@ Now we will define a new study area for the Scandinavia region.
 You will visualize the current and newest region settings saved as //scandinavia//  \\
    
    
-If you open Qgis
-   qgis & 
-You can load a raster map on Qgis from the menue:
-Plugin GRASS > add GRASS raster layer > 
-  * Gisdbase : /home/user/ost4sem/grassdb
-  * Location : europe
-  * Mapset   : PERMANENT
-  * Map name : fnfpc
+If you open  the GRASS gui 
 
-If you click on " //Display current Grass region// " you will see the Scandinavia area within a red frame.
+   g.gui wxpython  
+   
+You can visualize the Computational Region in the Display menu by cliking "Show computation Extent" and you will see the Scandinavia area within a red frame.
 
 Back to GRASS if you reset the default grass region 
   g.region -d
-And when you look again at Qgis, you can visualise the red frame changing position by clicking twice on  " //Display current Grass region// ".
-
 
 \\
 ==== Clipping maps and changing resolution use ====

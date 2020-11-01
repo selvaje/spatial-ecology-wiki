@@ -1,0 +1,3 @@
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>R
+<span class="kw2">mkdir</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>R<span class="sy0">/</span>output
+<span class="re2">OUTR</span>=<span class="st0">&quot;~/ost4sem/project/unidk2010/nutrients/R/output&quot;</span>

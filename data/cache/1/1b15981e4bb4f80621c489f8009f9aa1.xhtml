@@ -1,0 +1,145 @@
+
+<h1 class="sectionedit1" id="create_maps_using_open_layers">Create maps using open layers</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Create maps using open layers&quot;,&quot;hid&quot;:&quot;create_maps_using_open_layers&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-45&quot;} -->
+<h2 class="sectionedit2" id="reproject_vector_and_plot_it_over_google_map">Reproject vector and plot it over google map</h2>
+<div class="level2">
+
+<p>
+We use the ward administration boundary of Cornwall as vector layer and overlay it to google map. The ward layer need to be reprojected into epsg:3856 map projection to harmonize maps.
+</p>
+<pre class="code r">library(dismo)
+system(&quot;wget http://www.spatial-ecology.net/ost4sem/exercise/r_ecoservice/vector/cornwall_agri.zip&quot;)
+system(&quot;unzip cornwall_agri.zip&quot;)
+&nbsp;
+# load vector
+ward &lt;- shapefile(&quot;cornwall.shp&quot;) 
+&nbsp;
+# Reproject vector using raster library required by dismo
+ward.84 &lt;- spTransform(ward,CRS(&quot;+init=epsg:3857&quot;)) 
+&nbsp;
+# Load google map using the &quot;Cornwall&quot; location as google query
+cornwall.sat &lt;- gmap(&quot;Cornwall&quot;,type=&quot;satellite&quot;) 
+plot(cornwall.sat)  # plot the map
+&nbsp;
+# Overlay the vector layer on the raster layer
+plot(ward.84, add = TRUE, lwd =1, ext = extent(ward.84), border = &quot;yellow
+&nbsp;
+# Plot small area within a region 
+Lizard.sat &lt;- gmap(&quot;Lizard, Cornwall&quot;,type=&quot;satellite&quot;) 
+plot(Lizard.sat)
+&nbsp;
+# Plot small area within a region using google hybrid map
+Lizard.hybrid &lt;- gmap(&quot;Lizard, Cornwall&quot;,type=&quot;hybrid&quot;) 
+plot(Lizard.hybrid)&quot; )
+&nbsp;
+# Plot a town suing the terrain google map
+Matera.terrain &lt;- gmap(&quot;Matera&quot;,type=&quot;terrain&quot;) 
+plot(Matera.terrain)</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:goog_vect.png" class="media" title="wiki:rstat:goog_vect.png"><img src="/dokuwiki/lib/exe/fetch.php?w=250&amp;tok=85d4dc&amp;media=wiki:rstat:goog_vect.png" class="media" alt="" width="250" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:matera_gterrain.png" class="media" title="wiki:rstat:matera_gterrain.png"><img src="/dokuwiki/lib/exe/fetch.php?w=200&amp;tok=712321&amp;media=wiki:rstat:matera_gterrain.png" class="media" alt="" width="200" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:lizard_sat.png" class="media" title="wiki:rstat:lizard_sat.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=d3941a&amp;media=wiki:rstat:lizard_sat.png" class="media" alt="" width="300" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:lizard_hybrid.png" class="media" title="wiki:rstat:lizard_hybrid.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=a8f811&amp;media=wiki:rstat:lizard_hybrid.png" class="media" alt="" width="300" /></a><br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Reproject vector and plot it over google map&quot;,&quot;hid&quot;:&quot;reproject_vector_and_plot_it_over_google_map&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;46-1406&quot;} -->
+<h2 class="sectionedit3" id="raster_layer_overlay_with_openstreetmap">Raster layer overlay with OpenStreetMap</h2>
+<div class="level2">
+
+<p>
+We use the bounding box of the ward administrative layer in Cornwall UK to download the corresponding study area from OpenStreetMap raster layer. We have to define the bounding box in lat long epsg:4326 projection.<br/>
+
+Successively we load the soil carbon map overwrite its projection (British National Grid projection epsg:27700) since the metafile is absent; reproject from epsg :27700 to the OpenStreetMap projection epsg 3857.<br/>
+
+Finally we can overlay the carbon soil map to openstreetmap.<br/>
+
+</p>
+<div class="plugin_note noteimportant">N.B. We have downloaded the soil carbon content map needed here below, in the raster <a href="/dokuwiki/doku.php?id=wiki:rstat:r_load_rast" class="wikilink1" title="wiki:rstat:r_load_rast"> data visualization tutorial</a>.
+</div><pre class="code bash"><span class="co0"># install rjava from the bash shell it is a needed dependency for later</span>
+<span class="kw2">sudo</span> <span class="kw2">apt-get install</span> r-cran-rjava
+<span class="co0"># enter R as super user</span>
+<span class="kw2">sudo</span> R</pre>
+<pre class="code r">install.packages(&quot;OpenStreetMap&quot;)
+library(OpenStreetMap)
+library(rgdal)
+library(raster)
+# Reproject ward layer to lat lon
+ward.LatLon &lt;- spTransform(ward,CRS(&quot;+init=epsg:4326&quot;))
+&nbsp;
+#Use lat long extents to load OpenStreetMap layer
+cornwall.osm = openmap(c(lat = ward.LatLon@bbox[2,2],lon= ward.LatLon@bbox[1,1] ),c(lat = ward.LatLon@bbox[2,1],lon = ward.LatLon@bbox[1,2]), minNumTiles = 9, type=&quot;osm&quot;)
+# Plot the map
+plot(cornwall.osm)
+&nbsp;
+# Load the soil carbon content map for Cornwall. 
+soil.carbon=raster(readGDAL(&quot;carS_m9.asc&quot;))
+&nbsp;
+# Write the projection type to this layer
+str(soil.carbon@crs) # check projection
+&nbsp;
+crs(soil.carbon)&lt;- &quot;+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs&quot;
+str(soil.carbon@crs) # check projection now
+&nbsp;
+#Define the epsg 4326 projection 
+sr4326=&quot;+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs&quot;
+&nbsp;
+# Reproject from epsg:22770 to epsg:4326
+soil.carbon4326 &lt;-  projectRaster(soil.carbon, crs = sr4326)
+&nbsp;
+Plot the soil carbon map in transparency with OpenStreetMap
+plot(soil.carbon4326, col=rainbow(25, alpha=0.35), add=TRUE)</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:cornwall_osm.png" class="media" title="wiki:rstat:cornwall_osm.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=6943b2&amp;media=wiki:rstat:cornwall_osm.png" class="media" alt="" width="300" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:soilcar_osm.png" class="media" title="wiki:rstat:soilcar_osm.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=8a8821&amp;media=wiki:rstat:soilcar_osm.png" class="media" alt="" width="300" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Raster layer overlay with OpenStreetMap&quot;,&quot;hid&quot;:&quot;raster_layer_overlay_with_openstreetmap&quot;,&quot;codeblockOffset&quot;:1,&quot;secid&quot;:3,&quot;range&quot;:&quot;1407-3594&quot;} -->
+<h2 class="sectionedit4" id="vector_layer_overlay_with_stamen-watercolor">Vector layer overlay with Stamen-Watercolor</h2>
+<div class="level2">
+
+<p>
+We Reproject the ward vector layer to lat long (epsg:4326) projection, so we can query and download the stamen watercolor rater map using the openmap function.<br/>
+
+Next, we reproject the ward layer in the openStreetMap projection  (epsg:4326) to overlay it with the raster.
+</p>
+<pre class="code r">ward.LatLon &lt;- spTransform(ward,CRS(&quot;+init=epsg:4326&quot;))
+cornwall.watercolor = openmap(c(lat = ward.LatLon@bbox[2,2],lon= ward.LatLon@bbox[1,1] ),c(lat = ward.LatLon@bbox[2,1],lon = ward.LatLon@bbox[1,2]), type=&quot;stamen-watercolor&quot;)
+plot(cornwall.watercolor)
+ward.3857 &lt;- spTransform(ward,CRS(&quot;+init=epsg:3857&quot;))
+plot(ward.3857, add = TRUE, lwd =1, ext = extent(ward.3857), border = &quot;darkgreen&quot; )</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:water_cornwall.png" class="media" title="wiki:rstat:water_cornwall.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=0b0ad1&amp;media=wiki:rstat:water_cornwall.png" class="media" alt="" width="300" /></a><a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:water_vect_cornwall.png" class="media" title="wiki:rstat:water_vect_cornwall.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=126382&amp;media=wiki:rstat:water_vect_cornwall.png" class="media" alt="" width="300" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Vector layer overlay with Stamen-Watercolor&quot;,&quot;hid&quot;:&quot;vector_layer_overlay_with_stamen-watercolor&quot;,&quot;codeblockOffset&quot;:3,&quot;secid&quot;:4,&quot;range&quot;:&quot;3595-4422&quot;} -->
+<h2 class="sectionedit5" id="define_a_study_area_with_google_plot_openstreetmap">Define a study area with google, plot OpenStreetMap</h2>
+<div class="level2">
+
+<p>
+The following method allow to define a study area using a google location keyword (e.g. country, town, continent, small village) and use its extent to plot openstreet map. Example for Matera in Italy:<br/>
+
+</p>
+<pre class="code r">matera.sat &lt;- gmap(&quot;Matera&quot;,type=&quot;satellite&quot;
+matera.LatLon &lt;- spTransform(matera.sat,CRS(&quot;+init=epsg:4326&quot;))
+sr &lt;- &quot;+init=epsg:4326 +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;
+matera.LatLon &lt;-  projectRaster(matera.sat, crs = sr)
+xmin=bbox(matera.LatLon)[1,1]
+xmax=bbox(matera.LatLon)[1,2]
+ymax=bbox(matera.LatLon)[2,2]
+ymin=bbox(matera.LatLon)[2,1]
+matera.osm = openmap( c(lat = ymax, lon = xmin ) , c(lat = ymin, lon = xmax), type=&quot;osm&quot;)
+plot(matera.osm)</pre>
+
+<p>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:plot_matera_google.png" class="media" title="wiki:rstat:plot_matera_google.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=1d68a9&amp;media=wiki:rstat:plot_matera_google.png" class="media" alt="" width="300" /></a>
+<a href="/dokuwiki/lib/exe/detail.php?id=wiki%3Arstat%3Ar_load_proj&amp;media=wiki:rstat:matera_osm.png" class="media" title="wiki:rstat:matera_osm.png"><img src="/dokuwiki/lib/exe/fetch.php?w=300&amp;tok=8227aa&amp;media=wiki:rstat:matera_osm.png" class="media" alt="" width="300" /></a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Define a study area with google, plot OpenStreetMap&quot;,&quot;hid&quot;:&quot;define_a_study_area_with_google_plot_openstreetmap&quot;,&quot;codeblockOffset&quot;:4,&quot;secid&quot;:5,&quot;range&quot;:&quot;4423-&quot;} -->

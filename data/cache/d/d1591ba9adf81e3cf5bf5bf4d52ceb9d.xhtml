@@ -1,0 +1,196 @@
+
+<h2 class="sectionedit1" id="case_studies">Case studies</h2>
+<div class="level2">
+
+<p>
+These two study cases take a real example of research application and drives the students trough the full scripting-process in order to arrive to the final maps and graphics which highlights the conclusions.<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:firemod" class="wikilink1" title="wiki:firemod"> Projecting future burnt area in the EU-Mediterranean countries under IPCC SRES A2/B2 climate change scenarios. </a></div>
+</li>
+<li class="level1"><div class="li"><a href="/dokuwiki/doku.php?id=wiki:forestmod" class="wikilink1" title="wiki:forestmod"> Modelling and mapping the Natural Forest Distribution of Italy and predicting changes for the year 2080 under IPCC SRES A2a scenario.</a></div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Case studies&quot;,&quot;hid&quot;:&quot;case_studies&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;1-544&quot;} -->
+<h2 class="sectionedit2" id="modelling_and_mapping_the_natural_forest_distribution_of_italy_and_predicting_changes_for_the_year_2080_under_ipcc_sres_a2a_scenario">Modelling and mapping the Natural Forest Distribution of Italy and predicting changes for the year 2080 under IPCC SRES A2a scenario</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Modelling and mapping the Natural Forest Distribution of Italy and predicting changes for the year 2080 under IPCC SRES A2a scenario&quot;,&quot;hid&quot;:&quot;modelling_and_mapping_the_natural_forest_distribution_of_italy_and_predicting_changes_for_the_year_2080_under_ipcc_sres_a2a_scenario&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;545-689&quot;} -->
+<h3 class="sectionedit3" id="objective">Objective</h3>
+<div class="level3">
+
+<p>
+The goal of this work is to simulate potential changes of Italian natural forest distribution under climate change scenario.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Objective&quot;,&quot;hid&quot;:&quot;objective&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;690-839&quot;} -->
+<h3 class="sectionedit4" id="introduction">Introduction</h3>
+<div class="level3">
+
+<p>
+In the period between 1950 and 2000, natural disturbance has caused each year several millions of cubic meters of forest damage <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Schelhaas et al. 2003)</a>. An increase of forest damage can be foreseen directly and indirectly due to climate change projections <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(McCarthy et al. 2001)</a>. In the latest decades not only have damaged areas been reforested, but a trend of afforestation of agricultural land has been observed with a general increase in forested land <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Kuusela 1996)</a>. European forest landscapes are changing shape and content. Next century afforestation and reforestation will be a crucial decision policy making topic in the context of landscape management towards European sustainability. Our study is linked to conservation policy making approaching theoretical distributional modelling, ecological theory and applied landscape management. This is achieved combining fine resolution predictors with homogeneous and dense field data by means of robust modelling techniques.<br/>
+
+Within this applied spatial ecoogical modeling theme, we modelled actual and future Natural forest categories in Italy and estimated the shifts in vegetation in the period 2000–2080 under IPCC SRES A2a scenario. The actual and future distribution of the 10 most dominant European Forest Categories (EEA, 2006) are simulated using Random Forest classifier. Random Forest is a ensemble model machine learning techniques and relates the natural forest formations in Italy and environmental predictor surface maps.<br/>
+
+Environmental predictor variables have a resolution of 1km<sup>2</sup> pixel and include soil factors (European Soil Database), bioclimatic factors (Worldclim database, <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">Hijmans et al. 2005)</a> and topographic factors (SRTM digital elevation model). See <a href="/dokuwiki/doku.php?id=wiki:case_studies#input_data" class="wikilink2" title="wiki:case_studies" rel="nofollow">Input Data</a> section.<br/>
+According to the future climatic simulation we expect Mediterranean vegetation to gain suitability areas and temperate forest to dicrease their extent. In mountainous areas vegetation belts are expected to shift towards upper altitude levels.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Introduction&quot;,&quot;hid&quot;:&quot;introduction&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;840-3056&quot;} -->
+<h3 class="sectionedit5" id="method">Method</h3>
+<div class="level3">
+
+<p>
+In our approach we model the current distribution of the natural forest in Italy according to environmental variables. For doing so we are going to construct an input response / predictor table relating the distribution of the Natural forest formations in Italy with climatic, soil and geomorphologic factors. Successively we use the input response/ predictor table and the machine learning ensemble classifier Random Forest <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Breiman, 2001)</a> to create a forest type / environmental factors predictive model.<br/>
+
+Once the model is trained for the current climate we are going project vegetation shift under future climate conditions.<br/>
+
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Method&quot;,&quot;hid&quot;:&quot;method&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;3057-3743&quot;} -->
+<h3 class="sectionedit6" id="input_data">Input Data</h3>
+<div class="level3">
+
+<p>
+As input data we use the following datasets:
+</p>
+<ul>
+<li class="level1"><div class="li"> Map of the Natural Vegetation of Europe <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Bohn et al. 2000)</a> reclassified in forest categories according to the European Forest Types <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(EEA 2006)</a> classification scheme. </div>
+</li>
+<li class="level1"><div class="li"> Climatic data: twenty years averaged monthly minimum, maximum and accumulated precipitation from the <a href="http://www.worldclim.org" class="urlextern" target="blanc" title="http://www.worldclim.org" rel="nofollow noopener">http://www.worldclim.org</a> datasets <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Hijmans et al., 2005)</a> and derived bioclimatic factors as described in <a href="/dokuwiki/doku.php?id=wiki:pubste" class="wikilink2" title="wiki:pubste" rel="nofollow">Casalegno et al. 2010</a> see  <a href="/dokuwiki/doku.php?id=wiki:predictor_table" class="wikilink1" title="wiki:predictor_table">predictor_table</a></div>
+</li>
+<li class="level1"><div class="li"> Future climate projections derived from the <a href="http://worldclim.org" class="urlextern" target="blanc" title="http://worldclim.org" rel="nofollow noopener">http://worldclim.org</a> datraset. We use the <a href="http://www.ipcc.ch/" class="urlextern" target="blanc" title="http://www.ipcc.ch/" rel="nofollow noopener">IPCC</a> Special Report on Emission Scenario A2a storyline <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(IPCC, 2001)</a> future climate projection simulated by an averaged Genaral Circulation Model <a href="http://en.wikipedia.org/wiki/Global_climate_model" class="urlextern" target="blanc" title="http://en.wikipedia.org/wiki/Global_climate_model" rel="nofollow noopener">GCM</a>. Original averaged GCM are HADCM3 (Hadley Centre Coupled Model version 3) <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Collins et al., 2001)</a>, CCCMA (Canadian Centre for Climate Modelling and Analysis) <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Kim et al., 2003)</a>, CSIRO (Commonwealth Scientific and Industrial Research Organisation) <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Gordon and O’Farrell, 1997)</a>.</div>
+</li>
+<li class="level1"><div class="li"> Geo-morphological factors derived from the <a href="http://www2.jpl.nasa.gov/srtm/" class="urlextern" target="blanc" title="http://www2.jpl.nasa.gov/srtm/" rel="nofollow noopener">SRTM</a> digital elevation model <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(Farr et al., 2007)</a> minimum, maximum, mean altitudes, altitude standard deviation, slope and dominant orientation (north, south, east, west).</div>
+</li>
+<li class="level1"><div class="li"> Soil variables selected from the <a href="http://eusoils.jrc.ec.europa.eu/" class="urlextern" target="blanc" title="http://eusoils.jrc.ec.europa.eu/" rel="nofollow noopener">European Soil Database</a> <a href="/dokuwiki/doku.php?id=wiki:case_studies#bibliography" class="wikilink2" title="wiki:case_studies" rel="nofollow">(King et al., 1995; Heineke et al., 1998)</a>: soil parent material (eight classes) and FAO soil type classification (25 classes).<br/>
+</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Input Data&quot;,&quot;hid&quot;:&quot;input_data&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;3744-5606&quot;} -->
+<h3 class="sectionedit7" id="computational_implementation">Computational Implementation</h3>
+<div class="level3">
+
+<p>
+The modelling and mapping procedure include the following steps and relative scripts:<br/>
+
+<br/>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Generate a response predictor input table using a bash shell / grass script: <a href="http://www.spatial.ecology.net/downloads/ITAveg_respred_table.sh" class="urlextern" target="blanc" title="http://www.spatial.ecology.net/downloads/ITAveg_respred_table.sh" rel="nofollow noopener">Download the shell script here</a> or follow the <a href="/dokuwiki/doku.php?id=wiki:itaveg_respred_table_sh" class="wikilink1" title="wiki:itaveg_respred_table_sh">shell script in wiki format</a> <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Modeling the current distribution of the Natural Forest Vegetation of Italy: <a href="http://www.spatial.ecology.net/downloads/randomforest_itaveg.R" class="urlextern" target="blanc" title="http://www.spatial.ecology.net/downloads/randomforest_itaveg.R" rel="nofollow noopener">Download the .R script here</a> or follow the <a href="/dokuwiki/doku.php?id=wiki:randomforest_itaveg_r" class="wikilink1" title="wiki:randomforest_itaveg_r">R script in wiki format</a> <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Mapping the current Natural Forest Vegetation in Italy: <a href="http://www.spatial.ecology.net/downloads/map_rf_itaveg.R" class="urlextern" target="blanc" title="http://www.spatial.ecology.net/downloads/map_rf_itaveg.R" rel="nofollow noopener">Download the R script here</a> or follow the <a href="/dokuwiki/doku.php?id=wiki:map_rf_itaveg_r" class="wikilink1" title="wiki:map_rf_itaveg_r">R script in wiki format</a> <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Generate future climate prediction surface map for the year 2080 and the IPCC A2a ENS model: <a href="http://www.spatial.ecology.net/downloads/itaveg_fut_clim_rasters.sh" class="urlextern" target="blanc" title="http://www.spatial.ecology.net/downloads/itaveg_fut_clim_rasters.sh" rel="nofollow noopener">Download the bash shell / grass script here</a> or follow the <a href="/dokuwiki/doku.php?id=wiki:itaveg_fut_clim_rasters_sh" class="wikilink1" title="wiki:itaveg_fut_clim_rasters_sh">shell script in wiki format</a> <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Mapping the future projections of the Natural Forest Vegetation in Italy: <a href="http://www.spatial.ecology.net/downloads/map_rf_itaveg_ens2080.R" class="urlextern" target="blanc" title="http://www.spatial.ecology.net/downloads/map_rf_itaveg_ens2080.R" rel="nofollow noopener">Download the R script here</a> or follow the <a href="/dokuwiki/doku.php?id=wiki:map_rf_itaveg_ens2028_r" class="wikilink1" title="wiki:map_rf_itaveg_ens2028_r">R script in wiki format</a> <br/>
+</div>
+</li>
+<li class="level1"><div class="li"> Merging map tiles into a single image: <a href="http://www.spatial.ecology.net/downloads/merge_ascii.sh" class="urlextern" target="blanc" title="http://www.spatial.ecology.net/downloads/merge_ascii.sh" rel="nofollow noopener">Download the bash shell GDAL command here</a> or follow the <a href="/dokuwiki/doku.php?id=wiki:merge_ascii_sh" class="wikilink1" title="wiki:merge_ascii_sh">GDAL command line description in wiki format</a> <br/>
+</div>
+</li>
+</ul>
+
+<p>
+<br/>
+
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Computational Implementation&quot;,&quot;hid&quot;:&quot;computational_implementation&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;5607-7203&quot;} -->
+<h3 class="sectionedit8" id="bibliography">Bibliography</h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Bohn U., Gollub G., Hettwer C. 2000. Map of the Natural Vegetation of Europe. Bonn: Federal Agency for Nature Conservation.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Breiman, L., 2001. Random forests. Machine Learning 45 (1), 5–32.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Collins, M., Tett, S., Cooper, C., 2001. The internal climate variability of hadcm3, a version of the hadley centre coupled  model without flux adjustments. Climate Dynamics 17, 61–68.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> EEA 2006. European Forest Types: Categories and types for sustainable forest management reporting and policy. European Environmental Agency Technical report no 9/2006. Copenhagen. ISSN 175-2237.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Farr, T. G., Rosen, P., Caro, E., Crippen, R., Duren, R., Hensley, S., Kobrick, M., Paller, M., Rodriguez, E., Roth, L., Seal, D., Shaffer, S., Shimada, J., Umland, J., Werner, M., Oskin, M., Burbank, D., Alsdorf, D., 2007. The shuttle radar topography mission. Rev. Geophys 45. </div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Gordon, H., O’Farrell, S., 1997. Transient climate change in the csiro coupled model with dynamic sea ice. Monthly Waether Review 125(5), 875907.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Heineke, H., Eckelmann, W., Thomasson, A., Jones, R., Montanarella, L., Buckley, B., 1998. Land Information Systems Developments for planning the sustainable use of land resources. Research Report. European Soil Boureau, Luxembourg.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Hijmans, R. J., S.E. Cameron, J.L. Parra, Jones, P. G., and Jarvis, A., 2005: Very high resolution interpolated</div>
+</li>
+</ul>
+<pre class="code">   climate surfaces for global land areas. International Journal of Climatology, 25: 1965-1978</pre>
+
+<p>
+  * IPCC, 2001. Climate Change 2001: The Scientific Basis. Contribution of Working Group I to the Third Assessment Report of the Intergovernmental Panel on Climate Change, cambridge university press Edition. Cambridge University Press,, Cambridge, United Kingdom.
+</p>
+<ul>
+<li class="level1"><div class="li">Kim, S.-J., Flato, G., Boer, G., 2003. A coupled climate model simulation of the last glacial maximum, part 2: approach  to equilibrium climate. Dynamics 20, 635–661.
+</div>
+</li>
+<li class="level1"><div class="li">King, D., Jones, R., Thomasson, A., 1995. European Land Information Systems for Agro-environmental Monitoring. Office for the Official Publications of the European Communities, Luxembourg.
+</div>
+</li>
+<li class="level1"><div class="li">Kuusela, K. 1996. Forest resources in Europe 1950-1990. Cambridge University Press.
+</div>
+</li>
+<li class="level1"><div class="li">McCarthy JJ, Canziani OF, et al. (eds) (2001) Climate Change 2001: Impacts, Adaptation, and Vulnerability. Contribution of Working Group II to the Third Assessment Report of the Intergovernmental Panel on Climate Change (IPCC). Cambridge University Press, Cambridge.
+</div>
+</li>
+<li class="level1"><div class="li">Shelhaas, M-J., Nabuurs, G-J., Schuck, A..2003. Natural disturbances in the European forests in the 19th and 20th centuries. Global Change Biology:, 1620–1633.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Bibliography&quot;,&quot;hid&quot;:&quot;bibliography&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:8,&quot;range&quot;:&quot;7204-&quot;} -->

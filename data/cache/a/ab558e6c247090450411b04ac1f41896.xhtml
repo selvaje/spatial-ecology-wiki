@@ -1,0 +1,33 @@
+
+<h4 id="create_trainingtxt">Create training.txt</h4>
+<div class="level4">
+
+</div>
+
+<h5 id="convert_the_envi_proprietary_ascii_to_simple_ascii_text_file">Convert the ENVI proprietary ASCII to simple ASCII text file</h5>
+<div class="level5">
+<pre class="code bash">    <span class="kw2">cat</span> labels.txt <span class="sy0">|</span> <span class="kw1">while</span> <span class="kw2">read</span> class label;<span class="kw1">do</span> <span class="kw2">sed</span> <span class="re5">-n</span> <span class="st0">&quot;/<span class="es2">$label</span>/,/^$/p&quot;</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_TR.txt <span class="sy0">|</span> <span class="kw2">sed</span> <span class="re5">-e</span> <span class="st_h">'/;/d'</span> <span class="re5">-e</span> <span class="st_h">'/^$/d'</span><span class="sy0">|</span><span class="kw2">awk</span> <span class="re5">-v</span> <span class="re2">C</span>=<span class="re1">$class</span> <span class="st_h">'{print $1,$4,$5,C}'</span>; <span class="kw1">done</span> <span class="sy0">&gt;</span> training.txt</pre>
+
+</div>
+
+<h4 id="create_ogr_vector_file">Create ogr vector file</h4>
+<div class="level4">
+<pre class="code bash">    pkascii2ogr <span class="re5">-i</span> training.txt <span class="re5">-o</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_TR.shp <span class="re5">-x</span> <span class="nu0">2</span> <span class="re5">-y</span> <span class="nu0">1</span> <span class="re5">-p</span> epsg:<span class="nu0">4326</span> <span class="re5">-n</span> <span class="kw2">id</span> <span class="re5">-ot</span> Integer <span class="re5">-n</span> label <span class="re5">-ot</span> Integer </pre>
+
+</div>
+
+<h4 id="re-project_vector_file">Re-project vector file</h4>
+<div class="level4">
+<pre class="code bash">    ogr2ogr -s_srs epsg:<span class="nu0">4326</span> -t_srs epsg:<span class="nu0">26915</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_TR_26915.shp <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_TR.shp</pre>
+
+</div>
+
+<h4 id="create_training_vector_file_with_casi_bands_as_attributes">Create training vector file with CASI bands as attributes</h4>
+<div class="level4">
+<pre class="code bash">    pkextract <span class="re5">-i</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_CASI.tif <span class="re5">-s</span> <span class="nu0">2013</span>_IEEE_GRSS_DF_Contest_Samples_TR_26915.shp <span class="re5">-o</span> training_casi.shp</pre>
+
+<p>
+<img src="/dokuwiki/lib/exe/fetch.php?media=wiki:contest:training.png" class="mediacenter" alt="" />
+</p>
+
+</div>

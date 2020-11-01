@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="FeedCreator 1.8" -->
+<?xml-stylesheet href="http://www.spatial-ecology.net/dokuwiki/lib/exe/css.php?s=feed" type="text/css"?>
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel rdf:about="http://www.spatial-ecology.net/dokuwiki/feed.php">
+        <title> wikitz</title>
+        <description></description>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <image rdf:resource="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
+       <dc:date>2020-03-23T00:00:37+0000</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wikitz:tanzania2010&amp;rev=1539716022&amp;do=diff"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico">
+        <title></title>
+        <link>http://www.spatial-ecology.net/dokuwiki/</link>
+        <url>http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
+    </image>
+    <item rdf:about="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wikitz:tanzania2010&amp;rev=1539716022&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2018-10-16T18:53:42+0000</dc:date>
+        <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
+        <title>wikitz:tanzania2010</title>
+        <link>http://www.spatial-ecology.net/dokuwiki/doku.php?id=wikitz:tanzania2010&amp;rev=1539716022&amp;do=diff</link>
+        <description>Summary of the satisfaction survey
+
+Will you use and progress using Open Sources tools in future ?
+ Bash Yes  Bash No  Gdal yes  Gdal no  Grass yes  Grass no  Qgis yes  Qgis no 14  1  13  2  15  0  15  0 
+
+
+
+Do you feel to be able to independently improve and learn more about Open Source tools ?</description>
+    </item>
+</rdf:RDF>

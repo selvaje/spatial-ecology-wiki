@@ -1,0 +1,46 @@
+&nbsp;
+<span class="co0">#################################################</span>
+<span class="co0">######### SOIL DATA SGU  </span>
+<span class="co0"># vector data, Sweref99TM</span>
+<span class="kw3">cd</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>SGU2013<span class="sy0">/</span>SGU2014<span class="sy0">/</span>
+&nbsp;
+<span class="co0"># download and unzip:</span>
+<span class="kw1">for</span> name <span class="kw1">in</span> jord berggrund; <span class="kw1">do</span>
+curl <span class="re5">-L</span> <span class="re5">-O</span> http:<span class="sy0">//</span>www.sgu.se<span class="sy0">/</span>dokument<span class="sy0">/</span>service_sgu_publ<span class="sy0">/</span><span class="re1">$name</span><span class="st0">&quot;1M.zip&quot;</span>
+<span class="kw2">unzip</span> <span class="re1">$name</span><span class="st0">&quot;1M.zip&quot;</span> <span class="co0"># unzips into folder</span>
+<span class="kw1">done</span>
+&nbsp;
+<span class="co0"># rasterize : (are already in Sweref, 1:1M)</span>
+gdal_rasterize <span class="re5">-a</span> JG2 -a_nodata <span class="re5">-9999</span> <span class="re5">-tr</span> <span class="nu0">1000.0</span> <span class="nu0">1000.0</span> <span class="re5">-l</span> jona_jg2 \
+  <span class="re5">-ot</span> Int32 jord<span class="sy0">/</span>data<span class="sy0">/</span>jona_jg2.shp jord<span class="sy0">/</span>data<span class="sy0">/</span>soil1km.tif
+gdal_rasterize <span class="re5">-a</span> BRG -a_nodata <span class="re5">-9999</span> <span class="re5">-tr</span> <span class="nu0">1000.0</span> <span class="nu0">1000.0</span> <span class="re5">-l</span> berggrundsytor \
+  <span class="re5">-ot</span> Int32 berggrund<span class="sy0">/</span>berggrundsytor.shp berggrund<span class="sy0">/</span>bedrock1km.tif
+&nbsp;
+<span class="co0"># clip to Sweden outline:</span>
+gdalwarp <span class="re5">-dstnodata</span> <span class="re5">-9999</span> -t_srs EPSG:<span class="nu0">3006</span> <span class="re5">-cutline</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Sweden_outline<span class="sy0">/</span>Sweden_WGS84.shp \
+  -crop_to_cutline jord<span class="sy0">/</span>data<span class="sy0">/</span>soil1km.tif jord<span class="sy0">/</span>data<span class="sy0">/</span>soil1km_cropped.tif
+gdalwarp <span class="re5">-dstnodata</span> <span class="re5">-9999</span> -t_srs EPSG:<span class="nu0">3006</span> <span class="re5">-cutline</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>Sweden_outline<span class="sy0">/</span>Sweden_WGS84.shp \
+  -crop_to_cutline berggrund<span class="sy0">/</span>bedrock1km.tif berggrund<span class="sy0">/</span>bedrock1km_cropped.tif
+&nbsp;
+<span class="co0"># clean up:</span>
+<span class="kw2">rm</span> jord<span class="sy0">/</span>data<span class="sy0">/</span>soil1km.tif
+<span class="kw2">rm</span> berggrund<span class="sy0">/</span>bedrock1km.tif
+&nbsp;
+<span class="co0">## create new mapset within swedenSWEREF: SGUsoil </span>
+<span class="co0"># (switches there automatically accord. to g.gisenv but not the prompt)</span>
+&nbsp;
+g.mapset <span class="re5">-c</span> <span class="re2">mapset</span>=SGUsoil <span class="re2">location</span>=swedenSWEREF <span class="re2">gisdbase</span>=~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>GRASSDB
+&nbsp;
+<span class="co0"># switch to new mapset: (&quot;a fairly radical maneuvre&quot;)</span>
+<span class="co0">#g.mapset mapset=SGUsoil</span>
+<span class="co0"># or exit and re-enter, to be on safe side:</span>
+<span class="kw3">exit</span>
+grass ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>GRASSDB<span class="sy0">/</span>swedenSWEREF<span class="sy0">/</span>SGUsoil
+&nbsp;
+<span class="kw3">cd</span> ~<span class="sy0">/</span>Documents<span class="sy0">/</span>GISdata<span class="sy0">/</span>SGU2013<span class="sy0">/</span>SGU2014<span class="sy0">/</span>
+&nbsp;
+<span class="co0"># import rasterized and clipped tifs to grass:</span>
+r.in.gdal <span class="re2">input</span>=jord<span class="sy0">/</span>data<span class="sy0">/</span>soil1km_cropped.tif <span class="re2">output</span>=SGU_soil_1km
+r.in.gdal <span class="re2">input</span>=berggrund<span class="sy0">/</span>bedrock1km_cropped.tif <span class="re2">output</span>=SGU_bedrock_1km
+&nbsp;
+<span class="kw3">exit</span>

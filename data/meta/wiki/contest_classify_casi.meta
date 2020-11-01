@@ -1,0 +1,21 @@
+a:2:{s:7:"current";a:7:{s:4:"date";a:2:{s:7:"created";i:1512514411;s:8:"modified";i:1594967994;}s:4:"user";s:0:"";s:7:"creator";s:0:"";s:5:"title";s:20:"Image classification";s:11:"description";a:2:{s:15:"tableofcontents";a:1:{i:0;a:4:{s:3:"hid";s:20:"image_classification";s:5:"title";s:20:"Image classification";s:4:"type";s:2:"ul";s:5:"level";i:3;}}s:8:"abstract";s:348:"Image classification
+
+Create an ASCII text file ct.txt for the following color table
+
+
+1 0 180 0 255
+2 0 120 0 255
+3 0 135 70 255
+4 0 70 0 255
+5 170 123 18 255
+6 0 187 191 255
+7 118 0 0 255
+8 214 214 246 255
+9 119 119 119 255
+10 204 171 127 255
+11 218 175 122 255
+12 97 97 97 255
+13 182 175 95 255
+14 0 234 0 255
+15 205 24 58 255
+16 100 100 100 255";}s:8:"relation";a:2:{s:5:"media";a:1:{s:31:"wiki:contest:contest_legend.jpg";b:1;}s:10:"firstimage";s:31:"wiki:contest:contest_legend.jpg";}s:8:"internal";a:2:{s:5:"cache";b:1;s:3:"toc";b:1;}}s:10:"persistent";a:3:{s:4:"date";a:1:{s:7:"created";i:1512514411;}s:4:"user";s:0:"";s:7:"creator";s:0:"";}}

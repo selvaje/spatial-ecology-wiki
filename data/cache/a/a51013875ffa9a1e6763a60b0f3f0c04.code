@@ -1,0 +1,56 @@
+&nbsp;
+<span class="co0">#!/bin/bash</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">GISDBASE</span>=<span class="re4">$1</span>
+<span class="kw3">export</span> <span class="re2">LOCATION</span>=<span class="re4">$2</span>
+<span class="kw3">export</span> <span class="re2">file</span>=<span class="re4">$3</span>
+&nbsp;
+<span class="kw3">export</span> <span class="re2">filename</span>=$<span class="br0">&#40;</span><span class="kw2">basename</span>  <span class="re1">$file</span> .tif<span class="br0">&#41;</span>
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-rf</span>  <span class="re1">$GISDBASE</span><span class="sy0">/</span><span class="re1">$LOCATION</span> <span class="re1">$GISDBASE</span><span class="sy0">/</span>loc_tmp
+&nbsp;
+<span class="kw2">mkdir</span> <span class="re5">-p</span>  <span class="re1">$GISDBASE</span><span class="sy0">/</span>loc_tmp<span class="sy0">/</span>tmp
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;LOCATION_NAME: loc_tmp&quot;</span>                                                       <span class="sy0">&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GISDBASE: /dev/shm&quot;</span>                                                          <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+<span class="kw3">echo</span> <span class="st0">&quot;MAPSET: tmp&quot;</span>                                                                 <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+<span class="kw3">echo</span> <span class="st0">&quot;GRASS_GUI: text&quot;</span>                                                             <span class="sy0">&gt;&gt;</span> <span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+&nbsp;
+<span class="co0"># path to GRASS settings file</span>
+<span class="kw3">export</span> <span class="re2">GISRC</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>rc_<span class="re1">$filename</span>
+<span class="kw3">export</span> <span class="re2">GRASS_PYTHON</span>=python
+<span class="kw3">export</span> <span class="re2">GRASS_MESSAGE_FORMAT</span>=plain
+<span class="kw3">export</span> <span class="re2">GRASS_PAGER</span>=<span class="kw2">cat</span>
+<span class="kw3">export</span> <span class="re2">GRASS_WISH</span>=wish
+<span class="kw3">export</span> <span class="re2">GRASS_ADDON_BASE</span>=<span class="re1">$HOME</span><span class="sy0">/</span>.grass7<span class="sy0">/</span>addons
+<span class="kw3">export</span> <span class="re2">GRASS_VERSION</span>=7.0.0beta1
+<span class="kw3">export</span> <span class="re2">GISBASE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Apps<span class="sy0">/</span>GRASS<span class="sy0">/</span>7.0.0beta1<span class="sy0">/</span>grass-7.0.0beta1
+<span class="kw3">export</span> <span class="re2">GRASS_PROJSHARE</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Libs<span class="sy0">/</span>PROJ<span class="sy0">/</span>4.8.0<span class="sy0">/</span>share<span class="sy0">/</span>proj<span class="sy0">/</span>
+<span class="kw3">export</span> <span class="re2">PROJ_DIR</span>=<span class="sy0">/</span>usr<span class="sy0">/</span>local<span class="sy0">/</span>cluster<span class="sy0">/</span>hpc<span class="sy0">/</span>Libs<span class="sy0">/</span>PROJ<span class="sy0">/</span>4.8.0
+&nbsp;
+<span class="kw3">export</span> <span class="re2">PATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/bin:<span class="es2">$GISBASE</span>/scripts:<span class="es2">$PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">LD_LIBRARY_PATH</span>=<span class="re1">$LD_LIBRARY_PATH</span>:<span class="st0">&quot;<span class="es2">$GISBASE</span>/lib&quot;</span>
+<span class="kw3">export</span> <span class="re2">GRASS_LD_LIBRARY_PATH</span>=<span class="st0">&quot;<span class="es2">$LD_LIBRARY_PATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">PYTHONPATH</span>=<span class="st0">&quot;<span class="es2">$GISBASE</span>/etc/python:<span class="es2">$PYTHONPATH</span>&quot;</span>
+<span class="kw3">export</span> <span class="re2">MANPATH</span>=<span class="re1">$MANPATH</span>:<span class="re1">$GISBASE</span><span class="sy0">/</span><span class="kw2">man</span>
+<span class="kw3">export</span> <span class="re2">GIS_LOCK</span>=<span class="re4">$$</span>
+<span class="kw3">export</span> <span class="re2">GRASS_OVERWRITE</span>=<span class="nu0">1</span>
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-rf</span>  <span class="re1">$GISDBASE</span><span class="sy0">/</span><span class="re1">$LOCATION</span>
+&nbsp;
+<span class="kw3">echo</span> start importing 
+r.in.gdal <span class="re2">in</span>=<span class="re1">$file</span>   <span class="re2">out</span>=<span class="re1">$filename</span>  <span class="re2">location</span>=<span class="re1">$LOCATION</span>
+&nbsp;
+g.mapset <span class="re2">mapset</span>=PERMANENT  <span class="re2">location</span>=<span class="re1">$LOCATION</span>
+&nbsp;
+<span class="kw2">rm</span> <span class="re5">-rf</span>  <span class="re1">$GISDBASE</span><span class="sy0">/</span>loc_tmp
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+<span class="kw3">echo</span>  Welcome to GRASS
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+&nbsp;
+g.gisenv 
+&nbsp;
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>
+<span class="kw3">echo</span> Start to use GRASS comands
+<span class="kw3">echo</span> <span class="st0">&quot;########################&quot;</span>

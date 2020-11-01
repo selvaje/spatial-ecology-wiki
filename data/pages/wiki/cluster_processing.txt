@@ -14,9 +14,9 @@ Control number of cores using **xargs & qsub** bash function:
   * [[http://www.gnu.org/software/parallel/man.html#name| parallel ]] - multi core processing using //parallel// bash function. //Parallel// allows you to perform a lot of stuff.... as an example you can use multiple remote computers for multi core computing. It is a rich software allowing the redirection of output to your machine.
   * [[multicore_python| Multicore processing in python - Zonal Statistic ]]  
 
-===== High Performance Computing Cluster (HPC) Anunna  =====
+===== High Performance Computing Cluster (HPC) Grace  =====
 
-[[ https://www.wur.nl/en/show/High-Performance-Computing-Cluster-HPC-Anunna.htm | Anunna]] is an HPC at Wageningen University and Research. It is designed also for GeoComputation and [[ anunna_setting |  here ]] you can see how to use it. 
+[[ https://docs.ycrc.yale.edu/clusters-at-yale/clusters/grace/ | Grace ]] is an HPC at Yale University and. It is designed also for GeoComputation and [[ anunna_setting |  here ]] you can see how to use it. 
 ===== Cluster computation under GRAPPOLO =====
 [[wiki:raspi_hpc|GRAPPOLO]] **a supercomputer in a super box** is a project conceived and developed from **Spatial Ecology** to teach cluster computation using a grid engine. We have collaborated with Makernow (a fablab in Cornwall) to make it portable.
 More specifically, GRAPPOLO is micro cluster computer replicating the functioning of the biggest cluster computer facility in the southwest UK. This tool is similar to the Raspberry pi cluster developed at Southampton University but is aimed towards teaching BigData processing for Geographic Information Systems methods rather than raw computation. It is very low cost ( ~ £140), portable and a perfect replica of an operating system running on a true high performance cluster computer. 

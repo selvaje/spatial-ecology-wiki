@@ -1,0 +1,3 @@
+grass <span class="re5">-text</span> ~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>grassdb<span class="sy0">/</span>europe<span class="sy0">/</span>PERMANENT 
+<span class="re2">INDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>input    
+<span class="re2">OUTDIR</span>=~<span class="sy0">/</span>ost4sem<span class="sy0">/</span>project<span class="sy0">/</span>unidk2010<span class="sy0">/</span>nutrients<span class="sy0">/</span>output 

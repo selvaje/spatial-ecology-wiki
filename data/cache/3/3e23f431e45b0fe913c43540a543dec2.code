@@ -1,0 +1,2 @@
+<span class="kw3">cd</span> <span class="sy0">/</span>tmp <span class="sy0">&amp;&amp;</span> <span class="kw2">mkdir</span> landsat <span class="sy0">&amp;&amp;</span> <span class="kw3">cd</span> landsat;
+<span class="kw2">cp</span> <span class="sy0">/</span>opt<span class="sy0">/</span>rasdaman<span class="sy0">/</span>share<span class="sy0">/</span>wcst_import<span class="sy0">/</span>ingredients<span class="sy0">/</span>map_mosaic.json landsat.json

@@ -1,0 +1,19 @@
+<span class="kw2">awk</span> <span class="st_h">'{  
+    if(NR==1) { 
+	    old=$1 
+            z=$2 
+            print substr($1,1,6) &quot;,&quot; substr($1,7,7) &quot;,&quot; $2  
+	} 
+    else 
+	{
+	    if($1!=old) {
+		    print substr(old,1,6) &quot;,&quot; substr(old,7,7) &quot;,&quot; z ; 
+		    old=$1 ; 
+		    z=$2}
+	}
+} 
+END { 
+    print substr(old,1,6) &quot;,&quot; substr(old,7,7) &quot;,&quot; z ; 
+    old=$1 ; 
+    z=$2  
+}'</span>  point_s.asc  <span class="sy0">&gt;&gt;</span> point.csv

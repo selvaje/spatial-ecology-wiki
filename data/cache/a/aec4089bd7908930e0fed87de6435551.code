@@ -1,0 +1,7 @@
+<span class="st0">'''
+    A matter of namespace and symbols
+'''</span>
+<span class="kw1">from</span> fibonacci <span class="kw1">import</span> fibonacci
+&nbsp;
+s <span class="sy0">=</span> fibonacci<span class="br0">&#40;</span><span class="br0">&#41;</span>
+<span class="kw1">print</span> s
