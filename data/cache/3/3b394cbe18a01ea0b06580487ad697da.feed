@@ -11,7 +11,7 @@
         <description></description>
         <link>http://www.spatial-ecology.net/dokuwiki/</link>
         <image rdf:resource="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
-       <dc:date>2020-10-17T10:37:28+0000</dc:date>
+       <dc:date>2020-12-09T19:40:44+0000</dc:date>
         <items>
             <rdf:Seq>
                 <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:rstat:r_cohen_kappa&amp;rev=1594967994&amp;do=diff"/>

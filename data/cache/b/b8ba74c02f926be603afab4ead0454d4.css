@@ -269,6 +269,9 @@
   .mf_zip {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAhFBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAACZZgCUlJSVlZWZmZl+VACZZgCPXwD4+Pj5+fn5+fn7+/v8/PyZZgCxij6xiz/m5ubn5+fp6enq6urr6+vs7Ozt7e3v7+/w8PDx8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn7+/v8/Pz///9o3RgLAAAAFHRSTlMAAAIcIDI0Nn6RkZGbv83x8/X9/b9Y2vAAAACQSURBVBgZBcExTsQwEADA2XVyiQ4aRLFU8P9v0blFOuAA28xErJYJGHPZyGt7AeP9d64W9uNpjnG/367rb2psr5pYa57b4/dMSKll2I+3tkGEmG3/mOPZBkEkMRpx7gcA8jP3Q1UpVZiZB72DXrgkVIfqkKgOOsg7qgD8xLkfAIiviHV5yAL0cYtYrQWAOf8Bo8cwOFk9D0UAAAAASUVORK5CYII=);
   }
+  .mf_svg {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABZ0lEQVQ4y6VTS27CMBQcxxFU3WWDWHTBGVBFd/1chmP0DkiwCOIwpbsu6CG6oWRDECGOledMFyhRkqaoVUey/Oynmfc8T1YkoZQCgBsAAwA+LiMC8EGyAACQLBPjLMsOeZ47EWHXyrKM8/l8BmAEwCPZEJjkee6SJOHpdKrW4XDgfr/nbrejiHC73XKxWFQi9dYmIkJjDK21NMbQGMPj8cg4jhlFEUWEaZoySRKGYTgDMFItgTfnXHVRFAVIQkRgrUUQBA0zfN+/+2aY53mlqfA8D845aK3R6/UQxzGKooCIYDAYnEXaAiW5jLXWjXMpWN2FIZ4BPAF4xB8wHD5gs1mvvDp5OiWm0/NU2ns7//m5RhBg7NfJy6X6sWJX/voa42qOy6VqVLsk1DC9fqiLlPGlrsopvAB4rBO70NVhmuL9H1O4x2bzulK133hrrV1rra/aT+tA4ZxL+/3+g2p95+EvyCUEQPQFdOP3t/P0BQEAAAAASUVORK5CYII=);
+  }
 }
 @media feed {
   /* XXXXXXXXX /lib/plugins/acl/feed.css XXXXXXXXX */
@@ -345,6 +348,8 @@
   /* XXXXXXXXX /lib/plugins/doodle3/feed.less XXXXXXXXX */
   /* XXXXXXXXX /lib/plugins/nodisp/feed.css XXXXXXXXX */
   /* XXXXXXXXX /lib/plugins/nodisp/feed.less XXXXXXXXX */
+  /* XXXXXXXXX /lib/plugins/alertbox/feed.css XXXXXXXXX */
+  /* XXXXXXXXX /lib/plugins/alertbox/feed.less XXXXXXXXX */
   /* XXXXXXXXX /conf/userfeed.css XXXXXXXXX */
   /* XXXXXXXXX /conf/userfeed.less XXXXXXXXX */
   rss channel,

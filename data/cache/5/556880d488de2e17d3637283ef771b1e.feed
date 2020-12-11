@@ -11,7 +11,7 @@
         <description></description>
         <link>http://www.spatial-ecology.net/dokuwiki/</link>
         <image rdf:resource="http://www.spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
-       <dc:date>2020-11-01T15:51:05+0000</dc:date>
+       <dc:date>2020-12-09T18:22:56+0000</dc:date>
         <items>
             <rdf:Seq>
                 <rdf:li rdf:resource="http://www.spatial-ecology.net/dokuwiki/doku.php?id=wiki:python:anetaurban&amp;rev=1594967994&amp;do=diff"/>

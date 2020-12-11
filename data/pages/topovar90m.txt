@@ -13,7 +13,9 @@ Geomorpho90m is a set of geomorphometric variables derived from [[http://hydro.i
   * 3 arc-second (~90m) resolution, under WGS84 Geographic Coordinate System.
   * 7.5 arc-second (~250m) resolution, under WGS84 Geographic Coordinate System.
 
-The layers can be downloaded from [[https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94]]. This repository contains:\\
+The layers can be downloaded from\\
+[[ https://portal.opentopography.org/dataspace/dataset?opentopoID=OTDS.012020.4326.1 | OpenTopography ]] \\ or \\
+[[https://drive.google.com/drive/folders/1D4YHUycBBhNFVVsz4ohaJI7QXV9BEh94]]. This repository contains:\\
 \\
   * **gemgeomorphometry\_90m\_wgs84** contains 26 subfolders labelled in accordance to the geomorphometry layer name (see table 1 in publication). Each subfolder contains 57 tar. In each tar there are from 1 to 37 tif. Each tif (90m resolution; extend 5x5 degree) contain one band. The full size for a global geomorphometry variable is 4-80G for a total of 1148 tiles. The data type for the tif is Float32, which ensure maximum precision.
   * **gemgeomorphometry\_pangaea250m\_wgs84** contains 26 tif (250m resolution; extend full globe). These files are prepared for global analysis and/or to be ingested in web-GIS platform. The file size for each tif can is 100M-6G. The data type for this file is Int16 or UInt16 and the pixel value has been multiplied by a scaling factor reported in the geotif as metadata. It is possible to obtain the scaling factor using //gdalinfo//. To obatain the orginal value multiply the tif by the scaling factor. Nonetheless, for maximum precision use 90m or 100m resolutions that are stored as data type Float32. 

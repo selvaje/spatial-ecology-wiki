@@ -11,7 +11,7 @@
         <description></description>
         <link>http://spatial-ecology.net/dokuwiki/</link>
         <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
-       <dc:date>2020-09-20T06:03:31+0000</dc:date>
+       <dc:date>2020-12-01T03:38:26+0000</dc:date>
         <items>
             <rdf:Seq>
                 <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:rasdaman:rasdahome&amp;rev=1594967994&amp;do=diff"/>

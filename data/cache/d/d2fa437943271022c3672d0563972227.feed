@@ -11,9 +11,10 @@
         <description></description>
         <link>http://spatial-ecology.net/dokuwiki/</link>
         <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
-       <dc:date>2020-11-01T13:23:47+0000</dc:date>
+       <dc:date>2020-12-11T17:31:38+0000</dc:date>
         <items>
             <rdf:Seq>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1605999804&amp;do=diff"/>
                 <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:pkt_openev_osgeolive&amp;rev=1597819237&amp;do=diff"/>
                 <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:gdalpktools_kenya&amp;rev=1597819097&amp;do=diff"/>
                 <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:install&amp;rev=1597818907&amp;do=diff"/>
@@ -29,6 +30,27 @@
         <link>http://spatial-ecology.net/dokuwiki/</link>
         <url>http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico</url>
     </image>
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1605999804&amp;do=diff">
+        <dc:format>text/html</dc:format>
+        <dc:date>2020-11-21T23:03:24+0000</dc:date>
+        <dc:creator>ost4sem_giu (ost4sem_giu@undisclosed.example.com)</dc:creator>
+        <title>topovar90m</title>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1605999804&amp;do=diff</link>
+        <description>Geomorpho90m: technical documentation
+
+Scientific Data
+
+ Geomorpho90m, empirical evaluation and accuracy assessment of global high-resolution geomorphometric layers
+
+
+
+“Giuseppe Amatulli, Daniel McInerney, Tushar Sethi, Peter Strobl, Sami Domisch”
+
+
+Download Procedure
+
+Geomorpho90m is a set of geomorphometric variables derived from  MERIT-DEM. The are available at 3 resolutions:________</description>
+    </item>
     <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=wiki:pkt_openev_osgeolive&amp;rev=1597819237&amp;do=diff">
         <dc:format>text/html</dc:format>
         <dc:date>2020-08-19T06:40:37+0000</dc:date>

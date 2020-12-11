@@ -11,12 +11,12 @@
         <description></description>
         <link>http://spatial-ecology.net/dokuwiki/</link>
         <image rdf:resource="http://spatial-ecology.net/dokuwiki/lib/tpl/dokuwiki/images/favicon.ico" />
-       <dc:date>2020-11-01T15:47:32+0000</dc:date>
+       <dc:date>2020-12-08T22:16:25+0000</dc:date>
         <items>
             <rdf:Seq>
                 <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=sidebar&amp;rev=1594967994&amp;do=diff"/>
                 <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=start&amp;rev=1594967994&amp;do=diff"/>
-                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1594967994&amp;do=diff"/>
+                <rdf:li rdf:resource="http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1605999804&amp;do=diff"/>
             </rdf:Seq>
         </items>
     </channel>
@@ -108,12 +108,12 @@ projects
 
 The content of the Spatial Ecology …</description>
     </item>
-    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1594967994&amp;do=diff">
+    <item rdf:about="http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1605999804&amp;do=diff">
         <dc:format>text/html</dc:format>
-        <dc:date>2020-07-17T06:39:54+0000</dc:date>
+        <dc:date>2020-11-21T23:03:24+0000</dc:date>
         <dc:creator>Anonymous (anonymous@undisclosed.example.com)</dc:creator>
         <title>topovar90m</title>
-        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1594967994&amp;do=diff</link>
+        <link>http://spatial-ecology.net/dokuwiki/doku.php?id=topovar90m&amp;rev=1605999804&amp;do=diff</link>
         <description>Geomorpho90m: technical documentation
 
 Scientific Data
